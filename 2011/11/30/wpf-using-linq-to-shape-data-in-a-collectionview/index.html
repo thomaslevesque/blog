@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>[WPF] Using Linq to shape data in a CollectionView | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="[WPF] Using Linq to shape data in a CollectionView" />
+<meta property="og:description" content="WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
+// Collection to which the view is bound public ObservableCollection People { get; private set; } ... // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People); // Show only adults view.Filter = o =&gt; ((Person)o).Age &gt;= 18; // Sort by last name and first name view.SortDescriptions.Add(new SortDescription(&#34;LastName&#34;, ListSortDirection." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/" />
+<meta property="article:published_time" content="2011-11-30T13:09:45+00:00" />
+<meta property="article:modified_time" content="2011-11-30T13:09:45+00:00" />
+<meta itemprop="name" content="[WPF] Using Linq to shape data in a CollectionView">
+<meta itemprop="description" content="WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
+// Collection to which the view is bound public ObservableCollection People { get; private set; } ... // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People); // Show only adults view.Filter = o =&gt; ((Person)o).Age &gt;= 18; // Sort by last name and first name view.SortDescriptions.Add(new SortDescription(&#34;LastName&#34;, ListSortDirection.">
+<meta itemprop="datePublished" content="2011-11-30T13:09:45&#43;00:00" />
+<meta itemprop="dateModified" content="2011-11-30T13:09:45&#43;00:00" />
+<meta itemprop="wordCount" content="894">
+
+
+
+<meta itemprop="keywords" content="collectionview,linq,WPF," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[WPF] Using Linq to shape data in a CollectionView"/>
+<meta name="twitter:description" content="WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
+// Collection to which the view is bound public ObservableCollection People { get; private set; } ... // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People); // Show only adults view.Filter = o =&gt; ((Person)o).Age &gt;= 18; // Sort by last name and first name view.SortDescriptions.Add(new SortDescription(&#34;LastName&#34;, ListSortDirection."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/&amp;text=[WPF]%20Using%20Linq%20to%20shape%20data%20in%20a%20CollectionView" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/&amp;title=[WPF]%20Using%20Linq%20to%20shape%20data%20in%20a%20CollectionView" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">[WPF] Using Linq to shape data in a CollectionView</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2011-11-30T13:09:45Z">November 30, 2011</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>WPF provides a simple mechanism for shaping collections of data, via the <code>ICollectionView</code> interface and its <code>Filter</code>, <code>SortDescriptions</code> and <code>GroupDescriptions</code> properties:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#75715e">// Collection to which the view is bound
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> ObservableCollection People { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">set</span>; }
+...
+
+<span style="color:#75715e">// Default view of the People collection
+</span><span style="color:#75715e"></span>ICollectionView view = CollectionViewSource.GetDefaultView(People);
+
+<span style="color:#75715e">// Show only adults
+</span><span style="color:#75715e"></span>view.Filter = o =&gt; ((Person)o).Age &gt;= <span style="color:#ae81ff">18</span>;
+
+<span style="color:#75715e">// Sort by last name and first name
+</span><span style="color:#75715e"></span>view.SortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription(<span style="color:#e6db74">&#34;LastName&#34;</span>, ListSortDirection.Ascending));
+view.SortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription(<span style="color:#e6db74">&#34;FirstName&#34;</span>, ListSortDirection.Ascending));
+
+<span style="color:#75715e">// Group by country
+</span><span style="color:#75715e"></span>view.GroupDescriptions.Add(<span style="color:#66d9ef">new</span> PropertyGroupDescription(<span style="color:#e6db74">&#34;Country&#34;</span>));
+</code></pre></div><p>Even though this technique is not difficult to use, it has a few drawbacks:</p>
+<ul>
+<li>
+<p>The syntax is a bit clumsy and unnatural: the fact that the filter parameter is an <code>object</code> whereas we know it&rsquo;s actually of type <code>Person</code> makes the code less readable because of the cast, and the specification of the sort and group descriptions is a little repetitive</p>
+</li>
+<li>
+<p>Specifying the property names as strings introduces a risk of error, since they&rsquo;re not verified by the compiler</p>
+<p>In the last few years, we got used to use Linq to do this kind of things… it would be nice to be able to do the same for the shaping of an <code>ICollectionView</code>.  Let&rsquo;s see what syntax we could use to do it with Linq… something like this perhaps?</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+People.Where(p =&gt; p.Age &gt;= <span style="color:#ae81ff">18</span>)
+      .OrderBy(p =&gt; p.LastName)
+      .ThenBy(p =&gt; p.FirstName)
+      .GroupBy(p =&gt; p.Country);
+</code></pre></div><p>Or, with the Linq query comprehension syntax:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> People
+<span style="color:#66d9ef">where</span> p.Age &gt;= <span style="color:#ae81ff">18</span>
+<span style="color:#66d9ef">orderby</span> p.LastName, p.FirstName
+<span style="color:#66d9ef">group</span> p <span style="color:#66d9ef">by</span> p.Country;
+</code></pre></div><p>Obviously, this is not enough: this code only creates a  query on the collection, it doesn&rsquo;t modify the <code>CollectionView</code>… but with just a little extra work, we can get the desired result:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">var</span> query =
+    <span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> People.ShapeView()
+    <span style="color:#66d9ef">where</span> p.Age &gt;= <span style="color:#ae81ff">18</span>
+    <span style="color:#66d9ef">orderby</span> p.LastName, p.FirstName
+    <span style="color:#66d9ef">group</span> p <span style="color:#66d9ef">by</span> p.Country;
+
+query.Apply();
+</code></pre></div><p>The <code>ShapeView</code> method returns a wrapper which encapsulates the default view of the collection, and exposes <code>Where</code>, <code>OrderBy</code> and <code>GroupBy</code> methods with appropriate signatures to specify the shaping of the <code>CollectionView</code>. Creating the query has no direct effect, the changes are only applied to the view when  <code>Apply</code> is called: that&rsquo;s because it&rsquo;s better to apply all changes at the same time, using <code>ICollectionView.DeferRefresh</code>, to avoid causing a refresh of the view for each clause of the query. When <code>Apply</code> is called, we can see that the view is correctly updated to reflect the query.  This solution allows to define the filter, sort and grouping in a strongly-typed way, which implies that the code is verified by the compiler. It&rsquo;s also more concise and readable than the original code… Just be careful with one thing: some queries that are correct from the compiler&rsquo;s point of view won&rsquo;t be applicable to a <code>CollectionView</code>. For instance, if you try to group the data by the first letter of the last name (<code>p.LastName.Substring(0, 1)</code>), the <code>GroupBy</code> method will fail because only properties are supported by <code>PropertyGroupDescription</code>.  Note that the wrapper won&rsquo;t overwrite the shaping properties of the <code>CollectionView</code> if you don&rsquo;t specify the corresponding Linq clause, so you can just modify the current view without specifying everything again. If you need to clear the properties, you can use the <code>ClearFilter</code>, <code>ClearSort</code> and <code>ClearGrouping</code> methods:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#75715e">// Remove the grouping and add a sort criteria
+</span><span style="color:#75715e"></span>People.ShapeView()
+      .ClearGrouping()
+      .OrderBy(p =&gt; p.LastName);
+      .Apply();
+</code></pre></div><p>Note that as for a normal Linq query, it&rsquo;s possible to use either the query comprehension syntax or to call the methods directly, since the former is just syntactic sugar for the latter.  Finally, here&rsquo;s the complete code of the wrapper and the associated extension methods:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CollectionViewShaper</span>
+    {
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> CollectionViewShaper&lt;TSource&gt; ShapeView&lt;TSource&gt;(<span style="color:#66d9ef">this</span> IEnumerable&lt;TSource&gt; source)
+        {
+            <span style="color:#66d9ef">var</span> view = CollectionViewSource.GetDefaultView(source);
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> CollectionViewShaper&lt;TSource&gt;(view);
+        }
+
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> CollectionViewShaper&lt;TSource&gt; Shape&lt;TSource&gt;(<span style="color:#66d9ef">this</span> ICollectionView view)
+        {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> CollectionViewShaper&lt;TSource&gt;(view);
+        }
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CollectionViewShaper</span>&lt;TSource&gt;
+    {
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICollectionView _view;
+        <span style="color:#66d9ef">private</span> Predicate&lt;<span style="color:#66d9ef">object</span>&gt; _filter;
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;SortDescription&gt; _sortDescriptions = <span style="color:#66d9ef">new</span> List&lt;SortDescription&gt;();
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;GroupDescription&gt; _groupDescriptions = <span style="color:#66d9ef">new</span> List&lt;GroupDescription&gt;();
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper(ICollectionView view)
+        {
+            <span style="color:#66d9ef">if</span> (view == <span style="color:#66d9ef">null</span>)
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;view&#34;</span>);
+            _view = view;
+            _filter = view.Filter;
+            _sortDescriptions = view.SortDescriptions.ToList();
+            _groupDescriptions = view.GroupDescriptions.ToList();
+        }
+
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Apply()
+        {
+            <span style="color:#66d9ef">using</span> (_view.DeferRefresh())
+            {
+                _view.Filter = _filter;
+                _view.SortDescriptions.Clear();
+                <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> s <span style="color:#66d9ef">in</span> _sortDescriptions)
+                {
+                    _view.SortDescriptions.Add(s);
+                }
+                _view.GroupDescriptions.Clear();
+                <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> g <span style="color:#66d9ef">in</span> _groupDescriptions)
+                {
+                    _view.GroupDescriptions.Add(g);
+                }
+            }
+        }
+            
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearGrouping()
+        {
+            _groupDescriptions.Clear();
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+        }
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearSort()
+        {
+            _sortDescriptions.Clear();
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+        }
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearFilter()
+        {
+            _filter = <span style="color:#66d9ef">null</span>;
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+        }
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearAll()
+        {
+            _filter = <span style="color:#66d9ef">null</span>;
+            _sortDescriptions.Clear();
+            _groupDescriptions.Clear();
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+        }
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; Where(Func&lt;TSource, <span style="color:#66d9ef">bool</span>&gt; predicate)
+        {
+            _filter = o =&gt; predicate((TSource)o);
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+        }
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; OrderBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+        {
+            <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">true</span>, ListSortDirection.Ascending);
+        }
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; OrderByDescending&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+        {
+            <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">true</span>, ListSortDirection.Descending);
+        }
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ThenBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+        {
+            <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">false</span>, ListSortDirection.Ascending);
+        }
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ThenByDescending&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+        {
+            <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">false</span>, ListSortDirection.Descending);
+        }
+
+        <span style="color:#66d9ef">private</span> CollectionViewShaper&lt;TSource&gt; OrderBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector, <span style="color:#66d9ef">bool</span> clear, ListSortDirection direction)
+        {
+            <span style="color:#66d9ef">string</span> path = GetPropertyPath(keySelector.Body);
+            <span style="color:#66d9ef">if</span> (clear)
+                _sortDescriptions.Clear();
+            _sortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription(path, direction));
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+        }
+
+        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; GroupBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+        {
+            <span style="color:#66d9ef">string</span> path = GetPropertyPath(keySelector.Body);
+            _groupDescriptions.Add(<span style="color:#66d9ef">new</span> PropertyGroupDescription(path));
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+        }
+
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> GetPropertyPath(Expression expression)
+        {
+            <span style="color:#66d9ef">var</span> names = <span style="color:#66d9ef">new</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt;();
+            <span style="color:#66d9ef">var</span> expr = expression;
+            <span style="color:#66d9ef">while</span> (expr != <span style="color:#66d9ef">null</span> &amp;&amp; !(expr <span style="color:#66d9ef">is</span> ParameterExpression) &amp;&amp; !(expr <span style="color:#66d9ef">is</span> ConstantExpression))
+            {
+                <span style="color:#66d9ef">var</span> memberExpr = expr <span style="color:#66d9ef">as</span> MemberExpression;
+                <span style="color:#66d9ef">if</span> (memberExpr == <span style="color:#66d9ef">null</span>)
+                    <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;The selector body must contain only property or field access expressions&#34;</span>);
+                names.Push(memberExpr.Member.Name);
+                expr = memberExpr.Expression;
+            }
+            <span style="color:#66d9ef">return</span> String.Join(<span style="color:#e6db74">&#34;.&#34;</span>, names.ToArray());
+        }
+    }
+</code></pre></div><ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/collectionview" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">collectionview</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/linq" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">linq</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/wpf" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">WPF</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/">[WPF] Creating parameterized styles with attached properties</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/">[WPF 4.5] Subscribing to an event using a markup extension</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2011/03/27/wpf-display-an-animated-gif-image/">[WPF] Display an animated GIF image</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/">[WPF] How to bind to data when the DataContext is not inherited</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2010/10/03/entity-framework-using-include-with-lambda-expressions/">[Entity Framework] Using Include with lambda expressions</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/">[WPF] A simpler Grid using XAML attribute syntax</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2010/02/21/automating-null-checks-with-linq-expressions/">Automating null checks with Linq expressions</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2009/10/26/vs2010-binding-support-in-inputbindings/">[VS2010] Binding support in InputBindings</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2009/08/23/wpf-markup-extensions-and-templates/">[WPF] Markup extensions and templates</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2009/08/04/wpf-automatically-sort-a-gridview-continued/">[WPF] Automatically sort a GridView (continued)</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/">[WPF] A markup extension that can update its target</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2009/04/17/wpf-binding-to-an-asynchronous-collection/">[WPF] Binding to an asynchronous collection</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/">[WPF] Automatically sort a GridView when a column header is clicked</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/">[WPF] Using InputBindings with the MVVM pattern</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/">[WPF] Article about the Model-View-ViewModel design pattern, by Josh Smith</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

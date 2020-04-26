@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Hosting an ASP.NET Core 2 application on a Raspberry Pi | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Hosting an ASP.NET Core 2 application on a Raspberry Pi" />
+<meta property="og:description" content="As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&hellip; For instance, is a very small machine like a Raspberry Pi, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2018/04/17/hosting-an-asp.net-core-2-application-on-a-raspberry-pi/" />
+<meta property="article:published_time" content="2018-04-17T20:57:40+00:00" />
+<meta property="article:modified_time" content="2018-04-17T20:57:40+00:00" />
+<meta itemprop="name" content="Hosting an ASP.NET Core 2 application on a Raspberry Pi">
+<meta itemprop="description" content="As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&hellip; For instance, is a very small machine like a Raspberry Pi, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is!">
+<meta itemprop="datePublished" content="2018-04-17T20:57:40&#43;00:00" />
+<meta itemprop="dateModified" content="2018-04-17T20:57:40&#43;00:00" />
+<meta itemprop="wordCount" content="1551">
+
+
+
+<meta itemprop="keywords" content=".net core,asp.net core,linux,nginx,raspberry pi,reverse proxy," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hosting an ASP.NET Core 2 application on a Raspberry Pi"/>
+<meta name="twitter:description" content="As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&hellip; For instance, is a very small machine like a Raspberry Pi, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is!"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2018/04/17/hosting-an-asp.net-core-2-application-on-a-raspberry-pi/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2018/04/17/hosting-an-asp.net-core-2-application-on-a-raspberry-pi/&amp;text=Hosting%20an%20ASP.NET%c2%a0Core%c2%a02%20application%20on%20a%20Raspberry%c2%a0Pi" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2018/04/17/hosting-an-asp.net-core-2-application-on-a-raspberry-pi/&amp;title=Hosting%20an%20ASP.NET%c2%a0Core%c2%a02%20application%20on%20a%20Raspberry%c2%a0Pi" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Hosting an ASP.NET Core 2 application on a Raspberry Pi</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2018-04-17T20:57:40Z">April 17, 2018</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&hellip; For instance, is a very small machine like a <strong>Raspberry Pi</strong>, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is! At least as long as you don&rsquo;t expect it to handle a very heavy load. So let&rsquo;s see in practice how to deploy an expose an ASP.NET Core web app on a Raspberry Pi.</p>
+<h2 id="creating-the-app">Creating the app</h2>
+<p>Let&rsquo;s start from a basic ASP.NET Core 2.0 MVC app template:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+dotnet new mvc
+</code></pre></div><p>You don&rsquo;t even need to open the project for now, just compile it as is and publish it for the Raspberry Pi:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+dotnet publish -c Release -r linux-arm
+</code></pre></div><h2 id="prerequisites">Prerequisites</h2>
+<p>We&rsquo;re going to use a Raspberry Pi running Raspbian, the official Linux distro for Raspberry Pi, which is based on Debian. To run a .NET Core 2.0 app, you&rsquo;ll need version Jessie or higher (I used Raspbian Stretch Lite). <em><strong>Update</strong>: as Tomasz mentioned in the comments, you also need a Raspberry Pi 2 or more recent, with an ARMv7 processor; The first RPi has an ARMv6 processor and cannot run .NET Core.</em></p>
+<p>Even though the app is self-contained and doesn&rsquo;t require .NET Core to be installed on the RPi, you will still need a few low-level dependencies; they are listed <a href="https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md#linux">here</a>. You can install them using <code>apt-get</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+sudo apt-get update
+sudo apt-get install curl libunwind8 gettext apt-transport-https
+</code></pre></div><h2 id="deploy-and-run-the-application">Deploy and run the application</h2>
+<p>Copy all files from the <code>bin\Release\netcoreapp2.0\linux-arm\publish</code> directory to the Raspberry Pi, and make the binary executable (replace MyWebApp with the name of your app):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+chmod <span style="color:#ae81ff">755</span> ./MyWebApp
+</code></pre></div><p>Run the app:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+./MyWebApp
+</code></pre></div><p>If nothing went wrong, the app should start listening on port 5000. But since it listens only on <code>localhost</code>, it&rsquo;s only accessible from the Raspberry Pi itself&hellip;</p>
+<h2 id="exposing-the-app-on-the-network">Exposing the app on the network</h2>
+<p>There are several ways to fix that. The easiest is to set the <code>ASPNETCORE_URLS</code> environment variable to a value like <code>http://*:5000/</code>, in order to listen on all addresses. But if you intend to expose the app on the Internet, it might not be a good idea: the Kestrel server used by ASP.NET Core isn&rsquo;t designed to be exposed directly to the outside world, and isn&rsquo;t well protected against attacks. It is strongly recommended to put it behind a reverse proxy, such as <a href="https://www.nginx.com/">nginx</a>. Let&rsquo;s see how to do that.</p>
+<p>First, you need to install nginx if it&rsquo;s not already there, using this command:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+sudo apt-get install nginx
+</code></pre></div><p>And start it like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+sudo service nginx start
+</code></pre></div><p>Now you need to configure it so that requests arriving to port 80 are passed to your app on port 5000. To do that, open the <code>/etc/nginx/sites-available/default</code> file in your favorite editor (I use vim because my RPi has no graphical environment). The default configuration defines only one server, listening on port 80. Under this server, look for the section starting with <code>location /</code>: this is the configuration for the root path on this server. Replace it with the following configuration:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">
+location / {
+        proxy_pass http://localhost:5000/;
+        proxy_http_version 1.1;
+        proxy_set_header Connection keep-alive;
+}
+</code></pre></div><p>Be careful to include the final slash in the destination URL.</p>
+<p>This configuration is intentionnally minimal, we&rsquo;ll expand it a bit later.</p>
+<p>Once you&rsquo;re done editing the file, tell nginx to reload its configuration:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+sudo nginx -s reload
+</code></pre></div><p>From your PC, try to access the app on the Raspberry Pi by entering its IP address in your browser. If you did everything right, you should see the familiar home page from the ASP.NET Core app template!</p>
+<p>Note that you&rsquo;ll need to be patient: the first time the home page is loaded, its Razor view is compiled, which can take a while on the RPi&rsquo;s low-end hardware. ASP.NET Core 2.0 doesn&rsquo;t support precompilation of Razor views for self-contained apps; this is fixed in 2.1, which is currently in preview. So for now you have 3 options:</p>
+<ul>
+<li>be patient and endure the delay on first page load</li>
+<li>migrate to ASP.NET Core 2.1 preview, as explained <a href="https://blogs.msdn.microsoft.com/webdev/2018/04/12/asp-net-core-2-1-0-preview2-now-available/#migrating">here</a></li>
+<li>make a non self-contained deployment, which requires .NET Core to be installed on the RPi</li>
+</ul>
+<p>For this article, I chose the first options to keep things simple.</p>
+<h2 id="proxy-headers">Proxy headers</h2>
+<p>At this point, we could just leave the app alone and call it a day. However, if your app is going to evolve into something more useful, there are a few things that aren&rsquo;t going to work correctly in the current state. The problem is that the app isn&rsquo;t aware that it&rsquo;s behind a reverse proxy; as far as it knows, it&rsquo;s only listening to requests on localhost on port 5000. Which means it cannot know:</p>
+<ul>
+<li>the actual client IP (requests seem to come from localhost)</li>
+<li>the protocol scheme used by the client</li>
+<li>the actual host name specified by the client</li>
+</ul>
+<p>For the app to know these things, it has to be told by the reverse proxy. Let&rsquo;s change the nginx configuration so that it adds a few headers to incoming requests. These headers are not standard, but they&rsquo;re widely used by proxy servers.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">
+    proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Host   $http_host;
+    proxy_set_header X-Forwarded-Proto  http;
+</code></pre></div><p><code>X-Forwarded-For</code> contains the client IP address, and optionally the addresses of proxies along the way. <code>X-Forwarded-Host</code> contains the host name initially specified by the client, and <code>X-Forwarded-Proto</code> contains the original protocol scheme (hard-coded to <code>http</code> here since HTTPS is not configured).</p>
+<p>(Don&rsquo;t forget to reload the nginx configuration)</p>
+<p>We also need to change the ASP.NET Core app so that it takes these headers into account. This can be done easily using the <code>ForwardedHeaders</code> middleware; add this code at the start of the <code>Startup.Configure</code> method:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+app.UseForwardedHeaders(<span style="color:#66d9ef">new</span> ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.All
+});
+</code></pre></div><p>In case you&rsquo;re wondering what a middleware is, <a href="https://www.thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/">this article</a> might help!</p>
+<p>This middleware will read the <code>X-Forwarded-*</code> headers from incoming requests, and use them to modify:</p>
+<ul>
+<li>the <code>Host</code> and <code>Scheme</code> of the request</li>
+<li>the <code>Connection.RemoteIpAddress</code>, which contains the client IP.</li>
+</ul>
+<p>This way, the app will behave as if the request was received directly from the client.</p>
+<h2 id="expose-the-app-on-a-specific-path">Expose the app on a specific path</h2>
+<p>Our app is now accessible at the URL <code>http://&lt;ip-address&gt;/</code>, i.e. at the root of the server. But if we want to host several applications on the Raspberry Pi, it&rsquo;s going to be a problem&hellip; We could put each app on a different port, but it&rsquo;s not very convenient. It would be better to have each app on its own path, e.g. with URLs like <code>http://&lt;ip-address&gt;/MyWebApp/</code>.</p>
+<p>It&rsquo;s pretty easy to do with nginx. Edit the nginx configuration again, and replace <code>location /</code> with <code>location /MyWebApp/</code> (note the final slash, it&rsquo;s important). Reload the configuration, and try to access the app at its new URL&hellip; The home page loads, but the CSS and JS scripts don&rsquo;t: error 404. In addition, links to other pages are now incorrect, and point to <code>http://&lt;ip-address&gt;/Something</code> instead of <code>http://&lt;ip-address&gt;/MyWebApp/Something</code>. What&rsquo;s going on?</p>
+<p>The reason is quite simple: the app isn&rsquo;t aware that it&rsquo;s not served from the root of the server, and generates all its links as if it were&hellip; To fix this, we can ask nginx to pass yet another header to our app:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">
+proxy_set_header X-Forwarded-Path   /MyWebApp;
+</code></pre></div><p>Note that this <code>X-Forwarded-Path</code> header is even less standard than the other ones, since I just made it up&hellip; So of course, there&rsquo;s no built-in ASP.NET Core middleware that can handle it, and we&rsquo;ll need to do it ourselves. Fortunately it&rsquo;s pretty easy: we just need to use the path specified in the header as the path base. In the <code>Startup.Configure</code> method, add this after the <code>UseForwardHeaders</code> statement:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#75715e">// Patch path base with forwarded path
+</span><span style="color:#75715e"></span>app.Use(<span style="color:#66d9ef">async</span> (context, next) =&gt;
+{
+    <span style="color:#66d9ef">var</span> forwardedPath = context.Request.Headers[<span style="color:#e6db74">&#34;X-Forwarded-Path&#34;</span>].FirstOrDefault();
+    <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(forwardedPath))
+    {
+        context.Request.PathBase = forwardedPath;
+    }
+
+    <span style="color:#66d9ef">await</span> next();
+});
+</code></pre></div><p>Redeploy and restart the app, reload the nginx configuration, and try again: now it works!</p>
+<h2 id="run-the-app-as-a-service">Run the app as a service</h2>
+<p>If we want our app to be always running, restarting it manually every time it crashes or when the Raspberry Pi reboots isn&rsquo;t going to be sustainable&hellip; What we want is to run it as a service, so that it starts when the system starts, and is automatically restarted if it stops working. To do this, we&rsquo;ll take advantage of <strong>systemd</strong>, which manages services in most Linux distros, including Raspbian.</p>
+<p>To create a systemd service, create a <code>MyWebApp.service</code> file in the <code>/lib/systemd/system/</code> directory, with the following content:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">
+[Unit]
+Description=My ASP.NET Core Web App
+After=nginx.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/apps/MyWebApp
+ExecStart=/home/pi/apps/MyWebApp/MyWebApp
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div><p>(replace the name and paths to match your app of course)</p>
+<p>Enable the service like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+sudo systemctl enable MyWebApp
+</code></pre></div><p>And start it like this (new services aren&rsquo;t started automatically):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+sudo systemctl start MyWebApp
+</code></pre></div><p>And that&rsquo;s it, your app is now monitored by systemd, which will take care of starting or restarting it as needed.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>As you can see, running an ASP.NET Core 2.0 app on a Raspberry Pi is not only possible, but reasonably easy too; you just need a bit of fiddling with headers and reverse proxy settings. You won&rsquo;t host the next Facebook or StackOverflow on your RPi, but it&rsquo;s fine for small utility applications. Just give free rein to your imagination!</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/.net-core" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">.net core</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/asp.net-core" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">asp.net core</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/linux" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">linux</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/nginx" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">nginx</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/raspberry-pi" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">raspberry pi</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/reverse-proxy" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">reverse proxy</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2018/03/27/understanding-the-asp.net-core-middleware-pipeline/">Understanding the ASP.NET Core middleware pipeline</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2017/09/18/common-msbuild-properties-and-items-with-directory.build.props/">Common MSBuild properties and items with Directory.Build.props</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2017/03/28/linq-performance-improvements-in-.net-core/">Linq performance improvements in .NET Core</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

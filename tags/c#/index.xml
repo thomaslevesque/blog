@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C# on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/c#/</link>
+    <description>Recent content in C# on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 Mar 2020 16:44:40 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/c#/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Using the OAuth 2.0 device flow to authenticate users in desktop apps</title>
+      <link>https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</link>
+      <pubDate>Sat, 28 Mar 2020 16:44:40 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</guid>
+      <description>Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
+Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:</description>
+    </item>
+    
+    <item>
+      <title>Lazily resolving services to fix circular dependencies in .NET Core</title>
+      <link>https://blog2.thomaslevesque.net/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</link>
+      <pubDate>Wed, 18 Mar 2020 13:14:03 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</guid>
+      <description>The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
+It is generally agreed that this should be avoided; I won&amp;rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</description>
+    </item>
+    
+    <item>
+      <title>Handling query string parameters with no value in ASP.NET Core</title>
+      <link>https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</link>
+      <pubDate>Thu, 30 Jan 2020 07:00:58 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
+      <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
+ query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
+ But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.</description>
+    </item>
+    
+    <item>
+      <title>ASP.NET Core: when environments are not enough, use sub-environments!</title>
+      <link>https://blog2.thomaslevesque.net/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</link>
+      <pubDate>Fri, 20 Dec 2019 11:33:00 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
+      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
+ appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
+    </item>
+    
+    <item>
+      <title>Easy unit testing of null argument validation (C# 8 edition)</title>
+      <link>https://blog2.thomaslevesque.net/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</link>
+      <pubDate>Tue, 19 Nov 2019 07:00:39 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</guid>
+      <description>A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
+[Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&amp;lt;int&amp;gt;(); var right = Enumerable.Empty&amp;lt;int&amp;gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&amp;gt; left.FullOuterJoin(right, x =&amp;gt; x, y =&amp;gt; y, (k, x, y) =&amp;gt; 0, 0, 0, null), &amp;#34;left&amp;#34;, &amp;#34;right&amp;#34;, &amp;#34;leftKeySelector&amp;#34;, &amp;#34;rightKeySelector&amp;#34;, &amp;#34;resultSelector&amp;#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.</description>
+    </item>
+    
+    <item>
+      <title>Using foreach with index in C#</title>
+      <link>https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/</link>
+      <pubDate>Mon, 18 Nov 2019 07:00:11 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/</guid>
+      <description>Just a quick tip today!
+for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.
+But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
+    </item>
+    
+    <item>
+      <title>Handling type hierarchies in Cosmos DB (part 2)</title>
+      <link>https://blog2.thomaslevesque.net/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</link>
+      <pubDate>Tue, 15 Oct 2019 06:00:08 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
+      <description>This is the second post in a series of 2:
+ Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
+    </item>
+    
+    <item>
+      <title>Handling type hierarchies in Cosmos DB (part 1)</title>
+      <link>https://blog2.thomaslevesque.net/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</link>
+      <pubDate>Mon, 14 Oct 2019 06:00:31 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
+      <description>This is the first post in a series of 2:
+ Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
+    </item>
+    
+    <item>
+      <title>Multitenant Azure AD issuer validation in ASP.NET Core</title>
+      <link>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</link>
+      <pubDate>Mon, 24 Dec 2018 13:54:43 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
+      <description>If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:
+openIdConnectOptions.Authority = &amp;#34;https://login.microsoftonline.com/organizations/v2.0&amp;#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&amp;rsquo;t match the issuer specified in the OpenID metadata.</description>
+    </item>
+    
+    <item>
+      <title>Asynchronous initialization in ASP.NET Core, revisited</title>
+      <link>https://blog2.thomaslevesque.net/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</link>
+      <pubDate>Tue, 25 Sep 2018 21:43:22 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</guid>
+      <description>Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
+Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&amp;rsquo;t such a good approach.</description>
+    </item>
+    
+    <item>
+      <title>Handling multipart requests with JSON and file uploads in ASP.NET Core</title>
+      <link>https://blog2.thomaslevesque.net/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</link>
+      <pubDate>Tue, 04 Sep 2018 09:56:23 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
+      <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
+ Embed the image bytes as base64 in the JSON payload, e.g.  { &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
+    </item>
+    
+    <item>
+      <title>Asynchronous initialization in ASP.NET Core with custom middleware</title>
+      <link>https://blog2.thomaslevesque.net/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</link>
+      <pubDate>Fri, 20 Jul 2018 15:46:31 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
+      <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
+Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
+ There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
+    </item>
+    
+    <item>
+      <title>Writing a GitHub Webhook as an Azure Function</title>
+      <link>https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/</link>
+      <pubDate>Fri, 30 Mar 2018 12:43:41 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/</guid>
+      <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
+A bit of background As you may already know, I&amp;rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
+    </item>
+    
+    <item>
+      <title>Understanding the ASP.NET Core middleware pipeline</title>
+      <link>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</link>
+      <pubDate>Tue, 27 Mar 2018 06:00:38 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</guid>
+      <description>Middlewhat? The ASP.NET Core architecture features a system of middleware, which are pieces of code that handle requests and responses. Middleware are chained to each other to form a pipeline. Incoming requests are passed through the pipeline, where each middleware has a chance to do something with them before passing them to the next middleware. Outgoing responses are also passed through the pipeline, in reverse order. If this sounds very abstract, the following schema from the official ASP.</description>
+    </item>
+    
+    <item>
+      <title>Better timeout handling with HttpClient</title>
+      <link>https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/</link>
+      <pubDate>Sun, 25 Feb 2018 18:01:03 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/</guid>
+      <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
+ The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
+    </item>
+    
+    <item>
+      <title>Testing and debugging library code from LINQPad</title>
+      <link>https://blog2.thomaslevesque.net/2017/08/26/testing-and-debugging-library-code-from-linqpad/</link>
+      <pubDate>Fri, 25 Aug 2017 21:53:08 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2017/08/26/testing-and-debugging-library-code-from-linqpad/</guid>
+      <description>I&amp;rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&amp;rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&amp;rsquo;s also extremely useful as a general-purpose .</description>
+    </item>
+    
+    <item>
+      <title>Linq performance improvements in .NET Core</title>
+      <link>https://blog2.thomaslevesque.net/2017/03/29/linq-performance-improvements-in-net-core/</link>
+      <pubDate>Tue, 28 Mar 2017 22:18:21 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2017/03/29/linq-performance-improvements-in-net-core/</guid>
+      <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
+For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:</description>
+    </item>
+    
+    <item>
+      <title>C# methods in git diff hunk headers</title>
+      <link>https://blog2.thomaslevesque.net/2017/01/17/c-methods-in-git-diff-hunk-headers/</link>
+      <pubDate>Tue, 17 Jan 2017 21:31:45 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2017/01/17/c-methods-in-git-diff-hunk-headers/</guid>
+      <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
+diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args)  Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;);  } This is very useful to know where you are when looking at a diff.</description>
+    </item>
+    
+    <item>
+      <title>Fun with the HttpClient pipeline</title>
+      <link>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</link>
+      <pubDate>Thu, 08 Dec 2016 00:18:43 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
+      <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.
+You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&amp;rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
+    </item>
+    
+    <item>
+      <title>Tuple deconstruction in C# 7</title>
+      <link>https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/</link>
+      <pubDate>Mon, 22 Aug 2016 22:54:17 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/</guid>
+      <description>Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
+  emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
+  deconstruction of tuples into separate variables
+Well, it looks like the C# language team has been busy during the last month, because both items are now implemented in VS 15 Preview 4, which was released today!</description>
+    </item>
+    
+    <item>
+      <title>Tuples in C# 7</title>
+      <link>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</link>
+      <pubDate>Sun, 24 Jul 2016 23:03:18 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</guid>
+      <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
+In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
+private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) {int count = 0;double sum = 0.0;foreach (var value in values){ count++; sum += value;}return Tuple.</description>
+    </item>
+    
+    <item>
+      <title>Pitfall: using var and async together</title>
+      <link>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</link>
+      <pubDate>Tue, 21 Jun 2016 20:43:41 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</guid>
+      <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
+public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync:  private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() { // actual implementation irrelevant  // .</description>
+    </item>
+    
+    <item>
+      <title>Test driving C# 7 features in Visual Studio “15” Preview</title>
+      <link>https://blog2.thomaslevesque.net/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</link>
+      <pubDate>Sat, 16 Apr 2016 20:58:40 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</guid>
+      <description>About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!</description>
+    </item>
+    
+    <item>
+      <title>Automatically inject fakes in test fixture with FakeItEasy</title>
+      <link>https://blog2.thomaslevesque.net/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</link>
+      <pubDate>Sun, 17 Jan 2016 00:20:09 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</guid>
+      <description>Today I’d like to share a nice feature I discovered recently in FakeItEasy.
+When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier.</description>
+    </item>
+    
+    <item>
+      <title>Using multiple cancellation sources with CreateLinkedTokenSource</title>
+      <link>https://blog2.thomaslevesque.net/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</link>
+      <pubDate>Thu, 31 Dec 2015 13:27:14 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</guid>
+      <description>Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel.</description>
+    </item>
+    
+    <item>
+      <title>Explicitly switch to the UI thread in an async method</title>
+      <link>https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</link>
+      <pubDate>Wed, 11 Nov 2015 17:00:16 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</guid>
+      <description>Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Prevent the user from pasting an image in a RichTextBox</title>
+      <link>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</link>
+      <pubDate>Sat, 05 Sep 2015 13:07:13 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</guid>
+      <description>WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.
+When I googled for a way to prevent that, the only solutions I found suggested to intercept the Ctrl-V keystroke, and swallow the event if the clipboard contains an image.</description>
+    </item>
+    
+    <item>
+      <title>C# Puzzle 2</title>
+      <link>https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/</link>
+      <pubDate>Thu, 30 Jul 2015 17:13:05 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/</guid>
+      <description>Just another little puzzle based on an issue I had at work…
+Consider this piece of code :
+ Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;); Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
+ x &amp;gt; y is False !(x &amp;lt;= y) is True</description>
+    </item>
+    
+    <item>
+      <title>How to retrieve dates as UTC in SQLite</title>
+      <link>https://blog2.thomaslevesque.net/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/</link>
+      <pubDate>Sun, 28 Jun 2015 19:09:56 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/</guid>
+      <description>SQLite is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an official ADO.NET provider that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a DateTime converted to local time, with Kind = Unspecified.</description>
+    </item>
+    
+    <item>
+      <title>Create an auto-mocking container with Unity and FakeItEasy</title>
+      <link>https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</link>
+      <pubDate>Sun, 14 Jun 2015 20:00:47 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</guid>
+      <description>Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.</description>
+    </item>
+    
+    <item>
+      <title>Async and cancellation support for wait handles</title>
+      <link>https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/</link>
+      <pubDate>Thu, 04 Jun 2015 00:37:59 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/</guid>
+      <description>The .NET framework comes with a number of low-level synchronization primitives. The most commonly used are collectively known as “wait handles”, and inherit the WaitHandle class: Semaphore, Mutex, AutoResetEvent and ManualResetEvent. These classes have been there since at least .NET 2.0 (1.1 for some of them), but they haven’t evolved much since they were introduced, which means they don’t support common features that were introduced later. In particular, they don’t provide support for waiting asynchronously, nor do they support cancelling the wait.</description>
+    </item>
+    
+    <item>
+      <title>C# Puzzle 1</title>
+      <link>https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/</link>
+      <pubDate>Mon, 09 Mar 2015 23:51:20 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/</guid>
+      <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
+I just came up with this one:
+ static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); }What do you think this code prints? Can you be sure? Post your answer in the comments!
+I’ll try to post more puzzles in the future if I can come up with others.</description>
+    </item>
+    
+    <item>
+      <title>Async unit tests with NUnit</title>
+      <link>https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/</link>
+      <pubDate>Sun, 01 Feb 2015 21:20:08 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/</guid>
+      <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
+Let’s assume the system under test is this very interesting Calculator class:
+ public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.</description>
+    </item>
+    
+    <item>
+      <title>Optimize ToArray and ToList by providing the number of elements</title>
+      <link>https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</link>
+      <pubDate>Sun, 07 Dec 2014 18:10:42 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</guid>
+      <description>The ToArray and ToList extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on ToArray for now (ToList has a few differences, but the principle is mostly the same).</description>
+    </item>
+    
+    <item>
+      <title>Easily convert file sizes to human-readable form</title>
+      <link>https://blog2.thomaslevesque.net/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</link>
+      <pubDate>Sun, 23 Nov 2014 02:24:12 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</guid>
+      <description>If you write an application that has anything to do with file management, you will probably need to display the size of the files. But if a file has a size of 123456789 bytes, it doesn’t mean that you should just display this value to the user, because it’s hard to read, and the user usually doesn’t need 1-byte precision. Instead, you will write something like 118 MB.
+This should be a no-brainer, but there are actually a number of different ways to display byte sizes… For instance, there are several co-existing conventions for units and prefixes:</description>
+    </item>
+    
+    <item>
+      <title>Passing parameters by reference to an asynchronous method</title>
+      <link>https://blog2.thomaslevesque.net/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</link>
+      <pubDate>Tue, 04 Nov 2014 11:00:00 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</guid>
+      <description>Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (ref or out) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first await), so the location of the variable won’t exist anymore.</description>
+    </item>
+    
+    <item>
+      <title>Easy unit testing of null argument validation</title>
+      <link>https://blog2.thomaslevesque.net/2014/11/02/easy-unit-testing-of-null-argument-validation/</link>
+      <pubDate>Sun, 02 Nov 2014 15:24:06 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/11/02/easy-unit-testing-of-null-argument-validation/</guid>
+      <description>When unit testing a method, one of the things to test is argument validation : for instance, ensure that the method throws a ArgumentNullException when a null argument is passed for a parameter that isn’t allowed to be null. Writing this kind of test is very easy, but it’s also a tedious and repetitive task, especially if the method has many parameters… So I wrote a method that automates part of this task: it tries to pass null for each of the specified arguments, and asserts that the method throws an ArgumentNullException.</description>
+    </item>
+    
+    <item>
+      <title>Showing result suggestions in a WinRT SearchBox: bug regarding the image</title>
+      <link>https://blog2.thomaslevesque.net/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</link>
+      <pubDate>Mon, 04 Nov 2013 20:27:39 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</guid>
+      <description>Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
+The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:
+ History suggestions are search queries previously entered by the user.</description>
+    </item>
+    
+    <item>
+      <title>Detecting dependency property changes in WinRT</title>
+      <link>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</link>
+      <pubDate>Sun, 21 Apr 2013 17:05:53 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</guid>
+      <description>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
+It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.</description>
+    </item>
+    
+    <item>
+      <title>Tail recursion in C#</title>
+      <link>https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/</link>
+      <pubDate>Thu, 01 Sep 2011 22:16:52 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/</guid>
+      <description>Regardless of the programming language you&amp;rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&amp;rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .</description>
+    </item>
+    
+    <item>
+      <title>[C#] A simple implementation of the WeakEvent pattern</title>
+      <link>https://blog2.thomaslevesque.net/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</link>
+      <pubDate>Mon, 17 May 2010 21:12:36 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</guid>
+      <description>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&amp;rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.</description>
+    </item>
+    
+    <item>
+      <title>Automating null checks with Linq expressions</title>
+      <link>https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/</link>
+      <pubDate>Sun, 21 Feb 2010 20:42:58 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
+      <description>The problem Have you ever written code like the following ?
+X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
+    </item>
+    
+    <item>
+      <title>[C#] Parent/child relationship and XML serialization</title>
+      <link>https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/</link>
+      <pubDate>Fri, 12 Jun 2009 10:18:22 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/</guid>
+      <description>Today I&amp;rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&amp;rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).</description>
+    </item>
+    
+  </channel>
+</rss>

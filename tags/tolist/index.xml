@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ToList on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/tolist/</link>
+    <description>Recent content in ToList on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 07 Dec 2014 18:10:42 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/tolist/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Optimize ToArray and ToList by providing the number of elements</title>
+      <link>https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</link>
+      <pubDate>Sun, 07 Dec 2014 18:10:42 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</guid>
+      <description>The ToArray and ToList extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on ToArray for now (ToList has a few differences, but the principle is mostly the same).</description>
+    </item>
+    
+  </channel>
+</rss>

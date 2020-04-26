@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>binding on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/binding/</link>
+    <description>Recent content in binding on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 21 Apr 2013 17:05:53 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/binding/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Detecting dependency property changes in WinRT</title>
+      <link>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</link>
+      <pubDate>Sun, 21 Apr 2013 17:05:53 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</guid>
+      <description>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
+It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] How to bind to data when the DataContext is not inherited</title>
+      <link>https://blog2.thomaslevesque.net/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</link>
+      <pubDate>Mon, 21 Mar 2011 16:15:29 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</guid>
+      <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&amp;rsquo;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip; Let&amp;rsquo;s illustrate with a simple example: we want to display a list of products in a DataGrid.</description>
+    </item>
+    
+    <item>
+      <title>[VS2010] Binding support in InputBindings</title>
+      <link>https://blog2.thomaslevesque.net/2009/10/26/vs2010-binding-support-in-inputbindings/</link>
+      <pubDate>Mon, 26 Oct 2009 15:30:25 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
+      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&amp;hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&amp;rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Binding to an asynchronous collection</title>
+      <link>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</link>
+      <pubDate>Fri, 17 Apr 2009 01:00:19 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
+      <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
+ This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
+ To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Binding to application settings using a markup extension</title>
+      <link>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</link>
+      <pubDate>Tue, 18 Nov 2008 13:56:48 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</guid>
+      <description>Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.
+The end-user of any application expects that his preferences (window size, state of this or that option&amp;hellip;) are saved to be restored at the next run : that&amp;rsquo;s why .NET 2.0 introduced application settings as a unified way to persist these settings.</description>
+    </item>
+    
+  </channel>
+</rss>

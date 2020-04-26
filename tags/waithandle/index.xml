@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>waithandle on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/waithandle/</link>
+    <description>Recent content in waithandle on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 04 Jun 2015 00:37:59 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/waithandle/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Async and cancellation support for wait handles</title>
+      <link>https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/</link>
+      <pubDate>Thu, 04 Jun 2015 00:37:59 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/</guid>
+      <description>The .NET framework comes with a number of low-level synchronization primitives. The most commonly used are collectively known as “wait handles”, and inherit the WaitHandle class: Semaphore, Mutex, AutoResetEvent and ManualResetEvent. These classes have been there since at least .NET 2.0 (1.1 for some of them), but they haven’t evolved much since they were introduced, which means they don’t support common features that were introduced later. In particular, they don’t provide support for waiting asynchronously, nor do they support cancelling the wait.</description>
+    </item>
+    
+  </channel>
+</rss>

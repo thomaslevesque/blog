@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>unity on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/unity/</link>
+    <description>Recent content in unity on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 14 Jun 2015 20:00:47 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/unity/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Create an auto-mocking container with Unity and FakeItEasy</title>
+      <link>https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</link>
+      <pubDate>Sun, 14 Jun 2015 20:00:47 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</guid>
+      <description>Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.</description>
+    </item>
+    
+  </channel>
+</rss>

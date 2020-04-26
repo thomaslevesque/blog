@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Test driving C# 7 features in Visual Studio “15” Preview | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Test driving C# 7 features in Visual Studio “15” Preview" />
+<meta property="og:description" content="About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2016/04/16/test-driving-c#-7-features-in-visual-studio-15-preview/" />
+<meta property="article:published_time" content="2016-04-16T20:58:40+00:00" />
+<meta property="article:modified_time" content="2016-04-16T20:58:40+00:00" />
+<meta itemprop="name" content="Test driving C# 7 features in Visual Studio “15” Preview">
+<meta itemprop="description" content="About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!">
+<meta itemprop="datePublished" content="2016-04-16T20:58:40&#43;00:00" />
+<meta itemprop="dateModified" content="2016-04-16T20:58:40&#43;00:00" />
+<meta itemprop="wordCount" content="1272">
+
+
+
+<meta itemprop="keywords" content="C#,C# 7,Visual Studio," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Test driving C# 7 features in Visual Studio “15” Preview"/>
+<meta name="twitter:description" content="About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2016/04/16/test-driving-c" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2016/04/16/test-driving-c&amp;text=Test%20driving%20C#%207%20features%20in%20Visual%20Studio%20%e2%80%9c15%e2%80%9d%20Preview" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2016/04/16/test-driving-c&amp;title=Test%20driving%20C#%207%20features%20in%20Visual%20Studio%20%e2%80%9c15%e2%80%9d%20Preview" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Test driving C# 7 features in Visual Studio “15” Preview</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2016-04-16T20:58:40Z">April 16, 2016</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the <a href="https://www.visualstudio.com/en-us/news/vs15-preview-vs.aspx#CsharpAndVB">release notes</a>. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!</p>
+<h3 id="enabling-the-new-features">Enabling the new features</h3>
+<p>The new features are not enabled by default. You can enable them individually with <code>/feature:</code> command line switches, but the easiest way is to enable them all by adding <code>__DEMO__</code> and <code>__DEMO_EXPERIMENTAL__</code> to the conditional compilation symbols (in <em>Project properties</em>, <em>Build</em> tab).</p>
+<h3 id="local-functions">Local functions</h3>
+<p>Most functional languages allow you to declare functions in the body of other functions. It’s now possible to do the same in C# 7! The syntax for declaring a method inside another is pretty much what you would expect:</p>
+<pre><code>
+long Factorial(int n)
+{
+    long Fact(int i, long acc)
+    {
+        return i == 0 ? acc : Fact(i - 1, acc * i);
+    }
+    return Fact(n, 1);
+}
+</code></pre><p>Here, the <code>Fact</code> method is local to the <code>Factorial</code> method (in case you’re wondering, it’s a tail-recursive implementation of the factorial — which doesn’t make much sense, since C# doesn’t support tail recursion, but it’s just an example).</p>
+<p>Of course, it was already possible to simulate local functions with lambda expressions, but there were a few drawbacks:</p>
+<ul>
+<li>it’s less readable, because you have to declare the delegate type explicitly</li>
+<li>it’s slower, due to the overhead of creating a delegate instance, and calling the delegate vs. calling the method directly</li>
+<li>writing recursive lambdas is a bit awkward</li>
+</ul>
+<p>Local functions have the following benefits:</p>
+<ul>
+<li>when a method is only used as a helper for another method, making it local makes the relation more obvious</li>
+<li>like lambdas, local functions can capture local variables and parameters of their containing method</li>
+<li>local functions support recursion like any normal method</li>
+</ul>
+<p>You can read more about this feature <a href="https://github.com/dotnet/roslyn/issues/2930">in the Roslyn Github repository</a>.</p>
+<h3 id="ref-returns-and-ref-locals">Ref returns and ref locals</h3>
+<p>Since the first version of C#, it has always been possible to pass parameters by reference, which is conceptually similar to passing a pointer to a variable in languages like C. Until now, this feature was limited to parameters, but in C# 7 it becomes possible to return values by reference, or to have local variables that refer to the location of another variable. Here’s an example:</p>
+<pre><code>
+static void TestRefReturn()
+{
+    var foo = new Foo();
+    Console.WriteLine(foo); // 0, 0
+    
+    foo.GetByRef(&quot;x&quot;) = 42;
+
+    ref int y = ref foo.GetByRef(&quot;y&quot;);
+    y = 99;
+
+    Console.WriteLine(foo); // 42, 99
+}
+
+class Foo
+{
+    private int x;
+    private int y;
+
+    public ref int GetByRef(string name)
+    {
+        if (name == &quot;x&quot;)
+            return ref x;
+        if (name == &quot;y&quot;)
+            return ref y;
+        throw new ArgumentException(nameof(name));
+    }
+
+    public override string ToString() =&gt; $&quot;{x},{y}&quot;;
+}
+</code></pre><p>Let’s have a closer look at this code.</p>
+<ul>
+<li>On line 6, it looks like I’m assigning a value to the return of a method; what does this even mean? Well, the <code>GetByRef</code> method returns a field of the <code>Foo</code> class <em>by reference</em> (note the <code>ref int</code> return type of <code>GetByRef</code>). So, if I pass <code>&quot;x&quot;</code> as an argument, it returns the <code>x</code> field by reference. If I assign a value to that, it actually assigns a value to the <code>x</code> field.</li>
+<li>On line 8, instead of just assigning a value directly to the field returned by <code>GetByRef</code>, I use a ref local variable <code>y</code>. The local variable now shares the same memory location as the <code>foo.y</code> field. So if I assign a value to it, it changes the value of <code>foo.y</code>.</li>
+</ul>
+<p>Note that you can also return an array location by reference:</p>
+<pre><code>
+private MyBigStruct[] array = new MyBigStruct[10];
+private int current;
+
+public ref MyBigStruct GetCurrentItem()
+{
+    return ref array[current];
+}
+</code></pre><p>It’s likely that most C# developers will never actually need this feature; it’s pretty low level, and not the kind of thing you typically need when writing line-of-business applications. However it’s very useful for code whose performance is critical: copying a large structure is expensive, so if we can return it by reference instead, it can be a non-negligible performance benefit.</p>
+<p>You can learn more about this feature <a href="https://github.com/dotnet/roslyn/issues/118">on Github</a>.</p>
+<h3 id="pattern-matching">Pattern matching</h3>
+<p>Pattern matching is a feature very common in functional languages. C# 7 introduces some aspects of pattern matching, in the form of extensions to the <code>is</code> operator. For instance, when testing the type of a variable, it lets you introduce a new variable after the type, so that this variable is assigned with the left-hand side operand of the <code>is</code>, but with the type specified as the right-hand side operand (it will be clearer with an example).</p>
+<p>Typically, if you need to test that a value is of type <code>DateTime</code>, then do something with that <code>DateTime</code>, you need to test the type, then cast to that type:</p>
+<pre><code>
+object o = GetValue();
+if (o is DateTime)
+{
+    var d = (DateTime)o;
+    // Do something with d
+}
+</code></pre><p>In C# 7, you can do this instead:</p>
+<pre><code>
+object o = GetValue();
+if (o is DateTime d)
+{
+    // Do something with d
+}
+</code></pre><p><code>d</code> is now declared directly as part of the <code>o is DateTime</code> expression.</p>
+<p>This feature can also be used in a switch statement:</p>
+<pre><code>
+object v = GetValue();
+switch (v)
+{
+    case string s:
+        Console.WriteLine($&quot;{v} is a string of length {s.Length}&quot;);
+        break;
+    case int i:
+        Console.WriteLine($&quot;{v} is an {(i % 2 == 0 ? &quot;even&quot; : &quot;odd&quot;)} int&quot;);
+        break;
+    default:
+        Console.WriteLine($&quot;{v} is something else&quot;);
+        break;
+}
+</code></pre><p>In this code, each case introduces a variable of the appropriate type, which you can use in the body of the case.</p>
+<p>So far I only covered pattern matching against a simple type, but there are also more advanced forms. For instance:</p>
+<pre><code>
+switch (DateTime.Today)
+{
+    case DateTime(*, 10, 31):
+        Console.WriteLine(&quot;Happy Halloween!&quot;);
+        break;
+    case DateTime(var year, 7, 4) when year &gt; 1776:
+        Console.WriteLine(&quot;Happy Independence Day!&quot;);
+        break;
+    case DateTime { DayOfWeek is DayOfWeek.Saturday }:
+    case DateTime { DayOfWeek is DayOfWeek.Sunday }:
+        Console.WriteLine(&quot;Have a nice week-end!&quot;);
+        break;
+    default:
+        break;
+}
+</code></pre><p>How cool is that!</p>
+<p>There’s also another (still experimental) form of pattern matching, using a new <code>match</code> keyword:</p>
+<pre><code>
+object o = GetValue();
+string description = o match
+    (
+        case string s : $&quot;{o} is a string of length {s.Length}&quot;
+        case int i : $&quot;{o} is an {(i % 2 == 0 ? &quot;even&quot; : &quot;odd&quot;)} int&quot;
+        case * : $&quot;{o} is something else&quot;
+    );
+</code></pre><p>It’s very similar to a switch, except that it’s an expression, not a statement.</p>
+<p>There’s a lot more to pattern matching than what I mentioned here. You can look at <a href="https://github.com/dotnet/roslyn/blob/features/patterns/docs/features/patterns.md">the spec</a> on Github for more details.</p>
+<h3 id="binary-literals-and-digit-separators">Binary literals and digit separators</h3>
+<p>These features were not explicitly mentioned in the VS Preview release notes, but I noticed they were included as well. They were initially planned for C# 6, but didn’t make it in the final release. They’re back in C# 7.</p>
+<p>You can now write numeric literal in binary, in addition to decimal an hexadecimal:</p>
+<pre><code>
+int x = 0b11001010;
+</code></pre><p>Very convenient to define bit masks!</p>
+<p>To make large numbers more readable, you can also group digits by introducing separators. This can be used for decimal, hexadecimal or binary literals:</p>
+<pre><code>
+int oneBillion = 1_000_000_000;
+int foo = 0x7FFF_1234;
+int bar = 0b1001_0110_1010_0101;
+</code></pre><h3 id="conclusion">Conclusion</h3>
+<p>So, with Visual Studio “15” Preview, you can start experimenting with the new C# 7 features; don’t hesitate to share your feedback on Github! And keep in mind that it’s still pre-release software, lots of things can change before the final release.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/c" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">C#</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/c#-7" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">C# 7</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/visual-studio" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Visual Studio</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/">Automatically inject fakes in test fixture with FakeItEasy</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/">Using multiple cancellation sources with CreateLinkedTokenSource</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/">Explicitly switch to the UI thread in an async method</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/">[WPF] Prevent the user from pasting an image in a RichTextBox</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/07/30/c#-puzzle-2/">C# Puzzle 2</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/">How to retrieve dates as UTC in SQLite</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/">Create an auto-mocking container with Unity and FakeItEasy</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/06/04/async-and-cancellation-support-for-wait-handles/">Async and cancellation support for wait handles</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/03/09/c#-puzzle-1/">C# Puzzle 1</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/02/01/async-unit-tests-with-nunit/">Async unit tests with NUnit</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/">Optimize ToArray and ToList by providing the number of elements</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2014/11/23/easily-convert-file-sizes-to-human-readable-form/">Easily convert file sizes to human-readable form</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/">Passing parameters by reference to an asynchronous method</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2014/11/02/easy-unit-testing-of-null-argument-validation/">Easy unit testing of null argument validation</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2014/10/12/visual-studio-online-git-integration-with-team-explorer/">Visual Studio Online &#43; Git integration with Team Explorer</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Puzzles on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/categories/puzzles/</link>
+    <description>Recent content in Puzzles on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 30 Jul 2015 17:13:05 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/categories/puzzles/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>C# Puzzle 2</title>
+      <link>https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/</link>
+      <pubDate>Thu, 30 Jul 2015 17:13:05 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/</guid>
+      <description>Just another little puzzle based on an issue I had at work…
+Consider this piece of code :
+ Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;); Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
+ x &amp;gt; y is False !(x &amp;lt;= y) is True</description>
+    </item>
+    
+    <item>
+      <title>C# Puzzle 1</title>
+      <link>https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/</link>
+      <pubDate>Mon, 09 Mar 2015 23:51:20 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/</guid>
+      <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
+I just came up with this one:
+ static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); }What do you think this code prints? Can you be sure? Post your answer in the comments!
+I’ll try to post more puzzles in the future if I can come up with others.</description>
+    </item>
+    
+  </channel>
+</rss>

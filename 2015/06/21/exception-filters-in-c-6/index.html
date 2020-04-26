@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Exception filters in C# 6: their biggest advantage is not what you think | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Exception filters in C# 6: their biggest advantage is not what you think" />
+<meta property="og:description" content="Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
+ static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&quot;Error 42 occurred&quot;); } }As you might expect, the catch block will be entered if and only if ex." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/" />
+<meta property="article:published_time" content="2015-06-21T18:57:13+00:00" />
+<meta property="article:modified_time" content="2015-06-21T18:57:13+00:00" />
+<meta itemprop="name" content="Exception filters in C# 6: their biggest advantage is not what you think">
+<meta itemprop="description" content="Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
+ static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&quot;Error 42 occurred&quot;); } }As you might expect, the catch block will be entered if and only if ex.">
+<meta itemprop="datePublished" content="2015-06-21T18:57:13&#43;00:00" />
+<meta itemprop="dateModified" content="2015-06-21T18:57:13&#43;00:00" />
+<meta itemprop="wordCount" content="870">
+
+
+
+<meta itemprop="keywords" content="C# 6,exception filters,stack," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Exception filters in C# 6: their biggest advantage is not what you think"/>
+<meta name="twitter:description" content="Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
+ static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&quot;Error 42 occurred&quot;); } }As you might expect, the catch block will be entered if and only if ex."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/&amp;text=Exception%20filters%20in%20C#%206:%20their%20biggest%20advantage%20is%20not%20what%20you%20think" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/&amp;title=Exception%20filters%20in%20C#%206:%20their%20biggest%20advantage%20is%20not%20what%20you%20think" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Exception filters in C# 6: their biggest advantage is not what you think</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2015-06-21T18:57:13Z">June 21, 2015</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:</p>
+<pre><code>
+static void Main()
+{
+    try
+    {
+        Foo.DoSomethingThatMightFail(null);
+    }
+    catch (MyException ex) when (ex.Code == 42)
+    {
+        Console.WriteLine(&quot;Error 42 occurred&quot;);
+    }
+}
+</code></pre><p>As you might expect, the <code>catch</code> block will be entered if and only if <code>ex.Code == 42</code>. If the condition is not verified, the exception will bubble up the stack until it’s caught somewhere else or terminates the process.</p>
+<p>At first glance, this feature doesn’t seem to bring anything really new. After all, it has always been possible to do this:</p>
+<pre><code>
+static void Main()
+{
+    try
+    {
+        Foo.DoSomethingThatMightFail(null);
+    }
+    catch (MyException ex)
+    {
+        if (ex.Code == 42)
+            Console.WriteLine(&quot;Error 42 occurred&quot;);
+        else
+            throw;
+    }
+}
+</code></pre><p>Since this piece of code is equivalent to the previous one, exception filters are just syntactic sugar, aren’t they? I mean, they <em>are</em> equivalent, right?</p>
+<p>WRONG!</p>
+<h3 id="stack-unwinding">Stack unwinding</h3>
+<p>There is actually a subtle but important difference: <strong>exception filters don’t unwind the stack</strong>. OK, but what does that mean?</p>
+<p>When you enter a <code>catch</code> block, the stack is unwound: this means that the stack frames for the method calls “deeper” than the current method are dropped. This implies that all information about current execution state in those stack frames is lost, making it harder to identify the root cause of the exception.</p>
+<p>Let’s assume that <code>DoSomethingThatMightFail</code> throws a <code>MyException</code> with the code 123, and the debugger is configured to break only on uncaught exceptions.</p>
+<ul>
+<li>In the code that doesn’t use exception filters, the catch block is always entered (based on the type of the exception), and the stack is immediately unwound. Since the exception doesn’t satisfy the condition, it is rethrown. So the debugger will break on the <code>throw;</code> in the <code>catch</code> block; no information on the execution state of the <code>DoSomethingThatMightFail</code> method will be available. In other words, we won’t know what was going on in the method that threw the exception.</li>
+<li>In the code with exception filters, on the other hand, the filter won’t match, so the catch block won’t be entered at all, and the stack won’t be unwound. The debugger will break in the <code>DoSomethingThatMightFail</code> method, making it easy to see what was going on when the exception was thrown.</li>
+</ul>
+<p>Of course, when you’re debugging directly in Visual Studio, you can configure the debugger to break as soon as an exception is thrown, whether it’s caught or not. But you don’t always have that luxury; for instance, if you’re debugging an application in production, you often have just a crash dump to work with, so the fact that the stack wasn’t unwound becomes very useful, since it lets you see what was going on in the method that threw the exception.</p>
+<h3 id="stack-vs-stack-trace">Stack vs. stack trace</h3>
+<p>You may have noticed that I talked about the stack, not the stack trace. Even though it’s common to refer to “the stack” when we mean “the stack trace”, they’re not the same thing. The call stack is a piece of memory allocated to the thread, that contains information for each method call: return address, arguments, and local variables. The stack trace is just a string that contains the names of the methods currently on the call stack (and the location in those methods, if debug symbols are available). The <code>Exception.StackTrace</code> property contains the stack trace as it was when the exception was thrown, and is not affected when the stack is unwound; if you rethrow the same exception with <code>throw;</code>, it is left untouched. It is only overwritten if you rethrow the exception with <code>throw ex;</code>. The stack itself, on the other hand, is unwound when a catch block is entered, as discussed above.</p>
+<h3 id="side-effects">Side effects</h3>
+<p>It’s interesting to note that an exception filter can contain any expression that returns a <code>bool</code> (well, almost… you can’t use <code>await</code>, for instance). It can be an inline condition, a property, a method call, etc. Technically, there’s nothing to prevent you from causing side effects in the exception filter. In most cases, I would strongly advise against doing that, as it can cause very confusing behavior; it can become really hard to understand the order in which things are executed. However, there is a common scenario that could benefit from side effects in exception filters: logging. You could easily create a method that logs the exception and returns false so that the catch block is not entered. This would allow logging exceptions on the fly without actually catching them, hence without unwinding the stack:</p>
+<pre><code>
+try
+{
+    DoSomethingThatMightFail(s);
+}
+catch (Exception ex) when (Log(ex, &quot;An error occurred&quot;))
+{
+    // this catch block will never be reached
+}
+
+...
+
+static bool Log(Exception ex, string message, params object[] args)
+{
+    Debug.Print(message, args);
+    return false;
+}
+</code></pre><h3 id="conclusion">Conclusion</h3>
+<p>As you can see, exception filters are not just syntactic sugar. Contrary to most C# 6 features, they’re not really a “coding” feature (in that they don’t make the code significantly clearer), but rather a “debugging” feature. Correctly understood and used, they can make it much easier to diagnose problems in your code.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/c#-6" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">C# 6</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/exception-filters" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">exception filters</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/stack" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">stack</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2015/02/24/customizing-string-interpolation-in-c-6/">Customizing string interpolation in C# 6</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2014/11/17/stringtemplate-another-approach-to-string-interpolation/">StringTemplate: another approach to string interpolation</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Fun with the HttpClient pipeline | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Fun with the HttpClient pipeline" />
+<meta property="og:description" content="A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&rsquo;s also easily extensible.
+You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/" />
+<meta property="article:published_time" content="2016-12-08T00:18:43+00:00" />
+<meta property="article:modified_time" content="2016-12-08T00:18:43+00:00" />
+<meta itemprop="name" content="Fun with the HttpClient pipeline">
+<meta itemprop="description" content="A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&rsquo;s also easily extensible.
+You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.">
+<meta itemprop="datePublished" content="2016-12-08T00:18:43&#43;00:00" />
+<meta itemprop="dateModified" content="2016-12-08T00:18:43&#43;00:00" />
+<meta itemprop="wordCount" content="1169">
+
+
+
+<meta itemprop="keywords" content=".NET,C#,HTTP,HttpClient,HttpMessageHandler,pipeline," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Fun with the HttpClient pipeline"/>
+<meta name="twitter:description" content="A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&rsquo;s also easily extensible.
+You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/&amp;text=Fun%20with%20the%20HttpClient%20pipeline" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/&amp;title=Fun%20with%20the%20HttpClient%20pipeline" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Fun with the HttpClient pipeline</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2016-12-08T00:18:43Z">December 8, 2016</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>A few years ago, Microsoft introduced the <code>HttpClient</code> class as a modern alternative to <code>HttpWebRequest</code> to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&rsquo;s also easily extensible.</p>
+<p>You might have noticed that <code>HttpClient</code> has a constructor that accepts a <code>HttpMessageHandler</code>. What is this handler? It&rsquo;s an object that accepts a request (<code>HttpRequestMessage</code>) and returns a response (<code>HttpResponseMessage</code>); how it does that is entirely dependent on the implementation. By default, <code>HttpClient</code> uses <code>HttpClientHandler</code>, a handler which sends a request to a server over the network and returns the server&rsquo;s response. The other built-in handler implementation is an abstract class named <code>DelegatingHandler</code>, and is the one I want to talk about.</p>
+<h2 id="the-pipeline">The pipeline</h2>
+<p><code>DelegatingHandler</code> is a handler that is designed to be chained with another handler, effectively forming a pipeline through which requests and responses will pass, as shown on this diagram:
+<img src="webapi_handlers_03.png" alt="HttpClient pipeline diagram" title="Image from the official ASP.NET website">
+(Image from the <a href="https://www.asp.net/web-api/overview/advanced/httpclient-message-handlers">official ASP.NET website</a>)</p>
+<p>Each handler has a chance to examine and/or modify the request before passing it to the next handler in the chain, and to examine and/or modify the response it receives from the next handler. Typically, the last handler in the pipeline is the <code>HttpClientHandler</code>, which communicates directly with the network.</p>
+<p>The handler chain can be setup like this:</p>
+<pre><code>
+var pipeline = new MyHandler1()
+{
+    InnerHandler = new MyHandler2()
+    {
+        InnerHandler = new HttpClientHandler()
+    }
+};
+var client = new HttpClient(pipeline);
+</code></pre><p>But if you prefer fluent interfaces, you can easily create an extension method to do it like this:</p>
+<pre><code>
+var pipeline = new HttpClientHandler()
+    .DecorateWith(new MyHandler2())
+    .DecorateWith(new MyHandler1());
+var client = new HttpClient(pipeline);
+</code></pre><p>All this might seem a little abstract at this point, but this pipeline architecture enables plenty of interesting scenarios. See, HTTP message handlers can be used to add custom behavior to how requests and responses are processed. I&rsquo;ll give a few examples.</p>
+<p><strong>Side note:</strong> I&rsquo;m presenting this feature from a client-side perspective (since I primarily make client apps), but the same HTTP message handlers are also used <a href="https://www.asp.net/web-api/overview/advanced/http-message-handlers">on the server-side in ASP.NET Web API</a>.</p>
+<h2 id="unit-testing">Unit testing</h2>
+<p>The first use case that comes to mind, and the first I ever used, is unit testing. If you&rsquo;re testing a class that makes online payments over HTTP, you don&rsquo;t want it to actually send requests to the real server&hellip; you just want to ensure that the requests it sends are correct, and that it reacts correctly to specific responses. An easy solution to this problem is to create a &ldquo;stub&rdquo; handler, and inject it into your class to use instead of <code>HttpClientHandler</code>. Here&rsquo;s a simple implementation:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubHandler</span> : HttpMessageHandler
+{
+    <span style="color:#75715e">// Responses to return
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Queue&lt;HttpResponseMessage&gt; _responses =
+        <span style="color:#66d9ef">new</span> Queue&lt;System.Net.Http.HttpResponseMessage&gt;();
+
+    <span style="color:#75715e">// Requests that were sent via the handler
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;HttpRequestMessage&gt; _requests =
+        <span style="color:#66d9ef">new</span> List&lt;System.Net.Http.HttpRequestMessage&gt;();
+
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Task&lt;HttpResponseMessage&gt; SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken)
+    {
+        <span style="color:#66d9ef">if</span> (_responses.Count == <span style="color:#ae81ff">0</span>)
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;No response configured&#34;</span>);
+
+        _requests.Add(request);
+        <span style="color:#66d9ef">var</span> response = _responses.Dequeue();
+        <span style="color:#66d9ef">return</span> Task.FromResult(response);
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> QueueResponse(HttpResponseMessage response) =&gt;
+        _responses.Enqueue(response);
+
+    <span style="color:#66d9ef">public</span> IEnumerable&lt;HttpRequestMessage&gt; GetRequests() =&gt;
+        _requests;
+}
+</code></pre></div><p>This class lets you record the requests that are sent via the handler and specify the responses that should be returned. For instance, you could write a test like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#75715e">// Arrange
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> handler = <span style="color:#66d9ef">new</span> StubHandler();
+handler.EnqueueResponse(<span style="color:#66d9ef">new</span> HttpResponseMessage(HttpStatusCode.Unauthorized));
+<span style="color:#66d9ef">var</span> processor = <span style="color:#66d9ef">new</span> PaymentProcessor(handler);
+
+<span style="color:#75715e">// Act
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> paymentResult = <span style="color:#66d9ef">await</span> processor.ProcessPayment(<span style="color:#66d9ef">new</span> Payment());
+
+<span style="color:#75715e">// Assert
+</span><span style="color:#75715e"></span>Assert.AreEqual(PaymentStatus.Failed, paymentResult.Status);
+</code></pre></div><p>Of course, rather than creating a stub manually, you could use a mocking framework to generate a fake handler for you. The fact that the <code>SendAsync</code> method is protected makes it a little harder than it should be, but you can easily work around the issue by making a subclass that exposes a public virtual method, and mock that instead:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MockableMessageHandler</span> : HttpMessageHandler
+{
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">sealed</span> Task&lt;HttpResponseMessage&gt; SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken)
+    {
+        <span style="color:#66d9ef">return</span> DoSendAsync(request);
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> Task&lt;HttpResponseMessage&gt; DoSendAsync(HttpRequestMessage request);
+}
+</code></pre></div><p>Usage example with <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#75715e">// Arrange
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> handler = A.Fake&lt;MockableMessageHandler&gt;();
+A.CallTo(() =&gt; handler.DoSendAsync(A&lt;HttpRequestMessage&gt;._))
+    .Returns(<span style="color:#66d9ef">new</span> HttpResponseMessage(HttpStatusCode.Unauthorized));
+<span style="color:#66d9ef">var</span> processor = <span style="color:#66d9ef">new</span> PaymentProcessor(handler);
+...
+</code></pre></div><h2 id="logging">Logging</h2>
+<p>Logging sent requests and received responses can help diagnose issues. This can easily be done with a custom delegating handler:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggingHandler</span> : DelegatingHandler
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger _logger;
+
+    <span style="color:#66d9ef">public</span> LoggingHandler(ILogger logger)
+    {
+        _logger = logger;
+    }
+
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken)
+    {
+        _logger.Trace(<span style="color:#e6db74">$&#34;Request: {request}&#34;</span>);
+        <span style="color:#66d9ef">try</span>
+        {
+            <span style="color:#75715e">// base.SendAsync calls the inner handler
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.SendAsync(request, cancellationToken);
+            _logger.Trace(<span style="color:#e6db74">$&#34;Response: {response}&#34;</span>);
+            <span style="color:#66d9ef">return</span> response;
+        }
+        <span style="color:#66d9ef">catch</span> (Exception ex)
+        {
+            _logger.Error(<span style="color:#e6db74">$&#34;Failed to get response: {ex}&#34;</span>);
+            <span style="color:#66d9ef">throw</span>;
+        }
+    }
+}
+</code></pre></div><h2 id="retrying-failed-requests">Retrying failed requests</h2>
+<p>Another interesting use case for HTTP message handlers is to automatically retry failed requests. For instance, the server you&rsquo;re talking to might be temporarily unavailable (503), or it could be throttling your requests (429), or maybe you lost Internet access. Handling the retry for these cases at the application level is a pain, because it can happen virtually in any part of your code. Having this logic at the lowest possible level and implemented in a way that is completely transparent to the callers can make things much easier.</p>
+<p>Here&rsquo;s a possible implementation of a retry handler:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RetryHandler</span> : DelegatingHandler
+{
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken)
+    {
+        <span style="color:#66d9ef">while</span> (<span style="color:#66d9ef">true</span>)
+        {
+            <span style="color:#66d9ef">try</span>
+            {
+                <span style="color:#75715e">// base.SendAsync calls the inner handler
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.SendAsync(request, cancellationToken);
+
+                <span style="color:#66d9ef">if</span> (response.StatusCode == HttpStatusCode.ServiceUnavailable)
+                {
+                    <span style="color:#75715e">// 503 Service Unavailable
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// Wait a bit and try again later
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">5000</span>, cancellationToken);
+                    <span style="color:#66d9ef">continue</span>;
+                }
+
+                <span style="color:#66d9ef">if</span> (response.StatusCode == (HttpStatusCode)<span style="color:#ae81ff">429</span>)
+                {
+                    <span style="color:#75715e">// 429 Too many requests
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// Wait a bit and try again later
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">1000</span>, cancellationToken);
+                    <span style="color:#66d9ef">continue</span>;
+                }
+
+                <span style="color:#75715e">// Not something we can retry, return the response as is
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">return</span> response;
+            }
+            <span style="color:#66d9ef">catch</span> (Exception ex) when(IsNetworkError(ex))
+            {
+                <span style="color:#75715e">// Network error
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// Wait a bit and try again later
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">2000</span>, cancellationToken);
+                <span style="color:#66d9ef">continue</span>;
+            }
+        }
+    }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsNetworkError(Exception ex)
+    {
+        <span style="color:#75715e">// Check if it&#39;s a network error
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (ex <span style="color:#66d9ef">is</span> SocketException)
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+        <span style="color:#66d9ef">if</span> (ex.InnerException != <span style="color:#66d9ef">null</span>)
+            <span style="color:#66d9ef">return</span> IsNetworkError(ex.InnerException);
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+    }
+}
+</code></pre></div><p>Note that it&rsquo;s a pretty naive and simplistic implementation; for use in production code, you will probably want to add exponential backoff, take the <code>Retry-After</code> header into account to decide how long you have to wait, or be more subtle in how you check if an exception indicates a connection issue. Also, note that in its current state, this handler will retry <em>forever</em> until it succeeds; make sure to pass a cancellation token so that you can stop retrying if necessary.</p>
+<h2 id="other-use-cases">Other use cases</h2>
+<p>I can&rsquo;t give examples for every possible scenario, but here are a few other possible use cases for HTTP message handlers:</p>
+<ul>
+<li>Custom cookie handling (I actually did that to work around a bug in <code>CookieContainer</code>)</li>
+<li>Custom authentication (also something I did to implement OAuth2 Bearer authentication)</li>
+<li>Using the <code>X-HTTP-Method-Override</code> header to pass proxies that forbid certain HTTP methods (see <a href="http://www.hanselman.com/blog/HTTPPUTOrDELETENotAllowedUseXHTTPMethodOverrideForYourRESTServiceWithASPNETWebAPI.aspx">Scott Hanselman&rsquo;s article</a> for details)</li>
+<li>Custom encryption or encoding</li>
+<li>Caching</li>
+<li>&hellip;</li>
+</ul>
+<p>As you can see, there&rsquo;s a whole world of possibilities! If you have other ideas, let me know in the comments!</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/.net" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">.NET</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/c" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">C#</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/http" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">HTTP</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/httpclient" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">HttpClient</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/httpmessagehandler" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">HttpMessageHandler</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/pipeline" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">pipeline</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2016/08/23/tuple-deconstruction-in-c-7/">Tuple deconstruction in C# 7</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2016/07/25/tuples-in-c-7/">Tuples in C# 7</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2016/06/21/pitfall-using-var-and-async-together/">Pitfall: using var and async together</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/">Test driving C# 7 features in Visual Studio “15” Preview</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/">Automatically inject fakes in test fixture with FakeItEasy</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/">Using multiple cancellation sources with CreateLinkedTokenSource</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/">Explicitly switch to the UI thread in an async method</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/">[WPF] Prevent the user from pasting an image in a RichTextBox</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/07/30/c-puzzle-2/">C# Puzzle 2</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/">How to retrieve dates as UTC in SQLite</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/">Create an auto-mocking container with Unity and FakeItEasy</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/06/04/async-and-cancellation-support-for-wait-handles/">Async and cancellation support for wait handles</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/03/10/c-puzzle-1/">C# Puzzle 1</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2015/02/01/async-unit-tests-with-nunit/">Async unit tests with NUnit</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/">Optimize ToArray and ToList by providing the number of elements</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

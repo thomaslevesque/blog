@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/git/</link>
+    <description>Recent content in git on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Mar 2018 12:43:41 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cleanup Git history to remove unwanted files</title>
+      <link>https://blog2.thomaslevesque.net/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</link>
+      <pubDate>Tue, 06 Mar 2018 19:01:59 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</guid>
+      <description>I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&amp;hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.
+Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&amp;rsquo;t have been there in the first place.</description>
+    </item>
+    
+    <item>
+      <title>C# methods in git diff hunk headers</title>
+      <link>https://blog2.thomaslevesque.net/2017/01/17/c-methods-in-git-diff-hunk-headers/</link>
+      <pubDate>Tue, 17 Jan 2017 21:31:45 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2017/01/17/c-methods-in-git-diff-hunk-headers/</guid>
+      <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
+diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args)  Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;);  } This is very useful to know where you are when looking at a diff.</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio Online &#43; Git integration with Team Explorer</title>
+      <link>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</link>
+      <pubDate>Sun, 12 Oct 2014 11:30:56 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</guid>
+      <description>I recently started using Visual Studio Online for personal projects, and I must say it’s a pretty good platform, although it would be nice to be able to host public projects as well as private ones. The thing I like the most is the integration with Visual Studio Team Explorer to manage work items and builds.
+However, I noticed a little gotcha when using Git for source control : the remote for VS Online must be named origin, otherwise Team Explorer won’t detect that it’s a VS Online project, and it won’t show the “Builds” and “Work items” pages.</description>
+    </item>
+    
+  </channel>
+</rss>

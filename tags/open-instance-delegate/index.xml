@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>open-instance delegate on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/open-instance-delegate/</link>
+    <description>Recent content in open-instance delegate on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 16 Aug 2015 11:29:23 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/open-instance-delegate/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Weak events in C#, take two</title>
+      <link>https://blog2.thomaslevesque.net/2015/08/16/weak-events-in-c-take-two/</link>
+      <pubDate>Sun, 16 Aug 2015 11:29:23 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/08/16/weak-events-in-c-take-two/</guid>
+      <description>A few years ago, I blogged about a generic implementation of the weak event pattern in C#. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.
+My initial solution was more a proof of concept than anything else, and had a major performance issue, due to the use of DynamicInvoke every time the event was raised.</description>
+    </item>
+    
+  </channel>
+</rss>

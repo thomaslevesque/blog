@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WPF on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/wpf/</link>
+    <description>Recent content in WPF on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 23 Nov 2018 13:17:51 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/wpf/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Making a WPF app using a SDK-style project with MSBuildSdkExtras</title>
+      <link>https://blog2.thomaslevesque.net/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</link>
+      <pubDate>Fri, 23 Nov 2018 13:17:51 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</guid>
+      <description>Ever since the first stable release of the .NET Core SDK, we&amp;rsquo;ve enjoyed a better C# project format, often called &amp;ldquo;SDK-style&amp;rdquo; because you specify a SDK to use in the project file. It&amp;rsquo;s still a .csproj XML file, it&amp;rsquo;s still based on MSBuild, but it&amp;rsquo;s much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.
+However, out of the box, it&amp;rsquo;s only usable for some project types: ASP.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Prevent the user from pasting an image in a RichTextBox</title>
+      <link>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</link>
+      <pubDate>Sat, 05 Sep 2015 13:07:13 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</guid>
+      <description>WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.
+When I googled for a way to prevent that, the only solutions I found suggested to intercept the Ctrl-V keystroke, and swallow the event if the clipboard contains an image.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Declare global hotkeys in XAML with NHotkey</title>
+      <link>https://blog2.thomaslevesque.net/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</link>
+      <pubDate>Wed, 05 Feb 2014 21:35:03 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</guid>
+      <description>A common requirement for desktop applications is to handle system-wide hotkeys, in order to intercept keyboard shortcuts even when they don’t have focus. Unfortunately, there is no built-in feature in the .NET framework to do it.
+Of course, this is not a new issue, and there are quite a few open-source libraries that address it (e.g. VirtualInput). Most of them rely on a global system hook, which allow them to intercept all keystrokes, even the ones you’re not interested in.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Using Linq to shape data in a CollectionView</title>
+      <link>https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/</link>
+      <pubDate>Wed, 30 Nov 2011 13:09:45 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/</guid>
+      <description>WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
+// Collection to which the view is bound public ObservableCollection People { get; private set; } ... // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People); // Show only adults view.Filter = o =&amp;gt; ((Person)o).Age &amp;gt;= 18; // Sort by last name and first name view.SortDescriptions.Add(new SortDescription(&amp;#34;LastName&amp;#34;, ListSortDirection.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Creating parameterized styles with attached properties</title>
+      <link>https://blog2.thomaslevesque.net/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/</link>
+      <pubDate>Sat, 01 Oct 2011 00:37:15 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/</guid>
+      <description>Today I&amp;rsquo;d like to share a trick that I used quite often in the past few months. Let&amp;rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls: OK, I&amp;rsquo;m not a designer&amp;hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&amp;rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.</description>
+    </item>
+    
+    <item>
+      <title>[WPF 4.5] Subscribing to an event using a markup extension</title>
+      <link>https://blog2.thomaslevesque.net/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</link>
+      <pubDate>Fri, 23 Sep 2011 11:32:07 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</guid>
+      <description>It&amp;rsquo;s been a while since I last wrote about markup extensions&amp;hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&amp;rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events. Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&amp;rsquo;t do the same to subscribe to an event.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Display an animated GIF image</title>
+      <link>https://blog2.thomaslevesque.net/2011/03/27/wpf-display-an-animated-gif-image/</link>
+      <pubDate>Sun, 27 Mar 2011 22:25:18 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2011/03/27/wpf-display-an-animated-gif-image/</guid>
+      <description>Note: The code in this article is out of date; the current code is hosted on GitHub. WPF is a great technology, but sometimes it seems to be missing some really basic features&amp;hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation. Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:</description>
+    </item>
+    
+    <item>
+      <title>[WPF] How to bind to data when the DataContext is not inherited</title>
+      <link>https://blog2.thomaslevesque.net/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</link>
+      <pubDate>Mon, 21 Mar 2011 16:15:29 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</guid>
+      <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&amp;rsquo;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip; Let&amp;rsquo;s illustrate with a simple example: we want to display a list of products in a DataGrid.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] A simpler Grid using XAML attribute syntax</title>
+      <link>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</link>
+      <pubDate>Tue, 20 Jul 2010 20:51:10 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</guid>
+      <description>The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:
+&amp;lt;Grid&amp;gt; &amp;lt;Grid.RowDefinitions&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;Auto&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;5&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;*&amp;#34;/&amp;gt; &amp;lt;/Grid.RowDefinitions&amp;gt; &amp;lt;Grid.ColumnDefinitions&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;60&amp;#34; /&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;*&amp;#34; /&amp;gt; &amp;lt;/Grid.ColumnDefinitions&amp;gt; &amp;lt;Label Content=&amp;#34;Name&amp;#34; Grid.Row=&amp;#34;0&amp;#34; Grid.Column=&amp;#34;0&amp;#34; /&amp;gt; &amp;lt;TextBox Text=&amp;#34;Hello world&amp;#34; Grid.</description>
+    </item>
+    
+    <item>
+      <title>[VS2010] Binding support in InputBindings</title>
+      <link>https://blog2.thomaslevesque.net/2009/10/26/vs2010-binding-support-in-inputbindings/</link>
+      <pubDate>Mon, 26 Oct 2009 15:30:25 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
+      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&amp;hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&amp;rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Markup extensions and templates</title>
+      <link>https://blog2.thomaslevesque.net/2009/08/23/wpf-markup-extensions-and-templates/</link>
+      <pubDate>Sun, 23 Aug 2009 01:51:10 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/08/23/wpf-markup-extensions-and-templates/</guid>
+      <description>Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&amp;hellip; In this post I&amp;rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let&amp;rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Automatically sort a GridView (continued)</title>
+      <link>https://blog2.thomaslevesque.net/2009/08/04/wpf-automatically-sort-a-gridview-continued/</link>
+      <pubDate>Tue, 04 Aug 2009 14:41:01 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/08/04/wpf-automatically-sort-a-gridview-continued/</guid>
+      <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] A markup extension that can update its target</title>
+      <link>https://blog2.thomaslevesque.net/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</link>
+      <pubDate>Tue, 28 Jul 2009 12:38:26 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</guid>
+      <description>If you have read my previous posts on the topic, you know I&amp;rsquo;m a big fan of custom markup extensions&amp;hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&amp;hellip; It could be useful in various cases, for instance :
+  if the value of the markup extension can change in response to an event</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Binding to an asynchronous collection</title>
+      <link>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</link>
+      <pubDate>Fri, 17 Apr 2009 01:00:19 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
+      <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
+ This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
+ To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Automatically sort a GridView when a column header is clicked</title>
+      <link>https://blog2.thomaslevesque.net/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</link>
+      <pubDate>Fri, 27 Mar 2009 01:00:31 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</guid>
+      <description>It&amp;rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&amp;hellip; With the DataGridView in Windows Forms, it was &amp;ldquo;automagic&amp;rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&amp;hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Using InputBindings with the MVVM pattern</title>
+      <link>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</link>
+      <pubDate>Tue, 17 Mar 2009 10:27:58 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
+      <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
+&amp;amp;lt;UserControl.InputBindings&amp;amp;gt; &amp;amp;lt;KeyBinding Modifiers=&amp;amp;quot;Control&amp;amp;quot; Key=&amp;amp;quot;E&amp;amp;quot; Command=&amp;amp;quot;{Binding EditCommand}&amp;amp;quot;/&amp;amp;gt; &amp;amp;lt;/UserControl.InputBindings&amp;amp;gt; Unfortunately, this code doesn&amp;rsquo;t work, for two reasons :
+ The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&amp;rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Article about the Model-View-ViewModel design pattern, by Josh Smith</title>
+      <link>https://blog2.thomaslevesque.net/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/</link>
+      <pubDate>Wed, 25 Feb 2009 01:30:56 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/</guid>
+      <description>Soon after the release of WPF, people have been talking more and more about &amp;ldquo;Model-View-ViewModel&amp;rdquo; (MVVM). This expression refers to a design pattern, drawing its inspiration from the Model-View-Controller (MVC) and Presentation Model (PM) patterns, and created specifically to take advantage of WPF features. This patterns enables an excellent decoupling between data, behavior and presentation, which makes the code easier to understand and maintain, and improves the collaboration between developers and designers.</description>
+    </item>
+    
+    <item>
+      <title>Build an RSS reader in 5 minutes</title>
+      <link>https://blog2.thomaslevesque.net/2009/02/13/build-an-rss-reader-in-5-minutes/</link>
+      <pubDate>Thu, 12 Feb 2009 23:05:13 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/02/13/build-an-rss-reader-in-5-minutes/</guid>
+      <description>Today, I stumbled upon a very handy class : SyndicationFeed. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones. For instance, here&amp;rsquo;s how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it&amp;rsquo;s items :</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)</title>
+      <link>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
+      <pubDate>Thu, 05 Feb 2009 00:26:28 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
+      <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)
+If you&amp;rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&amp;hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&amp;rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Binding to application settings using a markup extension</title>
+      <link>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</link>
+      <pubDate>Tue, 18 Nov 2008 13:56:48 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</guid>
+      <description>Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.
+The end-user of any application expects that his preferences (window size, state of this or that option&amp;hellip;) are saved to be restored at the next run : that&amp;rsquo;s why .NET 2.0 introduced application settings as a unified way to persist these settings.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Code sample on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/categories/code-sample/</link>
+    <description>Recent content in Code sample on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 11 Nov 2015 17:00:16 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/categories/code-sample/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Explicitly switch to the UI thread in an async method</title>
+      <link>https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</link>
+      <pubDate>Wed, 11 Nov 2015 17:00:16 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</guid>
+      <description>Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).</description>
+    </item>
+    
+    <item>
+      <title>Async and cancellation support for wait handles</title>
+      <link>https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/</link>
+      <pubDate>Thu, 04 Jun 2015 00:37:59 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/</guid>
+      <description>The .NET framework comes with a number of low-level synchronization primitives. The most commonly used are collectively known as “wait handles”, and inherit the WaitHandle class: Semaphore, Mutex, AutoResetEvent and ManualResetEvent. These classes have been there since at least .NET 2.0 (1.1 for some of them), but they haven’t evolved much since they were introduced, which means they don’t support common features that were introduced later. In particular, they don’t provide support for waiting asynchronously, nor do they support cancelling the wait.</description>
+    </item>
+    
+    <item>
+      <title>Tackling timeout issues when uploading large files with HttpWebRequest</title>
+      <link>https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/</link>
+      <pubDate>Tue, 14 Jan 2014 00:47:24 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/</guid>
+      <description>If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?</description>
+    </item>
+    
+    <item>
+      <title>An easy and secure way to store a password using Data Protection API</title>
+      <link>https://blog2.thomaslevesque.net/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/</link>
+      <pubDate>Mon, 20 May 2013 22:59:50 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/</guid>
+      <description>If you&amp;rsquo;re writing a client application that needs to store user credentials, it&amp;rsquo;s usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&amp;hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration.</description>
+    </item>
+    
+    <item>
+      <title>Tail recursion in C#</title>
+      <link>https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/</link>
+      <pubDate>Thu, 01 Sep 2011 22:16:52 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/</guid>
+      <description>Regardless of the programming language you&amp;rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&amp;rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .</description>
+    </item>
+    
+    <item>
+      <title>[Entity Framework] Using Include with lambda expressions</title>
+      <link>https://blog2.thomaslevesque.net/2010/10/03/entity-framework-using-include-with-lambda-expressions/</link>
+      <pubDate>Sun, 03 Oct 2010 22:42:02 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2010/10/03/entity-framework-using-include-with-lambda-expressions/</guid>
+      <description>I&amp;rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
+var query = from ord in db.Orders.Include(&amp;#34;OrderDetails&amp;#34;) where ord.Date &amp;gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
+var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;) where ord.Date &amp;gt;= DateTime.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] A simpler Grid using XAML attribute syntax</title>
+      <link>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</link>
+      <pubDate>Tue, 20 Jul 2010 20:51:10 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</guid>
+      <description>The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:
+&amp;lt;Grid&amp;gt; &amp;lt;Grid.RowDefinitions&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;Auto&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;5&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;*&amp;#34;/&amp;gt; &amp;lt;/Grid.RowDefinitions&amp;gt; &amp;lt;Grid.ColumnDefinitions&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;60&amp;#34; /&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;*&amp;#34; /&amp;gt; &amp;lt;/Grid.ColumnDefinitions&amp;gt; &amp;lt;Label Content=&amp;#34;Name&amp;#34; Grid.Row=&amp;#34;0&amp;#34; Grid.Column=&amp;#34;0&amp;#34; /&amp;gt; &amp;lt;TextBox Text=&amp;#34;Hello world&amp;#34; Grid.</description>
+    </item>
+    
+    <item>
+      <title>[C#] A simple implementation of the WeakEvent pattern</title>
+      <link>https://blog2.thomaslevesque.net/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</link>
+      <pubDate>Mon, 17 May 2010 21:12:36 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</guid>
+      <description>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&amp;rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.</description>
+    </item>
+    
+    <item>
+      <title>Automating null checks with Linq expressions</title>
+      <link>https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/</link>
+      <pubDate>Sun, 21 Feb 2010 20:42:58 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
+      <description>The problem Have you ever written code like the following ?
+X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
+    </item>
+    
+    <item>
+      <title>[C# 4.0] Implementing a custom dynamic object</title>
+      <link>https://blog2.thomaslevesque.net/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</link>
+      <pubDate>Thu, 08 Oct 2009 00:32:07 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</guid>
+      <description>If you&amp;rsquo;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Markup extensions and templates</title>
+      <link>https://blog2.thomaslevesque.net/2009/08/23/wpf-markup-extensions-and-templates/</link>
+      <pubDate>Sun, 23 Aug 2009 01:51:10 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/08/23/wpf-markup-extensions-and-templates/</guid>
+      <description>Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&amp;hellip; In this post I&amp;rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let&amp;rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Automatically sort a GridView (continued)</title>
+      <link>https://blog2.thomaslevesque.net/2009/08/04/wpf-automatically-sort-a-gridview-continued/</link>
+      <pubDate>Tue, 04 Aug 2009 14:41:01 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/08/04/wpf-automatically-sort-a-gridview-continued/</guid>
+      <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] A markup extension that can update its target</title>
+      <link>https://blog2.thomaslevesque.net/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</link>
+      <pubDate>Tue, 28 Jul 2009 12:38:26 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</guid>
+      <description>If you have read my previous posts on the topic, you know I&amp;rsquo;m a big fan of custom markup extensions&amp;hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&amp;hellip; It could be useful in various cases, for instance :
+  if the value of the markup extension can change in response to an event</description>
+    </item>
+    
+    <item>
+      <title>[C#] Parent/child relationship and XML serialization</title>
+      <link>https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/</link>
+      <pubDate>Fri, 12 Jun 2009 10:18:22 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/</guid>
+      <description>Today I&amp;rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&amp;rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Binding to an asynchronous collection</title>
+      <link>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</link>
+      <pubDate>Fri, 17 Apr 2009 01:00:19 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
+      <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
+ This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
+ To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Automatically sort a GridView when a column header is clicked</title>
+      <link>https://blog2.thomaslevesque.net/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</link>
+      <pubDate>Fri, 27 Mar 2009 01:00:31 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</guid>
+      <description>It&amp;rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&amp;hellip; With the DataGridView in Windows Forms, it was &amp;ldquo;automagic&amp;rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&amp;hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Using InputBindings with the MVVM pattern</title>
+      <link>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</link>
+      <pubDate>Tue, 17 Mar 2009 10:27:58 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
+      <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
+&amp;amp;lt;UserControl.InputBindings&amp;amp;gt; &amp;amp;lt;KeyBinding Modifiers=&amp;amp;quot;Control&amp;amp;quot; Key=&amp;amp;quot;E&amp;amp;quot; Command=&amp;amp;quot;{Binding EditCommand}&amp;amp;quot;/&amp;amp;gt; &amp;amp;lt;/UserControl.InputBindings&amp;amp;gt; Unfortunately, this code doesn&amp;rsquo;t work, for two reasons :
+ The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&amp;rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
+    </item>
+    
+    <item>
+      <title>Build an RSS reader in 5 minutes</title>
+      <link>https://blog2.thomaslevesque.net/2009/02/13/build-an-rss-reader-in-5-minutes/</link>
+      <pubDate>Thu, 12 Feb 2009 23:05:13 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/02/13/build-an-rss-reader-in-5-minutes/</guid>
+      <description>Today, I stumbled upon a very handy class : SyndicationFeed. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones. For instance, here&amp;rsquo;s how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it&amp;rsquo;s items :</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)</title>
+      <link>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
+      <pubDate>Thu, 05 Feb 2009 00:26:28 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
+      <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)
+If you&amp;rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&amp;hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&amp;rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Binding to application settings using a markup extension</title>
+      <link>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</link>
+      <pubDate>Tue, 18 Nov 2008 13:56:48 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</guid>
+      <description>Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.
+The end-user of any application expects that his preferences (window size, state of this or that option&amp;hellip;) are saved to be restored at the next run : that&amp;rsquo;s why .NET 2.0 introduced application settings as a unified way to persist these settings.</description>
+    </item>
+    
+  </channel>
+</rss>

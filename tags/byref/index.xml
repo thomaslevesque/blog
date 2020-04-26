@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>byref on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/byref/</link>
+    <description>Recent content in byref on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 04 Nov 2014 11:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/byref/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Passing parameters by reference to an asynchronous method</title>
+      <link>https://blog2.thomaslevesque.net/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</link>
+      <pubDate>Tue, 04 Nov 2014 11:00:00 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</guid>
+      <description>Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (ref or out) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first await), so the location of the variable won’t exist anymore.</description>
+    </item>
+    
+  </channel>
+</rss>

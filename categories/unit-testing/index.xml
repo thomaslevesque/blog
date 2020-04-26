@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Unit testing on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/categories/unit-testing/</link>
+    <description>Recent content in Unit testing on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 17 Jan 2016 00:20:09 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/categories/unit-testing/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Automatically inject fakes in test fixture with FakeItEasy</title>
+      <link>https://blog2.thomaslevesque.net/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</link>
+      <pubDate>Sun, 17 Jan 2016 00:20:09 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</guid>
+      <description>Today I’d like to share a nice feature I discovered recently in FakeItEasy.
+When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier.</description>
+    </item>
+    
+    <item>
+      <title>Create an auto-mocking container with Unity and FakeItEasy</title>
+      <link>https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</link>
+      <pubDate>Sun, 14 Jun 2015 20:00:47 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</guid>
+      <description>Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.</description>
+    </item>
+    
+    <item>
+      <title>Async unit tests with NUnit</title>
+      <link>https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/</link>
+      <pubDate>Sun, 01 Feb 2015 21:20:08 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/</guid>
+      <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
+Let’s assume the system under test is this very interesting Calculator class:
+ public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>stack on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/stack/</link>
+    <description>Recent content in stack on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 21 Jun 2015 18:57:13 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/stack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Exception filters in C# 6: their biggest advantage is not what you think</title>
+      <link>https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/</link>
+      <pubDate>Sun, 21 Jun 2015 18:57:13 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/</guid>
+      <description>Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
+ static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&amp;quot;Error 42 occurred&amp;quot;); } }As you might expect, the catch block will be entered if and only if ex.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Using TypeScript to write Cosmos DB stored procedures with async/await | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Using TypeScript to write Cosmos DB stored procedures with async/await" />
+<meta property="og:description" content="Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&rsquo;t hesitate to let me know in the comments!
+Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&rsquo;s a very different world." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/" />
+<meta property="article:published_time" content="2019-07-15T06:00:23+00:00" />
+<meta property="article:modified_time" content="2019-07-15T06:00:23+00:00" />
+<meta itemprop="name" content="Using TypeScript to write Cosmos DB stored procedures with async/await">
+<meta itemprop="description" content="Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&rsquo;t hesitate to let me know in the comments!
+Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&rsquo;s a very different world.">
+<meta itemprop="datePublished" content="2019-07-15T06:00:23&#43;00:00" />
+<meta itemprop="dateModified" content="2019-07-15T06:00:23&#43;00:00" />
+<meta itemprop="wordCount" content="1633">
+
+
+
+<meta itemprop="keywords" content="Azure,Azure Cosmos DB,Cosmos DB,server-side,stored procedure,TypeScript," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Using TypeScript to write Cosmos DB stored procedures with async/await"/>
+<meta name="twitter:description" content="Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&rsquo;t hesitate to let me know in the comments!
+Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&rsquo;s a very different world."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/&amp;text=Using%20TypeScript%20to%20write%20Cosmos%20DB%20stored%20procedures%20with%20async/await" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/&amp;title=Using%20TypeScript%20to%20write%20Cosmos%20DB%20stored%20procedures%20with%20async/await" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Using TypeScript to write Cosmos DB stored procedures with async/await</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-07-15T06:00:23Z">July 15, 2019</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><em><strong>Disclaimer</strong>: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&rsquo;t hesitate to let me know in the comments!</em></p>
+<p><a href="https://docs.microsoft.com/en-us/azure/cosmos-db/introduction">Azure Cosmos DB</a> (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&rsquo;s a very different world. Some things are great, for instance modeling data is much easier than in a relational database, and performance is excellent. Other things can be disconcerting, such as the lack of support for <a href="https://en.wikipedia.org/wiki/ACID_%28computer_science%29">ACID</a>. From the client&rsquo;s perspective, there are no transactions: you can&rsquo;t update multiple documents atomically. Of course, there&rsquo;s a workaround: you can write stored procedures and triggers, which execute in the context of a transaction. So, when you really, <em>really</em> need multiple updates to be made atomically, you write a stored procedure to do the job.</p>
+<h2 id="the-bad-news">The bad news</h2>
+<p>Unfortunately, on Cosmos DB, stored procedures are written… in Javascript 😢 (I know, plenty of folks love Javascript, but I don&rsquo;t. Sue me!). All APIs for database operations are asynchronous (which is a good thing), but these APIs are based on callbacks, not on promises, so even though ECMAScript 2017 is supported, you can&rsquo;t use <code>async</code>/<code>await</code> with them. This fact is enough to turn any non-trivial task (i.e. code that involves branches such as ifs or loops) into a nightmare, at least for a C# developer like me… I typically spend a full day to write and debug a stored procedure that should have taken less than an hour with async/await.</p>
+<h2 id="promise-based-wrapper">Promise-based wrapper</h2>
+<p>Of course, I wouldn&rsquo;t be writing this post if there wasn&rsquo;t a way to make things better. Cosmos DB Product Manager <a href="https://twitter.com/aliuy8">Andrew Liu</a> was kind enough to show me how to write a wrapper around the callback-based API to enable the use of promises and <code>async</code>/<code>await</code>. Basically, it&rsquo;s just a few functions that you can add to your stored procedures:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() {
+    <span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">main</span>() {
+        <span style="color:#66d9ef">let</span> { <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">doc</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">feed</span>) {
+            <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
+            <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>);
+        }
+    }
+
+    <span style="color:#a6e22e">main</span>().<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">err</span> =&gt; <span style="color:#a6e22e">getContext</span>().<span style="color:#a6e22e">abort</span>(<span style="color:#a6e22e">err</span>));
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">queryDocuments</span>(<span style="color:#a6e22e">sqlQuery</span>, <span style="color:#a6e22e">options</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">getSelfLink</span>(), <span style="color:#a6e22e">sqlQuery</span>, <span style="color:#a6e22e">options</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">err</span>);
+            <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">resolve</span>({ <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">opts</span> });
+        });
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">isAccepted</span>) <span style="color:#a6e22e">reject</span>(<span style="color:#66d9ef">new</span> Error(<span style="color:#ae81ff">429</span>, <span style="color:#e6db74">&#34;queryDocuments was not accepted.&#34;</span>));
+    });
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>, <span style="color:#a6e22e">options</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">_self</span>, <span style="color:#a6e22e">doc</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">err</span>);
+            <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">resolve</span>({ <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">opts</span> });
+        });
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">isAccepted</span>) <span style="color:#a6e22e">reject</span>(<span style="color:#66d9ef">new</span> Error(<span style="color:#ae81ff">429</span>, <span style="color:#e6db74">&#34;replaceDocument was not accepted.&#34;</span>));
+    });
+}
+
+<span style="color:#75715e">// and so on for other APIs...
+</span></code></pre></div><p>Note that the stored procedure&rsquo;s entry point (<code>setFoo</code> in this example) cannot be async (if it returns a promise, Cosmos DB won&rsquo;t wait for it to complete), so you need to write another async function (<code>main</code>), call it from the stored procedure&rsquo;s entry point, and catch the error that could be thrown. Note the use of <code>getContext().abort(err)</code>, which aborts and rolls back the current transaction; without this, the exception would be swallowed.</p>
+<p>I&rsquo;m not going to show the equivalent code using the callback-based API here, because honestly, it makes my head hurt just thinking about it. But trust me on this: it&rsquo;s not pretty, and much harder to understand.</p>
+<h2 id="using-typescript">Using TypeScript</h2>
+<p>The code shown above is pretty straightforward, once you have the wrapper functions. However, there are at least two issues with it:</p>
+<ul>
+<li>This is still Javascript, which is weakly typed, so it&rsquo;s easy to make mistakes that won&rsquo;t be caught until runtime.</li>
+<li>Cosmos DB stored procedures and triggers must consist of a single self-contained file; no <code>import</code> or <code>require</code> allowed. Which means you can&rsquo;t share the wrapper functions across multiple stored procedures, you have to include them in each stored procedure. This is annoying&hellip;</li>
+</ul>
+<p>First, let&rsquo;s see how we can write our stored procedure in TypeScript and reduce the boilerplate code.</p>
+<p>Let&rsquo;s start by installing TypeScript. Create a <code>package.json</code> file with the <code>npm init</code> command (it will prompt you for a few details, you can leave everything empty), and run the <code>npm install typescript</code> command. We&rsquo;ll also need the TypeScript definitions of the Cosmos DB server-side APIs. For this, we&rsquo;ll install a npm package named <a href="https://www.npmjs.com/package/@types/documentdb-server"><code>@types/documentdb-server</code></a> which contains the definitions: <code>npm install @types/documentdb-server</code>.</p>
+<p>We also need a <code>tsconfig.json</code> file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+{
+    <span style="color:#e6db74">&#34;exclude&#34;</span><span style="color:#f92672">:</span> [
+        <span style="color:#e6db74">&#34;node_modules&#34;</span>
+    ],
+    <span style="color:#e6db74">&#34;compilerOptions&#34;</span><span style="color:#f92672">:</span> {
+        <span style="color:#e6db74">&#34;target&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;es2017&#34;</span>,
+        <span style="color:#e6db74">&#34;strict&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+    }
+}
+</code></pre></div><p>Now, let&rsquo;s create a few helpers to use in our stored procedures. I put them all in a <code>CosmosServerScriptHelpers</code> folder. The most important piece is the <code>AsyncCosmosContext</code> class, which is basically a strongly-typed, promise-based wrapper for <a href="https://azure.github.io/azure-cosmosdb-js-server/-__object.html">the <code>__</code> object</a>. It implements the following interface:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IAsyncCosmosContext</span> {
+
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">request</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IRequest</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">response</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IResponse</span>;
+
+    <span style="color:#75715e">// Basic query and CRUD methods
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">queryDocuments</span>(<span style="color:#a6e22e">sqlQuery</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">IFeedOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">IFeedResult</span><span style="color:#f92672">&gt;</span>;
+    <span style="color:#a6e22e">readDocument</span>(<span style="color:#a6e22e">link</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">IReadOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>;
+    <span style="color:#a6e22e">createDocument</span>(<span style="color:#a6e22e">doc</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">ICreateOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>;
+    <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">IReplaceOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>;
+    <span style="color:#a6e22e">deleteDocument</span>(<span style="color:#a6e22e">doc</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">IDeleteOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>;
+
+    <span style="color:#75715e">// Helper methods
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">readDocumentById</span>(<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">IReadOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>;
+    <span style="color:#a6e22e">readDocumentByIdIfExists</span>(<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">IReadOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>;
+    <span style="color:#a6e22e">deleteDocumentById</span>(<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">IDeleteOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#a6e22e">queryFirstDocument</span>(<span style="color:#a6e22e">sqlQuery</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">IFeedOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>;
+    <span style="color:#a6e22e">createOrReplaceDocument</span>(<span style="color:#a6e22e">doc</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">ICreateOrReplaceOptions</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>;
+}
+</code></pre></div><p>I&rsquo;m not showing the whole code in this article because it would be too long, but you can see the implementation and auxiliary types in the GitHub repo here: <a href="https://github.com/thomaslevesque/TypeScriptCosmosDBStoredProceduresArticle">https://github.com/thomaslevesque/TypeScriptCosmosDBStoredProceduresArticle</a>.</p>
+<p>So, how can we use this? Let&rsquo;s look at our previous example again, and see how we can rewrite it in TypeScript using our wrappers:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">IAsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/IAsyncCosmosContext&#34;</span>;
+<span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">AsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/AsyncCosmosContext&#34;</span>;
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() {
+    <span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">main</span>(<span style="color:#a6e22e">context</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IAsyncCosmosContext</span>) {
+        <span style="color:#66d9ef">let</span> { <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">doc</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">feed</span>) {
+            <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
+            <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>);
+        }
+    }
+
+    <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AsyncCosmosContext</span>()).<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">err</span> =&gt; <span style="color:#a6e22e">getContext</span>().<span style="color:#a6e22e">abort</span>(<span style="color:#a6e22e">err</span>));
+}
+</code></pre></div><p>It looks remarkably similar to the previous version, with just the following changes:</p>
+<ul>
+<li>We no longer have the wrapper functions in the same file, instead we just import them via the <code>AsyncCosmosContext</code> class.</li>
+<li>We pass an instance of <code>AsyncCosmosContext</code> to the <code>main</code> function.</li>
+</ul>
+<p>This looks pretty good already, but what&rsquo;s bugging me is having to explicitly create the context and do the <code>.catch(...)</code>. So let&rsquo;s create another helper to encapsulate this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">IAsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./IAsyncCosmosContext&#34;</span>;
+<span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">AsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./AsyncCosmosContext&#34;</span>;
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncHelper</span> {
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * Executes the specified async function and returns its result as the response body of the stored procedure.
+</span><span style="color:#75715e">     * @param func The async function to execute, which returns an object.
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">executeAndReturn</span>(<span style="color:#a6e22e">func</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">context</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IAsyncCosmosContext</span>) =&gt; Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>) {
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">executeCore</span>(<span style="color:#a6e22e">func</span>, <span style="color:#66d9ef">true</span>);
+    }
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * Executes the specified async function, but doesn&#39;t write anything to the response body of the stored procedure.
+</span><span style="color:#75715e">     * @param func The async function to execute, which returns nothing.
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">execute</span>(<span style="color:#a6e22e">func</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">context</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IAsyncCosmosContext</span>) =&gt; Promise<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span><span style="color:#f92672">&gt;</span>) {
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">executeCore</span>(<span style="color:#a6e22e">func</span>, <span style="color:#66d9ef">false</span>);
+    }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">executeCore</span>(<span style="color:#a6e22e">func</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">context</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IAsyncCosmosContext</span>) =&gt; Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span>, <span style="color:#a6e22e">setBody</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">boolean</span>) {
+        <span style="color:#a6e22e">func</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AsyncCosmosContext</span>())
+            .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">result</span> =&gt; {
+                <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">setBody</span>) {
+                    <span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">setBody</span>(<span style="color:#a6e22e">result</span>);
+                }
+            })
+            .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">err</span> =&gt; {
+                <span style="color:#75715e">// @ts-ignore
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">getContext</span>().<span style="color:#a6e22e">abort</span>(<span style="color:#a6e22e">err</span>);
+            });
+    }
+}
+</code></pre></div><p>Using this helper, our stored procedure now looks like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">AsyncHelper</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/AsyncHelper&#34;</span>;
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() 
+{
+    <span style="color:#a6e22e">AsyncHelper</span>.<span style="color:#a6e22e">execute</span>(<span style="color:#a6e22e">async</span> <span style="color:#a6e22e">context</span> =&gt; {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">doc</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">feed</span>) {
+            <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
+            <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>);
+        }
+    });
+}
+</code></pre></div><p>This reduces the boilerplate code to a minimum. I&rsquo;m pretty happy with it, so let&rsquo;s leave it alone.</p>
+<h2 id="generate-the-actual-js-stored-procedure-files">Generate the actual JS stored procedure files</h2>
+<p>OK, now comes the tricky part&hellip; We have a bunch of TypeScript files that <code>import</code> each other. But Cosmos DB wants a single, self-contained JavaScript file, with the first function as the entry point of the stored procedure. By default, compiling the TypeScript files to JavaScript will just generate one JS file for each TS file. The <code>--outFile</code> compiler option outputs everything to a single file, but it doesn&rsquo;t really work for us, because it still emits some module related code that won&rsquo;t work in Cosmos DB. What we need, for each stored procedure, is a file that only contains:</p>
+<ul>
+<li>the stored procedure function itself</li>
+<li>all the helper code, without any <code>import</code> or <code>require</code>.</li>
+</ul>
+<p>Since it doesn&rsquo;t seem possible to get the desired result using just the TypeScript compiler, the solution I found was to use a Gulp pipeline to concatenate the output files and remove the extraneous <code>export</code>s and <code>import</code>s. Here&rsquo;s my <code>gulpfile.js</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">gulp</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;gulp&#34;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ts</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;gulp-typescript&#34;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;path&#34;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">flatmap</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;gulp-flatmap&#34;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">replace</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;gulp-replace&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">concat</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;gulp-concat&#39;</span>);
+
+<span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">task</span>(<span style="color:#e6db74">&#34;build-cosmos-server-scripts&#34;</span>, <span style="color:#66d9ef">function</span>() {
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sharedScripts</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/*.ts&#34;</span>;
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">tsServerSideScripts</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;StoredProcedures/**/*.ts&#34;</span>;
+
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">src</span>(<span style="color:#a6e22e">tsServerSideScripts</span>)
+        .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">flatmap</span>((<span style="color:#a6e22e">stream</span>, <span style="color:#a6e22e">file</span>) =&gt;
+        {
+            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">outFile</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">dirname</span>(<span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">relative</span>), <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">basename</span>(<span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">relative</span>, <span style="color:#e6db74">&#34;.ts&#34;</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.js&#34;</span>);
+            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">tsProject</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ts</span>.<span style="color:#a6e22e">createProject</span>(<span style="color:#e6db74">&#34;tsconfig.json&#34;</span>);
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">stream</span>
+                .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">src</span>(<span style="color:#a6e22e">sharedScripts</span>))
+                .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">tsProject</span>())
+                .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^\s*import .+;\s*$/gm</span>, <span style="color:#e6db74">&#34;&#34;</span>))
+                .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^\s*export .+;\s*$/gm</span>, <span style="color:#e6db74">&#34;&#34;</span>))
+                .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^\s*export /gm</span>, <span style="color:#e6db74">&#34;&#34;</span>))
+                .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">concat</span>(<span style="color:#a6e22e">outFile</span>))
+                .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">dest</span>(<span style="color:#e6db74">&#34;StoredProcedures&#34;</span>));
+        }));
+});
+
+<span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">task</span>(<span style="color:#e6db74">&#34;default&#34;</span>, <span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">series</span>(<span style="color:#e6db74">&#34;build-cosmos-server-scripts&#34;</span>));
+</code></pre></div><p>Note that this script requires a few additional npm packages: <code>gulp</code>, <code>gulp-concat</code>, <code>gulp-replace</code>, <code>gulp-flatmap</code>, and <code>gulp-typescript</code>.</p>
+<p>Now you can just run <code>gulp</code> and it will produce the appropriate JS file for each TS stored procedure.</p>
+<p>To be honest, this solution feels a bit hacky, but it&rsquo;s the best I&rsquo;ve been able to come up with. If you know of a better approach, please let me know!</p>
+<h2 id="wrapping-up">Wrapping up</h2>
+<p>The out-of-the-box experience for writing Cosmos DB server-side code is not great (to put it mildly), but with just a bit of work, it can be made much better. You can have strong-typing thanks to TypeScript and the type definitions, and you can use <code>async</code>/<code>await</code> to make the code simpler. Note that this approach is also valid for triggers.</p>
+<p>Hopefully, a future Cosmos DB update will introduce a proper promise-based API, and maybe even TypeScript support. In the meantime, feel free to use the solution in this post!</p>
+<p>The full code for this article is here: <a href="https://github.com/thomaslevesque/TypeScriptCosmosDBStoredProceduresArticle">https://github.com/thomaslevesque/TypeScriptCosmosDBStoredProceduresArticle</a>.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/azure" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Azure</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/azure-cosmos-db" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Azure Cosmos DB</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/cosmos-db" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Cosmos DB</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/server-side" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">server-side</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/stored-procedure" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">stored procedure</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/typescript" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">TypeScript</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/">Scaling out ASP.NET Core SignalR using Azure Service Bus</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/">Multitenant Azure AD issuer validation in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/03/30/writing-a-github-webhook-as-an-azure-function/">Writing a GitHub Webhook as an Azure Function</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

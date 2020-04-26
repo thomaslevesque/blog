@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Weak events in C#, take two | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Weak events in C#, take two" />
+<meta property="og:description" content="A few years ago, I blogged about a generic implementation of the weak event pattern in C#. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.
+My initial solution was more a proof of concept than anything else, and had a major performance issue, due to the use of DynamicInvoke every time the event was raised." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2015/08/16/weak-events-in-c-take-two/" />
+<meta property="article:published_time" content="2015-08-16T11:29:23+00:00" />
+<meta property="article:modified_time" content="2015-08-16T11:29:23+00:00" />
+<meta itemprop="name" content="Weak events in C#, take two">
+<meta itemprop="description" content="A few years ago, I blogged about a generic implementation of the weak event pattern in C#. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.
+My initial solution was more a proof of concept than anything else, and had a major performance issue, due to the use of DynamicInvoke every time the event was raised.">
+<meta itemprop="datePublished" content="2015-08-16T11:29:23&#43;00:00" />
+<meta itemprop="dateModified" content="2015-08-16T11:29:23&#43;00:00" />
+<meta itemprop="wordCount" content="575">
+
+
+
+<meta itemprop="keywords" content="events,memory leak,open-instance delegate,weak event," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Weak events in C#, take two"/>
+<meta name="twitter:description" content="A few years ago, I blogged about a generic implementation of the weak event pattern in C#. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.
+My initial solution was more a proof of concept than anything else, and had a major performance issue, due to the use of DynamicInvoke every time the event was raised."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2015/08/16/weak-events-in-c-take-two/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2015/08/16/weak-events-in-c-take-two/&amp;text=Weak%20events%20in%20C#,%20take%20two" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2015/08/16/weak-events-in-c-take-two/&amp;title=Weak%20events%20in%20C#,%20take%20two" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Weak events in C#, take two</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2015-08-16T11:29:23Z">August 16, 2015</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>A few years ago, I blogged about a <a href="http://www.thomaslevesque.com/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/">generic implementation of the weak event pattern in C#</a>. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.</p>
+<p>My initial solution was more a proof of concept than anything else, and had a major performance issue, due to the use of <code>DynamicInvoke</code> every time the event was raised. Over the years, I revisited the weak event problem several times and came up with various solutions, improving a little every time, and I now have an implementation that should be good enough for most use cases. The public API is similar to that of my first solution. Basically, instead of writing an event like this:</p>
+<pre><code>
+public event EventHandler MyEvent;
+</code></pre><p>You write it like this:</p>
+<pre><code>
+private readonly WeakEventSource _myEventSource = new WeakEventSource();
+public event EventHandler MyEvent
+{
+    add { _myEventSource.Subscribe(value); }
+    remove { _myEventSource.Unsubscribe(value); }
+}
+</code></pre><p>From the subscriber’s point of view, this is no different from a normal event, but the subscriber will be eligible to garbage collection if it’s not referenced anywhere else.</p>
+<p>The event publisher can raise the event like this:</p>
+<pre><code>
+_myEventSource.Raise(this, e);
+</code></pre><p>There is a small limitation: the signature of the event <em>has</em> to be <code>EventHandler&lt;TEventArgs&gt;</code> (with any <code>TEventArgs</code> you like, of course). It can’t be something like <code>FooEventHandler</code>, or a custom delegate type. I don’t think this is a major issue, because the vast majority of events in the .NET world follow the recommended pattern <code>void (sender, args)</code>, and specific delegate types like <code>FooEventHandler</code> actually have the same signature as <code>EventHandler&lt;FooEventArgs&gt;</code>. I initially tried to make a solution that could work with any delegate signature, but it turned out to be too much of a challenge… for now at least <img src="wlEmoticon-winkingsmile.png" alt="Winking smile">.</p>
+<h3 id="how-does-it-work">How does it work</h3>
+<p>This new solution is still based on weak references, but changes the way the target method is called. Rather than using <code>DynamicInvoke</code>, it creates an open-instance delegate for the method when the weak handler is subscribed. What this means is that for an event signature like <code>void EventHandler(object sender, EventArgs e)</code>,  it creates a delegate with the signature <code>void OpenEventHandler(object target, object sender, EventArgs e)</code>. The extra <code>target</code> parameter represents the instance on which the method is called. To invoke the handler, we just need to get the target from the weak reference, and if it’s still alive,  pass it to the open-instance delegate.</p>
+<p>For better performance, this delegate is created only the first time a given handler method is encountered, and is cached for later reuse. This way, if multiple instances of an object subscribe to an event using the same handler method, the delegate is only created the first time, and is reused for subsequent subscribers.</p>
+<p>Note that technically, the created delegate is not a “real” open-instance delegate such as those created with <code>Delegate.CreateDelegate</code>. Instead it is created using Linq expressions. The reason is that in a real open-instance delegate, the type of the first parameter must be the type that declares the method, rather than object. Since this information isn’t known statically, I have to dynamically introduce a cast.</p>
+<p>You can find the source code on GitHub: <a href="https://github.com/thomaslevesque/WeakEvent">WeakEvent</a>. A NuGet package is available here: <a href="https://www.nuget.org/packages/ThomasLevesque.WeakEvent/">ThomasLevesque.WeakEvent</a>.</p>
+<p>The repository also include code snippets for <a href="https://github.com/thomaslevesque/WeakEvent/blob/master/Snippets/VisualStudio/wevt.snippet">Visual Studio</a> and <a href="https://github.com/thomaslevesque/WeakEvent/blob/master/Snippets/ReSharper/wevt.DotSettings">ReSharper</a>, to make it easier to write the boilerplate code for a weak event.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/events" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">events</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/memory-leak" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">memory leak</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/open-instance-delegate" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">open-instance delegate</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/weak-event" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">weak event</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/">[WPF 4.5] Subscribing to an event using a markup extension</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/">[C#] A simple implementation of the WeakEvent pattern</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

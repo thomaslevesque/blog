@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Azure Active Directory on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/azure-active-directory/</link>
+    <description>Recent content in Azure Active Directory on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 24 Dec 2018 13:54:43 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/azure-active-directory/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Multitenant Azure AD issuer validation in ASP.NET Core</title>
+      <link>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</link>
+      <pubDate>Mon, 24 Dec 2018 13:54:43 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
+      <description>If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:
+openIdConnectOptions.Authority = &amp;#34;https://login.microsoftonline.com/organizations/v2.0&amp;#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&amp;rsquo;t match the issuer specified in the OpenID metadata.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>notification on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/notification/</link>
+    <description>Recent content in notification on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Nov 2013 01:49:29 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/notification/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Strongly typed helper for toast notifications</title>
+      <link>https://blog2.thomaslevesque.net/2013/11/10/strongly-typed-helper-for-toast-notifications/</link>
+      <pubDate>Sun, 10 Nov 2013 01:49:29 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2013/11/10/strongly-typed-helper-for-toast-notifications/</guid>
+      <description>Windows 8 provides an API for showing toast notifications. Unfortunately, it’s very cumbersome: to define the content of a notification, you must use a predefined template that is provided in the form of an XmlDocument, and set the value for each field in the XML. There is nothing in the API to let you know which fields the template defines, you need to check the toast template catalog in the documentation.</description>
+    </item>
+    
+  </channel>
+</rss>

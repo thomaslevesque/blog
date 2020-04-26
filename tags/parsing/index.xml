@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>parsing on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/parsing/</link>
+    <description>Recent content in parsing on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Feb 2017 12:44:08 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/parsing/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Easy text parsing in C# with Sprache</title>
+      <link>https://blog2.thomaslevesque.net/2017/02/23/easy-text-parsing-in-c-with-sprache/</link>
+      <pubDate>Thu, 23 Feb 2017 12:44:08 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2017/02/23/easy-text-parsing-in-c-with-sprache/</guid>
+      <description>A few days ago, I discovered a little gem: Sprache. The name means &amp;ldquo;language&amp;rdquo; in German. It&amp;rsquo;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&amp;rsquo;ll see in a minute, Sprache makes it very simple.
+Text parsing Parsing text is a common task, but it can be tedious and error-prone.</description>
+    </item>
+    
+  </channel>
+</rss>

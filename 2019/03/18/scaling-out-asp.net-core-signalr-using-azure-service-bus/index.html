@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Scaling out ASP.NET Core SignalR using Azure Service Bus | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Scaling out ASP.NET Core SignalR using Azure Service Bus" />
+<meta property="og:description" content="ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp.net-core-signalr-using-azure-service-bus/" />
+<meta property="article:published_time" content="2019-03-18T06:16:15+00:00" />
+<meta property="article:modified_time" content="2019-03-18T06:16:15+00:00" />
+<meta itemprop="name" content="Scaling out ASP.NET Core SignalR using Azure Service Bus">
+<meta itemprop="description" content="ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.">
+<meta itemprop="datePublished" content="2019-03-18T06:16:15&#43;00:00" />
+<meta itemprop="dateModified" content="2019-03-18T06:16:15&#43;00:00" />
+<meta itemprop="wordCount" content="682">
+
+
+
+<meta itemprop="keywords" content="asp.net core,Azure,scale-out,Service Bus,SignalR," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Scaling out ASP.NET Core SignalR using Azure Service Bus"/>
+<meta name="twitter:description" content="ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp.net-core-signalr-using-azure-service-bus/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp.net-core-signalr-using-azure-service-bus/&amp;text=Scaling%20out%20ASP.NET%20Core%20SignalR%20using%20Azure%20Service%20Bus" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp.net-core-signalr-using-azure-service-bus/&amp;title=Scaling%20out%20ASP.NET%20Core%20SignalR%20using%20Azure%20Service%20Bus" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Scaling out ASP.NET Core SignalR using Azure Service Bus</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-03-18T06:16:15Z">March 18, 2019</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href="https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction">ASP.NET Core SignalR</a> is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it. Microsoft has two documented solutions to this problem:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/signalr/redis-backplane">Using Redis as a backplane</a> for sharing information between server instances.</li>
+<li><a href="https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-overview?toc=/aspnet/core/toc.json&amp;bc=/aspnet/core/breadcrumb/toc.json">Using Azure SignalR Service</a>, which is basically &ldquo;SignalR As A Service&rdquo;.</li>
+</ul>
+<p>Derek Comartin did a good job explaining these solutions (<a href="https://codeopinion.com/practical-asp-net-core-signalr-scaling/">Redis</a>, <a href="https://codeopinion.com/practical-asp-net-core-signalr-azure/">Azure SignalR Service</a>), so I won&rsquo;t go into the details. Both are perfectly viable, however they&rsquo;re relatively expensive. A Redis Cache resource in Azure starts at about 14€/month for the smallest size, and Azure SignalR Service starts at about 40€/month for a single unit (I&rsquo;m entirely dismissing the free plan, which is too limited to use beyond development scenarios). Sure, it&rsquo;s not <em>that</em> expensive, but why pay more when you can pay less?</p>
+<p>What I want to talk about in this post is a third option that will probably be cheaper in many scenarios: using <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview">Azure Service Bus</a> to dispatch SignalR messages between server instances. In fact, <a href="https://docs.microsoft.com/en-us/aspnet/signalr/overview/performance/scaleout-with-windows-azure-service-bus">this approach was supported in classic ASP.NET</a>, but it hasn&rsquo;t been ported to ASP.NET Core.</p>
+<p>Here&rsquo;s an overview of how one could manually implement the Azure Service Bus approach:</p>
+<ul>
+<li>
+<p>When an instance of the application wants to send a SignalR message to all clients, it sends it:</p>
+<ul>
+<li>via its own SignalR hub or hub context (only clients connected to this instance will receive it)</li>
+<li>and to an Azure Service Bus topic, for distribution to other instances.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#75715e">// Pseudo code...
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHubContext&lt;ChatHub, IChatClient&gt; _hubContext;
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceBusPublisher _serviceBusPublisher;
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task SendMessageToAllAsync(<span style="color:#66d9ef">string</span> text)
+{
+    <span style="color:#75715e">// Send the message to clients connected to the current instance
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">await</span> _hubContext.Clients.All.ReceiveMessageAsync(text);
+
+    <span style="color:#75715e">// Notify other instances to send the same message
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">await</span> _serviceBusPublisher.PublishMessageAsync(<span style="color:#66d9ef">new</span> SendToAllMessage(text));
+}
+</code></pre></div><ul>
+<li>
+<p>Each instance of the application runs a <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services">hosted service</a> that subscribes to the topic and processes the messages</p>
+<ul>
+<li>When a message is received, it&rsquo;s sent to the relevant clients via the hub context, unless it&rsquo;s from the current instance.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#75715e">// Very simplified pseudo code...
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// Subscribe to the topic
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> subscriptionClient = <span style="color:#66d9ef">new</span> SubscriptionClient(connectionString, topicName, subscriptionName);
+subscriptionClient.RegisterMessageHandler(OnMessageReceived, OnError);
+
+...
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> Task OnMessageReceived(Message sbMessage, CancellationToken cancellationToken)
+{
+    SendToAllMessage message = DeserializeServiceBusMessage(sbMessage);
+
+    <span style="color:#66d9ef">if</span> (message.SenderInstanceId == MyInstanceId)
+        <span style="color:#66d9ef">return</span>; <span style="color:#75715e">// ignore message from self
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">// Send the message to clients connected to the current instance
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">await</span> _hubContext.Clients.All.ReceiveMessageAsync(message.Text);
+}
+</code></pre></div><p>I&rsquo;m not showing the full details of how to implement this solution, because to be honest, it kind of sucks. It works, but it&rsquo;s a bit ugly: the fact that it&rsquo;s using a service bus to share messages with other server instances is too visible, you can&rsquo;t just ignore it. Every time you send a message via SignalR, you also have to explicitly send one to the service bus. It would be better to hide that ugliness behind an abstraction, or even better, make it completely invisible&hellip;</p>
+<p>If you have used the Redis or Azure SignalR Service approaches before, you might have noticed how simple they are to use. Basically, in your <code>Startup.ConfigureServices</code> method, just append <code>AddRedis(...)</code> or <code>AddAzureSignalR(...)</code> after <code>services.AddSignalR()</code>, and you&rsquo;re done: you can use SignalR as usual, the details of how it handles scale-out are completely abstracted away. Wouldn&rsquo;t it be nice to be able to do the same for Azure Service Bus? I thought so too, so I made a library that does exactly that: <a href="https://github.com/thomaslevesque/AspNetCore.SignalR.AzureServiceBus">AspNetCore.SignalR.AzureServiceBus</a>. To use it, reference the <a href="https://www.nuget.org/packages/AspNetCore.SignalR.AzureServiceBus/1.0.0-alpha.1">NuGet package</a>, and just add this in your <code>Startup.ConfigureServices</code> method:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+services.AddSignalR()
+        .AddAzureServiceBus(options =&gt;
+        {
+            options.ConnectionString = <span style="color:#e6db74">&#34;(your service bus connection string)&#34;</span>;
+            options.TopicName = <span style="color:#e6db74">&#34;(your topic name)&#34;</span>;
+        });
+</code></pre></div><p><strong>Disclaimer:</strong> The library is still in alpha status, probably not ready for production use. I&rsquo;m not aware of any issue, but it hasn&rsquo;t been battle tested yet. Use at your own risk, and please report any issues you find!</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/asp.net-core" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">asp.net core</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/azure" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Azure</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/scale-out" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">scale-out</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/service-bus" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Service Bus</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/signalr" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">SignalR</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp.net-core/">Multitenant Azure AD issuer validation in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/01/10/google-shutdown-fixing-google-authentication-in-asp.net-core/">Google&#43; shutdown: fixing Google authentication in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/09/25/asynchronous-initialization-in-asp.net-core-revisited/">Asynchronous initialization in ASP.NET Core, revisited</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp.net-core/">Handling multipart requests with JSON and file uploads in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/07/20/asynchronous-initialization-in-asp.net-core-with-custom-middleware/">Asynchronous initialization in ASP.NET Core with custom middleware</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/04/17/hosting-an-asp.net-core-2-application-on-a-raspberry-pi/">Hosting an ASP.NET Core 2 application on a Raspberry Pi</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/03/30/writing-a-github-webhook-as-an-azure-function/">Writing a GitHub Webhook as an Azure Function</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/03/27/understanding-the-asp.net-core-middleware-pipeline/">Understanding the ASP.NET Core middleware pipeline</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

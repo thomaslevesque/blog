@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>testing on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/testing/</link>
+    <description>Recent content in testing on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Jun 2016 20:43:41 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/testing/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Pitfall: using var and async together</title>
+      <link>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</link>
+      <pubDate>Tue, 21 Jun 2016 20:43:41 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</guid>
+      <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
+public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync:  private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() { // actual implementation irrelevant  // .</description>
+    </item>
+    
+  </channel>
+</rss>

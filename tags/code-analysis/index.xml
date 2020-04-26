@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>code analysis on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/code-analysis/</link>
+    <description>Recent content in code analysis on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Mar 2015 01:12:50 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/code-analysis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leveraging ReSharper annotations</title>
+      <link>https://blog2.thomaslevesque.net/2015/03/13/leveraging-resharper-annotations/</link>
+      <pubDate>Fri, 13 Mar 2015 01:12:50 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/03/13/leveraging-resharper-annotations/</guid>
+      <description>I don’t think it’s really necessary to present ReSharper (often abbreviated R#), but in case you don’t know about it, it’s a tool made by JetBrains that performs real-time analysis of your C# or VB.NET code to warn you about possible bugs, bad practices, convention violations, etc. It also provides many useful refactorings and code generators. I’ve been using it for a few years now, and it has tremendously improved both my productivity and my coding style.</description>
+    </item>
+    
+    <item>
+      <title>A review of NDepend</title>
+      <link>https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/</link>
+      <pubDate>Wed, 30 Jul 2014 18:20:44 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/</guid>
+      <description>I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.
+NDepend is a static analysis tool for .NET that checks your code base against a large set of rules that fall in various categories, such as code quality, object-oriented design, architecture, naming conventions, etc. All of these rules are completely customizable.</description>
+    </item>
+    
+  </channel>
+</rss>

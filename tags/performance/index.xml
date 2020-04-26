@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>performance on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/performance/</link>
+    <description>Recent content in performance on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 28 Mar 2017 22:18:21 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/performance/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linq performance improvements in .NET Core</title>
+      <link>https://blog2.thomaslevesque.net/2017/03/29/linq-performance-improvements-in-net-core/</link>
+      <pubDate>Tue, 28 Mar 2017 22:18:21 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2017/03/29/linq-performance-improvements-in-net-core/</guid>
+      <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
+For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:</description>
+    </item>
+    
+    <item>
+      <title>Optimize ToArray and ToList by providing the number of elements</title>
+      <link>https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</link>
+      <pubDate>Sun, 07 Dec 2014 18:10:42 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</guid>
+      <description>The ToArray and ToList extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on ToArray for now (ToList has a few differences, but the principle is mostly the same).</description>
+    </item>
+    
+  </channel>
+</rss>

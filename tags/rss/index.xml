@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RSS on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/rss/</link>
+    <description>Recent content in RSS on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 12 Feb 2009 23:05:13 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/rss/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Build an RSS reader in 5 minutes</title>
+      <link>https://blog2.thomaslevesque.net/2009/02/13/build-an-rss-reader-in-5-minutes/</link>
+      <pubDate>Thu, 12 Feb 2009 23:05:13 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/02/13/build-an-rss-reader-in-5-minutes/</guid>
+      <description>Today, I stumbled upon a very handy class : SyndicationFeed. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones. For instance, here&amp;rsquo;s how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it&amp;rsquo;s items :</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CreateLinkedTokenSource on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/createlinkedtokensource/</link>
+    <description>Recent content in CreateLinkedTokenSource on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 31 Dec 2015 13:27:14 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/createlinkedtokensource/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Using multiple cancellation sources with CreateLinkedTokenSource</title>
+      <link>https://blog2.thomaslevesque.net/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</link>
+      <pubDate>Thu, 31 Dec 2015 13:27:14 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</guid>
+      <description>Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel.</description>
+    </item>
+    
+  </channel>
+</rss>

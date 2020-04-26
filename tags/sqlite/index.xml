@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sqlite on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/sqlite/</link>
+    <description>Recent content in sqlite on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 28 Jun 2015 19:09:56 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/sqlite/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to retrieve dates as UTC in SQLite</title>
+      <link>https://blog2.thomaslevesque.net/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/</link>
+      <pubDate>Sun, 28 Jun 2015 19:09:56 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/</guid>
+      <description>SQLite is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an official ADO.NET provider that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a DateTime converted to local time, with Kind = Unspecified.</description>
+    </item>
+    
+  </channel>
+</rss>

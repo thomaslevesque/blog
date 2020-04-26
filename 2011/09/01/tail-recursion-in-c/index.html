@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Tail recursion in C# | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Tail recursion in C#" />
+<meta property="og:description" content="Regardless of the programming language you&rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2011/09/01/tail-recursion-in-c/" />
+<meta property="article:published_time" content="2011-09-01T22:16:52+00:00" />
+<meta property="article:modified_time" content="2011-09-01T22:16:52+00:00" />
+<meta itemprop="name" content="Tail recursion in C#">
+<meta itemprop="description" content="Regardless of the programming language you&rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .">
+<meta itemprop="datePublished" content="2011-09-01T22:16:52&#43;00:00" />
+<meta itemprop="dateModified" content="2011-09-01T22:16:52&#43;00:00" />
+<meta itemprop="wordCount" content="1883">
+
+
+
+<meta itemprop="keywords" content="C#,tail recursion,trampoline," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Tail recursion in C#"/>
+<meta name="twitter:description" content="Regardless of the programming language you&rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in ."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2011/09/01/tail-recursion-in-c/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2011/09/01/tail-recursion-in-c/&amp;text=Tail%20recursion%20in%20C#" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2011/09/01/tail-recursion-in-c/&amp;title=Tail%20recursion%20in%20C#" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Tail recursion in C#</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2011-09-01T22:16:52Z">September 1, 2011</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Regardless of the programming language you&rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (<code>StackOverflowException</code> in .NET).</p>
+<h6 id="tail-recursion-whats-that"><strong>Tail recursion? What&rsquo;s that?</strong></h6>
+<p>Some languages, more particularly functional languages, have native support for an optimization technique called <a href="http://en.wikipedia.org/wiki/Tail_recursion">tail recursion</a>. The idea is that if the recursive call is the last instruction in a recursive function, there is no need to keep the current call context on the stack, since we won&rsquo;t have to go back there: we only need to replace the parameters with their new values, and jump back to the beginning of the function. So the recursion is transformed into an iteration, so it can’t cause a stack overflow. This notion being quite new to me, I won’t try to give a full course about tail recursion… much smarter people already took care of it! I suggest you follow the Wikipedia link above, which is a good starting point to understand tail recursion.</p>
+<p>Unfortunately, the C# compiler doesn’t support tail recursion, which is a pity, since <a href="http://msdn.microsoft.com/en-us/library/system.reflection.emit.opcodes.tailcall.aspx">the CLR supports it</a>. However, all is not lost! Some people had a very clever idea to work around this issue: a technique called “trampoline” (because it makes the function “bounce”) that allows to easily transform a recursive algorithm into an iterative algorithm. Samuel Jack has a good explanation of this concept <a href="http://blog.functionalfun.net/2008/04/bouncing-on-your-tail.html">on his blog</a>. In the rest of this article, we will see how to apply this technique to a simple algorithm, using the class from Samuel Jack’s article; then I’ll present another implementation of the trampoline, which I find more flexible.</p>
+<h6 id="a-simple-use-case-in-c"><strong>A simple use case in C#</strong></h6>
+<p>Let’s see how we can transform a simple recursive algorithm, like the computation of the factorial of a number, into an algorithm that uses tail recursion (incidentally, the factorial can be computed much more efficiently with a non-recursive algorithm, but let’s assume we don’t know that…). Here’s a basic implementation that results directly from the definition:</p>
+<pre><code>
+BigInteger Factorial(int n)
+{
+    if (n &lt; 2)
+        return 1;
+    return n * Factorial(n - 1);
+}
+</code></pre><p>(Note the use of <code>BigInteger</code>: if we are to make the recursion deep enough to observe the effects of tail recursion, the result will be far beyond the capacity of an int or even a <code>long</code>…)</p>
+<p>If we call this method with a large value (around 20000 on my machine), we get an error which was quite predictable: <code>StackOverflowException</code>. We made so many nested call to the <code>Factorial</code> method that we exhausted the capacity of the stack. So we’re going to modify this code so that it can benefit from tail recursion…</p>
+<p>As mentioned above, the key requirement for tail recursion is that the method calls itself as the last instruction. It <em>seems</em> to be the case here… but it’s not: the last operation is actually the multiplication, which can’t be executed until we know the result of <code>Factorial(n-1)</code>. So we need to redesign this method so that it ends with a call to itself, with different arguments. To do that, we can add a new parameter named <code>product</code>, which will act as an accumulator:</p>
+<pre><code>
+BigInteger Factorial(int n, BigInteger product)
+{
+    if (n &lt; 2)
+        return product;
+    return Factorial(n - 1, n * product);
+}
+</code></pre><p>For the first call, we’ll just have to pass 1 for the initial value of the accumulator.</p>
+<p>We now have a method that meets the requirements for tail recursion: the recursive call to <code>Factorial</code> really is the last instruction. Now that we have put the algorithm in this form, the final transformation to enable tail recursion using Samuel Jack’s trampoline is trivial:</p>
+<pre><code>
+Bounce&lt;int, BigInteger, BigInteger&gt; Factorial(int n, BigInteger product)
+{
+    if (n &lt; 2)
+        return Trampoline.ReturnResult&lt;int, BigInteger, BigInteger&gt;(product);
+    return Trampoline.Recurse&lt;int, BigInteger, BigInteger&gt;(n - 1, n * product);
+}
+</code></pre><ul>
+<li>Instead of returning the final result directly, we call <code>Trampoline.ReturnResult</code> to tell the trampoline that we now have a result</li>
+<li>The recursive call to <code>Factorial</code> is replaced with a call to <code>Trampoline.Recurse</code>, which tells the trampoline that the method needs to be called again with different parameters</li>
+</ul>
+<p>This method can’t be used directly: it returns a <code>Bounce</code> object, and we don&rsquo;t really know what to do with this… To execute it, we use the <code>Trampoline.MakeTrampoline</code> method, which returns a new function on which tail recursion is applied. We can then use this new function directly:</p>
+<pre><code>
+Func&lt;int, BigInteger, BigInteger&gt; fact = Trampoline.MakeTrampoline&lt;int, BigInteger, BigInteger&gt;(Factorial);
+BigInteger result = fact(50000, 1);
+</code></pre><p>We can now compute the factorial of large numbers, with no risk of causing a stack overflow… Admittedly, it’s not very efficient: as mentioned before, there are better ways of computing a factorial, and furthermore, computations involving <code>BigInteger</code>s are much slower than with <code>int</code>s or <code>long</code>s.</p>
+<h6 id="can-we-make-it-better"><strong>Can we make it better?</strong></h6>
+<p>Well, you can guess that I wouldn’t be asking the question unless the answer was yes… The trampoline implementation demonstrated above does its job well enough, but I think it could be made more flexible and easier to use:</p>
+<ul>
+<li>It only works if you have 2 parameters (of course we can adapt it for a different number of parameters, but then we need to create new methods with adequate signatures for each different arity)</li>
+<li>The syntax is quite unwieldy: there are 3 type arguments, and we need to specify them every time because the compiler doesn’t have enough information to infer them automatically</li>
+<li>Having to use <code>MakeTrampoline</code> just to create a new function that we can then call isn’t very convenient; it would be more intuitive to have an <code>Execute</code> method that returns the result directly</li>
+</ul>
+<p>And finally, I think the terminology isn’t very explicit… Names like <code>Trampoline</code> and <code>Bounce</code> sound like fun, but they don’t really reveal the intent.</p>
+<p>So I tried to improve the system to make it more convenient. My solution is based on lambda expressions. There is only one type argument (the return type), and the parameters are passed trough a closure, so there is no need for multiple methods to handle different numbers of parameters. Here’s what the <code>Factorial</code> method looks like with my implementation:</p>
+<pre><code>
+RecursionResult&lt;BigInteger&gt; Factorial(int n, BigInteger product)
+{
+    if (n &lt; 2)
+        return TailRecursion.Return(product);
+    return TailRecursion.Next(() =&gt; Factorial(n - 1, n * product));
+}
+</code></pre><p>It can be used as follows:</p>
+<pre><code>
+BigInteger result = TailRecursion.Execute(() =&gt; Factorial(50000, 1));
+</code></pre><p>It’s more flexible, more concise, and more readable…in my opinion at least<img src="wlemoticon-smile.png" alt="Sourire">. The downside is that performance is slightly worse than before (it takes about 20% longer to compute the factorial of 50000), probably because of the delegate creation at each level of recursion.</p>
+<p>Here’s the full code for the <code>TailRecursion</code> class:</p>
+<pre><code>
+public static class TailRecursion
+{
+    public static T Execute&lt;T&gt;(Func&lt;RecursionResult&lt;T&gt;&gt; func)
+    {
+        do
+        {
+            var recursionResult = func();
+            if (recursionResult.IsFinalResult)
+                return recursionResult.Result;
+            func = recursionResult.NextStep;
+        } while (true);
+    }
+
+    public static RecursionResult&lt;T&gt; Return&lt;T&gt;(T result)
+    {
+        return new RecursionResult&lt;T&gt;(true, result, null);
+    }
+
+    public static RecursionResult&lt;T&gt; Next&lt;T&gt;(Func&lt;RecursionResult&lt;T&gt;&gt; nextStep)
+    {
+        return new RecursionResult&lt;T&gt;(false, default(T), nextStep);
+    }
+
+}
+
+public class RecursionResult&lt;T&gt;
+{
+    private readonly bool _isFinalResult;
+    private readonly T _result;
+    private readonly Func&lt;RecursionResult&lt;T&gt;&gt; _nextStep;
+    internal RecursionResult(bool isFinalResult, T result, Func&lt;RecursionResult&lt;T&gt;&gt; nextStep)
+    {
+        _isFinalResult = isFinalResult;
+        _result = result;
+        _nextStep = nextStep;
+    }
+
+    public bool IsFinalResult { get { return _isFinalResult; } }
+    public T Result { get { return _result; } }
+    public Func&lt;RecursionResult&lt;T&gt;&gt; NextStep { get { return _nextStep; } }
+}
+</code></pre><h6 id="is-there-a-better-way-to-accomplish-tail-recursion-in-c"><strong>Is there a better way to accomplish tail recursion in C#?</strong></h6>
+<p>Sure! But it gets a little tricky, and it’s not pure C#. As I mentioned before, the CLR supports tail recursion, through the <code>tail</code> instruction. Ideally, the C# compiler would automatically generate this instruction for methods that are eligible to tail recursion, but unfortunately it’s not the case, and I don’t think this will ever be supported given the low demand for this feature.</p>
+<p>Anyway, we can cheat a little by helping the compiler to do its job: the .NET Framework SDK provides tools named <a href="http://msdn.microsoft.com/en-us/library/f7dy01k1.aspx">ildasm</a> (IL disassembler) and <a href="http://msdn.microsoft.com/en-us/library/496e4ekx.aspx">ilasm</a> (IL assembler), which can help to fill the gap between C# and the CLR… Let’s go back to the classical recursive implementation of <code>Factorial</code>, which doesn’t yet use tail recursion:</p>
+<pre><code>
+static BigInteger Factorial(int n, BigInteger product)
+{if (n &lt; 2)	return product;return Factorial(n - 1, n * product);
+}
+</code></pre><p>If we compile this code and disassemble it with ilasm, we get the following IL code:</p>
+<pre><code>
+.method private hidebysig static valuetype [System.Numerics]System.Numerics.BigInteger
+        Factorial(int32 n,
+                  valuetype [System.Numerics]System.Numerics.BigInteger product) cil managed
+{
+  // Code size       41 (0x29)
+  .maxstack  3
+  .locals init (valuetype [System.Numerics]System.Numerics.BigInteger V_0,
+           bool V_1)
+  IL_0000:  nop
+  IL_0001:  ldarg.0
+  IL_0002:  ldc.i4.2
+  IL_0003:  clt
+  IL_0005:  ldc.i4.0
+  IL_0006:  ceq
+  IL_0008:  stloc.1
+  IL_0009:  ldloc.1
+  IL_000a:  brtrue.s   IL_0010
+
+  IL_000c:  ldarg.1
+  IL_000d:  stloc.0
+  IL_000e:  br.s       IL_0027
+
+  IL_0010:  ldarg.0
+  IL_0011:  ldc.i4.1
+  IL_0012:  sub
+  IL_0013:  ldarg.0
+  IL_0014:  call       valuetype [System.Numerics]System.Numerics.BigInteger [System.Numerics]System.Numerics.BigInteger::op_Implicit(int32)
+  IL_0019:  ldarg.1
+  IL_001a:  call       valuetype [System.Numerics]System.Numerics.BigInteger [System.Numerics]System.Numerics.BigInteger::op_Multiply(valuetype [System.Numerics]System.Numerics.BigInteger,
+                                                                                                                                      valuetype [System.Numerics]System.Numerics.BigInteger)
+  IL_001f:  call       valuetype [System.Numerics]System.Numerics.BigInteger Program::Factorial(int32,
+                                                                                                valuetype [System.Numerics]System.Numerics.BigInteger)
+  IL_0024:  stloc.0
+  IL_0025:  br.s       IL_0027
+
+  IL_0027:  ldloc.0
+  IL_0028:  ret
+} // end of method Program::Factorial
+</code></pre><p>It’s a bit hard on the eye if you’re not used to read IL code, but we can see roughly what’s going on… The recursive call is at offset <code>IL_001f;</code> this is where we’re going to fiddle with the generated code to introduce tail recursion. If we look at the documentation for the <code>tail</code> instruction, we see that it must immediately precede a <code>call</code> instruction, and that the instruction following the <code>call</code> must be <code>ret</code> (return). Right now, we have several instructions following the recursive call, because the compiler introduced a local variable to store the return value. We just need to modify the code so that it doesn’t use this variable, and add the <code>tail</code> instruction in the right place:</p>
+<pre><code>
+.method private hidebysig static valuetype [System.Numerics]System.Numerics.BigInteger
+        Factorial(int32 n,
+                  valuetype [System.Numerics]System.Numerics.BigInteger product) cil managed
+{
+  // Code size       41 (0x29)
+  .maxstack  3
+  .locals init (valuetype [System.Numerics]System.Numerics.BigInteger V_0,
+           bool V_1)
+  IL_0000:  nop
+  IL_0001:  ldarg.0
+  IL_0002:  ldc.i4.2
+  IL_0003:  clt
+  IL_0005:  ldc.i4.0
+  IL_0006:  ceq
+  IL_0008:  stloc.1
+  IL_0009:  ldloc.1
+  IL_000a:  brtrue.s   IL_0010
+
+  IL_000c:  ldarg.1
+  IL_000d:  ret		// Return directly instead of storing the result in V_0
+  IL_000e:  nop
+
+  IL_0010:  ldarg.0
+  IL_0011:  ldc.i4.1
+  IL_0012:  sub
+  IL_0013:  ldarg.0
+  IL_0014:  call       valuetype [System.Numerics]System.Numerics.BigInteger [System.Numerics]System.Numerics.BigInteger::op_Implicit(int32)
+  IL_0019:  ldarg.1
+  IL_001a:  call       valuetype [System.Numerics]System.Numerics.BigInteger [System.Numerics]System.Numerics.BigInteger::op_Multiply(valuetype [System.Numerics]System.Numerics.BigInteger,
+                                                                                                                                      valuetype [System.Numerics]System.Numerics.BigInteger)
+  IL_001f:  tail.
+  IL_0020:  call       valuetype [System.Numerics]System.Numerics.BigInteger Program::Factorial(int32,
+                                                                                                valuetype [System.Numerics]System.Numerics.BigInteger)
+  IL_0025:  ret		// Return directly instead of storing the result in V_0
+
+} // end of method Program::Factorial
+</code></pre><p>If we reassemble this code with ilasm, we get a new executable, which runs without issues even for large values which made the old code crash<img src="wlemoticon-smile.png" alt="Sourire">. Performance is also pretty good: about 3 times as fast than the version using the <code>Trampoline</code> class. If we compare the performance for smaller values (so that the old code doesn’t crash), we can see that it’s also 3 times as fast as the recursive version with no tail recursion.</p>
+<p>Of course, this is just a proof of concept… it doesn’t seem very realistic to perform this transformation manually in a “real” project. However, it might be possible to create a tool that rewrites assemblies automatically after the compilation to introduce tail recursion.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/c" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">C#</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/tail-recursion" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">tail recursion</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/trampoline" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">trampoline</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2010/05/17/c#-a-simple-implementation-of-the-weakevent-pattern/">[C#] A simple implementation of the WeakEvent pattern</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2010/02/21/automating-null-checks-with-linq-expressions/">Automating null checks with Linq expressions</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2009/06/12/c#-parent/child-relationship-and-xml-serialization/">[C#] Parent/child relationship and XML serialization</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

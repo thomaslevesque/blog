@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>workaround on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/workaround/</link>
+    <description>Recent content in workaround on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 05 Feb 2009 00:26:28 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/workaround/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)</title>
+      <link>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
+      <pubDate>Thu, 05 Feb 2009 00:26:28 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
+      <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)
+If you&amp;rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&amp;hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&amp;rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</description>
+    </item>
+    
+  </channel>
+</rss>

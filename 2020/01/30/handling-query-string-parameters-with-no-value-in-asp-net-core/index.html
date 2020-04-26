@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Handling query string parameters with no value in ASP.NET Core | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Handling query string parameters with no value in ASP.NET Core" />
+<meta property="og:description" content="Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
+ query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
+ But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/" />
+<meta property="article:published_time" content="2020-01-30T07:00:58+00:00" />
+<meta property="article:modified_time" content="2020-01-30T07:00:58+00:00" />
+<meta itemprop="name" content="Handling query string parameters with no value in ASP.NET Core">
+<meta itemprop="description" content="Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
+ query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
+ But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.">
+<meta itemprop="datePublished" content="2020-01-30T07:00:58&#43;00:00" />
+<meta itemprop="dateModified" content="2020-01-30T07:00:58&#43;00:00" />
+<meta itemprop="wordCount" content="639">
+
+
+
+<meta itemprop="keywords" content="asp.net core,C#,model binding,query string," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Handling query string parameters with no value in ASP.NET Core"/>
+<meta name="twitter:description" content="Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
+ query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
+ But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/&amp;text=Handling%20query%20string%20parameters%20with%20no%20value%20in%20ASP.NET%20Core" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/&amp;title=Handling%20query%20string%20parameters%20with%20no%20value%20in%20ASP.NET%20Core" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Handling query string parameters with no value in ASP.NET Core</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-01-30T07:00:58Z">January 30, 2020</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Query strings are typically made of a sequence of key-value pairs, like <code>?foo=hello&amp;bar=world…</code>. However, if you look at <a href="https://tools.ietf.org/html/rfc3986#section-3.4">RFC 3986</a>, you can see that query strings are very loosely specified. It mentions that</p>
+<blockquote>
+<p>query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs</p>
+</blockquote>
+<p>But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&rsquo;s not standardized. The use of key-value pairs separated by <code>&amp;</code> is just a convention, not a requirement.</p>
+<p>And as it happens, it&rsquo;s not uncommon to see URLs with query strings like this: <code>?foo</code>, i.e. a key without a value. How it should be interpreted is entirely implementation-dependent, but in most cases, it probably means the same as <code>?foo=true</code>: the presence of the parameter is interpreted as an implicit true value.</p>
+<p>Unfortunately, in ASP.NET Core MVC, there&rsquo;s no built-in support for this form of query string. If you have a controller action like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">[HttpGet(&#34;search&#34;)]</span>
+<span style="color:#66d9ef">public</span> IActionResult Search(
+<span style="color:#a6e22e">    [FromQuery]</span> <span style="color:#66d9ef">string</span> term,
+<span style="color:#a6e22e">    [FromQuery]</span> <span style="color:#66d9ef">bool</span> ignoreCase)
+{
+    <span style="color:#960050;background-color:#1e0010">…</span>
+}
+</code></pre></div><p>The default <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-3.1">model binder</a> expects the <code>ignoreCase</code> parameter to be specified with an explicit <code>true</code> or <code>false</code> value, e.g. <code>ignoreCase=true</code>. If you omit the value, it will be interpreted as empty, and the model binding will fail:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+{
+  <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://tools.ietf.org/html/rfc7231#section-6.5.1&#34;</span>,
+  <span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;One or more validation errors occurred.&#34;</span>,
+  <span style="color:#e6db74">&#34;status&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">400</span>,
+  <span style="color:#e6db74">&#34;traceId&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;|53613c25-4767e032425dfb92.&#34;</span>,
+  <span style="color:#e6db74">&#34;errors&#34;</span><span style="color:#f92672">:</span> {
+    <span style="color:#e6db74">&#34;ignoreCase&#34;</span><span style="color:#f92672">:</span> [
+      <span style="color:#e6db74">&#34;The value &#39;&#39; is invalid.&#34;</span>
+    ]
+  }
+}
+</code></pre></div><p>It&rsquo;s not a very big issue, but it&rsquo;s annoying… So, let&rsquo;s see what we can do about it!</p>
+<p>By default, a boolean parameter is bound using <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.modelbinding.binders.simpletypemodelbinder?view=aspnetcore-3.1"><code>SimpleTypeModelBinder</code></a>, which is used for most primitive types. This model binder uses the <code>TypeConverter</code> of the target type to convert a string value to the target type. In this case, the converter is a <code>BooleanConverter</code>, which doesn&rsquo;t recognize an empty value…</p>
+<p>So we need to create our own model binder, which will interpret the presence of a key with no value as an implicit <code>true</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BooleanModelBinder</span> : IModelBinder
+{
+    <span style="color:#66d9ef">public</span> Task BindModelAsync(ModelBindingContext bindingContext)
+    {
+        <span style="color:#66d9ef">var</span> result = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+        <span style="color:#66d9ef">if</span> (result == ValueProviderResult.None)
+        {
+            <span style="color:#75715e">// Parameter is missing, interpret as false
+</span><span style="color:#75715e"></span>            bindingContext.Result = ModelBindingResult.Success(<span style="color:#66d9ef">false</span>);
+        }
+        <span style="color:#66d9ef">else</span>
+        {
+            bindingContext.ModelState.SetModelValue(bindingContext.ModelName, result);
+            <span style="color:#66d9ef">var</span> rawValue = result.FirstValue;
+            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">string</span>.IsNullOrEmpty(rawValue))
+            {
+                <span style="color:#75715e">// Value is empty, interpret as true
+</span><span style="color:#75715e"></span>                bindingContext.Result = ModelBindingResult.Success(<span style="color:#66d9ef">true</span>);
+            }
+            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">bool</span>.TryParse(rawValue, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">var</span> boolValue))
+            {
+                <span style="color:#75715e">// Value is a valid boolean, use that value
+</span><span style="color:#75715e"></span>                bindingContext.Result = ModelBindingResult.Success(boolValue);
+            }
+            <span style="color:#66d9ef">else</span>
+            {
+                <span style="color:#75715e">// Value is something else, fail
+</span><span style="color:#75715e"></span>                bindingContext.ModelState.TryAddModelError(
+                    bindingContext.ModelName,
+                    <span style="color:#e6db74">&#34;Value must be false, true, or empty.&#34;</span>);
+            }
+        }
+
+        <span style="color:#66d9ef">return</span> Task.CompletedTask;
+    }
+}
+</code></pre></div><p>In order to use this model binder, we also need a model binder provider:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BooleanModelBinderProvider</span> : IModelBinderProvider
+{
+    <span style="color:#66d9ef">public</span> IModelBinder GetBinder(ModelBinderProviderContext context)
+    {
+        <span style="color:#66d9ef">if</span> (context.Metadata.ModelType == <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">bool</span>))
+        {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> BooleanModelBinder();
+        }
+
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+    }
+}
+</code></pre></div><p>It will return our model binder if the target type is <code>bool</code>. Now we just need to add this provider to the list of model binder providers:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#75715e">// In Startup.ConfigureServices
+</span><span style="color:#75715e"></span>services.AddControllers(options =&gt;
+{
+    options.ModelBinderProviders.Insert(
+        <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">new</span> BooleanModelBinderProvider());
+});
+</code></pre></div><p><em>Note: This code is for an ASP.NET Core 3 Web API project.</em></p>
+<ul>
+<li><em>If your project also has views or pages, replace <code>AddControllers</code> with <code>AddControllersWithViews</code> or <code>AddRazorPages</code>, as appropriate.</em></li>
+<li><em>If you&rsquo;re using ASP.NET Core 2, replace <code>AddControllers</code> with <code>AddMvc</code>.</em></li>
+</ul>
+<p>Note that we need to insert our new model binder provider at the beginning of the list. If we add it at the end, another provider will match first, and our provider won&rsquo;t even be called.</p>
+<p>And that&rsquo;s it: you should now be able to call your endpoint with a query string like <code>?term=foo&amp;ignoreCase</code>, without explicitly specifying <code>true</code> as the value of <code>ignoreCase</code>.</p>
+<p>A possible improvement to this binder would be to also accept <code>0</code> or <code>1</code> as valid values for boolean parameters. I&rsquo;ll leave that as an exercise to you!</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/asp.net-core" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">asp.net core</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/c" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">C#</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/model-binding" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">model binding</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/query-string" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">query string</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/">ASP.NET Core: when environments are not enough, use sub-environments!</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/">Multitenant Azure AD issuer validation in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/">Asynchronous initialization in ASP.NET Core, revisited</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/">Handling multipart requests with JSON and file uploads in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/">Asynchronous initialization in ASP.NET Core with custom middleware</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/">Understanding the ASP.NET Core middleware pipeline</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/">Easy unit testing of null argument validation (C# 8 edition)</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/11/18/using-foreach-with-index-in-c/">Using foreach with index in C#</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/">Handling type hierarchies in Cosmos DB (part 2)</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/">Handling type hierarchies in Cosmos DB (part 1)</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/">Scaling out ASP.NET Core SignalR using Azure Service Bus</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/">Google&#43; shutdown: fixing Google authentication in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/">Hosting an ASP.NET Core 2 application on a Raspberry Pi</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/03/30/writing-a-github-webhook-as-an-azure-function/">Writing a GitHub Webhook as an Azure Function</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/02/25/better-timeout-handling-with-httpclient/">Better timeout handling with HttpClient</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Automating null checks with Linq expressions | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Automating null checks with Linq expressions" />
+<meta property="og:description" content="The problem Have you ever written code like the following ?
+X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/" />
+<meta property="article:published_time" content="2010-02-21T20:42:58+00:00" />
+<meta property="article:modified_time" content="2010-02-21T20:42:58+00:00" />
+<meta itemprop="name" content="Automating null checks with Linq expressions">
+<meta itemprop="description" content="The problem Have you ever written code like the following ?
+X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.">
+<meta itemprop="datePublished" content="2010-02-21T20:42:58&#43;00:00" />
+<meta itemprop="dateModified" content="2010-02-21T20:42:58&#43;00:00" />
+<meta itemprop="wordCount" content="1023">
+
+
+
+<meta itemprop="keywords" content="C#,expression,linq,null check,proof of concept," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Automating null checks with Linq expressions"/>
+<meta name="twitter:description" content="The problem Have you ever written code like the following ?
+X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/&amp;text=Automating%20null%20checks%20with%20Linq%20expressions" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/&amp;title=Automating%20null%20checks%20with%20Linq%20expressions" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Automating null checks with Linq expressions</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2010-02-21T20:42:58Z">February 21, 2010</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><strong>The problem</strong>  Have you ever written code like the following ?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+X xx = GetX();
+<span style="color:#66d9ef">string</span> name = <span style="color:#e6db74">&#34;Default&#34;</span>;
+<span style="color:#66d9ef">if</span> (xx != <span style="color:#66d9ef">null</span> &amp;&amp; xx.Foo != <span style="color:#66d9ef">null</span> &amp;&amp; xx.Foo.Bar != <span style="color:#66d9ef">null</span> &amp;&amp; xx.Foo.Bar.Baz != <span style="color:#66d9ef">null</span>)
+{
+    name = xx.Foo.Bar.Baz.Name;
+}
+</code></pre></div><p>I bet you have ! You just need to get the value of <code>xx.Foo.Bar.Baz.Name</code>, but you have to test <em>every</em> intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.  <strong>A solution</strong>  Linq offers a very interesting feature which can help solve that problem : expressions. C# 3.0 makes it possible to retrieve the abstract syntax tree (AST) of a lambda expression, and perform all kinds of manipulations on it. It is also possible to dynamically generate an AST, compile it to obtain a delegate, and execute it.  How is this related to the problem described above ? Well, Linq makes it possible to analyse the AST for the expression that accesses the <code>xx.Foo.Bar.Baz.Name</code> property, and rewrite that AST to insert null checks where needed. So we&rsquo;re going to create a <code>NullSafeEval</code> extension method, which takes as a parameter the lambda expression defining how to access a property, and the default value to return if a null object is encountered along the way.  That method will transform the expression <code>xx.Foo.Bar.Baz.Name</code> into that :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+    (xx == <span style="color:#66d9ef">null</span>)
+    ? defaultValue
+    : (xx.Foo == <span style="color:#66d9ef">null</span>)
+      ? defaultValue
+      : (xx.Foo.Bar == <span style="color:#66d9ef">null</span>)
+        ? defaultValue
+        : (xx.Foo.Bar.Baz == <span style="color:#66d9ef">null</span>)
+          ? defaultValue
+          : xx.Foo.Bar.Baz.Name;
+</code></pre></div><p>Here&rsquo;s the implementation of the <code>NullSafeEval</code> method :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TResult NullSafeEval&lt;TSource, TResult&gt;(<span style="color:#66d9ef">this</span> TSource source, Expression&lt;Func&lt;TSource, TResult&gt;&gt; expression, TResult defaultValue)
+        {
+            <span style="color:#66d9ef">var</span> safeExp = Expression.Lambda&lt;Func&lt;TSource, TResult&gt;&gt;(
+                NullSafeEvalWrapper(expression.Body, Expression.Constant(defaultValue)),
+                expression.Parameters[<span style="color:#ae81ff">0</span>]);
+
+            <span style="color:#66d9ef">var</span> safeDelegate = safeExp.Compile();
+            <span style="color:#66d9ef">return</span> safeDelegate(source);
+        }
+
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Expression NullSafeEvalWrapper(Expression expr, Expression defaultValue)
+        {
+            Expression obj;
+            Expression safe = expr;
+
+            <span style="color:#66d9ef">while</span> (!IsNullSafe(expr, <span style="color:#66d9ef">out</span> obj))
+            {
+                <span style="color:#66d9ef">var</span> isNull = Expression.Equal(obj, Expression.Constant(<span style="color:#66d9ef">null</span>));
+
+                safe =
+                    Expression.Condition
+                    (
+                        isNull,
+                        defaultValue,
+                        safe
+                    );
+
+                expr = obj;
+            }
+            <span style="color:#66d9ef">return</span> safe;
+        }
+
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsNullSafe(Expression expr, <span style="color:#66d9ef">out</span> Expression nullableObject)
+        {
+            nullableObject = <span style="color:#66d9ef">null</span>;
+
+            <span style="color:#66d9ef">if</span> (expr <span style="color:#66d9ef">is</span> MemberExpression || expr <span style="color:#66d9ef">is</span> MethodCallExpression)
+            {
+                Expression obj;
+                MemberExpression memberExpr = expr <span style="color:#66d9ef">as</span> MemberExpression;
+                MethodCallExpression callExpr = expr <span style="color:#66d9ef">as</span> MethodCallExpression;
+
+                <span style="color:#66d9ef">if</span> (memberExpr != <span style="color:#66d9ef">null</span>)
+                {
+                    <span style="color:#75715e">// Static fields don&#39;t require an instance
+</span><span style="color:#75715e"></span>                    FieldInfo field = memberExpr.Member <span style="color:#66d9ef">as</span> FieldInfo;
+                    <span style="color:#66d9ef">if</span> (field != <span style="color:#66d9ef">null</span> &amp;&amp; field.IsStatic)
+                        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+
+                    <span style="color:#75715e">// Static properties don&#39;t require an instance
+</span><span style="color:#75715e"></span>                    PropertyInfo property = memberExpr.Member <span style="color:#66d9ef">as</span> PropertyInfo;
+                    <span style="color:#66d9ef">if</span> (property != <span style="color:#66d9ef">null</span>)
+                    {
+                        MethodInfo getter = property.GetGetMethod();
+                        <span style="color:#66d9ef">if</span> (getter != <span style="color:#66d9ef">null</span> &amp;&amp; getter.IsStatic)
+                            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+                    }
+                    obj = memberExpr.Expression;
+                }
+                <span style="color:#66d9ef">else</span>
+                {
+                    <span style="color:#75715e">// Static methods don&#39;t require an instance
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">if</span> (callExpr.Method.IsStatic)
+                        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+
+                    obj = callExpr.Object;
+                }
+
+                <span style="color:#75715e">// Value types can&#39;t be null
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> (obj.Type.IsValueType)
+                    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+
+                <span style="color:#75715e">// Instance member access or instance method call is not safe
+</span><span style="color:#75715e"></span>                nullableObject = obj;
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+            }
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+        }
+</code></pre></div><p>In short, this code walks up the lambda expression tree, and surrounds each property access or instance method call with a conditional expression <em>(condition ? value if true : value if false)</em>.  And here&rsquo;s how we can use this method :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">string</span> name = xx.NullSafeEval(x =&gt; x.Foo.Bar.Baz.Name, <span style="color:#e6db74">&#34;Default&#34;</span>);
+</code></pre></div><p>Much clearer and concise than our initial code, isn&rsquo;t it ? :)  Note that the proposed implementation handles  not only properties, but also method calls, so we could write something like that :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">string</span> name = xx.NullSafeEval(x =&gt; x.Foo.GetBar(<span style="color:#ae81ff">42</span>).Baz.Name, <span style="color:#e6db74">&#34;Default&#34;</span>);
+</code></pre></div><p>Indexers are not handled yet, but they could be added quite easily ; I will leave it to you to do it if you have the use for it ;)  <strong>Limitations</strong>  Even though that solution can seem very interesting at first sight, please read what follows before you integrate this code into a real world program&hellip;</p>
+<ul>
+<li>First, the proposed code is just a proof of concept, and as such, hasn&rsquo;t been thoroughly tested, so it&rsquo;s probably not very reliable.</li>
+<li>Secondly, keep in mind that dynamic code generation from an expression tree is tough work for the CLR, and will have a big impact on performance. A quick test shows that using the <code>NullSafeEval</code> method is about 10000 times slower than accessing the property directly&hellip;<!-- raw HTML omitted --><!-- raw HTML omitted -->A possible approach to limit that issue would be to cache the delegates generated for each expression, to avoid regenerating them every time. Unfortunately, as far as I know there is no simple and reliable way to compare two Linq expressions, which makes it much harder to implement such a cache.</li>
+<li>Last, you might have noticed that intermediate properties and methods are evaluated several times ; not only this is bad for performance, but more importantly, it could have side effects that are hard to predict, depending on how the properties and methods are implemented.<!-- raw HTML omitted --><!-- raw HTML omitted -->A possible workaround would be to rewrite the conditional expression as follows :<!-- raw HTML omitted --><!-- raw HTML omitted --></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+Foo foo = <span style="color:#66d9ef">null</span>;
+Bar bar = <span style="color:#66d9ef">null</span>;
+Baz baz = <span style="color:#66d9ef">null</span>;
+<span style="color:#66d9ef">var</span> name =
+    (x == <span style="color:#66d9ef">null</span>)
+    ? defaultValue
+    : ((foo = x.Foo) == <span style="color:#66d9ef">null</span>)
+      ? defaultValue
+      : ((bar = foo.Bar) == <span style="color:#66d9ef">null</span>)
+        ? defaultValue
+        : ((baz = bar.Baz) == <span style="color:#66d9ef">null</span>)
+          ? defaultValue
+          : baz.Name;
+</code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted -->Unfortunately, this is not possible in .NET 3.5 : that version only supports simple expressions, so it&rsquo;s not possible to declare variables, assign values to them, or write several distinct instructions. However, in .NET 4.0, support for Linq expressions has been largely improved, and makes it possible to generate that kind of code. I&rsquo;m currently trying to improve the <code>NullSafeEval</code> method to take advantage of the new .NET 4.0 features, but it turns out to be much more difficult than I had anticipated&hellip; If I manage to work it out, I&rsquo;ll let you know and post the code !</p>
+<p>To conclude, I wouldn&rsquo;t recommend using that technique in real programs, at least not in its current state. However, it gives an interesting insight on the possibilities offered by Linq expressions. If you&rsquo;re new to this, you should know that Linq expressions are used (among other things) :</p>
+<ul>
+<li>To generate SQL queries in ORMs like Linq to SQL or Entity Framework</li>
+<li>To build complex predicates dynamically, like in the <a href="http://www.albahari.com/nutshell/predicatebuilder.aspx">PredicateBuilder</a> class by Joseph Albahari</li>
+<li>To implement &ldquo;static reflection&rdquo;, which has generated <a href="http://www.google.com/search?tbo=1&amp;tbs=blg:1&amp;q=static+reflection">a lot of buzz on technical blogs</a> lately</li>
+</ul>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/c" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">C#</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/expression" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">expression</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/linq" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">linq</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/null-check" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">null check</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/proof-of-concept" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">proof of concept</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2009/06/12/c-parentchild-relationship-and-xml-serialization/">[C#] Parent/child relationship and XML serialization</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Google&#43; shutdown: fixing Google authentication in ASP.NET Core | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Google&#43; shutdown: fixing Google authentication in ASP.NET Core" />
+<meta property="og:description" content="A few months ago, Google decided to shutdown Google&#43;, due to multiple data leaks. More recently, they announced that the Google&#43; APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2019/01/10/google-shutdown-fixing-google-authentication-in-asp.net-core/" />
+<meta property="article:published_time" content="2019-01-10T13:15:34+00:00" />
+<meta property="article:modified_time" content="2019-01-10T13:15:34+00:00" />
+<meta itemprop="name" content="Google&#43; shutdown: fixing Google authentication in ASP.NET Core">
+<meta itemprop="description" content="A few months ago, Google decided to shutdown Google&#43;, due to multiple data leaks. More recently, they announced that the Google&#43; APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP.">
+<meta itemprop="datePublished" content="2019-01-10T13:15:34&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-10T13:15:34&#43;00:00" />
+<meta itemprop="wordCount" content="597">
+
+
+
+<meta itemprop="keywords" content="asp.net core,Authentication,google,OpenId Connect," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Google&#43; shutdown: fixing Google authentication in ASP.NET Core"/>
+<meta name="twitter:description" content="A few months ago, Google decided to shutdown Google&#43;, due to multiple data leaks. More recently, they announced that the Google&#43; APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2019/01/10/google-shutdown-fixing-google-authentication-in-asp.net-core/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2019/01/10/google-shutdown-fixing-google-authentication-in-asp.net-core/&amp;text=Google&#43;%20shutdown:%20fixing%20Google%20authentication%20in%20ASP.NET%20Core" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2019/01/10/google-shutdown-fixing-google-authentication-in-asp.net-core/&amp;title=Google&#43;%20shutdown:%20fixing%20Google%20authentication%20in%20ASP.NET%20Core" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Google&#43; shutdown: fixing Google authentication in ASP.NET Core</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-01-10T13:15:34Z">January 10, 2019</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that <a href="https://developers.google.com/+/api-shutdown">the Google+ APIs will be shutdown</a> on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP.NET Core app, think again! The built-in Google authentication provider (<code>services.AddAuthentication().AddGoogle(...)</code>) uses a Google+ API to retrieve information about the signed-in user, which will soon stop working. You can read the details in <a href="https://github.com/aspnet/AspNetCore/issues/6069">this Github thread</a>. <em>Note that it also affects classic ASP.NET MVC</em>.</p>
+<h2 id="ok-now-im-listening-how-do-i-fix-it">OK, now I&rsquo;m listening. How do I fix it?</h2>
+<p>Fortunately, it&rsquo;s not too difficult to fix. There&rsquo;s already a <a href="https://github.com/aspnet/AspNetCore/pull/6338">pull request</a> to fix it in ASP.NET Core, and hopefully an update will be released soon. In the meantime, you can either:</p>
+<ul>
+<li>use the workaround <a href="https://github.com/aspnet/AspNetCore/issues/6069#issuecomment-449461197">described here</a>, which basically specifies a different user information endpoint and adjusts the JSON mappings.</li>
+<li>or use the generic OpenID Connect authentication provider instead, which I think is better than the built-in provider anyway, because you can get all the necessary information directly from the ID token, without making an extra API call.</li>
+</ul>
+<h2 id="using-openid-connect-to-authenticate-with-google">Using OpenID Connect to authenticate with Google</h2>
+<p>So, let&rsquo;s see how to change our app to use the OpenID Connect provider instead of the built-in Google provider, and configure it to get the same results as before.</p>
+<p>First, let&rsquo;s install the <code>Microsoft.AspNetCore.Authentication.OpenIdConnect</code> NuGet package to the project, if it&rsquo;s not already there.</p>
+<p>Then, we go to the place where we add the built-in Google provider (the call to <code>AddGoogle</code>, usually in the <code>Startup</code> class), and remove that call.</p>
+<p>Instead, we add the OpenID Connect provider, point it to the Google OpenID Connect authority URL, and set the client id (the same that we were using for the built-in Google provider):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+services
+    .AddAuthentication()
+    .AddOpenIdConnect(
+        authenticationScheme: <span style="color:#e6db74">&#34;Google&#34;</span>,
+        displayName: <span style="color:#e6db74">&#34;Google&#34;</span>,
+        options =&gt;
+        {
+            options.Authority = <span style="color:#e6db74">&#34;https://accounts.google.com/&#34;</span>;
+            options.ClientId = configuration[<span style="color:#e6db74">&#34;Authentication:Google:ClientId&#34;</span>];
+        });
+</code></pre></div><p>We also need to adjust the callback path to be the same as before, so that the redirect URI configured for the Google app still works; and while we&rsquo;re at it, let&rsquo;s also configure the signout paths.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+options.CallbackPath = <span style="color:#e6db74">&#34;/signin-google&#34;</span>;
+options.SignedOutCallbackPath = <span style="color:#e6db74">&#34;/signout-callback-google&#34;</span>;
+options.RemoteSignOutPath = <span style="color:#e6db74">&#34;/signout-google&#34;</span>;
+</code></pre></div><p>The default configuration already includes the <code>openid</code> and <code>profile</code> scopes, but if we want to have access to the user&rsquo;s email address as we did before, we also need to add the <code>email</code> scope:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+options.Scope.Add(<span style="color:#e6db74">&#34;email&#34;</span>);
+</code></pre></div><p>And that&rsquo;s it! Everything should work as it did before. Here&rsquo;s a <a href="https://gist.github.com/thomaslevesque/fe2cb14377e30833484f75ac416134bb">Gist</a> that shows the code before and after the change.</p>
+<h2 id="hey-wheres-the-client-secret">Hey, where&rsquo;s the client secret?</h2>
+<p>You might have noticed that we didn&rsquo;t specify the client secret. Why is this?</p>
+<p>The built-in Google provider is actually just a generic OAuth provider with Google-specific configuration. It uses the authorization code flow, which requires the client secret to exchange the authorization code for an access token, which in turn is used to call the user information endpoint.</p>
+<p>But by default the OpenId Connect provider uses the implicit flow. There isn&rsquo;t an authorization code: an <code>id_token</code> is provided directly to the <code>redirect_uri</code>, and there&rsquo;s no need to call any API, so no secret is needed. If, for some reason, you don&rsquo;t want to use the implicit flow, just change <code>options.ResponseType</code> to <code>code</code> (the default is <code>id_token</code>), and set <code>options.ClientSecret</code> as appropriate. You should also set <code>options.GetClaimsFromUserInfoEndpoint</code> to true to get the user details (name, email&hellip;), since you won&rsquo;t have an <code>id_token</code> to get them from.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/asp.net-core" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">asp.net core</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/authentication" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Authentication</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/google" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">google</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/openid-connect" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">OpenId Connect</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp.net-core/">Multitenant Azure AD issuer validation in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/09/25/asynchronous-initialization-in-asp.net-core-revisited/">Asynchronous initialization in ASP.NET Core, revisited</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp.net-core/">Handling multipart requests with JSON and file uploads in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/07/20/asynchronous-initialization-in-asp.net-core-with-custom-middleware/">Asynchronous initialization in ASP.NET Core with custom middleware</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/04/17/hosting-an-asp.net-core-2-application-on-a-raspberry-pi/">Hosting an ASP.NET Core 2 application on a Raspberry Pi</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/03/27/understanding-the-asp.net-core-middleware-pipeline/">Understanding the ASP.NET Core middleware pipeline</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

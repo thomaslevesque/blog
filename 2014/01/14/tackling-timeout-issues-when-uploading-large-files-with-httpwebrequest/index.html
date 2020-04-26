@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Tackling timeout issues when uploading large files with HttpWebRequest | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Tackling timeout issues when uploading large files with HttpWebRequest" />
+<meta property="og:description" content="If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/" />
+<meta property="article:published_time" content="2014-01-14T00:47:24+00:00" />
+<meta property="article:modified_time" content="2014-01-14T00:47:24+00:00" />
+<meta itemprop="name" content="Tackling timeout issues when uploading large files with HttpWebRequest">
+<meta itemprop="description" content="If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?">
+<meta itemprop="datePublished" content="2014-01-14T00:47:24&#43;00:00" />
+<meta itemprop="dateModified" content="2014-01-14T00:47:24&#43;00:00" />
+<meta itemprop="wordCount" content="838">
+
+
+
+<meta itemprop="keywords" content="HttpWebRequest,timeout,upload," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Tackling timeout issues when uploading large files with HttpWebRequest"/>
+<meta name="twitter:description" content="If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/&amp;text=Tackling%20timeout%20issues%20when%20uploading%20large%20files%20with%20HttpWebRequest" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/&amp;title=Tackling%20timeout%20issues%20when%20uploading%20large%20files%20with%20HttpWebRequest" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Tackling timeout issues when uploading large files with HttpWebRequest</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2014-01-14T00:47:24Z">January 14, 2014</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default <code>Timeout</code> value for <code>HttpWebRequest</code> is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?  If you know the available bandwidth, you could calculate a rough estimate of how long it should take to upload the file, but it’s not very reliable, because if there is some network congestion, it will take longer, and your request will fail even though it could have succeeded given enough time. So, should you set the timeout to a very large value, like several hours, or even <a href="http://msdn.microsoft.com/en-us/library/system.threading.timeout.infinite.aspx">Timeout.Infinite</a>? Probably not. The most compelling reason is that even though the transfer itself could take hours, some phases of the exchange shouldn’t take that long. Let’s decompose the phases of an HTTP upload:  <img src="timeout1.png" alt="timeout1" title="timeout1">  Obtaining the request stream or getting the response (orange parts) isn’t supposed to take very long, so obviously we need a rather short timeout there (the default value of 100 seconds seems reasonable). But sending the request body (blue part) could take much longer, and there is no reliable way  to decide how long that should be; as long as we keep sending data and the server is receiving it, there is no reason not to continue, even if it’s taking hours. So we actually don’t want a timeout at all there! Unfortunately, the behavior of the <code>Timeout</code> property is to consider everything from the call to <code>GetRequestStream</code> to the return of <code>GetResponse</code>…  In my opinion, it’s a design flaw of the <code>HttpWebRequest</code> class, and one that has bothered me for a very long time. So I eventually came up with a solution. It relies on the fact that the asynchronous versions of <code>GetRequestStream</code> and <code>GetResponse</code> don’t have a timeout mechanism. Here’s what the documentation says:</p>
+<blockquote>
+<p>*The Timeout property has no effect on asynchronous requests made with the BeginGetResponse or BeginGetRequestStream method.*<em>In the case of asynchronous requests, the client application implements its own time-out mechanism. Refer to the example in the BeginGetResponse method.</em></p>
+</blockquote>
+<p>So, a solution could be to to use these methods directly (or the new <code>Task</code>-based versions: <code>GetRequestStreamAsync</code> and <code>GetResponseAsync</code>); but more often than not, you already have an existing code base that uses the synchronous methods, and changing the code to make it fully asynchronous is usually not trivial. So, the easy approach is to create synchronous wrappers around <code>BeginGetRequestStream</code> and <code>BeginGetResponse</code>, with a way to specify a timeout for these operations:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebRequestExtensions</span>
+    {
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Stream GetRequestStreamWithTimeout(
+            <span style="color:#66d9ef">this</span> WebRequest request,
+            <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
+        {
+            <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
+                request.BeginGetRequestStream,
+                request.EndGetRequestStream,
+                millisecondsTimeout ?? request.Timeout);
+        }
+
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> WebResponse GetResponseWithTimeout(
+            <span style="color:#66d9ef">this</span> HttpWebRequest request,
+            <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
+        {
+            <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
+                request.BeginGetResponse,
+                request.EndGetResponse,
+                millisecondsTimeout ?? request.Timeout);
+        }
+
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> T AsyncToSyncWithTimeout&lt;T&gt;(
+            Func&lt;AsyncCallback, <span style="color:#66d9ef">object</span>, IAsyncResult&gt; begin,
+            Func&lt;IAsyncResult, T&gt; end,
+            <span style="color:#66d9ef">int</span> millisecondsTimeout)
+        {
+            <span style="color:#66d9ef">var</span> iar = begin(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>);
+            <span style="color:#66d9ef">if</span> (!iar.AsyncWaitHandle.WaitOne(millisecondsTimeout))
+            {
+                <span style="color:#66d9ef">var</span> ex = <span style="color:#66d9ef">new</span> TimeoutException();
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> WebException(ex.Message, ex, WebExceptionStatus.Timeout, <span style="color:#66d9ef">null</span>);
+            }
+            <span style="color:#66d9ef">return</span> end(iar);
+        }
+    }
+</code></pre></div><p>(note that I used the Begin/End methods rather than the Async methods, in order to keep compatibility with older versions of .NET)  These extension methods can be used instead of <code>GetRequestStream</code> and <code>GetResponse</code>; each of them will timeout if they take too long, but once you have the request stream, you can take as long as you want to upload the data. Note that the stream itself has its own read and write timeout (5 minutes by default), so if 5 minutes go by without any data being uploaded, the Write method will cause an exception. Here is the new upload scenario using these methods:  <img src="timeout2.png" alt="timeout2" title="timeout2">  As you can see, the only difference is that the timeout doesn&rsquo;t apply anymore to the transfer of the request body, but only to obtaining the request stream and getting the response. Here’s a full example that corresponds to the scenario above:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">long</span> UploadFile(<span style="color:#66d9ef">string</span> path, <span style="color:#66d9ef">string</span> url, <span style="color:#66d9ef">string</span> contentType)
+{
+    <span style="color:#75715e">// Build request
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> request = (HttpWebRequest)WebRequest.Create(url);
+    request.Method = WebRequestMethods.Http.Post;
+    request.AllowWriteStreamBuffering = <span style="color:#66d9ef">false</span>;
+    request.ContentType = contentType;
+    <span style="color:#66d9ef">string</span> fileName = Path.GetFileName(path);
+    request.Headers[<span style="color:#e6db74">&#34;Content-Disposition&#34;</span>] = <span style="color:#66d9ef">string</span>.Format(<span style="color:#e6db74">&#34;attachment; filename=\&#34;{0}\&#34;&#34;</span>, fileName);
+    
+    <span style="color:#66d9ef">try</span>
+    {
+        <span style="color:#75715e">// Open source file
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> fileStream = File.OpenRead(path))
+        {
+            <span style="color:#75715e">// Set content length based on source file length
+</span><span style="color:#75715e"></span>            request.ContentLength = fileStream.Length;
+            
+            <span style="color:#75715e">// Get the request stream with the default timeout
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> requestStream = request.GetRequestStreamWithTimeout())
+            {
+                <span style="color:#75715e">// Upload the file with no timeout
+</span><span style="color:#75715e"></span>                fileStream.CopyTo(requestStream);
+            }
+        }
+        
+        <span style="color:#75715e">// Get response with the default timeout, and parse the response body
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> response = request.GetResponseWithTimeout())
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> responseStream = response.GetResponseStream())
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> reader = <span style="color:#66d9ef">new</span> StreamReader(responseStream))
+        {
+            <span style="color:#66d9ef">string</span> json = reader.ReadToEnd();
+            <span style="color:#66d9ef">var</span> j = JObject.Parse(json);
+            <span style="color:#66d9ef">return</span> j.Value&lt;<span style="color:#66d9ef">long</span>&gt;(<span style="color:#e6db74">&#34;Id&#34;</span>);
+        }
+    }
+    <span style="color:#66d9ef">catch</span> (WebException ex)
+    {
+        <span style="color:#66d9ef">if</span> (ex.Status == WebExceptionStatus.Timeout)
+        {
+            LogError(ex, <span style="color:#e6db74">&#34;Timeout while uploading &#39;{0}&#39;&#34;</span>, fileName);
+        }
+        <span style="color:#66d9ef">else</span>
+        {
+            LogError(ex, <span style="color:#e6db74">&#34;Error while uploading &#39;{0}&#39;&#34;</span>, fileName);
+        }
+        <span style="color:#66d9ef">throw</span>;
+    }
+}
+</code></pre></div><p>I hope you will find this helpful!</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/httpwebrequest" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">HttpWebRequest</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/timeout" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">timeout</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/upload" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">upload</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

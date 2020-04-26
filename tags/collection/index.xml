@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>collection on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/collection/</link>
+    <description>Recent content in collection on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 Nov 2011 13:09:45 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/collection/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[C#] Parent/child relationship and XML serialization</title>
+      <link>https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/</link>
+      <pubDate>Fri, 12 Jun 2009 10:18:22 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/</guid>
+      <description>Today I&amp;rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&amp;rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).</description>
+    </item>
+    
+    <item>
+      <title>[WPF] Binding to an asynchronous collection</title>
+      <link>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</link>
+      <pubDate>Fri, 17 Apr 2009 01:00:19 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
+      <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
+ This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
+ To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
+    </item>
+    
+  </channel>
+</rss>

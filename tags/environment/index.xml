@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>environment on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/environment/</link>
+    <description>Recent content in environment on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 20 Dec 2019 11:33:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/environment/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ASP.NET Core: when environments are not enough, use sub-environments!</title>
+      <link>https://blog2.thomaslevesque.net/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</link>
+      <pubDate>Fri, 20 Dec 2019 11:33:00 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
+      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
+ appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
+    </item>
+    
+  </channel>
+</rss>

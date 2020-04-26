@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>A review of NDepend | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="A review of NDepend" />
+<meta property="og:description" content="I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.
+NDepend is a static analysis tool for .NET that checks your code base against a large set of rules that fall in various categories, such as code quality, object-oriented design, architecture, naming conventions, etc. All of these rules are completely customizable." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/" />
+<meta property="article:published_time" content="2014-07-30T18:20:44+00:00" />
+<meta property="article:modified_time" content="2014-07-30T18:20:44+00:00" />
+<meta itemprop="name" content="A review of NDepend">
+<meta itemprop="description" content="I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.
+NDepend is a static analysis tool for .NET that checks your code base against a large set of rules that fall in various categories, such as code quality, object-oriented design, architecture, naming conventions, etc. All of these rules are completely customizable.">
+<meta itemprop="datePublished" content="2014-07-30T18:20:44&#43;00:00" />
+<meta itemprop="dateModified" content="2014-07-30T18:20:44&#43;00:00" />
+<meta itemprop="wordCount" content="1500">
+
+
+
+<meta itemprop="keywords" content="architecture,code analysis,ndepend,review," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="A review of NDepend"/>
+<meta name="twitter:description" content="I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.
+NDepend is a static analysis tool for .NET that checks your code base against a large set of rules that fall in various categories, such as code quality, object-oriented design, architecture, naming conventions, etc. All of these rules are completely customizable."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/&amp;text=A%20review%20of%20NDepend" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/&amp;title=A%20review%20of%20NDepend" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">A review of NDepend</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2014-07-30T18:20:44Z">July 30, 2014</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>I’ve been hearing quite a lot about <a href="http://www.ndepend.com/">NDepend</a> over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.</p>
+<p>NDepend is a static analysis tool for .NET that checks your code base against a large set of rules that fall in various categories, such as code quality, object-oriented design, architecture, naming conventions, etc. All of these rules are completely customizable. It can be used as a standalone tool, or as a Visual Studio extension; there is also a command-line tool to integrate in the build process.</p>
+<p>I should note that it’s the first time I write a software review, so this exercise is completely new to me. Although I was offered a free license, I’m not affiliated with NDepend in any way, and I’ll do my best to be as fair and unbiased as possible.</p>
+<h2 id="setup-experience">Setup experience</h2>
+<p>NDepend doesn’t have an installer: it’s just a zip file that you extract into a folder. From there you can run the standalone tool (<em>VisualNDepend.exe</em>), and install the VS plugin (<em>NDepend.Install.VisualStudioAddin.exe</em>).</p>
+<p>There is no UI to enter the license key either; you just drop the <em>NDependProLicense.xml</em> file into the NDepend folder.</p>
+<p>Admittedly, this tool is intended for professional developers who shouldn’t have any problem with those steps, so it’s not that big a deal, but a more streamlined setup experience would have been nicer.</p>
+<h3 id="ui">UI</h3>
+<p>Perhaps it’s just me, but I found the UI a little confusing; there are just too many windows and tooltips that pop open all the time (I used the tool mostly as a VS extension). NDepend needs <em>a lot</em> of screen space to work comfortably, and at home I only have one screen with a lower-than-average resolution, which made it a bit awkward to use for me.</p>
+<p>To be fair, the Dashboard gives a pretty good overview of the project. In the VS extension, there is also an icon in the status bar that lets you see at a glance the code queries and rule violations (click the images to enlarge).</p>
+<p><img src="image7.png" alt="image" title="image"><img src="image8.png" alt="image" title="image"></p>
+<p>You can also view a full report that is rendered as webpage and contains a lot of relevant information about your project.</p>
+<p><img src="image1.png" alt="image" title="image"></p>
+<p>This report can be customized to your specific needs in the NDepend project properties.</p>
+<h3 id="code-queries-and-rules">Code queries and rules</h3>
+<p>This is, in my opinion, the best thing about NDepend : the code inspection engine is extremely powerful and customizable. NDepend comes with a lot of default rules :</p>
+<p><img src="image2.png" alt="image" title="image"></p>
+<p>(in this screenshot I have already fixed all warnings, so all rules show a count of 0)</p>
+<p>These rules are defined using a domain specific language called CQLinq, which allows you to write complex queries about your code using the familiar Linq syntax. For instance, here’s a simple one that checks for namespaces with few types:</p>
+<p><img src="image3.png" alt="image" title="image"></p>
+<p>The default rules often come with comments that give more information about the rule and explain why it’s relevant. As you can see, the code is mostly standard Linq, and the editor has syntax highlighting and Intellisense. NDepend’s code model includes about everything you could expect (classes, methods, etc), but also a lot of extra information like cyclomatic complexity, number of IL instructions, dependencies between classes or namespaces, etc. The result presentation is quite smart; depending on the output of the query, it shows namespaces, types or members organized by assembly. Result columns that contain lists can be clicked to view the elements of the list, and a click on a code item jumps to the location in code.</p>
+<p>Each rule can be enabled or disabled, or set as critical or not. You can modify the default rules, or create your own. Note that rules don’t have to be warnings: you can create a code query that just reports information about your code:</p>
+<p><img src="image4.png" alt="image" title="image"></p>
+<p>So as you can see, CQLinq is a powerful way to check just about any design rule you care to enforce about your code.</p>
+<p>Of course, the feature is not perfect… Here are a few downsides:</p>
+<ul>
+<li>There are <em>a lot</em> of default rules. Arguably, that could also be counted as a quality, but the first time you run NDepend on your project, the sheer number of reported rule violations is quite overwhelming, and usually you don’t really care about most of them. So you have to spend quite a long time reviewing the results to decide which rules you really care about, which ones need to be adjusted to your need, etc. When I did it on a rather small project, it took me 2 hours to fix all warnings; not because I had a lot of things to fix in my code, but because I had a lot of things to fix in the rules! I’m not saying my code was perfect, obviously, and NDepend did help me find and fix a few issues, but many of the rules weren’t really relevant in my specific project. So, if you use NDepend, expect to spend a lot of time adjusting the rules to your needs; once you do that, the tool will really shine, and the analysis results will be a lot more useful to you.</li>
+<li>There is no easy way to “suppress” a specific occurrence of a rule violation. For instance, in ReSharper you can suppress a warning with a special comment (and the quick fix menu lets you add that comment automatically); in FxCop, you can apply the <code>[SuppressMessage]</code> attribute to a type or member. There is nothing like that in NDepend; if you want to exclude a code item from a rule, you have to modify the code of the CQLinq query itself. Given the flexibility of the query language, it’s understandable that there is no generic way to suppress warnings, but still, it’s annoying; it also means that you can’t just reuse the exact same queries in other projects. There is however a nice feature that partly counterbalances the lack of a generic suppression mechanism: the JustMyCode context. It defines a “view” of the code that only includes your own code, not the code generated by designers or by the compiler. So you can query against the JustMyCode context to ignore rule violations in code that you didn’t write, and you can customize what is considered “not your code” using the same CQLinq syntax.</li>
+<li>Queries that take IL statistics (number of IL instructions, IL cyclomatic complexity, etc) into account are often biased by complex code constructs such as iterator blocks, anonymous methods or async methods, which results in false positives. Some methods are complex at the IL level, and reported as such, even though the original C# code is rather straightforward.</li>
+</ul>
+<h3 id="dependency-management">Dependency management</h3>
+<p>I guess that’s the feature that gave the tool its name, even though now it does much more than that… NDepend can give you very detailed information about dependencies between assemblies and namespaces (your own, as well as framework or third party assemblies). The dependencies can be viewed as a directed graph:</p>
+<p><img src="image5.png" alt="image" title="image"></p>
+<p>Or as a matrix:</p>
+<p><img src="image6.png" alt="image" title="image"></p>
+<p>Both views are interactive; the matrix view can even be “drilled down” to view dependencies at a lower level.</p>
+<p>I didn’t really take advantage of the dependency-related features, because I only tested NDepend on simple projects, but they can certainly be very useful in large solutions to eliminate unwanted coupling between different parts of the code.</p>
+<h3 id="code-evolution-analysis">Code evolution analysis</h3>
+<p>NDepend also lets you to compare analysis results between builds. Basically, you set a baseline for the comparison, and it gives you trends to measure the progress of various code metrics over time. I didn’t use this feature myself so I can’t really talk in detail about it, but its usefulness is quite obvious for large projects as it lets you see which aspects are improving or worsening, allowing you to refocus the team’s efforts as necessary.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>I have to say that I’m very impressed by NDepend’s analysis engine; it’s incredibly powerful, and the fact that the rules are completely customizable opens a world of possibilities. I love the fact that I can just write a simple Linq query to find all classes or methods that match certain criteria. Regarding the other features, like dependency management, I’m sure they can be very useful, but most of the projects I work on are rather small, so dependencies are usually not a major issue for me.</p>
+<p>The way I see it, NDepend is a great tool to keep close tabs on the architecture of large projects, but is probably overkill for small projects. It’s also very useful if you need to enforce strict design guidelines across a large code base; obviously, it won’t completely replace code review, but it can certainly be a big help in the review process.</p>
+<p>In any case, NDepend has a lot of obvious qualities, but it’s probably not the right tool for everyone. The only way to decide if you need it or not is to <a href="http://www.ndepend.com/NDependDownload.aspx">try it for yourself</a>, and see how it works out for you!</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/architecture" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">architecture</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/code-analysis" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">code analysis</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/ndepend" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">ndepend</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/review" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">review</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

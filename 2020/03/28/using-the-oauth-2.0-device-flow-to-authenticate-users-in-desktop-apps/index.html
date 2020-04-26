@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Using the OAuth 2.0 device flow to authenticate users in desktop apps | Thomas Levesque .NET Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Using the OAuth 2.0 device flow to authenticate users in desktop apps" />
+<meta property="og:description" content="Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
+Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2.0-device-flow-to-authenticate-users-in-desktop-apps/" />
+<meta property="article:published_time" content="2020-03-28T16:44:40+00:00" />
+<meta property="article:modified_time" content="2020-03-28T16:44:40+00:00" />
+<meta itemprop="name" content="Using the OAuth 2.0 device flow to authenticate users in desktop apps">
+<meta itemprop="description" content="Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
+Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:">
+<meta itemprop="datePublished" content="2020-03-28T16:44:40&#43;00:00" />
+<meta itemprop="dateModified" content="2020-03-28T16:44:40&#43;00:00" />
+<meta itemprop="wordCount" content="1650">
+
+
+
+<meta itemprop="keywords" content=".NET,Authentication,Azure AD,C#,device flow,OAuth 2.0,OpenId Connect," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Using the OAuth 2.0 device flow to authenticate users in desktop apps"/>
+<meta name="twitter:description" content="Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
+Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Thomas Levesque .NET Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2.0-device-flow-to-authenticate-users-in-desktop-apps/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2.0-device-flow-to-authenticate-users-in-desktop-apps/&amp;text=Using%20the%20OAuth%202.0%20device%20flow%20to%20authenticate%20users%20in%20desktop%20apps" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2.0-device-flow-to-authenticate-users-in-desktop-apps/&amp;title=Using%20the%20OAuth%202.0%20device%20flow%20to%20authenticate%20users%20in%20desktop%20apps" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Using the OAuth 2.0 device flow to authenticate users in desktop apps</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-03-28T16:44:40Z">March 28, 2020</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…</p>
+<h2 id="authorization-code-flow">Authorization code flow</h2>
+<p>OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:</p>
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc6749#section-1.3.3">Resource Owner Password Credentials</a></li>
+<li><a href="https://tools.ietf.org/html/rfc6749#section-1.3.1">Authorization Code</a></li>
+</ul>
+<p>The password flow is pretty easy to use (basically, just exchange the user&rsquo;s login and password for a token), but it requires that the client app is highly trusted, since it gets to manipulate the user&rsquo;s credentials directly. This flow is now <a href="https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13#section-3.4">disallowed by OAuth 2.0 Security Best Current Practice</a>.</p>
+<p>The authorization code flow is a bit more complex, but has the advantage that the client application never sees the user&rsquo;s password. The problem is that it requires web navigation with a redirection to the client application, which isn&rsquo;t very practical in a desktop app. There are ways to achieve this, but none of them is perfect. Here are two common ones:</p>
+<ul>
+<li>Open the authorization page in a WebView, and intercept the navigation to the redirect URI to get the authorization code. Not great, because the app <em>could</em> get the credentials from the WebView (at least on some platforms), and it requires that the WebView supports intercepting the navigation (probably not possible on some platforms).</li>
+<li>Open the authorization page in the default web browser, and use an application protocol (e.g. <code>myapp://auth</code>) associated with the client application for the redirect URI. Unfortunately, a recent Chrome update made this approach impractical, because it <a href="https://support.google.com/chrome/thread/14193532?hl=en&amp;msgid=14879873">always prompts the user</a> to open the URL in the client application.</li>
+</ul>
+<p>In addition, in order to protect against certain attack vectors, it&rsquo;s recommended to use the <a href="https://tools.ietf.org/html/rfc7636">PKCE</a> extension when using the authorization code grant, which contributes to make the implementation more complex.</p>
+<p>Finally, many identity providers require that the client authenticates with its client secret when calling the token endpoint, even though it&rsquo;s not required by the spec (it&rsquo;s only required for confidential clients). This is problematic, since the client app will probably be installed on many machines, and is definitely <em>not</em> a confidential client. The user could easily extract the client secret, which is therefore no longer secret.</p>
+<h2 id="an-easier-way--device-flow">An easier way : device flow</h2>
+<p>Enter device flow (or, more formally, <a href="https://tools.ietf.org/html/rfc8628">device authorization grant</a>). Device flow is a relatively recent addition to OAuth 2.0 (the first draft was published in 2016), and was designed for connected devices that don&rsquo;t have a browser or have limited user input capabilities. How would you authenticate on such a device if you don&rsquo;t have a keyboard? Well, it&rsquo;s easy: do it on <em>another</em> device! Basically, when you need to authenticate, the device will display a URL and a code (it could also display a QR code to avoid having to copy the URL), and start polling the identity provider to ask if authentication is complete. You navigate to the URL in the browser on your phone or computer, log in when prompted to, and enter the code. When you&rsquo;re done, the next time the device polls the IdP, it will receive a token: the flow is complete. The <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code">Azure AD documentation</a> has a nice sequence diagram that helps understand the flow.</p>
+<p>When you think of it, this approach is quite simple, and more straightforward than the more widely used redirection-based flows (authorization code and implicit flow). But what does it have to do with desktop apps, you ask? Well, just because it was designed for input constrained devices doesn&rsquo;t mean you can&rsquo;t use it on a full-fledged computer. As discussed earlier, the redirection-based flows are impractical to use in non-web applications; the device flow doesn&rsquo;t have this problem.</p>
+<p>In practice, the client application can directly open the authentication page in the browser, with the code as a query parameter, so the user doesn&rsquo;t need to copy them. The user just needs to sign in with the IdP, give their consent for the application, and it&rsquo;s done. Of course, if the user is already signed in with the IdP and has already given their consent, the flow completes immediately.</p>
+<p>The device flow is not very commonly used in desktop apps yet, but you can see it in action in the Azure CLI, when you do <code>az login</code>.</p>
+<h2 id="a-simple-implementation">A simple implementation</h2>
+<p>OK, this post has been a little abstract so far, so let&rsquo;s build something! We&rsquo;re going to create a simple console app that authenticates a user using the device flow.</p>
+<p>In this example, I use Azure AD as the identity provider, because it&rsquo;s easy and doesn&rsquo;t require any setup (of course, you could also do this with your IdP of choice, like Auth0, Okta, a custom IdP based on IdentityServer, etc.). Head to the Azure Portal, in the <em>Azure Active Directory</em> blade, <em>App registrations</em> tab. Create a new registration, give it any name you like, and select <em>&ldquo;Accounts in this organizational directory only (Default directory only - Single tenant)&quot;</em> for the <em>Supported Account Types</em> (it would also work in multi-tenant mode, of course, but let&rsquo;s keep things simple for now). Also enter a redirect URI for a public client. It shouldn&rsquo;t be necessary for the device flow, and it won&rsquo;t actually be used, but for some reason, authentication will fail if it&rsquo;s not defined… one of Azure AD&rsquo;s quirks, I guess.</p>
+<p><img src="app-registration.png" alt="App registration"></p>
+<p>Now, go to the <em>Authentication</em> tab of the app, in the <em>Advanced settings</em> section, and set <em>Treat application as a public client</em> to <em>Yes</em>.</p>
+<p><img src="public-client.png" alt="Public client"></p>
+<p>And that&rsquo;s all for the app registration part. Just take note of these values in the app&rsquo;s <em>Overview</em> tab:</p>
+<ul>
+<li><em>Application ID</em> (client ID in OAuth terminology)</li>
+<li><em>Directory ID</em> (a.k.a. tenant ID; this is your Azure AD tenant)</li>
+</ul>
+<p>Now, in our program, the first step is to issue a request to the device code endpoint to start the authorization flow. The <a href="https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration">OpenID Connect discovery document</a> on Azure AD is incomplete and doesn&rsquo;t mention the device code endpoint, but it can be found in the documentation. We need to send the client id of our application and the requested scopes. In this case, we use <code>openid</code>, <code>profile</code> and <code>offline_access</code> (to get a refresh token), but in real-world scenario you&rsquo;ll probably need an API scope as well.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> TenantId = <span style="color:#e6db74">&#34;&lt;your tenant id&gt;&#34;</span>;
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> ClientId = <span style="color:#e6db74">&#34;&lt;your client id&gt;&#34;</span>;
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;DeviceAuthorizationResponse&gt; StartDeviceFlowAsync(HttpClient client)
+{
+    <span style="color:#66d9ef">string</span> deviceEndpoint = <span style="color:#e6db74">$&#34;https://login.microsoftonline.com/{TenantId}/oauth2/v2.0/devicecode&#34;</span>;
+    <span style="color:#66d9ef">var</span> request = <span style="color:#66d9ef">new</span> HttpRequestMessage(HttpMethod.Post, deviceEndpoint)
+    {
+        Content = <span style="color:#66d9ef">new</span> FormUrlEncodedContent(<span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;
+        {
+<span style="color:#a6e22e">            [&#34;client_id&#34;]</span> = ClientId,
+<span style="color:#a6e22e">            [&#34;scope&#34;]</span> = <span style="color:#e6db74">&#34;openid profile offline_access&#34;</span>
+        })
+    };
+    <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.SendAsync(request);
+    response.EnsureSuccessStatusCode();
+    <span style="color:#66d9ef">var</span> json = <span style="color:#66d9ef">await</span> response.Content.ReadAsStringAsync();
+    <span style="color:#66d9ef">return</span> JsonSerializer.Deserialize&lt;DeviceAuthorizationResponse&gt;(json);
+}
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DeviceAuthorizationResponse</span>
+{
+<span style="color:#a6e22e">    [JsonPropertyName(&#34;device_code&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> DeviceCode { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;user_code&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserCode { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;verification_uri&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> VerificationUri { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;expires_in&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ExpiresIn { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;interval&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Interval { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+}
+</code></pre></div><p>Let&rsquo;s call this method and open the <code>verification_uri</code> from the response in the browser. The user will need to enter the <code>user_code</code> in the authorization page.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">using</span> var client = <span style="color:#66d9ef">new</span> HttpClient();
+<span style="color:#66d9ef">var</span> authorizationResponse = <span style="color:#66d9ef">await</span> StartDeviceFlowAsync(client);
+Console.WriteLine(<span style="color:#e6db74">&#34;Please visit this URL: &#34;</span> + authorizationResponse.VerificationUri);
+Console.WriteLine(<span style="color:#e6db74">&#34;And enter the following code: &#34;</span> + authorizationResponse.UserCode);
+OpenWebPage(authorizationResponse.VerificationUri);
+</code></pre></div><p>This opens the following page:</p>
+<p><img src="enter-user-code.png" alt="Enter user code"></p>
+<p><strong>Note:</strong> the specs for the device flow mention an optional <code>verification_uri_complete</code> property in the authorization response, which includes the <code>user_code</code>. Unfortunately, this is not supported by Azure AD, so the user has to enter the code manually.</p>
+<p>Now, while the user is entering the code and logging in, we start polling the IdP to get a token. We need to specify <code>urn:ietf:params:oauth:grant-type:device_code</code> as the <code>grant_type</code>, and provide the <code>device_code</code> from the authorization response.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">var</span> tokenResponse = <span style="color:#66d9ef">await</span> GetTokenAsync(client, authorizationResponse);
+Console.WriteLine(<span style="color:#e6db74">&#34;Access token: &#34;</span>);
+Console.WriteLine(tokenResponse.AccessToken);
+Console.WriteLine(<span style="color:#e6db74">&#34;ID token: &#34;</span>);
+Console.WriteLine(tokenResponse.IdToken);
+Console.WriteLine(<span style="color:#e6db74">&#34;refresh token: &#34;</span>);
+Console.WriteLine(tokenResponse.IdToken);
+
+...
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;TokenResponse&gt; GetTokenAsync(HttpClient client, DeviceAuthorizationResponse authResponse)
+{
+    <span style="color:#66d9ef">string</span> tokenEndpoint = <span style="color:#e6db74">$&#34;https://login.microsoftonline.com/{TenantId}/oauth2/v2.0/token&#34;</span>;
+
+    <span style="color:#75715e">// Poll until we get a valid token response or a fatal error
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> pollingDelay = authResponse.Interval;
+    <span style="color:#66d9ef">while</span> (<span style="color:#66d9ef">true</span>)
+    {
+        <span style="color:#66d9ef">var</span> request = <span style="color:#66d9ef">new</span> HttpRequestMessage(HttpMethod.Post, tokenEndpoint)
+        {
+            Content = <span style="color:#66d9ef">new</span> FormUrlEncodedContent(<span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;
+            {
+<span style="color:#a6e22e">                [&#34;grant_type&#34;]</span> = <span style="color:#e6db74">&#34;urn:ietf:params:oauth:grant-type:device_code&#34;</span>,
+<span style="color:#a6e22e">                [&#34;device_code&#34;]</span> = authResponse.DeviceCode,
+<span style="color:#a6e22e">                [&#34;client_id&#34;]</span> = ClientId
+            })
+        };
+        <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.SendAsync(request);
+        <span style="color:#66d9ef">var</span> json = <span style="color:#66d9ef">await</span> response.Content.ReadAsStringAsync();
+        <span style="color:#66d9ef">if</span> (response.IsSuccessStatusCode)
+        {
+            <span style="color:#66d9ef">return</span> JsonSerializer.Deserialize&lt;TokenResponse&gt;(json);
+        }
+        <span style="color:#66d9ef">else</span>
+        {
+            <span style="color:#66d9ef">var</span> errorResponse = JsonSerializer.Deserialize&lt;TokenErrorResponse&gt;(json);
+            <span style="color:#66d9ef">switch</span>(errorResponse.Error)
+            {
+                <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;authorization_pending&#34;</span>:
+                    <span style="color:#75715e">// Not complete yet, wait and try again later
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">break</span>;
+                <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;slow_down&#34;</span>:
+                    <span style="color:#75715e">// Not complete yet, and we should slow down the polling
+</span><span style="color:#75715e"></span>                    pollingDelay += <span style="color:#ae81ff">5</span>;                            
+                    <span style="color:#66d9ef">break</span>;
+                <span style="color:#66d9ef">default</span>:
+                    <span style="color:#75715e">// Some other error, nothing we can do but throw
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Exception(
+                        <span style="color:#e6db74">$&#34;Authorization failed: {errorResponse.Error} - {errorResponse.ErrorDescription}&#34;</span>);
+            }
+
+            <span style="color:#66d9ef">await</span> Task.Delay(TimeSpan.FromSeconds(pollingDelay));
+        }
+    }
+}
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TokenErrorResponse</span>
+{
+<span style="color:#a6e22e">    [JsonPropertyName(&#34;error&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Error { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;error_description&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ErrorDescription { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+}
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TokenResponse</span>
+{
+<span style="color:#a6e22e">    [JsonPropertyName(&#34;access_token&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> AccessToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;id_token&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> IdToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;refresh_token&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> RefreshToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;token_type&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> TokenType { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;expires_in&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ExpiresIn { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;scope&#34;)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Scope { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+}
+</code></pre></div><p>When the user completes the login process in the browser, the next call to the token endpoint returns an <code>access_token</code>, <code>id_token</code> and <code>refresh_token</code> (if you requested the <code>offline_access</code> scope).</p>
+<p>When the access token expires, you can use the refresh token to get a new one, <a href="https://tools.ietf.org/html/rfc6749#section-6">as described in the specs</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>As you can see, the device flow is pretty easy to implement; it&rsquo;s quite straightforward, with no redirection mechanism. Its simplicity also makes it quite secure, with very few angles of attack. In my opinion, it&rsquo;s the ideal flow for desktop or console applications.</p>
+<p>You can find the full code for this article <a href="https://github.com/thomaslevesque/TestDeviceFlow">in this repository</a>.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/.net" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">.NET</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/authentication" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Authentication</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/azure-ad" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Azure AD</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/c" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">C#</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/device-flow" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">device flow</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/oauth-2.0" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">OAuth 2.0</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/openid-connect" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">OpenId Connect</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp.net-core/">Multitenant Azure AD issuer validation in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/01/10/google-shutdown-fixing-google-authentication-in-asp.net-core/">Google&#43; shutdown: fixing Google authentication in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/02/25/better-timeout-handling-with-httpclient/">Better timeout handling with HttpClient</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2016/12/08/fun-with-the-httpclient-pipeline/">Fun with the HttpClient pipeline</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-.net-core/">Lazily resolving services to fix circular dependencies in .NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2020/01/30/handling-query-string-parameters-with-no-value-in-asp.net-core/">Handling query string parameters with no value in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/12/20/asp.net-core-when-environments-are-not-enough-use-sub-environments/">ASP.NET Core: when environments are not enough, use sub-environments!</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/11/19/easy-unit-testing-of-null-argument-validation-c#-8-edition/">Easy unit testing of null argument validation (C# 8 edition)</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/11/18/using-foreach-with-index-in-c/">Using foreach with index in C#</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/">Handling type hierarchies in Cosmos DB (part 2)</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2019/10/14/handling-type-hierarchies-in-cosmos-db-part-1/">Handling type hierarchies in Cosmos DB (part 1)</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/09/25/asynchronous-initialization-in-asp.net-core-revisited/">Asynchronous initialization in ASP.NET Core, revisited</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp.net-core/">Handling multipart requests with JSON and file uploads in ASP.NET Core</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/07/20/asynchronous-initialization-in-asp.net-core-with-custom-middleware/">Asynchronous initialization in ASP.NET Core with custom middleware</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/2018/03/30/writing-a-github-webhook-as-an-azure-function/">Writing a GitHub Webhook as an Azure Function</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
+    &copy;  Thomas Levesque .NET Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

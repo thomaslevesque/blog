@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dependency property on Thomas Levesque .NET Blog</title>
+    <link>https://blog2.thomaslevesque.net/tags/dependency-property/</link>
+    <description>Recent content in dependency property on Thomas Levesque .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 21 Apr 2013 17:05:53 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog2.thomaslevesque.net/tags/dependency-property/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Detecting dependency property changes in WinRT</title>
+      <link>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</link>
+      <pubDate>Sun, 21 Apr 2013 17:05:53 +0000</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</guid>
+      <description>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
+It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.</description>
+    </item>
+    
+  </channel>
+</rss>
