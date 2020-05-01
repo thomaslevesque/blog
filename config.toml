@@ -1,7 +1,7 @@
 baseURL = "https://blog2.thomaslevesque.net/"
 languageCode = "en-us"
 title = "Thomas Levesque's .NET Blog"
-theme = "ananke"
+theme = "mainroad"
 publishDir = "../blog"
 googleAnalytics = "UA-31621259-1"
 
