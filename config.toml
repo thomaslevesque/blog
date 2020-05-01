@@ -1,6 +1,6 @@
 baseURL = "https://blog2.thomaslevesque.net/"
 languageCode = "en-us"
-title = "Thomas Levesque .NET Blog"
+title = "Thomas Levesque's .NET Blog"
 theme = "ananke"
 publishDir = "../blog"
 
