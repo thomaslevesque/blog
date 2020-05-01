@@ -6,7 +6,7 @@
     <description>Recent content in C# 8 on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Nov 2019 07:00:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/c#-8/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Easy unit testing of null argument validation (C# 8 edition)</title>
       <link>https://blog2.thomaslevesque.net/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</link>
-      <pubDate>Tue, 19 Nov 2019 07:00:39 +0000</pubDate>
+      <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</guid>
       <description>A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:

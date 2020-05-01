@@ -31,14 +31,14 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails&#34;) where ord.Date
 var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where ord.Date &gt;= DateTime." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog2.thomaslevesque.net/2010/10/03/entity-framework-using-include-with-lambda-expressions/" />
-<meta property="article:published_time" content="2010-10-03T22:42:02+00:00" />
-<meta property="article:modified_time" content="2010-10-03T22:42:02+00:00" />
+<meta property="article:published_time" content="2010-10-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2010-10-03T00:00:00+00:00" />
 <meta itemprop="name" content="[Entity Framework] Using Include with lambda expressions">
 <meta itemprop="description" content="I&rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
 var query = from ord in db.Orders.Include(&#34;OrderDetails&#34;) where ord.Date &gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
 var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where ord.Date &gt;= DateTime.">
-<meta itemprop="datePublished" content="2010-10-03T22:42:02&#43;00:00" />
-<meta itemprop="dateModified" content="2010-10-03T22:42:02&#43;00:00" />
+<meta itemprop="datePublished" content="2010-10-03T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2010-10-03T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="1137">
 
 
@@ -133,7 +133,7 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
       <h1 class="f1 athelas mt3 mb1">[Entity Framework] Using Include with lambda expressions</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2010-10-03T22:42:02Z">October 3, 2010</time>
+      <time class="f6 mv4 dib tracked" datetime="2010-10-03T00:00:00Z">October 3, 2010</time>
 
       
       

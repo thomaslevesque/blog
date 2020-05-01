@@ -6,7 +6,7 @@
     <description>Recent content in bug on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jun 2016 20:43:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jun 2016 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/bug/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Pitfall: using var and async together</title>
       <link>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</link>
-      <pubDate>Tue, 21 Jun 2016 20:43:41 +0000</pubDate>
+      <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</guid>
       <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
@@ -24,7 +24,7 @@ public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = awai
     <item>
       <title>Visual Studio Online &#43; Git integration with Team Explorer</title>
       <link>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</link>
-      <pubDate>Sun, 12 Oct 2014 11:30:56 +0000</pubDate>
+      <pubDate>Sun, 12 Oct 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</guid>
       <description>I recently started using Visual Studio Online for personal projects, and I must say it’s a pretty good platform, although it would be nice to be able to host public projects as well as private ones. The thing I like the most is the integration with Visual Studio Team Explorer to manage work items and builds.
@@ -34,7 +34,7 @@ However, I noticed a little gotcha when using Git for source control : the remot
     <item>
       <title>[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)</title>
       <link>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
-      <pubDate>Thu, 05 Feb 2009 00:26:28 +0000</pubDate>
+      <pubDate>Thu, 05 Feb 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
       <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)

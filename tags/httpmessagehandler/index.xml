@@ -6,7 +6,7 @@
     <description>Recent content in HttpMessageHandler on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Dec 2016 00:18:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Dec 2016 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/httpmessagehandler/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Fun with the HttpClient pipeline</title>
       <link>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</link>
-      <pubDate>Thu, 08 Dec 2016 00:18:43 +0000</pubDate>
+      <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
       <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.

@@ -6,7 +6,7 @@
     <description>Recent content in string interpolation on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Feb 2015 02:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Feb 2015 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/string-interpolation/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Customizing string interpolation in C# 6</title>
       <link>https://blog2.thomaslevesque.net/2015/02/24/customizing-string-interpolation-in-c-6/</link>
-      <pubDate>Tue, 24 Feb 2015 02:00:00 +0000</pubDate>
+      <pubDate>Tue, 24 Feb 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/02/24/customizing-string-interpolation-in-c-6/</guid>
       <description>One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
@@ -24,7 +24,7 @@ string text = $&amp;quot;{p.Name} was born on {p.DateOfBirth:D}&amp;quot;;A les
     <item>
       <title>StringTemplate: another approach to string interpolation</title>
       <link>https://blog2.thomaslevesque.net/2014/11/17/stringtemplate-another-approach-to-string-interpolation/</link>
-      <pubDate>Mon, 17 Nov 2014 01:08:50 +0000</pubDate>
+      <pubDate>Mon, 17 Nov 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/11/17/stringtemplate-another-approach-to-string-interpolation/</guid>
       <description>With the upcoming version 6 of C#, there’s a lot of talk on CodePlex and elsewhere about string interpolation. Not very surprising, since it’s one of the major features of that release… In case you were living under a rock during the last few months and you haven’t heard about it, string interpolation is a way to insert C# expressions inside a string, so that they’re evaluated at runtime and replaced with their values.</description>

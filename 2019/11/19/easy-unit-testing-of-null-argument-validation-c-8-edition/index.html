@@ -30,13 +30,13 @@
 [Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&lt;int&gt;(); var right = Enumerable.Empty&lt;int&gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&gt; left.FullOuterJoin(right, x =&gt; x, y =&gt; y, (k, x, y) =&gt; 0, 0, 0, null), &#34;left&#34;, &#34;right&#34;, &#34;leftKeySelector&#34;, &#34;rightKeySelector&#34;, &#34;resultSelector&#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog2.thomaslevesque.net/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/" />
-<meta property="article:published_time" content="2019-11-19T07:00:39+00:00" />
-<meta property="article:modified_time" content="2019-11-19T07:00:39+00:00" />
+<meta property="article:published_time" content="2019-11-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-19T00:00:00+00:00" />
 <meta itemprop="name" content="Easy unit testing of null argument validation (C# 8 edition)">
 <meta itemprop="description" content="A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
 [Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&lt;int&gt;(); var right = Enumerable.Empty&lt;int&gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&gt; left.FullOuterJoin(right, x =&gt; x, y =&gt; y, (k, x, y) =&gt; 0, 0, 0, null), &#34;left&#34;, &#34;right&#34;, &#34;leftKeySelector&#34;, &#34;rightKeySelector&#34;, &#34;resultSelector&#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.">
-<meta itemprop="datePublished" content="2019-11-19T07:00:39&#43;00:00" />
-<meta itemprop="dateModified" content="2019-11-19T07:00:39&#43;00:00" />
+<meta itemprop="datePublished" content="2019-11-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-19T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="609">
 
 
@@ -130,7 +130,7 @@
       <h1 class="f1 athelas mt3 mb1">Easy unit testing of null argument validation (C# 8 edition)</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2019-11-19T07:00:39Z">November 19, 2019</time>
+      <time class="f6 mv4 dib tracked" datetime="2019-11-19T00:00:00Z">November 19, 2019</time>
 
       
       

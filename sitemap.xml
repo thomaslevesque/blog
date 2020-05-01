@@ -4,1637 +4,1637 @@
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/.net/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/authentication/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/azure/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/azure-ad/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/c#/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/device-flow/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/oauth-2.0/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/openid-connect/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/posts/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/uncategorized/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</loc>
-    <lastmod>2020-03-28T16:44:40+00:00</lastmod>
+    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/.net-core/</loc>
-    <lastmod>2020-03-18T13:14:03+00:00</lastmod>
+    <lastmod>2020-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/circular-dependency/</loc>
-    <lastmod>2020-03-18T13:14:03+00:00</lastmod>
+    <lastmod>2020-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/dependency-injection/</loc>
-    <lastmod>2020-03-18T13:14:03+00:00</lastmod>
+    <lastmod>2020-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</loc>
-    <lastmod>2020-03-18T13:14:03+00:00</lastmod>
+    <lastmod>2020-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/lazy/</loc>
-    <lastmod>2020-03-18T13:14:03+00:00</lastmod>
+    <lastmod>2020-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/asp.net/</loc>
-    <lastmod>2020-01-30T07:00:58+00:00</lastmod>
+    <lastmod>2020-01-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/asp.net-core/</loc>
-    <lastmod>2020-01-30T07:00:58+00:00</lastmod>
+    <lastmod>2020-01-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</loc>
-    <lastmod>2020-01-30T07:00:58+00:00</lastmod>
+    <lastmod>2020-01-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/model-binding/</loc>
-    <lastmod>2020-01-30T07:00:58+00:00</lastmod>
+    <lastmod>2020-01-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/query-string/</loc>
-    <lastmod>2020-01-30T07:00:58+00:00</lastmod>
+    <lastmod>2020-01-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</loc>
-    <lastmod>2019-12-20T11:33:00+00:00</lastmod>
+    <lastmod>2019-12-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/configuration/</loc>
-    <lastmod>2019-12-20T11:33:00+00:00</lastmod>
+    <lastmod>2019-12-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/environment/</loc>
-    <lastmod>2019-12-20T11:33:00+00:00</lastmod>
+    <lastmod>2019-12-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/sub-environment/</loc>
-    <lastmod>2019-12-20T11:33:00+00:00</lastmod>
+    <lastmod>2019-12-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/argument-validation/</loc>
-    <lastmod>2019-11-19T07:00:39+00:00</lastmod>
+    <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/c#-8/</loc>
-    <lastmod>2019-11-19T07:00:39+00:00</lastmod>
+    <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</loc>
-    <lastmod>2019-11-19T07:00:39+00:00</lastmod>
+    <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/non-nullable-reference-types/</loc>
-    <lastmod>2019-11-19T07:00:39+00:00</lastmod>
+    <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/null-check/</loc>
-    <lastmod>2019-11-19T07:00:39+00:00</lastmod>
+    <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/unit/</loc>
-    <lastmod>2019-11-19T07:00:39+00:00</lastmod>
+    <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/unit-testing/</loc>
-    <lastmod>2019-11-19T07:00:39+00:00</lastmod>
+    <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/foreach/</loc>
-    <lastmod>2019-11-18T07:00:11+00:00</lastmod>
+    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/index/</loc>
-    <lastmod>2019-11-18T07:00:11+00:00</lastmod>
+    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/linq/</loc>
-    <lastmod>2019-11-18T07:00:11+00:00</lastmod>
+    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/tuple/</loc>
-    <lastmod>2019-11-18T07:00:11+00:00</lastmod>
+    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/</loc>
-    <lastmod>2019-11-18T07:00:11+00:00</lastmod>
+    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/cosmos-db/</loc>
-    <lastmod>2019-10-15T06:00:08+00:00</lastmod>
+    <lastmod>2019-10-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</loc>
-    <lastmod>2019-10-15T06:00:08+00:00</lastmod>
+    <lastmod>2019-10-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/json/</loc>
-    <lastmod>2019-10-15T06:00:08+00:00</lastmod>
+    <lastmod>2019-10-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</loc>
-    <lastmod>2019-10-14T06:00:31+00:00</lastmod>
+    <lastmod>2019-10-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/azure-cosmos-db/</loc>
-    <lastmod>2019-07-15T06:00:23+00:00</lastmod>
+    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/server-side/</loc>
-    <lastmod>2019-07-15T06:00:23+00:00</lastmod>
+    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/stored-procedure/</loc>
-    <lastmod>2019-07-15T06:00:23+00:00</lastmod>
+    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/typescript/</loc>
-    <lastmod>2019-07-15T06:00:23+00:00</lastmod>
+    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</loc>
-    <lastmod>2019-07-15T06:00:23+00:00</lastmod>
+    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/asp.net-core/</loc>
-    <lastmod>2019-03-18T06:16:15+00:00</lastmod>
+    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/azure/</loc>
-    <lastmod>2019-03-18T06:16:15+00:00</lastmod>
+    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/scale-out/</loc>
-    <lastmod>2019-03-18T06:16:15+00:00</lastmod>
+    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</loc>
-    <lastmod>2019-03-18T06:16:15+00:00</lastmod>
+    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/service-bus/</loc>
-    <lastmod>2019-03-18T06:16:15+00:00</lastmod>
+    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/signalr/</loc>
-    <lastmod>2019-03-18T06:16:15+00:00</lastmod>
+    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/google/</loc>
-    <lastmod>2019-01-10T13:15:34+00:00</lastmod>
+    <lastmod>2019-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</loc>
-    <lastmod>2019-01-10T13:15:34+00:00</lastmod>
+    <lastmod>2019-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/azure-active-directory/</loc>
-    <lastmod>2018-12-24T13:54:43+00:00</lastmod>
+    <lastmod>2018-12-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/jwt/</loc>
-    <lastmod>2018-12-24T13:54:43+00:00</lastmod>
+    <lastmod>2018-12-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/multitenant/</loc>
-    <lastmod>2018-12-24T13:54:43+00:00</lastmod>
+    <lastmod>2018-12-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</loc>
-    <lastmod>2018-12-24T13:54:43+00:00</lastmod>
+    <lastmod>2018-12-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/.net-core-sdk/</loc>
-    <lastmod>2018-11-23T13:17:51+00:00</lastmod>
+    <lastmod>2018-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</loc>
-    <lastmod>2018-11-23T13:17:51+00:00</lastmod>
+    <lastmod>2018-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/sdk-style-project/</loc>
-    <lastmod>2018-11-23T13:17:51+00:00</lastmod>
+    <lastmod>2018-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/wpf/</loc>
-    <lastmod>2018-11-23T13:17:51+00:00</lastmod>
+    <lastmod>2018-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/wpf/</loc>
-    <lastmod>2018-11-23T13:17:51+00:00</lastmod>
+    <lastmod>2018-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/async/</loc>
-    <lastmod>2018-09-25T21:43:22+00:00</lastmod>
+    <lastmod>2018-09-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</loc>
-    <lastmod>2018-09-25T21:43:22+00:00</lastmod>
+    <lastmod>2018-09-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/initialization/</loc>
-    <lastmod>2018-09-25T21:43:22+00:00</lastmod>
+    <lastmod>2018-09-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</loc>
-    <lastmod>2018-09-04T09:56:23+00:00</lastmod>
+    <lastmod>2018-09-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/multipart/</loc>
-    <lastmod>2018-09-04T09:56:23+00:00</lastmod>
+    <lastmod>2018-09-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/upload/</loc>
-    <lastmod>2018-09-04T09:56:23+00:00</lastmod>
+    <lastmod>2018-09-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</loc>
-    <lastmod>2018-07-20T15:46:31+00:00</lastmod>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/middleware/</loc>
-    <lastmod>2018-07-20T15:46:31+00:00</lastmod>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/</loc>
-    <lastmod>2018-04-17T20:57:40+00:00</lastmod>
+    <lastmod>2018-04-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/linux/</loc>
-    <lastmod>2018-04-17T20:57:40+00:00</lastmod>
+    <lastmod>2018-04-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/nginx/</loc>
-    <lastmod>2018-04-17T20:57:40+00:00</lastmod>
+    <lastmod>2018-04-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/raspberry-pi/</loc>
-    <lastmod>2018-04-17T20:57:40+00:00</lastmod>
+    <lastmod>2018-04-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/reverse-proxy/</loc>
-    <lastmod>2018-04-17T20:57:40+00:00</lastmod>
+    <lastmod>2018-04-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/azure-functions/</loc>
-    <lastmod>2018-03-30T12:43:41+00:00</lastmod>
+    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/git/</loc>
-    <lastmod>2018-03-30T12:43:41+00:00</lastmod>
+    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/github/</loc>
-    <lastmod>2018-03-30T12:43:41+00:00</lastmod>
+    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/ngrok/</loc>
-    <lastmod>2018-03-30T12:43:41+00:00</lastmod>
+    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/webhook/</loc>
-    <lastmod>2018-03-30T12:43:41+00:00</lastmod>
+    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/</loc>
-    <lastmod>2018-03-30T12:43:41+00:00</lastmod>
+    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/pipeline/</loc>
-    <lastmod>2018-03-27T06:00:38+00:00</lastmod>
+    <lastmod>2018-03-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</loc>
-    <lastmod>2018-03-27T06:00:38+00:00</lastmod>
+    <lastmod>2018-03-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</loc>
-    <lastmod>2018-03-06T19:01:59+00:00</lastmod>
+    <lastmod>2018-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/version-control/</loc>
-    <lastmod>2018-03-06T19:01:59+00:00</lastmod>
+    <lastmod>2018-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/</loc>
-    <lastmod>2018-02-25T18:01:03+00:00</lastmod>
+    <lastmod>2018-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/handler/</loc>
-    <lastmod>2018-02-25T18:01:03+00:00</lastmod>
+    <lastmod>2018-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/http/</loc>
-    <lastmod>2018-02-25T18:01:03+00:00</lastmod>
+    <lastmod>2018-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/httpclient/</loc>
-    <lastmod>2018-02-25T18:01:03+00:00</lastmod>
+    <lastmod>2018-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/timeout/</loc>
-    <lastmod>2018-02-25T18:01:03+00:00</lastmod>
+    <lastmod>2018-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/build/</loc>
-    <lastmod>2017-11-12T22:05:47+00:00</lastmod>
+    <lastmod>2017-11-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/code-generation/</loc>
-    <lastmod>2017-11-12T22:05:47+00:00</lastmod>
+    <lastmod>2017-11-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/msbuild/</loc>
-    <lastmod>2017-11-12T22:05:47+00:00</lastmod>
+    <lastmod>2017-11-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/t4/</loc>
-    <lastmod>2017-11-12T22:05:47+00:00</lastmod>
+    <lastmod>2017-11-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/</loc>
-    <lastmod>2017-11-12T22:05:47+00:00</lastmod>
+    <lastmod>2017-11-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/visual-studio/</loc>
-    <lastmod>2017-11-12T22:05:47+00:00</lastmod>
+    <lastmod>2017-11-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/</loc>
-    <lastmod>2017-09-18T17:59:10+00:00</lastmod>
+    <lastmod>2017-09-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/csproj/</loc>
-    <lastmod>2017-09-18T17:59:10+00:00</lastmod>
+    <lastmod>2017-09-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/debug/</loc>
-    <lastmod>2017-08-25T21:53:08+00:00</lastmod>
+    <lastmod>2017-08-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/linqpad/</loc>
-    <lastmod>2017-08-25T21:53:08+00:00</lastmod>
+    <lastmod>2017-08-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2017/08/26/testing-and-debugging-library-code-from-linqpad/</loc>
-    <lastmod>2017-08-25T21:53:08+00:00</lastmod>
+    <lastmod>2017-08-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/tips-and-tricks/</loc>
-    <lastmod>2017-08-25T21:53:08+00:00</lastmod>
+    <lastmod>2017-08-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2017/03/29/linq-performance-improvements-in-net-core/</loc>
-    <lastmod>2017-03-28T22:18:21+00:00</lastmod>
+    <lastmod>2017-03-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/performance/</loc>
-    <lastmod>2017-03-28T22:18:21+00:00</lastmod>
+    <lastmod>2017-03-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2017/02/23/easy-text-parsing-in-c-with-sprache/</loc>
-    <lastmod>2017-02-23T12:44:08+00:00</lastmod>
+    <lastmod>2017-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/parser/</loc>
-    <lastmod>2017-02-23T12:44:08+00:00</lastmod>
+    <lastmod>2017-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/parser-combinator/</loc>
-    <lastmod>2017-02-23T12:44:08+00:00</lastmod>
+    <lastmod>2017-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/parsing/</loc>
-    <lastmod>2017-02-23T12:44:08+00:00</lastmod>
+    <lastmod>2017-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/sprache/</loc>
-    <lastmod>2017-02-23T12:44:08+00:00</lastmod>
+    <lastmod>2017-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/fakeiteasy/</loc>
-    <lastmod>2017-02-20T20:32:30+00:00</lastmod>
+    <lastmod>2017-02-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/mocking/</loc>
-    <lastmod>2017-02-20T20:32:30+00:00</lastmod>
+    <lastmod>2017-02-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2017/02/20/whats-new-in-fakeiteasy-3-0-0/</loc>
-    <lastmod>2017-02-20T20:32:30+00:00</lastmod>
+    <lastmod>2017-02-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2017/01/17/c-methods-in-git-diff-hunk-headers/</loc>
-    <lastmod>2017-01-17T21:31:45+00:00</lastmod>
+    <lastmod>2017-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/csharp/</loc>
-    <lastmod>2017-01-17T21:31:45+00:00</lastmod>
+    <lastmod>2017-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/diff/</loc>
-    <lastmod>2017-01-17T21:31:45+00:00</lastmod>
+    <lastmod>2017-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/gitattributes/</loc>
-    <lastmod>2017-01-17T21:31:45+00:00</lastmod>
+    <lastmod>2017-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/xfuncname/</loc>
-    <lastmod>2017-01-17T21:31:45+00:00</lastmod>
+    <lastmod>2017-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</loc>
-    <lastmod>2016-12-08T00:18:43+00:00</lastmod>
+    <lastmod>2016-12-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/httpmessagehandler/</loc>
-    <lastmod>2016-12-08T00:18:43+00:00</lastmod>
+    <lastmod>2016-12-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/c#-7/</loc>
-    <lastmod>2016-08-22T22:54:17+00:00</lastmod>
+    <lastmod>2016-08-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/deconstruction/</loc>
-    <lastmod>2016-08-22T22:54:17+00:00</lastmod>
+    <lastmod>2016-08-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/</loc>
-    <lastmod>2016-08-22T22:54:17+00:00</lastmod>
+    <lastmod>2016-08-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/visual-studio-15/</loc>
-    <lastmod>2016-08-22T22:54:17+00:00</lastmod>
+    <lastmod>2016-08-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</loc>
-    <lastmod>2016-07-24T23:03:18+00:00</lastmod>
+    <lastmod>2016-07-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/bug/</loc>
-    <lastmod>2016-06-21T20:43:41+00:00</lastmod>
+    <lastmod>2016-06-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</loc>
-    <lastmod>2016-06-21T20:43:41+00:00</lastmod>
+    <lastmod>2016-06-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/resharper/</loc>
-    <lastmod>2016-06-21T20:43:41+00:00</lastmod>
+    <lastmod>2016-06-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/testing/</loc>
-    <lastmod>2016-06-21T20:43:41+00:00</lastmod>
+    <lastmod>2016-06-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/appveyor/</loc>
-    <lastmod>2016-04-19T22:10:05+00:00</lastmod>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/continuous-integration/</loc>
-    <lastmod>2016-04-19T22:10:05+00:00</lastmod>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/deployment/</loc>
-    <lastmod>2016-04-19T22:10:05+00:00</lastmod>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/nuget/</loc>
-    <lastmod>2016-04-19T22:10:05+00:00</lastmod>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2016/04/20/publishing-a-package-from-appveyor-to-nuget-org/</loc>
-    <lastmod>2016-04-19T22:10:05+00:00</lastmod>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/tutorial/</loc>
-    <lastmod>2016-04-19T22:10:05+00:00</lastmod>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</loc>
-    <lastmod>2016-04-16T20:58:40+00:00</lastmod>
+    <lastmod>2016-04-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</loc>
-    <lastmod>2016-01-17T00:20:09+00:00</lastmod>
+    <lastmod>2016-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/unit-testing/</loc>
-    <lastmod>2016-01-17T00:20:09+00:00</lastmod>
+    <lastmod>2016-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/cancellation/</loc>
-    <lastmod>2015-12-31T13:27:14+00:00</lastmod>
+    <lastmod>2015-12-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/createlinkedtokensource/</loc>
-    <lastmod>2015-12-31T13:27:14+00:00</lastmod>
+    <lastmod>2015-12-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</loc>
-    <lastmod>2015-12-31T13:27:14+00:00</lastmod>
+    <lastmod>2015-12-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/await/</loc>
-    <lastmod>2015-11-11T17:00:16+00:00</lastmod>
+    <lastmod>2015-11-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/code-sample/</loc>
-    <lastmod>2015-11-11T17:00:16+00:00</lastmod>
+    <lastmod>2015-11-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</loc>
-    <lastmod>2015-11-11T17:00:16+00:00</lastmod>
+    <lastmod>2015-11-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/synchronization-context/</loc>
-    <lastmod>2015-11-11T17:00:16+00:00</lastmod>
+    <lastmod>2015-11-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/ui/</loc>
-    <lastmod>2015-11-11T17:00:16+00:00</lastmod>
+    <lastmod>2015-11-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</loc>
-    <lastmod>2015-09-05T13:07:13+00:00</lastmod>
+    <lastmod>2015-09-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/clipboard/</loc>
-    <lastmod>2015-09-05T13:07:13+00:00</lastmod>
+    <lastmod>2015-09-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/image/</loc>
-    <lastmod>2015-09-05T13:07:13+00:00</lastmod>
+    <lastmod>2015-09-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/richtextbox/</loc>
-    <lastmod>2015-09-05T13:07:13+00:00</lastmod>
+    <lastmod>2015-09-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/events/</loc>
-    <lastmod>2015-08-16T11:29:23+00:00</lastmod>
+    <lastmod>2015-08-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/libraries/</loc>
-    <lastmod>2015-08-16T11:29:23+00:00</lastmod>
+    <lastmod>2015-08-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/memory-leak/</loc>
-    <lastmod>2015-08-16T11:29:23+00:00</lastmod>
+    <lastmod>2015-08-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/open-instance-delegate/</loc>
-    <lastmod>2015-08-16T11:29:23+00:00</lastmod>
+    <lastmod>2015-08-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/weak-event/</loc>
-    <lastmod>2015-08-16T11:29:23+00:00</lastmod>
+    <lastmod>2015-08-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/08/16/weak-events-in-c-take-two/</loc>
-    <lastmod>2015-08-16T11:29:23+00:00</lastmod>
+    <lastmod>2015-08-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/</loc>
-    <lastmod>2015-07-30T17:13:05+00:00</lastmod>
+    <lastmod>2015-07-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/puzzle/</loc>
-    <lastmod>2015-07-30T17:13:05+00:00</lastmod>
+    <lastmod>2015-07-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/puzzles/</loc>
-    <lastmod>2015-07-30T17:13:05+00:00</lastmod>
+    <lastmod>2015-07-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/ado.net/</loc>
-    <lastmod>2015-06-28T19:09:56+00:00</lastmod>
+    <lastmod>2015-06-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/database/</loc>
-    <lastmod>2015-06-28T19:09:56+00:00</lastmod>
+    <lastmod>2015-06-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/datetime/</loc>
-    <lastmod>2015-06-28T19:09:56+00:00</lastmod>
+    <lastmod>2015-06-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/</loc>
-    <lastmod>2015-06-28T19:09:56+00:00</lastmod>
+    <lastmod>2015-06-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/sqlite/</loc>
-    <lastmod>2015-06-28T19:09:56+00:00</lastmod>
+    <lastmod>2015-06-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/system.data.sqlite/</loc>
-    <lastmod>2015-06-28T19:09:56+00:00</lastmod>
+    <lastmod>2015-06-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/utc/</loc>
-    <lastmod>2015-06-28T19:09:56+00:00</lastmod>
+    <lastmod>2015-06-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/c#-6/</loc>
-    <lastmod>2015-06-21T18:57:13+00:00</lastmod>
+    <lastmod>2015-06-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/exception-filters/</loc>
-    <lastmod>2015-06-21T18:57:13+00:00</lastmod>
+    <lastmod>2015-06-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/</loc>
-    <lastmod>2015-06-21T18:57:13+00:00</lastmod>
+    <lastmod>2015-06-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/stack/</loc>
-    <lastmod>2015-06-21T18:57:13+00:00</lastmod>
+    <lastmod>2015-06-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</loc>
-    <lastmod>2015-06-14T20:00:47+00:00</lastmod>
+    <lastmod>2015-06-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/unity/</loc>
-    <lastmod>2015-06-14T20:00:47+00:00</lastmod>
+    <lastmod>2015-06-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/</loc>
-    <lastmod>2015-06-04T00:37:59+00:00</lastmod>
+    <lastmod>2015-06-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/waithandle/</loc>
-    <lastmod>2015-06-04T00:37:59+00:00</lastmod>
+    <lastmod>2015-06-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/annotations/</loc>
-    <lastmod>2015-03-13T01:12:50+00:00</lastmod>
+    <lastmod>2015-03-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/code-analysis/</loc>
-    <lastmod>2015-03-13T01:12:50+00:00</lastmod>
+    <lastmod>2015-03-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/03/13/leveraging-resharper-annotations/</loc>
-    <lastmod>2015-03-13T01:12:50+00:00</lastmod>
+    <lastmod>2015-03-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/tools/</loc>
-    <lastmod>2015-03-13T01:12:50+00:00</lastmod>
+    <lastmod>2015-03-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/</loc>
-    <lastmod>2015-03-09T23:51:20+00:00</lastmod>
+    <lastmod>2015-03-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/02/24/customizing-string-interpolation-in-c-6/</loc>
-    <lastmod>2015-02-24T02:00:00+00:00</lastmod>
+    <lastmod>2015-02-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/iformattable/</loc>
-    <lastmod>2015-02-24T02:00:00+00:00</lastmod>
+    <lastmod>2015-02-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/roslyn/</loc>
-    <lastmod>2015-02-24T02:00:00+00:00</lastmod>
+    <lastmod>2015-02-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/string-interpolation/</loc>
-    <lastmod>2015-02-24T02:00:00+00:00</lastmod>
+    <lastmod>2015-02-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/</loc>
-    <lastmod>2015-02-01T21:20:08+00:00</lastmod>
+    <lastmod>2015-02-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/nunit/</loc>
-    <lastmod>2015-02-01T21:20:08+00:00</lastmod>
+    <lastmod>2015-02-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/</loc>
-    <lastmod>2015-01-17T15:58:26+00:00</lastmod>
+    <lastmod>2015-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/animated/</loc>
-    <lastmod>2015-01-17T15:58:26+00:00</lastmod>
+    <lastmod>2015-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/gif/</loc>
-    <lastmod>2015-01-17T15:58:26+00:00</lastmod>
+    <lastmod>2015-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/xaml/</loc>
-    <lastmod>2015-01-17T15:58:26+00:00</lastmod>
+    <lastmod>2015-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/optimization/</loc>
-    <lastmod>2014-12-07T18:10:42+00:00</lastmod>
+    <lastmod>2014-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</loc>
-    <lastmod>2014-12-07T18:10:42+00:00</lastmod>
+    <lastmod>2014-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/toarray/</loc>
-    <lastmod>2014-12-07T18:10:42+00:00</lastmod>
+    <lastmod>2014-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/tolist/</loc>
-    <lastmod>2014-12-07T18:10:42+00:00</lastmod>
+    <lastmod>2014-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/byte/</loc>
-    <lastmod>2014-11-23T02:24:12+00:00</lastmod>
+    <lastmod>2014-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</loc>
-    <lastmod>2014-11-23T02:24:12+00:00</lastmod>
+    <lastmod>2014-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/size/</loc>
-    <lastmod>2014-11-23T02:24:12+00:00</lastmod>
+    <lastmod>2014-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/localization/</loc>
-    <lastmod>2014-11-17T01:08:50+00:00</lastmod>
+    <lastmod>2014-11-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/nstring/</loc>
-    <lastmod>2014-11-17T01:08:50+00:00</lastmod>
+    <lastmod>2014-11-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/stringtemplate/</loc>
-    <lastmod>2014-11-17T01:08:50+00:00</lastmod>
+    <lastmod>2014-11-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2014/11/17/stringtemplate-another-approach-to-string-interpolation/</loc>
-    <lastmod>2014-11-17T01:08:50+00:00</lastmod>
+    <lastmod>2014-11-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/asynchronous/</loc>
-    <lastmod>2014-11-04T11:00:00+00:00</lastmod>
+    <lastmod>2014-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/byref/</loc>
-    <lastmod>2014-11-04T11:00:00+00:00</lastmod>
+    <lastmod>2014-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/out/</loc>
-    <lastmod>2014-11-04T11:00:00+00:00</lastmod>
+    <lastmod>2014-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</loc>
-    <lastmod>2014-11-04T11:00:00+00:00</lastmod>
+    <lastmod>2014-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/ref/</loc>
-    <lastmod>2014-11-04T11:00:00+00:00</lastmod>
+    <lastmod>2014-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/reference/</loc>
-    <lastmod>2014-11-04T11:00:00+00:00</lastmod>
+    <lastmod>2014-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2014/11/02/easy-unit-testing-of-null-argument-validation/</loc>
-    <lastmod>2014-11-02T15:24:06+00:00</lastmod>
+    <lastmod>2014-11-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/visual-studio-online/</loc>
-    <lastmod>2014-10-12T11:30:56+00:00</lastmod>
+    <lastmod>2014-10-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</loc>
-    <lastmod>2014-10-12T11:30:56+00:00</lastmod>
+    <lastmod>2014-10-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/</loc>
-    <lastmod>2014-07-30T18:20:44+00:00</lastmod>
+    <lastmod>2014-07-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/architecture/</loc>
-    <lastmod>2014-07-30T18:20:44+00:00</lastmod>
+    <lastmod>2014-07-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/ndepend/</loc>
-    <lastmod>2014-07-30T18:20:44+00:00</lastmod>
+    <lastmod>2014-07-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/review/</loc>
-    <lastmod>2014-07-30T18:20:44+00:00</lastmod>
+    <lastmod>2014-07-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</loc>
-    <lastmod>2014-02-05T21:35:03+00:00</lastmod>
+    <lastmod>2014-02-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/global/</loc>
-    <lastmod>2014-02-05T21:35:03+00:00</lastmod>
+    <lastmod>2014-02-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/hotkey/</loc>
-    <lastmod>2014-02-05T21:35:03+00:00</lastmod>
+    <lastmod>2014-02-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/windows-forms/</loc>
-    <lastmod>2014-02-05T21:35:03+00:00</lastmod>
+    <lastmod>2014-02-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/httpwebrequest/</loc>
-    <lastmod>2014-01-14T00:47:24+00:00</lastmod>
+    <lastmod>2014-01-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/</loc>
-    <lastmod>2014-01-14T00:47:24+00:00</lastmod>
+    <lastmod>2014-01-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/httpcontent/</loc>
-    <lastmod>2013-11-30T21:47:09+00:00</lastmod>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/objectcontent/</loc>
-    <lastmod>2013-11-30T21:47:09+00:00</lastmod>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/push/</loc>
-    <lastmod>2013-11-30T21:47:09+00:00</lastmod>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/pushstreamcontent/</loc>
-    <lastmod>2013-11-30T21:47:09+00:00</lastmod>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2013/11/30/uploading-data-with-httpclient-using-a-push-model/</loc>
-    <lastmod>2013-11-30T21:47:09+00:00</lastmod>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2013/11/21/winrt-toggle-selection-of-a-list-item-on-long-press/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/gesture/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/grid/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/gridview/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/hold/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/listview/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/long-press/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/selection/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/winrt/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/winrt/</loc>
-    <lastmod>2013-11-21T21:41:59+00:00</lastmod>
+    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/autoruncustomtool/</loc>
-    <lastmod>2013-11-14T00:19:06+00:00</lastmod>
+    <lastmod>2013-11-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/custom-tool/</loc>
-    <lastmod>2013-11-14T00:19:06+00:00</lastmod>
+    <lastmod>2013-11-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/extension/</loc>
-    <lastmod>2013-11-14T00:19:06+00:00</lastmod>
+    <lastmod>2013-11-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2013/11/14/running-a-custom-tool-automatically-when-a-file-is-modified/</loc>
-    <lastmod>2013-11-14T00:19:06+00:00</lastmod>
+    <lastmod>2013-11-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/notification/</loc>
-    <lastmod>2013-11-10T01:49:29+00:00</lastmod>
+    <lastmod>2013-11-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2013/11/10/strongly-typed-helper-for-toast-notifications/</loc>
-    <lastmod>2013-11-10T01:49:29+00:00</lastmod>
+    <lastmod>2013-11-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/toast/</loc>
-    <lastmod>2013-11-10T01:49:29+00:00</lastmod>
+    <lastmod>2013-11-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/windows-store/</loc>
-    <lastmod>2013-11-10T01:49:29+00:00</lastmod>
+    <lastmod>2013-11-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/searchbox/</loc>
-    <lastmod>2013-11-04T20:27:39+00:00</lastmod>
+    <lastmod>2013-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</loc>
-    <lastmod>2013-11-04T20:27:39+00:00</lastmod>
+    <lastmod>2013-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/suggestion/</loc>
-    <lastmod>2013-11-04T20:27:39+00:00</lastmod>
+    <lastmod>2013-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/</loc>
-    <lastmod>2013-05-20T22:59:50+00:00</lastmod>
+    <lastmod>2013-05-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/cryptography/</loc>
-    <lastmod>2013-05-20T22:59:50+00:00</lastmod>
+    <lastmod>2013-05-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/dpapi/</loc>
-    <lastmod>2013-05-20T22:59:50+00:00</lastmod>
+    <lastmod>2013-05-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/password/</loc>
-    <lastmod>2013-05-20T22:59:50+00:00</lastmod>
+    <lastmod>2013-05-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/protect/</loc>
-    <lastmod>2013-05-20T22:59:50+00:00</lastmod>
+    <lastmod>2013-05-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/binding/</loc>
-    <lastmod>2013-04-21T17:05:53+00:00</lastmod>
+    <lastmod>2013-04-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/dependency-property/</loc>
-    <lastmod>2013-04-21T17:05:53+00:00</lastmod>
+    <lastmod>2013-04-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</loc>
-    <lastmod>2013-04-21T17:05:53+00:00</lastmod>
+    <lastmod>2013-04-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/c#-5/</loc>
-    <lastmod>2012-06-13T15:32:05+00:00</lastmod>
+    <lastmod>2012-06-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/caller-info/</loc>
-    <lastmod>2012-06-13T15:32:05+00:00</lastmod>
+    <lastmod>2012-06-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/</loc>
-    <lastmod>2012-06-13T15:32:05+00:00</lastmod>
+    <lastmod>2012-06-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/edit-and-continue/</loc>
-    <lastmod>2012-06-02T16:00:31+00:00</lastmod>
+    <lastmod>2012-06-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/features/</loc>
-    <lastmod>2012-06-02T16:00:31+00:00</lastmod>
+    <lastmod>2012-06-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/lambda/</loc>
-    <lastmod>2012-06-02T16:00:31+00:00</lastmod>
+    <lastmod>2012-06-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2012/06/02/little-known-new-features-in-visual-studio-2012/</loc>
-    <lastmod>2012-06-02T16:00:31+00:00</lastmod>
+    <lastmod>2012-06-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/visual-studio-2012/</loc>
-    <lastmod>2012-06-02T16:00:31+00:00</lastmod>
+    <lastmod>2012-06-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/</loc>
-    <lastmod>2011-11-30T13:09:45+00:00</lastmod>
+    <lastmod>2011-11-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/collection/</loc>
-    <lastmod>2011-11-30T13:09:45+00:00</lastmod>
+    <lastmod>2011-11-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/collectionview/</loc>
-    <lastmod>2011-11-30T13:09:45+00:00</lastmod>
+    <lastmod>2011-11-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/</loc>
-    <lastmod>2011-10-01T00:37:15+00:00</lastmod>
+    <lastmod>2011-10-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/attached-property/</loc>
-    <lastmod>2011-10-01T00:37:15+00:00</lastmod>
+    <lastmod>2011-10-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/style/</loc>
-    <lastmod>2011-10-01T00:37:15+00:00</lastmod>
+    <lastmod>2011-10-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/template/</loc>
-    <lastmod>2011-10-01T00:37:15+00:00</lastmod>
+    <lastmod>2011-10-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/.net-4.5/</loc>
-    <lastmod>2011-09-23T11:32:07+00:00</lastmod>
+    <lastmod>2011-09-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</loc>
-    <lastmod>2011-09-23T11:32:07+00:00</lastmod>
+    <lastmod>2011-09-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/markup-extension/</loc>
-    <lastmod>2011-09-23T11:32:07+00:00</lastmod>
+    <lastmod>2011-09-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/tail-recursion/</loc>
-    <lastmod>2011-09-01T22:16:52+00:00</lastmod>
+    <lastmod>2011-09-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/</loc>
-    <lastmod>2011-09-01T22:16:52+00:00</lastmod>
+    <lastmod>2011-09-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/trampoline/</loc>
-    <lastmod>2011-09-01T22:16:52+00:00</lastmod>
+    <lastmod>2011-09-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2011/03/27/wpf-display-an-animated-gif-image/</loc>
-    <lastmod>2011-03-27T22:25:18+00:00</lastmod>
+    <lastmod>2011-03-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</loc>
-    <lastmod>2011-03-21T16:15:29+00:00</lastmod>
+    <lastmod>2011-03-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/datacontext/</loc>
-    <lastmod>2011-03-21T16:15:29+00:00</lastmod>
+    <lastmod>2011-03-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/freezable/</loc>
-    <lastmod>2011-03-21T16:15:29+00:00</lastmod>
+    <lastmod>2011-03-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/.net-4.0/</loc>
-    <lastmod>2010-10-03T22:42:02+00:00</lastmod>
+    <lastmod>2010-10-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2010/10/03/entity-framework-using-include-with-lambda-expressions/</loc>
-    <lastmod>2010-10-03T22:42:02+00:00</lastmod>
+    <lastmod>2010-10-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/c#-4.0/</loc>
-    <lastmod>2010-10-03T22:42:02+00:00</lastmod>
+    <lastmod>2010-10-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/entity-framework/</loc>
-    <lastmod>2010-10-03T22:42:02+00:00</lastmod>
+    <lastmod>2010-10-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/expression/</loc>
-    <lastmod>2010-10-03T22:42:02+00:00</lastmod>
+    <lastmod>2010-10-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/include/</loc>
-    <lastmod>2010-10-03T22:42:02+00:00</lastmod>
+    <lastmod>2010-10-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</loc>
-    <lastmod>2010-07-20T20:51:10+00:00</lastmod>
+    <lastmod>2010-07-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</loc>
-    <lastmod>2010-05-17T21:12:36+00:00</lastmod>
+    <lastmod>2010-05-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/code-snippet/</loc>
-    <lastmod>2010-05-17T21:12:36+00:00</lastmod>
+    <lastmod>2010-05-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/</loc>
-    <lastmod>2010-02-21T20:42:58+00:00</lastmod>
+    <lastmod>2010-02-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/proof-of-concept/</loc>
-    <lastmod>2010-02-21T20:42:58+00:00</lastmod>
+    <lastmod>2010-02-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/10/26/vs2010-binding-support-in-inputbindings/</loc>
-    <lastmod>2009-10-26T15:30:25+00:00</lastmod>
+    <lastmod>2009-10-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/inputbinding/</loc>
-    <lastmod>2009-10-26T15:30:25+00:00</lastmod>
+    <lastmod>2009-10-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/keybinding/</loc>
-    <lastmod>2009-10-26T15:30:25+00:00</lastmod>
+    <lastmod>2009-10-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/mvvm/</loc>
-    <lastmod>2009-10-26T15:30:25+00:00</lastmod>
+    <lastmod>2009-10-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/visual-studio-2010/</loc>
-    <lastmod>2009-10-26T15:30:25+00:00</lastmod>
+    <lastmod>2009-10-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/wpf-4.0/</loc>
-    <lastmod>2009-10-26T15:30:25+00:00</lastmod>
+    <lastmod>2009-10-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</loc>
-    <lastmod>2009-10-08T00:32:07+00:00</lastmod>
+    <lastmod>2009-10-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/c#-4.0/</loc>
-    <lastmod>2009-10-08T00:32:07+00:00</lastmod>
+    <lastmod>2009-10-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/dlr/</loc>
-    <lastmod>2009-10-08T00:32:07+00:00</lastmod>
+    <lastmod>2009-10-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/dynamic/</loc>
-    <lastmod>2009-10-08T00:32:07+00:00</lastmod>
+    <lastmod>2009-10-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/08/23/wpf-markup-extensions-and-templates/</loc>
-    <lastmod>2009-08-23T01:51:10+00:00</lastmod>
+    <lastmod>2009-08-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/08/04/wpf-automatically-sort-a-gridview-continued/</loc>
-    <lastmod>2009-08-04T14:41:01+00:00</lastmod>
+    <lastmod>2009-08-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/sort/</loc>
-    <lastmod>2009-08-04T14:41:01+00:00</lastmod>
+    <lastmod>2009-08-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</loc>
-    <lastmod>2009-07-28T12:38:26+00:00</lastmod>
+    <lastmod>2009-07-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/</loc>
-    <lastmod>2009-06-12T10:18:22+00:00</lastmod>
+    <lastmod>2009-06-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/xml-serialization/</loc>
-    <lastmod>2009-06-12T10:18:22+00:00</lastmod>
+    <lastmod>2009-06-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</loc>
-    <lastmod>2009-05-06T00:17:21+00:00</lastmod>
+    <lastmod>2009-05-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/dragmove/</loc>
-    <lastmod>2009-05-06T00:17:21+00:00</lastmod>
+    <lastmod>2009-05-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/categories/windows-forms/</loc>
-    <lastmod>2009-05-06T00:17:21+00:00</lastmod>
+    <lastmod>2009-05-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</loc>
-    <lastmod>2009-04-17T01:00:19+00:00</lastmod>
+    <lastmod>2009-04-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</loc>
-    <lastmod>2009-03-27T01:00:31+00:00</lastmod>
+    <lastmod>2009-03-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</loc>
-    <lastmod>2009-03-17T10:27:58+00:00</lastmod>
+    <lastmod>2009-03-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/03/05/visual-studio-trick-make-a-project-item-a-child-item-of-another/</loc>
-    <lastmod>2009-03-05T01:32:55+00:00</lastmod>
+    <lastmod>2009-03-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/trick/</loc>
-    <lastmod>2009-03-05T01:32:55+00:00</lastmod>
+    <lastmod>2009-03-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/</loc>
-    <lastmod>2009-02-25T01:30:56+00:00</lastmod>
+    <lastmod>2009-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/article/</loc>
-    <lastmod>2009-02-25T01:30:56+00:00</lastmod>
+    <lastmod>2009-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/design-pattern/</loc>
-    <lastmod>2009-02-25T01:30:56+00:00</lastmod>
+    <lastmod>2009-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/josh-smith/</loc>
-    <lastmod>2009-02-25T01:30:56+00:00</lastmod>
+    <lastmod>2009-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/02/13/build-an-rss-reader-in-5-minutes/</loc>
-    <lastmod>2009-02-12T23:05:13+00:00</lastmod>
+    <lastmod>2009-02-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/rss/</loc>
-    <lastmod>2009-02-12T23:05:13+00:00</lastmod>
+    <lastmod>2009-02-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/syndication/</loc>
-    <lastmod>2009-02-12T23:05:13+00:00</lastmod>
+    <lastmod>2009-02-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</loc>
-    <lastmod>2009-02-05T00:26:28+00:00</lastmod>
+    <lastmod>2009-02-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/workaround/</loc>
-    <lastmod>2009-02-05T00:26:28+00:00</lastmod>
+    <lastmod>2009-02-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</loc>
-    <lastmod>2008-11-18T13:56:48+00:00</lastmod>
+    <lastmod>2008-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog2.thomaslevesque.net/tags/settings/</loc>
-    <lastmod>2008-11-18T13:56:48+00:00</lastmod>
+    <lastmod>2008-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>

@@ -6,7 +6,7 @@
     <description>Recent content in cryptography on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 May 2013 22:59:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 May 2013 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/cryptography/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>An easy and secure way to store a password using Data Protection API</title>
       <link>https://blog2.thomaslevesque.net/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/</link>
-      <pubDate>Mon, 20 May 2013 22:59:50 +0000</pubDate>
+      <pubDate>Tue, 21 May 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/</guid>
       <description>If you&amp;rsquo;re writing a client application that needs to store user credentials, it&amp;rsquo;s usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&amp;hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration.</description>

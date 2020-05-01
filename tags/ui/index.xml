@@ -6,7 +6,7 @@
     <description>Recent content in UI on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Nov 2015 17:00:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2015 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/ui/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Explicitly switch to the UI thread in an async method</title>
       <link>https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</link>
-      <pubDate>Wed, 11 Nov 2015 17:00:16 +0000</pubDate>
+      <pubDate>Wed, 11 Nov 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</guid>
       <description>Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).</description>

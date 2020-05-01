@@ -6,7 +6,7 @@
     <description>Recent content in dependency property on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Apr 2013 17:05:53 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Apr 2013 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/dependency-property/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Detecting dependency property changes in WinRT</title>
       <link>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</link>
-      <pubDate>Sun, 21 Apr 2013 17:05:53 +0000</pubDate>
+      <pubDate>Sun, 21 Apr 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</guid>
       <description>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…

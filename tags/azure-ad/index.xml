@@ -6,7 +6,7 @@
     <description>Recent content in Azure AD on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2020 16:44:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/azure-ad/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Using the OAuth 2.0 device flow to authenticate users in desktop apps</title>
       <link>https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</link>
-      <pubDate>Sat, 28 Mar 2020 16:44:40 +0000</pubDate>
+      <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</guid>
       <description>Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
@@ -24,7 +24,7 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
     <item>
       <title>Multitenant Azure AD issuer validation in ASP.NET Core</title>
       <link>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</link>
-      <pubDate>Mon, 24 Dec 2018 13:54:43 +0000</pubDate>
+      <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:

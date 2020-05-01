@@ -6,7 +6,7 @@
     <description>Recent content in Visual Studio Online on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Oct 2014 11:30:56 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Oct 2014 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/visual-studio-online/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Visual Studio Online &#43; Git integration with Team Explorer</title>
       <link>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</link>
-      <pubDate>Sun, 12 Oct 2014 11:30:56 +0000</pubDate>
+      <pubDate>Sun, 12 Oct 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</guid>
       <description>I recently started using Visual Studio Online for personal projects, and I must say it’s a pretty good platform, although it would be nice to be able to host public projects as well as private ones. The thing I like the most is the integration with Visual Studio Team Explorer to manage work items and builds.

@@ -6,7 +6,7 @@
     <description>Recent content in Posts on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2020 16:44:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/posts/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Using the OAuth 2.0 device flow to authenticate users in desktop apps</title>
       <link>https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</link>
-      <pubDate>Sat, 28 Mar 2020 16:44:40 +0000</pubDate>
+      <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</guid>
       <description>Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
@@ -24,7 +24,7 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
     <item>
       <title>Lazily resolving services to fix circular dependencies in .NET Core</title>
       <link>https://blog2.thomaslevesque.net/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</link>
-      <pubDate>Wed, 18 Mar 2020 13:14:03 +0000</pubDate>
+      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</guid>
       <description>The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
@@ -34,7 +34,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
     <item>
       <title>Handling query string parameters with no value in ASP.NET Core</title>
       <link>https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</link>
-      <pubDate>Thu, 30 Jan 2020 07:00:58 +0000</pubDate>
+      <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
       <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
@@ -45,7 +45,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
     <item>
       <title>ASP.NET Core: when environments are not enough, use sub-environments!</title>
       <link>https://blog2.thomaslevesque.net/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</link>
-      <pubDate>Fri, 20 Dec 2019 11:33:00 +0000</pubDate>
+      <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
       <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
@@ -55,7 +55,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
     <item>
       <title>Easy unit testing of null argument validation (C# 8 edition)</title>
       <link>https://blog2.thomaslevesque.net/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</link>
-      <pubDate>Tue, 19 Nov 2019 07:00:39 +0000</pubDate>
+      <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</guid>
       <description>A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
@@ -65,7 +65,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
     <item>
       <title>Using foreach with index in C#</title>
       <link>https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/</link>
-      <pubDate>Mon, 18 Nov 2019 07:00:11 +0000</pubDate>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/</guid>
       <description>Just a quick tip today!
@@ -76,7 +76,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
     <item>
       <title>Handling type hierarchies in Cosmos DB (part 2)</title>
       <link>https://blog2.thomaslevesque.net/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</link>
-      <pubDate>Tue, 15 Oct 2019 06:00:08 +0000</pubDate>
+      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
       <description>This is the second post in a series of 2:
@@ -86,7 +86,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
     <item>
       <title>Handling type hierarchies in Cosmos DB (part 1)</title>
       <link>https://blog2.thomaslevesque.net/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</link>
-      <pubDate>Mon, 14 Oct 2019 06:00:31 +0000</pubDate>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
       <description>This is the first post in a series of 2:
@@ -96,7 +96,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
     <item>
       <title>Using TypeScript to write Cosmos DB stored procedures with async/await</title>
       <link>https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</link>
-      <pubDate>Mon, 15 Jul 2019 06:00:23 +0000</pubDate>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</guid>
       <description>Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&amp;rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&amp;rsquo;t hesitate to let me know in the comments!
@@ -106,7 +106,7 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
     <item>
       <title>Scaling out ASP.NET Core SignalR using Azure Service Bus</title>
       <link>https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</link>
-      <pubDate>Mon, 18 Mar 2019 06:16:15 +0000</pubDate>
+      <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</guid>
       <description>ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&amp;rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.</description>
@@ -115,7 +115,7 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
     <item>
       <title>Google&#43; shutdown: fixing Google authentication in ASP.NET Core</title>
       <link>https://blog2.thomaslevesque.net/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</link>
-      <pubDate>Thu, 10 Jan 2019 13:15:34 +0000</pubDate>
+      <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</guid>
       <description>A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&amp;rsquo;t affect you as a developer; but if you&amp;rsquo;re using Google authentication in an ASP.</description>
@@ -124,7 +124,7 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
     <item>
       <title>Multitenant Azure AD issuer validation in ASP.NET Core</title>
       <link>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</link>
-      <pubDate>Mon, 24 Dec 2018 13:54:43 +0000</pubDate>
+      <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:
@@ -134,7 +134,7 @@ openIdConnectOptions.Authority = &amp;#34;https://login.microsoftonline.com/orga
     <item>
       <title>Making a WPF app using a SDK-style project with MSBuildSdkExtras</title>
       <link>https://blog2.thomaslevesque.net/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</link>
-      <pubDate>Fri, 23 Nov 2018 13:17:51 +0000</pubDate>
+      <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</guid>
       <description>Ever since the first stable release of the .NET Core SDK, we&amp;rsquo;ve enjoyed a better C# project format, often called &amp;ldquo;SDK-style&amp;rdquo; because you specify a SDK to use in the project file. It&amp;rsquo;s still a .csproj XML file, it&amp;rsquo;s still based on MSBuild, but it&amp;rsquo;s much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.
@@ -144,7 +144,7 @@ However, out of the box, it&amp;rsquo;s only usable for some project types: ASP.
     <item>
       <title>Asynchronous initialization in ASP.NET Core, revisited</title>
       <link>https://blog2.thomaslevesque.net/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</link>
-      <pubDate>Tue, 25 Sep 2018 21:43:22 +0000</pubDate>
+      <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</guid>
       <description>Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
@@ -154,7 +154,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
     <item>
       <title>Handling multipart requests with JSON and file uploads in ASP.NET Core</title>
       <link>https://blog2.thomaslevesque.net/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</link>
-      <pubDate>Tue, 04 Sep 2018 09:56:23 +0000</pubDate>
+      <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
       <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
@@ -164,7 +164,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
     <item>
       <title>Asynchronous initialization in ASP.NET Core with custom middleware</title>
       <link>https://blog2.thomaslevesque.net/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</link>
-      <pubDate>Fri, 20 Jul 2018 15:46:31 +0000</pubDate>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
       <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
@@ -175,7 +175,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
     <item>
       <title>Hosting an ASP.NET Core 2 application on a Raspberry Pi</title>
       <link>https://blog2.thomaslevesque.net/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/</link>
-      <pubDate>Tue, 17 Apr 2018 20:57:40 +0000</pubDate>
+      <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/</guid>
       <description>As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&amp;hellip; For instance, is a very small machine like a Raspberry Pi, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is!</description>
@@ -184,7 +184,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
     <item>
       <title>Writing a GitHub Webhook as an Azure Function</title>
       <link>https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/</link>
-      <pubDate>Fri, 30 Mar 2018 12:43:41 +0000</pubDate>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/</guid>
       <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
@@ -194,7 +194,7 @@ A bit of background As you may already know, I&amp;rsquo;m one of the maintainer
     <item>
       <title>Understanding the ASP.NET Core middleware pipeline</title>
       <link>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</link>
-      <pubDate>Tue, 27 Mar 2018 06:00:38 +0000</pubDate>
+      <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</guid>
       <description>Middlewhat? The ASP.NET Core architecture features a system of middleware, which are pieces of code that handle requests and responses. Middleware are chained to each other to form a pipeline. Incoming requests are passed through the pipeline, where each middleware has a chance to do something with them before passing them to the next middleware. Outgoing responses are also passed through the pipeline, in reverse order. If this sounds very abstract, the following schema from the official ASP.</description>
@@ -203,7 +203,7 @@ A bit of background As you may already know, I&amp;rsquo;m one of the maintainer
     <item>
       <title>Cleanup Git history to remove unwanted files</title>
       <link>https://blog2.thomaslevesque.net/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</link>
-      <pubDate>Tue, 06 Mar 2018 19:01:59 +0000</pubDate>
+      <pubDate>Tue, 06 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</guid>
       <description>I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&amp;hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.
@@ -213,7 +213,7 @@ Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreat
     <item>
       <title>Better timeout handling with HttpClient</title>
       <link>https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/</link>
-      <pubDate>Sun, 25 Feb 2018 18:01:03 +0000</pubDate>
+      <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/</guid>
       <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
@@ -223,7 +223,7 @@ Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreat
     <item>
       <title>Transform T4 templates as part of the build, and pass variables from the project</title>
       <link>https://blog2.thomaslevesque.net/2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/</link>
-      <pubDate>Sun, 12 Nov 2017 22:05:47 +0000</pubDate>
+      <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/</guid>
       <description>T4 (Text Template Transformation Toolkit) is a great tool to generate code at design time; you can, for instance, create POCO classes from database tables, generate repetitive code, etc. In Visual Studio, T4 files (.tt extension) are associated with the TextTemplatingFileGenerator custom tool, which transforms the template to generate an output file every time you save the template. But sometimes it&amp;rsquo;s not enough, and you want to ensure that the template&amp;rsquo;s output is regenerated before build.</description>
@@ -232,7 +232,7 @@ Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreat
     <item>
       <title>Common MSBuild properties and items with Directory.Build.props</title>
       <link>https://blog2.thomaslevesque.net/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/</link>
-      <pubDate>Mon, 18 Sep 2017 17:59:10 +0000</pubDate>
+      <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/</guid>
       <description>To be honest, I never really liked MSBuild until recently. The project files generated by Visual Studio were a mess, most of their content was redundant, you had to unload the projects to edit them, it was poorly documented&amp;hellip; But with the advent of .NET Core and the new &amp;ldquo;SDK-style&amp;rdquo; projects, it&amp;rsquo;s become much, much better.
@@ -242,7 +242,7 @@ MSBuild 15 introduced a pretty cool feature: implicit imports (I don&amp;rsquo;t
     <item>
       <title>Testing and debugging library code from LINQPad</title>
       <link>https://blog2.thomaslevesque.net/2017/08/26/testing-and-debugging-library-code-from-linqpad/</link>
-      <pubDate>Fri, 25 Aug 2017 21:53:08 +0000</pubDate>
+      <pubDate>Sat, 26 Aug 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2017/08/26/testing-and-debugging-library-code-from-linqpad/</guid>
       <description>I&amp;rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&amp;rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&amp;rsquo;s also extremely useful as a general-purpose .</description>
@@ -251,7 +251,7 @@ MSBuild 15 introduced a pretty cool feature: implicit imports (I don&amp;rsquo;t
     <item>
       <title>Linq performance improvements in .NET Core</title>
       <link>https://blog2.thomaslevesque.net/2017/03/29/linq-performance-improvements-in-net-core/</link>
-      <pubDate>Tue, 28 Mar 2017 22:18:21 +0000</pubDate>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2017/03/29/linq-performance-improvements-in-net-core/</guid>
       <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
@@ -261,7 +261,7 @@ For instance, Linq has been made faster in .NET Core. I made a little benchmark 
     <item>
       <title>Easy text parsing in C# with Sprache</title>
       <link>https://blog2.thomaslevesque.net/2017/02/23/easy-text-parsing-in-c-with-sprache/</link>
-      <pubDate>Thu, 23 Feb 2017 12:44:08 +0000</pubDate>
+      <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2017/02/23/easy-text-parsing-in-c-with-sprache/</guid>
       <description>A few days ago, I discovered a little gem: Sprache. The name means &amp;ldquo;language&amp;rdquo; in German. It&amp;rsquo;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&amp;rsquo;ll see in a minute, Sprache makes it very simple.
@@ -271,7 +271,7 @@ Text parsing Parsing text is a common task, but it can be tedious and error-pron
     <item>
       <title>What&#39;s new in FakeItEasy 3.0.0?</title>
       <link>https://blog2.thomaslevesque.net/2017/02/20/whats-new-in-fakeiteasy-3-0-0/</link>
-      <pubDate>Mon, 20 Feb 2017 20:32:30 +0000</pubDate>
+      <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2017/02/20/whats-new-in-fakeiteasy-3-0-0/</guid>
       <description>FakeItEasy is a popular mocking framework for .NET, with an very intuitive and easy-to-use API. For about one year, I&amp;rsquo;ve been a maintainer of FakeItEasy, along with Adam Ralph and Blair Conrad. It&amp;rsquo;s been a real pleasure working with them and I had a lot of fun!
@@ -282,7 +282,7 @@ Let&amp;rsquo;s see what&amp;rsquo;s new!</description>
     <item>
       <title>C# methods in git diff hunk headers</title>
       <link>https://blog2.thomaslevesque.net/2017/01/17/c-methods-in-git-diff-hunk-headers/</link>
-      <pubDate>Tue, 17 Jan 2017 21:31:45 +0000</pubDate>
+      <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2017/01/17/c-methods-in-git-diff-hunk-headers/</guid>
       <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
@@ -292,7 +292,7 @@ diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program
     <item>
       <title>Fun with the HttpClient pipeline</title>
       <link>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</link>
-      <pubDate>Thu, 08 Dec 2016 00:18:43 +0000</pubDate>
+      <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
       <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.
@@ -302,7 +302,7 @@ You might have noticed that HttpClient has a constructor that accepts a HttpMess
     <item>
       <title>Tuple deconstruction in C# 7</title>
       <link>https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/</link>
-      <pubDate>Mon, 22 Aug 2016 22:54:17 +0000</pubDate>
+      <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/</guid>
       <description>Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
@@ -314,7 +314,7 @@ Well, it looks like the C# language team has been busy during the last month, be
     <item>
       <title>Tuples in C# 7</title>
       <link>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</link>
-      <pubDate>Sun, 24 Jul 2016 23:03:18 +0000</pubDate>
+      <pubDate>Mon, 25 Jul 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</guid>
       <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
@@ -325,7 +325,7 @@ private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&
     <item>
       <title>Pitfall: using var and async together</title>
       <link>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</link>
-      <pubDate>Tue, 21 Jun 2016 20:43:41 +0000</pubDate>
+      <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</guid>
       <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
@@ -335,7 +335,7 @@ public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = awai
     <item>
       <title>Publishing a package from AppVeyor to NuGet.org</title>
       <link>https://blog2.thomaslevesque.net/2016/04/20/publishing-a-package-from-appveyor-to-nuget-org/</link>
-      <pubDate>Tue, 19 Apr 2016 22:10:05 +0000</pubDate>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/04/20/publishing-a-package-from-appveyor-to-nuget-org/</guid>
       <description>In the last few months, I’ve been using AppVeyor CI on some of my open-source projects (along with Cake for the build scripts). I really like it, but one thing bothered me: I couldn’t find a way to manually publish packages to NuGet.org directly from AppVeyor. I had to download the package locally, then upload it manually from my machine (either with nuget push on the command line, or via the web form on NuGet.</description>
@@ -344,7 +344,7 @@ public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = awai
     <item>
       <title>Test driving C# 7 features in Visual Studio “15” Preview</title>
       <link>https://blog2.thomaslevesque.net/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</link>
-      <pubDate>Sat, 16 Apr 2016 20:58:40 +0000</pubDate>
+      <pubDate>Sat, 16 Apr 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</guid>
       <description>About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!</description>
@@ -353,7 +353,7 @@ public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = awai
     <item>
       <title>Automatically inject fakes in test fixture with FakeItEasy</title>
       <link>https://blog2.thomaslevesque.net/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</link>
-      <pubDate>Sun, 17 Jan 2016 00:20:09 +0000</pubDate>
+      <pubDate>Sun, 17 Jan 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</guid>
       <description>Today I’d like to share a nice feature I discovered recently in FakeItEasy.
@@ -363,7 +363,7 @@ When you write unit tests for a class that takes dependencies, you typically nee
     <item>
       <title>Using multiple cancellation sources with CreateLinkedTokenSource</title>
       <link>https://blog2.thomaslevesque.net/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</link>
-      <pubDate>Thu, 31 Dec 2015 13:27:14 +0000</pubDate>
+      <pubDate>Thu, 31 Dec 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</guid>
       <description>Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel.</description>
@@ -372,7 +372,7 @@ When you write unit tests for a class that takes dependencies, you typically nee
     <item>
       <title>Explicitly switch to the UI thread in an async method</title>
       <link>https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</link>
-      <pubDate>Wed, 11 Nov 2015 17:00:16 +0000</pubDate>
+      <pubDate>Wed, 11 Nov 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</guid>
       <description>Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).</description>
@@ -381,7 +381,7 @@ When you write unit tests for a class that takes dependencies, you typically nee
     <item>
       <title>[WPF] Prevent the user from pasting an image in a RichTextBox</title>
       <link>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</link>
-      <pubDate>Sat, 05 Sep 2015 13:07:13 +0000</pubDate>
+      <pubDate>Sat, 05 Sep 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</guid>
       <description>WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.
@@ -391,7 +391,7 @@ When I googled for a way to prevent that, the only solutions I found suggested t
     <item>
       <title>Weak events in C#, take two</title>
       <link>https://blog2.thomaslevesque.net/2015/08/16/weak-events-in-c-take-two/</link>
-      <pubDate>Sun, 16 Aug 2015 11:29:23 +0000</pubDate>
+      <pubDate>Sun, 16 Aug 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/08/16/weak-events-in-c-take-two/</guid>
       <description>A few years ago, I blogged about a generic implementation of the weak event pattern in C#. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.
@@ -401,7 +401,7 @@ My initial solution was more a proof of concept than anything else, and had a ma
     <item>
       <title>C# Puzzle 2</title>
       <link>https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/</link>
-      <pubDate>Thu, 30 Jul 2015 17:13:05 +0000</pubDate>
+      <pubDate>Thu, 30 Jul 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/</guid>
       <description>Just another little puzzle based on an issue I had at work…
@@ -413,7 +413,7 @@ x &amp;gt; y is False!(x &amp;lt;= y) is True</description>
     <item>
       <title>How to retrieve dates as UTC in SQLite</title>
       <link>https://blog2.thomaslevesque.net/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/</link>
-      <pubDate>Sun, 28 Jun 2015 19:09:56 +0000</pubDate>
+      <pubDate>Sun, 28 Jun 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/</guid>
       <description>SQLite is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an official ADO.NET provider that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a DateTime converted to local time, with Kind = Unspecified.</description>
@@ -422,7 +422,7 @@ x &amp;gt; y is False!(x &amp;lt;= y) is True</description>
     <item>
       <title>Exception filters in C# 6: their biggest advantage is not what you think</title>
       <link>https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/</link>
-      <pubDate>Sun, 21 Jun 2015 18:57:13 +0000</pubDate>
+      <pubDate>Sun, 21 Jun 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/</guid>
       <description>Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
@@ -432,7 +432,7 @@ static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyExcept
     <item>
       <title>Create an auto-mocking container with Unity and FakeItEasy</title>
       <link>https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</link>
-      <pubDate>Sun, 14 Jun 2015 20:00:47 +0000</pubDate>
+      <pubDate>Sun, 14 Jun 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</guid>
       <description>Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.</description>
@@ -441,7 +441,7 @@ static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyExcept
     <item>
       <title>Async and cancellation support for wait handles</title>
       <link>https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/</link>
-      <pubDate>Thu, 04 Jun 2015 00:37:59 +0000</pubDate>
+      <pubDate>Thu, 04 Jun 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/</guid>
       <description>The .NET framework comes with a number of low-level synchronization primitives. The most commonly used are collectively known as “wait handles”, and inherit the WaitHandle class: Semaphore, Mutex, AutoResetEvent and ManualResetEvent. These classes have been there since at least .NET 2.0 (1.1 for some of them), but they haven’t evolved much since they were introduced, which means they don’t support common features that were introduced later. In particular, they don’t provide support for waiting asynchronously, nor do they support cancelling the wait.</description>
@@ -450,7 +450,7 @@ static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyExcept
     <item>
       <title>Leveraging ReSharper annotations</title>
       <link>https://blog2.thomaslevesque.net/2015/03/13/leveraging-resharper-annotations/</link>
-      <pubDate>Fri, 13 Mar 2015 01:12:50 +0000</pubDate>
+      <pubDate>Fri, 13 Mar 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/03/13/leveraging-resharper-annotations/</guid>
       <description>I don’t think it’s really necessary to present ReSharper (often abbreviated R#), but in case you don’t know about it, it’s a tool made by JetBrains that performs real-time analysis of your C# or VB.NET code to warn you about possible bugs, bad practices, convention violations, etc. It also provides many useful refactorings and code generators. I’ve been using it for a few years now, and it has tremendously improved both my productivity and my coding style.</description>
@@ -459,7 +459,7 @@ static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyExcept
     <item>
       <title>C# Puzzle 1</title>
       <link>https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/</link>
-      <pubDate>Mon, 09 Mar 2015 23:51:20 +0000</pubDate>
+      <pubDate>Tue, 10 Mar 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/</guid>
       <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
@@ -471,7 +471,7 @@ I’ll try to post more puzzles in the future if I can come up with others.</des
     <item>
       <title>Customizing string interpolation in C# 6</title>
       <link>https://blog2.thomaslevesque.net/2015/02/24/customizing-string-interpolation-in-c-6/</link>
-      <pubDate>Tue, 24 Feb 2015 02:00:00 +0000</pubDate>
+      <pubDate>Tue, 24 Feb 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/02/24/customizing-string-interpolation-in-c-6/</guid>
       <description>One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
@@ -481,7 +481,7 @@ string text = $&amp;quot;{p.Name} was born on {p.DateOfBirth:D}&amp;quot;;A les
     <item>
       <title>Async unit tests with NUnit</title>
       <link>https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/</link>
-      <pubDate>Sun, 01 Feb 2015 21:20:08 +0000</pubDate>
+      <pubDate>Sun, 01 Feb 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
@@ -492,7 +492,7 @@ Let’s assume the system under test is this very interesting Calculator class:
     <item>
       <title>A new library to display animated GIFs in XAML apps</title>
       <link>https://blog2.thomaslevesque.net/2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/</link>
-      <pubDate>Sat, 17 Jan 2015 15:58:26 +0000</pubDate>
+      <pubDate>Sat, 17 Jan 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/</guid>
       <description>A few years ago, I wrote an article that showed how to display an animated GIF in WPF. The article included the full code, and was quite successful, since WPF had no built-in support for animated GIFs. Based on the issues reported in the comments, I made many edits to the code in the article. At some point I realized it was very impractical, so I published the code on CodePlex (it has now moved to GitHub) under the name WpfAnimatedGif, and started maintaining it there.</description>
@@ -501,7 +501,7 @@ Let’s assume the system under test is this very interesting Calculator class:
     <item>
       <title>Optimize ToArray and ToList by providing the number of elements</title>
       <link>https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</link>
-      <pubDate>Sun, 07 Dec 2014 18:10:42 +0000</pubDate>
+      <pubDate>Sun, 07 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</guid>
       <description>The ToArray and ToList extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on ToArray for now (ToList has a few differences, but the principle is mostly the same).</description>
@@ -510,7 +510,7 @@ Let’s assume the system under test is this very interesting Calculator class:
     <item>
       <title>Easily convert file sizes to human-readable form</title>
       <link>https://blog2.thomaslevesque.net/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</link>
-      <pubDate>Sun, 23 Nov 2014 02:24:12 +0000</pubDate>
+      <pubDate>Sun, 23 Nov 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</guid>
       <description>If you write an application that has anything to do with file management, you will probably need to display the size of the files. But if a file has a size of 123456789 bytes, it doesn’t mean that you should just display this value to the user, because it’s hard to read, and the user usually doesn’t need 1-byte precision. Instead, you will write something like 118 MB.
@@ -520,7 +520,7 @@ This should be a no-brainer, but there are actually a number of different ways t
     <item>
       <title>StringTemplate: another approach to string interpolation</title>
       <link>https://blog2.thomaslevesque.net/2014/11/17/stringtemplate-another-approach-to-string-interpolation/</link>
-      <pubDate>Mon, 17 Nov 2014 01:08:50 +0000</pubDate>
+      <pubDate>Mon, 17 Nov 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/11/17/stringtemplate-another-approach-to-string-interpolation/</guid>
       <description>With the upcoming version 6 of C#, there’s a lot of talk on CodePlex and elsewhere about string interpolation. Not very surprising, since it’s one of the major features of that release… In case you were living under a rock during the last few months and you haven’t heard about it, string interpolation is a way to insert C# expressions inside a string, so that they’re evaluated at runtime and replaced with their values.</description>
@@ -529,7 +529,7 @@ This should be a no-brainer, but there are actually a number of different ways t
     <item>
       <title>Passing parameters by reference to an asynchronous method</title>
       <link>https://blog2.thomaslevesque.net/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</link>
-      <pubDate>Tue, 04 Nov 2014 11:00:00 +0000</pubDate>
+      <pubDate>Tue, 04 Nov 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</guid>
       <description>Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (ref or out) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first await), so the location of the variable won’t exist anymore.</description>
@@ -538,7 +538,7 @@ This should be a no-brainer, but there are actually a number of different ways t
     <item>
       <title>Easy unit testing of null argument validation</title>
       <link>https://blog2.thomaslevesque.net/2014/11/02/easy-unit-testing-of-null-argument-validation/</link>
-      <pubDate>Sun, 02 Nov 2014 15:24:06 +0000</pubDate>
+      <pubDate>Sun, 02 Nov 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/11/02/easy-unit-testing-of-null-argument-validation/</guid>
       <description>When unit testing a method, one of the things to test is argument validation : for instance, ensure that the method throws a ArgumentNullException when a null argument is passed for a parameter that isn’t allowed to be null. Writing this kind of test is very easy, but it’s also a tedious and repetitive task, especially if the method has many parameters… So I wrote a method that automates part of this task: it tries to pass null for each of the specified arguments, and asserts that the method throws an ArgumentNullException.</description>
@@ -547,7 +547,7 @@ This should be a no-brainer, but there are actually a number of different ways t
     <item>
       <title>Visual Studio Online &#43; Git integration with Team Explorer</title>
       <link>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</link>
-      <pubDate>Sun, 12 Oct 2014 11:30:56 +0000</pubDate>
+      <pubDate>Sun, 12 Oct 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</guid>
       <description>I recently started using Visual Studio Online for personal projects, and I must say it’s a pretty good platform, although it would be nice to be able to host public projects as well as private ones. The thing I like the most is the integration with Visual Studio Team Explorer to manage work items and builds.
@@ -557,7 +557,7 @@ However, I noticed a little gotcha when using Git for source control : the remot
     <item>
       <title>A review of NDepend</title>
       <link>https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/</link>
-      <pubDate>Wed, 30 Jul 2014 18:20:44 +0000</pubDate>
+      <pubDate>Wed, 30 Jul 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/</guid>
       <description>I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.
@@ -567,7 +567,7 @@ NDepend is a static analysis tool for .NET that checks your code base against a 
     <item>
       <title>[WPF] Declare global hotkeys in XAML with NHotkey</title>
       <link>https://blog2.thomaslevesque.net/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</link>
-      <pubDate>Wed, 05 Feb 2014 21:35:03 +0000</pubDate>
+      <pubDate>Wed, 05 Feb 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</guid>
       <description>A common requirement for desktop applications is to handle system-wide hotkeys, in order to intercept keyboard shortcuts even when they don’t have focus. Unfortunately, there is no built-in feature in the .NET framework to do it.
@@ -577,7 +577,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
     <item>
       <title>Tackling timeout issues when uploading large files with HttpWebRequest</title>
       <link>https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/</link>
-      <pubDate>Tue, 14 Jan 2014 00:47:24 +0000</pubDate>
+      <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/</guid>
       <description>If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?</description>
@@ -586,7 +586,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
     <item>
       <title>Uploading data with HttpClient using a &#34;push&#34; model</title>
       <link>https://blog2.thomaslevesque.net/2013/11/30/uploading-data-with-httpclient-using-a-push-model/</link>
-      <pubDate>Sat, 30 Nov 2013 21:47:09 +0000</pubDate>
+      <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/11/30/uploading-data-with-httpclient-using-a-push-model/</guid>
       <description>If you have used the HttpWebRequest class to upload data, you know that it uses a “push” model. What I mean is that you call the GetRequestStream method, which opens the connection if necessary, sends the headers, and returns a stream on which you can write directly.
@@ -596,7 +596,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
     <item>
       <title>[WinRT] Toggle selection of a list item on long press</title>
       <link>https://blog2.thomaslevesque.net/2013/11/21/winrt-toggle-selection-of-a-list-item-on-long-press/</link>
-      <pubDate>Thu, 21 Nov 2013 21:41:59 +0000</pubDate>
+      <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/11/21/winrt-toggle-selection-of-a-list-item-on-long-press/</guid>
       <description>As you probably know, the standard way to select or deselect an item in a WinRT list control is to slide it up or down a little. Although I rather like this gesture, it’s not very intuitive for users unfamiliar with Modern UI. And it gets even more confusing, because my previous statement wasn’t perfectly accurate: in fact, you have to slide the item perpendicularly to the panning direction. In a GridView, which (by default) pans horizontally, that means up or down; but in a ListView, which pans vertically, you have to slide the item left or right.</description>
@@ -605,7 +605,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
     <item>
       <title>Running a custom tool automatically when a file is modified</title>
       <link>https://blog2.thomaslevesque.net/2013/11/14/running-a-custom-tool-automatically-when-a-file-is-modified/</link>
-      <pubDate>Thu, 14 Nov 2013 00:19:06 +0000</pubDate>
+      <pubDate>Thu, 14 Nov 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/11/14/running-a-custom-tool-automatically-when-a-file-is-modified/</guid>
       <description>As far as I can remember, Visual Studio always had something called “custom tools”, also known as single-file generators. When you apply such a tool to a file in your project, it will generate something (typically code, but not necessarily) based on the content of the file. For instance, the default custom tool for resource files is called ResXFileCodeGenerator, and generates a class that provides easy access to the resources defined in the resx file.</description>
@@ -614,7 +614,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
     <item>
       <title>Strongly typed helper for toast notifications</title>
       <link>https://blog2.thomaslevesque.net/2013/11/10/strongly-typed-helper-for-toast-notifications/</link>
-      <pubDate>Sun, 10 Nov 2013 01:49:29 +0000</pubDate>
+      <pubDate>Sun, 10 Nov 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/11/10/strongly-typed-helper-for-toast-notifications/</guid>
       <description>Windows 8 provides an API for showing toast notifications. Unfortunately, it’s very cumbersome: to define the content of a notification, you must use a predefined template that is provided in the form of an XmlDocument, and set the value for each field in the XML. There is nothing in the API to let you know which fields the template defines, you need to check the toast template catalog in the documentation.</description>
@@ -623,7 +623,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
     <item>
       <title>Showing result suggestions in a WinRT SearchBox: bug regarding the image</title>
       <link>https://blog2.thomaslevesque.net/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</link>
-      <pubDate>Mon, 04 Nov 2013 20:27:39 +0000</pubDate>
+      <pubDate>Mon, 04 Nov 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</guid>
       <description>Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
@@ -634,7 +634,7 @@ The SearchBox control was introduced in Windows 8.1 to enable search scenarios f
     <item>
       <title>An easy and secure way to store a password using Data Protection API</title>
       <link>https://blog2.thomaslevesque.net/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/</link>
-      <pubDate>Mon, 20 May 2013 22:59:50 +0000</pubDate>
+      <pubDate>Tue, 21 May 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/</guid>
       <description>If you&amp;rsquo;re writing a client application that needs to store user credentials, it&amp;rsquo;s usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&amp;hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration.</description>
@@ -643,7 +643,7 @@ The SearchBox control was introduced in Windows 8.1 to enable search scenarios f
     <item>
       <title>Detecting dependency property changes in WinRT</title>
       <link>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</link>
-      <pubDate>Sun, 21 Apr 2013 17:05:53 +0000</pubDate>
+      <pubDate>Sun, 21 Apr 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/</guid>
       <description>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
@@ -653,7 +653,7 @@ It’s often useful to be notified when the value of a dependency property chang
     <item>
       <title>Using C# 5 caller info attributes when targeting earlier versions of the .NET framework</title>
       <link>https://blog2.thomaslevesque.net/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/</link>
-      <pubDate>Wed, 13 Jun 2012 15:32:05 +0000</pubDate>
+      <pubDate>Wed, 13 Jun 2012 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/</guid>
       <description>Caller info attributes are one of the new features of C# 5. They&amp;rsquo;re attributes applied to optional method parameters that enable you to pass caller information implicitly to a method. I&amp;rsquo;m not sure that description is very clear, so an example will help you understand:
@@ -663,7 +663,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
     <item>
       <title>Little known new features in Visual Studio 2012</title>
       <link>https://blog2.thomaslevesque.net/2012/06/02/little-known-new-features-in-visual-studio-2012/</link>
-      <pubDate>Sat, 02 Jun 2012 16:00:31 +0000</pubDate>
+      <pubDate>Sat, 02 Jun 2012 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2012/06/02/little-known-new-features-in-visual-studio-2012/</guid>
       <description>Visual Studio 2012 RC is out since last week, and even though I didn’t have much time to play with it yet, I think I like it so far. Lots of things have already been said about the design, and about the most important new features, but there are also many smaller and less remarkable improvements that make life easier for us. Since I have seen little or nothing written about those, I thought I would make a list of what I noticed so far.</description>
@@ -672,7 +672,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
     <item>
       <title>[WPF] Using Linq to shape data in a CollectionView</title>
       <link>https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/</link>
-      <pubDate>Wed, 30 Nov 2011 13:09:45 +0000</pubDate>
+      <pubDate>Wed, 30 Nov 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/</guid>
       <description>WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
@@ -682,7 +682,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
     <item>
       <title>[WPF] Creating parameterized styles with attached properties</title>
       <link>https://blog2.thomaslevesque.net/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/</link>
-      <pubDate>Sat, 01 Oct 2011 00:37:15 +0000</pubDate>
+      <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/</guid>
       <description>Today I&amp;rsquo;d like to share a trick that I used quite often in the past few months. Let&amp;rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls: OK, I&amp;rsquo;m not a designer&amp;hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&amp;rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.</description>
@@ -691,7 +691,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
     <item>
       <title>[WPF 4.5] Subscribing to an event using a markup extension</title>
       <link>https://blog2.thomaslevesque.net/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</link>
-      <pubDate>Fri, 23 Sep 2011 11:32:07 +0000</pubDate>
+      <pubDate>Fri, 23 Sep 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</guid>
       <description>It&amp;rsquo;s been a while since I last wrote about markup extensions&amp;hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&amp;rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events. Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&amp;rsquo;t do the same to subscribe to an event.</description>
@@ -700,7 +700,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
     <item>
       <title>Tail recursion in C#</title>
       <link>https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/</link>
-      <pubDate>Thu, 01 Sep 2011 22:16:52 +0000</pubDate>
+      <pubDate>Fri, 02 Sep 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/</guid>
       <description>Regardless of the programming language you&amp;rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&amp;rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .</description>
@@ -709,7 +709,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
     <item>
       <title>[WPF] Display an animated GIF image</title>
       <link>https://blog2.thomaslevesque.net/2011/03/27/wpf-display-an-animated-gif-image/</link>
-      <pubDate>Sun, 27 Mar 2011 22:25:18 +0000</pubDate>
+      <pubDate>Sun, 27 Mar 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2011/03/27/wpf-display-an-animated-gif-image/</guid>
       <description>Note: The code in this article is out of date; the current code is hosted on GitHub. WPF is a great technology, but sometimes it seems to be missing some really basic features&amp;hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation. Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:</description>
@@ -718,7 +718,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
     <item>
       <title>[WPF] How to bind to data when the DataContext is not inherited</title>
       <link>https://blog2.thomaslevesque.net/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</link>
-      <pubDate>Mon, 21 Mar 2011 16:15:29 +0000</pubDate>
+      <pubDate>Mon, 21 Mar 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</guid>
       <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&amp;rsquo;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip; Let&amp;rsquo;s illustrate with a simple example: we want to display a list of products in a DataGrid.</description>
@@ -727,7 +727,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
     <item>
       <title>[Entity Framework] Using Include with lambda expressions</title>
       <link>https://blog2.thomaslevesque.net/2010/10/03/entity-framework-using-include-with-lambda-expressions/</link>
-      <pubDate>Sun, 03 Oct 2010 22:42:02 +0000</pubDate>
+      <pubDate>Sun, 03 Oct 2010 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2010/10/03/entity-framework-using-include-with-lambda-expressions/</guid>
       <description>I&amp;rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
@@ -738,7 +738,7 @@ var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;
     <item>
       <title>[WPF] A simpler Grid using XAML attribute syntax</title>
       <link>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</link>
-      <pubDate>Tue, 20 Jul 2010 20:51:10 +0000</pubDate>
+      <pubDate>Tue, 20 Jul 2010 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</guid>
       <description>The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:
@@ -748,7 +748,7 @@ var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;
     <item>
       <title>[C#] A simple implementation of the WeakEvent pattern</title>
       <link>https://blog2.thomaslevesque.net/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</link>
-      <pubDate>Mon, 17 May 2010 21:12:36 +0000</pubDate>
+      <pubDate>Mon, 17 May 2010 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</guid>
       <description>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&amp;rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.</description>
@@ -757,7 +757,7 @@ var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;
     <item>
       <title>Automating null checks with Linq expressions</title>
       <link>https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/</link>
-      <pubDate>Sun, 21 Feb 2010 20:42:58 +0000</pubDate>
+      <pubDate>Sun, 21 Feb 2010 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
       <description>The problem Have you ever written code like the following ?
@@ -767,7 +767,7 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
     <item>
       <title>[VS2010] Binding support in InputBindings</title>
       <link>https://blog2.thomaslevesque.net/2009/10/26/vs2010-binding-support-in-inputbindings/</link>
-      <pubDate>Mon, 26 Oct 2009 15:30:25 +0000</pubDate>
+      <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
       <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&amp;hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&amp;rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).</description>
@@ -776,7 +776,7 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
     <item>
       <title>[C# 4.0] Implementing a custom dynamic object</title>
       <link>https://blog2.thomaslevesque.net/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</link>
-      <pubDate>Thu, 08 Oct 2009 00:32:07 +0000</pubDate>
+      <pubDate>Thu, 08 Oct 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</guid>
       <description>If you&amp;rsquo;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.</description>
@@ -785,7 +785,7 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
     <item>
       <title>[WPF] Markup extensions and templates</title>
       <link>https://blog2.thomaslevesque.net/2009/08/23/wpf-markup-extensions-and-templates/</link>
-      <pubDate>Sun, 23 Aug 2009 01:51:10 +0000</pubDate>
+      <pubDate>Sun, 23 Aug 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/08/23/wpf-markup-extensions-and-templates/</guid>
       <description>Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&amp;hellip; In this post I&amp;rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let&amp;rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</description>
@@ -794,7 +794,7 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
     <item>
       <title>[WPF] Automatically sort a GridView (continued)</title>
       <link>https://blog2.thomaslevesque.net/2009/08/04/wpf-automatically-sort-a-gridview-continued/</link>
-      <pubDate>Tue, 04 Aug 2009 14:41:01 +0000</pubDate>
+      <pubDate>Tue, 04 Aug 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/08/04/wpf-automatically-sort-a-gridview-continued/</guid>
       <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
@@ -803,7 +803,7 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
     <item>
       <title>[WPF] A markup extension that can update its target</title>
       <link>https://blog2.thomaslevesque.net/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</link>
-      <pubDate>Tue, 28 Jul 2009 12:38:26 +0000</pubDate>
+      <pubDate>Tue, 28 Jul 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</guid>
       <description>If you have read my previous posts on the topic, you know I&amp;rsquo;m a big fan of custom markup extensions&amp;hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&amp;hellip; It could be useful in various cases, for instance :
@@ -813,7 +813,7 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
     <item>
       <title>[C#] Parent/child relationship and XML serialization</title>
       <link>https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/</link>
-      <pubDate>Fri, 12 Jun 2009 10:18:22 +0000</pubDate>
+      <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/</guid>
       <description>Today I&amp;rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&amp;rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).</description>
@@ -822,7 +822,7 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
     <item>
       <title>[Windows Forms] Automatically drag and drop controls (DragMove)</title>
       <link>https://blog2.thomaslevesque.net/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</link>
-      <pubDate>Wed, 06 May 2009 00:17:21 +0000</pubDate>
+      <pubDate>Wed, 06 May 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</guid>
       <description>Here&amp;rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&amp;hellip; In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
@@ -832,7 +832,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
     <item>
       <title>[WPF] Binding to an asynchronous collection</title>
       <link>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</link>
-      <pubDate>Fri, 17 Apr 2009 01:00:19 +0000</pubDate>
+      <pubDate>Fri, 17 Apr 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
       <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
@@ -843,7 +843,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
     <item>
       <title>[WPF] Automatically sort a GridView when a column header is clicked</title>
       <link>https://blog2.thomaslevesque.net/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</link>
-      <pubDate>Fri, 27 Mar 2009 01:00:31 +0000</pubDate>
+      <pubDate>Fri, 27 Mar 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</guid>
       <description>It&amp;rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&amp;hellip; With the DataGridView in Windows Forms, it was &amp;ldquo;automagic&amp;rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&amp;hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.</description>
@@ -852,7 +852,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
     <item>
       <title>[WPF] Using InputBindings with the MVVM pattern</title>
       <link>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</link>
-      <pubDate>Tue, 17 Mar 2009 10:27:58 +0000</pubDate>
+      <pubDate>Tue, 17 Mar 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
       <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
@@ -863,7 +863,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
     <item>
       <title>[Visual Studio] Trick : make a project item a child item of another</title>
       <link>https://blog2.thomaslevesque.net/2009/03/05/visual-studio-trick-make-a-project-item-a-child-item-of-another/</link>
-      <pubDate>Thu, 05 Mar 2009 01:32:55 +0000</pubDate>
+      <pubDate>Thu, 05 Mar 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/03/05/visual-studio-trick-make-a-project-item-a-child-item-of-another/</guid>
       <description>You probably noticed that, in a C# project tree, some items are placed &amp;ldquo;under&amp;rdquo; a parent item : it is the case, for instance, for files generated by a designer or wizard : The following trick shows how to apply the same behavior to your own files. Let&amp;rsquo;s assume that you want to customize the classes generated by the EDM designer. You can&amp;rsquo;t modify the Model1.designer.cs file, because you changes would be overwritten by the designer.</description>
@@ -872,7 +872,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
     <item>
       <title>[WPF] Article about the Model-View-ViewModel design pattern, by Josh Smith</title>
       <link>https://blog2.thomaslevesque.net/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/</link>
-      <pubDate>Wed, 25 Feb 2009 01:30:56 +0000</pubDate>
+      <pubDate>Wed, 25 Feb 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/</guid>
       <description>Soon after the release of WPF, people have been talking more and more about &amp;ldquo;Model-View-ViewModel&amp;rdquo; (MVVM). This expression refers to a design pattern, drawing its inspiration from the Model-View-Controller (MVC) and Presentation Model (PM) patterns, and created specifically to take advantage of WPF features. This patterns enables an excellent decoupling between data, behavior and presentation, which makes the code easier to understand and maintain, and improves the collaboration between developers and designers.</description>
@@ -881,7 +881,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
     <item>
       <title>Build an RSS reader in 5 minutes</title>
       <link>https://blog2.thomaslevesque.net/2009/02/13/build-an-rss-reader-in-5-minutes/</link>
-      <pubDate>Thu, 12 Feb 2009 23:05:13 +0000</pubDate>
+      <pubDate>Fri, 13 Feb 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/02/13/build-an-rss-reader-in-5-minutes/</guid>
       <description>Today, I stumbled upon a very handy class : SyndicationFeed. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones. For instance, here&amp;rsquo;s how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it&amp;rsquo;s items :</description>
@@ -890,7 +890,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
     <item>
       <title>[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)</title>
       <link>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
-      <pubDate>Thu, 05 Feb 2009 00:26:28 +0000</pubDate>
+      <pubDate>Thu, 05 Feb 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
       <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)
@@ -900,7 +900,7 @@ If you&amp;rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you 
     <item>
       <title>[WPF] Binding to application settings using a markup extension</title>
       <link>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</link>
-      <pubDate>Tue, 18 Nov 2008 13:56:48 +0000</pubDate>
+      <pubDate>Tue, 18 Nov 2008 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</guid>
       <description>Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.

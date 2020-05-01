@@ -6,7 +6,7 @@
     <description>Recent content in JSON on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Oct 2019 06:00:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 15 Oct 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/json/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Handling type hierarchies in Cosmos DB (part 2)</title>
       <link>https://blog2.thomaslevesque.net/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</link>
-      <pubDate>Tue, 15 Oct 2019 06:00:08 +0000</pubDate>
+      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
       <description>This is the second post in a series of 2:
@@ -24,7 +24,7 @@
     <item>
       <title>Handling type hierarchies in Cosmos DB (part 1)</title>
       <link>https://blog2.thomaslevesque.net/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</link>
-      <pubDate>Mon, 14 Oct 2019 06:00:31 +0000</pubDate>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
       <description>This is the first post in a series of 2:
@@ -34,7 +34,7 @@
     <item>
       <title>Handling multipart requests with JSON and file uploads in ASP.NET Core</title>
       <link>https://blog2.thomaslevesque.net/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</link>
-      <pubDate>Tue, 04 Sep 2018 09:56:23 +0000</pubDate>
+      <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
       <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
@@ -44,7 +44,7 @@
     <item>
       <title>Uploading data with HttpClient using a &#34;push&#34; model</title>
       <link>https://blog2.thomaslevesque.net/2013/11/30/uploading-data-with-httpclient-using-a-push-model/</link>
-      <pubDate>Sat, 30 Nov 2013 21:47:09 +0000</pubDate>
+      <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2013/11/30/uploading-data-with-httpclient-using-a-push-model/</guid>
       <description>If you have used the HttpWebRequest class to upload data, you know that it uses a “push” model. What I mean is that you call the GetRequestStream method, which opens the connection if necessary, sends the headers, and returns a stream on which you can write directly.

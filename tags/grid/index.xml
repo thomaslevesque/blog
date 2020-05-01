@@ -6,7 +6,7 @@
     <description>Recent content in grid on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 Nov 2013 21:41:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 Nov 2013 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/grid/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>[WPF] A simpler Grid using XAML attribute syntax</title>
       <link>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</link>
-      <pubDate>Tue, 20 Jul 2010 20:51:10 +0000</pubDate>
+      <pubDate>Tue, 20 Jul 2010 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</guid>
       <description>The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:

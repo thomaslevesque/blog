@@ -6,7 +6,7 @@
     <description>Recent content in middleware on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Jul 2018 15:46:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/middleware/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Asynchronous initialization in ASP.NET Core with custom middleware</title>
       <link>https://blog2.thomaslevesque.net/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</link>
-      <pubDate>Fri, 20 Jul 2018 15:46:31 +0000</pubDate>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
       <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
@@ -25,7 +25,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
     <item>
       <title>Understanding the ASP.NET Core middleware pipeline</title>
       <link>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</link>
-      <pubDate>Tue, 27 Mar 2018 06:00:38 +0000</pubDate>
+      <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</guid>
       <description>Middlewhat? The ASP.NET Core architecture features a system of middleware, which are pieces of code that handle requests and responses. Middleware are chained to each other to form a pipeline. Incoming requests are passed through the pipeline, where each middleware has a chance to do something with them before passing them to the next middleware. Outgoing responses are also passed through the pipeline, in reverse order. If this sounds very abstract, the following schema from the official ASP.</description>

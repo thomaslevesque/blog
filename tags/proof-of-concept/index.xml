@@ -6,7 +6,7 @@
     <description>Recent content in proof of concept on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Feb 2010 20:42:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Feb 2010 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/proof-of-concept/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Automating null checks with Linq expressions</title>
       <link>https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/</link>
-      <pubDate>Sun, 21 Feb 2010 20:42:58 +0000</pubDate>
+      <pubDate>Sun, 21 Feb 2010 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
       <description>The problem Have you ever written code like the following ?

@@ -6,7 +6,7 @@
     <description>Recent content in clipboard on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 05 Sep 2015 13:07:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 05 Sep 2015 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/clipboard/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>[WPF] Prevent the user from pasting an image in a RichTextBox</title>
       <link>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</link>
-      <pubDate>Sat, 05 Sep 2015 13:07:13 +0000</pubDate>
+      <pubDate>Sat, 05 Sep 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</guid>
       <description>WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.
@@ -24,7 +24,7 @@ When I googled for a way to prevent that, the only solutions I found suggested t
     <item>
       <title>[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)</title>
       <link>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
-      <pubDate>Thu, 05 Feb 2009 00:26:28 +0000</pubDate>
+      <pubDate>Thu, 05 Feb 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
       <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)

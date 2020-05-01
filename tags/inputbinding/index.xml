@@ -6,7 +6,7 @@
     <description>Recent content in InputBinding on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Oct 2009 15:30:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2009 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/inputbinding/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>[VS2010] Binding support in InputBindings</title>
       <link>https://blog2.thomaslevesque.net/2009/10/26/vs2010-binding-support-in-inputbindings/</link>
-      <pubDate>Mon, 26 Oct 2009 15:30:25 +0000</pubDate>
+      <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
       <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&amp;hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&amp;rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).</description>
@@ -23,7 +23,7 @@
     <item>
       <title>[WPF] Using InputBindings with the MVVM pattern</title>
       <link>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</link>
-      <pubDate>Tue, 17 Mar 2009 10:27:58 +0000</pubDate>
+      <pubDate>Tue, 17 Mar 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
       <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :

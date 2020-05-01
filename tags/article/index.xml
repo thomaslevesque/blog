@@ -6,7 +6,7 @@
     <description>Recent content in article on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2009 01:30:56 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2009 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/article/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>[WPF] Article about the Model-View-ViewModel design pattern, by Josh Smith</title>
       <link>https://blog2.thomaslevesque.net/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/</link>
-      <pubDate>Wed, 25 Feb 2009 01:30:56 +0000</pubDate>
+      <pubDate>Wed, 25 Feb 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/</guid>
       <description>Soon after the release of WPF, people have been talking more and more about &amp;ldquo;Model-View-ViewModel&amp;rdquo; (MVVM). This expression refers to a design pattern, drawing its inspiration from the Model-View-Controller (MVC) and Presentation Model (PM) patterns, and created specifically to take advantage of WPF features. This patterns enables an excellent decoupling between data, behavior and presentation, which makes the code easier to understand and maintain, and improves the collaboration between developers and designers.</description>

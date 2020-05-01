@@ -6,7 +6,7 @@
     <description>Recent content in trampoline on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Sep 2011 22:16:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Sep 2011 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/trampoline/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Tail recursion in C#</title>
       <link>https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/</link>
-      <pubDate>Thu, 01 Sep 2011 22:16:52 +0000</pubDate>
+      <pubDate>Fri, 02 Sep 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/</guid>
       <description>Regardless of the programming language you&amp;rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&amp;rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .</description>

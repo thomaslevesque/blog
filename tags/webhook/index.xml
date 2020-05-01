@@ -6,7 +6,7 @@
     <description>Recent content in Webhook on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Mar 2018 12:43:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/webhook/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Writing a GitHub Webhook as an Azure Function</title>
       <link>https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/</link>
-      <pubDate>Fri, 30 Mar 2018 12:43:41 +0000</pubDate>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/</guid>
       <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.

@@ -6,7 +6,7 @@
     <description>Recent content in TypeScript on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jul 2019 06:00:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Using TypeScript to write Cosmos DB stored procedures with async/await</title>
       <link>https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</link>
-      <pubDate>Mon, 15 Jul 2019 06:00:23 +0000</pubDate>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</guid>
       <description>Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&amp;rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&amp;rsquo;t hesitate to let me know in the comments!

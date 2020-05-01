@@ -6,7 +6,7 @@
     <description>Recent content in ReSharper on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jun 2016 20:43:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jun 2016 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/resharper/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Pitfall: using var and async together</title>
       <link>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</link>
-      <pubDate>Tue, 21 Jun 2016 20:43:41 +0000</pubDate>
+      <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/</guid>
       <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
@@ -24,7 +24,7 @@ public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = awai
     <item>
       <title>Leveraging ReSharper annotations</title>
       <link>https://blog2.thomaslevesque.net/2015/03/13/leveraging-resharper-annotations/</link>
-      <pubDate>Fri, 13 Mar 2015 01:12:50 +0000</pubDate>
+      <pubDate>Fri, 13 Mar 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2015/03/13/leveraging-resharper-annotations/</guid>
       <description>I don’t think it’s really necessary to present ReSharper (often abbreviated R#), but in case you don’t know about it, it’s a tool made by JetBrains that performs real-time analysis of your C# or VB.NET code to warn you about possible bugs, bad practices, convention violations, etc. It also provides many useful refactorings and code generators. I’ve been using it for a few years now, and it has tremendously improved both my productivity and my coding style.</description>

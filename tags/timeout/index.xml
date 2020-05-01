@@ -6,7 +6,7 @@
     <description>Recent content in timeout on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Feb 2018 18:01:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Feb 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/timeout/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Better timeout handling with HttpClient</title>
       <link>https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/</link>
-      <pubDate>Sun, 25 Feb 2018 18:01:03 +0000</pubDate>
+      <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/</guid>
       <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
@@ -24,7 +24,7 @@
     <item>
       <title>Tackling timeout issues when uploading large files with HttpWebRequest</title>
       <link>https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/</link>
-      <pubDate>Tue, 14 Jan 2014 00:47:24 +0000</pubDate>
+      <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/</guid>
       <description>If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?</description>

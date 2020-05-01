@@ -6,7 +6,7 @@
     <description>Recent content in Azure on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2020 16:44:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/azure/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Using TypeScript to write Cosmos DB stored procedures with async/await</title>
       <link>https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</link>
-      <pubDate>Mon, 15 Jul 2019 06:00:23 +0000</pubDate>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</guid>
       <description>Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&amp;rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&amp;rsquo;t hesitate to let me know in the comments!
@@ -24,7 +24,7 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
     <item>
       <title>Scaling out ASP.NET Core SignalR using Azure Service Bus</title>
       <link>https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</link>
-      <pubDate>Mon, 18 Mar 2019 06:16:15 +0000</pubDate>
+      <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</guid>
       <description>ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&amp;rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.</description>
@@ -33,7 +33,7 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
     <item>
       <title>Multitenant Azure AD issuer validation in ASP.NET Core</title>
       <link>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</link>
-      <pubDate>Mon, 24 Dec 2018 13:54:43 +0000</pubDate>
+      <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:
@@ -43,7 +43,7 @@ openIdConnectOptions.Authority = &amp;#34;https://login.microsoftonline.com/orga
     <item>
       <title>Writing a GitHub Webhook as an Azure Function</title>
       <link>https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/</link>
-      <pubDate>Fri, 30 Mar 2018 12:43:41 +0000</pubDate>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/</guid>
       <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.

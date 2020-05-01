@@ -6,7 +6,7 @@
     <description>Recent content in handler on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Feb 2018 18:01:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Feb 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/handler/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Better timeout handling with HttpClient</title>
       <link>https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/</link>
-      <pubDate>Sun, 25 Feb 2018 18:01:03 +0000</pubDate>
+      <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/</guid>
       <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:

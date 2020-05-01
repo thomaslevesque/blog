@@ -6,7 +6,7 @@
     <description>Recent content in StringTemplate on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2014 01:08:50 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2014 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/stringtemplate/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>StringTemplate: another approach to string interpolation</title>
       <link>https://blog2.thomaslevesque.net/2014/11/17/stringtemplate-another-approach-to-string-interpolation/</link>
-      <pubDate>Mon, 17 Nov 2014 01:08:50 +0000</pubDate>
+      <pubDate>Mon, 17 Nov 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/11/17/stringtemplate-another-approach-to-string-interpolation/</guid>
       <description>With the upcoming version 6 of C#, there’s a lot of talk on CodePlex and elsewhere about string interpolation. Not very surprising, since it’s one of the major features of that release… In case you were living under a rock during the last few months and you haven’t heard about it, string interpolation is a way to insert C# expressions inside a string, so that they’re evaluated at runtime and replaced with their values.</description>

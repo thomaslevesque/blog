@@ -6,7 +6,7 @@
     <description>Recent content in caller info on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 Jun 2012 15:32:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 Jun 2012 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/caller-info/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Using C# 5 caller info attributes when targeting earlier versions of the .NET framework</title>
       <link>https://blog2.thomaslevesque.net/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/</link>
-      <pubDate>Wed, 13 Jun 2012 15:32:05 +0000</pubDate>
+      <pubDate>Wed, 13 Jun 2012 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/</guid>
       <description>Caller info attributes are one of the new features of C# 5. They&amp;rsquo;re attributes applied to optional method parameters that enable you to pass caller information implicitly to a method. I&amp;rsquo;m not sure that description is very clear, so an example will help you understand:

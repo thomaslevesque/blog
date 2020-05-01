@@ -6,7 +6,7 @@
     <description>Recent content in review on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 30 Jul 2014 18:20:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 30 Jul 2014 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/review/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>A review of NDepend</title>
       <link>https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/</link>
-      <pubDate>Wed, 30 Jul 2014 18:20:44 +0000</pubDate>
+      <pubDate>Wed, 30 Jul 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/07/30/a-review-of-ndepend/</guid>
       <description>I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.

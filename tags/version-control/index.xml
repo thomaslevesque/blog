@@ -6,7 +6,7 @@
     <description>Recent content in version control on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Mar 2018 19:01:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/version-control/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Cleanup Git history to remove unwanted files</title>
       <link>https://blog2.thomaslevesque.net/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</link>
-      <pubDate>Tue, 06 Mar 2018 19:01:59 +0000</pubDate>
+      <pubDate>Tue, 06 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</guid>
       <description>I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&amp;hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.

@@ -6,7 +6,7 @@
     <description>Recent content in index on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Nov 2019 07:00:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/index/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Using foreach with index in C#</title>
       <link>https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/</link>
-      <pubDate>Mon, 18 Nov 2019 07:00:11 +0000</pubDate>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/</guid>
       <description>Just a quick tip today!

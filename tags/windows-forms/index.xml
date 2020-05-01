@@ -6,7 +6,7 @@
     <description>Recent content in windows forms on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 05 Feb 2014 21:35:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Feb 2014 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/windows-forms/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>[WPF] Declare global hotkeys in XAML with NHotkey</title>
       <link>https://blog2.thomaslevesque.net/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</link>
-      <pubDate>Wed, 05 Feb 2014 21:35:03 +0000</pubDate>
+      <pubDate>Wed, 05 Feb 2014 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</guid>
       <description>A common requirement for desktop applications is to handle system-wide hotkeys, in order to intercept keyboard shortcuts even when they don’t have focus. Unfortunately, there is no built-in feature in the .NET framework to do it.
@@ -24,7 +24,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
     <item>
       <title>[Windows Forms] Automatically drag and drop controls (DragMove)</title>
       <link>https://blog2.thomaslevesque.net/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</link>
-      <pubDate>Wed, 06 May 2009 00:17:21 +0000</pubDate>
+      <pubDate>Wed, 06 May 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</guid>
       <description>Here&amp;rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&amp;hellip; In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :

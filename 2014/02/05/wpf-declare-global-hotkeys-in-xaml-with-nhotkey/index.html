@@ -30,13 +30,13 @@
 Of course, this is not a new issue, and there are quite a few open-source libraries that address it (e.g. VirtualInput). Most of them rely on a global system hook, which allow them to intercept all keystrokes, even the ones you’re not interested in." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog2.thomaslevesque.net/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/" />
-<meta property="article:published_time" content="2014-02-05T21:35:03+00:00" />
-<meta property="article:modified_time" content="2014-02-05T21:35:03+00:00" />
+<meta property="article:published_time" content="2014-02-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-02-05T00:00:00+00:00" />
 <meta itemprop="name" content="[WPF] Declare global hotkeys in XAML with NHotkey">
 <meta itemprop="description" content="A common requirement for desktop applications is to handle system-wide hotkeys, in order to intercept keyboard shortcuts even when they don’t have focus. Unfortunately, there is no built-in feature in the .NET framework to do it.
 Of course, this is not a new issue, and there are quite a few open-source libraries that address it (e.g. VirtualInput). Most of them rely on a global system hook, which allow them to intercept all keystrokes, even the ones you’re not interested in.">
-<meta itemprop="datePublished" content="2014-02-05T21:35:03&#43;00:00" />
-<meta itemprop="dateModified" content="2014-02-05T21:35:03&#43;00:00" />
+<meta itemprop="datePublished" content="2014-02-05T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2014-02-05T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="423">
 
 
@@ -130,7 +130,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
       <h1 class="f1 athelas mt3 mb1">[WPF] Declare global hotkeys in XAML with NHotkey</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2014-02-05T21:35:03Z">February 5, 2014</time>
+      <time class="f6 mv4 dib tracked" datetime="2014-02-05T00:00:00Z">February 5, 2014</time>
 
       
       
@@ -142,23 +142,23 @@ Of course, this is not a new issue, and there are quite a few open-source librar
 <li>I don’t really like the approach of intercepting all keystrokes. It usually means that you end up with a big method with lots of <code>if/else if</code> to decide what to do based on which keys were pressed.</li>
 </ul>
 <p>A better option, in my opinion, is to listen only to the keys you’re interested in, and declare what to do for each of those. The approach used in WPF for key bindings is quite elegant:</p>
-<pre><code>&lt;Window.InputBindings&gt;
-    &lt;KeyBinding Gesture=&quot;Ctrl+Alt+Add&quot; Command=&quot;{Binding IncrementCommand}&quot; /&gt;
-    &lt;KeyBinding Gesture=&quot;Ctrl+Alt+Subtract&quot; Command=&quot;{Binding DecrementCommand}&quot; /&gt;
-&lt;/Window.InputBindings&gt;
-</code></pre><p>But of course, key bindings are not global, they require that your app has focus… What if we could change that?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Window.InputBindings&gt;</span>
+    <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Gesture=</span><span style="color:#e6db74">&#34;Ctrl+Alt+Add&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding IncrementCommand}&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Gesture=</span><span style="color:#e6db74">&#34;Ctrl+Alt+Subtract&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding DecrementCommand}&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/Window.InputBindings&gt;</span>
+</code></pre></div><p>But of course, key bindings are not global, they require that your app has focus… What if we could change that?</p>
 <p><a href="https://github.com/thomaslevesque/NHotkey">NHotkey</a> is a very simple hotkey library that enables global key bindings. All you have to do is set an attached property to true on your key bindings:</p>
-<pre><code>&lt;Window.InputBindings&gt;
-    &lt;KeyBinding Gesture=&quot;Ctrl+Alt+Add&quot; Command=&quot;{Binding IncrementCommand}&quot;
-                HotkeyManager.RegisterGlobalHotkey=&quot;True&quot; /&gt;
-    &lt;KeyBinding Gesture=&quot;Ctrl+Alt+Subtract&quot; Command=&quot;{Binding DecrementCommand}&quot;
-                HotkeyManager.RegisterGlobalHotkey=&quot;True&quot; /&gt;
-&lt;/Window.InputBindings&gt;
-</code></pre><p>And that’s it; the commands defined in the key bindings will now be invoked even if your app doesn’t have focus!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Window.InputBindings&gt;</span>
+    <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Gesture=</span><span style="color:#e6db74">&#34;Ctrl+Alt+Add&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding IncrementCommand}&#34;</span>
+                <span style="color:#a6e22e">HotkeyManager.RegisterGlobalHotkey=</span><span style="color:#e6db74">&#34;True&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Gesture=</span><span style="color:#e6db74">&#34;Ctrl+Alt+Subtract&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding DecrementCommand}&#34;</span>
+                <span style="color:#a6e22e">HotkeyManager.RegisterGlobalHotkey=</span><span style="color:#e6db74">&#34;True&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/Window.InputBindings&gt;</span>
+</code></pre></div><p>And that’s it; the commands defined in the key bindings will now be invoked even if your app doesn’t have focus!</p>
 <p>You can also use NHotkey from code:</p>
-<pre><code>HotkeyManager.Current.AddOrReplace(&quot;Increment&quot;, Key.Add, ModifierKeys.Control | ModifierKeys.Alt, OnIncrement);
-HotkeyManager.Current.AddOrReplace(&quot;Decrement&quot;, Key.Subtract, ModifierKeys.Control | ModifierKeys.Alt, OnDecrement);
-</code></pre><p>The library takes advantage of the <code>RegisterHotkey</code> function. Because it also supports Windows Forms, it is split into 3 parts, so that you don’t need to reference the WinForms assembly from a WPF app or vice versa:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">HotkeyManager.Current.AddOrReplace(<span style="color:#e6db74">&#34;Increment&#34;</span>, Key.Add, ModifierKeys.Control | ModifierKeys.Alt, OnIncrement);
+HotkeyManager.Current.AddOrReplace(<span style="color:#e6db74">&#34;Decrement&#34;</span>, Key.Subtract, ModifierKeys.Control | ModifierKeys.Alt, OnDecrement);
+</code></pre></div><p>The library takes advantage of the <code>RegisterHotkey</code> function. Because it also supports Windows Forms, it is split into 3 parts, so that you don’t need to reference the WinForms assembly from a WPF app or vice versa:</p>
 <ul>
 <li>The core library, which handles the hotkey registration itself, independently of any specific UI framework. This library is not directly usable, but is used by the other two.</li>
 <li>The WinForms-specific API, which uses the <code>Keys</code> enumeration from <code>System.Windows.Forms</code></li>

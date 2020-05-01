@@ -6,7 +6,7 @@
     <description>Recent content in C# 4.0 on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Oct 2009 00:32:07 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Oct 2009 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/c#-4.0/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>[C# 4.0] Implementing a custom dynamic object</title>
       <link>https://blog2.thomaslevesque.net/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</link>
-      <pubDate>Thu, 08 Oct 2009 00:32:07 +0000</pubDate>
+      <pubDate>Thu, 08 Oct 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</guid>
       <description>If you&amp;rsquo;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.</description>

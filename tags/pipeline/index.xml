@@ -6,7 +6,7 @@
     <description>Recent content in pipeline on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Mar 2018 06:00:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/pipeline/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Understanding the ASP.NET Core middleware pipeline</title>
       <link>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</link>
-      <pubDate>Tue, 27 Mar 2018 06:00:38 +0000</pubDate>
+      <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</guid>
       <description>Middlewhat? The ASP.NET Core architecture features a system of middleware, which are pieces of code that handle requests and responses. Middleware are chained to each other to form a pipeline. Incoming requests are passed through the pipeline, where each middleware has a chance to do something with them before passing them to the next middleware. Outgoing responses are also passed through the pipeline, in reverse order. If this sounds very abstract, the following schema from the official ASP.</description>
@@ -23,7 +23,7 @@
     <item>
       <title>Fun with the HttpClient pipeline</title>
       <link>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</link>
-      <pubDate>Thu, 08 Dec 2016 00:18:43 +0000</pubDate>
+      <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
       <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.

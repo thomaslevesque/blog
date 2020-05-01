@@ -6,7 +6,7 @@
     <description>Recent content in Azure on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Mar 2019 06:16:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/categories/azure/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Scaling out ASP.NET Core SignalR using Azure Service Bus</title>
       <link>https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</link>
-      <pubDate>Mon, 18 Mar 2019 06:16:15 +0000</pubDate>
+      <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</guid>
       <description>ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&amp;rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.</description>

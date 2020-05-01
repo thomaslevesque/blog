@@ -6,7 +6,7 @@
     <description>Recent content in lazy on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2020 13:14:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/lazy/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Lazily resolving services to fix circular dependencies in .NET Core</title>
       <link>https://blog2.thomaslevesque.net/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</link>
-      <pubDate>Wed, 18 Mar 2020 13:14:03 +0000</pubDate>
+      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</guid>
       <description>The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:

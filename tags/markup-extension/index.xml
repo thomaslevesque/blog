@@ -6,7 +6,7 @@
     <description>Recent content in markup extension on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Sep 2011 11:32:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Sep 2011 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/markup-extension/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>[WPF 4.5] Subscribing to an event using a markup extension</title>
       <link>https://blog2.thomaslevesque.net/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</link>
-      <pubDate>Fri, 23 Sep 2011 11:32:07 +0000</pubDate>
+      <pubDate>Fri, 23 Sep 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</guid>
       <description>It&amp;rsquo;s been a while since I last wrote about markup extensions&amp;hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&amp;rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events. Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&amp;rsquo;t do the same to subscribe to an event.</description>
@@ -23,7 +23,7 @@
     <item>
       <title>[WPF] Markup extensions and templates</title>
       <link>https://blog2.thomaslevesque.net/2009/08/23/wpf-markup-extensions-and-templates/</link>
-      <pubDate>Sun, 23 Aug 2009 01:51:10 +0000</pubDate>
+      <pubDate>Sun, 23 Aug 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/08/23/wpf-markup-extensions-and-templates/</guid>
       <description>Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&amp;hellip; In this post I&amp;rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let&amp;rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</description>
@@ -32,7 +32,7 @@
     <item>
       <title>[WPF] A markup extension that can update its target</title>
       <link>https://blog2.thomaslevesque.net/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</link>
-      <pubDate>Tue, 28 Jul 2009 12:38:26 +0000</pubDate>
+      <pubDate>Tue, 28 Jul 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</guid>
       <description>If you have read my previous posts on the topic, you know I&amp;rsquo;m a big fan of custom markup extensions&amp;hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&amp;hellip; It could be useful in various cases, for instance :
@@ -42,7 +42,7 @@
     <item>
       <title>[WPF] Using InputBindings with the MVVM pattern</title>
       <link>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</link>
-      <pubDate>Tue, 17 Mar 2009 10:27:58 +0000</pubDate>
+      <pubDate>Tue, 17 Mar 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
       <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
@@ -53,7 +53,7 @@
     <item>
       <title>[WPF] Binding to application settings using a markup extension</title>
       <link>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</link>
-      <pubDate>Tue, 18 Nov 2008 13:56:48 +0000</pubDate>
+      <pubDate>Tue, 18 Nov 2008 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</guid>
       <description>Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.

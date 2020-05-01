@@ -6,7 +6,7 @@
     <description>Recent content in dragmove on Thomas Levesque .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 06 May 2009 00:17:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 May 2009 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/tags/dragmove/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>[Windows Forms] Automatically drag and drop controls (DragMove)</title>
       <link>https://blog2.thomaslevesque.net/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</link>
-      <pubDate>Wed, 06 May 2009 00:17:21 +0000</pubDate>
+      <pubDate>Wed, 06 May 2009 00:00:00 +0000</pubDate>
       
       <guid>https://blog2.thomaslevesque.net/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</guid>
       <description>Here&amp;rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&amp;hellip; In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
