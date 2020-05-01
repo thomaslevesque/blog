@@ -1,0 +1,8 @@
+baseURL = "https://blog2.thomaslevesque.net/"
+languageCode = "en-us"
+title = "Thomas Levesque .NET Blog"
+theme = "ananke"
+publishDir = "../blog"
+
+[permalinks]
+  posts = "/:year/:month/:day/:title/"
