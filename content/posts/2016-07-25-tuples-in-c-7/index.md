@@ -19,7 +19,15 @@ In .NET 4.0, a set of `Tuple` classes has been introduced in the framework, whic
 
 ```csharp
 private static Tuple<int, double> Tally(IEnumerable<double> values)
-{int count = 0;double sum = 0.0;foreach (var value in values){    count++;    sum += value;}return Tuple.Create(count, sum);
+{
+    int count = 0;
+    double sum = 0.0;
+    foreach (var value in values)
+    {
+        count++;
+        sum += value;
+    }
+    return Tuple.Create(count, sum);
 }
 
 ...
@@ -39,7 +47,15 @@ In C# 7, a new feature will be introduced to improve support for tuples: you wil
 
 ```csharp
 static (int count, double sum) Tally(IEnumerable<double> values)
-{int count = 0;double sum = 0.0;foreach (var value in values){    count++;    sum += value;}return (count, sum);
+{
+    int count = 0;
+    double sum = 0.0;
+    foreach (var value in values)
+    {
+        count++;
+        sum += value;
+    }
+    return (count, sum);
 }
 
 ...
