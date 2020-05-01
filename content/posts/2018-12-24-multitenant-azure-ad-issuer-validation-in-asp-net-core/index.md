@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Multitenant Azure AD issuer validation in ASP.NET Core
-date: 2018-12-24T13:54:43.0000000
+date: 2018-12-24T00:00:00.0000000
 url: /2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/
 tags:
   - asp.net core

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Test driving C# 7 features in Visual Studio “15” Preview
-date: 2016-04-16T20:58:40.0000000
+date: 2016-04-16T00:00:00.0000000
 url: /2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/
 tags:
   - C#

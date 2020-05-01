@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] How to bind to data when the DataContext is not inherited'
-date: 2011-03-21T16:15:29.0000000
+date: 2011-03-21T00:00:00.0000000
 url: /2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/
 tags:
   - binding

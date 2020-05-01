@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Asynchronous initialization in ASP.NET Core with custom middleware
-date: 2018-07-20T15:46:31.0000000
+date: 2018-07-20T00:00:00.0000000
 url: /2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/
 tags:
   - asp.net core

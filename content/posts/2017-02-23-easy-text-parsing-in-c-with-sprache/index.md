@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Easy text parsing in C# with Sprache
-date: 2017-02-23T12:44:08.0000000
+date: 2017-02-23T00:00:00.0000000
 url: /2017/02/23/easy-text-parsing-in-c-with-sprache/
 tags:
   - parser

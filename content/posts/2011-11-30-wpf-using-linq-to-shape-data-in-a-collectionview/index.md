@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Using Linq to shape data in a CollectionView'
-date: 2011-11-30T13:09:45.0000000
+date: 2011-11-30T00:00:00.0000000
 url: /2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/
 tags:
   - collectionview

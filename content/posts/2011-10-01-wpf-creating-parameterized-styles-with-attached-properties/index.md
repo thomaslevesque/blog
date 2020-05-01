@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Creating parameterized styles with attached properties'
-date: 2011-10-01T00:37:15.0000000
+date: 2011-10-01T00:00:00.0000000
 url: /2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/
 tags:
   - attached property

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Visual Studio Online + Git integration with Team Explorer
-date: 2014-10-12T11:30:56.0000000
+date: 2014-10-12T00:00:00.0000000
 url: /2014/10/12/visual-studio-online-git-integration-with-team-explorer/
 tags:
   - bug

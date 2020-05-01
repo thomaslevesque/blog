@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Linq performance improvements in .NET Core
-date: 2017-03-28T22:18:21.0000000
+date: 2017-03-29T00:00:00.0000000
 url: /2017/03/29/linq-performance-improvements-in-net-core/
 tags:
   - .net core

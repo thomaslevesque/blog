@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Using TypeScript to write Cosmos DB stored procedures with async/await
-date: 2019-07-15T06:00:23.0000000
+date: 2019-07-15T00:00:00.0000000
 url: /2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/
 tags:
   - Azure

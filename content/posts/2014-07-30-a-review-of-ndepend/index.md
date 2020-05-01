@@ -1,7 +1,7 @@
 ---
 layout: post
 title: A review of NDepend
-date: 2014-07-30T18:20:44.0000000
+date: 2014-07-30T00:00:00.0000000
 url: /2014/07/30/a-review-of-ndepend/
 tags:
   - architecture

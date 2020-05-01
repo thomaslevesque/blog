@@ -1,7 +1,7 @@
 ---
 layout: post
 title: A new library to display animated GIFs in XAML apps
-date: 2015-01-17T15:58:26.0000000
+date: 2015-01-17T00:00:00.0000000
 url: /2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/
 tags:
   - animated

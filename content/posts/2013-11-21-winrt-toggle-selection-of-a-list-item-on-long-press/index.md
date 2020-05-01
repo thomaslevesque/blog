@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WinRT] Toggle selection of a list item on long press'
-date: 2013-11-21T21:41:59.0000000
+date: 2013-11-21T00:00:00.0000000
 url: /2013/11/21/winrt-toggle-selection-of-a-list-item-on-long-press/
 tags:
   - gesture

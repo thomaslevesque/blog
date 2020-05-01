@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Automatically inject fakes in test fixture with FakeItEasy
-date: 2016-01-17T00:20:09.0000000
+date: 2016-01-17T00:00:00.0000000
 url: /2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/
 tags:
   - C#

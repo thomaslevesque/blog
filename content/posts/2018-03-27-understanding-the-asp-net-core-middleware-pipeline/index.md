@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Understanding the ASP.NET Core middleware pipeline
-date: 2018-03-27T06:00:38.0000000
+date: 2018-03-27T00:00:00.0000000
 url: /2018/03/27/understanding-the-asp-net-core-middleware-pipeline/
 tags:
   - .net core

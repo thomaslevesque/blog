@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF 4.5] Subscribing to an event using a markup extension'
-date: 2011-09-23T11:32:07.0000000
+date: 2011-09-23T00:00:00.0000000
 url: /2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/
 tags:
   - .NET 4.5

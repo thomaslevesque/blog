@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'Pitfall: using var and async together'
-date: 2016-06-21T20:43:41.0000000
+date: 2016-06-21T00:00:00.0000000
 url: /2016/06/21/pitfall-using-var-and-async-together/
 tags:
   - async

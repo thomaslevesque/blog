@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Transform T4 templates as part of the build, and pass variables from the project
-date: 2017-11-12T22:05:47.0000000
+date: 2017-11-13T00:00:00.0000000
 url: /2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/
 tags:
   - build

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Easily convert file sizes to human-readable form
-date: 2014-11-23T02:24:12.0000000
+date: 2014-11-23T00:00:00.0000000
 url: /2014/11/23/easily-convert-file-sizes-to-human-readable-form/
 tags:
   - byte

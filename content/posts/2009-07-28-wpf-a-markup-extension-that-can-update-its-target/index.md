@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] A markup extension that can update its target'
-date: 2009-07-28T12:38:26.0000000
+date: 2009-07-28T00:00:00.0000000
 url: /2009/07/28/wpf-a-markup-extension-that-can-update-its-target/
 tags:
   - markup extension

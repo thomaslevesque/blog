@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Tuples in C# 7
-date: 2016-07-24T23:03:18.0000000
+date: 2016-07-25T00:00:00.0000000
 url: /2016/07/25/tuples-in-c-7/
 tags:
   - C#

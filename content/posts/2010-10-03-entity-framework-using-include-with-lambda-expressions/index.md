@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[Entity Framework] Using Include with lambda expressions'
-date: 2010-10-03T22:42:02.0000000
+date: 2010-10-03T00:00:00.0000000
 url: /2010/10/03/entity-framework-using-include-with-lambda-expressions/
 tags:
   - .NET 4.0

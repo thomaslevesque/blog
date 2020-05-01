@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Using the OAuth 2.0 device flow to authenticate users in desktop apps
-date: 2020-03-28T16:44:40.0000000
+date: 2020-03-28T00:00:00.0000000
 url: /2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/
 tags:
   - .NET

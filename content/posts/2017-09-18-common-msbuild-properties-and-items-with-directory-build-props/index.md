@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Common MSBuild properties and items with Directory.Build.props
-date: 2017-09-18T17:59:10.0000000
+date: 2017-09-18T00:00:00.0000000
 url: /2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/
 tags:
   - .NET

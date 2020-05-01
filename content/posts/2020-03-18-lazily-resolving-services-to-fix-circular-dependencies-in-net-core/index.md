@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Lazily resolving services to fix circular dependencies in .NET Core
-date: 2020-03-18T13:14:03.0000000
+date: 2020-03-18T00:00:00.0000000
 url: /2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/
 tags:
   - .net core

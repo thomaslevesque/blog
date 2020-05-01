@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Tackling timeout issues when uploading large files with HttpWebRequest
-date: 2014-01-14T00:47:24.0000000
+date: 2014-01-14T00:00:00.0000000
 url: /2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/
 tags:
   - HttpWebRequest

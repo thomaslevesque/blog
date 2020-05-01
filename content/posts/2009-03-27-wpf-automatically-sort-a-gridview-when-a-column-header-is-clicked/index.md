@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Automatically sort a GridView when a column header is clicked'
-date: 2009-03-27T01:00:31.0000000
+date: 2009-03-27T00:00:00.0000000
 url: /2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/
 tags:
   - attached property

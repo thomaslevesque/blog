@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Publishing a package from AppVeyor to NuGet.org
-date: 2016-04-19T22:10:05.0000000
+date: 2016-04-20T00:00:00.0000000
 url: /2016/04/20/publishing-a-package-from-appveyor-to-nuget-org/
 tags:
   - appveyor

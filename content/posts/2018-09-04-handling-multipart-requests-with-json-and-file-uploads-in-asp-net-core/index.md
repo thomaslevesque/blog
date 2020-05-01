@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Handling multipart requests with JSON and file uploads in ASP.NET Core
-date: 2018-09-04T09:56:23.0000000
+date: 2018-09-04T00:00:00.0000000
 url: /2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/
 tags:
   - asp.net core

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Display an animated GIF image'
-date: 2011-03-27T22:25:18.0000000
+date: 2011-03-27T00:00:00.0000000
 url: /2011/03/27/wpf-display-an-animated-gif-image/
 tags:
   - animated

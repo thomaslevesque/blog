@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Passing parameters by reference to an asynchronous method
-date: 2014-11-04T11:00:00.0000000
+date: 2014-11-04T00:00:00.0000000
 url: /2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/
 tags:
   - async

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Automating null checks with Linq expressions
-date: 2010-02-21T20:42:58.0000000
+date: 2010-02-21T00:00:00.0000000
 url: /2010/02/21/automating-null-checks-with-linq-expressions/
 tags:
   - C#

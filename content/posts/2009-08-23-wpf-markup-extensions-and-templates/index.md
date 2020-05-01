@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Markup extensions and templates'
-date: 2009-08-23T01:51:10.0000000
+date: 2009-08-23T00:00:00.0000000
 url: /2009/08/23/wpf-markup-extensions-and-templates/
 tags:
   - markup extension

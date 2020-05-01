@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[C#] A simple implementation of the WeakEvent pattern'
-date: 2010-05-17T21:12:36.0000000
+date: 2010-05-17T00:00:00.0000000
 url: /2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/
 tags:
   - C#

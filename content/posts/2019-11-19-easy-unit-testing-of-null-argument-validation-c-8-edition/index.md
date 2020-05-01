@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Easy unit testing of null argument validation (C# 8 edition)
-date: 2019-11-19T07:00:39.0000000
+date: 2019-11-19T00:00:00.0000000
 url: /2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/
 tags:
   - argument validation

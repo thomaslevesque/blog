@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[C# 4.0] Implementing a custom dynamic object'
-date: 2009-10-08T00:32:07.0000000
+date: 2009-10-08T00:00:00.0000000
 url: /2009/10/08/c-4-0-implementing-a-custom-dynamic-object/
 tags:
   - .NET 4.0

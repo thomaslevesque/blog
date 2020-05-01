@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'Showing result suggestions in a WinRT SearchBox: bug regarding the image'
-date: 2013-11-04T20:27:39.0000000
+date: 2013-11-04T00:00:00.0000000
 url: /2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/
 tags:
   - C#

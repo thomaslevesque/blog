@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Create an auto-mocking container with Unity and FakeItEasy
-date: 2015-06-14T20:00:47.0000000
+date: 2015-06-14T00:00:00.0000000
 url: /2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/
 tags:
   - C#

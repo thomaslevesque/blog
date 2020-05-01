@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Explicitly switch to the UI thread in an async method
-date: 2015-11-11T17:00:16.0000000
+date: 2015-11-11T00:00:00.0000000
 url: /2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/
 tags:
   - async

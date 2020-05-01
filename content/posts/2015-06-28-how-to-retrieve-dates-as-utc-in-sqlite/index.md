@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How to retrieve dates as UTC in SQLite
-date: 2015-06-28T19:09:56.0000000
+date: 2015-06-28T00:00:00.0000000
 url: /2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/
 tags:
   - ado.net

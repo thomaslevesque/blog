@@ -1,7 +1,7 @@
 ---
 layout: post
 title: C# Puzzle 2
-date: 2015-07-30T17:13:05.0000000
+date: 2015-07-30T00:00:00.0000000
 url: /2015/07/30/c-puzzle-2/
 tags:
   - C#

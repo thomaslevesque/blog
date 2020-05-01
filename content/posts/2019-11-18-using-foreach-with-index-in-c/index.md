@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Using foreach with index in C#
-date: 2019-11-18T07:00:11.0000000
+date: 2019-11-18T00:00:00.0000000
 url: /2019/11/18/using-foreach-with-index-in-c/
 tags:
   - C#

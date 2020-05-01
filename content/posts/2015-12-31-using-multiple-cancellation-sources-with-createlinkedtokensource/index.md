@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Using multiple cancellation sources with CreateLinkedTokenSource
-date: 2015-12-31T13:27:14.0000000
+date: 2015-12-31T00:00:00.0000000
 url: /2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/
 tags:
   - async

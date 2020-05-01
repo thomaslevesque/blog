@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Hosting an ASP.NET Core 2 application on a Raspberry Pi
-date: 2018-04-17T20:57:40.0000000
+date: 2018-04-17T00:00:00.0000000
 url: /2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/
 tags:
   - .net core

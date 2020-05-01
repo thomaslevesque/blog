@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Strongly typed helper for toast notifications
-date: 2013-11-10T01:49:29.0000000
+date: 2013-11-10T00:00:00.0000000
 url: /2013/11/10/strongly-typed-helper-for-toast-notifications/
 tags:
   - notification

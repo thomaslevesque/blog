@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Tail recursion in C#
-date: 2011-09-01T22:16:52.0000000
+date: 2011-09-02T00:00:00.0000000
 url: /2011/09/02/tail-recursion-in-c/
 tags:
   - C#

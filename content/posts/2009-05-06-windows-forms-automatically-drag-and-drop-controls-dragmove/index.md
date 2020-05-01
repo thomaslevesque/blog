@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[Windows Forms] Automatically drag and drop controls (DragMove)'
-date: 2009-05-06T00:17:21.0000000
+date: 2009-05-06T00:00:00.0000000
 url: /2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/
 tags:
   - dragmove

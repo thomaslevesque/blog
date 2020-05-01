@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Easy unit testing of null argument validation
-date: 2014-11-02T15:24:06.0000000
+date: 2014-11-02T00:00:00.0000000
 url: /2014/11/02/easy-unit-testing-of-null-argument-validation/
 tags:
   - argument validation

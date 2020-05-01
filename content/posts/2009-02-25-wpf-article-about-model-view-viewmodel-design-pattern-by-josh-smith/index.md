@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Article about the Model-View-ViewModel design pattern, by Josh Smith'
-date: 2009-02-25T01:30:56.0000000
+date: 2009-02-25T00:00:00.0000000
 url: /2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/
 tags:
   - article

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[C#] Parent/child relationship and XML serialization'
-date: 2009-06-12T10:18:22.0000000
+date: 2009-06-12T00:00:00.0000000
 url: /2009/06/12/c-parentchild-relationship-and-xml-serialization/
 tags:
   - C#

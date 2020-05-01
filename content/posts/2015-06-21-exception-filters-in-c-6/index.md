@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'Exception filters in C# 6: their biggest advantage is not what you think'
-date: 2015-06-21T18:57:13.0000000
+date: 2015-06-21T00:00:00.0000000
 url: /2015/06/21/exception-filters-in-c-6/
 tags:
   - C# 6

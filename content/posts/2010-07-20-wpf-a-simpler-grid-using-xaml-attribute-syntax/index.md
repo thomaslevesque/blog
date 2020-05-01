@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] A simpler Grid using XAML attribute syntax'
-date: 2010-07-20T20:51:10.0000000
+date: 2010-07-20T00:00:00.0000000
 url: /2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/
 tags:
   - grid

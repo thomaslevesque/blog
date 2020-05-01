@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Making a WPF app using a SDK-style project with MSBuildSdkExtras
-date: 2018-11-23T13:17:51.0000000
+date: 2018-11-23T00:00:00.0000000
 url: /2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/
 tags:
   - .net core

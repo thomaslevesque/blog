@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Customizing string interpolation in C# 6
-date: 2015-02-24T02:00:00.0000000
+date: 2015-02-24T00:00:00.0000000
 url: /2015/02/24/customizing-string-interpolation-in-c-6/
 tags:
   - C# 6

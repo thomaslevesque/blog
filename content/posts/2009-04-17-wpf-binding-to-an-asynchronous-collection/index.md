@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Binding to an asynchronous collection'
-date: 2009-04-17T01:00:19.0000000
+date: 2009-04-17T00:00:00.0000000
 url: /2009/04/17/wpf-binding-to-an-asynchronous-collection/
 tags:
   - asynchronous

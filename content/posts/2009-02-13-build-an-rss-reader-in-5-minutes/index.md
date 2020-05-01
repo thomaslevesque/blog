@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Build an RSS reader in 5 minutes
-date: 2009-02-12T23:05:13.0000000
+date: 2009-02-13T00:00:00.0000000
 url: /2009/02/13/build-an-rss-reader-in-5-minutes/
 tags:
   - RSS

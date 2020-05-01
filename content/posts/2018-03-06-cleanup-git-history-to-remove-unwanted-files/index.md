@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Cleanup Git history to remove unwanted files
-date: 2018-03-06T19:01:59.0000000
+date: 2018-03-06T00:00:00.0000000
 url: /2018/03/06/cleanup-git-history-to-remove-unwanted-files/
 tags:
   - git

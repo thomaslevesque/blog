@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Leveraging ReSharper annotations
-date: 2015-03-13T01:12:50.0000000
+date: 2015-03-13T00:00:00.0000000
 url: /2015/03/13/leveraging-resharper-annotations/
 tags:
   - annotations

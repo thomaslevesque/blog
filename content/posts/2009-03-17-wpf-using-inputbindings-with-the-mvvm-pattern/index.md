@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Using InputBindings with the MVVM pattern'
-date: 2009-03-17T10:27:58.0000000
+date: 2009-03-17T00:00:00.0000000
 url: /2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/
 tags:
   - InputBinding

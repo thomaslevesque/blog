@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Fun with the HttpClient pipeline
-date: 2016-12-08T00:18:43.0000000
+date: 2016-12-08T00:00:00.0000000
 url: /2016/12/08/fun-with-the-httpclient-pipeline/
 tags:
   - .NET

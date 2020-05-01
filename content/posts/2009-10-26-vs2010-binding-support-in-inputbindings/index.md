@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[VS2010] Binding support in InputBindings'
-date: 2009-10-26T15:30:25.0000000
+date: 2009-10-26T00:00:00.0000000
 url: /2009/10/26/vs2010-binding-support-in-inputbindings/
 tags:
   - .NET 4.0

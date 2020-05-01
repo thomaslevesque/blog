@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Writing a GitHub Webhook as an Azure Function
-date: 2018-03-30T12:43:41.0000000
+date: 2018-03-30T00:00:00.0000000
 url: /2018/03/30/writing-a-github-webhook-as-an-azure-function/
 tags:
   - Azure

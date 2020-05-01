@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Binding to application settings using a markup extension'
-date: 2008-11-18T13:56:48.0000000
+date: 2008-11-18T00:00:00.0000000
 url: /2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/
 tags:
   - binding

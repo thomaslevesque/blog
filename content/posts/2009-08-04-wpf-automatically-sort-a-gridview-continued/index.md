@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Automatically sort a GridView (continued)'
-date: 2009-08-04T14:41:01.0000000
+date: 2009-08-04T00:00:00.0000000
 url: /2009/08/04/wpf-automatically-sort-a-gridview-continued/
 tags:
   - attached property

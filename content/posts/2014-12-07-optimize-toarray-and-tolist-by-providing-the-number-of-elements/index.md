@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Optimize ToArray and ToList by providing the number of elements
-date: 2014-12-07T18:10:42.0000000
+date: 2014-12-07T00:00:00.0000000
 url: /2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/
 tags:
   - C#

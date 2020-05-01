@@ -1,7 +1,7 @@
 ---
 layout: post
 title: What's new in FakeItEasy 3.0.0?
-date: 2017-02-20T20:32:30.0000000
+date: 2017-02-20T00:00:00.0000000
 url: /2017/02/20/whats-new-in-fakeiteasy-3-0-0/
 tags:
   - fakeiteasy

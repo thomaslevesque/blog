@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'StringTemplate: another approach to string interpolation'
-date: 2014-11-17T01:08:50.0000000
+date: 2014-11-17T00:00:00.0000000
 url: /2014/11/17/stringtemplate-another-approach-to-string-interpolation/
 tags:
   - C# 6

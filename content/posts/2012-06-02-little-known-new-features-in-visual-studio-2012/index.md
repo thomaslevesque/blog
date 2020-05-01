@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Little known new features in Visual Studio 2012
-date: 2012-06-02T16:00:31.0000000
+date: 2012-06-02T00:00:00.0000000
 url: /2012/06/02/little-known-new-features-in-visual-studio-2012/
 tags:
   - edit and continue

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: C# methods in git diff hunk headers
-date: 2017-01-17T21:31:45.0000000
+date: 2017-01-17T00:00:00.0000000
 url: /2017/01/17/c-methods-in-git-diff-hunk-headers/
 tags:
   - async

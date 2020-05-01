@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Better timeout handling with HttpClient
-date: 2018-02-25T18:01:03.0000000
+date: 2018-02-25T00:00:00.0000000
 url: /2018/02/25/better-timeout-handling-with-httpclient/
 tags:
   - .NET

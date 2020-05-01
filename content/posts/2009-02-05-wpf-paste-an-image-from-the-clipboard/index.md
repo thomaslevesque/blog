@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)'
-date: 2009-02-05T00:26:28.0000000
+date: 2009-02-05T00:00:00.0000000
 url: /2009/02/05/wpf-paste-an-image-from-the-clipboard/
 tags:
   - bug

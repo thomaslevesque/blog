@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Handling type hierarchies in Cosmos DB (part 1)
-date: 2019-10-14T06:00:31.0000000
+date: 2019-10-14T00:00:00.0000000
 url: /2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/
 tags:
   - C#

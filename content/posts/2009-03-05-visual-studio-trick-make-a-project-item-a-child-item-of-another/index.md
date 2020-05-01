@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[Visual Studio] Trick : make a project item a child item of another'
-date: 2009-03-05T01:32:55.0000000
+date: 2009-03-05T00:00:00.0000000
 url: /2009/03/05/visual-studio-trick-make-a-project-item-a-child-item-of-another/
 tags:
   - trick

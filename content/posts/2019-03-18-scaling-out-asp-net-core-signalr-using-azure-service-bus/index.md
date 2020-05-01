@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Scaling out ASP.NET Core SignalR using Azure Service Bus
-date: 2019-03-18T06:16:15.0000000
+date: 2019-03-18T00:00:00.0000000
 url: /2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/
 tags:
   - asp.net core

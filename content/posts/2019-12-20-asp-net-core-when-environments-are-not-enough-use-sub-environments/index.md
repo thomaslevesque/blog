@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'ASP.NET Core: when environments are not enough, use sub-environments!'
-date: 2019-12-20T11:33:00.0000000
+date: 2019-12-20T00:00:00.0000000
 url: /2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/
 tags:
   - asp.net core

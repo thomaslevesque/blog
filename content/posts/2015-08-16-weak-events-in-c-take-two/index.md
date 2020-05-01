@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Weak events in C#, take two
-date: 2015-08-16T11:29:23.0000000
+date: 2015-08-16T00:00:00.0000000
 url: /2015/08/16/weak-events-in-c-take-two/
 tags:
   - events

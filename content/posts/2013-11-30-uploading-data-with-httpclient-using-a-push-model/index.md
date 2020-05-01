@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Uploading data with HttpClient using a "push" model
-date: 2013-11-30T21:47:09.0000000
+date: 2013-11-30T00:00:00.0000000
 url: /2013/11/30/uploading-data-with-httpclient-using-a-push-model/
 tags:
   - HttpClient

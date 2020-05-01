@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Detecting dependency property changes in WinRT
-date: 2013-04-21T17:05:53.0000000
+date: 2013-04-21T00:00:00.0000000
 url: /2013/04/21/detecting-dependency-property-changes-in-winrt/
 tags:
   - binding

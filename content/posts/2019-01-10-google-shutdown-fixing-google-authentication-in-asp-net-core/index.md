@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'Google+ shutdown: fixing Google authentication in ASP.NET Core'
-date: 2019-01-10T13:15:34.0000000
+date: 2019-01-10T00:00:00.0000000
 url: /2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/
 tags:
   - asp.net core

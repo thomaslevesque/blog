@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Async and cancellation support for wait handles
-date: 2015-06-04T00:37:59.0000000
+date: 2015-06-04T00:00:00.0000000
 url: /2015/06/04/async-and-cancellation-support-for-wait-handles/
 tags:
   - async

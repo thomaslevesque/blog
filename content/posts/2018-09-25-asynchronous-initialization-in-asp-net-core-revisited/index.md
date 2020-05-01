@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Asynchronous initialization in ASP.NET Core, revisited
-date: 2018-09-25T21:43:22.0000000
+date: 2018-09-25T00:00:00.0000000
 url: /2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/
 tags:
   - asp.net core

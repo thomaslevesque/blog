@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Using C# 5 caller info attributes when targeting earlier versions of the .NET framework
-date: 2012-06-13T15:32:05.0000000
+date: 2012-06-13T00:00:00.0000000
 url: /2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/
 tags:
   - c# 5

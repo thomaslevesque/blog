@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[WPF] Prevent the user from pasting an image in a RichTextBox'
-date: 2015-09-05T13:07:13.0000000
+date: 2015-09-05T00:00:00.0000000
 url: /2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/
 tags:
   - C#

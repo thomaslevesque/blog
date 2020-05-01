@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Handling query string parameters with no value in ASP.NET Core
-date: 2020-01-30T07:00:58.0000000
+date: 2020-01-30T00:00:00.0000000
 url: /2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/
 tags:
   - asp.net core

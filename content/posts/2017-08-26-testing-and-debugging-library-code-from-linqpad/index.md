@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Testing and debugging library code from LINQPad
-date: 2017-08-25T21:53:08.0000000
+date: 2017-08-26T00:00:00.0000000
 url: /2017/08/26/testing-and-debugging-library-code-from-linqpad/
 tags:
   - C#
