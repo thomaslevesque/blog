@@ -18,7 +18,6 @@ If you ever had to upload large volumes of data over HTTP, you probably ran into
 
  So, a solution could be to to use these methods directly (or the new `Task`-based versions: `GetRequestStreamAsync` and `GetResponseAsync`); but more often than not, you already have an existing code base that uses the synchronous methods, and changing the code to make it fully asynchronous is usually not trivial. So, the easy approach is to create synchronous wrappers around `BeginGetRequestStream` and `BeginGetResponse`, with a way to specify a timeout for these operations: 
 ```csharp
-
     public static class WebRequestExtensions
     {
         public static Stream GetRequestStreamWithTimeout(
@@ -58,7 +57,6 @@ If you ever had to upload large volumes of data over HTTP, you probably ran into
 ```
  (note that I used the Begin/End methods rather than the Async methods, in order to keep compatibility with older versions of .NET)  These extension methods can be used instead of `GetRequestStream` and `GetResponse`; each of them will timeout if they take too long, but once you have the request stream, you can take as long as you want to upload the data. Note that the stream itself has its own read and write timeout (5 minutes by default), so if 5 minutes go by without any data being uploaded, the Write method will cause an exception. Here is the new upload scenario using these methods:  ![timeout2](timeout2.png "timeout2")  As you can see, the only difference is that the timeout doesn't apply anymore to the transfer of the request body, but only to obtaining the request stream and getting the response. Here’s a full example that corresponds to the scenario above: 
 ```csharp
-
 long UploadFile(string path, string url, string contentType)
 {
     // Build request

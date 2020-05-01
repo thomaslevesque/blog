@@ -22,14 +22,12 @@ As you probably know, .NET Core runs on many platforms: Windows, macOS, and many
 Let's start from a basic ASP.NET Core 2.0 MVC app template:
 
 ```bash
-
 dotnet new mvc
 ```
 
 You don't even need to open the project for now, just compile it as is and publish it for the Raspberry Pi:
 
 ```bash
-
 dotnet publish -c Release -r linux-arm
 ```
 
@@ -40,7 +38,6 @@ We're going to use a Raspberry Pi running Raspbian, the official Linux distro fo
 Even though the app is self-contained and doesn't require .NET Core to be installed on the RPi, you will still need a few low-level dependencies; they are listed [here](https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md#linux). You can install them using `apt-get`:
 
 ```bash
-
 sudo apt-get update
 sudo apt-get install curl libunwind8 gettext apt-transport-https
 ```
@@ -50,14 +47,12 @@ sudo apt-get install curl libunwind8 gettext apt-transport-https
 Copy all files from the `bin\Release\netcoreapp2.0\linux-arm\publish` directory to the Raspberry Pi, and make the binary executable (replace MyWebApp with the name of your app):
 
 ```bash
-
 chmod 755 ./MyWebApp
 ```
 
 Run the app:
 
 ```bash
-
 ./MyWebApp
 ```
 
@@ -70,21 +65,18 @@ There are several ways to fix that. The easiest is to set the `ASPNETCORE_URLS` 
 First, you need to install nginx if it's not already there, using this command:
 
 ```bash
-
 sudo apt-get install nginx
 ```
 
 And start it like this:
 
 ```bash
-
 sudo service nginx start
 ```
 
 Now you need to configure it so that requests arriving to port 80 are passed to your app on port 5000. To do that, open the `/etc/nginx/sites-available/default` file in your favorite editor (I use vim because my RPi has no graphical environment). The default configuration defines only one server, listening on port 80. Under this server, look for the section starting with `location /`: this is the configuration for the root path on this server. Replace it with the following configuration:
 
 ```plain
-
 location / {
         proxy_pass http://localhost:5000/;
         proxy_http_version 1.1;
@@ -99,7 +91,6 @@ This configuration is intentionnally minimal, we'll expand it a bit later.
 Once you're done editing the file, tell nginx to reload its configuration:
 
 ```bash
-
 sudo nginx -s reload
 ```
 
@@ -126,7 +117,6 @@ At this point, we could just leave the app alone and call it a day. However, if 
 For the app to know these things, it has to be told by the reverse proxy. Let's change the nginx configuration so that it adds a few headers to incoming requests. These headers are not standard, but they're widely used by proxy servers.
 
 ```plain
-
     proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Host   $http_host;
     proxy_set_header X-Forwarded-Proto  http;
@@ -139,7 +129,6 @@ For the app to know these things, it has to be told by the reverse proxy. Let's 
 We also need to change the ASP.NET Core app so that it takes these headers into account. This can be done easily using the `ForwardedHeaders` middleware; add this code at the start of the `Startup.Configure` method:
 
 ```csharp
-
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.All
@@ -165,14 +154,12 @@ It's pretty easy to do with nginx. Edit the nginx configuration again, and repla
 The reason is quite simple: the app isn't aware that it's not served from the root of the server, and generates all its links as if it were... To fix this, we can ask nginx to pass yet another header to our app:
 
 ```plain
-
 proxy_set_header X-Forwarded-Path   /MyWebApp;
 ```
 
 Note that this `X-Forwarded-Path` header is even less standard than the other ones, since I just made it up... So of course, there's no built-in ASP.NET Core middleware that can handle it, and we'll need to do it ourselves. Fortunately it's pretty easy: we just need to use the path specified in the header as the path base. In the `Startup.Configure` method, add this after the `UseForwardHeaders` statement:
 
 ```csharp
-
 // Patch path base with forwarded path
 app.Use(async (context, next) =>
 {
@@ -195,7 +182,6 @@ If we want our app to be always running, restarting it manually every time it cr
 To create a systemd service, create a `MyWebApp.service` file in the `/lib/systemd/system/` directory, with the following content:
 
 ```plain
-
 [Unit]
 Description=My ASP.NET Core Web App
 After=nginx.service
@@ -216,14 +202,12 @@ WantedBy=multi-user.target
 Enable the service like this:
 
 ```bash
-
 sudo systemctl enable MyWebApp
 ```
 
 And start it like this (new services aren't started automatically):
 
 ```bash
-
 sudo systemctl start MyWebApp
 ```
 

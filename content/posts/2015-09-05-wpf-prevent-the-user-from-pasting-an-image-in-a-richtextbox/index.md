@@ -35,14 +35,12 @@ In my case, I just wanted to prevent an image from being pasted or drag and drop
 XAML:
 
 ```
-
 <RichTextBox DataObject.Pasting="RichTextBox1_Pasting" ... />
 ```
 
 Code-behind:
 
 ```
-
 private void RichTextBox1_Pasting(object sender, DataObjectPastingEventArgs e)
 {
     if (e.FormatToApply == "Bitmap")

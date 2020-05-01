@@ -19,7 +19,6 @@ categories:
 If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with `@@`), like this:
 
 ```diff
-
 diff --git a/Program.cs b/Program.cs
 index 655a213..5ae1016 100644
 --- a/Program.cs
@@ -37,7 +36,6 @@ This is very useful to know where you are when looking at a diff.
 Git has a few built-in regex patterns to detect methods in some languages, including C#; they are defined in [`userdiff.c`](https://github.com/git/git/blob/d7dffce1cebde29a0c4b309a79e4345450bf352a/userdiff.c#L140). But by default, these patterns are not used... you need to tell git which file extensions should be associated with which language. This can be specified in a `.gitattributes` file at the root of your git repository:
 
 ```
-
 *.cs    diff=csharp
 ```
 
@@ -50,7 +48,6 @@ My first impulse was to submit a pull request on Github to add the missing keywo
 Fortunately, the built-in patterns can be overridden in the git configuration. To define the function name pattern for C#, you need to define the `diff.csharp.xfuncname` setting in your git config file:
 
 ```
-
 [[diff "csharp"]]
   xfuncname = ^[ \\t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async|partial)[ \\t]+)*[][<>@.~_[:alnum:]]+[ \\t]+[<>@._[:alnum:]]+[ \\t]*\\(.*\\))[ \\t]*$
 ```
@@ -58,7 +55,6 @@ Fortunately, the built-in patterns can be overridden in the git configuration. T
 As you can see, it's the same pattern as in `userdiff.c`, with the backslashes escaped and the missing keywords added. With this pattern, `git diff` now shows the correct function signature in async methods:
 
 ```diff
-
 diff --git a/Program.cs b/Program.cs
 index 655a213..5ae1016 100644
 --- a/Program.cs

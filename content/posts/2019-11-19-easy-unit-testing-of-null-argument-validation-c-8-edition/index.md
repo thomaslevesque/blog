@@ -18,7 +18,6 @@ categories:
 A few years ago, I blogged about [a way to automate unit testing of null argument validation](https://thomaslevesque.com/2014/11/02/easy-unit-testing-of-null-argument-validation/). Its usage looked like this:
 
 ```csharp
-
 [Fact]
 public void FullOuterJoin_Throws_If_Argument_Is_Null()
 {
@@ -41,7 +40,6 @@ Basically, when you compile a library with nullable reference types enabled, met
 Using these facts, it's possible to update my old `AssertThrowsWhenArgumentNull` method to make it detect non-nullable parameters automatically. Here's the result:
 
 ```csharp
-
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -140,7 +138,6 @@ static class TestHelper
 The unit test is now even simpler, since there's no need to specify the parameters to validate:
 
 ```csharp
-
 [Fact]
 public void FullOuterJoin_Throws_If_Argument_Is_Null()
 {

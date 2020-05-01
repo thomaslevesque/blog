@@ -34,7 +34,6 @@ Then, we go to the place where we add the built-in Google provider (the call to 
 Instead, we add the OpenID Connect provider, point it to the Google OpenID Connect authority URL, and set the client id (the same that we were using for the built-in Google provider):
 
 ```csharp
-
 services
     .AddAuthentication()
     .AddOpenIdConnect(
@@ -50,7 +49,6 @@ services
 We also need to adjust the callback path to be the same as before, so that the redirect URI configured for the Google app still works; and while we're at it, let's also configure the signout paths.
 
 ```csharp
-
 options.CallbackPath = "/signin-google";
 options.SignedOutCallbackPath = "/signout-callback-google";
 options.RemoteSignOutPath = "/signout-google";
@@ -59,7 +57,6 @@ options.RemoteSignOutPath = "/signout-google";
 The default configuration already includes the `openid` and `profile` scopes, but if we want to have access to the user's email address as we did before, we also need to add the `email` scope:
 
 ```csharp
-
 options.Scope.Add("email");
 ```
 

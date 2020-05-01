@@ -24,7 +24,6 @@ Unload your project, and open it in the editor. Add the following `PropertyGroup
 
 ```xml
 
-
     
     15.0
     $(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)
@@ -61,14 +60,12 @@ Note that it will cause a MSBuild warning in the build output (MSB4011) because 
 At some point, the code generation logic might become too complex to remain entirely in the T4 template file. You might want to extract some of it into a helper assembly, and reference this assembly from the template, like this:
 
 ```
-
 <#@ assembly name="../CodeGenHelper/bin/Release/net462/CodeGenHelper.dll" #>
 ```
 
 Of course, specifying the path like this isn't very very convenient... For instance, if you're currently in `Debug` configuration, the `Release` version of CodeGenHelper.dll might be out of date. Fortunately, Visual Studio's `TextTemplatingFileGenerator` custom tool recognizes MSBuild variables from the project, so you can do this instead:
 
 ```
-
 <#@ assembly name="$(SolutionDir)/CodeGenHelper/bin/$(Configuration)/net462/CodeGenHelper.dll" #>
 ```
 
@@ -85,7 +82,6 @@ Notice the `$(SolutionDir)` and `$(Configuration)` variables in the path? They w
 All is not lost, though. All you have to do is explicitly specify the variables you want to pass as T4 parameters. Edit your project file again, and create a new `ItemGroup` with the following items:
 
 ```xml
-
 
     
         $(SolutionDir)

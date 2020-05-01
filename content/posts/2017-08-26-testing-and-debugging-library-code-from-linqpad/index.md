@@ -30,7 +30,6 @@ Write some code that uses your library:
 And add this line at the beginning of your LINQPad script:
 
 ```csharp
-
 Debugger.Launch();
 ```
 

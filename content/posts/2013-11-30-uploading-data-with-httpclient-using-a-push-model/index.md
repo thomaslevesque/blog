@@ -29,7 +29,6 @@ The .NET Framework provides a few built-in implementations of `HttpContent`, her
 For instance, here’s how you would upload the content of a file:
 
 ```
-
 async Task UploadFileAsync(Uri uri, string filename)
 {
     using (var stream = File.OpenRead(filename))
@@ -46,7 +45,6 @@ As you may have noticed, nowhere in this code do we write to the request stream 
 This “pull” model is fine most of the time, but it has a drawback: it requires that the data to upload already exists in a form that can be sent directly to the server. This is not always practical, because sometimes you want to generate the request content “on the fly”. For instance, if you want to send an object serialized as JSON, with the “pull” approach you first need to serialize it in memory as a string or `MemoryStream`, then assign that to the request’s content:
 
 ```
-
 async Task UploadJsonObjectAsync<T>(Uri uri, T data)
 {
     var client = new HttpClient();
@@ -61,7 +59,6 @@ This is fine for small objects, but obviously not optimal for large object graph
 So, how could we reverse this pull model to a push model? Well, it’s actually pretty simple: all you have to do is to create a class that inherits `HttpContent`, and override the `SerializeToStreamAsync` method to write to the request stream directly. Actually, I intended to blog about my own implementation, but then I did some research, and it turns out that Microsoft has already done the work: the [Web API 2 Client](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client) library provides a `PushStreamContent``` class that does exactly that. Basically, you just pass a delegate that defines what to do with the request stream. Here’s how it works:
 
 ```
-
 async Task UploadJsonObjectAsync<T>(Uri uri, T data)
 {
     var client = new HttpClient();
@@ -83,7 +80,6 @@ Note that the `PushStreamContent` class also provides a constructor overload tha
 Actually, for this specific use case, the Web API 2 Client library provides a less convoluted approach: the `ObjectContent` class. You just pass it the object to send and a `MediaTypeFormatter`, and it takes care of serializing the object to the request stream:
 
 ```
-
 async Task UploadJsonObjectAsync<T>(Uri uri, T data)
 {
     var client = new HttpClient();

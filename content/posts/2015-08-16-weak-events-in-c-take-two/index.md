@@ -18,14 +18,12 @@ A few years ago, I blogged about a [generic implementation of the weak event pat
 My initial solution was more a proof of concept than anything else, and had a major performance issue, due to the use of `DynamicInvoke` every time the event was raised. Over the years, I revisited the weak event problem several times and came up with various solutions, improving a little every time, and I now have an implementation that should be good enough for most use cases. The public API is similar to that of my first solution. Basically, instead of writing an event like this:
 
 ```
-
 public event EventHandler MyEvent;
 ```
 
 You write it like this:
 
 ```
-
 private readonly WeakEventSource _myEventSource = new WeakEventSource();
 public event EventHandler MyEvent
 {
@@ -39,7 +37,6 @@ From the subscriber’s point of view, this is no different from a normal event,
 The event publisher can raise the event like this:
 
 ```
-
 _myEventSource.Raise(this, e);
 ```
 

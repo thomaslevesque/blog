@@ -39,7 +39,6 @@ If you apply it to a method or property, it means that the method or property wi
 
 
 ```
-
         [NotNull]
         public string GetString()
         {
@@ -56,7 +55,6 @@ When a method has this attribute, if you test if the return value is null (or no
 If you apply it to a method parameter, it means that null is not a valid argument value:
 
 ```
-
         public string Repeat([NotNull] string s)
         {
             if (s == null) throw new ArgumentNullException("s");
@@ -91,7 +89,6 @@ This one is very useful. Applied to a method, it means that the method is [pure]
 This annotation indicates that a method works like the `String.Format` method, i.e. it takes a composite format string followed by arguments that will replace the placeholders in the format string:
 
 ```
-
         [StringFormatMethod("format")]
         public static void Log(string format, params object[] args)
         {
@@ -114,7 +111,6 @@ This annotation is applied to an `IEnumerable` parameter, and means that the met
 
 
 ```
-
         public static IEnumerable<T> EmptyIfNull<T>([NoEnumeration] this IEnumerable<T> source)
         {
             return source ?? Enumerable.Empty<T>();
@@ -134,7 +130,6 @@ This annotation is a powerful way to describe how the output of a method depends
 
 
 ```
-
         [ContractAnnotation("null => null; notnull => notnull")]
         public object Transform(object data)
         {
@@ -147,7 +142,6 @@ Thanks to the annotation, ReSharper will know that if the argument was not null,
 This method doesn’t return normally (it throws an exception) if its argument is null:
 
 ```
-
         [ContractAnnotation("value:null => halt")]
         public static void CheckArgumentNull<T>(
             [NoEnumeration] this T value,

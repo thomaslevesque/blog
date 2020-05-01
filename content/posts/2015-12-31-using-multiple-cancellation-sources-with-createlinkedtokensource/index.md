@@ -16,7 +16,6 @@ categories:
 Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, [a standardized approach to cancellation](https://msdn.microsoft.com/en-us/library/dd997364%28v=vs.110%29.aspx) has been introduced : cancellation tokens. The basic idea is that you create a `CancellationTokenSource` that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel. That method will then pass it to the other methods it calls, if they can be canceled, and/or regularly check if cancellation was requested. Upon cancellation, the method will typically throw an `OperationCanceledException`. Quick and dirty example:
 
 ```
-
 private readonly IBusinessService _businessService;
 private CancellationTokenSource _cancellationSource;
 private Task _asyncOperation;
@@ -78,7 +77,6 @@ This all works pretty well and is rather easy to setup. But what if there is ano
 Let’s start with a simple case: you have another cancellation token that you also want to take into account. The code would look like this:
 
 ```
-
     public async Task DoSomethingAsync(CancellationToken cancellationToken)
     {
         var otherToken = GetOtherCancellationToken();
@@ -99,7 +97,6 @@ We created a linked cancellation source based on the two cancellation tokens, th
 Now let’s see a slightly more difficult case: the second cancellation source is actually an event. You want to cancel the operation when the event occurs, in addition to user cancellation represented by the `cancellationToken` parameter. So you need to subscribe to the event and trigger the cancellation when it occurs. Here’s a way to do it:
 
 ```
-
     public async Task DoSomethingAsync(CancellationToken cancellationToken)
     {
         using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
@@ -128,7 +125,6 @@ Here we only pass `cancellationToken` to `CreateLinkedTokenSource`, and we direc
 I can’t really give you a specific real-world use case of this technique, because the cases where I used it are too specific to be of public interest, but I can outline the general scenario. I have a long running operation that is made up of multiple long running operations. The whole operation can be canceled globally, and each of the sub-operations can also be canceled individually, without affecting the others. Here’s the rough outline of what it looks like:
 
 ```
-
 async Task GlobalOperationAsync(CancellationToken cancellationToken)
 {
     foreach (var subOperation is SubOperations)

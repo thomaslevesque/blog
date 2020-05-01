@@ -26,7 +26,6 @@ However, I noticed a little gotcha when using Git for source control : the remot
 This is obviously a bug (although a minor one), since the name `origin` is just a convention and a git remote can have any name; I reported it [on Connect](https://connect.microsoft.com/VisualStudio/feedback/details/998359/visual-studio-online-git-integration-in-team-explorer-doesnt-work-if-the-remote-for-vso-isnt-named-origin). If you encounter it you can easily work around it by renaming your remote to `origin`:
 
 ```
-
 git remote rename vso origin
 ```
 

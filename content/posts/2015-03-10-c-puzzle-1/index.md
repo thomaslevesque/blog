@@ -16,7 +16,6 @@ I love to solve C# puzzles; I think it’s a great way to gain a deep understand
 I just came up with this one:
 
 ```
-
 static void Test(out int x, out int y)
 {
     x = 42;

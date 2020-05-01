@@ -43,7 +43,6 @@ It's not an actual feature, it's just a name I made up. But the point is that yo
 For instance, in my scenario, I want to introduce a `appsettings.Development.LocalAuth.json` file that inherits the settings of the Development environment and just overrides the auth server URL:
 
 ```javascript
-
 {
     "Authentication": {
         "Authority": "https://localhost:6001"
@@ -54,7 +53,6 @@ For instance, in my scenario, I want to introduce a `appsettings.Development.Loc
 The way to do that is to add the new file as a configuration source when building the host in `Program.cs`:
 
 ```csharp
-
 public static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureAppConfiguration((context, builder) =>
@@ -83,7 +81,6 @@ And that's it! With this, you can refine existing environments for specific scen
 **Note:** Since the new configuration source is added last, it will override ALL previous configuration sources, not just the default `appsettings.json` files. The default host builder adds user secrets, environment variables, and command line arguments after the JSON files, so those will be overriden as well by the sub-environment settings. This is less than ideal, but probably not a major issue for most scenarios. If it's a concern, the fix is to insert the sub-environment config source after the existing JSON sources, but before the user secrets source. It makes the code a bit more involved, but it's doable:
 
 ```csharp
-
         ...
         .ConfigureAppConfiguration((context, builder) =>
         {

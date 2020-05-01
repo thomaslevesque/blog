@@ -65,7 +65,6 @@ It's possible to write Azure functions in JavaScript, C# (csx) or F# directly in
 The project template creates a class named `Function1` with a `Run` method that looks like this:
 
 ```csharp
-
 public static class Function1
 {
     [FunctionName("Function1")]
@@ -82,7 +81,6 @@ Rename the class to something that makes more sense, e.g. `GitHubWebHook`, and d
 Now we need to tell the Azure Functions runtime that this function is triggered by a GitHub webhook. To do this, change the method signature to look like this:
 
 ```csharp
-
     [FunctionName("GitHubWebHook")]
     public static async Task<HttpResponseMessage> Run(
         [HttpTrigger("POST", WebHookType = "github")] HttpRequestMessage req,
@@ -114,7 +112,6 @@ I won't describe the whole implementation of my webhook in this post, because it
 Rather than reinventing the wheel, we can leverage the [Octokit .NET library](https://github.com/octokit/octokit.net). Octokit is a library made by GitHub to consume the GitHub REST API. It contains classes representing the entities used in the API, including webhook payloads, so we can just deserialize the request content as a `PullRequestEventPayload`. However, if we just try to do this with JSON.NET, this isn't going to work: Octokit doesn't use JSON.NET, so the classes aren't decorated with JSON.NET attributes to map the C# property names to the JSON property names. Instead, we need to use the JSON serializer that is included in Octokit, called `SimpleJsonSerializer`:
 
 ```csharp
-
 private static async Task<PullRequestEventPayload> DeserializePayloadAsync(HttpContent content)
 {
     string json = await content.ReadAsStringAsync();
@@ -126,7 +123,6 @@ private static async Task<PullRequestEventPayload> DeserializePayloadAsync(HttpC
 There's also another issue: the `PullRequestEventPayload` from Octokit is missing the `Installation` property, which we're going to need later to authenticate with the GitHub API. An easy workaround is to make a new class that inherits `PullRequestEventPayload` and add the new property:
 
 ```csharp
-
 public class PullRequestPayload : PullRequestEventPayload
 {
     public Installation Installation { get; set; }
@@ -166,7 +162,6 @@ This JWT needs to be signed with the RS256 algorithm (RSA signature with SHA256)
 Once you have the private key as an `RSAParameters` object, you can generate a JWT like this:
 
 ```csharp
-
 public string GetTokenForApplication()
 {
     var key = new RsaSecurityKey(_settings.RsaParameters);
@@ -197,7 +192,6 @@ A few notes about this code:
 Once you have the JWT, you can get an installation access token by calling the ["new installation token" API endpoint](https://developer.github.com/v3/apps/#create-a-new-installation-token). You can authenticate to this endpoint by using the generated JWT as a `Bearer` token
 
 ```csharp
-
 public async Task<string> GetTokenForInstallationAsync(int installationId)
 {
     var appToken = GetTokenForApplication();
@@ -233,7 +227,6 @@ public async Task<string> GetTokenForInstallationAsync(int installationId)
 OK, almost there. Now we just need to use the installation token to call the GitHub API. This can be done easily with Octokit:
 
 ```csharp
-
 private IGitHubClient CreateGitHubClient(string installationToken)
 {
     var userAgent = new ProductHeaderValue("DontMergeMeYet");
@@ -253,14 +246,12 @@ Note: the code above isn't exactly what you'll find in [the repo](https://github
 When creating your Azure Function, it's useful to be able to debug on your local machine. However, how will GitHub be able to call your function if it doesn't have a publicly accessible URL? The answer is a tool called [ngrok](https://ngrok.com/). Ngrok can create a temporary host name that forwards all traffic to a port on your local machine. To use it, create an account (it's free) and download the command line tool. Once logged in to the ngrok website, a [page](https://dashboard.ngrok.com/get-started) will give you the command to save an authentication token on your machine. Just execute this command:
 
 ```bash
-
 ngrok authtoken 1beErG2VTJJ0azL3r2SBn_2iz8johqNv612vaXa3Rkm
 ```
 
 Start your Azure Function in debug from Visual Studio; the console will show you the local URL of the function, something like `http://localhost:7071/api/GitHubWebHook`. Note the port, and in a new console, start ngrok like this:
 
 ```bash
-
 ngrok http 7071 --host-header rewrite
 ```
 
@@ -269,7 +260,6 @@ This will create a new hostname and start forwarding traffic to the 7071 port on
 You can see the temporary hostname in the command output:
 
 ```plain
-
 ngrok by @inconshreveable                                                                                                                                                                                         (Ctrl+C to quit)
 
 Session Status                online

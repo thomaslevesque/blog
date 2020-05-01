@@ -27,7 +27,6 @@ On the surface, it seems very similar to WpfAnimatedGif, but at its core it uses
 The basic usage is roughly the same: just set an attached property on an `Image` control to specify the GIF animation source.
 
 ```
-
 <Image gif:AnimationBehavior.SourceUri="/images/working.gif" />
 ```
 
@@ -42,7 +41,6 @@ XamlAnimatedGif currently works on WPF 4.5, Windows 8.1 store apps, and Windows 
 The library is still labeled alpha because it’s new, but it seems reasonably stable so far. You can install it [from NuGet](http://www.nuget.org/packages/XamlAnimatedGif/):
 
 ```
-
 PM> Install-Package XamlAnimatedGif -Pre 
 ```
 

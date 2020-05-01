@@ -21,7 +21,6 @@ Just a quick tip today!
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:
 
 ```csharp
-
 // foreach with a "manual" index
 int index = 0;
 foreach (var item in collection)
@@ -41,7 +40,6 @@ for (int index = 0; index < collection.Count; index++)
 It's something that has always annoyed me; couldn't we have the benefits of both `foreach` and `for`? It turns out that there's a simple solution, using Linq and tuples. Just write an extension method like this:
 
 ```csharp
-
 using System.Linq;
 ...
 
@@ -54,7 +52,6 @@ public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> 
 And now you can do this:
 
 ```csharp
-
 foreach (var (item, index) in collection.WithIndex())
 {
     DoSomething(item, index);

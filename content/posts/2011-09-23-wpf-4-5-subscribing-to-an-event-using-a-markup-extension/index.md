@@ -19,13 +19,11 @@ It's been a while since I last wrote about markup extensions... The release of [
 
   It would be nice to be able to bind events directly to ViewModel methods, like this:  
 ```xml
-
         <Button Content="Click me"
                 Click="{my:EventBinding OnClick}" />
 ```
  With the `OnClick` method defined in the ViewModel: 
 ```csharp
-
         public void OnClick(object sender, EventArgs e)
         {
             MessageBox.Show("Hello world!");
@@ -33,7 +31,6 @@ It's been a while since I last wrote about markup extensions... The release of [
 ```
   Well, this is now possible! Here's a proof of concept... The `EventBindingExtension` class shown below first gets the `DataContext` of the control, then looks for the specified method on the `DataContext`, and eventually returns a delegate for this method: 
 ```csharp
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -119,7 +116,6 @@ using System.Windows.Markup;
 ```
   This class can be used as shown in the example above.  As it is now, this markup extension has an annoying limitation: the `DataContext` must be set before the call to `ProvideValue`, otherwise it won't be possible to find the event handler method. A solution could be to subscribe to the `DataContextChanged` event to look for the method after the `DataContext` is set, but in the meantime we still need to return something... and we can't return null, because it would cause an exception (since you can't subscribe to an event with a null handler). So we need to return a dummy handler generated dynamically from the event signature. It makes things a bit harder... but it's still feasible.  Here's a second version that implements this improvement :  
 ```csharp
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

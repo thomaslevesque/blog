@@ -19,7 +19,6 @@ Suppose we're writing an API for a blog. Our "create post" endpoint should recei
 - Embed the image bytes as base64 in the JSON payload, e.g.
 
 ```js
-
 {
     "title": "My first blog post",
     "body": "This is going to be the best blog EVER!!!!",
@@ -35,7 +34,6 @@ Suppose we're writing an API for a blog. Our "create post" endpoint should recei
 The last approach seems the most appropriate; unfortunately it's also the most difficult to support… There is no built-in support for this scenario in ASP.NET Core. There is *some* support for the `multipart/form-data` content type, though; for instance, we can bind a model to a multipart request body, like this:
 
 ```csharp
-
 public class MyRequestModel
 {
     [Required]
@@ -61,7 +59,6 @@ There's also a [`MultipartReader`](https://docs.microsoft.com/en-us/dotnet/api/m
 Ideally, we'd like to have a request model like this:
 
 ```csharp
-
 public class CreatePostRequestModel
 {
     [Required]
@@ -77,7 +74,6 @@ public class CreatePostRequestModel
 Where the `Title`, `Body` and `Tags` properties come from a form field containing JSON and the `Image` property comes from the uploaded file. In other words, the request would look like this:
 
 ```plain
-
 POST /api/blog/post HTTP/1.1
 Content-Type: multipart/form-data; boundary=AaB03x
  
@@ -103,7 +99,6 @@ Fortunately, ASP.NET Core is very flexible, and we can actually make this work, 
 Here it is:
 
 ```csharp
-
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -185,7 +180,6 @@ namespace TestMultipart.ModelBinding
 To use it, just apply this attribute to the `CreatePostRequestModel` class above:
 
 ```csharp
-
 [ModelBinder(typeof(JsonWithFilesFormDataModelBinder), Name = "json")]
 public class CreatePostRequestModel
 ```
@@ -195,7 +189,6 @@ This tells ASP.NET Core to use our custom model binder to bind this class. The `
 Now we just need to pass a `CreatePostRequestModel` to our controller action, and we're done:
 
 ```csharp
-
 [HttpPost]
 public ActionResult<Post> CreatePost(CreatePostRequestModel post)
 {

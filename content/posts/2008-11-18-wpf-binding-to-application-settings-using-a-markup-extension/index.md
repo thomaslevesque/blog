@@ -24,7 +24,6 @@ In Windows Forms, it was possible to define bindings between control properties 
 With WPF, we can do something similar in a much more elegant way... although it's not "officially" documented, it is possible to create bindings to application settings in XAML. For instance, to persist the window size and position in application settings, many blogs suggest this approach :
 
 ```xml
-
 <Window x:Class="WpfApplication1.Window1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -47,7 +46,6 @@ Of course, I'm not saying this idea is bad… but it's very easy to improve it, 
 It's quite easy to define your own markup extension, by creating a class that inherits the abstract MarkupExtension class, and implements the ProvideValue method. In our case, most of what we need is already implemented in the Binding class (which indirectly inherits MarkupExtension). So we're just going to inherit Binding, and initialize the necessary properties in order to bind to application settings :
 
 ```csharp
-
 using System.Windows.Data;
 
 namespace WpfApplication1
@@ -81,7 +79,6 @@ In that class, we defined two constructors, matching those of the Binding class.
 To illustrate the usage of this markup extension, let's go back to the previous example, and replace the Bindings with the SettingBinding extension :
 
 ```xml
-
 <Window x:Class="WpfApplication1.Window1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -98,7 +95,6 @@ Isn't it much clearer, more readable, and shorter to write ?
 And of course, to make it work, let's not forget to save the settings in the application's Exit event…
 
 ```csharp
-
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             WpfApplication1.Properties.Settings.Default.Save();

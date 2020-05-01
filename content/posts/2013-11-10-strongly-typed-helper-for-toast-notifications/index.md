@@ -18,7 +18,6 @@ Windows 8 provides an API for showing toast notifications. Unfortunately, it’s
 So I created a simple wrapper around the standard toast API. It can be used like this:
 
 ```
-
 var content = new ToastContent.ImageAndText02
 {
     Image = "ms-appx:///Images/dotnet.png",
@@ -34,7 +33,6 @@ Note that I kept the original names from the toast template catalog, because suf
 If you want more flexibility than a strongly typed template can provide, but don’t want to manipulate the template’s XML, you can use the `ToastContent` class directly:
 
 ```
-
 var content = new ToastContent(ToastTemplateType.ToastImageAndText02);
 content.SetImage(1, "ms-appx:///Images/dotnet.png");
 content.SetText(1, "Hello world!");

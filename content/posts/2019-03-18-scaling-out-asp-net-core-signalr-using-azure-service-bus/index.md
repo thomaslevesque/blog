@@ -34,7 +34,6 @@ Here's an overview of how one could manually implement the Azure Service Bus app
 
 
 ```csharp
-
 // Pseudo code...
 
 private readonly IHubContext<ChatHub, IChatClient> _hubContext;
@@ -55,7 +54,6 @@ public async Task SendMessageToAllAsync(string text)
 
 
 ```csharp
-
 // Very simplified pseudo code...
 
 // Subscribe to the topic
@@ -82,7 +80,6 @@ I'm not showing the full details of how to implement this solution, because to b
 If you have used the Redis or Azure SignalR Service approaches before, you might have noticed how simple they are to use. Basically, in your `Startup.ConfigureServices` method, just append `AddRedis(...)` or `AddAzureSignalR(...)` after `services.AddSignalR()`, and you're done: you can use SignalR as usual, the details of how it handles scale-out are completely abstracted away. Wouldn't it be nice to be able to do the same for Azure Service Bus? I thought so too, so I made a library that does exactly that: [AspNetCore.SignalR.AzureServiceBus](https://github.com/thomaslevesque/AspNetCore.SignalR.AzureServiceBus). To use it, reference the [NuGet package](https://www.nuget.org/packages/AspNetCore.SignalR.AzureServiceBus/1.0.0-alpha.1), and just add this in your `Startup.ConfigureServices` method:
 
 ```csharp
-
 services.AddSignalR()
         .AddAzureServiceBus(options =>
         {

@@ -14,7 +14,6 @@ categories:
 
 Today I'd like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design !  **The problem**  It's very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (`Controls`), and a reference to their parent control (`Parent`).  This kind of structure is quite easy to implement, it just requires a bit of plumbing to maintain the consistency of the parent/child relationship. However, if you want to serialize the parent object to XML, it can get tricky... Let's take a simple, purely theoretical example :  
 ```csharp
-
     public class Parent
     {
         public Parent()
@@ -41,7 +40,6 @@ Today I'd like to present an idea that occurred to me recently. Nothing about WP
 ```
 
 ```csharp
-
     public class Child
     {
         public string Name { get; set; }
@@ -51,7 +49,6 @@ Today I'd like to present an idea that occurred to me recently. Nothing about WP
 ```
   Let's create an instance of `Parent` with a few children, and try to serialize it to XML :  
 ```csharp
-
             Parent p = new Parent { Name = "The parent" };
             p.AddChild(new Child { Name = "First child" });
             p.AddChild(new Child { Name = "Second child" });
@@ -68,7 +65,6 @@ Today I'd like to present an idea that occurred to me recently. Nothing about WP
 ```
   When we try to serialize the `Parent` object, an `InvalidOperationException` occurs, saying that a circular reference was detected : indeed, the parent references the children, which in turn reference the parent, which references the children... and so on. The obvious solution to that issue is to suppress the serialization of the `Child.ParentObject` property, which can be done easily by using the `XmlIgnore` attribute. With that change the serialization works fine, but the problem is not solved yet : when we deserialize the object, the `ParentObject` property of the children is not set, since it wasn't serialized... the consistency of the parent/child relationship is broken !  A simple and naive solution would be to loop through the `Children` collection after the deserialization, in order to set the `ParentObject` manually. But it's definitely not an elegant approach... and since I really like elegant code, I thought of something else ;)  **The solution**  The idea I had to solve this problem consists of a specialized generic collection `ChildItemCollection<P,T>`, and a `IChildItem<P>` interface that must be implemented by children.  The `IChildItem<P>` interface just defines a `Parent` property of type P :  
 ```csharp
-
     /// <summary>
     /// Defines the contract for an object that has a parent object
     /// </summary>
@@ -80,7 +76,6 @@ Today I'd like to present an idea that occurred to me recently. Nothing about WP
 ```
   The `ChildItemCollection<P,T>` class implements `IList<T>` by delegating the implementation to a `List<T>` (or to a collection passed to the constructor), and maintains the parent/child relationship :  
 ```csharp
-
     /// <summary>
     /// Collection of child items. This collection automatically set the
     /// Parent property of the child items when they are added or removed
@@ -217,7 +212,6 @@ Today I'd like to present an idea that occurred to me recently. Nothing about WP
 ```
   Now let's see how this class can be used in the case of the above example... First let's change the `Child` class so that it implements the `IChildItem<Parent>` interface :  
 ```csharp
-
     public class Child : IChildItem<Parent>
     {
         public string Name { get; set; }
@@ -244,7 +238,6 @@ Today I'd like to present an idea that occurred to me recently. Nothing about WP
 ```
   Note that here the `IChildItem<Parent>` interface is implemented *explicitly* : this is a way to "hide" the `Parent` property, that will only be accessible when manipulating the `Child` object through a variable of type `IChildItem<Parent>`. We also define the `set` accessor of the `ParentObject` property as `internal`, so that it can't be modified from another assembly.  In the `Parent` class, the `List<Child>` just has to be replaced by a `ChildItemCollection<Parent, Child>`. We also remove the `AddChild` and `RemoveChild` methods, which are no more necessary since the `ChildItemCollection<P,T>` takes care of setting the `Parent` property.  
 ```csharp
-
     public class Parent
     {
         public Parent()

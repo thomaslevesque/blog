@@ -36,7 +36,6 @@ So we're going to implement a workaround for these two issues. Let's recap what 
 Let's see how we can associate a timeout value to a request. The `HttpRequestMessage` class has a `Properties` property, which is a dictionary in which we can put whatever we need. We're going to use this to store the timeout for a request, and to make things easier, we'll create extension methods to access the value in a strongly-typed fashion:
 
 ```csharp
-
 public static class HttpRequestExtensions
 {
     private static string TimeoutPropertyKey = "RequestTimeout";
@@ -75,7 +74,6 @@ The `HttpClient` uses a **pipeline architecture**: each request is sent through 
 Our handler is going to inherit `DelegatingHandler`, a type of handler designed to be chained to another handler. To implement a handler, we need to **override the `SendAsync` method**. A minimal implementation would look like this:
 
 ```csharp
-
 class TimeoutHandler : DelegatingHandler
 {
     protected async override Task<HttpResponseMessage> SendAsync(
@@ -94,7 +92,6 @@ The call to `base.SendAsync` just passes the request to the next handler. Which 
 First, let's add a `DefaultTimeout` property to our handler; it will be used for requests that don't have their timeout explicitly set:
 
 ```csharp
-
 public TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(100);
 ```
 
@@ -105,7 +102,6 @@ To actually implement the timeout, we're going to get the timeout value for the 
 To create a `CancellationToken` whose cancellation we can control, **we need a `CancellationTokenSource`**, which we're going to create based on the request's timeout:
 
 ```csharp
-
 private CancellationTokenSource GetCancellationTokenSource(
     HttpRequestMessage request,
     CancellationToken cancellationToken)
@@ -135,7 +131,6 @@ Two points of interest here:
 Finally, let's change the `SendAsync` method to use the `CancellationTokenSource` we created:
 
 ```csharp
-
 protected async override Task<HttpResponseMessage> SendAsync(
     HttpRequestMessage request,
     CancellationToken cancellationToken)
@@ -158,7 +153,6 @@ At this point, we have a handler that lets us specify a different timeout for ea
 All we need to do is catch the `TaskCanceledException` (or rather its base class, `OperationCanceledException`), and **check if the `cancellationToken` parameter is canceled**: if it is, the cancellation was caused by the caller, so we let it bubble up normally; if not, this means the cancellation was caused by the timeout, so we throw a `TimeoutException`. Here's the final  `SendAsync` method:
 
 ```csharp
-
 protected async override Task<HttpResponseMessage> SendAsync(
     HttpRequestMessage request,
     CancellationToken cancellationToken)
@@ -189,7 +183,6 @@ Our handler is done, now let's see how to use it.
 When creating an `HttpClient`, it's possible to **specify the first handler of the pipeline**. If none is specified, an `HttpClientHandler` is used; this handler sends requests directly to the network. To use our new `TimeoutHandler`, we're going to create it, attach an `HttpClientHandler` as its next handler, and pass it to the `HttpClient`:
 
 ```csharp
-
 var handler = new TimeoutHandler
 {
     InnerHandler = new HttpClientHandler()
@@ -207,7 +200,6 @@ Note that we need to **disable the `HttpClient`'s timeout by setting it to an in
 Now let's try to send a request with a timeout of 5 seconds to a server that takes to long to respond:
 
 ```csharp
-
 var request = new HttpRequestMessage(HttpMethod.Get, "http://foo/");
 request.SetTimeout(TimeSpan.FromSeconds(5));
 var response = await client.SendAsync(request);
@@ -218,7 +210,6 @@ If the server doesn't respond within 5 seconds, we get a `TimeoutException` inst
 Let's now check that cancellation still works correctly. To do this, we pass a `CancellationToken` that will be cancelled after 2 seconds (i.e. before the timeout expires):
 
 ```csharp
-
 var request = new HttpRequestMessage(HttpMethod.Get, "http://foo/");
 request.SetTimeout(TimeSpan.FromSeconds(5));
 var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));

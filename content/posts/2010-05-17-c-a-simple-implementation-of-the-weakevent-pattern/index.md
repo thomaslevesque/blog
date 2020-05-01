@@ -13,12 +13,10 @@ categories:
 
 As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they're not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.  The "obvious" solution, of course, is to unsubscribe from the event when you're done with it. Unfortunately, it's not always obvious to know *when* you can unsubscribe... an object that goes out of scope usually isn't aware of it, so it doesn't have a chance to unsubscribe from the event.  Another approach is to implement the [WeakEvent pattern](http://msdn.microsoft.com/en-us/library/aa970850.aspx), which principle is to keep only weak references to the listeners. That way, unsubscribed listeners can be claimed by the garbage collector. Microsoft included in WPF a few types to deal with the WeakEvent pattern (`WeakEventManager` class and `IWeakEventListener` interface), and gives guidelines on how to implement your own weak event. However this technique is not very convenient, because you need to create dedicated classes to expose new events, and the listeners need to implement a specific interface.  So I thought about another implementation, which allows creating weak events almost the same way as normal events. My first idea was to use a list of `WeakReference`s to store the list of subscribed delegates. But this doesn't work so well, because of the way we typically use delegates :  
 ```csharp
-
 myObject.MyEvent += new EventHandler(myObject_MyEvent);
 ```
   We create a delegate, subscribe it to the event, and... drop it. So the only accessible reference to the delegate is actually a weak reference, so there's nothing to prevent its garbage collection... and that's exactly what happens ! After a variable period of time (from my observations, no more than a few seconds), the delegate is garbage collected, and isn't called anymore when the event is raised.  Rather than keeping a weak reference to the delegate itself, we should use a less transient object : the target object of the delegate (`Delegate.Target`) would be a better choice. So I created the `WeakDelegate<TDelegate>` class, which wraps a delegate by storing separately the method and a weak reference to the target :  
 ```csharp
-
     public class WeakDelegate<TDelegate> : IEquatable<TDelegate>
     {
         private WeakReference _targetReference;
@@ -77,7 +75,6 @@ myObject.MyEvent += new EventHandler(myObject_MyEvent);
 ```
   Now, we just need to manage a list of these `WeakDelegate<TDelegate>`. This is done by the `WeakEvent<TDelegate>` class :  
 ```csharp
-
     public class WeakEvent<TEventHandler>
     {
         private List<WeakDelegate<TEventHandler>> _handlers;
@@ -123,7 +120,6 @@ myObject.MyEvent += new EventHandler(myObject_MyEvent);
 ```
   This class automatically handles the removal of "dead" (garbage collected) handlers, and provides a `Raise` method to call the handlers. It can be used as follows :  
 ```csharp
-
         private WeakEvent<EventHandler> _myEvent = new WeakEvent<EventHandler>();
         public event EventHandler MyEvent
         {
@@ -138,7 +134,6 @@ myObject.MyEvent += new EventHandler(myObject_MyEvent);
 ```
   This is a bit longer to write than a "regular" event, but considering the benefits, it's very acceptable. Anyway, you can easily create a Visual Studio snippet to quickly create a weak event, with only 3 fields to fill in :  
 ```xml
-
 <?xml version="1.0" encoding="utf-8" ?>
 <CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
   <CodeSnippet Format="1.0.0">

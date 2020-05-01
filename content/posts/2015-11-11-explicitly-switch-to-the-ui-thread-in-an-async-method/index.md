@@ -20,7 +20,6 @@ Async code is a great way to keep your app’s UI responsive. You can start an a
 For instance, let’s assume you want to do something like this:
 
 ```
-
 public async void btnStart_Click(object sender, RoutedEventArgs e)
 {
     lblStatus.Text = "Working...";
@@ -38,14 +37,12 @@ public async void btnStart_Click(object sender, RoutedEventArgs e)
 This method starts an async operation to retrieve some data, and doesn’t resume on the UI thread, because it has some work to do in the background. When it’s done, it tries to update the UI, but since it’s not on the UI thread, it fails. This is a well known issue, and there are several workarounds. The most obvious one is to explicitly marshall the action to the dispatcher thread:
 
 ```
-
 Dispatcher.Invoke(new Action(() => lblStatus.Text = "Done"));
 ```
 
 But it’s not very elegant and readable. A better way to do it is simply to extract the part of the method that does the actual work to another method:
 
 ```
-
 public async void btnStart_Click(object sender, RoutedEventArgs e)
 {
     lblStatus.Text = "Working...";
@@ -67,7 +64,6 @@ It takes advantage of the normal behavior of `await`, which is to resume on the 
 However, there might be some cases where it’s not practical to split the method like this. Or perhaps you want to switch to the UI thread in a method that didn’t start on the UI thread. Of course, you can use `Dispatcher.Invoke`, but it doesn’t look very nice with all those lambda expressions. What would be nice would be to be able to write something like this:
 
 ```
-
 await syncContext;
 ```
 
@@ -82,7 +78,6 @@ Well, it’s actually pretty simple to do: we just need to create a custom await
 So, we need to create an awaiter that captures a synchronization context, and causes the awaiting method to resume on this synchronization context. Here’s how it looks like:
 
 ```
-
 public struct SynchronizationContextAwaiter : INotifyCompletion
 {
     private static readonly SendOrPostCallback _postCallback = state => ((Action)state)();
@@ -110,7 +105,6 @@ public struct SynchronizationContextAwaiter : INotifyCompletion
 Now that we have this awaiter, we just need to create a `GetAwaiter` extension method for the synchronization context that returns this awaiter:
 
 ```
-
 public static SynchronizationContextAwaiter GetAwaiter(this SynchronizationContext context)
 {
     return new SynchronizationContextAwaiter(context);
@@ -122,7 +116,6 @@ And we’re done!
 The original method can now be rewritten like this:
 
 ```
-
 public async void btnStart_Click(object sender, RoutedEventArgs e)
 {
     var syncContext = SynchronizationContext.Current;

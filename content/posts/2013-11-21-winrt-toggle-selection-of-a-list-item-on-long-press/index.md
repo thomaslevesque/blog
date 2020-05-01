@@ -23,7 +23,6 @@ Sure, in the default style, there is visual hint (a discrete “slide down” an
 A simple way to do it is to create an attached property which, when set to `true`, subscribes to the `Holding` event of an item, and toggles the `IsSelected` property when the event occurs. Here’s a possible implementation:
 
 ```
-
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -87,7 +86,6 @@ namespace TestSelectOnHold
 You can then set this property in the `ItemContainerStyle` of the list control
 
 ```
-
 <GridView.ItemContainerStyle>
     <Style TargetType="GridViewItem">
         ...

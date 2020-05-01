@@ -28,7 +28,6 @@ Middleware can do all sort of things, such as handling authentication, errors, s
 You typically configure the ASP.NET pipeline in the `Configure` method of your `Startup` class, by calling `Use*` methods on the `IApplicationBuilder`. Here's an example straight from the docs:
 
 ```csharp
-
 public void Configure(IApplicationBuilder app)
 {
     app.UseExceptionHandler("/Home/Error");
@@ -47,7 +46,6 @@ The `Use*` methods in this example are actually just "shortcuts" to make it easi
 Let's look at a simple example, using only the `Use` and `Run` primitives:
 
 ```csharp
-
 public void Configure(IApplicationBuilder app)
 {
     // Middleware A
@@ -78,7 +76,6 @@ public void Configure(IApplicationBuilder app)
 Here, each middleware is defined inline as an anonymous method; they could also be defined as full-blown classes, but for this example I picked the more concise option. Non-terminal middleware take two arguments: the `HttpContext` and a delegate to call the next middleware. Terminal middleware only take the `HttpContext`. Here we have two middleware A and B that just log to the console, and a terminal middleware C which writes the response. Here's the console output when we send a request to our app:
 
 ```text
-
 A (before)
 B (before)
 C
@@ -97,7 +94,6 @@ A middleware doesn't necessarily have to call the next middleware. For instance,
 In the previous example, if we comment out the call to `next()` in middleware B, we get the following output:
 
 ```text
-
 A (before)
 B (before)
 B (after)
@@ -119,7 +115,6 @@ There are two types of branches: branches that rejoin the main pipeline, and bra
 This can be done using the `Map` or `MapWhen` method. `Map` lets you specify a branch based on the request path. `MapWhen` gives you more control: you can specify a predicate on the `HttpContext` to decide whether to branch or not. Let's look at a simple example using `Map`:
 
 ```csharp
-
 public void Configure(IApplicationBuilder app)
 {
     app.Use(async (context, next) =>
@@ -151,7 +146,6 @@ The first argument for `Map` is a `PathString` representing the path prefix of t
 For a request that doesn't start with `/foo`, this code produces the following output:
 
 ```text
-
 A (before)
 C
 A (after)
@@ -160,7 +154,6 @@ A (after)
 Middleware B is not invoked, since it's in the branch and the request doesn't match the prefix for the branch. But for a request that does start with `/foo`, we get the following output:
 
 ```text
-
 A (before)
 B (before)
 B (after)
@@ -182,7 +175,6 @@ As you can see, the branch with middleware B doesn't rejoin the main pipeline, s
 You can make a branch that rejoins the main pipeline by using the `UseWhen` method. This method accepts a predicate on the `HttpContext` to decide whether to branch or not. The branch will rejoin the main pipeline where it left it. Here's an example similar to the previous one, but with a rejoining branch:
 
 ```csharp
-
 public void Configure(IApplicationBuilder app)
 {
     app.Use(async (context, next) =>
@@ -212,7 +204,6 @@ public void Configure(IApplicationBuilder app)
 For a request that doesn't start with `/foo`, this code produces the same output as the previous example:
 
 ```text
-
 A (before)
 C
 A (after)
@@ -221,7 +212,6 @@ A (after)
 Again, middleware B is not invoked, since it's in the branch and the request doesn't match the predicate for the branch. But for a request that does start with `/foo`, we get the following output:
 
 ```text
-
 A (before)
 B (before)
 C
@@ -236,7 +226,6 @@ We can see that the request passes trough the branch (middleware B), then goes b
 Note that there is no `Use` method that accepts a `PathString` to specify the path prefix. I'm not sure why it's not included, but it would be easy to write, using `UseWhen`:
 
 ```csharp
-
 public static IApplicationBuilder Use(this IApplicationBuilder builder, PathString pathMatch, Action<IApplicationBuilder> configuration)
 {
     return builder.UseWhen(

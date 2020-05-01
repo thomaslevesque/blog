@@ -24,7 +24,6 @@ However, if we save that image to a stream and re-read it from the stream, we ge
 If we look at the image formats available from the clipboard (`Clipboard.GetDataObject().GetFormats()`), we can see that they depend on the origin of the image (screenshot, copy from Paint...). The only format that is always available is `DeviceIndependentBitmap` (DIB). So I tried to retrieve the `MemoryStream` for this format and decode it into a `BitmapSource` :
 
 ```csharp
-
         private ImageSource ImageFromClipboardDib()
         {
             MemoryStream ms = Clipboard.GetData("DeviceIndependentBitmap") as MemoryStream;
@@ -47,7 +46,6 @@ Unfortunately, this code throws a nasty `NotSupportedException` : « No imaging 
 If we observe the content of the DIB from the clipboard, we can see that it has the same structure, without the `BITMAPFILEHEADER` part... so the trick is just to add that header at the beginning of the buffer, and use this complete buffer to decode the image. Doesn't seem so hard, does it ? Well, the trouble is that we have to fill in some of the header fields... for instance, we must provide the location at which the actual image data begins, so we must know the total size of the headers and palette. These values can be read or calculated from the content of the image. The following code performs that task and returns an ImageSource from the clipboard :
 
 ```csharp
-
         private ImageSource ImageFromClipboardDib()
         {
             MemoryStream ms = Clipboard.GetData("DeviceIndependentBitmap") as MemoryStream;
@@ -87,7 +85,6 @@ If we observe the content of the DIB from the clipboard, we can see that it has 
 Definition of the `BITMAPFILEHEADER` and `BITMAPINFOHEADER` structures :
 
 ```csharp
-
         [StructLayout(LayoutKind.Sequential, Pack = 2)]
         private struct BITMAPFILEHEADER
         {
@@ -120,7 +117,6 @@ Definition of the `BITMAPFILEHEADER` and `BITMAPINFOHEADER` structures :
 Utility class to convert structures to binary :
 
 ```csharp
-
     public static class BinaryStructConverter
     {
         public static T FromByteArray<T>(byte[] bytes) where T : struct

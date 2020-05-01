@@ -47,7 +47,6 @@ The [FakeItEasy analyzer](http://fakeiteasy.readthedocs.io/en/stable/analyzer/),
 When you configure calls on a fake, it creates rules that are "stacked" on each other, which means you can override a previously configured rule. Combined with the ability to specify the number of times a rule must apply, this lets you say things like "return 42 twice, then throw an exception". Until now, to do that you had to configure the calls in reverse order, which wasn't very intuitive and meant you had to repeat the call specification:
 
 ```csharp
-
 A.CallTo(() => foo.Bar()).Throws(new Exception("oops"));
 A.CallTo(() => foo.Bar()).Returns(42).Twice();
 ```
@@ -55,7 +54,6 @@ A.CallTo(() => foo.Bar()).Returns(42).Twice();
 FakeItEasy 3.0.0 introduces a new syntax to make this easier:
 
 ```csharp
-
 A.CallTo(() => foo.Bar()).Returns(42).Twice()
     .Then.Throws(new Exception("oops"));
 ```
@@ -81,7 +79,6 @@ FakeItEasy lets you configure a method to throw an exception with `Throws`. But 
 In some cases the difference can be important to the caller, if it doesn't directly await the async method. FakeItEasy 3.0.0 introduces a `ThrowsAsync` method to configure a method to return a failed task:
 
 ```csharp
-
 A.CallTo(() => foo.BarAsync()).ThrowsAsync(new Exception("foo"));
 ```
 
@@ -90,7 +87,6 @@ A.CallTo(() => foo.BarAsync()).ThrowsAsync(new Exception("foo"));
 Unnatural fakes (i.e. `Fake<T>`) now have a `CallsToSet` method, which does the same as `A.CallToSet` on natural fakes:
 
 ```csharp
-
 var fake = new Fake<IFoo>();
 fake.CallsToSet(foo => foo.Bar).To(0).Throws(new Exception("The value of Bar can't be 0"));
 ```
@@ -100,7 +96,6 @@ fake.CallsToSet(foo => foo.Bar).To(0).Throws(new Exception("The value of Bar can
 The syntax to specify additional attributes on fakes was a bit unwieldy; you had to create a collection of `CustomAttributeBuilder`s, which themselves had to be created by specifying the constructor and argument values. The `WithAdditionalAttributes` method has been retired in FakeItEasy 3.0.0 and replaced with a simpler `WithAttributes` that accepts expressions:
 
 ```csharp
-
 var foo = A.Fake<IFoo>(x => x.WithAttributes(() => new FooAttribute()));
 ```
 

@@ -18,7 +18,6 @@ Recently, my team and I started writing unit tests on an application that uses a
 Let’s assume the system under test is this very interesting `Calculator` class:
 
 ```
-
     public class Calculator
     {
         public async Task<int> AddAsync(int x, int y)
@@ -38,7 +37,6 @@ And here’s a unit test for the `AddAsync` method:
 
 
 ```
-
         [Test]
         public async void AddAsync_Returns_The_Sum_Of_X_And_Y()
         {
@@ -53,7 +51,6 @@ And here’s a unit test for the `AddAsync` method:
 Even before trying to run this test, I thought to myself: *This isn’t gonna work! an `async void` method will return immediately on the first `await`, so NUnit will think the test is complete before the assertion is executed, and the test will always pass even if the assertion fails*. So I changed the method signature to `async Task` instead, thinking myself very clever for having avoided this trap…
 
 ```
-
         [Test]
         public async Task AddAsync_Returns_The_Sum_Of_X_And_Y()
 ```

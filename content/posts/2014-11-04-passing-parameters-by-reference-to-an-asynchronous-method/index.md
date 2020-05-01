@@ -22,7 +22,6 @@ Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was intro
 However, it’s pretty easy to work around that limitation : you only need to create a `Ref<T>` class to hold the value, and pass an instance of this class by value to the async method:
 
 ```
-
 async void btnFilesStats_Click(object sender, EventArgs e)
 {
     var count = new Ref<int>();
@@ -50,7 +49,6 @@ async Task GetFileStats(string path, Ref<int> totalCount, Ref<ulong> totalSize)
 The `Ref<T>` class looks like this:
 
 ```
-
 public class Ref<T>
 {
     public Ref() { }

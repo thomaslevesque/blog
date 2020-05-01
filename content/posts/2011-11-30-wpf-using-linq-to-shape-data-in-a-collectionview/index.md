@@ -13,7 +13,6 @@ categories:
 
 WPF provides a simple mechanism for shaping collections of data, via the `ICollectionView` interface and its `Filter`, `SortDescriptions` and `GroupDescriptions` properties:   
 ```csharp
-
 // Collection to which the view is bound
 public ObservableCollection People { get; private set; }
 ...
@@ -37,7 +36,6 @@ view.GroupDescriptions.Add(new PropertyGroupDescription("Country"));
 
   In the last few years, we got used to use Linq to do this kind of things… it would be nice to be able to do the same for the shaping of an `ICollectionView`.  Let's see what syntax we could use to do it with Linq… something like this perhaps?  
 ```csharp
-
 People.Where(p => p.Age >= 18)
       .OrderBy(p => p.LastName)
       .ThenBy(p => p.FirstName)
@@ -45,7 +43,6 @@ People.Where(p => p.Age >= 18)
 ```
   Or, with the Linq query comprehension syntax:  
 ```csharp
-
 from p in People
 where p.Age >= 18
 orderby p.LastName, p.FirstName
@@ -53,7 +50,6 @@ group p by p.Country;
 ```
   Obviously, this is not enough: this code only creates a  query on the collection, it doesn't modify the `CollectionView`… but with just a little extra work, we can get the desired result:  
 ```csharp
-
 var query =
     from p in People.ShapeView()
     where p.Age >= 18
@@ -64,7 +60,6 @@ query.Apply();
 ```
   The `ShapeView` method returns a wrapper which encapsulates the default view of the collection, and exposes `Where`, `OrderBy` and `GroupBy` methods with appropriate signatures to specify the shaping of the `CollectionView`. Creating the query has no direct effect, the changes are only applied to the view when  `Apply` is called: that's because it's better to apply all changes at the same time, using `ICollectionView.DeferRefresh`, to avoid causing a refresh of the view for each clause of the query. When `Apply` is called, we can see that the view is correctly updated to reflect the query.  This solution allows to define the filter, sort and grouping in a strongly-typed way, which implies that the code is verified by the compiler. It's also more concise and readable than the original code… Just be careful with one thing: some queries that are correct from the compiler's point of view won't be applicable to a `CollectionView`. For instance, if you try to group the data by the first letter of the last name (`p.LastName.Substring(0, 1)`), the `GroupBy` method will fail because only properties are supported by `PropertyGroupDescription`.  Note that the wrapper won't overwrite the shaping properties of the `CollectionView` if you don't specify the corresponding Linq clause, so you can just modify the current view without specifying everything again. If you need to clear the properties, you can use the `ClearFilter`, `ClearSort` and `ClearGrouping` methods:  
 ```csharp
-
 // Remove the grouping and add a sort criteria
 People.ShapeView()
       .ClearGrouping()
@@ -73,7 +68,6 @@ People.ShapeView()
 ```
   Note that as for a normal Linq query, it's possible to use either the query comprehension syntax or to call the methods directly, since the former is just syntactic sugar for the latter.  Finally, here's the complete code of the wrapper and the associated extension methods:  
 ```csharp
-
     public static class CollectionViewShaper
     {
         public static CollectionViewShaper<TSource> ShapeView<TSource>(this IEnumerable<TSource> source)

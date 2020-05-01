@@ -22,7 +22,6 @@ However, out of the box, it's only usable for some project types: ASP.NET Core a
 Fortunately, Oren Novotny created a pretty cool project named [MSBuildSdkExtras](https://github.com/onovotny/MSBuildSdkExtras). This is basically an extension of the .NET Core SDK that adds missing MSBuild targets and properties to enable building project types that are not supported out of the box. It presents itself as an alternative SDK, i.e. instead of specifying `Sdk="Microsoft.NET.Sdk"` in the root element of your project file, you write `Sdk="MSBuild.Sdk.Extras/1.6.61"`. The SDK will be automatically resolved from NuGet (note that you need VS2017 15.6 or higher for this to work). Alternatively, you can just specify `Sdk="MSBuild.Sdk.Extras"`, and specify the SDK version in a `global.json` file in the solution root folder, like this:
 
 ```js
-
 {
     "msbuild-sdks": {
         "MSBuild.Sdk.Extras": "1.6.61"
@@ -37,7 +36,6 @@ This approach is useful to share the SDK version between multiple projects.
 Let's see how to create a WPF project with the SDK project format. Follow the usual steps to create a new WPF application in Visual Studio. Once it's done, unload the project and edit the csproj file; replace the whole content with this:
 
 ```xml
-
 <Project Sdk="MSBuild.Sdk.Extras/1.6.61">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>

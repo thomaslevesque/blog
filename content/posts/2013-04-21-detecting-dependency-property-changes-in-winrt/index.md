@@ -22,7 +22,6 @@ It’s often useful to be notified when the value of a dependency property chang
 Fortunately, there is a mechanism which is available on all XAML platforms, and can solve this problem: binding. So, the solution is just to create a class with a dummy property that is bound to the property we want to watch, and call a handler when the value of the dummy property changes. To make it cleaner and hide the actual implementation, I wrapped it as an extension method that returns an `IDisposable`:
 
 ```
-
     public static class DependencyObjectExtensions
     {
         public static IDisposable WatchProperty(this DependencyObject target,
@@ -91,7 +90,6 @@ Fortunately, there is a mechanism which is available on all XAML platforms, and 
 It can be used like this:
 
 ```
-
 // Subscribe
 watcher = myControl.WatchProperty("Content", myControl_ContentChanged);
 

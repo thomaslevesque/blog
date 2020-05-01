@@ -21,7 +21,6 @@ This is the first post in a series of 2:
 Azure Cosmos DB is Microsoft's NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don't need to split complex objects into multiple tables and use joins like in relational databases. You just serialize your full C# object graph to JSON and save it to the database. The [Cosmos DB .NET SDK](https://github.com/Azure/azure-cosmos-dotnet-v3) takes care of serializing your objects, so you don't need to do it explicitly, and it lets you query the database in a strongly typed manner using Linq:
 
 ```csharp
-
 using var client = new CosmosClient(connectionString);
 var database = client.GetDatabase(databaseId);
 var container = database.GetContainer("Pets");
@@ -54,7 +53,6 @@ Actually the problem isn't in the Cosmos DB SDK per se, but in [JSON.NET](https:
 Let's take a concrete example: a (very simple) object model to represent a file system. We have two concrete types, `FileItem` and `FolderItem`, which both inherit from a common abstract base class, `FileSystemItem`. Here's the code:
 
 ```csharp
-
 public abstract class FileSystemItem
 {
     [JsonProperty("id")]
@@ -79,7 +77,6 @@ In a real-world scenario, you'd probably want more properties than that, but let
 If you create a `FileItem` and a `FolderItem` and serialize them to JSON...
 
 ```csharp
-
 var items = new FileSystemItem[]
 {
     new FolderItem
@@ -102,7 +99,6 @@ string json = JsonConvert.SerializeObject(items, Formatting.Indented);
 ...you'll notice that the JSON doesn't contain any information about the object's type:
 
 ```javascript
-
 [
   {
     "ChildrenCount": 1,
@@ -126,7 +122,6 @@ If the type information isn't available for deserialization, we can't really bla
 One way to solve this is using a built-in feature of JSON.NET: `TypeNameHandling`. Basically, you tell JSON.NET to include the name of the type in serialized objects, like this:
 
 ```csharp
-
 var settings = new JsonSerializerSettings
 {
     TypeNameHandling = TypeNameHandling.Objects
@@ -137,7 +132,6 @@ string json = JsonConvert.SerializeObject(items, Formatting.Indented, settings);
 And you get JSON objects annotated with the assembly-qualified type name of the objects:
 
 ```javascript
-
 [
   {
     "$type": "CosmosTypeHierarchy.FolderItem, CosmosTypeHierarchy",
@@ -158,7 +152,6 @@ And you get JSON objects annotated with the assembly-qualified type name of the 
 This is nice! Using the type name and assembly, JSON.NET can then deserialize these objects correctly:
 
 ```csharp
-
 var deserializedItems = JsonConvert.DeserializeObject<FileSystemItem[]>(json, settings);
 ```
 
@@ -171,7 +164,6 @@ On the other hand, if we were able to control the type name written to the docum
 We just need to implement our own `ISerializationBinder`:
 
 ```csharp
-
 class CustomSerializationBinder : ISerializationBinder
 {
     public void BindToName(Type serializedType, out string assemblyName, out string typeName)
@@ -225,7 +217,6 @@ string json = JsonConvert.SerializeObject(items, Formatting.Indented, settings);
 Which gives us the following JSON:
 
 ```javascript
-
 [
   {
     "$type": "folderItem",

@@ -69,7 +69,6 @@ And that's all for the app registration part. Just take note of these values in 
 Now, in our program, the first step is to issue a request to the device code endpoint to start the authorization flow. The [OpenID Connect discovery document](https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration) on Azure AD is incomplete and doesn't mention the device code endpoint, but it can be found in the documentation. We need to send the client id of our application and the requested scopes. In this case, we use `openid`, `profile` and `offline_access` (to get a refresh token), but in real-world scenario you'll probably need an API scope as well.
 
 ```csharp
-
 private const string TenantId = "<your tenant id>";
 private const string ClientId = "<your client id>";
 
@@ -112,7 +111,6 @@ private class DeviceAuthorizationResponse
 Let's call this method and open the `verification_uri` from the response in the browser. The user will need to enter the `user_code` in the authorization page.
 
 ```csharp
-
 using var client = new HttpClient();
 var authorizationResponse = await StartDeviceFlowAsync(client);
 Console.WriteLine("Please visit this URL: " + authorizationResponse.VerificationUri);
@@ -129,7 +127,6 @@ This opens the following page:
 Now, while the user is entering the code and logging in, we start polling the IdP to get a token. We need to specify `urn:ietf:params:oauth:grant-type:device_code` as the `grant_type`, and provide the `device_code` from the authorization response.
 
 ```csharp
-
 var tokenResponse = await GetTokenAsync(client, authorizationResponse);
 Console.WriteLine("Access token: ");
 Console.WriteLine(tokenResponse.AccessToken);

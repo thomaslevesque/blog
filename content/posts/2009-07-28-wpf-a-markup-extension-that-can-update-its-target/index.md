@@ -18,7 +18,6 @@ If you have read my previous posts on the topic, you know I'm a big fan of custo
 
   This post explains how to update the target of a markup extension after the initial evaluation.  The  `ProvideValue` method of a markup extension takes a parameter of type `IServiceProvider`, which provides, among others, a `IProvideValueTarget` service. This interface exposes two properties, `TargetObject` and `TargetProperty`, which allow to retrieve the target object and property of the markup extension. It is then possible, if you retain this information, to update the property after the markup extension has already been evaluated.  To carry out this task, we can create an abstract class `UpdatableMarkupExtension`, which saves the target object and property, and provides a method to update the value :  
 ```csharp
-
     public abstract class UpdatableMarkupExtension : MarkupExtension
     {
         private object _targetObject;
@@ -78,12 +77,10 @@ If you have read my previous posts on the topic, you know I'm a big fan of custo
 ```
   Since it is essential that the target object and property are saved, we mark the `ProvideValue` method as `sealed` so that it cannot be overriden, and we add an abstract `ProvideValueInternal` method so that inheritors can provide their implementation.  The `UpdateValue` method handles the update of the target property, which can be either a dependency property (`DependencyProperty`), or a standard CLR property (`PropertyInfo`). In the case of a `DependencyProperty`, the target object inherits from `DependencyObject`, which itself inherits from `DispatcherObject` : it is therefore necessary to make sure that the object is only accessed from the thread that owns it, using the `CheckAccess` and `Invoke` methods.  Here's a simple example to illustrate how to use this class. Let's assume we want to create a custom markup extension which indicates whether the network is available. It would be used like that :  
 ```xml
-
 <CheckBox IsChecked="{my:NetworkAvailable}" Content="Network is available" />
 ```
   Obviously, we want the checkbox to be updated when the availability of the network changes (e.g. when the network cable is plugged or unplugged, or when the Wifi network is out of reach). So we need to handle the `NetworkChange.NetworkAvailabilityChanged` event, and update the `IsChecked` property accordingly. So the extension will inherit the `UpdatableMarkupExtension` class to take advantage of the `UpdateValue` method :  
 ```csharp
-
     public class NetworkAvailableExtension : UpdatableMarkupExtension
     {
         public NetworkAvailableExtension()

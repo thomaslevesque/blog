@@ -26,7 +26,6 @@ In my case, it didn't matter, because I didn't need to publish the rewritten bra
 Since we're going to make pretty drastic and possibly risky changes on the repo, we'd better be cautious. The easiest way to avoid causing damage to the original branch is, of course, to work on a separate branch. So, assuming the branch we want to cleanup is `master`, let's create a `master2` working branch:
 
 ```bash
-
 git checkout -b master2 master
 ```
 
@@ -53,14 +52,12 @@ This command works by taking each commit in the branch, applying a filter to it,
 In our current scenario, `--index-filter` is perfectly adequate, since we only need to filter files based on their path. The `filter-branch` command with this kind of filter can be used as follows:
 
 ```bash
-
 git filter-branch --index-filter '<command>'
 ```
 
 `<command>` is a bash command that will be executed for each commit on the branch. In our case, it will be a call to `git rm` to remove unwanted files from the index:
 
 ```bash
-
 git filter-branch --index-filter 'git rm --cached --ignore-unmatch **/bin/** **/obj/** packages/**'
 ```
 
@@ -77,7 +74,6 @@ In the example above, there were only 3 file patterns to remove, so the command 
 In the previous example, we applied `filter-branch` to the whole branch. But it's also possible to apply it only from a given commit, by specifying a revision range:
 
 ```bash
-
 git filter-branch --index-filter '<command>' <ref>..HEAD
 ```
 

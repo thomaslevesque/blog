@@ -16,7 +16,6 @@ categories:
 When unit testing a method, one of the things to test is argument validation : for instance, ensure that the method throws a `ArgumentNullException` when a null argument is passed for a parameter that isn’t allowed to be null. Writing this kind of test is very easy, but it’s also a tedious and repetitive task, especially if the method has many parameters… So I wrote a method that automates part of this task: it tries to pass null for each of the specified arguments, and asserts that the method throws an `ArgumentNullException`. Here’s an example that tests a `FullOuterJoin` extension method:
 
 ```
-
 [Test]
 public void FullOuterJoin_Throws_If_Argument_Null()
 {
@@ -35,7 +34,6 @@ Using this method, instead of writing a test for each of the arguments that are 
 Here’s the code for the `TestHelper.AssertThrowsWhenArgumentNull` method (you can also find it on [Gist](https://gist.github.com/thomaslevesque/c4cb9f537316b122f5b9)):
 
 ```
-
 using System;
 using System.Linq;
 using System.Linq.Expressions;

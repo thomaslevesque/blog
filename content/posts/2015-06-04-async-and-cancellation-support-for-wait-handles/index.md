@@ -21,7 +21,6 @@ Let’s start with the easiest one: cancellation. There are cases where it would
 A `CancellationToken` exposes a `WaitHandle`, which is signaled when cancellation is requested. We can take advantage of this to implement a cancellable wait on a wait handle:
 
 ```
-
     public static bool WaitOne(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
     {
         int n = WaitHandle.WaitAny(new[] { handle, cancellationToken.WaitHandle }, millisecondsTimeout);
@@ -44,7 +43,6 @@ We use `WaitHandle.WaitAny` to wait for either the original wait handle or the c
 - the cancellation token’s wait handle is signaled first: we throw an `OperationCancelledException`. <br><br>  For completeness, let’s add some overloads for common use cases:
 
 ```
-
     public static bool WaitOne(this WaitHandle handle, TimeSpan timeout, CancellationToken cancellationToken)
     {
         return handle.WaitOne((int)timeout.TotalMilliseconds, cancellationToken);
@@ -67,7 +65,6 @@ So here’s what we’ll do:
 - unregister both delegates after the task completes <br>  Here’s the implementation:
 
 ```
-
     public static async Task<bool> WaitOneAsync(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
     {
         RegisteredWaitHandle registeredHandle = null;
@@ -108,7 +105,6 @@ Note that the lambda expressions could have used the `tcs` variable directly; th
 We can now use the `WaitOneAsync` method like this:
 
 ```
-
 var mre = new ManualResetEvent(false);
 …
 if (await mre.WaitOneAsync(2000, cancellationToken))

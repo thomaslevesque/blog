@@ -20,7 +20,6 @@ As you may have noticed, it is not possible to modify the contents of an `Observ
 
   To illustrate this, let's take a simple example : a `ListBox` bound to a collection of strings in the ViewModel :  
 ```csharp
-
         private ObservableCollection<string> _strings = new ObservableCollection<string>();
         public ObservableCollection<string> Strings
         {
@@ -34,12 +33,10 @@ As you may have noticed, it is not possible to modify the contents of an `Observ
 ```
 
 ```xml
-
     <ListBox ItemsSource="{Binding Strings}"/>
 ```
   If we add items to this collection out of the main thread, we get the exception mentioned above. A possible solution would be to create a new collection, and assign it to the `Strings` property when it is filled, but in this case the UI won't reflect progress : all items will appear in the `ListBox` at the same time after the collection is filled, instead of appearing as they are added to the collection. It can be annoying in some cases : for instance, if the `ListBox` is used to display search results, the user expects to see the results as they are found, like in Windows Search.  A simple way to achieve the desired behavior is to inherit `ObservableCollection` and override `OnCollectionChanged` and `OnPropertyChanged` so that the events are raised on the main thread (actually, the thread that created the collection). The `AsyncOperation` class is perfectly suited for this need : it allows to "post" a method call on the thread that created it. It is used, for instance, in the `BackgroundWorker` component, and in many asynchronous methods in the framework (`PictureBox.LoadAsync`, `WebClient.DownloadAsync`, etc...).  So, here's the code of an `AsyncObservableCollection` class, that can be modified from any thread, and still notify the UI when it is modified :  
 ```csharp
-
     public class AsyncObservableCollection<T> : ObservableCollection<T>
     {
         private AsyncOperation asyncOp = null;
@@ -88,12 +85,10 @@ As you may have noticed, it is not possible to modify the contents of an `Observ
 ```
   The only constraint when using this class is that instances of the collection must be created on the UI thread, so that events are raised on that thread.  In the previous example, the only thing to change to make the collection modifiable across threads is the instantiation of the collection in the ViewModel :  
 ```csharp
-
 private ObservableCollection<string> _strings = new AsyncObservableCollection<string>();
 ```
   The `ListBox` can now reflect in real-time the changes made on the collection.  Enjoy ;)  **Update :** I just found a bug in my implementation : in some cases, using `Post` to raise the event when the collection is modified from the main thread can cause unpredictable behavior. In that case, the event should of course be raised directly on the main thread, after checking that the current `SynchronizationContext` is the one in which the collection was created. This also made me realize that the `AsyncOperation` actually doesn't bring any benefit : we can use the `SynchronizationContext` directly instead. So here's the new implementation :  
 ```csharp
-
     public class AsyncObservableCollection<T> : ObservableCollection<T>
     {
         private SynchronizationContext _synchronizationContext = SynchronizationContext.Current;

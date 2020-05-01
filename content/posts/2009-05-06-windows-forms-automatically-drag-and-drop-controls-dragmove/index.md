@@ -12,7 +12,6 @@ categories:
 
 Here's a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers...  In WPF, there is a very handy method to move a window with no borders : `Window.DragMove`. It can be used like that :  
 ```csharp
-
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -32,7 +31,6 @@ There are several ways to use this solution, pick the one that best suits your n
 ![DragMoveProvider](dragmoveprovider1.png)- The closest to WPF's DragMove : in the handler of the `MouseDown` event, call the `DragMove` extension method on the Form or control to move
 
 ```csharp
-
         private void label2_MouseDown(object sender, MouseEventArgs e)
         {
             label2.DragMove();
@@ -41,7 +39,6 @@ There are several ways to use this solution, pick the one that best suits your n
 - The most flexible : call the `EnableDragMove` extension method on the Form or control to move (no event handling needed).
 
 ```csharp
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             this.EnableDragMove(checkBox1.Checked);

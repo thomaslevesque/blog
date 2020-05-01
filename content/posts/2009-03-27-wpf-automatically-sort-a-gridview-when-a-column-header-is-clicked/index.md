@@ -20,7 +20,6 @@ It's quite simple, in WPF, to present data in a grid, thanks to the `GridView` c
 
   After spending a long time trying to find a flexible and elegant approach, I came up with an interesting solution. It consists of a class with a few attached properties that can be set in XAML.  This class can be used as follows :  
 ```xml
-
     <ListView ItemsSource="{Binding Persons}"
           IsSynchronizedWithCurrentItem="True"
           util:GridViewSort.AutoSort="True">
@@ -43,7 +42,6 @@ It's quite simple, in WPF, to present data in a grid, thanks to the `GridView` c
 ```
   The `GridViewSort.AutoSort` property enables automatic sorting for the `ListView`. The `GridViewSort.PropertyName` property, defined for each column, indicates the property to use as the sort criteria. There is no extra code to write. A click on a column header triggers the sorting on this column ; if the ListView is already sorted on this column, the sort order is reversed.  In case you need to handle the sorting manually, I also added a `GridViewSort.Command` attached property. When used with the MVVM pattern, this property allows you to bind to a command declared in the ViewModel :  
 ```xml
-
     <ListView ItemsSource="{Binding Persons}"
           IsSynchronizedWithCurrentItem="True"
           util:GridViewSort.Command="{Binding SortCommand}">
@@ -51,7 +49,6 @@ It's quite simple, in WPF, to present data in a grid, thanks to the `GridView` c
 ```
   The sort command takes as parameter the name of the property to use as the sort criteria.  Note : if both the `Command` and `AutoSort` properties are set, `Command` has priority. `AutoSort` is ignored.  Here is the full code of the `GridViewSort` class :  
 ```csharp
-
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;

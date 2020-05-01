@@ -27,7 +27,6 @@ With JSON.NET, we can create custom converters to tell the serializer how to ser
 First, let add an abstract `Type` property to the base class of our object model, and implement it in the concrete classes:
 
 ```csharp
-
 public abstract class FileSystemItem
 {
     [JsonProperty("id")]
@@ -54,7 +53,6 @@ public class FolderItem : FileSystemItem
 There's nothing special to do for serialization, as JSON.NET will automatically serialize the `Type` property. However, we need a converter to handle deserialization when the target type is the abstract `FileSystemItem` class. Here it is:
 
 ```csharp
-
 class FileSystemItemJsonConverter : JsonConverter
 {
     // This converter handles only deserialization, not serialization.
@@ -97,7 +95,6 @@ class FileSystemItemJsonConverter : JsonConverter
 And here's how we can now use this converter:
 
 ```csharp
-
 var settings = new JsonSerializerSettings
 {
     Converters =
@@ -129,7 +126,6 @@ In the 3.x SDK, it requires a little more work. The default serializer is based 
 To do this, we must derive from the [`CosmosSerializer`](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/06b961a6c181995590097f764b296403169974f8/Microsoft.Azure.Cosmos/src/Serializer/CosmosSerializer.cs) abstract class:
 
 ```plain
-
 public abstract class CosmosSerializer
 {
     public abstract T FromStream<T>(Stream stream);
@@ -144,7 +140,6 @@ public abstract class CosmosSerializer
 Fortunately, we don't have to reinvent the wheel: we can just copy the code from the [default implementation](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/06b961a6c181995590097f764b296403169974f8/Microsoft.Azure.Cosmos/src/Serializer/CosmosJsonDotNetSerializer.cs), and adapt it to our needs. Here it goes:
 
 ```csharp
-
 public class NewtonsoftJsonCosmosSerializer : CosmosSerializer
 {
     private static readonly Encoding DefaultEncoding = new UTF8Encoding(false, true);
@@ -201,7 +196,6 @@ public class NewtonsoftJsonCosmosSerializer : CosmosSerializer
 We now have a serializer for which we can specify the `JsonSerializerSettings`. To use it, we just need to specify it when we create the `CosmosClient`:
 
 ```csharp
-
 var serializerSettings = new JsonSerializerSettings
 {
     Converters =
@@ -219,7 +213,6 @@ var client = new CosmosClient(connectionString, clientOptions);
 And that's it! We can now query our collection of mixed `FileItem`s and `FolderItem`s, and have them deserialized to the proper type:
 
 ```csharp
-
 var query = container.GetItemLinqQueryable<FileSystemItem>();
 var iterator = query.ToFeedIterator();
 while (iterator.HasMoreResults)

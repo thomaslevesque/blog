@@ -30,7 +30,6 @@ Each handler has a chance to examine and/or modify the request before passing it
 The handler chain can be setup like this:
 
 ```
-
 var pipeline = new MyHandler1()
 {
     InnerHandler = new MyHandler2()
@@ -44,7 +43,6 @@ var client = new HttpClient(pipeline);
 But if you prefer fluent interfaces, you can easily create an extension method to do it like this:
 
 ```
-
 var pipeline = new HttpClientHandler()
     .DecorateWith(new MyHandler2())
     .DecorateWith(new MyHandler1());
@@ -60,7 +58,6 @@ All this might seem a little abstract at this point, but this pipeline architect
 The first use case that comes to mind, and the first I ever used, is unit testing. If you're testing a class that makes online payments over HTTP, you don't want it to actually send requests to the real server... you just want to ensure that the requests it sends are correct, and that it reacts correctly to specific responses. An easy solution to this problem is to create a "stub" handler, and inject it into your class to use instead of `HttpClientHandler`. Here's a simple implementation:
 
 ```csharp
-
 class StubHandler : HttpMessageHandler
 {
     // Responses to return
@@ -94,7 +91,6 @@ class StubHandler : HttpMessageHandler
 This class lets you record the requests that are sent via the handler and specify the responses that should be returned. For instance, you could write a test like this:
 
 ```csharp
-
 // Arrange
 var handler = new StubHandler();
 handler.EnqueueResponse(new HttpResponseMessage(HttpStatusCode.Unauthorized));
@@ -110,7 +106,6 @@ Assert.AreEqual(PaymentStatus.Failed, paymentResult.Status);
 Of course, rather than creating a stub manually, you could use a mocking framework to generate a fake handler for you. The fact that the `SendAsync` method is protected makes it a little harder than it should be, but you can easily work around the issue by making a subclass that exposes a public virtual method, and mock that instead:
 
 ```csharp
-
 public abstract class MockableMessageHandler : HttpMessageHandler
 {
     protected override sealed Task<HttpResponseMessage> SendAsync(
@@ -125,7 +120,6 @@ public abstract class MockableMessageHandler : HttpMessageHandler
 ```
   Usage example with [FakeItEasy](https://github.com/FakeItEasy/FakeItEasy):  
 ```csharp
-
 // Arrange
 var handler = A.Fake<MockableMessageHandler>();
 A.CallTo(() => handler.DoSendAsync(A<HttpRequestMessage>._))
@@ -139,7 +133,6 @@ var processor = new PaymentProcessor(handler);
 Logging sent requests and received responses can help diagnose issues. This can easily be done with a custom delegating handler:
 
 ```csharp
-
 public class LoggingHandler : DelegatingHandler
 {
     private readonly ILogger _logger;
@@ -177,7 +170,6 @@ Another interesting use case for HTTP message handlers is to automatically retry
 Here's a possible implementation of a retry handler:
 
 ```csharp
-
 public class RetryHandler : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(

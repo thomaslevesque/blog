@@ -18,7 +18,6 @@ categories:
 A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
 
 ```csharp
-
 public async Task<bool> BookExistsAsync(int id)
 {
     var store = await GetBookStoreAsync();
@@ -53,7 +52,6 @@ The `BookExistsAsync` method always returns true. Can you see why ?
 Look at this line:
 
 ```csharp
-
 var book = store.GetBookByIdAsync(id);
 ```
 

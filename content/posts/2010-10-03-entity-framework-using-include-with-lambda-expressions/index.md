@@ -17,7 +17,6 @@ categories:
 
 I'm currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the [`ObjectQuery.Include`](http://msdn.microsoft.com/en-us/library/bb738708.aspx) method to eagerly load associated entities, in order to avoid database roundtrips when I access them:  
 ```csharp
-
 var query =
     from ord in db.Orders.Include("OrderDetails")
     where ord.Date >= DateTime.Today
@@ -25,7 +24,6 @@ var query =
 ```
   Or if I also want to eagerly load the product:  
 ```csharp
-
 var query =
     from ord in db.Orders.Include("OrderDetails.Product")
     where ord.Date >= DateTime.Today
@@ -37,7 +35,6 @@ var query =
 
   It would be much more convenient to use a lambda expression to specify the property path. The principle is well known, and frequently used to avoid using a string to refer to a property.  The trivial case, where the property to include is directly accessible from the source, is pretty easy to handle, and many implementation can be found on the Internet. We just need to use a method that extracts the property name from an expression :  
 ```csharp
-
     public static class ObjectQueryExtensions
     {
         public static ObjectQuery<T> Include<T>(this ObjectQuery<T> query, Expression<Func<T, object>> selector)
@@ -57,7 +54,6 @@ var query =
 ```
   Using that extension method, the code from the first sample can be rewritten as follows:  
 ```csharp
-
 var query =
     from ord in db.Orders.Include(o => o.OrderDetails)
     where ord.Date >= DateTime.Today
@@ -67,7 +63,6 @@ var query =
 - `VisitMember` : used to visit a property or field access
 - `VisitMethodCall` : used to visit a method call. Even though method calls aren't directly related to what we want to do, we need to change its behavior in the case of Linq operators: the default implementation visits each parameter in their normal order, but for extension method like `Select` or `SelectMany`, we need to visit the first parameter (the `this` parameter) last, so that we retrieve the properties in the correct order.<br><br>Here's a new version of the `Include` method, along with the `ExpressionVisitor` implementation:<br><br>
 ```csharp
-
     public static class ObjectQueryExtensions
     {
         public static ObjectQuery<T> Include<T>(this ObjectQuery<T> query, Expression<Func<T, object>> selector)
@@ -124,7 +119,6 @@ var query =
 ```
 <br><br>I already talked about the `VisitMethodCall` method, so I won't explain it further. The implementation of `VisitMember` is very simple: we just push the member name on a stack. Why a stack ? That's because the expression is not visited in the order one would intuitively expect. For instance, in an expression like `o.OrderDetails.Select(od => od.Product)`, the first visited node is not `o` but the call to `Select`, because what precedes it (`o.OrderDetails`) is actually the first parameter of the static `Select` method... To retrieve the properties in the correct order, we put them on a stack so that we can read them back in reverse order when we need to build the property path.<br><br>The `GetPropertyPath` method probably doesn't need a long explanation: it initializes the stack, visits the expression, and builds the property path from the stack.<br><br>We can now rewrite the code from the second example as follows:<br><br>
 ```csharp
-
 var query =
     from ord in db.Orders.Include(o => OrderDetails.Select(od => od.Product))
     where ord.Date >= DateTime.Today
@@ -132,7 +126,6 @@ var query =
 ```
 <br><br>This method also works for more complex cases. Let's add a few new entities to our model: one or more discounts can be applied to each purchased product, and each discount is linked to a sales campaign. If we need to retrieve the associated discounts and campaigns in the query results, we can write something like that:<br><br>
 ```csharp
-
 var query =
     from ord in db.Orders.Include(o => OrderDetails.Select(od => od.Discounts.Select(d => d.Campaign)))
     where ord.Date >= DateTime.Today
@@ -140,7 +133,6 @@ var query =
 ```
 <br><br>The result is the same as if we had passed "OrderDetails.Discounts.Campaign" to the standard `Include` method. Since the nested `Select` calls impair the readability, we can also use a different expression, with the same result:<br><br>
 ```csharp
-
 var query =
     from ord in db.Orders.Include(o => o.OrderDetails
                                         .SelectMany(od => od.Discounts)

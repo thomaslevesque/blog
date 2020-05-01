@@ -25,7 +25,6 @@ Unfortunately, the C# compiler doesn’t support tail recursion, which is a pity
 Let’s see how we can transform a simple recursive algorithm, like the computation of the factorial of a number, into an algorithm that uses tail recursion (incidentally, the factorial can be computed much more efficiently with a non-recursive algorithm, but let’s assume we don’t know that…). Here’s a basic implementation that results directly from the definition:
 
 ```
-
 BigInteger Factorial(int n)
 {
     if (n < 2)
@@ -41,7 +40,6 @@ If we call this method with a large value (around 20000 on my machine), we get a
 As mentioned above, the key requirement for tail recursion is that the method calls itself as the last instruction. It *seems* to be the case here… but it’s not: the last operation is actually the multiplication, which can’t be executed until we know the result of `Factorial(n-1)`. So we need to redesign this method so that it ends with a call to itself, with different arguments. To do that, we can add a new parameter named `product`, which will act as an accumulator:
 
 ```
-
 BigInteger Factorial(int n, BigInteger product)
 {
     if (n < 2)
@@ -55,7 +53,6 @@ For the first call, we’ll just have to pass 1 for the initial value of the acc
 We now have a method that meets the requirements for tail recursion: the recursive call to `Factorial` really is the last instruction. Now that we have put the algorithm in this form, the final transformation to enable tail recursion using Samuel Jack’s trampoline is trivial:
 
 ```
-
 Bounce<int, BigInteger, BigInteger> Factorial(int n, BigInteger product)
 {
     if (n < 2)
@@ -71,7 +68,6 @@ Bounce<int, BigInteger, BigInteger> Factorial(int n, BigInteger product)
 This method can’t be used directly: it returns a `Bounce` object, and we don't really know what to do with this… To execute it, we use the `Trampoline.MakeTrampoline` method, which returns a new function on which tail recursion is applied. We can then use this new function directly:
 
 ```
-
 Func<int, BigInteger, BigInteger> fact = Trampoline.MakeTrampoline<int, BigInteger, BigInteger>(Factorial);
 BigInteger result = fact(50000, 1);
 ```
@@ -92,7 +88,6 @@ And finally, I think the terminology isn’t very explicit… Names like `Trampo
 So I tried to improve the system to make it more convenient. My solution is based on lambda expressions. There is only one type argument (the return type), and the parameters are passed trough a closure, so there is no need for multiple methods to handle different numbers of parameters. Here’s what the `Factorial` method looks like with my implementation:
 
 ```
-
 RecursionResult<BigInteger> Factorial(int n, BigInteger product)
 {
     if (n < 2)
@@ -104,7 +99,6 @@ RecursionResult<BigInteger> Factorial(int n, BigInteger product)
 It can be used as follows:
 
 ```
-
 BigInteger result = TailRecursion.Execute(() => Factorial(50000, 1));
 ```
 
@@ -113,7 +107,6 @@ It’s more flexible, more concise, and more readable…in my opinion at least![
 Here’s the full code for the `TailRecursion` class:
 
 ```
-
 public static class TailRecursion
 {
     public static T Execute<T>(Func<RecursionResult<T>> func)
@@ -164,7 +157,6 @@ Sure! But it gets a little tricky, and it’s not pure C#. As I mentioned before
 Anyway, we can cheat a little by helping the compiler to do its job: the .NET Framework SDK provides tools named [ildasm](http://msdn.microsoft.com/en-us/library/f7dy01k1.aspx) (IL disassembler) and [ilasm](http://msdn.microsoft.com/en-us/library/496e4ekx.aspx) (IL assembler), which can help to fill the gap between C# and the CLR… Let’s go back to the classical recursive implementation of `Factorial`, which doesn’t yet use tail recursion:
 
 ```
-
 static BigInteger Factorial(int n, BigInteger product)
 {if (n < 2)	return product;return Factorial(n - 1, n * product);
 }
@@ -173,7 +165,6 @@ static BigInteger Factorial(int n, BigInteger product)
 If we compile this code and disassemble it with ilasm, we get the following IL code:
 
 ```
-
 .method private hidebysig static valuetype [System.Numerics]System.Numerics.BigInteger
         Factorial(int32 n,
                   valuetype [System.Numerics]System.Numerics.BigInteger product) cil managed
@@ -217,7 +208,6 @@ If we compile this code and disassemble it with ilasm, we get the following IL c
 It’s a bit hard on the eye if you’re not used to read IL code, but we can see roughly what’s going on… The recursive call is at offset `IL_001f;` this is where we’re going to fiddle with the generated code to introduce tail recursion. If we look at the documentation for the `tail` instruction, we see that it must immediately precede a `call` instruction, and that the instruction following the `call` must be `ret` (return). Right now, we have several instructions following the recursive call, because the compiler introduced a local variable to store the return value. We just need to modify the code so that it doesn’t use this variable, and add the `tail` instruction in the right place:
 
 ```
-
 .method private hidebysig static valuetype [System.Numerics]System.Numerics.BigInteger
         Factorial(int32 n,
                   valuetype [System.Numerics]System.Numerics.BigInteger product) cil managed

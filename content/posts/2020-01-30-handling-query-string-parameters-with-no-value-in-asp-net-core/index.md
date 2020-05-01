@@ -26,7 +26,6 @@ And as it happens, it's not uncommon to see URLs with query strings like this: `
 Unfortunately, in ASP.NET Core MVC, there's no built-in support for this form of query string. If you have a controller action like this:
 
 ```csharp
-
 [HttpGet("search")]
 public IActionResult Search(
     [FromQuery] string term,
@@ -39,7 +38,6 @@ public IActionResult Search(
 The default [model binder](https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-3.1) expects the `ignoreCase` parameter to be specified with an explicit `true` or `false` value, e.g. `ignoreCase=true`. If you omit the value, it will be interpreted as empty, and the model binding will fail:
 
 ```javascript
-
 {
   "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
   "title": "One or more validation errors occurred.",
@@ -60,7 +58,6 @@ By default, a boolean parameter is bound using [`SimpleTypeModelBinder`](https:/
 So we need to create our own model binder, which will interpret the presence of a key with no value as an implicit `true`:
 
 ```csharp
-
 class BooleanModelBinder : IModelBinder
 {
     public Task BindModelAsync(ModelBindingContext bindingContext)
@@ -102,7 +99,6 @@ class BooleanModelBinder : IModelBinder
 In order to use this model binder, we also need a model binder provider:
 
 ```csharp
-
 class BooleanModelBinderProvider : IModelBinderProvider
 {
     public IModelBinder GetBinder(ModelBinderProviderContext context)
@@ -120,7 +116,6 @@ class BooleanModelBinderProvider : IModelBinderProvider
 It will return our model binder if the target type is `bool`. Now we just need to add this provider to the list of model binder providers:
 
 ```csharp
-
 // In Startup.ConfigureServices
 services.AddControllers(options =>
 {

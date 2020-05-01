@@ -27,7 +27,6 @@ Sometimes you need to perform some initialization steps when your web applicatio
 A simple way to do it involves writing a custom [middleware](https://www.thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/) that ensures initialization is complete before processing a request. This middleware starts the initialization process when the app starts, and upon receiving a request, will wait until the initialization is done before passing the request to the next middleware. A basic implementation could look like this:
 
 ```csharp
-
 public class AsyncInitializationMiddleware
 {
     private readonly RequestDelegate _next;
@@ -88,7 +87,6 @@ public class AsyncInitializationMiddleware
 We can then add this middleware to the pipeline in the `Startup.Configure` method. It should be added early in the pipeline, before any other middleware that would need the initialization to be complete.
 
 ```csharp
-
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 {
     if (env.IsDevelopment())

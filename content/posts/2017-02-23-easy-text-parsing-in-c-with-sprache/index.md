@@ -35,7 +35,6 @@ Fortunately, [Sprache](https://github.com/sprache/sprache) offers a very nice al
 The `WWW-Authenticate` header is sent by an HTTP server as part of a 401 (Unauthorized) response to indicate how you should authenticate:
 
 ```
-
 # Basic challenge
 WWW-Authenticate: Basic realm="FooCorp"
 
@@ -48,7 +47,6 @@ What we want to parse is the "challenge", i.e. the value of the header. So, we h
 The `WWW-Authenticate` header is described in detail in [RFC-2617](https://tools.ietf.org/html/rfc2617). The grammar looks like this, in what the RFC calls "augmented Backus-Naur Form" (see [RFC 2616 §2.1](https://tools.ietf.org/html/rfc2616#section-2.1)):
 
 ```
-
 # from RFC-2617 (HTTP Basic and Digest authentication)
 
 challenge      = auth-scheme 1*SP 1#auth-param
@@ -76,7 +74,6 @@ Let's start with the most simple parts of the grammar: tokens. A token is declar
 We'll define our rules in a `Grammar` class. Let's start by defining some character classes:
 
 ```csharp
-
 static class Grammar
 {
     private static readonly Parser<char> SeparatorChar =
@@ -97,7 +94,6 @@ static class Grammar
 Now, let's define a `TokenChar` character class to match characters that can be part of a token. As per the RFC, this can be any character not in the previous classes:
 
 ```csharp
-
     private static readonly Parser<char> TokenChar =
         Parse.AnyChar
             .Except(SeparatorChar)
@@ -111,7 +107,6 @@ Now, let's define a `TokenChar` character class to match characters that can be 
 Finally, a token is a sequence of one or more of these characters:
 
 ```csharp
-
     private static readonly Parser<string> Token =
         TokenChar.AtLeastOnce().Text();
 ```
@@ -137,7 +132,6 @@ The grammar defines a quoted string as a sequence of:
 Let's write the rules for "qdtext" and "quoted pair":
 
 ```csharp
-
     private static readonly Parser<char> DoubleQuote = Parse.Char('"');
     private static readonly Parser<char> Backslash = Parse.Char('\\');
 
@@ -155,7 +149,6 @@ The `QdText` rule doesn't require much explanation, but `QuotedPair` is more int
 We can now write the rule for a quoted string:
 
 ```csharp
-
     private static readonly Parser<string> QuotedString =
         from open in DoubleQuote
         from text in QuotedPair.Or(QdText).Many().Text()
@@ -177,7 +170,6 @@ A challenge is made of an auth scheme followed by one or more parameters. The au
 Although there isn't a named rule for it in the grammar, let's define a rule for parameter values. The value can be either a token or a quoted string:
 
 ```csharp
-
     private static readonly Parser<string> ParameterValue =
         Token.Or(QuotedString);
 ```
@@ -185,7 +177,6 @@ Although there isn't a named rule for it in the grammar, let's define a rule for
 Since a parameter is a composite element (name and value), let's define a class to represent it:
 
 ```csharp
-
 class Parameter
 {
     public Parameter(string name, string value)
@@ -202,7 +193,6 @@ class Parameter
 The `T` in `Parser<T>` isn't restricted to characters and strings, it can be any type. So the rule for parsing parameters will be of type `Parser<Parameter>`:
 
 ```csharp
-
     private static readonly Parser<char> EqualSign = Parse.Char('=');
 
     private static readonly Parser<Parameter> Parameter =
@@ -217,7 +207,6 @@ Here we match a token (the parameter name), followed by the `'='` sign, followed
 Now let's parse a sequence of one or more parameters. Parameters are separated by commas (`','`), with optional leading and trailing whitespace (look for "#rule" in [RFC 2616 §2.1](https://tools.ietf.org/html/rfc2616#section-2.1)). The grammar for lists allows several commas without items in between, e.g. "item1 ,, item2,item3, ,item4", so the rule for the delimiter can be written like this:
 
 ```csharp
-
     private static readonly Parser<char> Comma = Parse.Char(',');
 
     private static readonly Parser<char> ListDelimiter =
@@ -232,7 +221,6 @@ We just match the first comma, the rest can be any number of commas or whitespac
 We could now match the sequence of parameters like this:
 
 ```csharp
-
     private static readonly Parser<Parameter[]> Parameters =
         from first in Parameter.Once()
         from others in (
@@ -245,7 +233,6 @@ We could now match the sequence of parameters like this:
 But it's not very straightforward... fortunately Sprache provides an easier option with the `DelimitedBy` method:
 
 ```csharp
-
     private static readonly Parser<Parameter[]> Parameters =
         from p in Parameter.DelimitedBy(ListDelimiter)
         select p.ToArray();
@@ -256,7 +243,6 @@ But it's not very straightforward... fortunately Sprache provides an easier opti
 We're almost done. We now have everything we need to parse the whole challenge. Let's define a class to represent it first:
 
 ```csharp
-
 class Challenge
 {
     public Challenge(string scheme, Parameter[] parameters)
@@ -272,7 +258,6 @@ class Challenge
 And finally we can write the top-level rule:
 
 ```csharp
-
     public static readonly Parser<Challenge> Challenge =
         from scheme in Token
         from _ in Parse.WhiteSpace.AtLeastOnce()
@@ -287,7 +272,6 @@ Note that I made this rule public, unlike the others: it's the only one we need 
 Our parser is done, now we just have to use it, which is pretty straightforward:
 
 ```csharp
-
 void ParseAndPrintChallenge(string input)
 {
     var challenge = Grammar.Challenge.Parse(input);
@@ -303,7 +287,6 @@ void ParseAndPrintChallenge(string input)
 With the OAuth 2.0 challenge example from earlier, this produces the following output:
 
 ```
-
 Scheme: Bearer
 Parameters:
 - realm = FooCorp

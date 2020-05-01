@@ -28,7 +28,6 @@ Unfortunately, on Cosmos DB, stored procedures are written… in Javascript 😢
 Of course, I wouldn't be writing this post if there wasn't a way to make things better. Cosmos DB Product Manager [Andrew Liu](https://twitter.com/aliuy8) was kind enough to show me how to write a wrapper around the callback-based API to enable the use of promises and `async`/`await`. Basically, it's just a few functions that you can add to your stored procedures:
 
 ```javascript
-
 function setFoo() {
     async function main() {
         let { feed, options } = await queryDocuments("SELECT * from c");
@@ -83,7 +82,6 @@ Let's start by installing TypeScript. Create a `package.json` file with the `npm
 We also need a `tsconfig.json` file:
 
 ```javascript
-
 {
     "exclude": [
         "node_modules"
@@ -98,7 +96,6 @@ We also need a `tsconfig.json` file:
 Now, let's create a few helpers to use in our stored procedures. I put them all in a `CosmosServerScriptHelpers` folder. The most important piece is the `AsyncCosmosContext` class, which is basically a strongly-typed, promise-based wrapper for [the `__` object](https://azure.github.io/azure-cosmosdb-js-server/-__object.html). It implements the following interface:
 
 ```javascript
-
 export interface IAsyncCosmosContext {
 
     readonly request: IRequest;
@@ -125,7 +122,6 @@ I'm not showing the whole code in this article because it would be too long, but
 So, how can we use this? Let's look at our previous example again, and see how we can rewrite it in TypeScript using our wrappers:
 
 ```javascript
-
 import {IAsyncCosmosContext} from "CosmosServerScriptHelpers/IAsyncCosmosContext";
 import {AsyncCosmosContext} from "CosmosServerScriptHelpers/AsyncCosmosContext";
 
@@ -151,7 +147,6 @@ It looks remarkably similar to the previous version, with just the following cha
 This looks pretty good already, but what's bugging me is having to explicitly create the context and do the `.catch(...)`. So let's create another helper to encapsulate this:
 
 ```javascript
-
 import {IAsyncCosmosContext} from "./IAsyncCosmosContext";
 import {AsyncCosmosContext} from "./AsyncCosmosContext";
 
@@ -190,7 +185,6 @@ export class AsyncHelper {
 Using this helper, our stored procedure now looks like this:
 
 ```javascript
-
 import {AsyncHelper} from "CosmosServerScriptHelpers/AsyncHelper";
 
 function setFoo() 
@@ -218,7 +212,6 @@ OK, now comes the tricky part... We have a bunch of TypeScript files that `impor
 Since it doesn't seem possible to get the desired result using just the TypeScript compiler, the solution I found was to use a Gulp pipeline to concatenate the output files and remove the extraneous `export`s and `import`s. Here's my `gulpfile.js`:
 
 ```javascript
-
 const gulp = require("gulp");
 const ts = require("gulp-typescript");
 const path = require("path");

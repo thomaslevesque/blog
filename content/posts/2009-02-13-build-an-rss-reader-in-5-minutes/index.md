@@ -14,7 +14,6 @@ categories:
 
 Today, I stumbled upon a very handy class : [SyndicationFeed](http://msdn.microsoft.com/en-us/library/system.servicemodel.syndication.syndicationfeed.aspx). This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones.  For instance, here's how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it's items :  
 ```csharp
-
 string url = "http://news.google.fr/nwshp?hl=fr&tab=wn&output=rss";
 using (XmlReader reader = XmlReader.Create(url))
 {
@@ -29,7 +28,6 @@ using (XmlReader reader = XmlReader.Create(url))
 ```
   Easy enough, don't you think ? :)  Let's now take advantage of WPF binding capabilities to create a very simple graphical RSS reader :  
 ```xml
-
 <Window x:Class="TestFeeds.Window1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -72,7 +70,6 @@ using (XmlReader reader = XmlReader.Create(url))
 ```
   The code-behind :  
 ```csharp
-
     private void btnGo_Click(object sender, RoutedEventArgs e)
     {
         using (XmlReader reader = XmlReader.Create(txtUrl.Text))

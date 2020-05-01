@@ -48,7 +48,6 @@ Fortunately, if you're willing to incur a bit of technical debt, there's a simpl
 One way to do that is to inject the `IServiceProvider` into your class, and use `services.GetRequiredService<T>()` when you need to use `T`. For instance, the `C` class I mentioned earlier might initially look like this:
 
 ```csharp
-
 class C : IC
 {
     private readonly IA _a;
@@ -70,7 +69,6 @@ class C : IC
 To avoid the dependency cycle, you could rewrite it like this:
 
 ```csharp
-
 class C : IC
 {
     private readonly IServiceProvider _services;
@@ -103,7 +101,6 @@ However, I don't really like this approach, because it smells of the [Service Lo
 The approach I actually use in this situation takes advantage of the `Lazy<T>` class. You will need the following extension method and class:
 
 ```csharp
-
 public static IServiceCollection AddLazyResolution(this IServiceCollection services)
 {
     return services.AddTransient(
@@ -123,7 +120,6 @@ private class LazilyResolved<T> : Lazy<T>
 Call this new method on your service collection during service registration:
 
 ```csharp
-
 services.AddLazyResolution();
 ```
 
@@ -132,7 +128,6 @@ This enables the resolution of a `Lazy<T>` which will lazily resolve a `T` from 
 In the class that depends on `IA`, inject `Lazy<IA>` instead. When you need to use `IA`, just access the lazy's value:
 
 ```csharp
-
 class C : IC
 {
     private readonly Lazy<IA> _a;

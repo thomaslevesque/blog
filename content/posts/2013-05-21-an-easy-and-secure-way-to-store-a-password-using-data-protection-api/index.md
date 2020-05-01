@@ -14,7 +14,6 @@ categories:
 
 If you're writing a client application that needs to store user credentials, it's usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues... Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration. But then it will be pretty easy to find...  Well, the good news is that you don't really need to solve this problem, because Windows already solved it for you! The solution is called [Data Protection API](http://msdn.microsoft.com/en-us/library/ms995355.aspx), and enables you to protect data without having to worry about an encryption key. The documentation is lengthy and boring, but actually it's pretty easy to use from .NET, because the framework provides a [`ProtectedData`](http://msdn.microsoft.com/en-us/library/system.security.cryptography.protecteddata.aspx) class that wraps the low-level API calls for you.  This class has two methods, with pretty self-explanatory names: `Protect` and `Unprotect`:  
 ```csharp
-
 public static byte[] Protect(byte[] userData, byte[] optionalEntropy, DataProtectionScope scope);
 public static byte[] Unprotect(byte[] encryptedData, byte[] optionalEntropy, DataProtectionScope scope);
 ```
@@ -34,7 +33,6 @@ public static byte[] Unprotect(byte[] encryptedData, byte[] optionalEntropy, Dat
 ```
   I omitted the entropy in the description above; in most cases it will probably be more convenient to have it as a string, too, so we can just encode the string to UTF-8 to get the corresponding bytes.  Eventually, we can wrap all this in two simple extension methods:  
 ```csharp
-
 public static class DataProtectionExtensions
 {
     public static string Protect(
@@ -70,12 +68,10 @@ public static class DataProtectionExtensions
 ```
   Encryption example:  
 ```csharp
-
 string encryptedPassword = password.Protect();
 ```
   Decryption example:  
 ```csharp
-
 try
 {
     string password = encryptedPassword.Unprotect();

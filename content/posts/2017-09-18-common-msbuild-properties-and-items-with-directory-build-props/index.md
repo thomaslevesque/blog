@@ -22,7 +22,6 @@ MSBuild 15 introduced a pretty cool feature: implicit imports (I don't know if i
 For instance, if you want to share some metadata across multiple projects, just write a `Directory.Build.props` file in the parent directory of your projects:
 
 ```xml
-
 <Project>
 
   <PropertyGroup>
@@ -36,7 +35,6 @@ For instance, if you want to share some metadata across multiple projects, just 
 You can also do more interesting things like enabling and configuring StyleCop for all your projects:
 
 ```xml
-
 <Project>
 
   <PropertyGroup>
@@ -63,7 +61,6 @@ MSBuild looks for the `Directory.Build.props` file starting from the project dir
 
 
 ```xml
-
 <Project>
 
   <!-- Properties common to all projects -->
@@ -76,7 +73,6 @@ MSBuild looks for the `Directory.Build.props` file starting from the project dir
 
 
 ```xml
-
 <Project>
 
   <!-- Import parent Directory.build.props -->

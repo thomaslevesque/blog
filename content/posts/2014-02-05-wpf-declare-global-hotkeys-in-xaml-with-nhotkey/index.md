@@ -25,7 +25,6 @@ Of course, this is not a new issue, and there are quite a few open-source librar
 A better option, in my opinion, is to listen only to the keys you’re interested in, and declare what to do for each of those. The approach used in WPF for key bindings is quite elegant:
 
 ```
-
 <Window.InputBindings>
     <KeyBinding Gesture="Ctrl+Alt+Add" Command="{Binding IncrementCommand}" />
     <KeyBinding Gesture="Ctrl+Alt+Subtract" Command="{Binding DecrementCommand}" />
@@ -37,7 +36,6 @@ But of course, key bindings are not global, they require that your app has focus
 [NHotkey](https://github.com/thomaslevesque/NHotkey) is a very simple hotkey library that enables global key bindings. All you have to do is set an attached property to true on your key bindings:
 
 ```
-
 <Window.InputBindings>
     <KeyBinding Gesture="Ctrl+Alt+Add" Command="{Binding IncrementCommand}"
                 HotkeyManager.RegisterGlobalHotkey="True" />
@@ -51,7 +49,6 @@ And that’s it; the commands defined in the key bindings will now be invoked ev
 You can also use NHotkey from code:
 
 ```
-
 HotkeyManager.Current.AddOrReplace("Increment", Key.Add, ModifierKeys.Control | ModifierKeys.Alt, OnIncrement);
 HotkeyManager.Current.AddOrReplace("Decrement", Key.Subtract, ModifierKeys.Control | ModifierKeys.Alt, OnDecrement);
 ```
