@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Thomas Levesque .NET Blog</title>
+    <title>Thomas Levesque&#39;s .NET Blog</title>
     <link>https://blog2.thomaslevesque.net/</link>
-    <description>Recent content on Thomas Levesque .NET Blog</description>
+    <description>Recent content on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2020 23:42:43 +0200</lastBuildDate>
     
 	<atom:link href="https://blog2.thomaslevesque.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>About</title>
+      <link>https://blog2.thomaslevesque.net/about/</link>
+      <pubDate>Fri, 01 May 2020 23:42:43 +0200</pubDate>
+      
+      <guid>https://blog2.thomaslevesque.net/about/</guid>
+      <description>I&amp;rsquo;m Thomas Levesque, a French software developer from Paris. I&amp;rsquo;ve been programming in C# almost since the beginning, and I still love it. I&amp;rsquo;ve done a lot of desktop app development with WinForms and WPF, but nowadays my focus is mostly on ASP.NET Core.
+I&amp;rsquo;m a core maintainer of FakeItEasy, the easy mocking library for .NET. I also maintain a few personal open-source projects, which you can see on my Github account.</description>
+    </item>
     
     <item>
       <title>Using the OAuth 2.0 device flow to authenticate users in desktop apps</title>

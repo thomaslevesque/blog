@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>model binding on Thomas Levesque .NET Blog</title>
+    <title>model binding on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://blog2.thomaslevesque.net/tags/model-binding/</link>
-    <description>Recent content in model binding on Thomas Levesque .NET Blog</description>
+    <description>Recent content in model binding on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 30 Jan 2020 00:00:00 +0000</lastBuildDate>
