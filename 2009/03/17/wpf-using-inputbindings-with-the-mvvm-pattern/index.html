@@ -27,7 +27,7 @@
     
     <meta property="og:title" content="[WPF] Using InputBindings with the MVVM pattern" />
 <meta property="og:description" content="If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
-&amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;quot;Control&amp;quot; Key=&amp;quot;E&amp;quot; Command=&amp;quot;{Binding EditCommand}&amp;quot;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
+&lt;UserControl.InputBindings&gt; &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt; &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
  The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog2.thomaslevesque.net/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/" />
@@ -35,7 +35,7 @@
 <meta property="article:modified_time" content="2009-03-17T10:27:58+00:00" />
 <meta itemprop="name" content="[WPF] Using InputBindings with the MVVM pattern">
 <meta itemprop="description" content="If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
-&amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;quot;Control&amp;quot; Key=&amp;quot;E&amp;quot; Command=&amp;quot;{Binding EditCommand}&amp;quot;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
+&lt;UserControl.InputBindings&gt; &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt; &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
  The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.">
 <meta itemprop="datePublished" content="2009-03-17T10:27:58&#43;00:00" />
 <meta itemprop="dateModified" content="2009-03-17T10:27:58&#43;00:00" />
@@ -46,7 +46,7 @@
 <meta itemprop="keywords" content="InputBinding,KeyBinding,markup extension,MVVM,WPF,XAML," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Using InputBindings with the MVVM pattern"/>
 <meta name="twitter:description" content="If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
-&amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;quot;Control&amp;quot; Key=&amp;quot;E&amp;quot; Command=&amp;quot;{Binding EditCommand}&amp;quot;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
+&lt;UserControl.InputBindings&gt; &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt; &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
  The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive."/>
 
   </head>
@@ -139,23 +139,20 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
-    &amp;lt;UserControl.InputBindings&amp;gt;
-        &amp;lt;KeyBinding Modifiers=&amp;quot;Control&amp;quot; Key=&amp;quot;E&amp;quot; Command=&amp;quot;{Binding EditCommand}&amp;quot;/&amp;gt;
-    &amp;lt;/UserControl.InputBindings&amp;gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;UserControl.InputBindings&gt;</span>
+        <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Modifiers=</span><span style="color:#e6db74">&#34;Control&#34;</span> <span style="color:#a6e22e">Key=</span><span style="color:#e6db74">&#34;E&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding EditCommand}&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/UserControl.InputBindings&gt;</span>
 </code></pre></div><p>Unfortunately, this code doesn&rsquo;t work, for two reasons :</p>
 <ol>
 <li>The <code>Command</code> property is not a dependency property, so you cannot assign it through binding</li>
 <li><code>InputBinding</code>s are not part of the logical or visual tree of the control, so they don&rsquo;t inherit the <code>DataContext</code></li>
 </ol>
 <p>A solution would be to create the <code>InputBinding</code>s in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive. So I eventually came up with a markup extension that enables binding to ViewModel commands, anywhere in XAML, even for non-dependency properties or if the element doesn&rsquo;t normally inherit the <code>DataContext</code>  This extension is used like a regular binding :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
-    &amp;lt;UserControl.InputBindings&amp;gt;
-        &amp;lt;KeyBinding Modifiers=&amp;quot;Control&amp;quot; Key=&amp;quot;E&amp;quot; Command=&amp;quot;{input:CommandBinding EditCommand}&amp;quot;/&amp;gt;
-    &amp;lt;/UserControl.InputBindings&amp;gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;UserControl.InputBindings&gt;</span>
+        <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Modifiers=</span><span style="color:#e6db74">&#34;Control&#34;</span> <span style="color:#a6e22e">Key=</span><span style="color:#e6db74">&#34;E&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{input:CommandBinding EditCommand}&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/UserControl.InputBindings&gt;</span>
 </code></pre></div><p>(The <em>input</em> XML namespace is mapped to the CLR namespace where the markup extension is declared)  In order to write this extension, I had to cheat a little&hellip; I used Reflector to find some private fields that would allow to retrieve the <code>DataContext</code> of the root element. I then accessed those fields using reflection.  Here is the code of the markup extension :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">using</span> System;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
 <span style="color:#66d9ef">using</span> System.Reflection;
 <span style="color:#66d9ef">using</span> System.Windows;
 <span style="color:#66d9ef">using</span> System.Windows.Input;
@@ -175,7 +172,7 @@
             <span style="color:#66d9ef">this</span>.CommandName = commandName;
         }
 <span style="color:#a6e22e">
-</span><span style="color:#a6e22e">        [ConstructorArgument(&amp;quot;commandName&amp;quot;)]</span>
+</span><span style="color:#a6e22e">        [ConstructorArgument(&#34;commandName&#34;)]</span>
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> CommandName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 
         <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">object</span> targetObject;
@@ -192,12 +189,12 @@
 
             <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(CommandName))
             {
-                <span style="color:#75715e">// The serviceProvider is actually a ProvideValueServiceProvider, which has a private field &amp;quot;_context&amp;quot; of type ParserContext
-</span><span style="color:#75715e"></span>                ParserContext parserContext = GetPrivateFieldValue&amp;lt;ParserContext&amp;gt;(serviceProvider, &amp;quot;_context&amp;quot;);
+                <span style="color:#75715e">// The serviceProvider is actually a ProvideValueServiceProvider, which has a private field &#34;_context&#34; of type ParserContext
+</span><span style="color:#75715e"></span>                ParserContext parserContext = GetPrivateFieldValue&lt;ParserContext&gt;(serviceProvider, <span style="color:#e6db74">&#34;_context&#34;</span>);
                 <span style="color:#66d9ef">if</span> (parserContext != <span style="color:#66d9ef">null</span>)
                 {
-                    <span style="color:#75715e">// A ParserContext has a private field &amp;quot;_rootElement&amp;quot;, which returns the root element of the XAML file
-</span><span style="color:#75715e"></span>                    FrameworkElement rootElement = GetPrivateFieldValue&amp;lt;FrameworkElement&amp;gt;(parserContext, &amp;quot;_rootElement&amp;quot;);
+                    <span style="color:#75715e">// A ParserContext has a private field &#34;_rootElement&#34;, which returns the root element of the XAML file
+</span><span style="color:#75715e"></span>                    FrameworkElement rootElement = GetPrivateFieldValue&lt;FrameworkElement&gt;(parserContext, <span style="color:#e6db74">&#34;_rootElement&#34;</span>);
                     <span style="color:#66d9ef">if</span> (rootElement != <span style="color:#66d9ef">null</span>)
                     {
                         <span style="color:#75715e">// Now we can retrieve the DataContext
@@ -239,7 +236,7 @@
 
         <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> AssignCommand(ICommand command)
         {
-            <span style="color:#66d9ef">if</span> (targetObject != <span style="color:#66d9ef">null</span> &amp;amp;&amp;amp; targetProperty != <span style="color:#66d9ef">null</span>)
+            <span style="color:#66d9ef">if</span> (targetObject != <span style="color:#66d9ef">null</span> &amp;&amp; targetProperty != <span style="color:#66d9ef">null</span>)
             {
                 <span style="color:#66d9ef">if</span> (targetProperty <span style="color:#66d9ef">is</span> DependencyProperty)
                 {
@@ -273,7 +270,7 @@
             }
         }
 
-        <span style="color:#66d9ef">private</span> T GetPrivateFieldValue&amp;lt;T&amp;gt;(<span style="color:#66d9ef">object</span> target, <span style="color:#66d9ef">string</span> fieldName)
+        <span style="color:#66d9ef">private</span> T GetPrivateFieldValue&lt;T&gt;(<span style="color:#66d9ef">object</span> target, <span style="color:#66d9ef">string</span> fieldName)
         {
             FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
             <span style="color:#66d9ef">if</span> (field != <span style="color:#66d9ef">null</span>)

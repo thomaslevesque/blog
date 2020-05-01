@@ -133,8 +133,7 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>When unit testing a method, one of the things to test is argument validation : for instance, ensure that the method throws a <code>ArgumentNullException</code> when a null argument is passed for a parameter that isn’t allowed to be null. Writing this kind of test is very easy, but it’s also a tedious and repetitive task, especially if the method has many parameters… So I wrote a method that automates part of this task: it tries to pass null for each of the specified arguments, and asserts that the method throws an <code>ArgumentNullException</code>. Here’s an example that tests a <code>FullOuterJoin</code> extension method:</p>
-<pre><code>
-[Test]
+<pre><code>[Test]
 public void FullOuterJoin_Throws_If_Argument_Null()
 {
     var left = Enumerable.Empty&lt;int&gt;();
@@ -146,8 +145,7 @@ public void FullOuterJoin_Throws_If_Argument_Null()
 </code></pre><p>The first parameter is a lambda expression that represents how to call the method. In this lambda, you should only pass valid arguments. The following parameters are the names of the parameters that are not allowed to be null. For each of the specified names, <code>AssertThrowsWhenArgumentNull</code> will replace the corresponding argument with null in the provided lambda, compile and invoke the lambda, and assert that the method throws a <code>ArgumentNullException</code>.</p>
 <p>Using this method, instead of writing a test for each of the arguments that are not allowed to be null, you only need one test.</p>
 <p>Here’s the code for the <code>TestHelper.AssertThrowsWhenArgumentNull</code> method (you can also find it on <a href="https://gist.github.com/thomaslevesque/c4cb9f537316b122f5b9">Gist</a>):</p>
-<pre><code>
-using System;
+<pre><code>using System;
 using System.Linq;
 using System.Linq.Expressions;
 using NUnit.Framework;

@@ -133,11 +133,9 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.  The &ldquo;obvious&rdquo; solution, of course, is to unsubscribe from the event when you&rsquo;re done with it. Unfortunately, it&rsquo;s not always obvious to know <em>when</em> you can unsubscribe&hellip; an object that goes out of scope usually isn&rsquo;t aware of it, so it doesn&rsquo;t have a chance to unsubscribe from the event.  Another approach is to implement the <a href="http://msdn.microsoft.com/en-us/library/aa970850.aspx">WeakEvent pattern</a>, which principle is to keep only weak references to the listeners. That way, unsubscribed listeners can be claimed by the garbage collector. Microsoft included in WPF a few types to deal with the WeakEvent pattern (<code>WeakEventManager</code> class and <code>IWeakEventListener</code> interface), and gives guidelines on how to implement your own weak event. However this technique is not very convenient, because you need to create dedicated classes to expose new events, and the listeners need to implement a specific interface.  So I thought about another implementation, which allows creating weak events almost the same way as normal events. My first idea was to use a list of <code>WeakReference</code>s to store the list of subscribed delegates. But this doesn&rsquo;t work so well, because of the way we typically use delegates :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-myObject.MyEvent += <span style="color:#66d9ef">new</span> EventHandler(myObject_MyEvent);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">myObject.MyEvent += <span style="color:#66d9ef">new</span> EventHandler(myObject_MyEvent);
 </code></pre></div><p>We create a delegate, subscribe it to the event, and&hellip; drop it. So the only accessible reference to the delegate is actually a weak reference, so there&rsquo;s nothing to prevent its garbage collection&hellip; and that&rsquo;s exactly what happens ! After a variable period of time (from my observations, no more than a few seconds), the delegate is garbage collected, and isn&rsquo;t called anymore when the event is raised.  Rather than keeping a weak reference to the delegate itself, we should use a less transient object : the target object of the delegate (<code>Delegate.Target</code>) would be a better choice. So I created the <code>WeakDelegate&lt;TDelegate&gt;</code> class, which wraps a delegate by storing separately the method and a weak reference to the target :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeakDelegate</span>&lt;TDelegate&gt; : IEquatable&lt;TDelegate&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeakDelegate</span>&lt;TDelegate&gt; : IEquatable&lt;TDelegate&gt;
     {
         <span style="color:#66d9ef">private</span> WeakReference _targetReference;
         <span style="color:#66d9ef">private</span> MethodInfo _method;
@@ -193,8 +191,7 @@ myObject.MyEvent += <span style="color:#66d9ef">new</span> EventHandler(myObject
         }
     }
 </code></pre></div><p>Now, we just need to manage a list of these <code>WeakDelegate&lt;TDelegate&gt;</code>. This is done by the <code>WeakEvent&lt;TDelegate&gt;</code> class :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeakEvent</span>&lt;TEventHandler&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeakEvent</span>&lt;TEventHandler&gt;
     {
         <span style="color:#66d9ef">private</span> List&lt;WeakDelegate&lt;TEventHandler&gt;&gt; _handlers;
 
@@ -237,8 +234,7 @@ myObject.MyEvent += <span style="color:#66d9ef">new</span> EventHandler(myObject
         }
     }
 </code></pre></div><p>This class automatically handles the removal of &ldquo;dead&rdquo; (garbage collected) handlers, and provides a <code>Raise</code> method to call the handlers. It can be used as follows :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-        <span style="color:#66d9ef">private</span> WeakEvent&lt;EventHandler&gt; _myEvent = <span style="color:#66d9ef">new</span> WeakEvent&lt;EventHandler&gt;();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> WeakEvent&lt;EventHandler&gt; _myEvent = <span style="color:#66d9ef">new</span> WeakEvent&lt;EventHandler&gt;();
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">event</span> EventHandler MyEvent
         {
             <span style="color:#66d9ef">add</span> { _myEvent.AddHandler(<span style="color:#66d9ef">value</span>); }
@@ -250,8 +246,7 @@ myObject.MyEvent += <span style="color:#66d9ef">new</span> EventHandler(myObject
             _myEvent.Raise(<span style="color:#66d9ef">this</span>, EventArgs.Empty);
         }
 </code></pre></div><p>This is a bit longer to write than a &ldquo;regular&rdquo; event, but considering the benefits, it&rsquo;s very acceptable. Anyway, you can easily create a Visual Studio snippet to quickly create a weak event, with only 3 fields to fill in :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
-<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34; ?&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34; ?&gt;</span>
 <span style="color:#f92672">&lt;CodeSnippets</span>  <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet&#34;</span><span style="color:#f92672">&gt;</span>
   <span style="color:#f92672">&lt;CodeSnippet</span> <span style="color:#a6e22e">Format=</span><span style="color:#e6db74">&#34;1.0.0&#34;</span><span style="color:#f92672">&gt;</span>
     <span style="color:#f92672">&lt;Header&gt;</span>

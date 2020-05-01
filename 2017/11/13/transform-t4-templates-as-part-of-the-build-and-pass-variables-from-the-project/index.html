@@ -137,7 +137,6 @@
 <p>If your project is a classic csproj or vbproj (i.e. not a .NET Core SDK-style project), things are actually quite simple and well documented on <a href="https://docs.microsoft.com/en-us/visualstudio/modeling/code-generation-in-a-build-process">this page</a>.</p>
 <p>Unload your project, and open it in the editor. Add the following <code>PropertyGroup</code> near the beginning of the file:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
-
     
     15.0
     $(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)
@@ -157,11 +156,9 @@
 </code></pre></div><p>Note that it will cause a MSBuild warning in the build output (MSB4011) because <code>Sdk.targets</code> is imported twice; you can safely ignore this warning.</p>
 <h2 id="passing-msbuild-variables-to-templates">Passing MSBuild variables to templates</h2>
 <p>At some point, the code generation logic might become too complex to remain entirely in the T4 template file. You might want to extract some of it into a helper assembly, and reference this assembly from the template, like this:</p>
-<pre><code>
-&lt;#@ assembly name=&quot;../CodeGenHelper/bin/Release/net462/CodeGenHelper.dll&quot; #&gt;
+<pre><code>&lt;#@ assembly name=&quot;../CodeGenHelper/bin/Release/net462/CodeGenHelper.dll&quot; #&gt;
 </code></pre><p>Of course, specifying the path like this isn&rsquo;t very very convenient&hellip; For instance, if you&rsquo;re currently in <code>Debug</code> configuration, the <code>Release</code> version of CodeGenHelper.dll might be out of date. Fortunately, Visual Studio&rsquo;s <code>TextTemplatingFileGenerator</code> custom tool recognizes MSBuild variables from the project, so you can do this instead:</p>
-<pre><code>
-&lt;#@ assembly name=&quot;$(SolutionDir)/CodeGenHelper/bin/$(Configuration)/net462/CodeGenHelper.dll&quot; #&gt;
+<pre><code>&lt;#@ assembly name=&quot;$(SolutionDir)/CodeGenHelper/bin/$(Configuration)/net462/CodeGenHelper.dll&quot; #&gt;
 </code></pre><p>The <code>$(SolutionDir)</code> and <code>$(Configuration)</code> variables will be expanded to their actual values. If you save the template, the template will be transformed using the CodeGenHelper.dll assembly. Nice!</p>
 <p>However, there&rsquo;s a catch&hellip; if you configured the project to transform templates on build as described above, the build will now fail, with an error like this:</p>
 <blockquote>
@@ -170,7 +167,6 @@
 <p>Notice the <code>$(SolutionDir)</code> and <code>$(Configuration)</code> variables in the path? They were not expanded! This is because the MSBuild target that transforms the templates and the <code>TextTemplatingFileGenerator</code> custom tool don&rsquo;t use the same text transformation engine. And unfortunately, the one used by MSBuild doesn&rsquo;t recognize MSBuild properties out of the box&hellip; Ironic, isn&rsquo;t it?</p>
 <p>All is not lost, though. All you have to do is explicitly specify the variables you want to pass as T4 parameters. Edit your project file again, and create a new <code>ItemGroup</code> with the following items:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
-
     
         $(SolutionDir)
         False

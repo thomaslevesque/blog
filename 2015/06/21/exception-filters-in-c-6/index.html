@@ -27,14 +27,14 @@
     
     <meta property="og:title" content="Exception filters in C# 6: their biggest advantage is not what you think" />
 <meta property="og:description" content="Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
- static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&quot;Error 42 occurred&quot;); } }As you might expect, the catch block will be entered if and only if ex." />
+static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyException ex) when (ex.Code == 42){Console.WriteLine(&quot;Error 42 occurred&quot;);}}As you might expect, the catch block will be entered if and only if ex." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog2.thomaslevesque.net/2015/06/21/exception-filters-in-c-6/" />
 <meta property="article:published_time" content="2015-06-21T18:57:13+00:00" />
 <meta property="article:modified_time" content="2015-06-21T18:57:13+00:00" />
 <meta itemprop="name" content="Exception filters in C# 6: their biggest advantage is not what you think">
 <meta itemprop="description" content="Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
- static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&quot;Error 42 occurred&quot;); } }As you might expect, the catch block will be entered if and only if ex.">
+static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyException ex) when (ex.Code == 42){Console.WriteLine(&quot;Error 42 occurred&quot;);}}As you might expect, the catch block will be entered if and only if ex.">
 <meta itemprop="datePublished" content="2015-06-21T18:57:13&#43;00:00" />
 <meta itemprop="dateModified" content="2015-06-21T18:57:13&#43;00:00" />
 <meta itemprop="wordCount" content="870">
@@ -44,7 +44,7 @@
 <meta itemprop="keywords" content="C# 6,exception filters,stack," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Exception filters in C# 6: their biggest advantage is not what you think"/>
 <meta name="twitter:description" content="Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
- static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&quot;Error 42 occurred&quot;); } }As you might expect, the catch block will be entered if and only if ex."/>
+static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyException ex) when (ex.Code == 42){Console.WriteLine(&quot;Error 42 occurred&quot;);}}As you might expect, the catch block will be entered if and only if ex."/>
 
   </head>
 
@@ -136,8 +136,7 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:</p>
-<pre><code>
-static void Main()
+<pre><code>static void Main()
 {
     try
     {
@@ -150,8 +149,7 @@ static void Main()
 }
 </code></pre><p>As you might expect, the <code>catch</code> block will be entered if and only if <code>ex.Code == 42</code>. If the condition is not verified, the exception will bubble up the stack until it’s caught somewhere else or terminates the process.</p>
 <p>At first glance, this feature doesn’t seem to bring anything really new. After all, it has always been possible to do this:</p>
-<pre><code>
-static void Main()
+<pre><code>static void Main()
 {
     try
     {
@@ -180,8 +178,7 @@ static void Main()
 <p>You may have noticed that I talked about the stack, not the stack trace. Even though it’s common to refer to “the stack” when we mean “the stack trace”, they’re not the same thing. The call stack is a piece of memory allocated to the thread, that contains information for each method call: return address, arguments, and local variables. The stack trace is just a string that contains the names of the methods currently on the call stack (and the location in those methods, if debug symbols are available). The <code>Exception.StackTrace</code> property contains the stack trace as it was when the exception was thrown, and is not affected when the stack is unwound; if you rethrow the same exception with <code>throw;</code>, it is left untouched. It is only overwritten if you rethrow the exception with <code>throw ex;</code>. The stack itself, on the other hand, is unwound when a catch block is entered, as discussed above.</p>
 <h3 id="side-effects">Side effects</h3>
 <p>It’s interesting to note that an exception filter can contain any expression that returns a <code>bool</code> (well, almost… you can’t use <code>await</code>, for instance). It can be an inline condition, a property, a method call, etc. Technically, there’s nothing to prevent you from causing side effects in the exception filter. In most cases, I would strongly advise against doing that, as it can cause very confusing behavior; it can become really hard to understand the order in which things are executed. However, there is a common scenario that could benefit from side effects in exception filters: logging. You could easily create a method that logs the exception and returns false so that the catch block is not entered. This would allow logging exceptions on the fly without actually catching them, hence without unwinding the stack:</p>
-<pre><code>
-try
+<pre><code>try
 {
     DoSomethingThatMightFail(s);
 }

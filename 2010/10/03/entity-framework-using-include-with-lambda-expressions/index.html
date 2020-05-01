@@ -139,14 +139,12 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>I&rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the <a href="http://msdn.microsoft.com/en-us/library/bb738708.aspx"><code>ObjectQuery.Include</code></a> method to eagerly load associated entities, in order to avoid database roundtrips when I access them:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">var</span> query =
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(<span style="color:#e6db74">&#34;OrderDetails&#34;</span>)
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
 </code></pre></div><p>Or if I also want to eagerly load the product:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">var</span> query =
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(<span style="color:#e6db74">&#34;OrderDetails.Product&#34;</span>)
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
@@ -160,8 +158,7 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
 <p>It would be much more convenient to use a lambda expression to specify the property path. The principle is well known, and frequently used to avoid using a string to refer to a property.  The trivial case, where the property to include is directly accessible from the source, is pretty easy to handle, and many implementation can be found on the Internet. We just need to use a method that extracts the property name from an expression :</p>
 </li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ObjectQueryExtensions</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ObjectQueryExtensions</span>
     {
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ObjectQuery&lt;T&gt; Include&lt;T&gt;(<span style="color:#66d9ef">this</span> ObjectQuery&lt;T&gt; query, Expression&lt;Func&lt;T, <span style="color:#66d9ef">object</span>&gt;&gt; selector)
         {
@@ -178,8 +175,7 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
         }
     }
 </code></pre></div><p>Using that extension method, the code from the first sample can be rewritten as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">var</span> query =
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; o.OrderDetails)
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
@@ -188,8 +184,7 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
 <li><code>VisitMember</code> : used to visit a property or field access</li>
 <li><code>VisitMethodCall</code> : used to visit a method call. Even though method calls aren&rsquo;t directly related to what we want to do, we need to change its behavior in the case of Linq operators: the default implementation visits each parameter in their normal order, but for extension method like <code>Select</code> or <code>SelectMany</code>, we need to visit the first parameter (the <code>this</code> parameter) last, so that we retrieve the properties in the correct order.<!-- raw HTML omitted --><!-- raw HTML omitted -->Here&rsquo;s a new version of the <code>Include</code> method, along with the <code>ExpressionVisitor</code> implementation:<!-- raw HTML omitted --><!-- raw HTML omitted --></li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ObjectQueryExtensions</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ObjectQueryExtensions</span>
     {
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ObjectQuery&lt;T&gt; Include&lt;T&gt;(<span style="color:#66d9ef">this</span> ObjectQuery&lt;T&gt; query, Expression&lt;Func&lt;T, <span style="color:#66d9ef">object</span>&gt;&gt; selector)
         {
@@ -243,20 +238,17 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
         }
     }
 </code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted -->I already talked about the <code>VisitMethodCall</code> method, so I won&rsquo;t explain it further. The implementation of <code>VisitMember</code> is very simple: we just push the member name on a stack. Why a stack ? That&rsquo;s because the expression is not visited in the order one would intuitively expect. For instance, in an expression like <code>o.OrderDetails.Select(od =&gt; od.Product)</code>, the first visited node is not <code>o</code> but the call to <code>Select</code>, because what precedes it (<code>o.OrderDetails</code>) is actually the first parameter of the static <code>Select</code> method&hellip; To retrieve the properties in the correct order, we put them on a stack so that we can read them back in reverse order when we need to build the property path.<!-- raw HTML omitted --><!-- raw HTML omitted -->The <code>GetPropertyPath</code> method probably doesn&rsquo;t need a long explanation: it initializes the stack, visits the expression, and builds the property path from the stack.<!-- raw HTML omitted --><!-- raw HTML omitted -->We can now rewrite the code from the second example as follows:<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">var</span> query =
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; OrderDetails.Select(od =&gt; od.Product))
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
 </code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted -->This method also works for more complex cases. Let&rsquo;s add a few new entities to our model: one or more discounts can be applied to each purchased product, and each discount is linked to a sales campaign. If we need to retrieve the associated discounts and campaigns in the query results, we can write something like that:<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">var</span> query =
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; OrderDetails.Select(od =&gt; od.Discounts.Select(d =&gt; d.Campaign)))
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
 </code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted -->The result is the same as if we had passed &ldquo;OrderDetails.Discounts.Campaign&rdquo; to the standard <code>Include</code> method. Since the nested <code>Select</code> calls impair the readability, we can also use a different expression, with the same result:<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">var</span> query =
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; o.OrderDetails
                                         .SelectMany(od =&gt; od.Discounts)
                                         .Select(d =&gt; d.Campaign))

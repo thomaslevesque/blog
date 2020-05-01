@@ -19,8 +19,8 @@
       <guid>https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/</guid>
       <description>Just another little puzzle based on an issue I had at work…
 Consider this piece of code :
- Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;); Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
- x &amp;gt; y is False !(x &amp;lt;= y) is True</description>
+Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;);Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
+x &amp;gt; y is False!(x &amp;lt;= y) is True</description>
     </item>
     
     <item>
@@ -31,7 +31,7 @@ Consider this piece of code :
       <guid>https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/</guid>
       <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
 I just came up with this one:
- static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); }What do you think this code prints? Can you be sure? Post your answer in the comments!
+static void Test(out int x, out int y){x = 42;y = 123;Console.WriteLine (x == y);}What do you think this code prints? Can you be sure? Post your answer in the comments!
 I’ll try to post more puzzles in the future if I can come up with others.</description>
     </item>
     

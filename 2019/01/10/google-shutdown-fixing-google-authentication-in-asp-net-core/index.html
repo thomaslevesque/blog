@@ -144,8 +144,7 @@
 <p>First, let&rsquo;s install the <code>Microsoft.AspNetCore.Authentication.OpenIdConnect</code> NuGet package to the project, if it&rsquo;s not already there.</p>
 <p>Then, we go to the place where we add the built-in Google provider (the call to <code>AddGoogle</code>, usually in the <code>Startup</code> class), and remove that call.</p>
 <p>Instead, we add the OpenID Connect provider, point it to the Google OpenID Connect authority URL, and set the client id (the same that we were using for the built-in Google provider):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-services
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services
     .AddAuthentication()
     .AddOpenIdConnect(
         authenticationScheme: <span style="color:#e6db74">&#34;Google&#34;</span>,
@@ -156,13 +155,11 @@ services
             options.ClientId = configuration[<span style="color:#e6db74">&#34;Authentication:Google:ClientId&#34;</span>];
         });
 </code></pre></div><p>We also need to adjust the callback path to be the same as before, so that the redirect URI configured for the Google app still works; and while we&rsquo;re at it, let&rsquo;s also configure the signout paths.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-options.CallbackPath = <span style="color:#e6db74">&#34;/signin-google&#34;</span>;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">options.CallbackPath = <span style="color:#e6db74">&#34;/signin-google&#34;</span>;
 options.SignedOutCallbackPath = <span style="color:#e6db74">&#34;/signout-callback-google&#34;</span>;
 options.RemoteSignOutPath = <span style="color:#e6db74">&#34;/signout-google&#34;</span>;
 </code></pre></div><p>The default configuration already includes the <code>openid</code> and <code>profile</code> scopes, but if we want to have access to the user&rsquo;s email address as we did before, we also need to add the <code>email</code> scope:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-options.Scope.Add(<span style="color:#e6db74">&#34;email&#34;</span>);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">options.Scope.Add(<span style="color:#e6db74">&#34;email&#34;</span>);
 </code></pre></div><p>And that&rsquo;s it! Everything should work as it did before. Here&rsquo;s a <a href="https://gist.github.com/thomaslevesque/fe2cb14377e30833484f75ac416134bb">Gist</a> that shows the code before and after the change.</p>
 <h2 id="hey-wheres-the-client-secret">Hey, where&rsquo;s the client secret?</h2>
 <p>You might have noticed that we didn&rsquo;t specify the client secret. Why is this?</p>

@@ -143,8 +143,7 @@ You might have noticed that HttpClient has a constructor that accepts a HttpMess
 (Image from the <a href="https://www.asp.net/web-api/overview/advanced/httpclient-message-handlers">official ASP.NET website</a>)</p>
 <p>Each handler has a chance to examine and/or modify the request before passing it to the next handler in the chain, and to examine and/or modify the response it receives from the next handler. Typically, the last handler in the pipeline is the <code>HttpClientHandler</code>, which communicates directly with the network.</p>
 <p>The handler chain can be setup like this:</p>
-<pre><code>
-var pipeline = new MyHandler1()
+<pre><code>var pipeline = new MyHandler1()
 {
     InnerHandler = new MyHandler2()
     {
@@ -153,8 +152,7 @@ var pipeline = new MyHandler1()
 };
 var client = new HttpClient(pipeline);
 </code></pre><p>But if you prefer fluent interfaces, you can easily create an extension method to do it like this:</p>
-<pre><code>
-var pipeline = new HttpClientHandler()
+<pre><code>var pipeline = new HttpClientHandler()
     .DecorateWith(new MyHandler2())
     .DecorateWith(new MyHandler1());
 var client = new HttpClient(pipeline);
@@ -162,8 +160,7 @@ var client = new HttpClient(pipeline);
 <p><strong>Side note:</strong> I&rsquo;m presenting this feature from a client-side perspective (since I primarily make client apps), but the same HTTP message handlers are also used <a href="https://www.asp.net/web-api/overview/advanced/http-message-handlers">on the server-side in ASP.NET Web API</a>.</p>
 <h2 id="unit-testing">Unit testing</h2>
 <p>The first use case that comes to mind, and the first I ever used, is unit testing. If you&rsquo;re testing a class that makes online payments over HTTP, you don&rsquo;t want it to actually send requests to the real server&hellip; you just want to ensure that the requests it sends are correct, and that it reacts correctly to specific responses. An easy solution to this problem is to create a &ldquo;stub&rdquo; handler, and inject it into your class to use instead of <code>HttpClientHandler</code>. Here&rsquo;s a simple implementation:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubHandler</span> : HttpMessageHandler
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubHandler</span> : HttpMessageHandler
 {
     <span style="color:#75715e">// Responses to return
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Queue&lt;HttpResponseMessage&gt; _responses =
@@ -192,8 +189,7 @@ var client = new HttpClient(pipeline);
         _requests;
 }
 </code></pre></div><p>This class lets you record the requests that are sent via the handler and specify the responses that should be returned. For instance, you could write a test like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#75715e">// Arrange
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Arrange
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> handler = <span style="color:#66d9ef">new</span> StubHandler();
 handler.EnqueueResponse(<span style="color:#66d9ef">new</span> HttpResponseMessage(HttpStatusCode.Unauthorized));
 <span style="color:#66d9ef">var</span> processor = <span style="color:#66d9ef">new</span> PaymentProcessor(handler);
@@ -204,8 +200,7 @@ handler.EnqueueResponse(<span style="color:#66d9ef">new</span> HttpResponseMessa
 <span style="color:#75715e">// Assert
 </span><span style="color:#75715e"></span>Assert.AreEqual(PaymentStatus.Failed, paymentResult.Status);
 </code></pre></div><p>Of course, rather than creating a stub manually, you could use a mocking framework to generate a fake handler for you. The fact that the <code>SendAsync</code> method is protected makes it a little harder than it should be, but you can easily work around the issue by making a subclass that exposes a public virtual method, and mock that instead:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MockableMessageHandler</span> : HttpMessageHandler
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MockableMessageHandler</span> : HttpMessageHandler
 {
     <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">sealed</span> Task&lt;HttpResponseMessage&gt; SendAsync(
         HttpRequestMessage request,
@@ -217,8 +212,7 @@ handler.EnqueueResponse(<span style="color:#66d9ef">new</span> HttpResponseMessa
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> Task&lt;HttpResponseMessage&gt; DoSendAsync(HttpRequestMessage request);
 }
 </code></pre></div><p>Usage example with <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#75715e">// Arrange
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Arrange
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> handler = A.Fake&lt;MockableMessageHandler&gt;();
 A.CallTo(() =&gt; handler.DoSendAsync(A&lt;HttpRequestMessage&gt;._))
     .Returns(<span style="color:#66d9ef">new</span> HttpResponseMessage(HttpStatusCode.Unauthorized));
@@ -226,8 +220,7 @@ A.CallTo(() =&gt; handler.DoSendAsync(A&lt;HttpRequestMessage&gt;._))
 ...
 </code></pre></div><h2 id="logging">Logging</h2>
 <p>Logging sent requests and received responses can help diagnose issues. This can easily be done with a custom delegating handler:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggingHandler</span> : DelegatingHandler
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggingHandler</span> : DelegatingHandler
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger _logger;
 
@@ -258,8 +251,7 @@ A.CallTo(() =&gt; handler.DoSendAsync(A&lt;HttpRequestMessage&gt;._))
 </code></pre></div><h2 id="retrying-failed-requests">Retrying failed requests</h2>
 <p>Another interesting use case for HTTP message handlers is to automatically retry failed requests. For instance, the server you&rsquo;re talking to might be temporarily unavailable (503), or it could be throttling your requests (429), or maybe you lost Internet access. Handling the retry for these cases at the application level is a pain, because it can happen virtually in any part of your code. Having this logic at the lowest possible level and implemented in a way that is completely transparent to the callers can make things much easier.</p>
 <p>Here&rsquo;s a possible implementation of a retry handler:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RetryHandler</span> : DelegatingHandler
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RetryHandler</span> : DelegatingHandler
 {
     <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; SendAsync(
         HttpRequestMessage request,

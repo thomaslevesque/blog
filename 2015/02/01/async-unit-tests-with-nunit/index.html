@@ -28,7 +28,7 @@
     <meta property="og:title" content="Async unit tests with NUnit" />
 <meta property="og:description" content="Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation await Task." />
+ public class Calculator{public async Task&lt;int&gt; AddAsync(int x, int y){// simulate long calculationawait Task." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/" />
 <meta property="article:published_time" content="2015-02-01T21:20:08+00:00" />
@@ -36,7 +36,7 @@ Let’s assume the system under test is this very interesting Calculator class:
 <meta itemprop="name" content="Async unit tests with NUnit">
 <meta itemprop="description" content="Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation await Task.">
+ public class Calculator{public async Task&lt;int&gt; AddAsync(int x, int y){// simulate long calculationawait Task.">
 <meta itemprop="datePublished" content="2015-02-01T21:20:08&#43;00:00" />
 <meta itemprop="dateModified" content="2015-02-01T21:20:08&#43;00:00" />
 <meta itemprop="wordCount" content="463">
@@ -47,7 +47,7 @@ Let’s assume the system under test is this very interesting Calculator class:
 <meta name="twitter:title" content="Async unit tests with NUnit"/>
 <meta name="twitter:description" content="Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation await Task."/>
+ public class Calculator{public async Task&lt;int&gt; AddAsync(int x, int y){// simulate long calculationawait Task."/>
 
   </head>
 
@@ -140,8 +140,7 @@ Let’s assume the system under test is this very interesting Calculator class:
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.</p>
 <p>Let’s assume the system under test is this very interesting <code>Calculator</code> class:</p>
-<pre><code>
-    public class Calculator
+<pre><code>    public class Calculator
     {
         public async Task&lt;int&gt; AddAsync(int x, int y)
         {
@@ -153,8 +152,7 @@ Let’s assume the system under test is this very interesting Calculator class:
     }
 </code></pre><p><em>(Hint: this code has a bug… 42 isn’t always the answer. This came to me as a shock!)</em></p>
 <p>And here’s a unit test for the <code>AddAsync</code> method:</p>
-<pre><code>
-        [Test]
+<pre><code>        [Test]
         public async void AddAsync_Returns_The_Sum_Of_X_And_Y()
         {
             var calculator = new Calculator();
@@ -164,8 +162,7 @@ Let’s assume the system under test is this very interesting Calculator class:
 </code></pre><p>``</p>
 <h2 id="async-void-vs-async-task"><code>async void</code> vs. <code>async Task</code></h2>
 <p>Even before trying to run this test, I thought to myself: <em>This isn’t gonna work! an <code>async void</code> method will return immediately on the first <code>await</code>, so NUnit will think the test is complete before the assertion is executed, and the test will always pass even if the assertion fails</em>. So I changed the method signature to <code>async Task</code> instead, thinking myself very clever for having avoided this trap…</p>
-<pre><code>
-        [Test]
+<pre><code>        [Test]
         public async Task AddAsync_Returns_The_Sum_Of_X_And_Y()
 </code></pre><p>As expected, the test failed, confirming that NUnit knew how to handle async tests. I fixed the <code>Calculator</code> class, and stopped thinking about it. Until one day, I noticed that my colleague was writing test methods with <code>async void</code>. So I started to explain to him why it couldn’t work, and tried to demonstrate it by introducing an assertion that would fail… and to my surprise, the test failed, proving that I was wrong. Mind blown!</p>
 <p>Having an inquisitive mind, I immediately started to investigate… My first idea was to check the current <code>SynchronizationContext</code>, and indeed I saw that NUnit had changed it to an instance of <code>NUnit.Framework.AsyncSynchronizationContext</code>. This class maintains a queue of all the continuations that are posted to it. After the <code>async void</code> test method has returned (i.e., the first time a not-yet-completed task is awaited), NUnit calls the <code>WaitForPendingOperationsToComplete</code> method, which executes all the continuations in the queue, until the queue is empty. Only then is the test considered complete.</p>

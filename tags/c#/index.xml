@@ -222,7 +222,7 @@ Well, it looks like the C# language team has been busy during the last month, be
       <guid>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</guid>
       <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) {int count = 0;double sum = 0.0;foreach (var value in values){ count++; sum += value;}return Tuple.</description>
+private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.</description>
     </item>
     
     <item>
@@ -290,8 +290,8 @@ When I googled for a way to prevent that, the only solutions I found suggested t
       <guid>https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/</guid>
       <description>Just another little puzzle based on an issue I had at work…
 Consider this piece of code :
- Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;); Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
- x &amp;gt; y is False !(x &amp;lt;= y) is True</description>
+Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;);Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
+x &amp;gt; y is False!(x &amp;lt;= y) is True</description>
     </item>
     
     <item>
@@ -329,7 +329,7 @@ Consider this piece of code :
       <guid>https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/</guid>
       <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
 I just came up with this one:
- static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); }What do you think this code prints? Can you be sure? Post your answer in the comments!
+static void Test(out int x, out int y){x = 42;y = 123;Console.WriteLine (x == y);}What do you think this code prints? Can you be sure? Post your answer in the comments!
 I’ll try to post more puzzles in the future if I can come up with others.</description>
     </item>
     
@@ -341,7 +341,7 @@ I’ll try to post more puzzles in the future if I can come up with others.</des
       <guid>https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.</description>
+ public class Calculator{public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y){// simulate long calculationawait Task.</description>
     </item>
     
     <item>

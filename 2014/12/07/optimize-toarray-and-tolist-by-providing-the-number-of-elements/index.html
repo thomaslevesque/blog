@@ -134,12 +134,10 @@
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>The <code>ToArray</code> and <code>ToList</code> extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on <code>ToArray</code> for now (<code>ToList</code> has a few differences, but the principle is mostly the same).</p>
 <p>Basically, <code>ToArray</code> takes a sequence, and returns an array that contains all the elements from the sequence. If the sequence implements <code>ICollection&lt;T&gt;</code>, it uses the <code>Count</code> property to allocate an array of the right size, and copy the elements into it; here’s an example:</p>
-<pre><code>
-List&lt;User&gt; users = GetUsers();
+<pre><code>List&lt;User&gt; users = GetUsers();
 User[] array = users.ToArray();
 </code></pre><p>In this scenario, <code>ToArray</code> is fairly efficient. Now, let’s change that code to extract just the names from the users:</p>
-<pre><code>
-List&lt;User&gt; users = GetUsers();
+<pre><code>List&lt;User&gt; users = GetUsers();
 string[] array = users.Select(u =&gt; u.Name).ToArray();
 </code></pre><p>Now, the argument of <code>ToArray</code> is an <code>IEnumerable&lt;User&gt;</code> returned by <code>Select</code>. It doesn’t implement <code>ICollection&lt;User&gt;</code>, so <code>ToArray</code> doesn’t know the number of elements, so it cannot allocate an array of the appropriate size. So here’s what it does:</p>
 <ol>
@@ -155,8 +153,7 @@ string[] array = users.Select(u =&gt; u.Name).ToArray();
 <p>If there are few elements, this is quite painless; but for a very long sequence, it’s very inefficient, because of the many allocations and copies.</p>
 <p>What is annoying is that, in many cases, we <em>know</em> the number of elements in the source! In the example above, we only use <code>Select</code>, which doesn’t change the number of elements, so we know that it’s the same as in the original list; but <code>ToArray</code> doesn’t know, because the information was lost along the way. If only we had a way to help it by providing this information ourselves….</p>
 <p>Well, it’s actually very easy to do: all we have to do is create a new extension method that accepts the count as a parameter. Here’s what it might look like:</p>
-<pre><code>
-public static TSource[] ToArray&lt;TSource&gt;(this IEnumerable&lt;TSource&gt; source, int count)
+<pre><code>public static TSource[] ToArray&lt;TSource&gt;(this IEnumerable&lt;TSource&gt; source, int count)
 {
     if (source == null) throw new ArgumentNullException(&quot;source&quot;);
     if (count &lt; 0) throw new ArgumentOutOfRangeException(&quot;count&quot;);
@@ -169,14 +166,12 @@ public static TSource[] ToArray&lt;TSource&gt;(this IEnumerable&lt;TSource&gt; s
     return array;
 }
 </code></pre><p>Now we can optimize our previous example like this:</p>
-<pre><code>
-List&lt;User&gt; users = GetUsers();
+<pre><code>List&lt;User&gt; users = GetUsers();
 string[] array = users.Select(u =&gt; u.Name).ToArray(users.Count);
 </code></pre><p>Note that if you specify a count that is less than the actual number of elements in the sequence, you will get an <code>IndexOutOfRangeException</code>; it’s your responsibility to provide the correct count to the method.</p>
 <p>So, what do we actually gain by doing that? From my benchmarks, this improved <code>ToArray</code> is about <strong>twice as fast</strong> as the built-in one, for a long sequence (tested with 1,000,000 elements). This is pretty good!</p>
 <p>Note that we can improve <code>ToList</code> in the same way, by using the <code>List&lt;T&gt;</code> constructor that lets us specify the initial capacity:</p>
-<pre><code>
-public static List&lt;TSource&gt; ToList&lt;TSource&gt;(this IEnumerable&lt;TSource&gt; source, int count)
+<pre><code>public static List&lt;TSource&gt; ToList&lt;TSource&gt;(this IEnumerable&lt;TSource&gt; source, int count)
 {
     if (source == null) throw new ArgumentNullException(&quot;source&quot;);
     if (count &lt; 0) throw new ArgumentOutOfRangeException(&quot;count&quot;);

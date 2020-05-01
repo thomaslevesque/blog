@@ -133,8 +133,7 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Today, I stumbled upon a very handy class : <a href="http://msdn.microsoft.com/en-us/library/system.servicemodel.syndication.syndicationfeed.aspx">SyndicationFeed</a>. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones.  For instance, here&rsquo;s how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it&rsquo;s items :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">string</span> url = <span style="color:#e6db74">&#34;http://news.google.fr/nwshp?hl=fr&amp;tab=wn&amp;output=rss&#34;</span>;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> url = <span style="color:#e6db74">&#34;http://news.google.fr/nwshp?hl=fr&amp;tab=wn&amp;output=rss&#34;</span>;
 <span style="color:#66d9ef">using</span> (XmlReader reader = XmlReader.Create(url))
 {
     SyndicationFeed feed = SyndicationFeed.Load(reader);
@@ -146,8 +145,7 @@
     }
 }
 </code></pre></div><p>Easy enough, don&rsquo;t you think ? :)  Let&rsquo;s now take advantage of WPF binding capabilities to create a very simple graphical RSS reader :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
-<span style="color:#f92672">&lt;Window</span> <span style="color:#a6e22e">x:Class=</span><span style="color:#e6db74">&#34;TestFeeds.Window1&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Window</span> <span style="color:#a6e22e">x:Class=</span><span style="color:#e6db74">&#34;TestFeeds.Window1&#34;</span>
         <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#34;</span>
         <span style="color:#a6e22e">xmlns:x=</span><span style="color:#e6db74">&#34;http://schemas.microsoft.com/winfx/2006/xaml&#34;</span>
         <span style="color:#a6e22e">Title=</span><span style="color:#e6db74">&#34;Minimalist feed reader&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;286&#34;</span> <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;531&#34;</span><span style="color:#f92672">&gt;</span>
@@ -187,8 +185,7 @@
     <span style="color:#f92672">&lt;/Grid&gt;</span>
 <span style="color:#f92672">&lt;/Window&gt;</span>
 </code></pre></div><p>The code-behind :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> btnGo_Click(<span style="color:#66d9ef">object</span> sender, RoutedEventArgs e)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> btnGo_Click(<span style="color:#66d9ef">object</span> sender, RoutedEventArgs e)
     {
         <span style="color:#66d9ef">using</span> (XmlReader reader = XmlReader.Create(txtUrl.Text))
         {

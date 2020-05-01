@@ -138,8 +138,7 @@ It’s often useful to be notified when the value of a dependency property chang
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…</p>
 <p>It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the <code>Content</code> property of a <code>ContentControl</code> changed. In WPF, I would have used the <a href="http://msdn.microsoft.com/en-us/library/system.componentmodel.dependencypropertydescriptor.aspx"><code>DependencyPropertyDescriptor</code></a> class, but it’s not available in WinRT.</p>
 <p>Fortunately, there is a mechanism which is available on all XAML platforms, and can solve this problem: binding. So, the solution is just to create a class with a dummy property that is bound to the property we want to watch, and call a handler when the value of the dummy property changes. To make it cleaner and hide the actual implementation, I wrapped it as an extension method that returns an <code>IDisposable</code>:</p>
-<pre><code>
-    public static class DependencyObjectExtensions
+<pre><code>    public static class DependencyObjectExtensions
     {
         public static IDisposable WatchProperty(this DependencyObject target,
                                                 string propertyPath,
@@ -203,8 +202,7 @@ It’s often useful to be notified when the value of a dependency property chang
         }
     }
 </code></pre><p>It can be used like this:</p>
-<pre><code>
-// Subscribe
+<pre><code>// Subscribe
 watcher = myControl.WatchProperty(&quot;Content&quot;, myControl_ContentChanged);
 
 // Unsubscribe

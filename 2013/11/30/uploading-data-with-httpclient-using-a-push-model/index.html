@@ -144,8 +144,7 @@
 <li><code>StreamContent</code>: represents raw binary content in the form of a <code>Stream</code></li>
 </ul>
 <p>For instance, here’s how you would upload the content of a file:</p>
-<pre><code>
-async Task UploadFileAsync(Uri uri, string filename)
+<pre><code>async Task UploadFileAsync(Uri uri, string filename)
 {
     using (var stream = File.OpenRead(filename))
     {
@@ -156,8 +155,7 @@ async Task UploadFileAsync(Uri uri, string filename)
 }
 </code></pre><p>As you may have noticed, nowhere in this code do we write to the request stream explicitly: the content is <em>pulled</em> from the source stream.</p>
 <p>This “pull” model is fine most of the time, but it has a drawback: it requires that the data to upload already exists in a form that can be sent directly to the server. This is not always practical, because sometimes you want to generate the request content “on the fly”. For instance, if you want to send an object serialized as JSON, with the “pull” approach you first need to serialize it in memory as a string or <code>MemoryStream</code>, then assign that to the request’s content:</p>
-<pre><code>
-async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
+<pre><code>async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 {
     var client = new HttpClient();
     string json = JsonConvert.SerializeObject(data);
@@ -166,8 +164,7 @@ async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 }
 </code></pre><p>This is fine for small objects, but obviously not optimal for large object graphs…</p>
 <p>So, how could we reverse this pull model to a push model? Well, it’s actually pretty simple: all you have to do is to create a class that inherits <code>HttpContent</code>, and override the <code>SerializeToStreamAsync</code> method to write to the request stream directly. Actually, I intended to blog about my own implementation, but then I did some research, and it turns out that Microsoft has already done the work: the <a href="https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client">Web API 2 Client</a> library provides a `PushStreamContent``` class that does exactly that. Basically, you just pass a delegate that defines what to do with the request stream. Here’s how it works:</p>
-<pre><code>
-async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
+<pre><code>async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 {
     var client = new HttpClient();
     var content = new PushStreamContent((stream, httpContent, transportContext) =&gt;
@@ -183,8 +180,7 @@ async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 }
 </code></pre><p>Note that the <code>PushStreamContent</code> class also provides a constructor overload that accepts an asynchronous delegate, if you want to write to the stream asynchronously.</p>
 <p>Actually, for this specific use case, the Web API 2 Client library provides a less convoluted approach: the <code>ObjectContent</code> class. You just pass it the object to send and a <code>MediaTypeFormatter</code>, and it takes care of serializing the object to the request stream:</p>
-<pre><code>
-async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
+<pre><code>async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 {
     var client = new HttpClient();
     var content = new ObjectContent&lt;T&gt;(data, new JsonMediaTypeFormatter());

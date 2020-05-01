@@ -27,14 +27,14 @@
     
     <meta property="og:title" content="Customizing string interpolation in C# 6" />
 <meta property="og:description" content="One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
- string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:" />
+string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog2.thomaslevesque.net/2015/02/24/customizing-string-interpolation-in-c-6/" />
 <meta property="article:published_time" content="2015-02-24T02:00:00+00:00" />
 <meta property="article:modified_time" content="2015-02-24T02:00:00+00:00" />
 <meta itemprop="name" content="Customizing string interpolation in C# 6">
 <meta itemprop="description" content="One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
- string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:">
+string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:">
 <meta itemprop="datePublished" content="2015-02-24T02:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2015-02-24T02:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="1111">
@@ -44,7 +44,7 @@
 <meta itemprop="keywords" content="C# 6,iformattable,roslyn,string interpolation," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Customizing string interpolation in C# 6"/>
 <meta name="twitter:description" content="One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
- string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:"/>
+string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:"/>
 
   </head>
 
@@ -136,8 +136,7 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>One of the major new features in C# 6 is string interpolation, which allows you to write things like this:</p>
-<pre><code>
-string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;
+<pre><code>string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;
 </code></pre><p>A lesser known aspect of this feature is that an interpolated string can be treated either as a <code>String</code>, or as an <code>IFormattable</code>, depending on the context. When it is converted to an <code>IFormattable</code>, it constructs a <code>FormattableString</code> object that implements the interface and exposes:</p>
 <ul>
 <li>the format string with the placeholders (“holes”) replaced by numbers (compatible with <code>String.Format</code>)</li>
@@ -147,19 +146,16 @@ string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;
 <h3 id="specifying-the-culture">Specifying the culture</h3>
 <p>During the design of the string interpolation feature, there was a lot of debate on whether to use the current culture or the invariant culture to format the values; there were good arguments on both sides, but eventually it was decided to use the current culture, for consistency with <code>String.Format</code> and similar APIs that use <a href="https://msdn.microsoft.com/en-us/library/txafckwd.aspx">composite formatting</a>. Using the current culture makes sense when you’re using string interpolation to build strings to be displayed in the user interface; but there are also scenarios where you want to build strings that will be consumed by an API or protocol (URLs, SQL queries…), and in those cases you usually want to use the invariant culture.</p>
 <p>C# 6 provides an easy way to do that, by taking advantage of the conversion to <code>IFormattable</code>. You just need to create a method like this:</p>
-<pre><code>
-static string Invariant(FormattableString formattable)
+<pre><code>static string Invariant(FormattableString formattable)
 {
     return formattable.ToString(CultureInfo.InvariantCulture);
 }
 </code></pre><p>And you can then use it as follows:</p>
-<pre><code>
-string text = Invariant($&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;);
+<pre><code>string text = Invariant($&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;);
 </code></pre><p>The values in the interpolated strings will now be formatted with the invariant culture, rather than the default culture.</p>
 <h3 id="building-urls">Building URLs</h3>
 <p>Here’s a more advanced example. String interpolation is a convenient way to build URLs, but if you include arbitrary strings in a URL, you need to be careful to URL-encode them. A custom string interpolator can do that for you; you just need to create a custom <code>IFormatProvider</code> that will take care of encoding the values. The implementation was not obvious at first, but after some trial and error I came up with this:</p>
-<pre><code>
-class UrlFormatProvider : IFormatProvider
+<pre><code>class UrlFormatProvider : IFormatProvider
 {
     private readonly UrlFormatter _formatter = new UrlFormatter();
 
@@ -183,8 +179,7 @@ class UrlFormatProvider : IFormatProvider
     }
 }
 </code></pre><p>You can use the formatter like this:</p>
-<pre><code>
-static string Url(FormattableString formattable)
+<pre><code>static string Url(FormattableString formattable)
 {
     return formattable.ToString(new UrlFormatProvider());
 }
@@ -204,8 +199,7 @@ string url = Url($&quot;http://foobar/item/{id}/{name}&quot;);
 </ul>
 <p>(there are probably other things to take care of, but these are the most obvious).</p>
 <p>We can use the same approach as for URLs and create a <code>SqlFormatProvider</code>:</p>
-<pre><code>
-class SqlFormatProvider : IFormatProvider
+<pre><code>class SqlFormatProvider : IFormatProvider
 {
     private readonly SqlFormatter _formatter = new SqlFormatter();
 
@@ -233,8 +227,7 @@ class SqlFormatProvider : IFormatProvider
     }
 }
 </code></pre><p>You can then use the formatter like this:</p>
-<pre><code>
-static string Sql(FormattableString formattable)
+<pre><code>static string Sql(FormattableString formattable)
 {
     return formattable.ToString(new SqlFormatProvider());
 }
@@ -245,8 +238,7 @@ string sql = Sql($&quot;insert into items(id, name, creationDate) values({id}, {
 </code></pre><p>This will take care of properly formatting the values to produce a valid SQL query.</p>
 <h3 id="using-string-interpolation-when-targeting-older-versions-of-net">Using string interpolation when targeting older versions of .NET</h3>
 <p>As is often the case for language features that leverage .NET framework types, you can use this feature with older versions of the framework that don’t have the <code>FormattableString</code> class; you just have to create the class yourself in the appropriate namespace. Actually, there are two classes to implement: <code>FormattableString</code> and <code>FormattableStringFactory</code>. <a href="https://twitter.com/jonskeet/status/569973023064887296">Jon Skeet was apparently in a hurry to try this</a>, and he has already <a href="https://gist.github.com/jskeet/9d297d0dc013d7a557ee">provided an example</a> with the code for these classes:</p>
-<pre><code>
-using System;
+<pre><code>using System;
 
 namespace System.Runtime.CompilerServices
 {

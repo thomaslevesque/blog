@@ -107,7 +107,7 @@
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
- static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&quot;Error 42 occurred&quot;); } }As you might expect, the catch block will be entered if and only if ex.
+static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyException ex) when (ex.Code == 42){Console.WriteLine(&quot;Error 42 occurred&quot;);}}As you might expect, the catch block will be entered if and only if ex.
     </div>
   </div>
 </div>

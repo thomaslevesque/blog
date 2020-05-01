@@ -47,7 +47,7 @@ MSBuild 15 introduced a pretty cool feature: implicit imports (I don&amp;rsquo;t
       <guid>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</guid>
       <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) {int count = 0;double sum = 0.0;foreach (var value in values){ count++; sum += value;}return Tuple.</description>
+private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.</description>
     </item>
     
     <item>

@@ -165,8 +165,7 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 <li>Access rights: it doesn&rsquo;t matter what you pick, we&rsquo;ll override it in the code.</li>
 </ul>
 <p>The project template creates a class named <code>Function1</code> with a <code>Run</code> method that looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Function1</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Function1</span>
 {
 <span style="color:#a6e22e">    [FunctionName(&#34;Function1&#34;)]</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; Run(
@@ -177,8 +176,7 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 }
 </code></pre></div><p>Rename the class to something that makes more sense, e.g. <code>GitHubWebHook</code>, and don&rsquo;t forget to change the name in the <code>FunctionName</code> attribute as well.</p>
 <p>Now we need to tell the Azure Functions runtime that this function is triggered by a GitHub webhook. To do this, change the method signature to look like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [FunctionName(&#34;GitHubWebHook&#34;)]</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">    [FunctionName(&#34;GitHubWebHook&#34;)]</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; Run(
 <span style="color:#a6e22e">        [HttpTrigger(&#34;POST&#34;, WebHookType = &#34;github&#34;)]</span> HttpRequestMessage req,
         TraceWriter log)
@@ -194,16 +192,14 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 <p>I won&rsquo;t describe the whole implementation of my webhook in this post, because it would be too long and most of it isn&rsquo;t that interesting, but I will just highlight a few points of interest. You can find the complete code <a href="https://github.com/thomaslevesque/DontMergeMeYet">on GitHub</a>.</p>
 <h3 id="parsing-the-payload">Parsing the payload</h3>
 <p>Rather than reinventing the wheel, we can leverage the <a href="https://github.com/octokit/octokit.net">Octokit .NET library</a>. Octokit is a library made by GitHub to consume the GitHub REST API. It contains classes representing the entities used in the API, including webhook payloads, so we can just deserialize the request content as a <code>PullRequestEventPayload</code>. However, if we just try to do this with JSON.NET, this isn&rsquo;t going to work: Octokit doesn&rsquo;t use JSON.NET, so the classes aren&rsquo;t decorated with JSON.NET attributes to map the C# property names to the JSON property names. Instead, we need to use the JSON serializer that is included in Octokit, called <code>SimpleJsonSerializer</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;PullRequestEventPayload&gt; DeserializePayloadAsync(HttpContent content)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;PullRequestEventPayload&gt; DeserializePayloadAsync(HttpContent content)
 {
     <span style="color:#66d9ef">string</span> json = <span style="color:#66d9ef">await</span> content.ReadAsStringAsync();
     <span style="color:#66d9ef">var</span> serializer = <span style="color:#66d9ef">new</span> SimpleJsonSerializer();
     <span style="color:#66d9ef">return</span> serializer.Deserialize&lt;PullRequestEventPayload&gt;(json);
 }
 </code></pre></div><p>There&rsquo;s also another issue: the <code>PullRequestEventPayload</code> from Octokit is missing the <code>Installation</code> property, which we&rsquo;re going to need later to authenticate with the GitHub API. An easy workaround is to make a new class that inherits <code>PullRequestEventPayload</code> and add the new property:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PullRequestPayload</span> : PullRequestEventPayload
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PullRequestPayload</span> : PullRequestEventPayload
 {
     <span style="color:#66d9ef">public</span> Installation Installation { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 }
@@ -230,8 +226,7 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 </ul>
 <p>This JWT needs to be signed with the RS256 algorithm (RSA signature with SHA256); in order to sign it, you need a private key, which must be generated from the GitHub app settings page. You can download the private key in PEM format, and store it somewhere your app can access it. Unfortunately, the .NET APIs to generate and sign a JWT don&rsquo;t handle the PEM format, they need an <code>RSAParameters</code> object&hellip; But Stackoverflow is our friend, and <a href="https://stackoverflow.com/a/26978561/98713">this answer</a> contains the code we need to convert a PEM private key to an <code>RSAParameters</code> object. I just kept <a href="https://github.com/thomaslevesque/DontMergeMeYet/blob/master/src/DontMergeMeYet/Services/CryptoHelper.cs">the part I needed</a>, and manually reformatted the PEM private key to remove the header, footer, and newlines, so that it could easily be stored in the settings as a single line of text.</p>
 <p>Once you have the private key as an <code>RSAParameters</code> object, you can generate a JWT like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetTokenForApplication()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetTokenForApplication()
 {
     <span style="color:#66d9ef">var</span> key = <span style="color:#66d9ef">new</span> RsaSecurityKey(_settings.RsaParameters);
     <span style="color:#66d9ef">var</span> creds = <span style="color:#66d9ef">new</span> SigningCredentials(key, SecurityAlgorithms.RsaSha256);
@@ -259,8 +254,7 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 <li>As per the GitHub documentation, the token lifetime cannot exceed 10 minutes</li>
 </ul>
 <p>Once you have the JWT, you can get an installation access token by calling the <a href="https://developer.github.com/v3/apps/#create-a-new-installation-token">&ldquo;new installation token&rdquo; API endpoint</a>. You can authenticate to this endpoint by using the generated JWT as a <code>Bearer</code> token</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">string</span>&gt; GetTokenForInstallationAsync(<span style="color:#66d9ef">int</span> installationId)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">string</span>&gt; GetTokenForInstallationAsync(<span style="color:#66d9ef">int</span> installationId)
 {
     <span style="color:#66d9ef">var</span> appToken = GetTokenForApplication();
     <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient())
@@ -291,8 +285,7 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
     }
 }
 </code></pre></div><p>OK, almost there. Now we just need to use the installation token to call the GitHub API. This can be done easily with Octokit:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">private</span> IGitHubClient CreateGitHubClient(<span style="color:#66d9ef">string</span> installationToken)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> IGitHubClient CreateGitHubClient(<span style="color:#66d9ef">string</span> installationToken)
 {
     <span style="color:#66d9ef">var</span> userAgent = <span style="color:#66d9ef">new</span> ProductHeaderValue(<span style="color:#e6db74">&#34;DontMergeMeYet&#34;</span>);
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> GitHubClient(userAgent)
@@ -304,15 +297,12 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 <p>Note: the code above isn&rsquo;t exactly what you&rsquo;ll find in <a href="https://github.com/thomaslevesque/DontMergeMeYet">the repo</a>; I simplified it a little for the sake of clarity.</p>
 <h3 id="testing-locally-using-ngrok">Testing locally using ngrok</h3>
 <p>When creating your Azure Function, it&rsquo;s useful to be able to debug on your local machine. However, how will GitHub be able to call your function if it doesn&rsquo;t have a publicly accessible URL? The answer is a tool called <a href="https://ngrok.com/">ngrok</a>. Ngrok can create a temporary host name that forwards all traffic to a port on your local machine. To use it, create an account (it&rsquo;s free) and download the command line tool. Once logged in to the ngrok website, a <a href="https://dashboard.ngrok.com/get-started">page</a> will give you the command to save an authentication token on your machine. Just execute this command:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
-ngrok authtoken 1beErG2VTJJ0azL3r2SBn_2iz8johqNv612vaXa3Rkm
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ngrok authtoken 1beErG2VTJJ0azL3r2SBn_2iz8johqNv612vaXa3Rkm
 </code></pre></div><p>Start your Azure Function in debug from Visual Studio; the console will show you the local URL of the function, something like <code>http://localhost:7071/api/GitHubWebHook</code>. Note the port, and in a new console, start ngrok like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
-ngrok http <span style="color:#ae81ff">7071</span> --host-header rewrite
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ngrok http <span style="color:#ae81ff">7071</span> --host-header rewrite
 </code></pre></div><p>This will create a new hostname and start forwarding traffic to the 7071 port on your machine. The <code>--host-header rewrite</code> argument causes ngrok to change the <code>Host</code> HTTP header to localhost, rather than the temporary hostname; Azure Functions don&rsquo;t work correctly without this.</p>
 <p>You can see the temporary hostname in the command output:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">
-ngrok by @inconshreveable                                                                                                                                                                                         (Ctrl+C to quit)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">ngrok by @inconshreveable                                                                                                                                                                                         (Ctrl+C to quit)
 
 Session Status                online
 Account                       Thomas Levesque (Plan: Free)

@@ -134,8 +134,7 @@
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (<code>ref</code> or <code>out</code>) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first <code>await</code>), so the location of the variable won’t exist anymore.</p>
 <p>However, it’s pretty easy to work around that limitation : you only need to create a <code>Ref&lt;T&gt;</code> class to hold the value, and pass an instance of this class by value to the async method:</p>
-<pre><code>
-async void btnFilesStats_Click(object sender, EventArgs e)
+<pre><code>async void btnFilesStats_Click(object sender, EventArgs e)
 {
     var count = new Ref&lt;int&gt;();
     var size = new Ref&lt;ulong&gt;();
@@ -158,8 +157,7 @@ async Task GetFileStats(string path, Ref&lt;int&gt; totalCount, Ref&lt;ulong&gt;
     }
 }
 </code></pre><p>The <code>Ref&lt;T&gt;</code> class looks like this:</p>
-<pre><code>
-public class Ref&lt;T&gt;
+<pre><code>public class Ref&lt;T&gt;
 {
     public Ref() { }
     public Ref(T value) { Value = value; }

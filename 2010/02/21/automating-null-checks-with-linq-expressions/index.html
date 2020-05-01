@@ -136,16 +136,14 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><strong>The problem</strong>  Have you ever written code like the following ?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-X xx = GetX();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">X xx = GetX();
 <span style="color:#66d9ef">string</span> name = <span style="color:#e6db74">&#34;Default&#34;</span>;
 <span style="color:#66d9ef">if</span> (xx != <span style="color:#66d9ef">null</span> &amp;&amp; xx.Foo != <span style="color:#66d9ef">null</span> &amp;&amp; xx.Foo.Bar != <span style="color:#66d9ef">null</span> &amp;&amp; xx.Foo.Bar.Baz != <span style="color:#66d9ef">null</span>)
 {
     name = xx.Foo.Bar.Baz.Name;
 }
 </code></pre></div><p>I bet you have ! You just need to get the value of <code>xx.Foo.Bar.Baz.Name</code>, but you have to test <em>every</em> intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.  <strong>A solution</strong>  Linq offers a very interesting feature which can help solve that problem : expressions. C# 3.0 makes it possible to retrieve the abstract syntax tree (AST) of a lambda expression, and perform all kinds of manipulations on it. It is also possible to dynamically generate an AST, compile it to obtain a delegate, and execute it.  How is this related to the problem described above ? Well, Linq makes it possible to analyse the AST for the expression that accesses the <code>xx.Foo.Bar.Baz.Name</code> property, and rewrite that AST to insert null checks where needed. So we&rsquo;re going to create a <code>NullSafeEval</code> extension method, which takes as a parameter the lambda expression defining how to access a property, and the default value to return if a null object is encountered along the way.  That method will transform the expression <code>xx.Foo.Bar.Baz.Name</code> into that :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-    (xx == <span style="color:#66d9ef">null</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    (xx == <span style="color:#66d9ef">null</span>)
     ? defaultValue
     : (xx.Foo == <span style="color:#66d9ef">null</span>)
       ? defaultValue
@@ -155,8 +153,7 @@ X xx = GetX();
           ? defaultValue
           : xx.Foo.Bar.Baz.Name;
 </code></pre></div><p>Here&rsquo;s the implementation of the <code>NullSafeEval</code> method :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TResult NullSafeEval&lt;TSource, TResult&gt;(<span style="color:#66d9ef">this</span> TSource source, Expression&lt;Func&lt;TSource, TResult&gt;&gt; expression, TResult defaultValue)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TResult NullSafeEval&lt;TSource, TResult&gt;(<span style="color:#66d9ef">this</span> TSource source, Expression&lt;Func&lt;TSource, TResult&gt;&gt; expression, TResult defaultValue)
         {
             <span style="color:#66d9ef">var</span> safeExp = Expression.Lambda&lt;Func&lt;TSource, TResult&gt;&gt;(
                 NullSafeEvalWrapper(expression.Body, Expression.Constant(defaultValue)),
@@ -235,19 +232,16 @@ X xx = GetX();
             <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
         }
 </code></pre></div><p>In short, this code walks up the lambda expression tree, and surrounds each property access or instance method call with a conditional expression <em>(condition ? value if true : value if false)</em>.  And here&rsquo;s how we can use this method :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">string</span> name = xx.NullSafeEval(x =&gt; x.Foo.Bar.Baz.Name, <span style="color:#e6db74">&#34;Default&#34;</span>);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> name = xx.NullSafeEval(x =&gt; x.Foo.Bar.Baz.Name, <span style="color:#e6db74">&#34;Default&#34;</span>);
 </code></pre></div><p>Much clearer and concise than our initial code, isn&rsquo;t it ? :)  Note that the proposed implementation handles  not only properties, but also method calls, so we could write something like that :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">string</span> name = xx.NullSafeEval(x =&gt; x.Foo.GetBar(<span style="color:#ae81ff">42</span>).Baz.Name, <span style="color:#e6db74">&#34;Default&#34;</span>);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> name = xx.NullSafeEval(x =&gt; x.Foo.GetBar(<span style="color:#ae81ff">42</span>).Baz.Name, <span style="color:#e6db74">&#34;Default&#34;</span>);
 </code></pre></div><p>Indexers are not handled yet, but they could be added quite easily ; I will leave it to you to do it if you have the use for it ;)  <strong>Limitations</strong>  Even though that solution can seem very interesting at first sight, please read what follows before you integrate this code into a real world program&hellip;</p>
 <ul>
 <li>First, the proposed code is just a proof of concept, and as such, hasn&rsquo;t been thoroughly tested, so it&rsquo;s probably not very reliable.</li>
 <li>Secondly, keep in mind that dynamic code generation from an expression tree is tough work for the CLR, and will have a big impact on performance. A quick test shows that using the <code>NullSafeEval</code> method is about 10000 times slower than accessing the property directly&hellip;<!-- raw HTML omitted --><!-- raw HTML omitted -->A possible approach to limit that issue would be to cache the delegates generated for each expression, to avoid regenerating them every time. Unfortunately, as far as I know there is no simple and reliable way to compare two Linq expressions, which makes it much harder to implement such a cache.</li>
 <li>Last, you might have noticed that intermediate properties and methods are evaluated several times ; not only this is bad for performance, but more importantly, it could have side effects that are hard to predict, depending on how the properties and methods are implemented.<!-- raw HTML omitted --><!-- raw HTML omitted -->A possible workaround would be to rewrite the conditional expression as follows :<!-- raw HTML omitted --><!-- raw HTML omitted --></li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-Foo foo = <span style="color:#66d9ef">null</span>;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Foo foo = <span style="color:#66d9ef">null</span>;
 Bar bar = <span style="color:#66d9ef">null</span>;
 Baz baz = <span style="color:#66d9ef">null</span>;
 <span style="color:#66d9ef">var</span> name =

@@ -136,8 +136,7 @@
 <h3 id="cancellation">Cancellation</h3>
 <p>Let’s start with the easiest one: cancellation. There are cases where it would be useful to pass a <code>CancellationToken</code> to <code>WaitHandle.WaitOne</code>, but none of the overloads supports it. Note that some more recent variants of the synchronization primitives, such as <code>SemaphoreSlim</code> and <code>ManualResetEventSlim</code>, do support cancellation; however, they’re not necessarily suitable for all use cases, because they’re designed for when the wait times are expected to be very short.</p>
 <p>A <code>CancellationToken</code> exposes a <code>WaitHandle</code>, which is signaled when cancellation is requested. We can take advantage of this to implement a cancellable wait on a wait handle:</p>
-<pre><code>
-    public static bool WaitOne(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
+<pre><code>    public static bool WaitOne(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
     {
         int n = WaitHandle.WaitAny(new[] { handle, cancellationToken.WaitHandle }, millisecondsTimeout);
         switch (n)
@@ -157,8 +156,7 @@
 <li>the original wait handle is signaled first: we return true (like the standard <code>WaitOne</code> method);</li>
 <li>the cancellation token’s wait handle is signaled first: we throw an <code>OperationCancelledException</code>. <!-- raw HTML omitted --><!-- raw HTML omitted -->  For completeness, let’s add some overloads for common use cases:</li>
 </ul>
-<pre><code>
-    public static bool WaitOne(this WaitHandle handle, TimeSpan timeout, CancellationToken cancellationToken)
+<pre><code>    public static bool WaitOne(this WaitHandle handle, TimeSpan timeout, CancellationToken cancellationToken)
     {
         return handle.WaitOne((int)timeout.TotalMilliseconds, cancellationToken);
     }
@@ -178,8 +176,7 @@ So here’s what we’ll do:</p>
 <li>register a delegate to mark the task as cancelled when the cancellation token is signaled, using <code>CancellationToken.Register</code>;</li>
 <li>unregister both delegates after the task completes <!-- raw HTML omitted -->  Here’s the implementation:</li>
 </ul>
-<pre><code>
-    public static async Task&lt;bool&gt; WaitOneAsync(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
+<pre><code>    public static async Task&lt;bool&gt; WaitOneAsync(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
     {
         RegisteredWaitHandle registeredHandle = null;
         CancellationTokenRegistration tokenRegistration = default(CancellationTokenRegistration);
@@ -216,8 +213,7 @@ So here’s what we’ll do:</p>
     }
 </code></pre><p>Note that the lambda expressions could have used the <code>tcs</code> variable directly; this would make the code more readable, but it would cause a closure to be created, so as a small performance optimization, <code>tcs</code> is passed as the <code>state</code> parameter.
 We can now use the <code>WaitOneAsync</code> method like this:</p>
-<pre><code>
-var mre = new ManualResetEvent(false);
+<pre><code>var mre = new ManualResetEvent(false);
 …
 if (await mre.WaitOneAsync(2000, cancellationToken))
 {

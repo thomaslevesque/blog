@@ -151,13 +151,11 @@ Well, it looks like the C# language team has been busy during the last month, be
 <p>Well, it looks like the C# language team has been busy during the last month, because both items are now implemented in VS 15 Preview 4, which was <a href="https://blogs.msdn.microsoft.com/visualstudio/2016/08/22/visual-studio-15-preview-4/">released today</a>! They’ve also written nice startup guides about <a href="https://github.com/dotnet/roslyn/blob/master/docs/features/tuples.md">tuples</a> and <a href="https://github.com/dotnet/roslyn/blob/master/docs/features/deconstruction.md">deconstruction</a>.  It is now possible to write something like this:</p>
 </li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">var</span> values = ...
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> values = ...
 <span style="color:#66d9ef">var</span> (count, sum) = Tally(values);
 Console.WriteLine(<span style="color:#e6db74">$&#34;There are {count} values and their sum is {sum}&#34;</span>);
 </code></pre></div><p>(the <code>Tally</code> method is the one from the previous post)  Note that the intermediate variable <code>t</code> from the previous post has disappeared; we now assign the <code>count</code> and <code>sum</code> variables directly from the method result, which looks much nicer IMHO. There doesn’t seem to be a way to ignore part of the tuple (i.e. not assign it to a variable), hopefully it will come later.  An interesting aspect of deconstruction is that it’s not limited to tuples; any type can be deconstructed, as long as it has a <code>Deconstruct</code> method with the appropriate <code>out</code> parameters:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> X { <span style="color:#66d9ef">get</span>; }
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Y { <span style="color:#66d9ef">get</span>; }
@@ -180,8 +178,7 @@ Console.WriteLine(<span style="color:#e6db74">$&#34;There are {count} values and
 <span style="color:#66d9ef">var</span> (x, y) = point;
 Console.WriteLine(<span style="color:#e6db74">$&#34;Coordinates: ({x}, {y})&#34;</span>);
 </code></pre></div><p>The <code>Deconstruct</code> method can also be an extension method, which can be useful if you want to deconstruct a type that you don’t own. The old <code>System.Tuple</code> classes, for example, can be deconstructed using extension methods like this one:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Deconstruct&lt;T1, T2&gt;(<span style="color:#66d9ef">this</span> Tuple&lt;T1, T2&gt; tuple, <span style="color:#66d9ef">out</span> T1 item1, <span style="color:#66d9ef">out</span> T2 item2)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Deconstruct&lt;T1, T2&gt;(<span style="color:#66d9ef">this</span> Tuple&lt;T1, T2&gt; tuple, <span style="color:#66d9ef">out</span> T1 item1, <span style="color:#66d9ef">out</span> T2 item2)
 {
     item1 = tuple.Item1;
     item2 = tuple.Item2;
@@ -193,8 +190,7 @@ Console.WriteLine(<span style="color:#e6db74">$&#34;Coordinates: ({x}, {y})&#34;
 <span style="color:#66d9ef">var</span> (name, <span style="color:#66d9ef">value</span>) = tuple;
 Console.WriteLine(<span style="color:#e6db74">$&#34;Name: {name}, Value = {value}&#34;</span>);
 </code></pre></div><p>Finally, methods that return tuples are now decorated with a <code>[TupleElementNames]</code> attribute that indicates the names of the tuple members:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#75715e">// Decompiled code
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Decompiled code
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">[return: TupleElementNames(new[]</span> { <span style="color:#e6db74">&#34;count&#34;</span>, <span style="color:#e6db74">&#34;sum&#34;</span> })]
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ValueTuple&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">double</span>&gt; Tally(IEnumerable&lt;<span style="color:#66d9ef">double</span>&gt; values)
 {

@@ -28,7 +28,7 @@
     <meta property="og:title" content="Tuples in C# 7" />
 <meta property="og:description" content="A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) {int count = 0;double sum = 0.0;foreach (var value in values){ count&#43;&#43;; sum &#43;= value;}return Tuple." />
+private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count&#43;&#43;; sum &#43;= value; } return Tuple." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/" />
 <meta property="article:published_time" content="2016-07-24T23:03:18+00:00" />
@@ -36,10 +36,10 @@ private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) 
 <meta itemprop="name" content="Tuples in C# 7">
 <meta itemprop="description" content="A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) {int count = 0;double sum = 0.0;foreach (var value in values){ count&#43;&#43;; sum &#43;= value;}return Tuple.">
+private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count&#43;&#43;; sum &#43;= value; } return Tuple.">
 <meta itemprop="datePublished" content="2016-07-24T23:03:18&#43;00:00" />
 <meta itemprop="dateModified" content="2016-07-24T23:03:18&#43;00:00" />
-<meta itemprop="wordCount" content="501">
+<meta itemprop="wordCount" content="513">
 
 
 
@@ -47,7 +47,7 @@ private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) 
 <meta name="twitter:title" content="Tuples in C# 7"/>
 <meta name="twitter:description" content="A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) {int count = 0;double sum = 0.0;foreach (var value in values){ count&#43;&#43;; sum &#43;= value;}return Tuple."/>
+private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count&#43;&#43;; sum &#43;= value; } return Tuple."/>
 
   </head>
 
@@ -141,7 +141,15 @@ private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) 
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.</p>
 <p>In .NET 4.0, a set of <code>Tuple</code> classes has been introduced in the framework, which can be used as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Tuple&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">double</span>&gt; Tally(IEnumerable&lt;<span style="color:#66d9ef">double</span>&gt; values)
-{<span style="color:#66d9ef">int</span> count = <span style="color:#ae81ff">0</span>;<span style="color:#66d9ef">double</span> sum = <span style="color:#ae81ff">0.0</span>;<span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> values){    count++;    sum += <span style="color:#66d9ef">value</span>;}<span style="color:#66d9ef">return</span> Tuple.Create(count, sum);
+{
+    <span style="color:#66d9ef">int</span> count = <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">double</span> sum = <span style="color:#ae81ff">0.0</span>;
+    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> values)
+    {
+        count++;
+        sum += <span style="color:#66d9ef">value</span>;
+    }
+    <span style="color:#66d9ef">return</span> Tuple.Create(count, sum);
 }
 
 ...
@@ -156,7 +164,15 @@ Console.WriteLine(<span style="color:#e6db74">$&#34;There are {t.Item1} values a
 </ul>
 <p>In C# 7, a new feature will be introduced to improve support for tuples: you will be able to declare tuples types “inline”, a little like anonymous types, except that they’re not limited to the current method. Using this new feature, the code above becomes much cleaner:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> (<span style="color:#66d9ef">int</span> count, <span style="color:#66d9ef">double</span> sum) Tally(IEnumerable&lt;<span style="color:#66d9ef">double</span>&gt; values)
-{<span style="color:#66d9ef">int</span> count = <span style="color:#ae81ff">0</span>;<span style="color:#66d9ef">double</span> sum = <span style="color:#ae81ff">0.0</span>;<span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> values){    count++;    sum += <span style="color:#66d9ef">value</span>;}<span style="color:#66d9ef">return</span> (count, sum);
+{
+    <span style="color:#66d9ef">int</span> count = <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">double</span> sum = <span style="color:#ae81ff">0.0</span>;
+    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> values)
+    {
+        count++;
+        sum += <span style="color:#66d9ef">value</span>;
+    }
+    <span style="color:#66d9ef">return</span> (count, sum);
 }
 
 ...

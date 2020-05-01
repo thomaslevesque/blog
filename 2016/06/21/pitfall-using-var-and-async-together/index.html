@@ -136,8 +136,7 @@ public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBoo
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; BookExistsAsync(<span style="color:#66d9ef">int</span> id)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; BookExistsAsync(<span style="color:#66d9ef">int</span> id)
 {
     <span style="color:#66d9ef">var</span> store = <span style="color:#66d9ef">await</span> GetBookStoreAsync();
     <span style="color:#66d9ef">var</span> book = store.GetBookByIdAsync(id);
@@ -166,8 +165,7 @@ public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBoo
 </span><span style="color:#75715e"></span>}
 </code></pre></div><p>The <code>BookExistsAsync</code> method always returns true. Can you see why ?</p>
 <p>Look at this line:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">var</span> book = store.GetBookByIdAsync(id);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> book = store.GetBookByIdAsync(id);
 </code></pre></div><p>Quick, what’s the type of <code>book</code>? If you answered <code>Book</code>, think again: it’s <code>Task&lt;Book&gt;</code>. The <code>await</code> is missing! And an <code>async</code> method always returns a non-null task, so <code>book</code>  is never null.</p>
 <p>When you have an <code>async</code> method with no <code>await</code>, the compiler warns you, but in this case there is an <code>await</code> on the line above. The only thing we do with <code>book</code> is to check that it’s not <code>null</code>; since <code>Task&lt;T&gt;</code> is a reference type, there’s nothing suspicious in comparing it to <code>null</code>. So, the compiler sees nothing wrong; the static code analyzer (ReSharper in this case) sees nothing wrong; and of course the feeble human brain reviewing the code sees nothing wrong either… Obviously, it could easily have been detected with adequate unit test coverage, but unfortunately this method wasn’t covered.</p>
 <p>So, how to avoid this kind of mistake? Stop using <code>var</code> and always specify types explicitly? But I <em>like</em> <code>var</code>, I use it almost everywhere! Besides, I think it’s the first time I ever found a bug caused by the use of <code>var</code>. I’m really not willing to give it up…</p>

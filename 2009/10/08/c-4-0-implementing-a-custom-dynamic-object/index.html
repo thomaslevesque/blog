@@ -133,8 +133,7 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>If you&rsquo;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new <code>dynamic</code> type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known. You can find more information about the <code>dynamic</code> type <a href="http://msdn.microsoft.com/en-us/library/dd264736%28VS.100%29.aspx">on MSDN</a>.  While playing with Visual Studio 2010 beta, I realized this <code>dynamic</code> type enabled very interesting scenarios&hellip; It is indeed possible to create your own dynamic objects, with the ability to control the resolution of dynamic members. To do that, you need to implement the <a href="http://msdn.microsoft.com/en-us/library/system.dynamic.idynamicmetaobjectprovider%28VS.100%29.aspx"><code>IDynamicMetaObjectProvider</code></a> interface. This interface seems pretty simple at first sight, since it only defines one member: the <code>GetMetaObject</code> method. But it actually gets trickier when you try to implement this method : you have to build a <code>DynamicMetaObject</code> from an <code>Expression</code>, which is far from trivial&hellip; I must admit I almost gave up when I saw the complexity of the task.  Fortunately, there is a much easier way to create your own dynamic objects: you just have to inherit from the <code>DynamicObject</code> class, which provides a basic implementation of <code>IDynamicMetaObjectProvider</code>, and override a few methods to achieve the desired behavior.  Here&rsquo;s a simple example, inspired from the Javascript language. In Javascript, it is possible to dynamically add members (properties or methods) to an existing type, as in the following sample:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object();
 <span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">Message</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello world !&#34;</span>;
 <span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">ShowMessage</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>()
 {
@@ -142,8 +141,7 @@
 };
 <span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">ShowMessage</span>();
 </code></pre></div><p>This code creates an object, add a <code>Message</code> property to that object by defining its value, and also adds a <code>ShowMessage</code> method to display the message.  In previous versions of C#, it would have been impossible to do such a thing: indeed C# is a statically typed language, which implies that members are resolved at compile time, not at runtime. Since the <code>Object</code> class doesn&rsquo;t have a <code>Message</code> property or a <code>ShowMessage</code> method, the compiler won&rsquo;t accept things like <code>x.Message</code> or <code>x.ShowMessage()</code>. This is where the <code>dynamic</code> type comes to the rescue, since it doesn&rsquo;t resolve the members at compile time&hellip;  Now let&rsquo;s try to create a dynamic object that allows to write a C# code similar to the Javascript code above. To do that, we will store the values of dynamic properties in a <code>Dictionary&lt;string, object&gt;</code>. To make this class work, we need to override the <a href="http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject.trygetmember%28VS.100%29.aspx"><code>TryGetMember</code></a> and <a href="http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject.trygetmember%28VS.100%29.aspx"><code>TrySetMember</code></a> methods. These methods implement the logic to read or write a member of the dynamic object. To illustrate the idea, let&rsquo;s have a look at the code, I&rsquo;ll comment it later:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDynamicObject</span> : DynamicObject
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDynamicObject</span> : DynamicObject
 {
     <span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; _properties = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;();
 
@@ -159,13 +157,11 @@
     }
 }
 </code></pre></div><p>Now let&rsquo;s explain the code above. The <code>TryGetMember</code> tries to find the requested property in the dictionary. Note that the name of the property is exposed as the <code>Name</code> property of the <code>binder</code> parameter. If the property exists, its value is returned in the <code>result</code> output parameter, and the method returns <code>true</code>. Otherwise, the method returns <code>false</code>, which will cause a <code>RuntimeBinderException</code> at the call site. This exception simply means that the dynamic resolution of the property failed.  The <code>TrySetMember</code> method performs the opposite task: it defines the value of a property. If the member doesn&rsquo;t exist, it is added to the dictionary, so the method always returns <code>true</code>.  The following sample shows how to use this object:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">dynamic</span> x = <span style="color:#66d9ef">new</span> MyDynamicObject();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">dynamic</span> x = <span style="color:#66d9ef">new</span> MyDynamicObject();
 x.Message = <span style="color:#e6db74">&#34;Hello world !&#34;</span>;
 Console.WriteLine(x.Message);
 </code></pre></div><p>This code compiles and runs fine, and prints &ldquo;Hello world !&rdquo; to the console&hellip; easy, isn&rsquo;t it ?  But what about methods ? Well, I could tell you that you need to override the <code>TryInvokeMember</code> method, which is used to handle dynamic method calls&hellip; but actually it&rsquo;s not even necessary ! Our implementation already handles this feature: we just need to assign a delegate to a property of the object. It won&rsquo;t actually be a real member method, just a property returning a delegate, but since the syntax to call it will be the same as a method call, it will do fine for now. Here&rsquo;s an example of adding a method to the object:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">dynamic</span> x = <span style="color:#66d9ef">new</span> MyDynamicObject();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">dynamic</span> x = <span style="color:#66d9ef">new</span> MyDynamicObject();
 x.Message = <span style="color:#e6db74">&#34;Hello world !&#34;</span>;
 x.ShowMessage = <span style="color:#66d9ef">new</span> Action(
     () =&gt;
@@ -174,8 +170,7 @@ x.ShowMessage = <span style="color:#66d9ef">new</span> Action(
     });
 x.ShowMessage();
 </code></pre></div><p>Eventually, we end up with something very close to the Javascript we were trying to imitate, all with a class of less than 10 lines of code (not counting the braces)&hellip;  This class can be quite handy to use as an general purpose object, for instance to group some data together without having to create a specific class. In that aspect, it&rsquo;s similar to an anonymous type (already existing in C# 3), but with the benefit that it can be used as a method return value, which is not possible with an anonymous type.  Of course there are many more useful things to do with a custom dynamic object&hellip; for instance, here&rsquo;s a simple wrapper for a <code>DataRow</code>, to make it easier to access the fields:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicDataRow</span> : DynamicObject
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicDataRow</span> : DynamicObject
 {
     <span style="color:#66d9ef">private</span> DataRow _dataRow;
 
@@ -213,8 +208,7 @@ x.ShowMessage();
     }
 }
 </code></pre></div><p>Let&rsquo;s add a helper extension method to get the wrapper for a row:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicDataRowExtensions</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicDataRowExtensions</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">dynamic</span> AsDynamic(<span style="color:#66d9ef">this</span> DataRow dataRow)
     {
@@ -222,8 +216,7 @@ x.ShowMessage();
     }
 }
 </code></pre></div><p>We can now write things like that:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-DataTable table = <span style="color:#66d9ef">new</span> DataTable();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">DataTable table = <span style="color:#66d9ef">new</span> DataTable();
 table.Columns.Add(<span style="color:#e6db74">&#34;FirstName&#34;</span>, <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>));
 table.Columns.Add(<span style="color:#e6db74">&#34;LastName&#34;</span>, <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>));
 table.Columns.Add(<span style="color:#e6db74">&#34;DateOfBirth&#34;</span>, <span style="color:#66d9ef">typeof</span>(DateTime));

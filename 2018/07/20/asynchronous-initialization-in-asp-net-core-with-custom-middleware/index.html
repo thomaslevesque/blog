@@ -146,8 +146,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
 </ul>
 <h2 id="async-initialization-middleware">Async initialization middleware</h2>
 <p>A simple way to do it involves writing a custom <a href="https://www.thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/">middleware</a> that ensures initialization is complete before processing a request. This middleware starts the initialization process when the app starts, and upon receiving a request, will wait until the initialization is done before passing the request to the next middleware. A basic implementation could look like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncInitializationMiddleware</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncInitializationMiddleware</span>
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> RequestDelegate _next;
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger _logger;
@@ -203,8 +202,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
     }
 }
 </code></pre></div><p>We can then add this middleware to the pipeline in the <code>Startup.Configure</code> method. It should be added early in the pipeline, before any other middleware that would need the initialization to be complete.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app, IHostingEnvironment env)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app, IHostingEnvironment env)
 {
     <span style="color:#66d9ef">if</span> (env.IsDevelopment())
     {

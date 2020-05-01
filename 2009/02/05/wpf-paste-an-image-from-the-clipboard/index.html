@@ -139,8 +139,7 @@ If you&rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you prob
 <p>If you&rsquo;ve ever tried to use the <code>Clipboard.GetImage</code> method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an <code>InteropBitmap</code> which, in some cases (most cases actually), can&rsquo;t be displayed in an <code>Image</code> control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</p>
 <p>However, if we save that image to a stream and re-read it from the stream, we get a perfectly usable image&hellip; So this could be an acceptable workaround, but I think its pretty bad for performance, because the image gets decoded, re-encoded, and re-decoded. It is also possible to use the <code>Clipboard</code> class from Windows Forms, which works fine, and convert the <code>System.Drawing.Image</code> to a <code>System.Windows.Media.ImageSource</code>, but I don&rsquo;t like the idea of referencing the Windows Forms assembly in a WPF app&hellip; So I decided to manually retrieve the image from the clipboard and handle the decoding myself.</p>
 <p>If we look at the image formats available from the clipboard (<code>Clipboard.GetDataObject().GetFormats()</code>), we can see that they depend on the origin of the image (screenshot, copy from Paint&hellip;). The only format that is always available is <code>DeviceIndependentBitmap</code> (DIB). So I tried to retrieve the <code>MemoryStream</code> for this format and decode it into a <code>BitmapSource</code> :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
         {
             MemoryStream ms = Clipboard.GetData(<span style="color:#e6db74">&#34;DeviceIndependentBitmap&#34;</span>) <span style="color:#66d9ef">as</span> MemoryStream;
             BitmapImage bmp = <span style="color:#66d9ef">new</span> BitmapImage();
@@ -157,8 +156,7 @@ If you&rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you prob
 <li>Raw pixel data</li>
 </ul>
 <p>If we observe the content of the DIB from the clipboard, we can see that it has the same structure, without the <code>BITMAPFILEHEADER</code> part&hellip; so the trick is just to add that header at the beginning of the buffer, and use this complete buffer to decode the image. Doesn&rsquo;t seem so hard, does it ? Well, the trouble is that we have to fill in some of the header fields&hellip; for instance, we must provide the location at which the actual image data begins, so we must know the total size of the headers and palette. These values can be read or calculated from the content of the image. The following code performs that task and returns an ImageSource from the clipboard :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
         {
             MemoryStream ms = Clipboard.GetData(<span style="color:#e6db74">&#34;DeviceIndependentBitmap&#34;</span>) <span style="color:#66d9ef">as</span> MemoryStream;
             <span style="color:#66d9ef">if</span> (ms != <span style="color:#66d9ef">null</span>)
@@ -193,8 +191,7 @@ If you&rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you prob
             <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
         }
 </code></pre></div><p>Definition of the <code>BITMAPFILEHEADER</code> and <code>BITMAPINFOHEADER</code> structures :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">
-</span><span style="color:#a6e22e">        [StructLayout(LayoutKind.Sequential, Pack = 2)]</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">        [StructLayout(LayoutKind.Sequential, Pack = 2)]</span>
         <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">BITMAPFILEHEADER</span>
         {
             <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">short</span> BM = <span style="color:#ae81ff">0</span>x4d42; <span style="color:#75715e">// BM
@@ -222,8 +219,7 @@ If you&rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you prob
             <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biClrImportant;
         }
 </code></pre></div><p>Utility class to convert structures to binary :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BinaryStructConverter</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BinaryStructConverter</span>
     {
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T FromByteArray&lt;T&gt;(<span style="color:#66d9ef">byte</span>[] bytes) <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">struct</span>
         {

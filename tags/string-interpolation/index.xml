@@ -18,7 +18,7 @@
       
       <guid>https://blog2.thomaslevesque.net/2015/02/24/customizing-string-interpolation-in-c-6/</guid>
       <description>One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
- string text = $&amp;quot;{p.Name} was born on {p.DateOfBirth:D}&amp;quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:</description>
+string text = $&amp;quot;{p.Name} was born on {p.DateOfBirth:D}&amp;quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:</description>
     </item>
     
     <item>

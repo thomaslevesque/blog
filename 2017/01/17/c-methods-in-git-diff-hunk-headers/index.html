@@ -136,8 +136,7 @@ diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with <code>@@</code>), like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">
-diff --git a/Program.cs b/Program.cs
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">diff --git a/Program.cs b/Program.cs
 index 655a213..5ae1016 100644
 <span style="color:#f92672">--- a/Program.cs
 </span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/Program.cs
@@ -149,18 +148,15 @@ index 655a213..5ae1016 100644
 </span><span style="color:#a6e22e"></span>     }
 </code></pre></div><p>This is very useful to know where you are when looking at a diff.</p>
 <p>Git has a few built-in regex patterns to detect methods in some languages, including C#; they are defined in <a href="https://github.com/git/git/blob/d7dffce1cebde29a0c4b309a79e4345450bf352a/userdiff.c#L140"><code>userdiff.c</code></a>. But by default, these patterns are not used&hellip; you need to tell git which file extensions should be associated with which language. This can be specified in a <code>.gitattributes</code> file at the root of your git repository:</p>
-<pre><code>
-*.cs    diff=csharp
+<pre><code>*.cs    diff=csharp
 </code></pre><p>With this done, <code>git diff</code> should show an output similar to the sample above.</p>
 <p>Are we done yet? Well, almost. See, the patterns for C# were added to git a long time ago, and C# has changed quite a bit since then. Some new keywords that can now be part of a method signature are not recognized by the built-in pattern, e.g. <code>async</code> or <code>partial</code>. This is quite annoying, because when some code has changed in an async method, the diff hunk header shows the signature of a previous, non-async method, or the line where the class is declared, which is confusing.</p>
 <p>My first impulse was to submit a pull request on Github to add the missing keywords; however I soon realized that the <a href="https://github.com/git/git">git repository on Github</a> is just a mirror and does not accept pull requests&hellip; The <a href="https://github.com/git/git/blob/master/Documentation/SubmittingPatches">contribution process</a> consists of sending a patch to the git mailing list, with a long and annoying checklist of requirements. This process seemed so tedious that I gave it up. I honestly don&rsquo;t know why they use such a difficult and old-fashioned contribution process, it just discourages casual contributors. But that&rsquo;s a bit off-topic, so let&rsquo;s move on and try to solve the problem some other way.</p>
 <p>Fortunately, the built-in patterns can be overridden in the git configuration. To define the function name pattern for C#, you need to define the <code>diff.csharp.xfuncname</code> setting in your git config file:</p>
-<pre><code>
-[[diff &quot;csharp&quot;]]
+<pre><code>[[diff &quot;csharp&quot;]]
   xfuncname = ^[ \\t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async|partial)[ \\t]+)*[][&lt;&gt;@.~_[:alnum:]]+[ \\t]+[&lt;&gt;@._[:alnum:]]+[ \\t]*\\(.*\\))[ \\t]*$
 </code></pre><p>As you can see, it&rsquo;s the same pattern as in <code>userdiff.c</code>, with the backslashes escaped and the missing keywords added. With this pattern, <code>git diff</code> now shows the correct function signature in async methods:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">
-diff --git a/Program.cs b/Program.cs
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">diff --git a/Program.cs b/Program.cs
 index 655a213..5ae1016 100644
 <span style="color:#f92672">--- a/Program.cs
 </span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/Program.cs

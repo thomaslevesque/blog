@@ -133,8 +133,7 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href="http://sqlite.org/">SQLite</a> is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an <a href="http://system.data.sqlite.org/">official ADO.NET provider</a> that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a <code>DateTime</code> converted to local time, with <code>Kind</code> = <code>Unspecified</code>. Here’s an example that exhibits the problem (using <a href="https://github.com/StackExchange/dapper-dot-net">Dapper</a> in <a href="http://www.linqpad.net/">LINQPad</a>):</p>
-<pre><code>
-void Main()
+<pre><code>void Main()
 {
     string connectionString = @&quot;Data Source=D:\tmp\testSQLiteDate.db&quot;;
     using (var connection = new SQLiteConnection(connectionString))
@@ -160,8 +159,7 @@ class Foo
 <p><img src="image.png" alt="image" title="image"></p>
 <p>As you can see, after reading it from the database, the date is no longer in UTC, and doesn’t even contain an indication that it’s a local date. This can cause all kinds of bugs if your code is comparing dates that are supposed to be UTC.</p>
 <p>I initially tried to fix that in my code by manually converting the date, before I realized that the solution was much simpler (although <a href="http://www.nudoq.org/#!/Packages/System.Data.SQLite/System.Data.SQLite/SQLiteConnectionStringBuilder/P/DateTimeKind">not very well documented</a>): there is a connection string setting to control how dates are handled. You just need to specify <code>DateTimeKind=Utc</code> in your connection string:</p>
-<pre><code>
-string connectionString = @&quot;Data Source=D:\tmp\testSQLiteDate.db;DateTimeKind=Utc&quot;;
+<pre><code>string connectionString = @&quot;Data Source=D:\tmp\testSQLiteDate.db;DateTimeKind=Utc&quot;;
 </code></pre><p>If you’re using <code>SqliteConnectionStringBuilder</code> to build the connection string, just set the <code>DateTimeKind</code> property to <code>DateTimeKind.Utc</code>.</p>
 <p>As you can see, the date kind is now preserved:</p>
 <p><img src="image1.png" alt="image" title="image"></p>

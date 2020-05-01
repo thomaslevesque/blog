@@ -142,15 +142,13 @@ Of course, this is not a new issue, and there are quite a few open-source librar
 <li>I don’t really like the approach of intercepting all keystrokes. It usually means that you end up with a big method with lots of <code>if/else if</code> to decide what to do based on which keys were pressed.</li>
 </ul>
 <p>A better option, in my opinion, is to listen only to the keys you’re interested in, and declare what to do for each of those. The approach used in WPF for key bindings is quite elegant:</p>
-<pre><code>
-&lt;Window.InputBindings&gt;
+<pre><code>&lt;Window.InputBindings&gt;
     &lt;KeyBinding Gesture=&quot;Ctrl+Alt+Add&quot; Command=&quot;{Binding IncrementCommand}&quot; /&gt;
     &lt;KeyBinding Gesture=&quot;Ctrl+Alt+Subtract&quot; Command=&quot;{Binding DecrementCommand}&quot; /&gt;
 &lt;/Window.InputBindings&gt;
 </code></pre><p>But of course, key bindings are not global, they require that your app has focus… What if we could change that?</p>
 <p><a href="https://github.com/thomaslevesque/NHotkey">NHotkey</a> is a very simple hotkey library that enables global key bindings. All you have to do is set an attached property to true on your key bindings:</p>
-<pre><code>
-&lt;Window.InputBindings&gt;
+<pre><code>&lt;Window.InputBindings&gt;
     &lt;KeyBinding Gesture=&quot;Ctrl+Alt+Add&quot; Command=&quot;{Binding IncrementCommand}&quot;
                 HotkeyManager.RegisterGlobalHotkey=&quot;True&quot; /&gt;
     &lt;KeyBinding Gesture=&quot;Ctrl+Alt+Subtract&quot; Command=&quot;{Binding DecrementCommand}&quot;
@@ -158,8 +156,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
 &lt;/Window.InputBindings&gt;
 </code></pre><p>And that’s it; the commands defined in the key bindings will now be invoked even if your app doesn’t have focus!</p>
 <p>You can also use NHotkey from code:</p>
-<pre><code>
-HotkeyManager.Current.AddOrReplace(&quot;Increment&quot;, Key.Add, ModifierKeys.Control | ModifierKeys.Alt, OnIncrement);
+<pre><code>HotkeyManager.Current.AddOrReplace(&quot;Increment&quot;, Key.Add, ModifierKeys.Control | ModifierKeys.Alt, OnIncrement);
 HotkeyManager.Current.AddOrReplace(&quot;Decrement&quot;, Key.Subtract, ModifierKeys.Control | ModifierKeys.Alt, OnDecrement);
 </code></pre><p>The library takes advantage of the <code>RegisterHotkey</code> function. Because it also supports Windows Forms, it is split into 3 parts, so that you don’t need to reference the WinForms assembly from a WPF app or vice versa:</p>
 <ul>

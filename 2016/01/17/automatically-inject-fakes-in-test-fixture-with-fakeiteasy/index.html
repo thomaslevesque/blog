@@ -137,8 +137,7 @@ When you write unit tests for a class that takes dependencies, you typically nee
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Today I’d like to share a nice feature I discovered recently in <a href="http://fakeiteasy.github.io/">FakeItEasy</a>.</p>
 <p>When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with <a href="http://www.thomaslevesque.com/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/">an auto-mocking Unity extension</a> to make it easier. Now I just realized that FakeItEasy offers an even better solution: just declare the dependencies and SUT as fields or properties in your test fixture, and call <code>Fake.InitializeFixture</code> on the fixture to initialize them. Here’s how it looks:</p>
-<pre><code>
-    public class BlogManagerTests
+<pre><code>    public class BlogManagerTests
     {
         [Fake] public IBlogPostRepository BlogPostRepository { get; set; }
         [Fake] public ISocialNetworkNotifier SocialNetworkNotifier { get; set; }

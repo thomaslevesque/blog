@@ -147,8 +147,7 @@ The SearchBox control was introduced in Windows 8.1 to enable search scenarios f
 </ul>
 <p>To provide suggestions, you need to handle the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.controls.searchbox.suggestionsrequested"><code>SuggestionsRequested</code></a> event of the <code>SearchBox</code>, and add suggestions using the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.search.searchsuggestioncollection.appendquerysuggestion"><code>AppendQuerySuggestion</code></a> and <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh700542"><code>AppendResultSuggestion</code></a> methods. Let’s focus on result suggestions.</p>
 <p>The <code>AppendResultSuggestion</code> method takes several parameters, and one of them is the image to display for the suggestion. It is mandatory (passing null will throw an exception), and the parameter is of type <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.irandomaccessstreamreference"><code>IRandomAccessStreamReference</code></a>, i.e. something that can provide a stream. I find this a little peculiar, since it would be more natural to pass an <code>ImageSource</code>, but that’s the way it is… So I looked for a class that implements the <code>IRandomAccessStreamReference</code> interface, and the first obvious candidate I found was <code>StorageFile</code>, which represents a file. So I wrote the following code:</p>
-<pre><code>
-private async void SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
+<pre><code>private async void SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
 {
     var deferral = args.Request.GetDeferral();
     try
@@ -170,8 +169,7 @@ private async void SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSug
 <p><img src="BiF0g.png" alt="http://i.stack.imgur.com/BiF0g.png"></p>
 <p>I spent a long time double-checking everything, making lots of minor changes to try and locate the issue, I even wrote a custom implementation of <code>IRandomAccessStreamReference</code>… to no avail.</p>
 <p>I eventually <a href="http://stackoverflow.com/questions/19769689/image-not-shown-for-result-suggestions-in-searchbox">submitted the problem to Stack Overflow</a>, and someone kindly provided the solution, which was very simple: instead of <code>StorageFile</code>, use <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.randomaccessstreamreference"><code>RandomAccessStreamReference</code></a> (seems pretty obvious once you know that it exists). The code now becomes :</p>
-<pre><code>
-private void SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
+<pre><code>private void SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
 {
     var imageUri = new Uri(&quot;ms-appx:///test.png&quot;);
     var imageRef = RandomAccessStreamReference.CreateFromUri(imageUri);

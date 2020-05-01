@@ -150,11 +150,9 @@ When I googled for a way to prevent that, the only solutions I found suggested t
 </ul>
 <p>In my case, I just wanted to prevent an image from being pasted or drag and dropped, so I just cancelled the operation when the <code>FormatToApply</code> was <code>&quot;Bitmap&quot;</code>, as shown below.</p>
 <p>XAML:</p>
-<pre><code>
-&lt;RichTextBox DataObject.Pasting=&quot;RichTextBox1_Pasting&quot; ... /&gt;
+<pre><code>&lt;RichTextBox DataObject.Pasting=&quot;RichTextBox1_Pasting&quot; ... /&gt;
 </code></pre><p>Code-behind:</p>
-<pre><code>
-private void RichTextBox1_Pasting(object sender, DataObjectPastingEventArgs e)
+<pre><code>private void RichTextBox1_Pasting(object sender, DataObjectPastingEventArgs e)
 {
     if (e.FormatToApply == &quot;Bitmap&quot;)
     {

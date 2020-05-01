@@ -133,21 +133,17 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>With the upcoming version 6 of C#, there’s a lot of talk on CodePlex and elsewhere about string interpolation. Not very surprising, since it’s one of the major features of that release… In case you were living under a rock during the last few months and you haven’t heard about it, string interpolation is a way to insert C# expressions inside a string, so that they’re evaluated at runtime and replaced with their values. Basically, you write something like this:</p>
-<pre><code>
-string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;
+<pre><code>string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;
 </code></pre><p>And the compiler transforms it to this:</p>
-<pre><code>
-string text = String.Format(&quot;{0} was born on {1:D}&quot;, p.Name, p.DateOfBirth);
+<pre><code>string text = String.Format(&quot;{0} was born on {1:D}&quot;, p.Name, p.DateOfBirth);
 </code></pre><p><strong>Note</strong>: the syntax shown above is the one from the <a href="http://roslyn.codeplex.com/discussions/570292">latest design notes about this feature</a>. It might still change before the final release, and the current preview build of VS2015 uses a different syntax: <code>“\{p.Name} was born on \{p.DateOfBirth:D}”.</code></p>
 <p>I really <em>love</em> this feature. It’s going to be extremely convenient for things like logging, generating URLs or queries, etc. I will probably use it a lot, especially since Microsoft has listened to community feedback and included a way to customize how the embedded expressions are evaluated (see the part about <code>IFormattable</code> in the <a href="http://roslyn.codeplex.com/discussions/570292">design notes</a>).</p>
 <p>But there’s one thing that bothers me, though: since interpolated strings are interpreted by the compiler, they <em>have</em> to be hard-coded ; you can’t extract them to resources for localization. This means that this feature cannot be used for localization, and we’re stuck with old-fashioned numeric placeholders in localized strings.</p>
 <p>Or are we really?</p>
 <p>For a few years now, I’ve been using a <a href="https://github.com/thomaslevesque/NString#stringtemplate">custom string interpolation engine</a> that can be used like <code>String.Format</code>, but with named placeholders instead of numeric ones. It takes a format string, and an object with properties that match the placeholder names:</p>
-<pre><code>
-string text = StringTemplate.Format(&quot;{Name} was born on {DateOfBirth:D}&quot;, new { p.Name, p.DateOfBirth });
+<pre><code>string text = StringTemplate.Format(&quot;{Name} was born on {DateOfBirth:D}&quot;, new { p.Name, p.DateOfBirth });
 </code></pre><p>Obviously, if you already have an object with the properties you want to include in the string, you can just pass that object directly:</p>
-<pre><code>
-string text = StringTemplate.Format(&quot;{Name} was born on {DateOfBirth:D}&quot;, p);
+<pre><code>string text = StringTemplate.Format(&quot;{Name} was born on {DateOfBirth:D}&quot;, p);
 </code></pre><p>The result is exactly what you would expect: the placeholders are replaced with the values of the corresponding properties.</p>
 <p>In which ways is it better than <code>String.Format</code>?</p>
 <ul>

@@ -103,7 +103,7 @@
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) {int count = 0;double sum = 0.0;foreach (var value in values){ count++; sum += value;}return Tuple.
+private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.
     </div>
   </div>
 </div>
@@ -244,8 +244,8 @@ My initial solution was more a proof of concept than anything else, and had a ma
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Just another little puzzle based on an issue I had at work…
 Consider this piece of code :
- Console.WriteLine($&quot;x &gt; y is {x &gt; y}&quot;); Console.WriteLine($&quot;!(x &lt;= y) is {!(x &lt;= y)}&quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
- x &gt; y is False !(x &lt;= y) is True
+Console.WriteLine($&quot;x &gt; y is {x &gt; y}&quot;);Console.WriteLine($&quot;!(x &lt;= y) is {!(x &lt;= y)}&quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
+x &gt; y is False!(x &lt;= y) is True
     </div>
   </div>
 </div>

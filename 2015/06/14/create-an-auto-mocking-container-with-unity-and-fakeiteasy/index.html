@@ -134,8 +134,7 @@
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.</p>
 <p>But as nice as FakeItEasy is, the process of registering all the fake dependencies for the class you are testing is still a bit tedious. Wouldn’t it be nice if the IoC container could automatically create the fakes on demand ? So this code:</p>
-<pre><code>
-var container = new UnityContainer();
+<pre><code>var container = new UnityContainer();
 
 // Setup dependencies
 var fooProvider = A.Fake&lt;IFooProvider&gt;();
@@ -147,16 +146,14 @@ container.RegisterInstance(bazManager);
 
 var sut = container.Resolve&lt;SystemUnderTest&gt;();
 </code></pre><p>Could be reduced to this:</p>
-<pre><code>
-var container = new UnityContainer();
+<pre><code>var container = new UnityContainer();
 
 // This will cause the container to provide fakes for all dependencies
 container.AddNewExtension&lt;AutoFakeExtension&gt;();
 
 var sut = container.Resolve&lt;SystemUnderTest&gt;();
 </code></pre><p>Well, it’s actually pretty easy to do with Unity. Unity is usually not considered the “cool kid” in the small world of IoC containers, but it’s well supported, easy to use, and extensible. I came up with the following extension to enable the above scenario:</p>
-<pre><code>
-public class AutoFakeExtension : UnityContainerExtension
+<pre><code>public class AutoFakeExtension : UnityContainerExtension
 {
     protected override void Initialize()
     {
@@ -196,12 +193,10 @@ public class AutoFakeExtension : UnityContainerExtension
 <li>The ugly reflection hack is due to the fact that FakeItEasy doesn’t have an non-generic overload of <code>A.Fake</code> that accepts a <code>Type</code> as a parameter. Well, nobody’s perfect…</li>
 <li>The lifetime is set to “container controlled”, because if you need to configure method calls, you will need to access the same instance that is injected into the system under test:</li>
 </ul>
-<pre><code>
-var fooProvider = container.Resolve&lt;IFooProvider&gt;();
+<pre><code>var fooProvider = container.Resolve&lt;IFooProvider&gt;();
 A.CallTo(() =&gt; fooProvider.GetFoo(42)).Returns(new Foo { Id = 42, Name = “test” });
 </code></pre><p>Note that if you register a dependency explicitly, it will take precedence and no fake will be created. So you can use this extension and still be able to manually specify a dependency:</p>
-<pre><code>
-var container = new UnityContainer();
+<pre><code>var container = new UnityContainer();
 container.AddNewExtension&lt;AutoFakeExtension&gt;();
 container.RegisterType&lt;IFooProvider, TestFooProvider&gt;();
 var sut = container.Resolve&lt;SystemUnderTest&gt;();

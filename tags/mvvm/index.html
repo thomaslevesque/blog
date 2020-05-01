@@ -160,7 +160,7 @@
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
-&amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;quot;Control&amp;quot; Key=&amp;quot;E&amp;quot; Command=&amp;quot;{Binding EditCommand}&amp;quot;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
+&lt;UserControl.InputBindings&gt; &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt; &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
  The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.
     </div>
   </div>

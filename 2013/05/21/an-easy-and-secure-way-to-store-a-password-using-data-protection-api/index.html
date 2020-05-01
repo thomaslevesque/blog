@@ -133,8 +133,7 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>If you&rsquo;re writing a client application that needs to store user credentials, it&rsquo;s usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration. But then it will be pretty easy to find&hellip;  Well, the good news is that you don&rsquo;t really need to solve this problem, because Windows already solved it for you! The solution is called <a href="http://msdn.microsoft.com/en-us/library/ms995355.aspx">Data Protection API</a>, and enables you to protect data without having to worry about an encryption key. The documentation is lengthy and boring, but actually it&rsquo;s pretty easy to use from .NET, because the framework provides a <a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography.protecteddata.aspx"><code>ProtectedData</code></a> class that wraps the low-level API calls for you.  This class has two methods, with pretty self-explanatory names: <code>Protect</code> and <code>Unprotect</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span>[] Protect(<span style="color:#66d9ef">byte</span>[] userData, <span style="color:#66d9ef">byte</span>[] optionalEntropy, DataProtectionScope scope);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span>[] Protect(<span style="color:#66d9ef">byte</span>[] userData, <span style="color:#66d9ef">byte</span>[] optionalEntropy, DataProtectionScope scope);
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span>[] Unprotect(<span style="color:#66d9ef">byte</span>[] encryptedData, <span style="color:#66d9ef">byte</span>[] optionalEntropy, DataProtectionScope scope);
 </code></pre></div><p>The <code>userData</code> parameter is the plain, unencrypted binary data. The <code>scope</code> is a value that indicates whether to protect the data for the current user (only that user will be able to decrypt it) or for the local machine (any user on the same machine will be able to decrypt it). What about the <code>optionalEntropy</code> parameter? Well, I&rsquo;m not an expert in cryptography, but as far as I understand, it&rsquo;s a kind of &ldquo;salt&rdquo;: according to the documentation, it is used to &ldquo;increase the complexity of the encryption&rdquo;. Obviously, you&rsquo;ll need to provide the same entropy to decrypt the data later. As the name implies, this parameter is optional, so you can just pass null if you don&rsquo;t want to use it.  So, this API is quite simple, but not directly usable for our goal: the input and output of <code>Protect</code> are byte arrays, but we want to encrypt a password, which is a string; also, it&rsquo;s usually more convenient to store a string than a byte array. To get a byte array from the password string, it&rsquo;s pretty easy: we just need to use a text encoding, like UTF-8. But we can&rsquo;t use the same approach to get a string from the encrypted binary data, because it will probably not contain printable text; instead we can encode the result in Base64, which gives a clean text representation of binary data. So, basically we&rsquo;re going to do this:</p>
 <pre><code>                      clear text
@@ -147,8 +146,7 @@
 (Unprotect)          =&gt; clear bytes
 (decode from UTF8)   =&gt; clear text
 </code></pre><p>I omitted the entropy in the description above; in most cases it will probably be more convenient to have it as a string, too, so we can just encode the string to UTF-8 to get the corresponding bytes.  Eventually, we can wrap all this in two simple extension methods:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DataProtectionExtensions</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DataProtectionExtensions</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Protect(
         <span style="color:#66d9ef">this</span> <span style="color:#66d9ef">string</span> clearText,
@@ -181,11 +179,9 @@
     }
 }
 </code></pre></div><p>Encryption example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">string</span> encryptedPassword = password.Protect();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> encryptedPassword = password.Protect();
 </code></pre></div><p>Decryption example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">try</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">try</span>
 {
     <span style="color:#66d9ef">string</span> password = encryptedPassword.Unprotect();
 }

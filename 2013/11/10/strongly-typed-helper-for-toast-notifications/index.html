@@ -134,8 +134,7 @@
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Windows 8 provides an API for showing toast notifications. Unfortunately, it’s very cumbersome: to define the content of a notification, you must use a predefined template that is provided in the form of an <code>XmlDocumen</code>t, and set the value for each field in the XML. There is nothing in the API to let you know which fields the template defines, you need to check the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh761494.aspx">toast template catalog</a> in the documentation. It would be much more convenient to have a strongly typed API…</p>
 <p>So I created a simple wrapper around the standard toast API. It can be used like this:</p>
-<pre><code>
-var content = new ToastContent.ImageAndText02
+<pre><code>var content = new ToastContent.ImageAndText02
 {
     Image = &quot;ms-appx:///Images/dotnet.png&quot;,
     Title = &quot;Hello world!&quot;,
@@ -145,8 +144,7 @@ var notifier = ToastNotificationManager.CreateToastNotifier();
 notifier.Show(content.CreateNotification());
 </code></pre><p>Note that I kept the original names from the toast template catalog, because sufficiently descriptive names would have been too long. I included XML documentation comments on each class to make it easier to choose the correct template.</p>
 <p>If you want more flexibility than a strongly typed template can provide, but don’t want to manipulate the template’s XML, you can use the <code>ToastContent</code> class directly:</p>
-<pre><code>
-var content = new ToastContent(ToastTemplateType.ToastImageAndText02);
+<pre><code>var content = new ToastContent(ToastTemplateType.ToastImageAndText02);
 content.SetImage(1, &quot;ms-appx:///Images/dotnet.png&quot;);
 content.SetText(1, &quot;Hello world!&quot;);
 content.SetText(2, &quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&quot;);

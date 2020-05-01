@@ -136,8 +136,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><a href="http://msdn.microsoft.com/en-us/library/hh534540%28v=vs.110%29.aspx">Caller info attributes</a> are one of the new features of C# 5. They&rsquo;re attributes applied to optional method parameters that enable you to pass caller information implicitly to a method. I&rsquo;m not sure that description is very clear, so an example will help you understand:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Log(
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Log(
             <span style="color:#66d9ef">string</span> message,
 <span style="color:#a6e22e">            [CallerMemberName]</span> <span style="color:#66d9ef">string</span> memberName = <span style="color:#66d9ef">null</span>,
 <span style="color:#a6e22e">            [CallerFilePath]</span> <span style="color:#66d9ef">string</span> filePath = <span style="color:#66d9ef">null</span>,
@@ -152,16 +151,14 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
                 message);
         }
 </code></pre></div><p>The method above takes several parameters intended to pass information about the caller: calling member name, source file path and line number. The <code>Caller*</code> attributes make the compiler pass the appropriate values automatically, so you don&rsquo;t have to specify the values for these parameters:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Foo()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Foo()
         {
             Log(<span style="color:#e6db74">&#34;Hello world&#34;</span>);
             <span style="color:#75715e">// Equivalent to:
 </span><span style="color:#75715e"></span>            <span style="color:#75715e">// Log(&#34;Hello world&#34;, &#34;Foo&#34;, @&#34;C:\x\y\z\Program.cs&#34;, 18);
 </span><span style="color:#75715e"></span>        }
 </code></pre></div><p>This is of course especially useful for logging methods&hellip;  Notice that the <code>Caller*</code> attributes are defined in the .NET Framework 4.5. Now, suppose we use Visual Studio 2012 to target an earlier framework version (e.g. 4.0): the caller info attributes don&rsquo;t exist in 4.0, so we can&rsquo;t use them&hellip; But wait! What if we could trick the compiler into thinking the attributes exist? Let&rsquo;s define our own attributes, taking care to put them in the namespace where the compiler expects them:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">namespace</span> System.Runtime.CompilerServices
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">namespace</span> System.Runtime.CompilerServices
 {
 <span style="color:#a6e22e">    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CallerMemberNameAttribute</span> : Attribute

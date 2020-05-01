@@ -167,8 +167,7 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
 <li><em>Directory ID</em> (a.k.a. tenant ID; this is your Azure AD tenant)</li>
 </ul>
 <p>Now, in our program, the first step is to issue a request to the device code endpoint to start the authorization flow. The <a href="https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration">OpenID Connect discovery document</a> on Azure AD is incomplete and doesn&rsquo;t mention the device code endpoint, but it can be found in the documentation. We need to send the client id of our application and the requested scopes. In this case, we use <code>openid</code>, <code>profile</code> and <code>offline_access</code> (to get a refresh token), but in real-world scenario you&rsquo;ll probably need an API scope as well.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> TenantId = <span style="color:#e6db74">&#34;&lt;your tenant id&gt;&#34;</span>;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> TenantId = <span style="color:#e6db74">&#34;&lt;your tenant id&gt;&#34;</span>;
 <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> ClientId = <span style="color:#e6db74">&#34;&lt;your client id&gt;&#34;</span>;
 
 <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;DeviceAuthorizationResponse&gt; StartDeviceFlowAsync(HttpClient client)
@@ -206,8 +205,7 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Interval { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 }
 </code></pre></div><p>Let&rsquo;s call this method and open the <code>verification_uri</code> from the response in the browser. The user will need to enter the <code>user_code</code> in the authorization page.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">using</span> var client = <span style="color:#66d9ef">new</span> HttpClient();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> var client = <span style="color:#66d9ef">new</span> HttpClient();
 <span style="color:#66d9ef">var</span> authorizationResponse = <span style="color:#66d9ef">await</span> StartDeviceFlowAsync(client);
 Console.WriteLine(<span style="color:#e6db74">&#34;Please visit this URL: &#34;</span> + authorizationResponse.VerificationUri);
 Console.WriteLine(<span style="color:#e6db74">&#34;And enter the following code: &#34;</span> + authorizationResponse.UserCode);
@@ -216,8 +214,7 @@ OpenWebPage(authorizationResponse.VerificationUri);
 <p><img src="enter-user-code.png" alt="Enter user code"></p>
 <p><strong>Note:</strong> the specs for the device flow mention an optional <code>verification_uri_complete</code> property in the authorization response, which includes the <code>user_code</code>. Unfortunately, this is not supported by Azure AD, so the user has to enter the code manually.</p>
 <p>Now, while the user is entering the code and logging in, we start polling the IdP to get a token. We need to specify <code>urn:ietf:params:oauth:grant-type:device_code</code> as the <code>grant_type</code>, and provide the <code>device_code</code> from the authorization response.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">var</span> tokenResponse = <span style="color:#66d9ef">await</span> GetTokenAsync(client, authorizationResponse);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> tokenResponse = <span style="color:#66d9ef">await</span> GetTokenAsync(client, authorizationResponse);
 Console.WriteLine(<span style="color:#e6db74">&#34;Access token: &#34;</span>);
 Console.WriteLine(tokenResponse.AccessToken);
 Console.WriteLine(<span style="color:#e6db74">&#34;ID token: &#34;</span>);

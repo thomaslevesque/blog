@@ -137,8 +137,7 @@
 <p>The new features are not enabled by default. You can enable them individually with <code>/feature:</code> command line switches, but the easiest way is to enable them all by adding <code>__DEMO__</code> and <code>__DEMO_EXPERIMENTAL__</code> to the conditional compilation symbols (in <em>Project properties</em>, <em>Build</em> tab).</p>
 <h3 id="local-functions">Local functions</h3>
 <p>Most functional languages allow you to declare functions in the body of other functions. It’s now possible to do the same in C# 7! The syntax for declaring a method inside another is pretty much what you would expect:</p>
-<pre><code>
-long Factorial(int n)
+<pre><code>long Factorial(int n)
 {
     long Fact(int i, long acc)
     {
@@ -162,8 +161,7 @@ long Factorial(int n)
 <p>You can read more about this feature <a href="https://github.com/dotnet/roslyn/issues/2930">in the Roslyn Github repository</a>.</p>
 <h3 id="ref-returns-and-ref-locals">Ref returns and ref locals</h3>
 <p>Since the first version of C#, it has always been possible to pass parameters by reference, which is conceptually similar to passing a pointer to a variable in languages like C. Until now, this feature was limited to parameters, but in C# 7 it becomes possible to return values by reference, or to have local variables that refer to the location of another variable. Here’s an example:</p>
-<pre><code>
-static void TestRefReturn()
+<pre><code>static void TestRefReturn()
 {
     var foo = new Foo();
     Console.WriteLine(foo); // 0, 0
@@ -198,8 +196,7 @@ class Foo
 <li>On line 8, instead of just assigning a value directly to the field returned by <code>GetByRef</code>, I use a ref local variable <code>y</code>. The local variable now shares the same memory location as the <code>foo.y</code> field. So if I assign a value to it, it changes the value of <code>foo.y</code>.</li>
 </ul>
 <p>Note that you can also return an array location by reference:</p>
-<pre><code>
-private MyBigStruct[] array = new MyBigStruct[10];
+<pre><code>private MyBigStruct[] array = new MyBigStruct[10];
 private int current;
 
 public ref MyBigStruct GetCurrentItem()
@@ -211,24 +208,21 @@ public ref MyBigStruct GetCurrentItem()
 <h3 id="pattern-matching">Pattern matching</h3>
 <p>Pattern matching is a feature very common in functional languages. C# 7 introduces some aspects of pattern matching, in the form of extensions to the <code>is</code> operator. For instance, when testing the type of a variable, it lets you introduce a new variable after the type, so that this variable is assigned with the left-hand side operand of the <code>is</code>, but with the type specified as the right-hand side operand (it will be clearer with an example).</p>
 <p>Typically, if you need to test that a value is of type <code>DateTime</code>, then do something with that <code>DateTime</code>, you need to test the type, then cast to that type:</p>
-<pre><code>
-object o = GetValue();
+<pre><code>object o = GetValue();
 if (o is DateTime)
 {
     var d = (DateTime)o;
     // Do something with d
 }
 </code></pre><p>In C# 7, you can do this instead:</p>
-<pre><code>
-object o = GetValue();
+<pre><code>object o = GetValue();
 if (o is DateTime d)
 {
     // Do something with d
 }
 </code></pre><p><code>d</code> is now declared directly as part of the <code>o is DateTime</code> expression.</p>
 <p>This feature can also be used in a switch statement:</p>
-<pre><code>
-object v = GetValue();
+<pre><code>object v = GetValue();
 switch (v)
 {
     case string s:
@@ -243,8 +237,7 @@ switch (v)
 }
 </code></pre><p>In this code, each case introduces a variable of the appropriate type, which you can use in the body of the case.</p>
 <p>So far I only covered pattern matching against a simple type, but there are also more advanced forms. For instance:</p>
-<pre><code>
-switch (DateTime.Today)
+<pre><code>switch (DateTime.Today)
 {
     case DateTime(*, 10, 31):
         Console.WriteLine(&quot;Happy Halloween!&quot;);
@@ -261,8 +254,7 @@ switch (DateTime.Today)
 }
 </code></pre><p>How cool is that!</p>
 <p>There’s also another (still experimental) form of pattern matching, using a new <code>match</code> keyword:</p>
-<pre><code>
-object o = GetValue();
+<pre><code>object o = GetValue();
 string description = o match
     (
         case string s : $&quot;{o} is a string of length {s.Length}&quot;
@@ -274,12 +266,10 @@ string description = o match
 <h3 id="binary-literals-and-digit-separators">Binary literals and digit separators</h3>
 <p>These features were not explicitly mentioned in the VS Preview release notes, but I noticed they were included as well. They were initially planned for C# 6, but didn’t make it in the final release. They’re back in C# 7.</p>
 <p>You can now write numeric literal in binary, in addition to decimal an hexadecimal:</p>
-<pre><code>
-int x = 0b11001010;
+<pre><code>int x = 0b11001010;
 </code></pre><p>Very convenient to define bit masks!</p>
 <p>To make large numbers more readable, you can also group digits by introducing separators. This can be used for decimal, hexadecimal or binary literals:</p>
-<pre><code>
-int oneBillion = 1_000_000_000;
+<pre><code>int oneBillion = 1_000_000_000;
 int foo = 0x7FFF_1234;
 int bar = 0b1001_0110_1010_0101;
 </code></pre><h3 id="conclusion">Conclusion</h3>

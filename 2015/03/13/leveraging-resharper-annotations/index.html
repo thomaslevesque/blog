@@ -146,8 +146,7 @@
 <h3 id="notnull">NotNull</h3>
 <p>This annotation indicates that the element on which it is applied cannot, or must not be null.</p>
 <p>If you apply it to a method or property, it means that the method or property will never return null:</p>
-<pre><code>
-        [NotNull]
+<pre><code>        [NotNull]
         public string GetString()
         {
             return &quot;Hello world!&quot;;
@@ -155,8 +154,7 @@
 </code></pre><p>When a method has this attribute, if you test if the return value is null (or not null), R# will warn you that the condition is always false (or true):</p>
 <p><img src="image6.png" alt="image" title="image"></p>
 <p>If you apply it to a method parameter, it means that null is not a valid argument value:</p>
-<pre><code>
-        public string Repeat([NotNull] string s)
+<pre><code>        public string Repeat([NotNull] string s)
         {
             if (s == null) throw new ArgumentNullException(&quot;s&quot;);
             return s + s;
@@ -173,8 +171,7 @@
 <h3 id="heading"> </h3>
 <h3 id="stringformatmethod">StringFormatMethod</h3>
 <p>This annotation indicates that a method works like the <code>String.Format</code> method, i.e. it takes a composite format string followed by arguments that will replace the placeholders in the format string:</p>
-<pre><code>
-        [StringFormatMethod(&quot;format&quot;)]
+<pre><code>        [StringFormatMethod(&quot;format&quot;)]
         public static void Log(string format, params object[] args)
         {
             ...
@@ -185,8 +182,7 @@
 <p>This one tells ReSharper that a code element is used, even though R# cannot statically detect it. It has the effect of suppressing the <em>“(…) is never used”</em> warning. It’s useful, for instance, when a type or member is used only via reflection.</p>
 <h3 id="noenumeration">NoEnumeration</h3>
 <p>This annotation is applied to an <code>IEnumerable</code> parameter, and means that the method will not enumerate the sequence. R# warns you when you enumerate an <code>IEnumerable</code> multiple times, so using this attribute prevents false positives for this warning:</p>
-<pre><code>
-        public static IEnumerable&lt;T&gt; EmptyIfNull&lt;T&gt;([NoEnumeration] this IEnumerable&lt;T&gt; source)
+<pre><code>        public static IEnumerable&lt;T&gt; EmptyIfNull&lt;T&gt;([NoEnumeration] this IEnumerable&lt;T&gt; source)
         {
             return source ?? Enumerable.Empty&lt;T&gt;();
         }
@@ -194,16 +190,14 @@
 <p>This one is applied to a delegate parameter, and means that the delegate will be executed during the execution of the method. It prevents the <em>“Access to modified closure”</em> warning that occurs when a lambda captures a variable that is later modified.</p>
 <h3 id="contractannotation">ContractAnnotation</h3>
 <p>This annotation is a powerful way to describe how the output of a method depends on its inputs. It lets R# predict how the method will behave. For instance, this method will return null if its argument is null, an not null otherwise:</p>
-<pre><code>
-        [ContractAnnotation(&quot;null =&gt; null; notnull =&gt; notnull&quot;)]
+<pre><code>        [ContractAnnotation(&quot;null =&gt; null; notnull =&gt; notnull&quot;)]
         public object Transform(object data)
         {
             ...
         }
 </code></pre><p>Thanks to the annotation, ReSharper will know that if the argument was not null, the result will not be null either.</p>
 <p>This method doesn’t return normally (it throws an exception) if its argument is null:</p>
-<pre><code>
-        [ContractAnnotation(&quot;value:null =&gt; halt&quot;)]
+<pre><code>        [ContractAnnotation(&quot;value:null =&gt; halt&quot;)]
         public static void CheckArgumentNull&lt;T&gt;(
             [NoEnumeration] this T value,
             [InvokerParameterName] string paramName)

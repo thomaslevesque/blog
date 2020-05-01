@@ -155,8 +155,7 @@ This should be a no-brainer, but there are actually a number of different ways t
 <h3 id="ok-enough-of-this-whats-your-point">OK, enough of this! What’s your point?</h3>
 <p>So as you can see, displaying a byte size in human-readable form isn’t as straightforward as you might have expected… I’ve had to write code to do it in a number of apps, and I eventually got tired of doing it again over and over, so I wrote a library that attempts to cover all use cases. I called it <a href="https://github.com/thomaslevesque/HumanBytes">HumanBytes</a>, for reasons that should be obvious… It is also available as a <a href="https://www.nuget.org/packages/HumanBytes">NuGet package</a>.</p>
 <p>Its usage is quite simple. It’s based on a class named <code>ByteSizeFormatter</code>, which has a few properties to control how the value is rendered:</p>
-<pre><code>
-var formatter = new ByteSizeFormatter
+<pre><code>var formatter = new ByteSizeFormatter
 {
     Convention = ByteSizeConvention.Binary,
     DecimalPlaces = 1,
@@ -170,8 +169,7 @@ var formatter = new ByteSizeFormatter
 var f = new FileInfo(&quot;TheFile.jpg&quot;);
 Console.WriteLine(&quot;The size of '{0}' is {1}&quot;, f, formatter.Format(f.Length));
 </code></pre><p>In most cases, though, you will just want to use the default settings. You can do that easily with the <code>Bytes</code> extension method:</p>
-<pre><code>
-var f = new FileInfo(&quot;TheFile.jpg&quot;);
+<pre><code>var f = new FileInfo(&quot;TheFile.jpg&quot;);
 Console.WriteLine(&quot;The size of '{0}' is {1}&quot;, f, f.Length.Bytes());
 </code></pre><p>This method returns an instance of the <code>ByteSize</code> structure, whose <code>ToString</code> method formats the value using the default formatter. You can change the default formatter settings globally through the <code>ByteSizeFormatter.Default</code> static property.</p>
 <h3 id="a-note-on-localization">A note on localization</h3>

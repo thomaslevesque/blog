@@ -142,8 +142,7 @@
 <p>After spending a long time trying to find a flexible and elegant approach, I came up with an interesting solution. It consists of a class with a few attached properties that can be set in XAML.  This class can be used as follows :</p>
 </li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
-    <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
           <span style="color:#a6e22e">IsSynchronizedWithCurrentItem=</span><span style="color:#e6db74">&#34;True&#34;</span>
           <span style="color:#a6e22e">util:GridViewSort.AutoSort=</span><span style="color:#e6db74">&#34;True&#34;</span><span style="color:#f92672">&gt;</span>
         <span style="color:#f92672">&lt;ListView.View&gt;</span>
@@ -163,14 +162,12 @@
         <span style="color:#f92672">&lt;/ListView.View&gt;</span>
     <span style="color:#f92672">&lt;/ListView&gt;</span>
 </code></pre></div><p>The <code>GridViewSort.AutoSort</code> property enables automatic sorting for the <code>ListView</code>. The <code>GridViewSort.PropertyName</code> property, defined for each column, indicates the property to use as the sort criteria. There is no extra code to write. A click on a column header triggers the sorting on this column ; if the ListView is already sorted on this column, the sort order is reversed.  In case you need to handle the sorting manually, I also added a <code>GridViewSort.Command</code> attached property. When used with the MVVM pattern, this property allows you to bind to a command declared in the ViewModel :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
-    <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
           <span style="color:#a6e22e">IsSynchronizedWithCurrentItem=</span><span style="color:#e6db74">&#34;True&#34;</span>
           <span style="color:#a6e22e">util:GridViewSort.Command=</span><span style="color:#e6db74">&#34;{Binding SortCommand}&#34;</span><span style="color:#f92672">&gt;</span>
     ...
 </code></pre></div><p>The sort command takes as parameter the name of the property to use as the sort criteria.  Note : if both the <code>Command</code> and <code>AutoSort</code> properties are set, <code>Command</code> has priority. <code>AutoSort</code> is ignored.  Here is the full code of the <code>GridViewSort</code> class :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">using</span> System.ComponentModel;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System.ComponentModel;
 <span style="color:#66d9ef">using</span> System.Windows;
 <span style="color:#66d9ef">using</span> System.Windows.Controls;
 <span style="color:#66d9ef">using</span> System.Windows.Input;
