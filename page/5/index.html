@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.69.2" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="Thomas Levesque's .NET Blog">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-31621259-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+				
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/" rel="bookmark">
+			How to retrieve dates as UTC in SQLite
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		SQLite is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an official ADO.NET provider that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a DateTime converted to local time, with Kind = Unspecified.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/06/21/exception-filters-in-c-6/" rel="bookmark">
+			Exception filters in C# 6: their biggest advantage is not what you think
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
+static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyException ex) when (ex.Code == 42){Console.WriteLine(&quot;Error 42 occurred&quot;);}}As you might expect, the catch block will be entered if and only if ex.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/" rel="bookmark">
+			Create an auto-mocking container with Unity and FakeItEasy
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/06/04/async-and-cancellation-support-for-wait-handles/" rel="bookmark">
+			Async and cancellation support for wait handles
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		The .NET framework comes with a number of low-level synchronization primitives. The most commonly used are collectively known as “wait handles”, and inherit the WaitHandle class: Semaphore, Mutex, AutoResetEvent and ManualResetEvent. These classes have been there since at least .NET 2.0 (1.1 for some of them), but they haven’t evolved much since they were introduced, which means they don’t support common features that were introduced later. In particular, they don’t provide support for waiting asynchronously, nor do they support cancelling the wait.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/03/13/leveraging-resharper-annotations/" rel="bookmark">
+			Leveraging ReSharper annotations
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		I don’t think it’s really necessary to present ReSharper (often abbreviated R#), but in case you don’t know about it, it’s a tool made by JetBrains that performs real-time analysis of your C# or VB.NET code to warn you about possible bugs, bad practices, convention violations, etc. It also provides many useful refactorings and code generators. I’ve been using it for a few years now, and it has tremendously improved both my productivity and my coding style.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/03/10/c-puzzle-1/" rel="bookmark">
+			C# Puzzle 1
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
+I just came up with this one:
+static void Test(out int x, out int y){x = 42;y = 123;Console.WriteLine (x == y);}What do you think this code prints? Can you be sure? Post your answer in the comments!
+I’ll try to post more puzzles in the future if I can come up with others.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/02/24/customizing-string-interpolation-in-c-6/" rel="bookmark">
+			Customizing string interpolation in C# 6
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
+string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/02/01/async-unit-tests-with-nunit/" rel="bookmark">
+			Async unit tests with NUnit
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
+Let’s assume the system under test is this very interesting Calculator class:
+ public class Calculator{public async Task&lt;int&gt; AddAsync(int x, int y){// simulate long calculationawait Task.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/" rel="bookmark">
+			A new library to display animated GIFs in XAML apps
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		A few years ago, I wrote an article that showed how to display an animated GIF in WPF. The article included the full code, and was quite successful, since WPF had no built-in support for animated GIFs. Based on the issues reported in the comments, I made many edits to the code in the article. At some point I realized it was very impractical, so I published the code on CodePlex (it has now moved to GitHub) under the name WpfAnimatedGif, and started maintaining it there.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/" rel="bookmark">
+			Optimize ToArray and ToList by providing the number of elements
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		The ToArray and ToList extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on ToArray for now (ToList has a few differences, but the principle is mostly the same).
+	</div>
+</article>
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/page/4/">«</a>
+	<span class="pagination__item pagination__item--current">5/10</span>
+	<a class="pagination__item pagination__item--next btn" href="/page/6/">»</a>
+</div>
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Thomas Levesque&#39;s .NET Blog.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

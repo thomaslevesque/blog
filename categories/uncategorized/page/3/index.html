@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Uncategorized - Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="alternate" type="application/rss+xml" href="/categories/uncategorized/index.xml" title="Thomas Levesque's .NET Blog">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-31621259-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+				
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Uncategorized</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2016/12/08/fun-with-the-httpclient-pipeline/" rel="bookmark">
+			Fun with the HttpClient pipeline
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&rsquo;s also easily extensible.
+You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2016/08/23/tuple-deconstruction-in-c-7/" rel="bookmark">
+			Tuple deconstruction in C# 7
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
+  emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
+  deconstruction of tuples into separate variables
+Well, it looks like the C# language team has been busy during the last month, because both items are now implemented in VS 15 Preview 4, which was released today!
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2016/07/25/tuples-in-c-7/" rel="bookmark">
+			Tuples in C# 7
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
+In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
+private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2016/06/21/pitfall-using-var-and-async-together/" rel="bookmark">
+			Pitfall: using var and async together
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
+public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync:  private Task&lt;IBookStore&gt; GetBookStoreAsync() { // actual implementation irrelevant  // .
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/" rel="bookmark">
+			Test driving C# 7 features in Visual Studio “15” Preview
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/" rel="bookmark">
+			Using multiple cancellation sources with CreateLinkedTokenSource
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/06/21/exception-filters-in-c-6/" rel="bookmark">
+			Exception filters in C# 6: their biggest advantage is not what you think
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
+static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyException ex) when (ex.Code == 42){Console.WriteLine(&quot;Error 42 occurred&quot;);}}As you might expect, the catch block will be entered if and only if ex.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/02/24/customizing-string-interpolation-in-c-6/" rel="bookmark">
+			Customizing string interpolation in C# 6
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
+string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/" rel="bookmark">
+			Optimize ToArray and ToList by providing the number of elements
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		The ToArray and ToList extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on ToArray for now (ToList has a few differences, but the principle is mostly the same).
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2014/11/02/easy-unit-testing-of-null-argument-validation/" rel="bookmark">
+			Easy unit testing of null argument validation
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		When unit testing a method, one of the things to test is argument validation : for instance, ensure that the method throws a ArgumentNullException when a null argument is passed for a parameter that isn’t allowed to be null. Writing this kind of test is very easy, but it’s also a tedious and repetitive task, especially if the method has many parameters… So I wrote a method that automates part of this task: it tries to pass null for each of the specified arguments, and asserts that the method throws an ArgumentNullException.
+	</div>
+</article>
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/categories/uncategorized/page/2/">«</a>
+	<span class="pagination__item pagination__item--current">3/4</span>
+	<a class="pagination__item pagination__item--next btn" href="/categories/uncategorized/page/4/">»</a>
+</div>
+
+			</div>
+			
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Thomas Levesque&#39;s .NET Blog.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

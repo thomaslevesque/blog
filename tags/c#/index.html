@@ -1,914 +1,222 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
-    <title>C# | Thomas Levesque&#39;s .NET Blog</title>
-    <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.69.2" />
-    
-    
-      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-    
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>C# - Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="alternate" type="application/rss+xml" href="/tags/c#/index.xml" title="Thomas Levesque's .NET Blog">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-31621259-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
-    
-    
-      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
-    
-
-    
-
-    
-      
-    
-
-    
-    
-      <link href="/tags/c#/index.xml" rel="alternate" type="application/rss+xml" title="Thomas Levesque&#39;s .NET Blog" />
-      <link href="/tags/c#/index.xml" rel="feed" type="application/rss+xml" title="Thomas Levesque&#39;s .NET Blog" />
-      
-    
-    
-    <meta property="og:title" content="C#" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog2.thomaslevesque.net/tags/c#/" />
-<meta property="og:updated_time" content="2020-03-28T00:00:00+00:00" />
-<meta itemprop="name" content="C#">
-<meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="C#"/>
-<meta name="twitter:description" content=""/>
-
-  </head>
-
-  <body class="ma0 avenir bg-near-white">
-
-    
-
-  <header>
-    <div class="pb3-m pb6-l bg-black">
-      <nav class="pv3 ph3 ph4-ns" role="navigation">
-  <div class="flex-l justify-between items-center center">
-    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
-      Thomas Levesque&#39;s .NET Blog
-    </a>
-    <div class="flex-l items-center">
-      
-
-      
-        <ul class="pl0 mr3">
-          
-          <li class="list f5 f4-ns fw4 dib pr3">
-            <a class="hover-white no-underline white-90" href="/about/" title="About page">
-              About
-            </a>
-          </li>
-          
-        </ul>
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-  </div>
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+				
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
 </nav>
 
-      <div class="tc-l pv3 ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          C#
-        </h1>
-        
-      </div>
-    </div>
-  </header>
-
-
-    <main class="pb7" role="main">
-      
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “C#”</p>
-    </div>
-  </article>
-  <div class="mw8 center">    
-    <section class="flex-ns flex-wrap justify-around mt5">
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/" class="link black dim">
-        Using the OAuth 2.0 device flow to authenticate users in desktop apps
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">C#</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/" rel="bookmark">
+			Using the OAuth 2.0 device flow to authenticate users in desktop apps
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
 Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/" class="link black dim">
-        Lazily resolving services to fix circular dependencies in .NET Core
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/" rel="bookmark">
+			Lazily resolving services to fix circular dependencies in .NET Core
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
 It is generally agreed that this should be avoided; I won&rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/" class="link black dim">
-        Handling query string parameters with no value in ASP.NET Core
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/" rel="bookmark">
+			Handling query string parameters with no value in ASP.NET Core
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
  query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
  But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/" class="link black dim">
-        ASP.NET Core: when environments are not enough, use sub-environments!
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Out of the box, ASP.NET Core has the concept of &ldquo;environments&rdquo;, which allows your app to use different settings based on which environment it&rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/" rel="bookmark">
+			ASP.NET Core: when environments are not enough, use sub-environments!
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Out of the box, ASP.NET Core has the concept of &ldquo;environments&rdquo;, which allows your app to use different settings based on which environment it&rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
  appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&rsquo;t have to specify unchanged settings in every environment if they&rsquo;re already specified in the global settings file.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/" class="link black dim">
-        Easy unit testing of null argument validation (C# 8 edition)
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/" rel="bookmark">
+			Easy unit testing of null argument validation (C# 8 edition)
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
 [Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&lt;int&gt;(); var right = Enumerable.Empty&lt;int&gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&gt; left.FullOuterJoin(right, x =&gt; x, y =&gt; y, (k, x, y) =&gt; 0, 0, 0, null), &#34;left&#34;, &#34;right&#34;, &#34;leftKeySelector&#34;, &#34;rightKeySelector&#34;, &#34;resultSelector&#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/" class="link black dim">
-        Using foreach with index in C#
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Just a quick tip today!
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2019/11/18/using-foreach-with-index-in-c/" rel="bookmark">
+			Using foreach with index in C#
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Just a quick tip today!
 for and foreach loops are among the most useful constructs in a C# developer&rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&lt;T&gt;, and doesn&rsquo;t require to access the current element by its index.
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/" class="link black dim">
-        Handling type hierarchies in Cosmos DB (part 2)
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      This is the second post in a series of 2:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/" rel="bookmark">
+			Handling type hierarchies in Cosmos DB (part 2)
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		This is the second post in a series of 2:
  Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&rsquo;s TypeNameHandling feature. In this post, I&rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/" class="link black dim">
-        Handling type hierarchies in Cosmos DB (part 1)
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      This is the first post in a series of 2:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/" rel="bookmark">
+			Handling type hierarchies in Cosmos DB (part 1)
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		This is the first post in a series of 2:
  Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/" class="link black dim">
-        Multitenant Azure AD issuer validation in ASP.NET Core
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/" rel="bookmark">
+			Multitenant Azure AD issuer validation in ASP.NET Core
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
 openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&rsquo;t match the issuer specified in the OpenID metadata.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/" class="link black dim">
-        Asynchronous initialization in ASP.NET Core, revisited
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/" rel="bookmark">
+			Asynchronous initialization in ASP.NET Core, revisited
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
 Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&rsquo;t such a good approach.
-    </div>
-  </div>
+	</div>
+</article>
+</main>
+
+<div class="pagination">
+	<span class="pagination__item pagination__item--current">1/5</span>
+	<a class="pagination__item pagination__item--next btn" href="/tags/c#/page/2/">»</a>
 </div>
 
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/" class="link black dim">
-        Handling multipart requests with JSON and file uploads in ASP.NET Core
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
- Embed the image bytes as base64 in the JSON payload, e.g.  { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!
-    </div>
-  </div>
-</div>
+			</div>
+			
 
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/" class="link black dim">
-        Asynchronous initialization in ASP.NET Core with custom middleware
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
-Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2018/03/30/writing-a-github-webhook-as-an-azure-function/" class="link black dim">
-        Writing a GitHub Webhook as an Azure Function
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
-A bit of background As you may already know, I&rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/" class="link black dim">
-        Understanding the ASP.NET Core middleware pipeline
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Middlewhat? The ASP.NET Core architecture features a system of middleware, which are pieces of code that handle requests and responses. Middleware are chained to each other to form a pipeline. Incoming requests are passed through the pipeline, where each middleware has a chance to do something with them before passing them to the next middleware. Outgoing responses are also passed through the pipeline, in reverse order. If this sounds very abstract, the following schema from the official ASP.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2018/02/25/better-timeout-handling-with-httpclient/" class="link black dim">
-        Better timeout handling with HttpClient
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
- The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2017/08/26/testing-and-debugging-library-code-from-linqpad/" class="link black dim">
-        Testing and debugging library code from LINQPad
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      I&rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&rsquo;s also extremely useful as a general-purpose .
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2017/03/29/linq-performance-improvements-in-net-core/" class="link black dim">
-        Linq performance improvements in .NET Core
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      By now, you&rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
-For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2017/01/17/c-methods-in-git-diff-hunk-headers/" class="link black dim">
-        C# methods in git diff hunk headers
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); + Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/" class="link black dim">
-        Fun with the HttpClient pipeline
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&rsquo;s also easily extensible.
-You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/" class="link black dim">
-        Tuple deconstruction in C# 7
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
-  emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
-  deconstruction of tuples into separate variables
-Well, it looks like the C# language team has been busy during the last month, because both items are now implemented in VS 15 Preview 4, which was released today!
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/" class="link black dim">
-        Tuples in C# 7
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
-In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2016/06/21/pitfall-using-var-and-async-together/" class="link black dim">
-        Pitfall: using var and async together
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
-public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync:  private Task&lt;IBookStore&gt; GetBookStoreAsync() { // actual implementation irrelevant  // .
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/" class="link black dim">
-        Test driving C# 7 features in Visual Studio “15” Preview
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/" class="link black dim">
-        Automatically inject fakes in test fixture with FakeItEasy
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Today I’d like to share a nice feature I discovered recently in FakeItEasy.
-When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/" class="link black dim">
-        Using multiple cancellation sources with CreateLinkedTokenSource
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/" class="link black dim">
-        Explicitly switch to the UI thread in an async method
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/" class="link black dim">
-        [WPF] Prevent the user from pasting an image in a RichTextBox
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.
-When I googled for a way to prevent that, the only solutions I found suggested to intercept the Ctrl-V keystroke, and swallow the event if the clipboard contains an image.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2015/07/30/c-puzzle-2/" class="link black dim">
-        C# Puzzle 2
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Just another little puzzle based on an issue I had at work…
-Consider this piece of code :
-Console.WriteLine($&quot;x &gt; y is {x &gt; y}&quot;);Console.WriteLine($&quot;!(x &lt;= y) is {!(x &lt;= y)}&quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
-x &gt; y is False!(x &lt;= y) is True
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/" class="link black dim">
-        How to retrieve dates as UTC in SQLite
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      SQLite is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an official ADO.NET provider that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a DateTime converted to local time, with Kind = Unspecified.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/" class="link black dim">
-        Create an auto-mocking container with Unity and FakeItEasy
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2015/06/04/async-and-cancellation-support-for-wait-handles/" class="link black dim">
-        Async and cancellation support for wait handles
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      The .NET framework comes with a number of low-level synchronization primitives. The most commonly used are collectively known as “wait handles”, and inherit the WaitHandle class: Semaphore, Mutex, AutoResetEvent and ManualResetEvent. These classes have been there since at least .NET 2.0 (1.1 for some of them), but they haven’t evolved much since they were introduced, which means they don’t support common features that were introduced later. In particular, they don’t provide support for waiting asynchronously, nor do they support cancelling the wait.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2015/03/10/c-puzzle-1/" class="link black dim">
-        C# Puzzle 1
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
-I just came up with this one:
-static void Test(out int x, out int y){x = 42;y = 123;Console.WriteLine (x == y);}What do you think this code prints? Can you be sure? Post your answer in the comments!
-I’ll try to post more puzzles in the future if I can come up with others.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2015/02/01/async-unit-tests-with-nunit/" class="link black dim">
-        Async unit tests with NUnit
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
-Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator{public async Task&lt;int&gt; AddAsync(int x, int y){// simulate long calculationawait Task.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/" class="link black dim">
-        Optimize ToArray and ToList by providing the number of elements
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      The ToArray and ToList extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on ToArray for now (ToList has a few differences, but the principle is mostly the same).
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2014/11/23/easily-convert-file-sizes-to-human-readable-form/" class="link black dim">
-        Easily convert file sizes to human-readable form
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      If you write an application that has anything to do with file management, you will probably need to display the size of the files. But if a file has a size of 123456789 bytes, it doesn’t mean that you should just display this value to the user, because it’s hard to read, and the user usually doesn’t need 1-byte precision. Instead, you will write something like 118 MB.
-This should be a no-brainer, but there are actually a number of different ways to display byte sizes… For instance, there are several co-existing conventions for units and prefixes:
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/" class="link black dim">
-        Passing parameters by reference to an asynchronous method
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (ref or out) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first await), so the location of the variable won’t exist anymore.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2014/11/02/easy-unit-testing-of-null-argument-validation/" class="link black dim">
-        Easy unit testing of null argument validation
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      When unit testing a method, one of the things to test is argument validation : for instance, ensure that the method throws a ArgumentNullException when a null argument is passed for a parameter that isn’t allowed to be null. Writing this kind of test is very easy, but it’s also a tedious and repetitive task, especially if the method has many parameters… So I wrote a method that automates part of this task: it tries to pass null for each of the specified arguments, and asserts that the method throws an ArgumentNullException.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/" class="link black dim">
-        Showing result suggestions in a WinRT SearchBox: bug regarding the image
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
-The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:
- History suggestions are search queries previously entered by the user.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/" class="link black dim">
-        Detecting dependency property changes in WinRT
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
-It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2011/09/02/tail-recursion-in-c/" class="link black dim">
-        Tail recursion in C#
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Regardless of the programming language you&rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/" class="link black dim">
-        [C#] A simple implementation of the WeakEvent pattern
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2010/02/21/automating-null-checks-with-linq-expressions/" class="link black dim">
-        Automating null checks with Linq expressions
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2009/06/12/c-parentchild-relationship-and-xml-serialization/" class="link black dim">
-        [C#] Parent/child relationship and XML serialization
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Today I&rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-    </section>
-  </div>
-
-    </main>
-    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
-    &copy;  Thomas Levesque's .NET Blog 2020 
-  </a>
-    <div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-  </div>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Thomas Levesque&#39;s .NET Blog.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
 </footer>
-
-    
-
-  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
-
-
-  </body>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
 </html>

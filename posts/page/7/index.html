@@ -1,424 +1,216 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
-    <title>Thomas Levesque&#39;s .NET Blog</title>
-    <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.69.2" />
-    
-    
-      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-    
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Posts - Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Thomas Levesque's .NET Blog">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-31621259-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
-    
-    
-      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
-    
-
-    
-
-    
-      
-    
-
-    
-    
-      <link href="/posts/index.xml" rel="alternate" type="application/rss+xml" title="Thomas Levesque&#39;s .NET Blog" />
-      <link href="/posts/index.xml" rel="feed" type="application/rss+xml" title="Thomas Levesque&#39;s .NET Blog" />
-      
-    
-    
-    <meta property="og:title" content="Posts" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog2.thomaslevesque.net/posts/" />
-<meta property="og:updated_time" content="2020-03-28T00:00:00+00:00" />
-<meta itemprop="name" content="Posts">
-<meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Posts"/>
-<meta name="twitter:description" content=""/>
-
-  </head>
-
-  <body class="ma0 avenir bg-near-white">
-
-    
-
-  <header>
-    <div class="pb3-m pb6-l bg-black">
-      <nav class="pv3 ph3 ph4-ns" role="navigation">
-  <div class="flex-l justify-between items-center center">
-    <a href="https://blog2.thomaslevesque.net/" class="f3 fw2 hover-white no-underline white-90 dib">
-      Thomas Levesque&#39;s .NET Blog
-    </a>
-    <div class="flex-l items-center">
-      
-
-      
-        <ul class="pl0 mr3">
-          
-          <li class="list f5 f4-ns fw4 dib pr3">
-            <a class="hover-white no-underline white-90" href="/about/" title="About page">
-              About
-            </a>
-          </li>
-          
-        </ul>
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-  </div>
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+				
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
 </nav>
 
-      <div class="tc-l pv3 ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          Posts
-        </h1>
-        
-      </div>
-    </div>
-  </header>
-
-
-    <main class="pb7" role="main">
-      
-  <article class="pa3 pa4-ns nested-copy-line-height nested-img">
-    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
-    <section class="flex-ns flex-wrap justify-around mt5">
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2013/11/14/running-a-custom-tool-automatically-when-a-file-is-modified/" class="link black dim">
-        Running a custom tool automatically when a file is modified
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      As far as I can remember, Visual Studio always had something called “custom tools”, also known as single-file generators. When you apply such a tool to a file in your project, it will generate something (typically code, but not necessarily) based on the content of the file. For instance, the default custom tool for resource files is called ResXFileCodeGenerator, and generates a class that provides easy access to the resources defined in the resx file.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2013/11/10/strongly-typed-helper-for-toast-notifications/" class="link black dim">
-        Strongly typed helper for toast notifications
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Windows 8 provides an API for showing toast notifications. Unfortunately, it’s very cumbersome: to define the content of a notification, you must use a predefined template that is provided in the form of an XmlDocument, and set the value for each field in the XML. There is nothing in the API to let you know which fields the template defines, you need to check the toast template catalog in the documentation.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/" class="link black dim">
-        Showing result suggestions in a WinRT SearchBox: bug regarding the image
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Posts</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2013/11/14/running-a-custom-tool-automatically-when-a-file-is-modified/" rel="bookmark">
+			Running a custom tool automatically when a file is modified
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		As far as I can remember, Visual Studio always had something called “custom tools”, also known as single-file generators. When you apply such a tool to a file in your project, it will generate something (typically code, but not necessarily) based on the content of the file. For instance, the default custom tool for resource files is called ResXFileCodeGenerator, and generates a class that provides easy access to the resources defined in the resx file.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2013/11/10/strongly-typed-helper-for-toast-notifications/" rel="bookmark">
+			Strongly typed helper for toast notifications
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Windows 8 provides an API for showing toast notifications. Unfortunately, it’s very cumbersome: to define the content of a notification, you must use a predefined template that is provided in the form of an XmlDocument, and set the value for each field in the XML. There is nothing in the API to let you know which fields the template defines, you need to check the toast template catalog in the documentation.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/" rel="bookmark">
+			Showing result suggestions in a WinRT SearchBox: bug regarding the image
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
 The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:
  History suggestions are search queries previously entered by the user.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/" class="link black dim">
-        An easy and secure way to store a password using Data Protection API
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      If you&rsquo;re writing a client application that needs to store user credentials, it&rsquo;s usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2013/04/21/detecting-dependency-property-changes-in-winrt/" class="link black dim">
-        Detecting dependency property changes in WinRT
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/" rel="bookmark">
+			An easy and secure way to store a password using Data Protection API
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		If you&rsquo;re writing a client application that needs to store user credentials, it&rsquo;s usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2013/04/21/detecting-dependency-property-changes-in-winrt/" rel="bookmark">
+			Detecting dependency property changes in WinRT
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
 It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/" class="link black dim">
-        Using C# 5 caller info attributes when targeting earlier versions of the .NET framework
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Caller info attributes are one of the new features of C# 5. They&rsquo;re attributes applied to optional method parameters that enable you to pass caller information implicitly to a method. I&rsquo;m not sure that description is very clear, so an example will help you understand:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/" rel="bookmark">
+			Using C# 5 caller info attributes when targeting earlier versions of the .NET framework
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Caller info attributes are one of the new features of C# 5. They&rsquo;re attributes applied to optional method parameters that enable you to pass caller information implicitly to a method. I&rsquo;m not sure that description is very clear, so an example will help you understand:
 static void Log( string message, [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null, [CallerLineNumber] int lineNumber = 0) { Console.WriteLine( &#34;[{0:g} - {1} - {2} - line {3}] {4}&#34;, DateTime.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2012/06/02/little-known-new-features-in-visual-studio-2012/" class="link black dim">
-        Little known new features in Visual Studio 2012
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Visual Studio 2012 RC is out since last week, and even though I didn’t have much time to play with it yet, I think I like it so far. Lots of things have already been said about the design, and about the most important new features, but there are also many smaller and less remarkable improvements that make life easier for us. Since I have seen little or nothing written about those, I thought I would make a list of what I noticed so far.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/" class="link black dim">
-        [WPF] Using Linq to shape data in a CollectionView
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2012/06/02/little-known-new-features-in-visual-studio-2012/" rel="bookmark">
+			Little known new features in Visual Studio 2012
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Visual Studio 2012 RC is out since last week, and even though I didn’t have much time to play with it yet, I think I like it so far. Lots of things have already been said about the design, and about the most important new features, but there are also many smaller and less remarkable improvements that make life easier for us. Since I have seen little or nothing written about those, I thought I would make a list of what I noticed so far.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/" rel="bookmark">
+			[WPF] Using Linq to shape data in a CollectionView
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
 // Collection to which the view is bound public ObservableCollection People { get; private set; } ... // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People); // Show only adults view.Filter = o =&gt; ((Person)o).Age &gt;= 18; // Sort by last name and first name view.SortDescriptions.Add(new SortDescription(&#34;LastName&#34;, ListSortDirection.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/" class="link black dim">
-        [WPF] Creating parameterized styles with attached properties
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Today I&rsquo;d like to share a trick that I used quite often in the past few months. Let&rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls: OK, I&rsquo;m not a designer&hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog2.thomaslevesque.net/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/" class="link black dim">
-        [WPF 4.5] Subscribing to an event using a markup extension
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      It&rsquo;s been a while since I last wrote about markup extensions&hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events. Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&rsquo;t do the same to subscribe to an event.
-    </div>
-  </div>
-</div>
-</div>
-      
-    </section>
-
-<ul class="pagination">
-    
-    <li class="page-item">
-        <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-    </li>
-    
-    <li class="page-item">
-    <a href="/posts/page/6/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-    </li>
-    
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/">1</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/2/">2</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/3/">3</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item disabled"><span aria-hidden="true">&nbsp;&hellip;&nbsp;</span></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/6/">6</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item active"><a class="page-link" href="/posts/page/7/">7</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/8/">8</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item disabled"><span aria-hidden="true">&nbsp;&hellip;&nbsp;</span></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/10/">10</a></li>
-    
-    
-    <li class="page-item">
-    <a href="/posts/page/8/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-    </li>
-    
-    <li class="page-item">
-        <a href="/posts/page/10/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-    </li>
-    
-</ul>
-
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/" rel="bookmark">
+			[WPF] Creating parameterized styles with attached properties
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Today I&rsquo;d like to share a trick that I used quite often in the past few months. Let&rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls: OK, I&rsquo;m not a designer&hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/" rel="bookmark">
+			[WPF 4.5] Subscribing to an event using a markup extension
+			</a>
+		</h3>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		It&rsquo;s been a while since I last wrote about markup extensions&hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events. Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&rsquo;t do the same to subscribe to an event.
+	</div>
 </article>
+</main>
 
-    </main>
-    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog2.thomaslevesque.net/" >
-    &copy;  Thomas Levesque's .NET Blog 2020 
-  </a>
-    <div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/posts/page/6/">«</a>
+	<span class="pagination__item pagination__item--current">7/10</span>
+	<a class="pagination__item pagination__item--next btn" href="/posts/page/8/">»</a>
 </div>
-  </div>
+
+			</div>
+			
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Thomas Levesque&#39;s .NET Blog.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
 </footer>
-
-    
-
-  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
-
-
-  </body>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
 </html>
