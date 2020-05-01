@@ -2,7 +2,6 @@
 title: "About"
 layout: post
 date: 2020-05-01T23:42:43+02:00
-draft: true
 ---
 
 I'm Thomas Levesque, a French software developer from Paris. I've been programming
