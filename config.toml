@@ -4,5 +4,11 @@ title = "Thomas Levesque's .NET Blog"
 theme = "ananke"
 publishDir = "../blog"
 
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+
 [permalinks]
   posts = "/:year/:month/:day/:title/"
