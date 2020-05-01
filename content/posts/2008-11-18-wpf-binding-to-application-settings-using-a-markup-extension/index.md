@@ -103,3 +103,4 @@ And of course, to make it work, let's not forget to save the settings in the app
 
 That's it ! the window size and position are now saved, and restored when the application is started again, without having to write anything more...
 [Download source code](http://www.thomaslevesque.com/files/2012/06/SettingBindingSample.zip)**Update :** If you understand French and want to know more about markup extensions, I suggest you read my tutorial on this topic : [Les markup extensions en WPF](http://tlevesque.developpez.com/dotnet/wpf-markup-extensions/)
+

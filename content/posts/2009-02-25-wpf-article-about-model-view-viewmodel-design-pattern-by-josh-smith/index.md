@@ -21,3 +21,4 @@ Soon after the release of WPF, people have been talking more and more about "Mod
 - ...
 
   Further more, the provided source code makes a good starting point to build a WPF application conforming to the MVVM pattern, and is also a mine of practical examples.
+

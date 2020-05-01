@@ -144,3 +144,4 @@ private ObservableCollection<string> _strings = new AsyncObservableCollection<st
     }
 ```
 **Update:** changed the code to use `Send` instead of `Post`. Using `Post` caused the event to be raised *asynchronously* on the UI thread, which could cause a race condition if the collection was modified again before the previous event was handled.
+

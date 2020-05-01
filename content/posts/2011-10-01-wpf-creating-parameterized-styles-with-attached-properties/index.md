@@ -184,3 +184,4 @@ Today I'd like to share a trick that I used quite often in the past few months. 
                 new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.Inherits));
 ```
   With this flag, the property becomes "ambient": we only need to specify its value on a parent control, and all descendant controls will automatically inherit the value. So if you need a view where all the checkboxes and radiobuttons are red, just set the `TickBrush` property to `Red` on the root element of the view.  Obviously this concept can be extended to other cases: actually, every time an element of the template must change based on arbitrary criteria, this technique can be used. It can be a good alternative to duplicating a template when you only need to change a small part of it.  
+

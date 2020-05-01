@@ -382,3 +382,4 @@ namespace Wpf.Util
 }
 ```
   I hope you'll find that useful :)  **Update**: uploaded [example project](http://www.thomaslevesque.com/files/2012/06/AutoSortGridView.zip) to demonstrate how to use the code
+

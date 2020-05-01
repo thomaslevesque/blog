@@ -72,3 +72,4 @@ public static ValueTuple<int, double> Tally(IEnumerable<double> values)
 }
 ```
   (the attribute is emitted by the compiler, you don’t actually need to write it yourself)  This makes it possible to share the tuple member names across assemblies, and lets tools like Intellisense provide helpful information about the method.  So, the tuple feature of C# 7 seems to be mostly complete; however, keep in mind that it’s still a preview, and some things could change between now and the final release.
+

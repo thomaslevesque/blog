@@ -121,3 +121,4 @@ categories:
     }
 ```
   The `UpdatableMarkupExtension` is now fully functional... until proved otherwise ;). This class makes a good starting point for any markup extension that needs to update its target, without having to worry about the low-level aspects of tracking and updating target objects.
+

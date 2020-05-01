@@ -16,7 +16,19 @@ categories:
 A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 
 In .NET 4.0, a set of `Tuple` classes has been introduced in the framework, which can be used as follows:
-  [sourcecode language="csharp"]private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) {int count = 0;double sum = 0.0;foreach (var value in values){    count++;    sum += value;}return Tuple.Create(count, sum); }  ...  var values = ... var t = Tally(values); Console.WriteLine($"There are {t.Item1} values and their sum is {t.Item2}");
+
+```csharp
+private static Tuple<int, double> Tally(IEnumerable<double> values)
+{int count = 0;double sum = 0.0;foreach (var value in values){    count++;    sum += value;}return Tuple.Create(count, sum);
+}
+
+...
+
+var values = ...
+var t = Tally(values);
+Console.WriteLine($"There are {t.Item1} values and their sum is {t.Item2}");
+```
+
 There are two annoying issues with the `Tuple` classes:
 
 - They’re classes, i.e. reference types. This means they must be allocated on the heap, and garbage collected when they’re no longer used. For applications where performance is critical, it can be an issue. Also, the fact that they can be null is often not desirable.
@@ -24,7 +36,19 @@ There are two annoying issues with the `Tuple` classes:
 
 
 In C# 7, a new feature will be introduced to improve support for tuples: you will be able to declare tuples types “inline”, a little like anonymous types, except that they’re not limited to the current method. Using this new feature, the code above becomes much cleaner:
-  [sourcecode language="csharp"]static (int count, double sum) Tally(IEnumerable&lt;double&gt; values) {int count = 0;double sum = 0.0;foreach (var value in values){    count++;    sum += value;}return (count, sum); }  ...  var values = ... var t = Tally(values); Console.WriteLine($"There are {t.count} values and their sum is {t.sum}");
+
+```csharp
+static (int count, double sum) Tally(IEnumerable<double> values)
+{int count = 0;double sum = 0.0;foreach (var value in values){    count++;    sum += value;}return (count, sum);
+}
+
+...
+
+var values = ...
+var t = Tally(values);
+Console.WriteLine($"There are {t.count} values and their sum is {t.sum}");
+```
+
 Note how the return type of the `Tally` method is declared, and how the result is used. This is much better! The tuple elements now have significant names, and the syntax is nicer too. The feature relies on a new `ValueTuple<T1, T2>` structure, which means it doesn’t involve a heap allocation.
 
 You can try this feature right now in Visual Studio 15 Preview 3. However, the  `ValueTuple<T1, T2>` type is not (yet) part of the .NET Framework; to get this example to work, you’ll need to reference the [System.ValueTuple](https://packages.nuget.org/packages/System.ValueTuple) NuGet package.

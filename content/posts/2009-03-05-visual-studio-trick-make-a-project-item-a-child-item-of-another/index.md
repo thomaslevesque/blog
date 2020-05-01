@@ -17,3 +17,4 @@ You probably noticed that, in a C# project tree, some items are placed "under" a
     </Compile>
 ```
   Reload the project : *Model1.Custom.cs* now appears as a child item of *Model1.edmx*. ![Solution Explorer](project3.png)  This trick enables you to organize your project better and make its structure clearer.
+

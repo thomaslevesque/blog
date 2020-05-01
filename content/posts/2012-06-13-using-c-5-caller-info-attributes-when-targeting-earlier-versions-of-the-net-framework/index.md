@@ -57,3 +57,4 @@ namespace System.Runtime.CompilerServices
 }
 ```
   If we compile and run the program, we can see that our custom attributes are taken into account by the compiler. So they don't have to be defined in mscorlib.dll like the "real" ones, they just have to be in the right namespace, and the compiler accepts them. This enables us to use this cool feature when targeting .NET 4.0, 3.5 or even 2.0!  Note that a similar trick enabled the creation of extension methods when targeting .NET 2.0 with the C# 3 compiler: you just had to create an `ExtensionAttribute` class in the `System.Runtime.CompilerServices` namespace, and the compiler would pick it up. This is also what enabled [LinqBridge](http://www.albahari.com/nutshell/linqbridge.aspx) to work.  
+

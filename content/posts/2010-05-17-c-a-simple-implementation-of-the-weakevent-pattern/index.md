@@ -182,3 +182,4 @@ myObject.MyEvent += new EventHandler(myObject_MyEvent);
 </CodeSnippets>
 ```
   This snippet gives the following result in Visual Studio :  ![Code snippet pour implémenter un WeakEvent](screenshot_snippet_wevt.png)
+

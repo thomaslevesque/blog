@@ -75,3 +75,4 @@ The `DataContext` property in WPF is extremely handy, because it is automaticall
                         Source={StaticResource proxy}}"/>
 ```
   Note that the binding path has been prefixed with "Data", since the path is now relative to the `BindingProxy` object.  The binding now works correctly, and the column is properly shown or hidden based on the `ShowPrice` property.  
+

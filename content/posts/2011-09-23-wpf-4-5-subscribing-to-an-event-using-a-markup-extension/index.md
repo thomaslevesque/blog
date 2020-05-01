@@ -282,3 +282,4 @@ using System.Windows.Markup;
     }
 ```
   So this is the kind of things we can do thanks to this new WPF feature. We could also imagine a behavior system similar to what we can do with attached properties, e.g. to execute a standard action when an event occurs. There are lots of possible applications for this, I leave it to you to find them ;)  
+

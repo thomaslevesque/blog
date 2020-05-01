@@ -17,9 +17,9 @@ categories:
 
 If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :  
 ```xml
-    &lt;UserControl.InputBindings&gt;
-        &lt;KeyBinding Modifiers=&quot;Control&quot; Key=&quot;E&quot; Command=&quot;{Binding EditCommand}&quot;/&gt;
-    &lt;/UserControl.InputBindings&gt;
+    <UserControl.InputBindings>
+        <KeyBinding Modifiers="Control" Key="E" Command="{Binding EditCommand}"/>
+    </UserControl.InputBindings>
 ```
   Unfortunately, this code doesn't work, for two reasons : 
 1. The `Command` property is not a dependency property, so you cannot assign it through binding
@@ -27,9 +27,9 @@ If you develop WPF applications according to the Model-View-ViewModel pattern, y
 
   A solution would be to create the `InputBinding`s in the code-behind, but in the MVVM pattern we usually prefer to avoid this... I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive. So I eventually came up with a markup extension that enables binding to ViewModel commands, anywhere in XAML, even for non-dependency properties or if the element doesn't normally inherit the `DataContext`  This extension is used like a regular binding :  
 ```xml
-    &lt;UserControl.InputBindings&gt;
-        &lt;KeyBinding Modifiers=&quot;Control&quot; Key=&quot;E&quot; Command=&quot;{input:CommandBinding EditCommand}&quot;/&gt;
-    &lt;/UserControl.InputBindings&gt;
+    <UserControl.InputBindings>
+        <KeyBinding Modifiers="Control" Key="E" Command="{input:CommandBinding EditCommand}"/>
+    </UserControl.InputBindings>
 ```
   (The *input* XML namespace is mapped to the CLR namespace where the markup extension is declared)  In order to write this extension, I had to cheat a little... I used Reflector to find some private fields that would allow to retrieve the `DataContext` of the root element. I then accessed those fields using reflection.  Here is the code of the markup extension :  
 ```csharp
@@ -53,7 +53,7 @@ namespace MVVMLib.Input
             this.CommandName = commandName;
         }
 
-        [ConstructorArgument(&quot;commandName&quot;)]
+        [ConstructorArgument("commandName")]
         public string CommandName { get; set; }
 
         private object targetObject;
@@ -70,12 +70,12 @@ namespace MVVMLib.Input
 
             if (!string.IsNullOrEmpty(CommandName))
             {
-                // The serviceProvider is actually a ProvideValueServiceProvider, which has a private field &quot;_context&quot; of type ParserContext
-                ParserContext parserContext = GetPrivateFieldValue&lt;ParserContext&gt;(serviceProvider, &quot;_context&quot;);
+                // The serviceProvider is actually a ProvideValueServiceProvider, which has a private field "_context" of type ParserContext
+                ParserContext parserContext = GetPrivateFieldValue<ParserContext>(serviceProvider, "_context");
                 if (parserContext != null)
                 {
-                    // A ParserContext has a private field &quot;_rootElement&quot;, which returns the root element of the XAML file
-                    FrameworkElement rootElement = GetPrivateFieldValue&lt;FrameworkElement&gt;(parserContext, &quot;_rootElement&quot;);
+                    // A ParserContext has a private field "_rootElement", which returns the root element of the XAML file
+                    FrameworkElement rootElement = GetPrivateFieldValue<FrameworkElement>(parserContext, "_rootElement");
                     if (rootElement != null)
                     {
                         // Now we can retrieve the DataContext
@@ -117,7 +117,7 @@ namespace MVVMLib.Input
 
         private void AssignCommand(ICommand command)
         {
-            if (targetObject != null &amp;&amp; targetProperty != null)
+            if (targetObject != null && targetProperty != null)
             {
                 if (targetProperty is DependencyProperty)
                 {
@@ -151,7 +151,7 @@ namespace MVVMLib.Input
             }
         }
 
-        private T GetPrivateFieldValue&lt;T&gt;(object target, string fieldName)
+        private T GetPrivateFieldValue<T>(object target, string fieldName)
         {
             FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
             if (field != null)
@@ -205,3 +205,4 @@ namespace MVVMLib.Input
 }
 ```
   However this solution has a limitation : it works only for the `DataContext` of the XAML root. So you can't use it, for instance, to define an InputBinding on a control whose `DataContext` is also redefined, because the markup extension will access the root `DataContext`. It shouldn't be a problem in most cases, but you need to be aware of that...
+
