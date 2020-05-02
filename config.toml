@@ -13,3 +13,24 @@ googleAnalytics = "UA-31621259-1"
 
 [permalinks]
   posts = "/:year/:month/:day/:title/"
+
+# Mainroad theme settings
+
+[Params]
+  customCSS = ["css/social.css"]
+
+[Params.sidebar]
+  home = "right" # Configure layout for home page
+  list = "right"  # Configure layout for list pages
+  single = "right" # Configure layout for single pages
+  # Enable widgets in given order
+  widgets = ["search", "social", "recent", "taglist"]
+
+[Params.widgets]
+  recent_num = 5 # Set the number of articles in the "Recent articles" widget
+  tags_counter = false
+  tags_num = 15
+
+[Params.widgets.social]
+  github = "thomaslevesque"
+  twitter = "thomaslevesque"

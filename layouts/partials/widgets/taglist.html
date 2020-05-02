@@ -1,0 +1,14 @@
+{{- $tags := .Site.Taxonomies.tags }}
+{{- $tags_num := .Site.Params.widgets.tags_num | default 10 }}
+{{- if gt (len $tags) 0 }}
+<div class="widget-taglist widget">
+	<h4 class="widget__title">{{ T "tags_title" }}</h4>
+	<div class="widget__content">
+	{{- range first $tags_num .Site.Taxonomies.tags.ByCount }}
+		<a class="widget-taglist__link widget__link btn" href="/tags/{{ .Name | urlize }}" title="{{ .Name }}">
+			{{- .Name -}}{{- if $.Site.Params.widgets.tags_counter }} ({{ .Count }}){{ end -}}
+		</a>
+	{{- end }}
+	</div>
+</div>
+{{- end }}

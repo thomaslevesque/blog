@@ -1,0 +1,17 @@
+{{- if .Site.Params.widgets.social }}
+<div class="widget-social widget">
+    <h4 class="widget-social__title widget__title">{{ T "social_title" }}</h4>
+    <div class="widget-social__content widget__content">
+        {{- with .Site.Params.widgets.social.github }}
+        <a class="widget-social__link-custom widget__link" title="GitHub" rel="noopener noreferrer" href="https://github.com/{{ . }}" target="_blank">
+            {{ partial "svg/github.svg" (dict "class" "widget-social__link-icon-custom") }}
+        </a>
+        {{- end }}
+        {{- with .Site.Params.widgets.social.twitter }}
+        <a class="widget-social__link-custom widget__link" title="Twitter" rel="noopener noreferrer" href="https://twitter.com/{{ . }}" target="_blank">
+            {{ partial "svg/twitter.svg" (dict "class" "widget-social__link-icon-custom") }}
+        </a>
+        {{- end }}
+    </div>
+</div>
+{{- end }}
