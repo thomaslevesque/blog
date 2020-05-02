@@ -1,4 +1,4 @@
-baseURL = "https://blog2.thomaslevesque.net/"
+baseURL = "https://thomaslevesque.com/"
 languageCode = "en-us"
 title = "Thomas Levesque's .NET Blog"
 theme = "mainroad"
