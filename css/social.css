@@ -1,0 +1,11 @@
+.widget-social__link-custom {
+	display: inline;
+	margin: 0 0 8px;
+	white-space: normal;
+}
+
+.widget-social__link-icon-custom {
+	margin: 0 5px 0 0;
+	vertical-align: middle;
+	fill: #000;
+}
