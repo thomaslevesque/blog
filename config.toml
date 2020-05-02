@@ -14,6 +14,9 @@ googleAnalytics = "UA-31621259-1"
 [permalinks]
   posts = "/:year/:month/:day/:title/"
 
+[markup.goldmark.renderer]
+  unsafe = true
+
 # Mainroad theme settings
 
 [Author] # Used in authorbox
