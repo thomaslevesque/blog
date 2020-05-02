@@ -16,7 +16,20 @@ googleAnalytics = "UA-31621259-1"
 
 # Mainroad theme settings
 
+[Author] # Used in authorbox
+  name = "Thomas Levesque"
+  bio = "Thomas Levesque is a French software developer from Paris."
+  avatar = "images/avatar.jpg"
+
 [Params]
+  subtitle = "Tips, tricks and thoughts about .NET development"
+  description = "Tips, tricks and thoughts about .NET development"
+  copyright = "Thomas Levesque"
+  authorbox = true
+  opengraph = true
+  twitter_cards = true
+  post_meta = ["date" ]
+  pager = true
   customCSS = ["css/social.css"]
 
 [Params.sidebar]
