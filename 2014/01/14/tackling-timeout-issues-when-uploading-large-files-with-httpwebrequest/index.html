@@ -7,8 +7,17 @@
 	<title>Tackling timeout issues when uploading large files with HttpWebRequest - Thomas Levesque&#39;s .NET Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	
-	
+	<meta property="og:title" content="Tackling timeout issues when uploading large files with HttpWebRequest" />
+<meta property="og:description" content="If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/" />
+<meta property="article:published_time" content="2014-01-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-01-14T00:00:00+00:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Tackling timeout issues when uploading large files with HttpWebRequest"/>
+<meta name="twitter:description" content="If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?"/>
+
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
@@ -35,7 +44,7 @@ if (!doNotTrack) {
 		<div class="logo">
 			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
 				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
-				
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
 			</a>
 		</div>
 		
@@ -63,7 +72,9 @@ if (!doNotTrack) {
 	<article class="post">
 		<header class="post__header">
 			<h1 class="post__title">Tackling timeout issues when uploading large files with HttpWebRequest</h1>
-			
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2014-01-14T00:00:00Z">January 14, 2014</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default <code>Timeout</code> value for <code>HttpWebRequest</code> is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?  If you know the available bandwidth, you could calculate a rough estimate of how long it should take to upload the file, but it’s not very reliable, because if there is some network congestion, it will take longer, and your request will fail even though it could have succeeded given enough time. So, should you set the timeout to a very large value, like several hours, or even <a href="http://msdn.microsoft.com/en-us/library/system.threading.timeout.infinite.aspx">Timeout.Infinite</a>? Probably not. The most compelling reason is that even though the transfer itself could take hours, some phases of the exchange shouldn’t take that long. Let’s decompose the phases of an HTTP upload:  <img src="timeout1.png" alt="timeout1" title="timeout1">  Obtaining the request stream or getting the response (orange parts) isn’t supposed to take very long, so obviously we need a rather short timeout there (the default value of 100 seconds seems reasonable). But sending the request body (blue part) could take much longer, and there is no reliable way  to decide how long that should be; as long as we keep sending data and the server is receiving it, there is no reason not to continue, even if it’s taking hours. So we actually don’t want a timeout at all there! Unfortunately, the behavior of the <code>Timeout</code> property is to consider everything from the call to <code>GetRequestStream</code> to the return of <code>GetResponse</code>…  In my opinion, it’s a design flaw of the <code>HttpWebRequest</code> class, and one that has bothered me for a very long time. So I eventually came up with a solution. It relies on the fact that the asynchronous versions of <code>GetRequestStream</code> and <code>GetResponse</code> don’t have a timeout mechanism. Here’s what the documentation says:</p>
 <blockquote>
@@ -179,8 +190,43 @@ if (!doNotTrack) {
 	</article>
 </main>
 
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Thomas Levesque</span>
+	</div>
+	<div class="authorbox__description">
+		Thomas Levesque is a French software developer from Paris.
+	</div>
+</div>
 
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/2013/11/30/uploading-data-with-httpclient-using-a-push-model/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Uploading data with HttpClient using a &#34;push&#34; model</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">[WPF] Declare global hotkeys in XAML with NHotkey</p>
+		</a>
+	</div>
+</nav>
 
+<div>
+    <script src="https://utteranc.es/client.js"
+            repo="thomaslevesque/blog"
+            issue-term="pathname"
+            label="post-comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
 
 
 			</div>
@@ -242,7 +288,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 Thomas Levesque&#39;s .NET Blog.
+			&copy; 2020 Thomas Levesque.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

@@ -7,8 +7,16 @@
 	<title>Posts - Thomas Levesque&#39;s .NET Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	
-	
+	<meta property="og:title" content="Posts" />
+<meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/posts/" />
+<meta property="og:updated_time" content="2020-03-28T00:00:00+00:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Posts"/>
+<meta name="twitter:description" content="Tips, tricks and thoughts about .NET development"/>
+
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Thomas Levesque's .NET Blog">
@@ -36,7 +44,7 @@ if (!doNotTrack) {
 		<div class="logo">
 			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
 				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
-				
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
 			</a>
 		</div>
 		
@@ -70,7 +78,9 @@ if (!doNotTrack) {
 			Tuples in C# 7
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-07-25T00:00:00Z">July 25, 2016</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
@@ -84,7 +94,9 @@ private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) 
 			Pitfall: using var and async together
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-06-21T00:00:00Z">June 21, 2016</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
@@ -97,7 +109,9 @@ public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBoo
 			Publishing a package from AppVeyor to NuGet.org
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-04-20T00:00:00Z">April 20, 2016</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		In the last few months, I’ve been using AppVeyor CI on some of my open-source projects (along with Cake for the build scripts). I really like it, but one thing bothered me: I couldn’t find a way to manually publish packages to NuGet.org directly from AppVeyor. I had to download the package locally, then upload it manually from my machine (either with nuget push on the command line, or via the web form on NuGet.
@@ -109,7 +123,9 @@ public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBoo
 			Test driving C# 7 features in Visual Studio “15” Preview
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-04-16T00:00:00Z">April 16, 2016</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!
@@ -121,7 +137,9 @@ public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBoo
 			Automatically inject fakes in test fixture with FakeItEasy
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-01-17T00:00:00Z">January 17, 2016</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Today I’d like to share a nice feature I discovered recently in FakeItEasy.
@@ -134,7 +152,9 @@ When you write unit tests for a class that takes dependencies, you typically nee
 			Using multiple cancellation sources with CreateLinkedTokenSource
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-12-31T00:00:00Z">December 31, 2015</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel.
@@ -146,7 +166,9 @@ When you write unit tests for a class that takes dependencies, you typically nee
 			Explicitly switch to the UI thread in an async method
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-11-11T00:00:00Z">November 11, 2015</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).
@@ -158,7 +180,9 @@ When you write unit tests for a class that takes dependencies, you typically nee
 			[WPF] Prevent the user from pasting an image in a RichTextBox
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-09-05T00:00:00Z">September 05, 2015</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.
@@ -171,7 +195,9 @@ When I googled for a way to prevent that, the only solutions I found suggested t
 			Weak events in C#, take two
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-08-16T00:00:00Z">August 16, 2015</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		A few years ago, I blogged about a generic implementation of the weak event pattern in C#. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.
@@ -184,7 +210,9 @@ My initial solution was more a proof of concept than anything else, and had a ma
 			C# Puzzle 2
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-07-30T00:00:00Z">July 30, 2015</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Just another little puzzle based on an issue I had at work…
@@ -261,7 +289,7 @@ x &gt; y is False!(x &lt;= y) is True
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 Thomas Levesque&#39;s .NET Blog.
+			&copy; 2020 Thomas Levesque.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

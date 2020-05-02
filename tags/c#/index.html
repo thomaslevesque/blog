@@ -7,8 +7,16 @@
 	<title>C# - Thomas Levesque&#39;s .NET Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	
-	
+	<meta property="og:title" content="C#" />
+<meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/tags/c#/" />
+<meta property="og:updated_time" content="2020-03-28T00:00:00+00:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="C#"/>
+<meta name="twitter:description" content="Tips, tricks and thoughts about .NET development"/>
+
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link rel="alternate" type="application/rss+xml" href="/tags/c#/index.xml" title="Thomas Levesque's .NET Blog">
@@ -36,7 +44,7 @@ if (!doNotTrack) {
 		<div class="logo">
 			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
 				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
-				
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
 			</a>
 		</div>
 		
@@ -70,7 +78,9 @@ if (!doNotTrack) {
 			Using the OAuth 2.0 device flow to authenticate users in desktop apps
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-03-28T00:00:00Z">March 28, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
@@ -83,7 +93,9 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
 			Lazily resolving services to fix circular dependencies in .NET Core
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-03-18T00:00:00Z">March 18, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
@@ -96,7 +108,9 @@ It is generally agreed that this should be avoided; I won&rsquo;t go into the de
 			Handling query string parameters with no value in ASP.NET Core
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-01-30T00:00:00Z">January 30, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
@@ -110,7 +124,9 @@ It is generally agreed that this should be avoided; I won&rsquo;t go into the de
 			ASP.NET Core: when environments are not enough, use sub-environments!
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-12-20T00:00:00Z">December 20, 2019</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Out of the box, ASP.NET Core has the concept of &ldquo;environments&rdquo;, which allows your app to use different settings based on which environment it&rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
@@ -123,7 +139,9 @@ It is generally agreed that this should be avoided; I won&rsquo;t go into the de
 			Easy unit testing of null argument validation (C# 8 edition)
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-11-19T00:00:00Z">November 19, 2019</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
@@ -136,7 +154,9 @@ It is generally agreed that this should be avoided; I won&rsquo;t go into the de
 			Using foreach with index in C#
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-11-18T00:00:00Z">November 18, 2019</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Just a quick tip today!
@@ -150,7 +170,9 @@ But sometimes, you do need the index of the current item; this usually leads to 
 			Handling type hierarchies in Cosmos DB (part 2)
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-10-15T00:00:00Z">October 15, 2019</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		This is the second post in a series of 2:
@@ -163,7 +185,9 @@ But sometimes, you do need the index of the current item; this usually leads to 
 			Handling type hierarchies in Cosmos DB (part 1)
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-10-14T00:00:00Z">October 14, 2019</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		This is the first post in a series of 2:
@@ -176,7 +200,9 @@ But sometimes, you do need the index of the current item; this usually leads to 
 			Multitenant Azure AD issuer validation in ASP.NET Core
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-12-24T00:00:00Z">December 24, 2018</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
@@ -189,7 +215,9 @@ openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organiza
 			Asynchronous initialization in ASP.NET Core, revisited
 			</a>
 		</h3>
-		
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-09-25T00:00:00Z">September 25, 2018</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
@@ -263,7 +291,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 Thomas Levesque&#39;s .NET Blog.
+			&copy; 2020 Thomas Levesque.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

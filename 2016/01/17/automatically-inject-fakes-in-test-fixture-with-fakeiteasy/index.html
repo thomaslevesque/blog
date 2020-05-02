@@ -7,8 +7,19 @@
 	<title>Automatically inject fakes in test fixture with FakeItEasy - Thomas Levesque&#39;s .NET Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	
-	
+	<meta property="og:title" content="Automatically inject fakes in test fixture with FakeItEasy" />
+<meta property="og:description" content="Today I’d like to share a nice feature I discovered recently in FakeItEasy.
+When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/" />
+<meta property="article:published_time" content="2016-01-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-01-17T00:00:00+00:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Automatically inject fakes in test fixture with FakeItEasy"/>
+<meta name="twitter:description" content="Today I’d like to share a nice feature I discovered recently in FakeItEasy.
+When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier."/>
+
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
@@ -35,7 +46,7 @@ if (!doNotTrack) {
 		<div class="logo">
 			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
 				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
-				
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
 			</a>
 		</div>
 		
@@ -63,7 +74,9 @@ if (!doNotTrack) {
 	<article class="post">
 		<header class="post__header">
 			<h1 class="post__title">Automatically inject fakes in test fixture with FakeItEasy</h1>
-			
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-01-17T00:00:00Z">January 17, 2016</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>Today I’d like to share a nice feature I discovered recently in <a href="http://fakeiteasy.github.io/">FakeItEasy</a>.</p>
 <p>When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with <a href="http://www.thomaslevesque.com/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/">an auto-mocking Unity extension</a> to make it easier. Now I just realized that FakeItEasy offers an even better solution: just declare the dependencies and SUT as fields or properties in your test fixture, and call <code>Fake.InitializeFixture</code> on the fixture to initialize them. Here’s how it looks:</p>
@@ -148,8 +161,43 @@ if (!doNotTrack) {
 	</article>
 </main>
 
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Thomas Levesque</span>
+	</div>
+	<div class="authorbox__description">
+		Thomas Levesque is a French software developer from Paris.
+	</div>
+</div>
 
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Using multiple cancellation sources with CreateLinkedTokenSource</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Test driving C# 7 features in Visual Studio “15” Preview</p>
+		</a>
+	</div>
+</nav>
 
+<div>
+    <script src="https://utteranc.es/client.js"
+            repo="thomaslevesque/blog"
+            issue-term="pathname"
+            label="post-comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
 
 
 			</div>
@@ -211,7 +259,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 Thomas Levesque&#39;s .NET Blog.
+			&copy; 2020 Thomas Levesque.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

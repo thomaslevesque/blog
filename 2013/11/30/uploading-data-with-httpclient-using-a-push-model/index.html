@@ -7,8 +7,19 @@
 	<title>Uploading data with HttpClient using a &#34;push&#34; model - Thomas Levesque&#39;s .NET Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	
-	
+	<meta property="og:title" content="Uploading data with HttpClient using a &#34;push&#34; model" />
+<meta property="og:description" content="If you have used the HttpWebRequest class to upload data, you know that it uses a “push” model. What I mean is that you call the GetRequestStream method, which opens the connection if necessary, sends the headers, and returns a stream on which you can write directly.
+.NET 4.5 introduced the HttpClient class as a new way to communicate over HTTP. It actually relies on HttpWebRequest under the hood, but offers a more convenient and fully asynchronous API." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog2.thomaslevesque.net/2013/11/30/uploading-data-with-httpclient-using-a-push-model/" />
+<meta property="article:published_time" content="2013-11-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-11-30T00:00:00+00:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Uploading data with HttpClient using a &#34;push&#34; model"/>
+<meta name="twitter:description" content="If you have used the HttpWebRequest class to upload data, you know that it uses a “push” model. What I mean is that you call the GetRequestStream method, which opens the connection if necessary, sends the headers, and returns a stream on which you can write directly.
+.NET 4.5 introduced the HttpClient class as a new way to communicate over HTTP. It actually relies on HttpWebRequest under the hood, but offers a more convenient and fully asynchronous API."/>
+
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
@@ -35,7 +46,7 @@ if (!doNotTrack) {
 		<div class="logo">
 			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
 				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
-				
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
 			</a>
 		</div>
 		
@@ -63,7 +74,9 @@ if (!doNotTrack) {
 	<article class="post">
 		<header class="post__header">
 			<h1 class="post__title">Uploading data with HttpClient using a &#34;push&#34; model</h1>
-			
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2013-11-30T00:00:00Z">November 30, 2013</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>If you have used the <code>HttpWebRequest</code> class to upload data, you know that it uses a “push” model. What I mean is that you call the <code>GetRequestStream</code> method, which opens the connection if necessary, sends the headers, and returns a stream on which you can write directly.</p>
 <p>.NET 4.5 introduced the <code>HttpClient</code> class as a new way to communicate over HTTP. It actually relies on <code>HttpWebRequest</code> under the hood, but offers a more convenient and fully asynchronous API. <code>HttpClient</code> uses a different approach when it comes to uploading data: instead of writing manually to the request stream, you set the <code>Content</code> property of the <code>HttpRequestMessage</code> to an instance of a class derived from <code>HttpContent</code>. You can also pass the content directly to the <code>PostAsync</code> or <code>PutAsync</code> methods.</p>
@@ -150,8 +163,43 @@ if (!doNotTrack) {
 	</article>
 </main>
 
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Thomas Levesque</span>
+	</div>
+	<div class="authorbox__description">
+		Thomas Levesque is a French software developer from Paris.
+	</div>
+</div>
 
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/2013/11/21/winrt-toggle-selection-of-a-list-item-on-long-press/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">[WinRT] Toggle selection of a list item on long press</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Tackling timeout issues when uploading large files with HttpWebRequest</p>
+		</a>
+	</div>
+</nav>
 
+<div>
+    <script src="https://utteranc.es/client.js"
+            repo="thomaslevesque/blog"
+            issue-term="pathname"
+            label="post-comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
 
 
 			</div>
@@ -213,7 +261,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 Thomas Levesque&#39;s .NET Blog.
+			&copy; 2020 Thomas Levesque.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>
