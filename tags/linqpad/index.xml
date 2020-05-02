@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>linqpad on Thomas Levesque&#39;s .NET Blog</title>
-    <link>https://blog2.thomaslevesque.net/tags/linqpad/</link>
+    <link>https://thomaslevesque.com/tags/linqpad/</link>
     <description>Recent content in linqpad on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 26 Aug 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blog2.thomaslevesque.net/tags/linqpad/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://thomaslevesque.com/tags/linqpad/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Testing and debugging library code from LINQPad</title>
-      <link>https://blog2.thomaslevesque.net/2017/08/26/testing-and-debugging-library-code-from-linqpad/</link>
+      <link>https://thomaslevesque.com/2017/08/26/testing-and-debugging-library-code-from-linqpad/</link>
       <pubDate>Sat, 26 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2017/08/26/testing-and-debugging-library-code-from-linqpad/</guid>
+      <guid>https://thomaslevesque.com/2017/08/26/testing-and-debugging-library-code-from-linqpad/</guid>
       <description>I&amp;rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&amp;rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&amp;rsquo;s also extremely useful as a general-purpose .</description>
     </item>
     

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tuple on Thomas Levesque&#39;s .NET Blog</title>
-    <link>https://blog2.thomaslevesque.net/tags/tuple/</link>
+    <link>https://thomaslevesque.com/tags/tuple/</link>
     <description>Recent content in tuple on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blog2.thomaslevesque.net/tags/tuple/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://thomaslevesque.com/tags/tuple/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Using foreach with index in C#</title>
-      <link>https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/</link>
+      <link>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2019/11/18/using-foreach-with-index-in-c/</guid>
+      <guid>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</guid>
       <description>Just a quick tip today!
 for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
@@ -24,10 +24,10 @@ But sometimes, you do need the index of the current item; this usually leads to 
     
     <item>
       <title>Tuple deconstruction in C# 7</title>
-      <link>https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/</link>
+      <link>https://thomaslevesque.com/2016/08/23/tuple-deconstruction-in-c-7/</link>
       <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/</guid>
+      <guid>https://thomaslevesque.com/2016/08/23/tuple-deconstruction-in-c-7/</guid>
       <description>Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
   emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
   deconstruction of tuples into separate variables
@@ -36,10 +36,10 @@ Well, it looks like the C# language team has been busy during the last month, be
     
     <item>
       <title>Tuples in C# 7</title>
-      <link>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</link>
+      <link>https://thomaslevesque.com/2016/07/25/tuples-in-c-7/</link>
       <pubDate>Mon, 25 Jul 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</guid>
+      <guid>https://thomaslevesque.com/2016/07/25/tuples-in-c-7/</guid>
       <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
 private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.</description>

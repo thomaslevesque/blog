@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C# 7 on Thomas Levesque&#39;s .NET Blog</title>
-    <link>https://blog2.thomaslevesque.net/tags/c#-7/</link>
+    <link>https://thomaslevesque.com/tags/c#-7/</link>
     <description>Recent content in C# 7 on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 23 Aug 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blog2.thomaslevesque.net/tags/c#-7/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://thomaslevesque.com/tags/c#-7/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Tuple deconstruction in C# 7</title>
-      <link>https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/</link>
+      <link>https://thomaslevesque.com/2016/08/23/tuple-deconstruction-in-c-7/</link>
       <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2016/08/23/tuple-deconstruction-in-c-7/</guid>
+      <guid>https://thomaslevesque.com/2016/08/23/tuple-deconstruction-in-c-7/</guid>
       <description>Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
   emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
   deconstruction of tuples into separate variables
@@ -25,10 +25,10 @@ Well, it looks like the C# language team has been busy during the last month, be
     
     <item>
       <title>Tuples in C# 7</title>
-      <link>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</link>
+      <link>https://thomaslevesque.com/2016/07/25/tuples-in-c-7/</link>
       <pubDate>Mon, 25 Jul 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2016/07/25/tuples-in-c-7/</guid>
+      <guid>https://thomaslevesque.com/2016/07/25/tuples-in-c-7/</guid>
       <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
 private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.</description>
@@ -36,10 +36,10 @@ private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&
     
     <item>
       <title>Test driving C# 7 features in Visual Studio “15” Preview</title>
-      <link>https://blog2.thomaslevesque.net/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</link>
+      <link>https://thomaslevesque.com/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</link>
       <pubDate>Sat, 16 Apr 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</guid>
+      <guid>https://thomaslevesque.com/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</guid>
       <description>About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!</description>
     </item>
     

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>grid on Thomas Levesque&#39;s .NET Blog</title>
-    <link>https://blog2.thomaslevesque.net/tags/grid/</link>
+    <link>https://thomaslevesque.com/tags/grid/</link>
     <description>Recent content in grid on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 21 Nov 2013 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blog2.thomaslevesque.net/tags/grid/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://thomaslevesque.com/tags/grid/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>[WPF] A simpler Grid using XAML attribute syntax</title>
-      <link>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</link>
+      <link>https://thomaslevesque.com/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</link>
       <pubDate>Tue, 20 Jul 2010 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</guid>
+      <guid>https://thomaslevesque.com/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</guid>
       <description>The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:
 &amp;lt;Grid&amp;gt; &amp;lt;Grid.RowDefinitions&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;Auto&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;5&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;*&amp;#34;/&amp;gt; &amp;lt;/Grid.RowDefinitions&amp;gt; &amp;lt;Grid.ColumnDefinitions&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;60&amp;#34; /&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;*&amp;#34; /&amp;gt; &amp;lt;/Grid.ColumnDefinitions&amp;gt; &amp;lt;Label Content=&amp;#34;Name&amp;#34; Grid.Row=&amp;#34;0&amp;#34; Grid.Column=&amp;#34;0&amp;#34; /&amp;gt; &amp;lt;TextBox Text=&amp;#34;Hello world&amp;#34; Grid.</description>
     </item>

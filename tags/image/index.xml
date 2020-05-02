@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>image on Thomas Levesque&#39;s .NET Blog</title>
-    <link>https://blog2.thomaslevesque.net/tags/image/</link>
+    <link>https://thomaslevesque.com/tags/image/</link>
     <description>Recent content in image on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 05 Sep 2015 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blog2.thomaslevesque.net/tags/image/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://thomaslevesque.com/tags/image/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>[WPF] Prevent the user from pasting an image in a RichTextBox</title>
-      <link>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</link>
+      <link>https://thomaslevesque.com/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</link>
       <pubDate>Sat, 05 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</guid>
+      <guid>https://thomaslevesque.com/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</guid>
       <description>WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.
 When I googled for a way to prevent that, the only solutions I found suggested to intercept the Ctrl-V keystroke, and swallow the event if the clipboard contains an image.</description>
     </item>
     
     <item>
       <title>Showing result suggestions in a WinRT SearchBox: bug regarding the image</title>
-      <link>https://blog2.thomaslevesque.net/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</link>
+      <link>https://thomaslevesque.com/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</link>
       <pubDate>Mon, 04 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</guid>
+      <guid>https://thomaslevesque.com/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</guid>
       <description>Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
 The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:
  History suggestions are search queries previously entered by the user.</description>
@@ -34,10 +34,10 @@ The SearchBox control was introduced in Windows 8.1 to enable search scenarios f
     
     <item>
       <title>[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)</title>
-      <link>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
+      <link>https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
       <pubDate>Thu, 05 Feb 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
+      <guid>https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
       <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)
 If you&amp;rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&amp;hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&amp;rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</description>
     </item>

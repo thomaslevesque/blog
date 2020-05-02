@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pipeline on Thomas Levesque&#39;s .NET Blog</title>
-    <link>https://blog2.thomaslevesque.net/tags/pipeline/</link>
+    <link>https://thomaslevesque.com/tags/pipeline/</link>
     <description>Recent content in pipeline on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 27 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blog2.thomaslevesque.net/tags/pipeline/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://thomaslevesque.com/tags/pipeline/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Understanding the ASP.NET Core middleware pipeline</title>
-      <link>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</link>
+      <link>https://thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</link>
       <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</guid>
+      <guid>https://thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</guid>
       <description>Middlewhat? The ASP.NET Core architecture features a system of middleware, which are pieces of code that handle requests and responses. Middleware are chained to each other to form a pipeline. Incoming requests are passed through the pipeline, where each middleware has a chance to do something with them before passing them to the next middleware. Outgoing responses are also passed through the pipeline, in reverse order. If this sounds very abstract, the following schema from the official ASP.</description>
     </item>
     
     <item>
       <title>Fun with the HttpClient pipeline</title>
-      <link>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</link>
+      <link>https://thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/</link>
       <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
+      <guid>https://thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
       <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.
 You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&amp;rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
     </item>

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Visual Studio Online on Thomas Levesque&#39;s .NET Blog</title>
-    <link>https://blog2.thomaslevesque.net/tags/visual-studio-online/</link>
+    <link>https://thomaslevesque.com/tags/visual-studio-online/</link>
     <description>Recent content in Visual Studio Online on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 12 Oct 2014 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blog2.thomaslevesque.net/tags/visual-studio-online/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://thomaslevesque.com/tags/visual-studio-online/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Visual Studio Online &#43; Git integration with Team Explorer</title>
-      <link>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</link>
+      <link>https://thomaslevesque.com/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</link>
       <pubDate>Sun, 12 Oct 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</guid>
+      <guid>https://thomaslevesque.com/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</guid>
       <description>I recently started using Visual Studio Online for personal projects, and I must say it’s a pretty good platform, although it would be nice to be able to host public projects as well as private ones. The thing I like the most is the integration with Visual Studio Team Explorer to manage work items and builds.
 However, I noticed a little gotcha when using Git for source control : the remote for VS Online must be named origin, otherwise Team Explorer won’t detect that it’s a VS Online project, and it won’t show the “Builds” and “Work items” pages.</description>
     </item>

@@ -2,1965 +2,1965 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Thomas Levesque&#39;s .NET Blog</title>
-    <link>https://blog2.thomaslevesque.net/tags/</link>
+    <link>https://thomaslevesque.com/tags/</link>
     <description>Recent content in Tags on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blog2.thomaslevesque.net/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://thomaslevesque.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>.NET</title>
-      <link>https://blog2.thomaslevesque.net/tags/.net/</link>
+      <link>https://thomaslevesque.com/tags/.net/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/.net/</guid>
+      <guid>https://thomaslevesque.com/tags/.net/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Authentication</title>
-      <link>https://blog2.thomaslevesque.net/tags/authentication/</link>
+      <link>https://thomaslevesque.com/tags/authentication/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/authentication/</guid>
+      <guid>https://thomaslevesque.com/tags/authentication/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Azure</title>
-      <link>https://blog2.thomaslevesque.net/tags/azure/</link>
+      <link>https://thomaslevesque.com/tags/azure/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/azure/</guid>
+      <guid>https://thomaslevesque.com/tags/azure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Azure AD</title>
-      <link>https://blog2.thomaslevesque.net/tags/azure-ad/</link>
+      <link>https://thomaslevesque.com/tags/azure-ad/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/azure-ad/</guid>
+      <guid>https://thomaslevesque.com/tags/azure-ad/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C#</title>
-      <link>https://blog2.thomaslevesque.net/tags/c#/</link>
+      <link>https://thomaslevesque.com/tags/c#/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/c#/</guid>
+      <guid>https://thomaslevesque.com/tags/c#/</guid>
       <description></description>
     </item>
     
     <item>
       <title>device flow</title>
-      <link>https://blog2.thomaslevesque.net/tags/device-flow/</link>
+      <link>https://thomaslevesque.com/tags/device-flow/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/device-flow/</guid>
+      <guid>https://thomaslevesque.com/tags/device-flow/</guid>
       <description></description>
     </item>
     
     <item>
       <title>OAuth 2.0</title>
-      <link>https://blog2.thomaslevesque.net/tags/oauth-2.0/</link>
+      <link>https://thomaslevesque.com/tags/oauth-2.0/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/oauth-2.0/</guid>
+      <guid>https://thomaslevesque.com/tags/oauth-2.0/</guid>
       <description></description>
     </item>
     
     <item>
       <title>OpenId Connect</title>
-      <link>https://blog2.thomaslevesque.net/tags/openid-connect/</link>
+      <link>https://thomaslevesque.com/tags/openid-connect/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/openid-connect/</guid>
+      <guid>https://thomaslevesque.com/tags/openid-connect/</guid>
       <description></description>
     </item>
     
     <item>
       <title>.net core</title>
-      <link>https://blog2.thomaslevesque.net/tags/.net-core/</link>
+      <link>https://thomaslevesque.com/tags/.net-core/</link>
       <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/.net-core/</guid>
+      <guid>https://thomaslevesque.com/tags/.net-core/</guid>
       <description></description>
     </item>
     
     <item>
       <title>circular dependency</title>
-      <link>https://blog2.thomaslevesque.net/tags/circular-dependency/</link>
+      <link>https://thomaslevesque.com/tags/circular-dependency/</link>
       <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/circular-dependency/</guid>
+      <guid>https://thomaslevesque.com/tags/circular-dependency/</guid>
       <description></description>
     </item>
     
     <item>
       <title>dependency injection</title>
-      <link>https://blog2.thomaslevesque.net/tags/dependency-injection/</link>
+      <link>https://thomaslevesque.com/tags/dependency-injection/</link>
       <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/dependency-injection/</guid>
+      <guid>https://thomaslevesque.com/tags/dependency-injection/</guid>
       <description></description>
     </item>
     
     <item>
       <title>lazy</title>
-      <link>https://blog2.thomaslevesque.net/tags/lazy/</link>
+      <link>https://thomaslevesque.com/tags/lazy/</link>
       <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/lazy/</guid>
+      <guid>https://thomaslevesque.com/tags/lazy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>asp.net</title>
-      <link>https://blog2.thomaslevesque.net/tags/asp.net/</link>
+      <link>https://thomaslevesque.com/tags/asp.net/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/asp.net/</guid>
+      <guid>https://thomaslevesque.com/tags/asp.net/</guid>
       <description></description>
     </item>
     
     <item>
       <title>asp.net core</title>
-      <link>https://blog2.thomaslevesque.net/tags/asp.net-core/</link>
+      <link>https://thomaslevesque.com/tags/asp.net-core/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/asp.net-core/</guid>
+      <guid>https://thomaslevesque.com/tags/asp.net-core/</guid>
       <description></description>
     </item>
     
     <item>
       <title>model binding</title>
-      <link>https://blog2.thomaslevesque.net/tags/model-binding/</link>
+      <link>https://thomaslevesque.com/tags/model-binding/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/model-binding/</guid>
+      <guid>https://thomaslevesque.com/tags/model-binding/</guid>
       <description></description>
     </item>
     
     <item>
       <title>query string</title>
-      <link>https://blog2.thomaslevesque.net/tags/query-string/</link>
+      <link>https://thomaslevesque.com/tags/query-string/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/query-string/</guid>
+      <guid>https://thomaslevesque.com/tags/query-string/</guid>
       <description></description>
     </item>
     
     <item>
       <title>configuration</title>
-      <link>https://blog2.thomaslevesque.net/tags/configuration/</link>
+      <link>https://thomaslevesque.com/tags/configuration/</link>
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/configuration/</guid>
+      <guid>https://thomaslevesque.com/tags/configuration/</guid>
       <description></description>
     </item>
     
     <item>
       <title>environment</title>
-      <link>https://blog2.thomaslevesque.net/tags/environment/</link>
+      <link>https://thomaslevesque.com/tags/environment/</link>
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/environment/</guid>
+      <guid>https://thomaslevesque.com/tags/environment/</guid>
       <description></description>
     </item>
     
     <item>
       <title>sub-environment</title>
-      <link>https://blog2.thomaslevesque.net/tags/sub-environment/</link>
+      <link>https://thomaslevesque.com/tags/sub-environment/</link>
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/sub-environment/</guid>
+      <guid>https://thomaslevesque.com/tags/sub-environment/</guid>
       <description></description>
     </item>
     
     <item>
       <title>argument validation</title>
-      <link>https://blog2.thomaslevesque.net/tags/argument-validation/</link>
+      <link>https://thomaslevesque.com/tags/argument-validation/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/argument-validation/</guid>
+      <guid>https://thomaslevesque.com/tags/argument-validation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C# 8</title>
-      <link>https://blog2.thomaslevesque.net/tags/c#-8/</link>
+      <link>https://thomaslevesque.com/tags/c#-8/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/c#-8/</guid>
+      <guid>https://thomaslevesque.com/tags/c#-8/</guid>
       <description></description>
     </item>
     
     <item>
       <title>non-nullable reference types</title>
-      <link>https://blog2.thomaslevesque.net/tags/non-nullable-reference-types/</link>
+      <link>https://thomaslevesque.com/tags/non-nullable-reference-types/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/non-nullable-reference-types/</guid>
+      <guid>https://thomaslevesque.com/tags/non-nullable-reference-types/</guid>
       <description></description>
     </item>
     
     <item>
       <title>null check</title>
-      <link>https://blog2.thomaslevesque.net/tags/null-check/</link>
+      <link>https://thomaslevesque.com/tags/null-check/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/null-check/</guid>
+      <guid>https://thomaslevesque.com/tags/null-check/</guid>
       <description></description>
     </item>
     
     <item>
       <title>unit</title>
-      <link>https://blog2.thomaslevesque.net/tags/unit/</link>
+      <link>https://thomaslevesque.com/tags/unit/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/unit/</guid>
+      <guid>https://thomaslevesque.com/tags/unit/</guid>
       <description></description>
     </item>
     
     <item>
       <title>unit testing</title>
-      <link>https://blog2.thomaslevesque.net/tags/unit-testing/</link>
+      <link>https://thomaslevesque.com/tags/unit-testing/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/unit-testing/</guid>
+      <guid>https://thomaslevesque.com/tags/unit-testing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>foreach</title>
-      <link>https://blog2.thomaslevesque.net/tags/foreach/</link>
+      <link>https://thomaslevesque.com/tags/foreach/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/foreach/</guid>
+      <guid>https://thomaslevesque.com/tags/foreach/</guid>
       <description></description>
     </item>
     
     <item>
       <title>index</title>
-      <link>https://blog2.thomaslevesque.net/tags/index/</link>
+      <link>https://thomaslevesque.com/tags/index/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/index/</guid>
+      <guid>https://thomaslevesque.com/tags/index/</guid>
       <description></description>
     </item>
     
     <item>
       <title>linq</title>
-      <link>https://blog2.thomaslevesque.net/tags/linq/</link>
+      <link>https://thomaslevesque.com/tags/linq/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/linq/</guid>
+      <guid>https://thomaslevesque.com/tags/linq/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tuple</title>
-      <link>https://blog2.thomaslevesque.net/tags/tuple/</link>
+      <link>https://thomaslevesque.com/tags/tuple/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/tuple/</guid>
+      <guid>https://thomaslevesque.com/tags/tuple/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Cosmos DB</title>
-      <link>https://blog2.thomaslevesque.net/tags/cosmos-db/</link>
+      <link>https://thomaslevesque.com/tags/cosmos-db/</link>
       <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/cosmos-db/</guid>
+      <guid>https://thomaslevesque.com/tags/cosmos-db/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JSON</title>
-      <link>https://blog2.thomaslevesque.net/tags/json/</link>
+      <link>https://thomaslevesque.com/tags/json/</link>
       <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/json/</guid>
+      <guid>https://thomaslevesque.com/tags/json/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Azure Cosmos DB</title>
-      <link>https://blog2.thomaslevesque.net/tags/azure-cosmos-db/</link>
+      <link>https://thomaslevesque.com/tags/azure-cosmos-db/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/azure-cosmos-db/</guid>
+      <guid>https://thomaslevesque.com/tags/azure-cosmos-db/</guid>
       <description></description>
     </item>
     
     <item>
       <title>server-side</title>
-      <link>https://blog2.thomaslevesque.net/tags/server-side/</link>
+      <link>https://thomaslevesque.com/tags/server-side/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/server-side/</guid>
+      <guid>https://thomaslevesque.com/tags/server-side/</guid>
       <description></description>
     </item>
     
     <item>
       <title>stored procedure</title>
-      <link>https://blog2.thomaslevesque.net/tags/stored-procedure/</link>
+      <link>https://thomaslevesque.com/tags/stored-procedure/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/stored-procedure/</guid>
+      <guid>https://thomaslevesque.com/tags/stored-procedure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>TypeScript</title>
-      <link>https://blog2.thomaslevesque.net/tags/typescript/</link>
+      <link>https://thomaslevesque.com/tags/typescript/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/typescript/</guid>
+      <guid>https://thomaslevesque.com/tags/typescript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>scale-out</title>
-      <link>https://blog2.thomaslevesque.net/tags/scale-out/</link>
+      <link>https://thomaslevesque.com/tags/scale-out/</link>
       <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/scale-out/</guid>
+      <guid>https://thomaslevesque.com/tags/scale-out/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Service Bus</title>
-      <link>https://blog2.thomaslevesque.net/tags/service-bus/</link>
+      <link>https://thomaslevesque.com/tags/service-bus/</link>
       <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/service-bus/</guid>
+      <guid>https://thomaslevesque.com/tags/service-bus/</guid>
       <description></description>
     </item>
     
     <item>
       <title>SignalR</title>
-      <link>https://blog2.thomaslevesque.net/tags/signalr/</link>
+      <link>https://thomaslevesque.com/tags/signalr/</link>
       <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/signalr/</guid>
+      <guid>https://thomaslevesque.com/tags/signalr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>google</title>
-      <link>https://blog2.thomaslevesque.net/tags/google/</link>
+      <link>https://thomaslevesque.com/tags/google/</link>
       <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/google/</guid>
+      <guid>https://thomaslevesque.com/tags/google/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Azure Active Directory</title>
-      <link>https://blog2.thomaslevesque.net/tags/azure-active-directory/</link>
+      <link>https://thomaslevesque.com/tags/azure-active-directory/</link>
       <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/azure-active-directory/</guid>
+      <guid>https://thomaslevesque.com/tags/azure-active-directory/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JWT</title>
-      <link>https://blog2.thomaslevesque.net/tags/jwt/</link>
+      <link>https://thomaslevesque.com/tags/jwt/</link>
       <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/jwt/</guid>
+      <guid>https://thomaslevesque.com/tags/jwt/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Multitenant</title>
-      <link>https://blog2.thomaslevesque.net/tags/multitenant/</link>
+      <link>https://thomaslevesque.com/tags/multitenant/</link>
       <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/multitenant/</guid>
+      <guid>https://thomaslevesque.com/tags/multitenant/</guid>
       <description></description>
     </item>
     
     <item>
       <title>.net core sdk</title>
-      <link>https://blog2.thomaslevesque.net/tags/.net-core-sdk/</link>
+      <link>https://thomaslevesque.com/tags/.net-core-sdk/</link>
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/.net-core-sdk/</guid>
+      <guid>https://thomaslevesque.com/tags/.net-core-sdk/</guid>
       <description></description>
     </item>
     
     <item>
       <title>sdk-style project</title>
-      <link>https://blog2.thomaslevesque.net/tags/sdk-style-project/</link>
+      <link>https://thomaslevesque.com/tags/sdk-style-project/</link>
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/sdk-style-project/</guid>
+      <guid>https://thomaslevesque.com/tags/sdk-style-project/</guid>
       <description></description>
     </item>
     
     <item>
       <title>WPF</title>
-      <link>https://blog2.thomaslevesque.net/tags/wpf/</link>
+      <link>https://thomaslevesque.com/tags/wpf/</link>
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/wpf/</guid>
+      <guid>https://thomaslevesque.com/tags/wpf/</guid>
       <description></description>
     </item>
     
     <item>
       <title>async</title>
-      <link>https://blog2.thomaslevesque.net/tags/async/</link>
+      <link>https://thomaslevesque.com/tags/async/</link>
       <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/async/</guid>
+      <guid>https://thomaslevesque.com/tags/async/</guid>
       <description></description>
     </item>
     
     <item>
       <title>initialization</title>
-      <link>https://blog2.thomaslevesque.net/tags/initialization/</link>
+      <link>https://thomaslevesque.com/tags/initialization/</link>
       <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/initialization/</guid>
+      <guid>https://thomaslevesque.com/tags/initialization/</guid>
       <description></description>
     </item>
     
     <item>
       <title>multipart</title>
-      <link>https://blog2.thomaslevesque.net/tags/multipart/</link>
+      <link>https://thomaslevesque.com/tags/multipart/</link>
       <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/multipart/</guid>
+      <guid>https://thomaslevesque.com/tags/multipart/</guid>
       <description></description>
     </item>
     
     <item>
       <title>upload</title>
-      <link>https://blog2.thomaslevesque.net/tags/upload/</link>
+      <link>https://thomaslevesque.com/tags/upload/</link>
       <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/upload/</guid>
+      <guid>https://thomaslevesque.com/tags/upload/</guid>
       <description></description>
     </item>
     
     <item>
       <title>middleware</title>
-      <link>https://blog2.thomaslevesque.net/tags/middleware/</link>
+      <link>https://thomaslevesque.com/tags/middleware/</link>
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/middleware/</guid>
+      <guid>https://thomaslevesque.com/tags/middleware/</guid>
       <description></description>
     </item>
     
     <item>
       <title>linux</title>
-      <link>https://blog2.thomaslevesque.net/tags/linux/</link>
+      <link>https://thomaslevesque.com/tags/linux/</link>
       <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/linux/</guid>
+      <guid>https://thomaslevesque.com/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>nginx</title>
-      <link>https://blog2.thomaslevesque.net/tags/nginx/</link>
+      <link>https://thomaslevesque.com/tags/nginx/</link>
       <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/nginx/</guid>
+      <guid>https://thomaslevesque.com/tags/nginx/</guid>
       <description></description>
     </item>
     
     <item>
       <title>raspberry pi</title>
-      <link>https://blog2.thomaslevesque.net/tags/raspberry-pi/</link>
+      <link>https://thomaslevesque.com/tags/raspberry-pi/</link>
       <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/raspberry-pi/</guid>
+      <guid>https://thomaslevesque.com/tags/raspberry-pi/</guid>
       <description></description>
     </item>
     
     <item>
       <title>reverse proxy</title>
-      <link>https://blog2.thomaslevesque.net/tags/reverse-proxy/</link>
+      <link>https://thomaslevesque.com/tags/reverse-proxy/</link>
       <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/reverse-proxy/</guid>
+      <guid>https://thomaslevesque.com/tags/reverse-proxy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Azure Functions</title>
-      <link>https://blog2.thomaslevesque.net/tags/azure-functions/</link>
+      <link>https://thomaslevesque.com/tags/azure-functions/</link>
       <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/azure-functions/</guid>
+      <guid>https://thomaslevesque.com/tags/azure-functions/</guid>
       <description></description>
     </item>
     
     <item>
       <title>git</title>
-      <link>https://blog2.thomaslevesque.net/tags/git/</link>
+      <link>https://thomaslevesque.com/tags/git/</link>
       <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/git/</guid>
+      <guid>https://thomaslevesque.com/tags/git/</guid>
       <description></description>
     </item>
     
     <item>
       <title>GitHub</title>
-      <link>https://blog2.thomaslevesque.net/tags/github/</link>
+      <link>https://thomaslevesque.com/tags/github/</link>
       <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/github/</guid>
+      <guid>https://thomaslevesque.com/tags/github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ngrok</title>
-      <link>https://blog2.thomaslevesque.net/tags/ngrok/</link>
+      <link>https://thomaslevesque.com/tags/ngrok/</link>
       <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/ngrok/</guid>
+      <guid>https://thomaslevesque.com/tags/ngrok/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Webhook</title>
-      <link>https://blog2.thomaslevesque.net/tags/webhook/</link>
+      <link>https://thomaslevesque.com/tags/webhook/</link>
       <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/webhook/</guid>
+      <guid>https://thomaslevesque.com/tags/webhook/</guid>
       <description></description>
     </item>
     
     <item>
       <title>pipeline</title>
-      <link>https://blog2.thomaslevesque.net/tags/pipeline/</link>
+      <link>https://thomaslevesque.com/tags/pipeline/</link>
       <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/pipeline/</guid>
+      <guid>https://thomaslevesque.com/tags/pipeline/</guid>
       <description></description>
     </item>
     
     <item>
       <title>version control</title>
-      <link>https://blog2.thomaslevesque.net/tags/version-control/</link>
+      <link>https://thomaslevesque.com/tags/version-control/</link>
       <pubDate>Tue, 06 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/version-control/</guid>
+      <guid>https://thomaslevesque.com/tags/version-control/</guid>
       <description></description>
     </item>
     
     <item>
       <title>handler</title>
-      <link>https://blog2.thomaslevesque.net/tags/handler/</link>
+      <link>https://thomaslevesque.com/tags/handler/</link>
       <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/handler/</guid>
+      <guid>https://thomaslevesque.com/tags/handler/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HTTP</title>
-      <link>https://blog2.thomaslevesque.net/tags/http/</link>
+      <link>https://thomaslevesque.com/tags/http/</link>
       <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/http/</guid>
+      <guid>https://thomaslevesque.com/tags/http/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HttpClient</title>
-      <link>https://blog2.thomaslevesque.net/tags/httpclient/</link>
+      <link>https://thomaslevesque.com/tags/httpclient/</link>
       <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/httpclient/</guid>
+      <guid>https://thomaslevesque.com/tags/httpclient/</guid>
       <description></description>
     </item>
     
     <item>
       <title>timeout</title>
-      <link>https://blog2.thomaslevesque.net/tags/timeout/</link>
+      <link>https://thomaslevesque.com/tags/timeout/</link>
       <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/timeout/</guid>
+      <guid>https://thomaslevesque.com/tags/timeout/</guid>
       <description></description>
     </item>
     
     <item>
       <title>build</title>
-      <link>https://blog2.thomaslevesque.net/tags/build/</link>
+      <link>https://thomaslevesque.com/tags/build/</link>
       <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/build/</guid>
+      <guid>https://thomaslevesque.com/tags/build/</guid>
       <description></description>
     </item>
     
     <item>
       <title>code generation</title>
-      <link>https://blog2.thomaslevesque.net/tags/code-generation/</link>
+      <link>https://thomaslevesque.com/tags/code-generation/</link>
       <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/code-generation/</guid>
+      <guid>https://thomaslevesque.com/tags/code-generation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>msbuild</title>
-      <link>https://blog2.thomaslevesque.net/tags/msbuild/</link>
+      <link>https://thomaslevesque.com/tags/msbuild/</link>
       <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/msbuild/</guid>
+      <guid>https://thomaslevesque.com/tags/msbuild/</guid>
       <description></description>
     </item>
     
     <item>
       <title>T4</title>
-      <link>https://blog2.thomaslevesque.net/tags/t4/</link>
+      <link>https://thomaslevesque.com/tags/t4/</link>
       <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/t4/</guid>
+      <guid>https://thomaslevesque.com/tags/t4/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Visual Studio</title>
-      <link>https://blog2.thomaslevesque.net/tags/visual-studio/</link>
+      <link>https://thomaslevesque.com/tags/visual-studio/</link>
       <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/visual-studio/</guid>
+      <guid>https://thomaslevesque.com/tags/visual-studio/</guid>
       <description></description>
     </item>
     
     <item>
       <title>csproj</title>
-      <link>https://blog2.thomaslevesque.net/tags/csproj/</link>
+      <link>https://thomaslevesque.com/tags/csproj/</link>
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/csproj/</guid>
+      <guid>https://thomaslevesque.com/tags/csproj/</guid>
       <description></description>
     </item>
     
     <item>
       <title>debug</title>
-      <link>https://blog2.thomaslevesque.net/tags/debug/</link>
+      <link>https://thomaslevesque.com/tags/debug/</link>
       <pubDate>Sat, 26 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/debug/</guid>
+      <guid>https://thomaslevesque.com/tags/debug/</guid>
       <description></description>
     </item>
     
     <item>
       <title>linqpad</title>
-      <link>https://blog2.thomaslevesque.net/tags/linqpad/</link>
+      <link>https://thomaslevesque.com/tags/linqpad/</link>
       <pubDate>Sat, 26 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/linqpad/</guid>
+      <guid>https://thomaslevesque.com/tags/linqpad/</guid>
       <description></description>
     </item>
     
     <item>
       <title>performance</title>
-      <link>https://blog2.thomaslevesque.net/tags/performance/</link>
+      <link>https://thomaslevesque.com/tags/performance/</link>
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/performance/</guid>
+      <guid>https://thomaslevesque.com/tags/performance/</guid>
       <description></description>
     </item>
     
     <item>
       <title>parser</title>
-      <link>https://blog2.thomaslevesque.net/tags/parser/</link>
+      <link>https://thomaslevesque.com/tags/parser/</link>
       <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/parser/</guid>
+      <guid>https://thomaslevesque.com/tags/parser/</guid>
       <description></description>
     </item>
     
     <item>
       <title>parser combinator</title>
-      <link>https://blog2.thomaslevesque.net/tags/parser-combinator/</link>
+      <link>https://thomaslevesque.com/tags/parser-combinator/</link>
       <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/parser-combinator/</guid>
+      <guid>https://thomaslevesque.com/tags/parser-combinator/</guid>
       <description></description>
     </item>
     
     <item>
       <title>parsing</title>
-      <link>https://blog2.thomaslevesque.net/tags/parsing/</link>
+      <link>https://thomaslevesque.com/tags/parsing/</link>
       <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/parsing/</guid>
+      <guid>https://thomaslevesque.com/tags/parsing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>sprache</title>
-      <link>https://blog2.thomaslevesque.net/tags/sprache/</link>
+      <link>https://thomaslevesque.com/tags/sprache/</link>
       <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/sprache/</guid>
+      <guid>https://thomaslevesque.com/tags/sprache/</guid>
       <description></description>
     </item>
     
     <item>
       <title>fakeiteasy</title>
-      <link>https://blog2.thomaslevesque.net/tags/fakeiteasy/</link>
+      <link>https://thomaslevesque.com/tags/fakeiteasy/</link>
       <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/fakeiteasy/</guid>
+      <guid>https://thomaslevesque.com/tags/fakeiteasy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mocking</title>
-      <link>https://blog2.thomaslevesque.net/tags/mocking/</link>
+      <link>https://thomaslevesque.com/tags/mocking/</link>
       <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/mocking/</guid>
+      <guid>https://thomaslevesque.com/tags/mocking/</guid>
       <description></description>
     </item>
     
     <item>
       <title>csharp</title>
-      <link>https://blog2.thomaslevesque.net/tags/csharp/</link>
+      <link>https://thomaslevesque.com/tags/csharp/</link>
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/csharp/</guid>
+      <guid>https://thomaslevesque.com/tags/csharp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>diff</title>
-      <link>https://blog2.thomaslevesque.net/tags/diff/</link>
+      <link>https://thomaslevesque.com/tags/diff/</link>
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/diff/</guid>
+      <guid>https://thomaslevesque.com/tags/diff/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gitattributes</title>
-      <link>https://blog2.thomaslevesque.net/tags/gitattributes/</link>
+      <link>https://thomaslevesque.com/tags/gitattributes/</link>
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/gitattributes/</guid>
+      <guid>https://thomaslevesque.com/tags/gitattributes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>xfuncname</title>
-      <link>https://blog2.thomaslevesque.net/tags/xfuncname/</link>
+      <link>https://thomaslevesque.com/tags/xfuncname/</link>
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/xfuncname/</guid>
+      <guid>https://thomaslevesque.com/tags/xfuncname/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HttpMessageHandler</title>
-      <link>https://blog2.thomaslevesque.net/tags/httpmessagehandler/</link>
+      <link>https://thomaslevesque.com/tags/httpmessagehandler/</link>
       <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/httpmessagehandler/</guid>
+      <guid>https://thomaslevesque.com/tags/httpmessagehandler/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C# 7</title>
-      <link>https://blog2.thomaslevesque.net/tags/c#-7/</link>
+      <link>https://thomaslevesque.com/tags/c#-7/</link>
       <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/c#-7/</guid>
+      <guid>https://thomaslevesque.com/tags/c#-7/</guid>
       <description></description>
     </item>
     
     <item>
       <title>deconstruction</title>
-      <link>https://blog2.thomaslevesque.net/tags/deconstruction/</link>
+      <link>https://thomaslevesque.com/tags/deconstruction/</link>
       <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/deconstruction/</guid>
+      <guid>https://thomaslevesque.com/tags/deconstruction/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Visual Studio 15</title>
-      <link>https://blog2.thomaslevesque.net/tags/visual-studio-15/</link>
+      <link>https://thomaslevesque.com/tags/visual-studio-15/</link>
       <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/visual-studio-15/</guid>
+      <guid>https://thomaslevesque.com/tags/visual-studio-15/</guid>
       <description></description>
     </item>
     
     <item>
       <title>bug</title>
-      <link>https://blog2.thomaslevesque.net/tags/bug/</link>
+      <link>https://thomaslevesque.com/tags/bug/</link>
       <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/bug/</guid>
+      <guid>https://thomaslevesque.com/tags/bug/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ReSharper</title>
-      <link>https://blog2.thomaslevesque.net/tags/resharper/</link>
+      <link>https://thomaslevesque.com/tags/resharper/</link>
       <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/resharper/</guid>
+      <guid>https://thomaslevesque.com/tags/resharper/</guid>
       <description></description>
     </item>
     
     <item>
       <title>testing</title>
-      <link>https://blog2.thomaslevesque.net/tags/testing/</link>
+      <link>https://thomaslevesque.com/tags/testing/</link>
       <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/testing/</guid>
+      <guid>https://thomaslevesque.com/tags/testing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>appveyor</title>
-      <link>https://blog2.thomaslevesque.net/tags/appveyor/</link>
+      <link>https://thomaslevesque.com/tags/appveyor/</link>
       <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/appveyor/</guid>
+      <guid>https://thomaslevesque.com/tags/appveyor/</guid>
       <description></description>
     </item>
     
     <item>
       <title>continuous integration</title>
-      <link>https://blog2.thomaslevesque.net/tags/continuous-integration/</link>
+      <link>https://thomaslevesque.com/tags/continuous-integration/</link>
       <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/continuous-integration/</guid>
+      <guid>https://thomaslevesque.com/tags/continuous-integration/</guid>
       <description></description>
     </item>
     
     <item>
       <title>deployment</title>
-      <link>https://blog2.thomaslevesque.net/tags/deployment/</link>
+      <link>https://thomaslevesque.com/tags/deployment/</link>
       <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/deployment/</guid>
+      <guid>https://thomaslevesque.com/tags/deployment/</guid>
       <description></description>
     </item>
     
     <item>
       <title>nuget</title>
-      <link>https://blog2.thomaslevesque.net/tags/nuget/</link>
+      <link>https://thomaslevesque.com/tags/nuget/</link>
       <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/nuget/</guid>
+      <guid>https://thomaslevesque.com/tags/nuget/</guid>
       <description></description>
     </item>
     
     <item>
       <title>cancellation</title>
-      <link>https://blog2.thomaslevesque.net/tags/cancellation/</link>
+      <link>https://thomaslevesque.com/tags/cancellation/</link>
       <pubDate>Thu, 31 Dec 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/cancellation/</guid>
+      <guid>https://thomaslevesque.com/tags/cancellation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>CreateLinkedTokenSource</title>
-      <link>https://blog2.thomaslevesque.net/tags/createlinkedtokensource/</link>
+      <link>https://thomaslevesque.com/tags/createlinkedtokensource/</link>
       <pubDate>Thu, 31 Dec 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/createlinkedtokensource/</guid>
+      <guid>https://thomaslevesque.com/tags/createlinkedtokensource/</guid>
       <description></description>
     </item>
     
     <item>
       <title>await</title>
-      <link>https://blog2.thomaslevesque.net/tags/await/</link>
+      <link>https://thomaslevesque.com/tags/await/</link>
       <pubDate>Wed, 11 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/await/</guid>
+      <guid>https://thomaslevesque.com/tags/await/</guid>
       <description></description>
     </item>
     
     <item>
       <title>synchronization context</title>
-      <link>https://blog2.thomaslevesque.net/tags/synchronization-context/</link>
+      <link>https://thomaslevesque.com/tags/synchronization-context/</link>
       <pubDate>Wed, 11 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/synchronization-context/</guid>
+      <guid>https://thomaslevesque.com/tags/synchronization-context/</guid>
       <description></description>
     </item>
     
     <item>
       <title>UI</title>
-      <link>https://blog2.thomaslevesque.net/tags/ui/</link>
+      <link>https://thomaslevesque.com/tags/ui/</link>
       <pubDate>Wed, 11 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/ui/</guid>
+      <guid>https://thomaslevesque.com/tags/ui/</guid>
       <description></description>
     </item>
     
     <item>
       <title>clipboard</title>
-      <link>https://blog2.thomaslevesque.net/tags/clipboard/</link>
+      <link>https://thomaslevesque.com/tags/clipboard/</link>
       <pubDate>Sat, 05 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/clipboard/</guid>
+      <guid>https://thomaslevesque.com/tags/clipboard/</guid>
       <description></description>
     </item>
     
     <item>
       <title>image</title>
-      <link>https://blog2.thomaslevesque.net/tags/image/</link>
+      <link>https://thomaslevesque.com/tags/image/</link>
       <pubDate>Sat, 05 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/image/</guid>
+      <guid>https://thomaslevesque.com/tags/image/</guid>
       <description></description>
     </item>
     
     <item>
       <title>richtextbox</title>
-      <link>https://blog2.thomaslevesque.net/tags/richtextbox/</link>
+      <link>https://thomaslevesque.com/tags/richtextbox/</link>
       <pubDate>Sat, 05 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/richtextbox/</guid>
+      <guid>https://thomaslevesque.com/tags/richtextbox/</guid>
       <description></description>
     </item>
     
     <item>
       <title>events</title>
-      <link>https://blog2.thomaslevesque.net/tags/events/</link>
+      <link>https://thomaslevesque.com/tags/events/</link>
       <pubDate>Sun, 16 Aug 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/events/</guid>
+      <guid>https://thomaslevesque.com/tags/events/</guid>
       <description></description>
     </item>
     
     <item>
       <title>memory leak</title>
-      <link>https://blog2.thomaslevesque.net/tags/memory-leak/</link>
+      <link>https://thomaslevesque.com/tags/memory-leak/</link>
       <pubDate>Sun, 16 Aug 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/memory-leak/</guid>
+      <guid>https://thomaslevesque.com/tags/memory-leak/</guid>
       <description></description>
     </item>
     
     <item>
       <title>open-instance delegate</title>
-      <link>https://blog2.thomaslevesque.net/tags/open-instance-delegate/</link>
+      <link>https://thomaslevesque.com/tags/open-instance-delegate/</link>
       <pubDate>Sun, 16 Aug 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/open-instance-delegate/</guid>
+      <guid>https://thomaslevesque.com/tags/open-instance-delegate/</guid>
       <description></description>
     </item>
     
     <item>
       <title>weak event</title>
-      <link>https://blog2.thomaslevesque.net/tags/weak-event/</link>
+      <link>https://thomaslevesque.com/tags/weak-event/</link>
       <pubDate>Sun, 16 Aug 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/weak-event/</guid>
+      <guid>https://thomaslevesque.com/tags/weak-event/</guid>
       <description></description>
     </item>
     
     <item>
       <title>puzzle</title>
-      <link>https://blog2.thomaslevesque.net/tags/puzzle/</link>
+      <link>https://thomaslevesque.com/tags/puzzle/</link>
       <pubDate>Thu, 30 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/puzzle/</guid>
+      <guid>https://thomaslevesque.com/tags/puzzle/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ado.net</title>
-      <link>https://blog2.thomaslevesque.net/tags/ado.net/</link>
+      <link>https://thomaslevesque.com/tags/ado.net/</link>
       <pubDate>Sun, 28 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/ado.net/</guid>
+      <guid>https://thomaslevesque.com/tags/ado.net/</guid>
       <description></description>
     </item>
     
     <item>
       <title>datetime</title>
-      <link>https://blog2.thomaslevesque.net/tags/datetime/</link>
+      <link>https://thomaslevesque.com/tags/datetime/</link>
       <pubDate>Sun, 28 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/datetime/</guid>
+      <guid>https://thomaslevesque.com/tags/datetime/</guid>
       <description></description>
     </item>
     
     <item>
       <title>sqlite</title>
-      <link>https://blog2.thomaslevesque.net/tags/sqlite/</link>
+      <link>https://thomaslevesque.com/tags/sqlite/</link>
       <pubDate>Sun, 28 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/sqlite/</guid>
+      <guid>https://thomaslevesque.com/tags/sqlite/</guid>
       <description></description>
     </item>
     
     <item>
       <title>system.data.sqlite</title>
-      <link>https://blog2.thomaslevesque.net/tags/system.data.sqlite/</link>
+      <link>https://thomaslevesque.com/tags/system.data.sqlite/</link>
       <pubDate>Sun, 28 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/system.data.sqlite/</guid>
+      <guid>https://thomaslevesque.com/tags/system.data.sqlite/</guid>
       <description></description>
     </item>
     
     <item>
       <title>utc</title>
-      <link>https://blog2.thomaslevesque.net/tags/utc/</link>
+      <link>https://thomaslevesque.com/tags/utc/</link>
       <pubDate>Sun, 28 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/utc/</guid>
+      <guid>https://thomaslevesque.com/tags/utc/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C# 6</title>
-      <link>https://blog2.thomaslevesque.net/tags/c#-6/</link>
+      <link>https://thomaslevesque.com/tags/c#-6/</link>
       <pubDate>Sun, 21 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/c#-6/</guid>
+      <guid>https://thomaslevesque.com/tags/c#-6/</guid>
       <description></description>
     </item>
     
     <item>
       <title>exception filters</title>
-      <link>https://blog2.thomaslevesque.net/tags/exception-filters/</link>
+      <link>https://thomaslevesque.com/tags/exception-filters/</link>
       <pubDate>Sun, 21 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/exception-filters/</guid>
+      <guid>https://thomaslevesque.com/tags/exception-filters/</guid>
       <description></description>
     </item>
     
     <item>
       <title>stack</title>
-      <link>https://blog2.thomaslevesque.net/tags/stack/</link>
+      <link>https://thomaslevesque.com/tags/stack/</link>
       <pubDate>Sun, 21 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/stack/</guid>
+      <guid>https://thomaslevesque.com/tags/stack/</guid>
       <description></description>
     </item>
     
     <item>
       <title>unity</title>
-      <link>https://blog2.thomaslevesque.net/tags/unity/</link>
+      <link>https://thomaslevesque.com/tags/unity/</link>
       <pubDate>Sun, 14 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/unity/</guid>
+      <guid>https://thomaslevesque.com/tags/unity/</guid>
       <description></description>
     </item>
     
     <item>
       <title>waithandle</title>
-      <link>https://blog2.thomaslevesque.net/tags/waithandle/</link>
+      <link>https://thomaslevesque.com/tags/waithandle/</link>
       <pubDate>Thu, 04 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/waithandle/</guid>
+      <guid>https://thomaslevesque.com/tags/waithandle/</guid>
       <description></description>
     </item>
     
     <item>
       <title>annotations</title>
-      <link>https://blog2.thomaslevesque.net/tags/annotations/</link>
+      <link>https://thomaslevesque.com/tags/annotations/</link>
       <pubDate>Fri, 13 Mar 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/annotations/</guid>
+      <guid>https://thomaslevesque.com/tags/annotations/</guid>
       <description></description>
     </item>
     
     <item>
       <title>code analysis</title>
-      <link>https://blog2.thomaslevesque.net/tags/code-analysis/</link>
+      <link>https://thomaslevesque.com/tags/code-analysis/</link>
       <pubDate>Fri, 13 Mar 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/code-analysis/</guid>
+      <guid>https://thomaslevesque.com/tags/code-analysis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>iformattable</title>
-      <link>https://blog2.thomaslevesque.net/tags/iformattable/</link>
+      <link>https://thomaslevesque.com/tags/iformattable/</link>
       <pubDate>Tue, 24 Feb 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/iformattable/</guid>
+      <guid>https://thomaslevesque.com/tags/iformattable/</guid>
       <description></description>
     </item>
     
     <item>
       <title>roslyn</title>
-      <link>https://blog2.thomaslevesque.net/tags/roslyn/</link>
+      <link>https://thomaslevesque.com/tags/roslyn/</link>
       <pubDate>Tue, 24 Feb 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/roslyn/</guid>
+      <guid>https://thomaslevesque.com/tags/roslyn/</guid>
       <description></description>
     </item>
     
     <item>
       <title>string interpolation</title>
-      <link>https://blog2.thomaslevesque.net/tags/string-interpolation/</link>
+      <link>https://thomaslevesque.com/tags/string-interpolation/</link>
       <pubDate>Tue, 24 Feb 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/string-interpolation/</guid>
+      <guid>https://thomaslevesque.com/tags/string-interpolation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>nunit</title>
-      <link>https://blog2.thomaslevesque.net/tags/nunit/</link>
+      <link>https://thomaslevesque.com/tags/nunit/</link>
       <pubDate>Sun, 01 Feb 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/nunit/</guid>
+      <guid>https://thomaslevesque.com/tags/nunit/</guid>
       <description></description>
     </item>
     
     <item>
       <title>animated</title>
-      <link>https://blog2.thomaslevesque.net/tags/animated/</link>
+      <link>https://thomaslevesque.com/tags/animated/</link>
       <pubDate>Sat, 17 Jan 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/animated/</guid>
+      <guid>https://thomaslevesque.com/tags/animated/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gif</title>
-      <link>https://blog2.thomaslevesque.net/tags/gif/</link>
+      <link>https://thomaslevesque.com/tags/gif/</link>
       <pubDate>Sat, 17 Jan 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/gif/</guid>
+      <guid>https://thomaslevesque.com/tags/gif/</guid>
       <description></description>
     </item>
     
     <item>
       <title>XAML</title>
-      <link>https://blog2.thomaslevesque.net/tags/xaml/</link>
+      <link>https://thomaslevesque.com/tags/xaml/</link>
       <pubDate>Sat, 17 Jan 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/xaml/</guid>
+      <guid>https://thomaslevesque.com/tags/xaml/</guid>
       <description></description>
     </item>
     
     <item>
       <title>optimization</title>
-      <link>https://blog2.thomaslevesque.net/tags/optimization/</link>
+      <link>https://thomaslevesque.com/tags/optimization/</link>
       <pubDate>Sun, 07 Dec 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/optimization/</guid>
+      <guid>https://thomaslevesque.com/tags/optimization/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ToArray</title>
-      <link>https://blog2.thomaslevesque.net/tags/toarray/</link>
+      <link>https://thomaslevesque.com/tags/toarray/</link>
       <pubDate>Sun, 07 Dec 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/toarray/</guid>
+      <guid>https://thomaslevesque.com/tags/toarray/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ToList</title>
-      <link>https://blog2.thomaslevesque.net/tags/tolist/</link>
+      <link>https://thomaslevesque.com/tags/tolist/</link>
       <pubDate>Sun, 07 Dec 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/tolist/</guid>
+      <guid>https://thomaslevesque.com/tags/tolist/</guid>
       <description></description>
     </item>
     
     <item>
       <title>byte</title>
-      <link>https://blog2.thomaslevesque.net/tags/byte/</link>
+      <link>https://thomaslevesque.com/tags/byte/</link>
       <pubDate>Sun, 23 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/byte/</guid>
+      <guid>https://thomaslevesque.com/tags/byte/</guid>
       <description></description>
     </item>
     
     <item>
       <title>size</title>
-      <link>https://blog2.thomaslevesque.net/tags/size/</link>
+      <link>https://thomaslevesque.com/tags/size/</link>
       <pubDate>Sun, 23 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/size/</guid>
+      <guid>https://thomaslevesque.com/tags/size/</guid>
       <description></description>
     </item>
     
     <item>
       <title>localization</title>
-      <link>https://blog2.thomaslevesque.net/tags/localization/</link>
+      <link>https://thomaslevesque.com/tags/localization/</link>
       <pubDate>Mon, 17 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/localization/</guid>
+      <guid>https://thomaslevesque.com/tags/localization/</guid>
       <description></description>
     </item>
     
     <item>
       <title>NString</title>
-      <link>https://blog2.thomaslevesque.net/tags/nstring/</link>
+      <link>https://thomaslevesque.com/tags/nstring/</link>
       <pubDate>Mon, 17 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/nstring/</guid>
+      <guid>https://thomaslevesque.com/tags/nstring/</guid>
       <description></description>
     </item>
     
     <item>
       <title>StringTemplate</title>
-      <link>https://blog2.thomaslevesque.net/tags/stringtemplate/</link>
+      <link>https://thomaslevesque.com/tags/stringtemplate/</link>
       <pubDate>Mon, 17 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/stringtemplate/</guid>
+      <guid>https://thomaslevesque.com/tags/stringtemplate/</guid>
       <description></description>
     </item>
     
     <item>
       <title>asynchronous</title>
-      <link>https://blog2.thomaslevesque.net/tags/asynchronous/</link>
+      <link>https://thomaslevesque.com/tags/asynchronous/</link>
       <pubDate>Tue, 04 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/asynchronous/</guid>
+      <guid>https://thomaslevesque.com/tags/asynchronous/</guid>
       <description></description>
     </item>
     
     <item>
       <title>byref</title>
-      <link>https://blog2.thomaslevesque.net/tags/byref/</link>
+      <link>https://thomaslevesque.com/tags/byref/</link>
       <pubDate>Tue, 04 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/byref/</guid>
+      <guid>https://thomaslevesque.com/tags/byref/</guid>
       <description></description>
     </item>
     
     <item>
       <title>out</title>
-      <link>https://blog2.thomaslevesque.net/tags/out/</link>
+      <link>https://thomaslevesque.com/tags/out/</link>
       <pubDate>Tue, 04 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/out/</guid>
+      <guid>https://thomaslevesque.com/tags/out/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ref</title>
-      <link>https://blog2.thomaslevesque.net/tags/ref/</link>
+      <link>https://thomaslevesque.com/tags/ref/</link>
       <pubDate>Tue, 04 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/ref/</guid>
+      <guid>https://thomaslevesque.com/tags/ref/</guid>
       <description></description>
     </item>
     
     <item>
       <title>reference</title>
-      <link>https://blog2.thomaslevesque.net/tags/reference/</link>
+      <link>https://thomaslevesque.com/tags/reference/</link>
       <pubDate>Tue, 04 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/reference/</guid>
+      <guid>https://thomaslevesque.com/tags/reference/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Visual Studio Online</title>
-      <link>https://blog2.thomaslevesque.net/tags/visual-studio-online/</link>
+      <link>https://thomaslevesque.com/tags/visual-studio-online/</link>
       <pubDate>Sun, 12 Oct 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/visual-studio-online/</guid>
+      <guid>https://thomaslevesque.com/tags/visual-studio-online/</guid>
       <description></description>
     </item>
     
     <item>
       <title>architecture</title>
-      <link>https://blog2.thomaslevesque.net/tags/architecture/</link>
+      <link>https://thomaslevesque.com/tags/architecture/</link>
       <pubDate>Wed, 30 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/architecture/</guid>
+      <guid>https://thomaslevesque.com/tags/architecture/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ndepend</title>
-      <link>https://blog2.thomaslevesque.net/tags/ndepend/</link>
+      <link>https://thomaslevesque.com/tags/ndepend/</link>
       <pubDate>Wed, 30 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/ndepend/</guid>
+      <guid>https://thomaslevesque.com/tags/ndepend/</guid>
       <description></description>
     </item>
     
     <item>
       <title>review</title>
-      <link>https://blog2.thomaslevesque.net/tags/review/</link>
+      <link>https://thomaslevesque.com/tags/review/</link>
       <pubDate>Wed, 30 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/review/</guid>
+      <guid>https://thomaslevesque.com/tags/review/</guid>
       <description></description>
     </item>
     
     <item>
       <title>global</title>
-      <link>https://blog2.thomaslevesque.net/tags/global/</link>
+      <link>https://thomaslevesque.com/tags/global/</link>
       <pubDate>Wed, 05 Feb 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/global/</guid>
+      <guid>https://thomaslevesque.com/tags/global/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hotkey</title>
-      <link>https://blog2.thomaslevesque.net/tags/hotkey/</link>
+      <link>https://thomaslevesque.com/tags/hotkey/</link>
       <pubDate>Wed, 05 Feb 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/hotkey/</guid>
+      <guid>https://thomaslevesque.com/tags/hotkey/</guid>
       <description></description>
     </item>
     
     <item>
       <title>windows forms</title>
-      <link>https://blog2.thomaslevesque.net/tags/windows-forms/</link>
+      <link>https://thomaslevesque.com/tags/windows-forms/</link>
       <pubDate>Wed, 05 Feb 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/windows-forms/</guid>
+      <guid>https://thomaslevesque.com/tags/windows-forms/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HttpWebRequest</title>
-      <link>https://blog2.thomaslevesque.net/tags/httpwebrequest/</link>
+      <link>https://thomaslevesque.com/tags/httpwebrequest/</link>
       <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/httpwebrequest/</guid>
+      <guid>https://thomaslevesque.com/tags/httpwebrequest/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HttpContent</title>
-      <link>https://blog2.thomaslevesque.net/tags/httpcontent/</link>
+      <link>https://thomaslevesque.com/tags/httpcontent/</link>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/httpcontent/</guid>
+      <guid>https://thomaslevesque.com/tags/httpcontent/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ObjectContent</title>
-      <link>https://blog2.thomaslevesque.net/tags/objectcontent/</link>
+      <link>https://thomaslevesque.com/tags/objectcontent/</link>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/objectcontent/</guid>
+      <guid>https://thomaslevesque.com/tags/objectcontent/</guid>
       <description></description>
     </item>
     
     <item>
       <title>push</title>
-      <link>https://blog2.thomaslevesque.net/tags/push/</link>
+      <link>https://thomaslevesque.com/tags/push/</link>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/push/</guid>
+      <guid>https://thomaslevesque.com/tags/push/</guid>
       <description></description>
     </item>
     
     <item>
       <title>PushStreamContent</title>
-      <link>https://blog2.thomaslevesque.net/tags/pushstreamcontent/</link>
+      <link>https://thomaslevesque.com/tags/pushstreamcontent/</link>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/pushstreamcontent/</guid>
+      <guid>https://thomaslevesque.com/tags/pushstreamcontent/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gesture</title>
-      <link>https://blog2.thomaslevesque.net/tags/gesture/</link>
+      <link>https://thomaslevesque.com/tags/gesture/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/gesture/</guid>
+      <guid>https://thomaslevesque.com/tags/gesture/</guid>
       <description></description>
     </item>
     
     <item>
       <title>grid</title>
-      <link>https://blog2.thomaslevesque.net/tags/grid/</link>
+      <link>https://thomaslevesque.com/tags/grid/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/grid/</guid>
+      <guid>https://thomaslevesque.com/tags/grid/</guid>
       <description></description>
     </item>
     
     <item>
       <title>GridView</title>
-      <link>https://blog2.thomaslevesque.net/tags/gridview/</link>
+      <link>https://thomaslevesque.com/tags/gridview/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/gridview/</guid>
+      <guid>https://thomaslevesque.com/tags/gridview/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hold</title>
-      <link>https://blog2.thomaslevesque.net/tags/hold/</link>
+      <link>https://thomaslevesque.com/tags/hold/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/hold/</guid>
+      <guid>https://thomaslevesque.com/tags/hold/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ListView</title>
-      <link>https://blog2.thomaslevesque.net/tags/listview/</link>
+      <link>https://thomaslevesque.com/tags/listview/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/listview/</guid>
+      <guid>https://thomaslevesque.com/tags/listview/</guid>
       <description></description>
     </item>
     
     <item>
       <title>long press</title>
-      <link>https://blog2.thomaslevesque.net/tags/long-press/</link>
+      <link>https://thomaslevesque.com/tags/long-press/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/long-press/</guid>
+      <guid>https://thomaslevesque.com/tags/long-press/</guid>
       <description></description>
     </item>
     
     <item>
       <title>selection</title>
-      <link>https://blog2.thomaslevesque.net/tags/selection/</link>
+      <link>https://thomaslevesque.com/tags/selection/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/selection/</guid>
+      <guid>https://thomaslevesque.com/tags/selection/</guid>
       <description></description>
     </item>
     
     <item>
       <title>winrt</title>
-      <link>https://blog2.thomaslevesque.net/tags/winrt/</link>
+      <link>https://thomaslevesque.com/tags/winrt/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/winrt/</guid>
+      <guid>https://thomaslevesque.com/tags/winrt/</guid>
       <description></description>
     </item>
     
     <item>
       <title>AutoRunCustomTool</title>
-      <link>https://blog2.thomaslevesque.net/tags/autoruncustomtool/</link>
+      <link>https://thomaslevesque.com/tags/autoruncustomtool/</link>
       <pubDate>Thu, 14 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/autoruncustomtool/</guid>
+      <guid>https://thomaslevesque.com/tags/autoruncustomtool/</guid>
       <description></description>
     </item>
     
     <item>
       <title>custom tool</title>
-      <link>https://blog2.thomaslevesque.net/tags/custom-tool/</link>
+      <link>https://thomaslevesque.com/tags/custom-tool/</link>
       <pubDate>Thu, 14 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/custom-tool/</guid>
+      <guid>https://thomaslevesque.com/tags/custom-tool/</guid>
       <description></description>
     </item>
     
     <item>
       <title>extension</title>
-      <link>https://blog2.thomaslevesque.net/tags/extension/</link>
+      <link>https://thomaslevesque.com/tags/extension/</link>
       <pubDate>Thu, 14 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/extension/</guid>
+      <guid>https://thomaslevesque.com/tags/extension/</guid>
       <description></description>
     </item>
     
     <item>
       <title>notification</title>
-      <link>https://blog2.thomaslevesque.net/tags/notification/</link>
+      <link>https://thomaslevesque.com/tags/notification/</link>
       <pubDate>Sun, 10 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/notification/</guid>
+      <guid>https://thomaslevesque.com/tags/notification/</guid>
       <description></description>
     </item>
     
     <item>
       <title>toast</title>
-      <link>https://blog2.thomaslevesque.net/tags/toast/</link>
+      <link>https://thomaslevesque.com/tags/toast/</link>
       <pubDate>Sun, 10 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/toast/</guid>
+      <guid>https://thomaslevesque.com/tags/toast/</guid>
       <description></description>
     </item>
     
     <item>
       <title>windows store</title>
-      <link>https://blog2.thomaslevesque.net/tags/windows-store/</link>
+      <link>https://thomaslevesque.com/tags/windows-store/</link>
       <pubDate>Sun, 10 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/windows-store/</guid>
+      <guid>https://thomaslevesque.com/tags/windows-store/</guid>
       <description></description>
     </item>
     
     <item>
       <title>searchbox</title>
-      <link>https://blog2.thomaslevesque.net/tags/searchbox/</link>
+      <link>https://thomaslevesque.com/tags/searchbox/</link>
       <pubDate>Mon, 04 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/searchbox/</guid>
+      <guid>https://thomaslevesque.com/tags/searchbox/</guid>
       <description></description>
     </item>
     
     <item>
       <title>suggestion</title>
-      <link>https://blog2.thomaslevesque.net/tags/suggestion/</link>
+      <link>https://thomaslevesque.com/tags/suggestion/</link>
       <pubDate>Mon, 04 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/suggestion/</guid>
+      <guid>https://thomaslevesque.com/tags/suggestion/</guid>
       <description></description>
     </item>
     
     <item>
       <title>cryptography</title>
-      <link>https://blog2.thomaslevesque.net/tags/cryptography/</link>
+      <link>https://thomaslevesque.com/tags/cryptography/</link>
       <pubDate>Tue, 21 May 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/cryptography/</guid>
+      <guid>https://thomaslevesque.com/tags/cryptography/</guid>
       <description></description>
     </item>
     
     <item>
       <title>dpapi</title>
-      <link>https://blog2.thomaslevesque.net/tags/dpapi/</link>
+      <link>https://thomaslevesque.com/tags/dpapi/</link>
       <pubDate>Tue, 21 May 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/dpapi/</guid>
+      <guid>https://thomaslevesque.com/tags/dpapi/</guid>
       <description></description>
     </item>
     
     <item>
       <title>password</title>
-      <link>https://blog2.thomaslevesque.net/tags/password/</link>
+      <link>https://thomaslevesque.com/tags/password/</link>
       <pubDate>Tue, 21 May 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/password/</guid>
+      <guid>https://thomaslevesque.com/tags/password/</guid>
       <description></description>
     </item>
     
     <item>
       <title>protect</title>
-      <link>https://blog2.thomaslevesque.net/tags/protect/</link>
+      <link>https://thomaslevesque.com/tags/protect/</link>
       <pubDate>Tue, 21 May 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/protect/</guid>
+      <guid>https://thomaslevesque.com/tags/protect/</guid>
       <description></description>
     </item>
     
     <item>
       <title>binding</title>
-      <link>https://blog2.thomaslevesque.net/tags/binding/</link>
+      <link>https://thomaslevesque.com/tags/binding/</link>
       <pubDate>Sun, 21 Apr 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/binding/</guid>
+      <guid>https://thomaslevesque.com/tags/binding/</guid>
       <description></description>
     </item>
     
     <item>
       <title>dependency property</title>
-      <link>https://blog2.thomaslevesque.net/tags/dependency-property/</link>
+      <link>https://thomaslevesque.com/tags/dependency-property/</link>
       <pubDate>Sun, 21 Apr 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/dependency-property/</guid>
+      <guid>https://thomaslevesque.com/tags/dependency-property/</guid>
       <description></description>
     </item>
     
     <item>
       <title>c# 5</title>
-      <link>https://blog2.thomaslevesque.net/tags/c#-5/</link>
+      <link>https://thomaslevesque.com/tags/c#-5/</link>
       <pubDate>Wed, 13 Jun 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/c#-5/</guid>
+      <guid>https://thomaslevesque.com/tags/c#-5/</guid>
       <description></description>
     </item>
     
     <item>
       <title>caller info</title>
-      <link>https://blog2.thomaslevesque.net/tags/caller-info/</link>
+      <link>https://thomaslevesque.com/tags/caller-info/</link>
       <pubDate>Wed, 13 Jun 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/caller-info/</guid>
+      <guid>https://thomaslevesque.com/tags/caller-info/</guid>
       <description></description>
     </item>
     
     <item>
       <title>edit and continue</title>
-      <link>https://blog2.thomaslevesque.net/tags/edit-and-continue/</link>
+      <link>https://thomaslevesque.com/tags/edit-and-continue/</link>
       <pubDate>Sat, 02 Jun 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/edit-and-continue/</guid>
+      <guid>https://thomaslevesque.com/tags/edit-and-continue/</guid>
       <description></description>
     </item>
     
     <item>
       <title>features</title>
-      <link>https://blog2.thomaslevesque.net/tags/features/</link>
+      <link>https://thomaslevesque.com/tags/features/</link>
       <pubDate>Sat, 02 Jun 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/features/</guid>
+      <guid>https://thomaslevesque.com/tags/features/</guid>
       <description></description>
     </item>
     
     <item>
       <title>lambda</title>
-      <link>https://blog2.thomaslevesque.net/tags/lambda/</link>
+      <link>https://thomaslevesque.com/tags/lambda/</link>
       <pubDate>Sat, 02 Jun 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/lambda/</guid>
+      <guid>https://thomaslevesque.com/tags/lambda/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Visual Studio 2012</title>
-      <link>https://blog2.thomaslevesque.net/tags/visual-studio-2012/</link>
+      <link>https://thomaslevesque.com/tags/visual-studio-2012/</link>
       <pubDate>Sat, 02 Jun 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/visual-studio-2012/</guid>
+      <guid>https://thomaslevesque.com/tags/visual-studio-2012/</guid>
       <description></description>
     </item>
     
     <item>
       <title>collection</title>
-      <link>https://blog2.thomaslevesque.net/tags/collection/</link>
+      <link>https://thomaslevesque.com/tags/collection/</link>
       <pubDate>Wed, 30 Nov 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/collection/</guid>
+      <guid>https://thomaslevesque.com/tags/collection/</guid>
       <description></description>
     </item>
     
     <item>
       <title>collectionview</title>
-      <link>https://blog2.thomaslevesque.net/tags/collectionview/</link>
+      <link>https://thomaslevesque.com/tags/collectionview/</link>
       <pubDate>Wed, 30 Nov 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/collectionview/</guid>
+      <guid>https://thomaslevesque.com/tags/collectionview/</guid>
       <description></description>
     </item>
     
     <item>
       <title>attached property</title>
-      <link>https://blog2.thomaslevesque.net/tags/attached-property/</link>
+      <link>https://thomaslevesque.com/tags/attached-property/</link>
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/attached-property/</guid>
+      <guid>https://thomaslevesque.com/tags/attached-property/</guid>
       <description></description>
     </item>
     
     <item>
       <title>style</title>
-      <link>https://blog2.thomaslevesque.net/tags/style/</link>
+      <link>https://thomaslevesque.com/tags/style/</link>
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/style/</guid>
+      <guid>https://thomaslevesque.com/tags/style/</guid>
       <description></description>
     </item>
     
     <item>
       <title>template</title>
-      <link>https://blog2.thomaslevesque.net/tags/template/</link>
+      <link>https://thomaslevesque.com/tags/template/</link>
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/template/</guid>
+      <guid>https://thomaslevesque.com/tags/template/</guid>
       <description></description>
     </item>
     
     <item>
       <title>.NET 4.5</title>
-      <link>https://blog2.thomaslevesque.net/tags/.net-4.5/</link>
+      <link>https://thomaslevesque.com/tags/.net-4.5/</link>
       <pubDate>Fri, 23 Sep 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/.net-4.5/</guid>
+      <guid>https://thomaslevesque.com/tags/.net-4.5/</guid>
       <description></description>
     </item>
     
     <item>
       <title>markup extension</title>
-      <link>https://blog2.thomaslevesque.net/tags/markup-extension/</link>
+      <link>https://thomaslevesque.com/tags/markup-extension/</link>
       <pubDate>Fri, 23 Sep 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/markup-extension/</guid>
+      <guid>https://thomaslevesque.com/tags/markup-extension/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tail recursion</title>
-      <link>https://blog2.thomaslevesque.net/tags/tail-recursion/</link>
+      <link>https://thomaslevesque.com/tags/tail-recursion/</link>
       <pubDate>Fri, 02 Sep 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/tail-recursion/</guid>
+      <guid>https://thomaslevesque.com/tags/tail-recursion/</guid>
       <description></description>
     </item>
     
     <item>
       <title>trampoline</title>
-      <link>https://blog2.thomaslevesque.net/tags/trampoline/</link>
+      <link>https://thomaslevesque.com/tags/trampoline/</link>
       <pubDate>Fri, 02 Sep 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/trampoline/</guid>
+      <guid>https://thomaslevesque.com/tags/trampoline/</guid>
       <description></description>
     </item>
     
     <item>
       <title>datacontext</title>
-      <link>https://blog2.thomaslevesque.net/tags/datacontext/</link>
+      <link>https://thomaslevesque.com/tags/datacontext/</link>
       <pubDate>Mon, 21 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/datacontext/</guid>
+      <guid>https://thomaslevesque.com/tags/datacontext/</guid>
       <description></description>
     </item>
     
     <item>
       <title>freezable</title>
-      <link>https://blog2.thomaslevesque.net/tags/freezable/</link>
+      <link>https://thomaslevesque.com/tags/freezable/</link>
       <pubDate>Mon, 21 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/freezable/</guid>
+      <guid>https://thomaslevesque.com/tags/freezable/</guid>
       <description></description>
     </item>
     
     <item>
       <title>.NET 4.0</title>
-      <link>https://blog2.thomaslevesque.net/tags/.net-4.0/</link>
+      <link>https://thomaslevesque.com/tags/.net-4.0/</link>
       <pubDate>Sun, 03 Oct 2010 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/.net-4.0/</guid>
+      <guid>https://thomaslevesque.com/tags/.net-4.0/</guid>
       <description></description>
     </item>
     
     <item>
       <title>entity framework</title>
-      <link>https://blog2.thomaslevesque.net/tags/entity-framework/</link>
+      <link>https://thomaslevesque.com/tags/entity-framework/</link>
       <pubDate>Sun, 03 Oct 2010 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/entity-framework/</guid>
+      <guid>https://thomaslevesque.com/tags/entity-framework/</guid>
       <description></description>
     </item>
     
     <item>
       <title>expression</title>
-      <link>https://blog2.thomaslevesque.net/tags/expression/</link>
+      <link>https://thomaslevesque.com/tags/expression/</link>
       <pubDate>Sun, 03 Oct 2010 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/expression/</guid>
+      <guid>https://thomaslevesque.com/tags/expression/</guid>
       <description></description>
     </item>
     
     <item>
       <title>include</title>
-      <link>https://blog2.thomaslevesque.net/tags/include/</link>
+      <link>https://thomaslevesque.com/tags/include/</link>
       <pubDate>Sun, 03 Oct 2010 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/include/</guid>
+      <guid>https://thomaslevesque.com/tags/include/</guid>
       <description></description>
     </item>
     
     <item>
       <title>code snippet</title>
-      <link>https://blog2.thomaslevesque.net/tags/code-snippet/</link>
+      <link>https://thomaslevesque.com/tags/code-snippet/</link>
       <pubDate>Mon, 17 May 2010 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/code-snippet/</guid>
+      <guid>https://thomaslevesque.com/tags/code-snippet/</guid>
       <description></description>
     </item>
     
     <item>
       <title>proof of concept</title>
-      <link>https://blog2.thomaslevesque.net/tags/proof-of-concept/</link>
+      <link>https://thomaslevesque.com/tags/proof-of-concept/</link>
       <pubDate>Sun, 21 Feb 2010 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/proof-of-concept/</guid>
+      <guid>https://thomaslevesque.com/tags/proof-of-concept/</guid>
       <description></description>
     </item>
     
     <item>
       <title>InputBinding</title>
-      <link>https://blog2.thomaslevesque.net/tags/inputbinding/</link>
+      <link>https://thomaslevesque.com/tags/inputbinding/</link>
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/inputbinding/</guid>
+      <guid>https://thomaslevesque.com/tags/inputbinding/</guid>
       <description></description>
     </item>
     
     <item>
       <title>KeyBinding</title>
-      <link>https://blog2.thomaslevesque.net/tags/keybinding/</link>
+      <link>https://thomaslevesque.com/tags/keybinding/</link>
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/keybinding/</guid>
+      <guid>https://thomaslevesque.com/tags/keybinding/</guid>
       <description></description>
     </item>
     
     <item>
       <title>MVVM</title>
-      <link>https://blog2.thomaslevesque.net/tags/mvvm/</link>
+      <link>https://thomaslevesque.com/tags/mvvm/</link>
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/mvvm/</guid>
+      <guid>https://thomaslevesque.com/tags/mvvm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Visual Studio 2010</title>
-      <link>https://blog2.thomaslevesque.net/tags/visual-studio-2010/</link>
+      <link>https://thomaslevesque.com/tags/visual-studio-2010/</link>
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/visual-studio-2010/</guid>
+      <guid>https://thomaslevesque.com/tags/visual-studio-2010/</guid>
       <description></description>
     </item>
     
     <item>
       <title>WPF 4.0</title>
-      <link>https://blog2.thomaslevesque.net/tags/wpf-4.0/</link>
+      <link>https://thomaslevesque.com/tags/wpf-4.0/</link>
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/wpf-4.0/</guid>
+      <guid>https://thomaslevesque.com/tags/wpf-4.0/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C# 4.0</title>
-      <link>https://blog2.thomaslevesque.net/tags/c#-4.0/</link>
+      <link>https://thomaslevesque.com/tags/c#-4.0/</link>
       <pubDate>Thu, 08 Oct 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/c#-4.0/</guid>
+      <guid>https://thomaslevesque.com/tags/c#-4.0/</guid>
       <description></description>
     </item>
     
     <item>
       <title>DLR</title>
-      <link>https://blog2.thomaslevesque.net/tags/dlr/</link>
+      <link>https://thomaslevesque.com/tags/dlr/</link>
       <pubDate>Thu, 08 Oct 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/dlr/</guid>
+      <guid>https://thomaslevesque.com/tags/dlr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>dynamic</title>
-      <link>https://blog2.thomaslevesque.net/tags/dynamic/</link>
+      <link>https://thomaslevesque.com/tags/dynamic/</link>
       <pubDate>Thu, 08 Oct 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/dynamic/</guid>
+      <guid>https://thomaslevesque.com/tags/dynamic/</guid>
       <description></description>
     </item>
     
     <item>
       <title>sort</title>
-      <link>https://blog2.thomaslevesque.net/tags/sort/</link>
+      <link>https://thomaslevesque.com/tags/sort/</link>
       <pubDate>Tue, 04 Aug 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/sort/</guid>
+      <guid>https://thomaslevesque.com/tags/sort/</guid>
       <description></description>
     </item>
     
     <item>
       <title>XML serialization</title>
-      <link>https://blog2.thomaslevesque.net/tags/xml-serialization/</link>
+      <link>https://thomaslevesque.com/tags/xml-serialization/</link>
       <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/xml-serialization/</guid>
+      <guid>https://thomaslevesque.com/tags/xml-serialization/</guid>
       <description></description>
     </item>
     
     <item>
       <title>dragmove</title>
-      <link>https://blog2.thomaslevesque.net/tags/dragmove/</link>
+      <link>https://thomaslevesque.com/tags/dragmove/</link>
       <pubDate>Wed, 06 May 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/dragmove/</guid>
+      <guid>https://thomaslevesque.com/tags/dragmove/</guid>
       <description></description>
     </item>
     
     <item>
       <title>trick</title>
-      <link>https://blog2.thomaslevesque.net/tags/trick/</link>
+      <link>https://thomaslevesque.com/tags/trick/</link>
       <pubDate>Thu, 05 Mar 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/trick/</guid>
+      <guid>https://thomaslevesque.com/tags/trick/</guid>
       <description></description>
     </item>
     
     <item>
       <title>article</title>
-      <link>https://blog2.thomaslevesque.net/tags/article/</link>
+      <link>https://thomaslevesque.com/tags/article/</link>
       <pubDate>Wed, 25 Feb 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/article/</guid>
+      <guid>https://thomaslevesque.com/tags/article/</guid>
       <description></description>
     </item>
     
     <item>
       <title>design pattern</title>
-      <link>https://blog2.thomaslevesque.net/tags/design-pattern/</link>
+      <link>https://thomaslevesque.com/tags/design-pattern/</link>
       <pubDate>Wed, 25 Feb 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/design-pattern/</guid>
+      <guid>https://thomaslevesque.com/tags/design-pattern/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Josh Smith</title>
-      <link>https://blog2.thomaslevesque.net/tags/josh-smith/</link>
+      <link>https://thomaslevesque.com/tags/josh-smith/</link>
       <pubDate>Wed, 25 Feb 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/josh-smith/</guid>
+      <guid>https://thomaslevesque.com/tags/josh-smith/</guid>
       <description></description>
     </item>
     
     <item>
       <title>RSS</title>
-      <link>https://blog2.thomaslevesque.net/tags/rss/</link>
+      <link>https://thomaslevesque.com/tags/rss/</link>
       <pubDate>Fri, 13 Feb 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/rss/</guid>
+      <guid>https://thomaslevesque.com/tags/rss/</guid>
       <description></description>
     </item>
     
     <item>
       <title>syndication</title>
-      <link>https://blog2.thomaslevesque.net/tags/syndication/</link>
+      <link>https://thomaslevesque.com/tags/syndication/</link>
       <pubDate>Fri, 13 Feb 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/syndication/</guid>
+      <guid>https://thomaslevesque.com/tags/syndication/</guid>
       <description></description>
     </item>
     
     <item>
       <title>workaround</title>
-      <link>https://blog2.thomaslevesque.net/tags/workaround/</link>
+      <link>https://thomaslevesque.com/tags/workaround/</link>
       <pubDate>Thu, 05 Feb 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/workaround/</guid>
+      <guid>https://thomaslevesque.com/tags/workaround/</guid>
       <description></description>
     </item>
     
     <item>
       <title>settings</title>
-      <link>https://blog2.thomaslevesque.net/tags/settings/</link>
+      <link>https://thomaslevesque.com/tags/settings/</link>
       <pubDate>Tue, 18 Nov 2008 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/settings/</guid>
+      <guid>https://thomaslevesque.com/tags/settings/</guid>
       <description></description>
     </item>
     
     <item>
       <title>parent/child</title>
-      <link>https://blog2.thomaslevesque.net/tags/parent/child/</link>
+      <link>https://thomaslevesque.com/tags/parent/child/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://blog2.thomaslevesque.net/tags/parent/child/</guid>
+      <guid>https://thomaslevesque.com/tags/parent/child/</guid>
       <description></description>
     </item>
     
