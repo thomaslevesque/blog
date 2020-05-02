@@ -98,7 +98,7 @@ if (!doNotTrack) {
 <ul>
 <li>a timeout occurred: we return false (like the standard <code>WaitOne</code> method);</li>
 <li>the original wait handle is signaled first: we return true (like the standard <code>WaitOne</code> method);</li>
-<li>the cancellation token’s wait handle is signaled first: we throw an <code>OperationCancelledException</code>. <!-- raw HTML omitted --><!-- raw HTML omitted -->  For completeness, let’s add some overloads for common use cases:</li>
+<li>the cancellation token’s wait handle is signaled first: we throw an <code>OperationCancelledException</code>. <br><br>  For completeness, let’s add some overloads for common use cases:</li>
 </ul>
 <pre><code>    public static bool WaitOne(this WaitHandle handle, TimeSpan timeout, CancellationToken cancellationToken)
     {
@@ -118,7 +118,7 @@ So here’s what we’ll do:</p>
 <li>create a <code>TaskCompletionSource&lt;bool&gt;</code>;</li>
 <li>register a delegate to set the result to true when the wait handle is signaled, or false if a timeout occurs, using <code>ThreadPool.RegisterWaitForSingleObject</code>;</li>
 <li>register a delegate to mark the task as cancelled when the cancellation token is signaled, using <code>CancellationToken.Register</code>;</li>
-<li>unregister both delegates after the task completes <!-- raw HTML omitted -->  Here’s the implementation:</li>
+<li>unregister both delegates after the task completes <br>  Here’s the implementation:</li>
 </ul>
 <pre><code>    public static async Task&lt;bool&gt; WaitOneAsync(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
     {
