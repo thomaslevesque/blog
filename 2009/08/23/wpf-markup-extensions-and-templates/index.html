@@ -76,7 +76,7 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-23T00:00:00Z">August 23, 2009</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p><em>Note : This post follows the one about a <a href="http://www.thomaslevesque.com/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/">a markup extension that can update its target</a>, and reuses the same code.</em>  You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I&rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template.  <strong>The problem</strong>  Let&rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</p>
+			<p><em>Note : This post follows the one about a <a href="/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/">a markup extension that can update its target</a>, and reuses the same code.</em>  You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I&rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template.  <strong>The problem</strong>  Let&rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;CheckBox</span> <span style="color:#a6e22e">IsChecked=</span><span style="color:#e6db74">&#34;{my:NetworkAvailable}&#34;</span> <span style="color:#a6e22e">Content=</span><span style="color:#e6db74">&#34;Network is available&#34;</span> <span style="color:#f92672">/&gt;</span>
 </code></pre></div><p>Now let&rsquo;s put the same <code>CheckBox</code> in a <code>ControlTemplate</code> :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ControlTemplate</span> <span style="color:#a6e22e">x:Key=</span><span style="color:#e6db74">&#34;test&#34;</span><span style="color:#f92672">&gt;</span>
@@ -272,21 +272,21 @@ if (!doNotTrack) {
 <div class="widget-taglist widget">
 	<h4 class="widget__title">Top tags</h4>
 	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/c" title="c#">c#</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/wpf" title="wpf">wpf</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/xaml" title="xaml">xaml</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core" title="asp.net-core">asp.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/async" title="async">async</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio" title="visual-studio">visual-studio</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core" title=".net-core">.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linq" title="linq">linq</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing" title="unit-testing">unit-testing</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/binding" title="binding">binding</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension" title="markup-extension">markup-extension</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm" title="mvvm">mvvm</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure" title="azure">azure</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
 	</div>
 </div>
 </aside>

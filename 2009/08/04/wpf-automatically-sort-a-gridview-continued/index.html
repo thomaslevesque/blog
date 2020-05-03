@@ -76,7 +76,7 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-04T00:00:00Z">August 04, 2009</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>A few months ago, I wrote <a href="http://www.thomaslevesque.com/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/"><strong>a post</strong></a> where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the <code>GridViewSort</code> class, which displays the sort glyph.  <img src="gridviewsort_en.png" alt="GridViewSort sample with sort glyph">  To achieve this result, I used an <code>Adorner</code> : this is a component which allows to draw over existing UI elements, on an independant rendering layer.  The new version of the <code>GridViewSort</code> class can be used as before, in that case the grid displays default sort glyphs. These default glyphs are not particularly good-looking, so if you have some artistic skills you can provide you own images, as shown in the code below :</p>
+			<p>A few months ago, I wrote <a href="/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/"><strong>a post</strong></a> where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the <code>GridViewSort</code> class, which displays the sort glyph.  <img src="gridviewsort_en.png" alt="GridViewSort sample with sort glyph">  To achieve this result, I used an <code>Adorner</code> : this is a component which allows to draw over existing UI elements, on an independant rendering layer.  The new version of the <code>GridViewSort</code> class can be used as before, in that case the grid displays default sort glyphs. These default glyphs are not particularly good-looking, so if you have some artistic skills you can provide you own images, as shown in the code below :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">        <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
                   <span style="color:#a6e22e">IsSynchronizedWithCurrentItem=</span><span style="color:#e6db74">&#34;True&#34;</span>
                   <span style="color:#a6e22e">util:GridViewSort.AutoSort=</span><span style="color:#e6db74">&#34;True&#34;</span>
@@ -437,7 +437,8 @@ if (!doNotTrack) {
         <span style="color:#75715e">#endregion
 </span><span style="color:#75715e"></span>    }
 }
-</code></pre></div><p>I hope you&rsquo;ll find that useful :)  <strong>Update</strong>: uploaded <a href="http://www.thomaslevesque.com/files/2012/06/AutoSortGridView.zip">example project</a> to demonstrate how to use the code</p>
+</code></pre></div><p>I hope you&rsquo;ll find that useful :)</p>
+<p><strong>Update</strong>: uploaded <a href="AutoSortGridView.zip">example project</a> to demonstrate how to use the code</p>
 
 		</div>
 		<footer class="post__footer">
@@ -541,21 +542,21 @@ if (!doNotTrack) {
 <div class="widget-taglist widget">
 	<h4 class="widget__title">Top tags</h4>
 	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/c" title="c#">c#</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/wpf" title="wpf">wpf</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/xaml" title="xaml">xaml</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core" title="asp.net-core">asp.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/async" title="async">async</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio" title="visual-studio">visual-studio</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core" title=".net-core">.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linq" title="linq">linq</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing" title="unit-testing">unit-testing</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/binding" title="binding">binding</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension" title="markup-extension">markup-extension</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm" title="mvvm">mvvm</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure" title="azure">azure</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
 	</div>
 </div>
 </aside>

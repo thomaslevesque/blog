@@ -164,7 +164,8 @@ if (!doNotTrack) {
             UpdateValue(e.IsAvailable);
         }
     }
-</code></pre></div><p>Note that we subscribe to the <code>NetworkAvailabilityChanged</code> event in the class constructor. If we wanted to subscribe to an event of the target object, we would have to do it in the <code>ProvideValueInternal</code> method, so that the target object can be accessed.  I hope this post let you see how simple it is to implement a markup extension that can update its target at a later time. This enables a behavior similar to a binding, but is not limited to dependency properties. An example of where I use this technique is to create a localization framework that allows to switch language &ldquo;on the fly&rdquo;, without restarting the application.   <strong>Update :</strong> In its current state, this markup extension can&rsquo;t be used in a template. For an explanation and a solution to that issue, please read <a href="http://www.thomaslevesque.com/2009/08/23/wpf-markup-extensions-and-templates/">this post</a>.</p>
+</code></pre></div><p>Note that we subscribe to the <code>NetworkAvailabilityChanged</code> event in the class constructor. If we wanted to subscribe to an event of the target object, we would have to do it in the <code>ProvideValueInternal</code> method, so that the target object can be accessed.  I hope this post let you see how simple it is to implement a markup extension that can update its target at a later time. This enables a behavior similar to a binding, but is not limited to dependency properties. An example of where I use this technique is to create a localization framework that allows to switch language &ldquo;on the fly&rdquo;, without restarting the application.</p>
+<p><strong>Update :</strong> In its current state, this markup extension can&rsquo;t be used in a template. For an explanation and a solution to that issue, please read <a href="/2009/08/23/wpf-markup-extensions-and-templates/">this post</a>.</p>
 
 		</div>
 		<footer class="post__footer">
@@ -262,21 +263,21 @@ if (!doNotTrack) {
 <div class="widget-taglist widget">
 	<h4 class="widget__title">Top tags</h4>
 	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/c" title="c#">c#</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/wpf" title="wpf">wpf</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/xaml" title="xaml">xaml</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core" title="asp.net-core">asp.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/async" title="async">async</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio" title="visual-studio">visual-studio</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core" title=".net-core">.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linq" title="linq">linq</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing" title="unit-testing">unit-testing</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/binding" title="binding">binding</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension" title="markup-extension">markup-extension</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm" title="mvvm">mvvm</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure" title="azure">azure</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
 	</div>
 </div>
 </aside>

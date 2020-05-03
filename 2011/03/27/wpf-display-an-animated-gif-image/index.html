@@ -358,7 +358,13 @@ if (!doNotTrack) {
         element.Loaded += handler;
     }
 }
-</code></pre></div><p>Enjoy :)  <strong>Update</strong>: the code that retrieves the frame duration only works on Windows Seven, and on Windows Vista if the <a href="http://support.microsoft.com/kb/971644/en-us">Platform Update</a> is installed (untested). The default duration (100ms) will be used instead on other versions of Windows. I will update the article if I find a solution that works on all operating systems (I know I could use <code>System.Drawing.Bitmap</code>, but I&rsquo;d rather not depend on this&hellip;)  <strong>Update 2</strong>: as pointed out by Klaus in the comments, the <code>ImageBehavior</code> class didn&rsquo;t handle some important attributes of the frames: the diposal method (whether a frame should entirely replace the previous one, or be combined with it), and the frame position (Left/Top/Width/Height). I updated the code to handle these attributes properly. Thank you Klaus!  <strong>Update 3</strong>: a commenter on the French version of my blog pointed out a problem when the AnimatedSource is an image in a resource dictionary; the UriSource wasn&rsquo;t correctly interpreted when it was a relative URI. This problem is now fixed. Thank you, &ldquo;anonymous&rdquo;!  <strong>Update 4</strong>: uploaded an <a href="http://www.thomaslevesque.com/files/2012/06/AnimatedGif.zip">example project</a> to demonstrate the code.  <strong>Update 5</strong>: yet another bug fix, for when you use a <code>BitmapImage</code> initialized from a stream. Thanks to Mizutama for spotting this one!  <strong>Update 6</strong>: rather than posting improvements to this blog post, I eventually created <a href="https://github.com/XamlAnimatedGif/WpfAnimatedGif/">a project on <strike>CodePlex</strike> GitHub</a> where this class will be maintained. You can also install it using NuGet, the package id is <a href="https://nuget.org/packages/WpfAnimatedGif">WpfAnimatedGif</a>. Thanks to Diego Mijelshon for the suggestion!</p>
+</code></pre></div><p>Enjoy :)</p>
+<p><strong>Update</strong>: the code that retrieves the frame duration only works on Windows Seven, and on Windows Vista if the <a href="http://support.microsoft.com/kb/971644/en-us">Platform Update</a> is installed (untested). The default duration (100ms) will be used instead on other versions of Windows. I will update the article if I find a solution that works on all operating systems (I know I could use <code>System.Drawing.Bitmap</code>, but I&rsquo;d rather not depend on this&hellip;)</p>
+<p><strong>Update 2</strong>: as pointed out by Klaus in the comments, the <code>ImageBehavior</code> class didn&rsquo;t handle some important attributes of the frames: the diposal method (whether a frame should entirely replace the previous one, or be combined with it), and the frame position (Left/Top/Width/Height). I updated the code to handle these attributes properly. Thank you Klaus!</p>
+<p><strong>Update 3</strong>: a commenter on the French version of my blog pointed out a problem when the AnimatedSource is an image in a resource dictionary; the UriSource wasn&rsquo;t correctly interpreted when it was a relative URI. This problem is now fixed. Thank you, &ldquo;anonymous&rdquo;!</p>
+<p><strong>Update 4</strong>: uploaded an <a href="AnimatedGif.zip">example project</a> to demonstrate the code.</p>
+<p><strong>Update 5</strong>: yet another bug fix, for when you use a <code>BitmapImage</code> initialized from a stream. Thanks to Mizutama for spotting this one!</p>
+<p><strong>Update 6</strong>: rather than posting improvements to this blog post, I eventually created <a href="https://github.com/XamlAnimatedGif/WpfAnimatedGif/">a project on <strike>CodePlex</strike> GitHub</a> where this class will be maintained. You can also install it using NuGet, the package id is <a href="https://nuget.org/packages/WpfAnimatedGif">WpfAnimatedGif</a>. Thanks to Diego Mijelshon for the suggestion!</p>
 
 		</div>
 		<footer class="post__footer">
@@ -456,21 +462,21 @@ if (!doNotTrack) {
 <div class="widget-taglist widget">
 	<h4 class="widget__title">Top tags</h4>
 	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/c" title="c#">c#</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/wpf" title="wpf">wpf</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/xaml" title="xaml">xaml</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core" title="asp.net-core">asp.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/async" title="async">async</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio" title="visual-studio">visual-studio</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core" title=".net-core">.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linq" title="linq">linq</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing" title="unit-testing">unit-testing</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/binding" title="binding">binding</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension" title="markup-extension">markup-extension</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm" title="mvvm">mvvm</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure" title="azure">azure</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
 	</div>
 </div>
 </aside>

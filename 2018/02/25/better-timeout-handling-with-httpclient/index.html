@@ -121,7 +121,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>Nothing fancy here, the timeout is an optional value of type <code>TimeSpan</code>. We can now associate a timeout value with a request, but of course, at this point there&rsquo;s no code that makes use of the value&hellip;</p>
 <h2 id="http-handler">HTTP handler</h2>
-<p>The <code>HttpClient</code> uses a <strong>pipeline architecture</strong>: each request is sent through a chain of handlers (of type <code>HttpMessageHandler</code>), and the response is passed back through these handlers in reverse order. <a href="https://www.thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/">This article</a> explains this in greater detail if you want to know more. We&rsquo;re going to insert our own handler into the pipeline, which will be in charge of handling timeouts.</p>
+<p>The <code>HttpClient</code> uses a <strong>pipeline architecture</strong>: each request is sent through a chain of handlers (of type <code>HttpMessageHandler</code>), and the response is passed back through these handlers in reverse order. <a href="/2016/12/08/fun-with-the-httpclient-pipeline/">This article</a> explains this in greater detail if you want to know more. We&rsquo;re going to insert our own handler into the pipeline, which will be in charge of handling timeouts.</p>
 <p>Our handler is going to inherit <code>DelegatingHandler</code>, a type of handler designed to be chained to another handler. To implement a handler, we need to <strong>override the <code>SendAsync</code> method</strong>. A minimal implementation would look like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TimeoutHandler</span> : DelegatingHandler
 {
@@ -160,7 +160,7 @@ if (!doNotTrack) {
 </code></pre></div><p>Two points of interest here:</p>
 <ul>
 <li>If the request&rsquo;s timeout is infinite, we don&rsquo;t create a <code>CancellationTokenSource</code>; it would never be canceled, so we save a useless allocation.</li>
-<li>If not, we create a <code>CancellationTokenSource</code> that will be canceled after the timeout is elapsed (<code>CancelAfter</code>). Note that <strong>this CTS is <em>linked to the <code>CancellationToken</code> we receive as a parameter in <code>SendAsync</code></em></strong>: this way, it will be canceled either when the timeout expires, or when the <code>CancellationToken</code> parameter will itself be canceled. You can get more details on linked cancellation tokens in <a href="http://www.thomaslevesque.com/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/">this article</a>.</li>
+<li>If not, we create a <code>CancellationTokenSource</code> that will be canceled after the timeout is elapsed (<code>CancelAfter</code>). Note that <strong>this CTS is <em>linked to the <code>CancellationToken</code> we receive as a parameter in <code>SendAsync</code></em></strong>: this way, it will be canceled either when the timeout expires, or when the <code>CancellationToken</code> parameter will itself be canceled. You can get more details on linked cancellation tokens in <a href="/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/">this article</a>.</li>
 </ul>
 <p>Finally, let&rsquo;s change the <code>SendAsync</code> method to use the <code>CancellationTokenSource</code> we created:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">override</span> Task&lt;HttpResponseMessage&gt; SendAsync(
@@ -197,7 +197,7 @@ if (!doNotTrack) {
         }
     }
 }
-</code></pre></div><p>Note that we use an <a href="https://www.thomaslevesque.com/2015/06/21/exception-filters-in-c-6/">exception filter</a> : this way we don&rsquo;t actually catch the <code>OperationException</code> when we want to let it propagate, and we avoid unnecessarily unwinding the stack.</p>
+</code></pre></div><p>Note that we use an <a href="/2015/06/21/exception-filters-in-c-6/">exception filter</a> : this way we don&rsquo;t actually catch the <code>OperationException</code> when we want to let it propagate, and we avoid unnecessarily unwinding the stack.</p>
 <p>Our handler is done, now let&rsquo;s see how to use it.</p>
 <h2 id="using-the-handler">Using the handler</h2>
 <p>When creating an <code>HttpClient</code>, it&rsquo;s possible to <strong>specify the first handler of the pipeline</strong>. If none is specified, an <code>HttpClientHandler</code> is used; this handler sends requests directly to the network. To use our new <code>TimeoutHandler</code>, we&rsquo;re going to create it, attach an <code>HttpClientHandler</code> as its next handler, and pass it to the <code>HttpClient</code>:</p>
@@ -236,7 +236,7 @@ request.SetTimeout(TimeSpan.FromSeconds(<span style="color:#ae81ff">5</span>));
 			<a class="tags__link btn" href="/tags/.net/" rel="tag">.NET</a>
 		</li>
 		<li class="tags__item">
-			<a class="tags__link btn" href="/tags/c/" rel="tag">C#</a>
+			<a class="tags__link btn" href="/tags/c%23/" rel="tag">C#</a>
 		</li>
 		<li class="tags__item">
 			<a class="tags__link btn" href="/tags/handler/" rel="tag">handler</a>
@@ -331,21 +331,21 @@ request.SetTimeout(TimeSpan.FromSeconds(<span style="color:#ae81ff">5</span>));
 <div class="widget-taglist widget">
 	<h4 class="widget__title">Top tags</h4>
 	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/c" title="c#">c#</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/wpf" title="wpf">wpf</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/xaml" title="xaml">xaml</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core" title="asp.net-core">asp.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/async" title="async">async</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio" title="visual-studio">visual-studio</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core" title=".net-core">.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linq" title="linq">linq</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing" title="unit-testing">unit-testing</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/binding" title="binding">binding</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension" title="markup-extension">markup-extension</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm" title="mvvm">mvvm</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure" title="azure">azure</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
 	</div>
 </div>
 </aside>

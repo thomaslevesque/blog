@@ -78,7 +78,7 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-08-16T00:00:00Z">August 16, 2015</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>A few years ago, I blogged about a <a href="http://www.thomaslevesque.com/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/">generic implementation of the weak event pattern in C#</a>. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.</p>
+			<p>A few years ago, I blogged about a <a href="/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/">generic implementation of the weak event pattern in C#</a>. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.</p>
 <p>My initial solution was more a proof of concept than anything else, and had a major performance issue, due to the use of <code>DynamicInvoke</code> every time the event was raised. Over the years, I revisited the weak event problem several times and came up with various solutions, improving a little every time, and I now have an implementation that should be good enough for most use cases. The public API is similar to that of my first solution. Basically, instead of writing an event like this:</p>
 <pre><code>public event EventHandler MyEvent;
 </code></pre><p>You write it like this:</p>
@@ -97,7 +97,7 @@ public event EventHandler MyEvent
 <p>For better performance, this delegate is created only the first time a given handler method is encountered, and is cached for later reuse. This way, if multiple instances of an object subscribe to an event using the same handler method, the delegate is only created the first time, and is reused for subsequent subscribers.</p>
 <p>Note that technically, the created delegate is not a “real” open-instance delegate such as those created with <code>Delegate.CreateDelegate</code>. Instead it is created using Linq expressions. The reason is that in a real open-instance delegate, the type of the first parameter must be the type that declares the method, rather than object. Since this information isn’t known statically, I have to dynamically introduce a cast.</p>
 <p>You can find the source code on GitHub: <a href="https://github.com/thomaslevesque/WeakEvent">WeakEvent</a>. A NuGet package is available here: <a href="https://www.nuget.org/packages/ThomasLevesque.WeakEvent/">ThomasLevesque.WeakEvent</a>.</p>
-<p>The repository also include code snippets for <a href="https://github.com/thomaslevesque/WeakEvent/blob/master/Snippets/VisualStudio/wevt.snippet">Visual Studio</a> and <a href="https://github.com/thomaslevesque/WeakEvent/blob/master/Snippets/ReSharper/wevt.DotSettings">ReSharper</a>, to make it easier to write the boilerplate code for a weak event.</p>
+<p>The repository also include code snippets for <a href="https://github.com/thomaslevesque/WeakEvent/blob/master/tools/Snippets/VisualStudio/wevt.snippet">Visual Studio</a> and <a href="https://github.com/thomaslevesque/WeakEvent/blob/master/tools/Snippets/ReSharper/wevt.DotSettings">ReSharper</a>, to make it easier to write the boilerplate code for a weak event.</p>
 
 		</div>
 		<footer class="post__footer">
@@ -198,21 +198,21 @@ public event EventHandler MyEvent
 <div class="widget-taglist widget">
 	<h4 class="widget__title">Top tags</h4>
 	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/c" title="c#">c#</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/wpf" title="wpf">wpf</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/xaml" title="xaml">xaml</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core" title="asp.net-core">asp.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/async" title="async">async</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio" title="visual-studio">visual-studio</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core" title=".net-core">.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linq" title="linq">linq</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing" title="unit-testing">unit-testing</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/binding" title="binding">binding</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension" title="markup-extension">markup-extension</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm" title="mvvm">mvvm</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure" title="azure">azure</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
 	</div>
 </div>
 </aside>
