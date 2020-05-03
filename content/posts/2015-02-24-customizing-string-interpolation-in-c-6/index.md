@@ -202,7 +202,7 @@ namespace System
 }
 ```
 
-This is the same approach that made it possible to use Linq when targeting .NET 2 ([LinqBridge](http://www.albahari.com/nutshell/linqbridge.aspx)) or [caller info attributes when targeting .NET 4](http://www.thomaslevesque.com/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/) or earlier. Of course, it still requires the C# 6 compiler to work…
+This is the same approach that made it possible to use Linq when targeting .NET 2 ([LinqBridge](http://www.albahari.com/nutshell/linqbridge.aspx)) or [caller info attributes when targeting .NET 4](/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/) or earlier. Of course, it still requires the C# 6 compiler to work…
 
 ### Conclusion
 

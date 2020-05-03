@@ -15,7 +15,7 @@ categories:
 ---
 
 
-A few years ago, I blogged about [a way to automate unit testing of null argument validation](https://thomaslevesque.com/2014/11/02/easy-unit-testing-of-null-argument-validation/). Its usage looked like this:
+A few years ago, I blogged about [a way to automate unit testing of null argument validation](/2014/11/02/easy-unit-testing-of-null-argument-validation/). Its usage looked like this:
 
 ```csharp
 [Fact]

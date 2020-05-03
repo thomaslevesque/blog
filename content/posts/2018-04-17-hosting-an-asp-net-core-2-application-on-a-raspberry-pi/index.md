@@ -135,7 +135,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 ```
 
-In case you're wondering what a middleware is, [this article](https://www.thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/) might help!
+In case you're wondering what a middleware is, [this article](/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/) might help!
 
 This middleware will read the `X-Forwarded-*` headers from incoming requests, and use them to modify:
 

@@ -283,5 +283,17 @@ public static void DoWhenLoaded<T>(this T element, Action<T> action)
     }
 }
 ```
-  Enjoy :)  **Update**: the code that retrieves the frame duration only works on Windows Seven, and on Windows Vista if the [Platform Update](http://support.microsoft.com/kb/971644/en-us) is installed (untested). The default duration (100ms) will be used instead on other versions of Windows. I will update the article if I find a solution that works on all operating systems (I know I could use `System.Drawing.Bitmap`, but I'd rather not depend on this...)  **Update 2**: as pointed out by Klaus in the comments, the `ImageBehavior` class didn't handle some important attributes of the frames: the diposal method (whether a frame should entirely replace the previous one, or be combined with it), and the frame position (Left/Top/Width/Height). I updated the code to handle these attributes properly. Thank you Klaus!  **Update 3**: a commenter on the French version of my blog pointed out a problem when the AnimatedSource is an image in a resource dictionary; the UriSource wasn't correctly interpreted when it was a relative URI. This problem is now fixed. Thank you, "anonymous"!  **Update 4**: uploaded an [example project](http://www.thomaslevesque.com/files/2012/06/AnimatedGif.zip) to demonstrate the code.  **Update 5**: yet another bug fix, for when you use a `BitmapImage` initialized from a stream. Thanks to Mizutama for spotting this one!  **Update 6**: rather than posting improvements to this blog post, I eventually created [a project on <strike>CodePlex</strike> GitHub](https://github.com/XamlAnimatedGif/WpfAnimatedGif/) where this class will be maintained. You can also install it using NuGet, the package id is [WpfAnimatedGif](https://nuget.org/packages/WpfAnimatedGif). Thanks to Diego Mijelshon for the suggestion!  
+  Enjoy :)
+  
+  **Update**: the code that retrieves the frame duration only works on Windows Seven, and on Windows Vista if the [Platform Update](http://support.microsoft.com/kb/971644/en-us) is installed (untested). The default duration (100ms) will be used instead on other versions of Windows. I will update the article if I find a solution that works on all operating systems (I know I could use `System.Drawing.Bitmap`, but I'd rather not depend on this...)  
+  
+  **Update 2**: as pointed out by Klaus in the comments, the `ImageBehavior` class didn't handle some important attributes of the frames: the diposal method (whether a frame should entirely replace the previous one, or be combined with it), and the frame position (Left/Top/Width/Height). I updated the code to handle these attributes properly. Thank you Klaus!
+  
+  **Update 3**: a commenter on the French version of my blog pointed out a problem when the AnimatedSource is an image in a resource dictionary; the UriSource wasn't correctly interpreted when it was a relative URI. This problem is now fixed. Thank you, "anonymous"!
+  
+  **Update 4**: uploaded an [example project](AnimatedGif.zip) to demonstrate the code.
+  
+  **Update 5**: yet another bug fix, for when you use a `BitmapImage` initialized from a stream. Thanks to Mizutama for spotting this one!
+  
+  **Update 6**: rather than posting improvements to this blog post, I eventually created [a project on <strike>CodePlex</strike> GitHub](https://github.com/XamlAnimatedGif/WpfAnimatedGif/) where this class will be maintained. You can also install it using NuGet, the package id is [WpfAnimatedGif](https://nuget.org/packages/WpfAnimatedGif). Thanks to Diego Mijelshon for the suggestion!  
 

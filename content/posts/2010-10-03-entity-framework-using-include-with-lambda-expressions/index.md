@@ -141,7 +141,7 @@ var query =
     select ord;
 ```
 To conclude, I just have two remarks regarding this solution:
-    - A similar extension method is included in the [Entity Framework Feature CTP4](http://blogs.msdn.com/b/adonet/archive/2010/07/14/ctp4announcement.aspx) (see [this article](http://romiller.com/2010/07/14/ef-ctp4-tips-tricks-include-with-lambda/) for details). So it is possible that it will eventually be included in the framework (perhaps in a service pack for .NET 4.0 ?).
+    - A similar extension method is included in the Entity Framework Feature CTP4 (see [this article](http://romiller.com/2010/07/14/ef-ctp4-tips-tricks-include-with-lambda/) for details). So it is possible that it will eventually be included in the framework (perhaps in a service pack for .NET 4.0 ?).
     - Even though this solution targets Entity Framework 4.0, it should be possible to adapt it for EF 3.5. The `ExpressionVisitor` class is not available in 3.5, but there is another implementation of it in Joseph Albahari's [LINQKit](http://www.albahari.com/nutshell/linqkit.aspx). I didn't try it, but it should work the same way...
 
 

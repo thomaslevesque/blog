@@ -69,7 +69,7 @@ Nothing fancy here, the timeout is an optional value of type `TimeSpan`. We can 
 
 ## HTTP handler
 
-The `HttpClient` uses a **pipeline architecture**: each request is sent through a chain of handlers (of type `HttpMessageHandler`), and the response is passed back through these handlers in reverse order. [This article](https://www.thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/) explains this in greater detail if you want to know more. We're going to insert our own handler into the pipeline, which will be in charge of handling timeouts.
+The `HttpClient` uses a **pipeline architecture**: each request is sent through a chain of handlers (of type `HttpMessageHandler`), and the response is passed back through these handlers in reverse order. [This article](/2016/12/08/fun-with-the-httpclient-pipeline/) explains this in greater detail if you want to know more. We're going to insert our own handler into the pipeline, which will be in charge of handling timeouts.
 
 Our handler is going to inherit `DelegatingHandler`, a type of handler designed to be chained to another handler. To implement a handler, we need to **override the `SendAsync` method**. A minimal implementation would look like this:
 
@@ -125,7 +125,7 @@ private CancellationTokenSource GetCancellationTokenSource(
 Two points of interest here:
 
 - If the request's timeout is infinite, we don't create a `CancellationTokenSource`; it would never be canceled, so we save a useless allocation.
-- If not, we create a `CancellationTokenSource` that will be canceled after the timeout is elapsed (`CancelAfter`). Note that **this CTS is *linked to the `CancellationToken` we receive as a parameter in `SendAsync`***: this way, it will be canceled either when the timeout expires, or when the `CancellationToken` parameter will itself be canceled. You can get more details on linked cancellation tokens in [this article](http://www.thomaslevesque.com/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/).
+- If not, we create a `CancellationTokenSource` that will be canceled after the timeout is elapsed (`CancelAfter`). Note that **this CTS is *linked to the `CancellationToken` we receive as a parameter in `SendAsync`***: this way, it will be canceled either when the timeout expires, or when the `CancellationToken` parameter will itself be canceled. You can get more details on linked cancellation tokens in [this article](/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/).
 
 
 Finally, let's change the `SendAsync` method to use the `CancellationTokenSource` we created:
@@ -174,7 +174,7 @@ protected async override Task<HttpResponseMessage> SendAsync(
 }
 ```
 
-Note that we use an [exception filter](https://www.thomaslevesque.com/2015/06/21/exception-filters-in-c-6/) : this way we don't actually catch the `OperationException` when we want to let it propagate, and we avoid unnecessarily unwinding the stack.
+Note that we use an [exception filter](/2015/06/21/exception-filters-in-c-6/) : this way we don't actually catch the `OperationException` when we want to let it propagate, and we avoid unnecessarily unwinding the stack.
 
 Our handler is done, now let's see how to use it.
 

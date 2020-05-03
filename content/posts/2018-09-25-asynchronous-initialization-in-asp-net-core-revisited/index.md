@@ -17,7 +17,7 @@ Initialization in ASP.NET Core is a bit awkward. There are well defined places f
 
 ## Using a middleware: not such a good idea
 
-Two months ago I published [a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware](https://www.thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/). At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn't such a good approach. Using a middleware for this has a major drawback: even though the initialization will only be performed once, the app will still incur the cost of calling an additional middleware for every single request. Obviously, we don't want the initialization to impact performance for the whole lifetime of the app, so it shouldn't be done in the request processing pipeline.
+Two months ago I published [a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware](/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/). At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn't such a good approach. Using a middleware for this has a major drawback: even though the initialization will only be performed once, the app will still incur the cost of calling an additional middleware for every single request. Obviously, we don't want the initialization to impact performance for the whole lifetime of the app, so it shouldn't be done in the request processing pipeline.
 
 ## A better approach: the `Program.Main` method
 

@@ -192,7 +192,7 @@ string description = o match
 
 It’s very similar to a switch, except that it’s an expression, not a statement.
 
-There’s a lot more to pattern matching than what I mentioned here. You can look at [the spec](https://github.com/dotnet/roslyn/blob/features/patterns/docs/features/patterns.md) on Github for more details.
+There’s a lot more to pattern matching than what I mentioned here. You can look at [the spec](https://github.com/dotnet/roslyn/blob/master/docs/features/patterns.md) on Github for more details.
 
 ### Binary literals and digit separators
 

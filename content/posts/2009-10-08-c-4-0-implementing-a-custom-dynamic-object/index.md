@@ -139,5 +139,7 @@ foreach (var item in bornInThe20thCentury)
     Console.WriteLine("{0} {1}", item.FirstName, item.LastName);
 }
 ```
-  Now that you understand the basic principles for creating custom dynamic objects, you can imagine many more useful applications :)  **Update :** Just after posting this article, I stumbled upon the [`ExpandoObject`](http://msdn.microsoft.com/en-us/library/system.dynamic.expandoobject%28VS.100%29.aspx) class, which does exactly the same thing as the `MyDynamicObject` class above... It seems I reinvented the wheel again ;). Anyway, it's interesting to see how dynamic objects work internally, if only for learning purposes... For more details about the `ExpandoObject` class, check out [this post on the C# FAQ blog](http://blogs.msdn.com/csharpfaq/archive/2009/10/01/dynamic-in-c-4-0-introducing-the-expandoobject.aspx).
+  Now that you understand the basic principles for creating custom dynamic objects, you can imagine many more useful applications :)
+
+  **Update :** Just after posting this article, I stumbled upon the [`ExpandoObject`](http://msdn.microsoft.com/en-us/library/system.dynamic.expandoobject%28VS.100%29.aspx) class, which does exactly the same thing as the `MyDynamicObject` class above... It seems I reinvented the wheel again ;). Anyway, it's interesting to see how dynamic objects work internally, if only for learning purposes... For more details about the `ExpandoObject` class, check out [this post on the C# FAQ blog](https://devblogs.microsoft.com/visualstudio/dynamic-in-c-4-0-introducing-the-expandoobject/).
 

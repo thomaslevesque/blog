@@ -13,7 +13,7 @@ categories:
 ---
 
 
-A few years ago, I blogged about a [generic implementation of the weak event pattern in C#](http://www.thomaslevesque.com/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/). The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.
+A few years ago, I blogged about a [generic implementation of the weak event pattern in C#](/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/). The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.
 
 My initial solution was more a proof of concept than anything else, and had a major performance issue, due to the use of `DynamicInvoke` every time the event was raised. Over the years, I revisited the weak event problem several times and came up with various solutions, improving a little every time, and I now have an implementation that should be good enough for most use cases. The public API is similar to that of my first solution. Basically, instead of writing an event like this:
 
@@ -56,5 +56,5 @@ Note that technically, the created delegate is not a “real” open-instance de
 
 You can find the source code on GitHub: [WeakEvent](https://github.com/thomaslevesque/WeakEvent). A NuGet package is available here: [ThomasLevesque.WeakEvent](https://www.nuget.org/packages/ThomasLevesque.WeakEvent/).
 
-The repository also include code snippets for [Visual Studio](https://github.com/thomaslevesque/WeakEvent/blob/master/Snippets/VisualStudio/wevt.snippet) and [ReSharper](https://github.com/thomaslevesque/WeakEvent/blob/master/Snippets/ReSharper/wevt.DotSettings), to make it easier to write the boilerplate code for a weak event.
+The repository also include code snippets for [Visual Studio](https://github.com/thomaslevesque/WeakEvent/blob/master/tools/Snippets/VisualStudio/wevt.snippet) and [ReSharper](https://github.com/thomaslevesque/WeakEvent/blob/master/tools/Snippets/ReSharper/wevt.DotSettings), to make it easier to write the boilerplate code for a weak event.
 

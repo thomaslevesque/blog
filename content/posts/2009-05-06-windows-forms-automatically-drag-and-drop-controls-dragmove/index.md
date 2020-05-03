@@ -45,5 +45,5 @@ There are several ways to use this solution, pick the one that best suits your n
         }
 ```
 
-  The attached Visual Studio solution contains the WinFormsDragMove library, and a test project to demonstrate the various ways to use this library. A C#2-compatible version of these projects is also included.  [Download source](http://www.thomaslevesque.com/files/2012/06/DragMove.zip)
+  The attached Visual Studio solution contains the WinFormsDragMove library, and a test project to demonstrate the various ways to use this library. A C#2-compatible version of these projects is also included.  [Download source](DragMove.zip)
 

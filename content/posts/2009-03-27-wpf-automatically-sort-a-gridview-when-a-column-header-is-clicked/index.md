@@ -234,5 +234,7 @@ namespace Wpf.Util
     }
 }
 ```
-  Of course, this class could probably be improved... for instance, we could add an arrow glyph on the sorted column (maybe by using an `Adorner`). Maybe I'll do that someday... meanwhile, please feel free to use it ;)  **Update :** A new version that displays the sort glyph in the sorted column is now available in [this blog post](http://www.thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/).
+  Of course, this class could probably be improved... for instance, we could add an arrow glyph on the sorted column (maybe by using an `Adorner`). Maybe I'll do that someday... meanwhile, please feel free to use it ;)
+
+  **Update :** A new version that displays the sort glyph in the sorted column is now available in [this blog post](/2009/08/04/wpf-automatically-sort-a-gridview-continued/).
 

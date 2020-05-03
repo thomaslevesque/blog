@@ -13,7 +13,7 @@ categories:
   - WPF
 ---
 
-*Note : This post follows the one about a [a markup extension that can update its target](http://www.thomaslevesque.com/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/), and reuses the same code.*  You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results... In this post I'll explain what the problem is, and how to create a markup extensions that behaves correctly in a template.  **The problem**  Let's take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :  
+*Note : This post follows the one about a [a markup extension that can update its target](/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/), and reuses the same code.*  You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results... In this post I'll explain what the problem is, and how to create a markup extensions that behaves correctly in a template.  **The problem**  Let's take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :  
 ```xml
 <CheckBox IsChecked="{my:NetworkAvailable}" Content="Network is available" />
 ```

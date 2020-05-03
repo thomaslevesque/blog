@@ -14,7 +14,7 @@ categories:
 ---
 
 
-***Update:** I no longer recommend the approach described in this post. I propose a better solution here: [Asynchronous initialization in ASP.NET Core, revisited](https://www.thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/).*
+***Update:** I no longer recommend the approach described in this post. I propose a better solution here: [Asynchronous initialization in ASP.NET Core, revisited](/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/).*
 
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the `Startup.Configure` method is generally not a good idea, because:
 
@@ -24,7 +24,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
 
 ## Async initialization middleware
 
-A simple way to do it involves writing a custom [middleware](https://www.thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/) that ensures initialization is complete before processing a request. This middleware starts the initialization process when the app starts, and upon receiving a request, will wait until the initialization is done before passing the request to the next middleware. A basic implementation could look like this:
+A simple way to do it involves writing a custom [middleware](/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/) that ensures initialization is complete before processing a request. This middleware starts the initialization process when the app starts, and upon receiving a request, will wait until the initialization is done before passing the request to the next middleware. A basic implementation could look like this:
 
 ```csharp
 public class AsyncInitializationMiddleware

@@ -15,7 +15,7 @@ categories:
 This is the first post in a series of 2:
 
 - Handling type hierarchies in Cosmos DB (part 1) (this post)
-- [Handling type hierarchies in Cosmos DB (part 2)](/2019/10/15/handling-type-hierarchies-in-cosmos-db-part2/)
+- [Handling type hierarchies in Cosmos DB (part 2)](/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/)
 
 
 Azure Cosmos DB is Microsoft's NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don't need to split complex objects into multiple tables and use joins like in relational databases. You just serialize your full C# object graph to JSON and save it to the database. The [Cosmos DB .NET SDK](https://github.com/Azure/azure-cosmos-dotnet-v3) takes care of serializing your objects, so you don't need to do it explicitly, and it lets you query the database in a strongly typed manner using Linq:

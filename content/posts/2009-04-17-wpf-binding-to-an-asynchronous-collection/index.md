@@ -87,7 +87,9 @@ As you may have noticed, it is not possible to modify the contents of an `Observ
 ```csharp
 private ObservableCollection<string> _strings = new AsyncObservableCollection<string>();
 ```
-  The `ListBox` can now reflect in real-time the changes made on the collection.  Enjoy ;)  **Update :** I just found a bug in my implementation : in some cases, using `Post` to raise the event when the collection is modified from the main thread can cause unpredictable behavior. In that case, the event should of course be raised directly on the main thread, after checking that the current `SynchronizationContext` is the one in which the collection was created. This also made me realize that the `AsyncOperation` actually doesn't bring any benefit : we can use the `SynchronizationContext` directly instead. So here's the new implementation :  
+  The `ListBox` can now reflect in real-time the changes made on the collection.  Enjoy ;)
+
+  **Update :** I just found a bug in my implementation : in some cases, using `Post` to raise the event when the collection is modified from the main thread can cause unpredictable behavior. In that case, the event should of course be raised directly on the main thread, after checking that the current `SynchronizationContext` is the one in which the collection was created. This also made me realize that the `AsyncOperation` actually doesn't bring any benefit : we can use the `SynchronizationContext` directly instead. So here's the new implementation :  
 ```csharp
     public class AsyncObservableCollection<T> : ObservableCollection<T>
     {

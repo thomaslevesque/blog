@@ -14,7 +14,7 @@ categories:
   - WPF
 ---
 
-A few months ago, I wrote [**a post**](http://www.thomaslevesque.com/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/) where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today's post, I present a new version of the `GridViewSort` class, which displays the sort glyph.  ![GridViewSort sample with sort glyph](gridviewsort_en.png)  To achieve this result, I used an `Adorner` : this is a component which allows to draw over existing UI elements, on an independant rendering layer.  The new version of the `GridViewSort` class can be used as before, in that case the grid displays default sort glyphs. These default glyphs are not particularly good-looking, so if you have some artistic skills you can provide you own images, as shown in the code below :  
+A few months ago, I wrote [**a post**](/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/) where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today's post, I present a new version of the `GridViewSort` class, which displays the sort glyph.  ![GridViewSort sample with sort glyph](gridviewsort_en.png)  To achieve this result, I used an `Adorner` : this is a component which allows to draw over existing UI elements, on an independant rendering layer.  The new version of the `GridViewSort` class can be used as before, in that case the grid displays default sort glyphs. These default glyphs are not particularly good-looking, so if you have some artistic skills you can provide you own images, as shown in the code below :  
 ```xml
         <ListView ItemsSource="{Binding Persons}"
                   IsSynchronizedWithCurrentItem="True"
@@ -381,5 +381,7 @@ namespace Wpf.Util
     }
 }
 ```
-  I hope you'll find that useful :)  **Update**: uploaded [example project](http://www.thomaslevesque.com/files/2012/06/AutoSortGridView.zip) to demonstrate how to use the code
+  I hope you'll find that useful :)
+  
+  **Update**: uploaded [example project](AutoSortGridView.zip) to demonstrate how to use the code
 

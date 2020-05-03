@@ -13,7 +13,7 @@ categories:
   - Uncategorized
 ---
 
-[Last time](http://www.thomaslevesque.com/2016/07/25/tuples-in-c-7/) on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:  
+[Last time](/2016/07/25/tuples-in-c-7/) on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:  
 - emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
 - deconstruction of tuples into separate variables
 
