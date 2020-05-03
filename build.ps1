@@ -1,0 +1,1 @@
+hugo --environment production
