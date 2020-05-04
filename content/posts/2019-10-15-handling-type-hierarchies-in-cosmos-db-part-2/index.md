@@ -153,18 +153,12 @@ public class NewtonsoftJsonCosmosSerializer : CosmosSerializer
 
     public override T FromStream<T>(Stream stream)
     {
-        string text;
-        using (var reader = new StreamReader(stream))
-        {
-            text = reader.ReadToEnd();
-        }
-
         if (typeof(Stream).IsAssignableFrom(typeof(T)))
         {
             return (T)(object)stream;
         }
 
-        using (var sr = new StringReader(text))
+        using (var sr = new StreamReader(stream))
         {
             using (var jsonTextReader = new JsonTextReader(sr))
             {
