@@ -188,18 +188,12 @@ if (!doNotTrack) {
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> T FromStream&lt;T&gt;(Stream stream)
     {
-        <span style="color:#66d9ef">string</span> text;
-        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> reader = <span style="color:#66d9ef">new</span> StreamReader(stream))
-        {
-            text = reader.ReadToEnd();
-        }
-
         <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">typeof</span>(Stream).IsAssignableFrom(<span style="color:#66d9ef">typeof</span>(T)))
         {
             <span style="color:#66d9ef">return</span> (T)(<span style="color:#66d9ef">object</span>)stream;
         }
 
-        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> sr = <span style="color:#66d9ef">new</span> StringReader(text))
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> sr = <span style="color:#66d9ef">new</span> StreamReader(stream))
         {
             <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> jsonTextReader = <span style="color:#66d9ef">new</span> JsonTextReader(sr))
             {
