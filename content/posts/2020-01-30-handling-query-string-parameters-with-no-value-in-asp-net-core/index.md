@@ -2,6 +2,7 @@
 layout: post
 title: Handling query string parameters with no value in ASP.NET Core
 date: 2020-01-30T00:00:00.0000000
+lastmod: 2020-05-05
 url: /2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/
 tags:
   - asp.net core
@@ -11,7 +12,6 @@ tags:
 categories:
   - Uncategorized
 ---
-
 
 Query strings are typically made of a sequence of key-value pairs, like `?foo=hello&bar=world…`. However, if you look at [RFC 3986](https://tools.ietf.org/html/rfc3986#section-3.4), you can see that query strings are very loosely specified. It mentions that
 
@@ -58,7 +58,7 @@ By default, a boolean parameter is bound using [`SimpleTypeModelBinder`](https:/
 So we need to create our own model binder, which will interpret the presence of a key with no value as an implicit `true`:
 
 ```csharp
-class BooleanModelBinder : IModelBinder
+class QueryBooleanModelBinder : IModelBinder
 {
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
@@ -99,13 +99,15 @@ class BooleanModelBinder : IModelBinder
 In order to use this model binder, we also need a model binder provider:
 
 ```csharp
-class BooleanModelBinderProvider : IModelBinderProvider
+class QueryBooleanModelBinderProvider : IModelBinderProvider
 {
     public IModelBinder GetBinder(ModelBinderProviderContext context)
     {
-        if (context.Metadata.ModelType == typeof(bool))
+        if (context.Metadata.ModelType == typeof(bool) &&
+            context.BindingInfo.BindingSource != null &&
+            context.BindingInfo.BindingSource.CanAcceptDataFrom(BindingSource.Query))
         {
-            return new BooleanModelBinder();
+            return new QueryBooleanModelBinder();
         }
 
         return null;
@@ -113,14 +115,14 @@ class BooleanModelBinderProvider : IModelBinderProvider
 }
 ```
 
-It will return our model binder if the target type is `bool`. Now we just need to add this provider to the list of model binder providers:
+It will return our model binder if the target type is `bool` *and* the binding source is the query string. Now we just need to add this provider to the list of model binder providers:
 
 ```csharp
 // In Startup.ConfigureServices
 services.AddControllers(options =>
 {
     options.ModelBinderProviders.Insert(
-        0, new BooleanModelBinderProvider());
+        0, new QueryBooleanModelBinderProvider());
 });
 ```
 
