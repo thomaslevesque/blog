@@ -3,6 +3,9 @@ name: Deploy to GitHub pages
 on:
   push:
     branches: [ master ]
+  schedule:
+    # run every day at 4am (UTC) to publish scheduled posts
+    - cron:  '0 3 * * *'
 
 jobs:
   build:
