@@ -32,9 +32,6 @@ jobs:
         cd $GITHUB_WORKSPACE/out
         git config user.name "Hugo Bot"
         git config user.email "hugobot@thomaslevesque.net"
-        #echo "machine github.com" >> ~/.netrc
-        #echo "login thomaslevesque" >> ~/.netrc
-        #echo "password $GITHUB_TOKEN" >> ~/.netrc
         git add .
         git commit -m "Publish site for $GITHUB_SHA"
         git push
