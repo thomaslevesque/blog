@@ -1,0 +1,40 @@
+name: Deploy to GitHub pages
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout source
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        path: src
+
+    - name: Checkout destination
+      uses: actions/checkout@v2
+      with:
+        ref: gh-pages
+        path: out
+
+    - name: Build website with Hugo
+      uses: srt32/hugo-action@v0.0.3
+      with:
+        args: --source $GITHUB_WORKSPACE/src --destination $GITHUB_WORKSPACE/out --environment production
+
+    - name: Commit and push result
+      run: |
+        cd $GITHUB_WORKSPACE/out
+        git config user.name "Hugo Bot"
+        git config user.email "hugobot@thomaslevesque.net"
+        #echo "machine github.com" >> ~/.netrc
+        #echo "login thomaslevesque" >> ~/.netrc
+        #echo "password $GITHUB_TOKEN" >> ~/.netrc
+        git add .
+        git commit -m "Publish site for $GITHUB_SHA"
+        git push
