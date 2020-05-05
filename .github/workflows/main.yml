@@ -33,5 +33,5 @@ jobs:
         git config user.name "Hugo Bot"
         git config user.email "hugobot@thomaslevesque.net"
         git add .
-        git commit -m "Publish site for $GITHUB_SHA"
+        git commit -m "Publish site for $GITHUB_SHA" || echo "No changes to commit"
         git push
