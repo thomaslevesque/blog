@@ -17,7 +17,7 @@
       <pubDate>Mon, 21 Mar 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</guid>
-      <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&amp;rsquo;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip; Let&amp;rsquo;s illustrate with a simple example: we want to display a list of products in a DataGrid.</description>
+      <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&#39;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip; Let&#39;s illustrate with a simple example: we want to display a list of products in a DataGrid.</description>
     </item>
     
   </channel>

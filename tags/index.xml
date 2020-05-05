@@ -30,15 +30,6 @@
     </item>
     
     <item>
-      <title>Azure</title>
-      <link>https://thomaslevesque.com/tags/azure/</link>
-      <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/azure/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Azure AD</title>
       <link>https://thomaslevesque.com/tags/azure-ad/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
@@ -116,15 +107,6 @@
       <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/lazy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>asp.net</title>
-      <link>https://thomaslevesque.com/tags/asp.net/</link>
-      <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/asp.net/</guid>
       <description></description>
     </item>
     
@@ -219,15 +201,6 @@
     </item>
     
     <item>
-      <title>unit</title>
-      <link>https://thomaslevesque.com/tags/unit/</link>
-      <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/unit/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>unit testing</title>
       <link>https://thomaslevesque.com/tags/unit-testing/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
@@ -287,6 +260,15 @@
       <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/json/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Azure</title>
+      <link>https://thomaslevesque.com/tags/azure/</link>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/azure/</guid>
       <description></description>
     </item>
     
@@ -507,15 +489,6 @@
     </item>
     
     <item>
-      <title>git</title>
-      <link>https://thomaslevesque.com/tags/git/</link>
-      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/git/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>GitHub</title>
       <link>https://thomaslevesque.com/tags/github/</link>
       <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
@@ -543,11 +516,29 @@
     </item>
     
     <item>
+      <title>asp.net</title>
+      <link>https://thomaslevesque.com/tags/asp.net/</link>
+      <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/asp.net/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>pipeline</title>
       <link>https://thomaslevesque.com/tags/pipeline/</link>
       <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/pipeline/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://thomaslevesque.com/tags/git/</link>
+      <pubDate>Tue, 06 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/git/</guid>
       <description></description>
     </item>
     
@@ -827,6 +818,15 @@
       <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/testing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>unit</title>
+      <link>https://thomaslevesque.com/tags/unit/</link>
+      <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/unit/</guid>
       <description></description>
     </item>
     
@@ -1389,15 +1389,6 @@
     </item>
     
     <item>
-      <title>grid</title>
-      <link>https://thomaslevesque.com/tags/grid/</link>
-      <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/grid/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>GridView</title>
       <link>https://thomaslevesque.com/tags/gridview/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
@@ -1632,15 +1623,6 @@
     </item>
     
     <item>
-      <title>collection</title>
-      <link>https://thomaslevesque.com/tags/collection/</link>
-      <pubDate>Wed, 30 Nov 2011 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/collection/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>collectionview</title>
       <link>https://thomaslevesque.com/tags/collectionview/</link>
       <pubDate>Wed, 30 Nov 2011 00:00:00 +0000</pubDate>
@@ -1767,6 +1749,15 @@
     </item>
     
     <item>
+      <title>grid</title>
+      <link>https://thomaslevesque.com/tags/grid/</link>
+      <pubDate>Tue, 20 Jul 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/grid/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>code snippet</title>
       <link>https://thomaslevesque.com/tags/code-snippet/</link>
       <pubDate>Mon, 17 May 2010 00:00:00 +0000</pubDate>
@@ -1866,6 +1857,24 @@
     </item>
     
     <item>
+      <title>collection</title>
+      <link>https://thomaslevesque.com/tags/collection/</link>
+      <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/collection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>parent/child</title>
+      <link>https://thomaslevesque.com/tags/parent/child/</link>
+      <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/parent/child/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>XML serialization</title>
       <link>https://thomaslevesque.com/tags/xml-serialization/</link>
       <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
@@ -1952,15 +1961,6 @@
       <pubDate>Tue, 18 Nov 2008 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/settings/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>parent/child</title>
-      <link>https://thomaslevesque.com/tags/parent/child/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/parent/child/</guid>
       <description></description>
     </item>
     

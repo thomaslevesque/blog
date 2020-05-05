@@ -17,7 +17,7 @@
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/</guid>
-      <description>Today I&amp;rsquo;d like to share a trick that I used quite often in the past few months. Let&amp;rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls: OK, I&amp;rsquo;m not a designer&amp;hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&amp;rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.</description>
+      <description>Today I&#39;d like to share a trick that I used quite often in the past few months. Let&#39;s assume that in order to improve the look of your application, you created custom styles for the standard controls: OK, I&#39;m not a designer&amp;hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&#39;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.</description>
     </item>
     
   </channel>

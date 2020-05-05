@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="Handling multipart requests with JSON and file uploads in ASP.NET Core" />
-<meta property="og:description" content="Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
+<meta property="og:description" content="Suppose we&#39;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
  Embed the image bytes as base64 in the JSON payload, e.g.  { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/" />
@@ -17,7 +17,7 @@
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Handling multipart requests with JSON and file uploads in ASP.NET Core"/>
-<meta name="twitter:description" content="Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
+<meta name="twitter:description" content="Suppose we&#39;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
  Embed the image bytes as base64 in the JSON payload, e.g.  { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!"/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -78,7 +78,7 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-09-04T00:00:00Z">September 04, 2018</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:</p>
+			<p>Suppose we're writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:</p>
 <ul>
 <li>Embed the image bytes as base64 in the JSON payload, e.g.</li>
 </ul>
@@ -91,10 +91,10 @@ if (!doNotTrack) {
 </code></pre></div><pre><code>This works fine, but it's probably not a very good idea to embed an arbitrarily long blob in JSON, because it could use a lot of memory if the image is very large.
 </code></pre>
 <ul>
-<li>Send the JSON and image as separate requests. Easy, but what if we want the image to be mandatory? There&rsquo;s no guarantee that the client will send the image in a second request, so our post object will be in an invalid state.</li>
+<li>Send the JSON and image as separate requests. Easy, but what if we want the image to be mandatory? There's no guarantee that the client will send the image in a second request, so our post object will be in an invalid state.</li>
 <li>Send the JSON and image as a multipart request.</li>
 </ul>
-<p>The last approach seems the most appropriate; unfortunately it&rsquo;s also the most difficult to support… There is no built-in support for this scenario in ASP.NET Core. There is <em>some</em> support for the <code>multipart/form-data</code> content type, though; for instance, we can bind a model to a multipart request body, like this:</p>
+<p>The last approach seems the most appropriate; unfortunately it's also the most difficult to support… There is no built-in support for this scenario in ASP.NET Core. There is <em>some</em> support for the <code>multipart/form-data</code> content type, though; for instance, we can bind a model to a multipart request body, like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyRequestModel</span>
 {
 <span style="color:#a6e22e">    [Required]</span>
@@ -109,10 +109,10 @@ if (!doNotTrack) {
 {
     ...
 }
-</code></pre></div><p>But if we do this, it means that each property maps to a different part of the request; we&rsquo;re completely giving up on JSON.</p>
-<p>There&rsquo;s also a <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.webutilities.multipartreader?view=aspnetcore-2.1"><code>MultipartReader</code></a> class that we can use to manually decode the request, but it means we have to give up model binding and automatic model validation entirely.</p>
+</code></pre></div><p>But if we do this, it means that each property maps to a different part of the request; we're completely giving up on JSON.</p>
+<p>There's also a <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.webutilities.multipartreader?view=aspnetcore-2.1"><code>MultipartReader</code></a> class that we can use to manually decode the request, but it means we have to give up model binding and automatic model validation entirely.</p>
 <h2 id="custom-model-binder">Custom model binder</h2>
-<p>Ideally, we&rsquo;d like to have a request model like this:</p>
+<p>Ideally, we'd like to have a request model like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreatePostRequestModel</span>
 {
 <span style="color:#a6e22e">    [Required]</span>
@@ -224,13 +224,13 @@ Content-Type: image/jpeg
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ModelBinder(typeof(JsonWithFilesFormDataModelBinder), Name = &#34;json&#34;)]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreatePostRequestModel</span>
 </code></pre></div><p>This tells ASP.NET Core to use our custom model binder to bind this class. The <code>Name = &quot;json&quot;</code> part tells our binder from which field of the multipart request it should read the JSON (this is the <code>bindingContext.FieldName</code> in the binder code).</p>
-<p>Now we just need to pass a <code>CreatePostRequestModel</code> to our controller action, and we&rsquo;re done:</p>
+<p>Now we just need to pass a <code>CreatePostRequestModel</code> to our controller action, and we're done:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[HttpPost]</span>
 <span style="color:#66d9ef">public</span> ActionResult&lt;Post&gt; CreatePost(CreatePostRequestModel post)
 {
     ...
 }
-</code></pre></div><p>This approach enables us to have a clean controller code and keep the benefits of model binding and validation. It messes up the Swagger/OpenAPI model though, but hey, you can&rsquo;t have everything!</p>
+</code></pre></div><p>This approach enables us to have a clean controller code and keep the benefits of model binding and validation. It messes up the Swagger/OpenAPI model though, but hey, you can't have everything!</p>
 
 		</div>
 		<footer class="post__footer">

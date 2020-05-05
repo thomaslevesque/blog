@@ -17,7 +17,7 @@
       <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</guid>
-      <description>A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&amp;rsquo;t affect you as a developer; but if you&amp;rsquo;re using Google authentication in an ASP.</description>
+      <description>A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&#39;t affect you as a developer; but if you&#39;re using Google authentication in an ASP.</description>
     </item>
     
   </channel>

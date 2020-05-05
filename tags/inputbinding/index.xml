@@ -17,7 +17,7 @@
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
-      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&amp;hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&amp;rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).</description>
+      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&#39;t a DependencyProperty, so it wasn&#39;t possible to bind it. Furthermore, InputBindings didn&#39;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&amp;hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&#39;t really satisfied with it (it used reflection on private members, and had annoying limitations).</description>
     </item>
     
     <item>
@@ -27,8 +27,8 @@
       
       <guid>https://thomaslevesque.com/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
       <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
-&amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;#34;Control&amp;#34; Key=&amp;#34;E&amp;#34; Command=&amp;#34;{Binding EditCommand}&amp;#34;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&amp;rsquo;t work, for two reasons :
- The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&amp;rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
+&amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;#34;Control&amp;#34; Key=&amp;#34;E&amp;#34; Command=&amp;#34;{Binding EditCommand}&amp;#34;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&#39;t work, for two reasons :
+ The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&#39;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
     </item>
     
   </channel>

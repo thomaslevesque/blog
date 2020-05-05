@@ -18,7 +18,7 @@
       
       <guid>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</guid>
       <description>Just a quick tip today!
-for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.
+for and foreach loops are among the most useful constructs in a C# developer&#39;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&#39;t require to access the current element by its index.
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
     </item>
     
@@ -28,7 +28,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/03/29/linq-performance-improvements-in-net-core/</guid>
-      <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
+      <description>By now, you&#39;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&#39;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
 For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:</description>
     </item>
     
@@ -57,7 +57,7 @@ For instance, Linq has been made faster in .NET Core. I made a little benchmark 
       <pubDate>Sun, 03 Oct 2010 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2010/10/03/entity-framework-using-include-with-lambda-expressions/</guid>
-      <description>I&amp;rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
+      <description>I&#39;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
 var query = from ord in db.Orders.Include(&amp;#34;OrderDetails&amp;#34;) where ord.Date &amp;gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
 var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;) where ord.Date &amp;gt;= DateTime.</description>
     </item>
@@ -69,7 +69,7 @@ var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;
       
       <guid>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
       <description>The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
+X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&#39;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
     </item>
     
   </channel>

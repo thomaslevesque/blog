@@ -84,7 +84,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
-Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&rsquo;t such a good approach.
+Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn't such a good approach.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -98,9 +98,9 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-07-20T00:00:00Z">July 20, 2018</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
+		*Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.*
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp.
+ There's no current scope in the Configure method, so you can't use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp.
 	</div>
 </article>
 </main>

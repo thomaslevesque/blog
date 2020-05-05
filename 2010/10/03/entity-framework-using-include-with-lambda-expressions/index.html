@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="[Entity Framework] Using Include with lambda expressions" />
-<meta property="og:description" content="I&rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
+<meta property="og:description" content="I&#39;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
 var query = from ord in db.Orders.Include(&#34;OrderDetails&#34;) where ord.Date &gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
 var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where ord.Date &gt;= DateTime." />
 <meta property="og:type" content="article" />
@@ -18,7 +18,7 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[Entity Framework] Using Include with lambda expressions"/>
-<meta name="twitter:description" content="I&rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
+<meta name="twitter:description" content="I&#39;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
 var query = from ord in db.Orders.Include(&#34;OrderDetails&#34;) where ord.Date &gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
 var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where ord.Date &gt;= DateTime."/>
 
@@ -80,7 +80,7 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2010-10-03T00:00:00Z">October 03, 2010</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>I&rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the <a href="http://msdn.microsoft.com/en-us/library/bb738708.aspx"><code>ObjectQuery.Include</code></a> method to eagerly load associated entities, in order to avoid database roundtrips when I access them:</p>
+			<p>I'm currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the <a href="http://msdn.microsoft.com/en-us/library/bb738708.aspx"><code>ObjectQuery.Include</code></a> method to eagerly load associated entities, in order to avoid database roundtrips when I access them:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(<span style="color:#e6db74">&#34;OrderDetails&#34;</span>)
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
@@ -90,13 +90,13 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(<span style="color:#e6db74">&#34;OrderDetails.Product&#34;</span>)
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
-</code></pre></div><p>However, there&rsquo;s something that really bothers me with this <code>Include</code> method: the property path is passed as a string. This approach has two major drawbacks:</p>
+</code></pre></div><p>However, there's something that really bothers me with this <code>Include</code> method: the property path is passed as a string. This approach has two major drawbacks:</p>
 <ul>
 <li>
-<p>It&rsquo;s easy to make a mistake when typing the property path, and since it&rsquo;s a string, the compiler doesn&rsquo;t complain. So we get a runtime error, rather than a compilation error.</p>
+<p>It's easy to make a mistake when typing the property path, and since it's a string, the compiler doesn't complain. So we get a runtime error, rather than a compilation error.</p>
 </li>
 <li>
-<p>We can&rsquo;t take advantage of IDE features like Intellisense and refactoring. If we rename a property in the model, automatic refactoring won&rsquo;t check the content of the string. We have to manually update all calls to <code>Include</code> that refer to this property, with the risk of missing some of them in the process&hellip;</p>
+<p>We can't take advantage of IDE features like Intellisense and refactoring. If we rename a property in the model, automatic refactoring won't check the content of the string. We have to manually update all calls to <code>Include</code> that refer to this property, with the risk of missing some of them in the process&hellip;</p>
 <p>It would be much more convenient to use a lambda expression to specify the property path. The principle is well known, and frequently used to avoid using a string to refer to a property.  The trivial case, where the property to include is directly accessible from the source, is pretty easy to handle, and many implementation can be found on the Internet. We just need to use a method that extracts the property name from an expression :</p>
 </li>
 </ul>
@@ -121,10 +121,10 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; o.OrderDetails)
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
-</code></pre></div><p>This code works fine, but only for the simplest cases&hellip; In the second example, we also want to eagerly load the <code>OrderDetail.Product</code> property, but the code above can&rsquo;t handle that case. Indeed, the expression we would use to include the <code>Product</code> property would be something like <code>o.OrderDetails.Select(od =&gt; od.Product)</code>, but the <code>GetPropertyName</code> method can only handle property accesses, not method calls, and it works only for an expression with a single level.  To get the full path of the property to include, we have to walk through the whole expression tree to extract the name of each property. It sounds like a complicated task, but there&rsquo;s a class that can help us with it: <a href="http://msdn.microsoft.com/en-us/library/system.linq.expressions.expressionvisitor.aspx"><code>ExpressionVisitor</code></a>. This class was introduced in .NET 4.0 and implements the Visitor pattern to walk through all nodes in the expression tree. It&rsquo;s just a base class for implementing custom visitors, and it does nothing else than just visiting each node. All we need to do is inherit it, and override some methods to extract the properties from the expression. Here are the methods we need to override:</p>
+</code></pre></div><p>This code works fine, but only for the simplest cases&hellip; In the second example, we also want to eagerly load the <code>OrderDetail.Product</code> property, but the code above can't handle that case. Indeed, the expression we would use to include the <code>Product</code> property would be something like <code>o.OrderDetails.Select(od =&gt; od.Product)</code>, but the <code>GetPropertyName</code> method can only handle property accesses, not method calls, and it works only for an expression with a single level.  To get the full path of the property to include, we have to walk through the whole expression tree to extract the name of each property. It sounds like a complicated task, but there's a class that can help us with it: <a href="http://msdn.microsoft.com/en-us/library/system.linq.expressions.expressionvisitor.aspx"><code>ExpressionVisitor</code></a>. This class was introduced in .NET 4.0 and implements the Visitor pattern to walk through all nodes in the expression tree. It's just a base class for implementing custom visitors, and it does nothing else than just visiting each node. All we need to do is inherit it, and override some methods to extract the properties from the expression. Here are the methods we need to override:</p>
 <ul>
 <li><code>VisitMember</code> : used to visit a property or field access</li>
-<li><code>VisitMethodCall</code> : used to visit a method call. Even though method calls aren&rsquo;t directly related to what we want to do, we need to change its behavior in the case of Linq operators: the default implementation visits each parameter in their normal order, but for extension method like <code>Select</code> or <code>SelectMany</code>, we need to visit the first parameter (the <code>this</code> parameter) last, so that we retrieve the properties in the correct order.<br><br>Here&rsquo;s a new version of the <code>Include</code> method, along with the <code>ExpressionVisitor</code> implementation:<br><br></li>
+<li><code>VisitMethodCall</code> : used to visit a method call. Even though method calls aren't directly related to what we want to do, we need to change its behavior in the case of Linq operators: the default implementation visits each parameter in their normal order, but for extension method like <code>Select</code> or <code>SelectMany</code>, we need to visit the first parameter (the <code>this</code> parameter) last, so that we retrieve the properties in the correct order.<br><br>Here's a new version of the <code>Include</code> method, along with the <code>ExpressionVisitor</code> implementation:<br><br></li>
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ObjectQueryExtensions</span>
     {
@@ -179,12 +179,12 @@ if (!doNotTrack) {
             }
         }
     }
-</code></pre></div><p><br><br>I already talked about the <code>VisitMethodCall</code> method, so I won&rsquo;t explain it further. The implementation of <code>VisitMember</code> is very simple: we just push the member name on a stack. Why a stack ? That&rsquo;s because the expression is not visited in the order one would intuitively expect. For instance, in an expression like <code>o.OrderDetails.Select(od =&gt; od.Product)</code>, the first visited node is not <code>o</code> but the call to <code>Select</code>, because what precedes it (<code>o.OrderDetails</code>) is actually the first parameter of the static <code>Select</code> method&hellip; To retrieve the properties in the correct order, we put them on a stack so that we can read them back in reverse order when we need to build the property path.<br><br>The <code>GetPropertyPath</code> method probably doesn&rsquo;t need a long explanation: it initializes the stack, visits the expression, and builds the property path from the stack.<br><br>We can now rewrite the code from the second example as follows:<br><br></p>
+</code></pre></div><p><br><br>I already talked about the <code>VisitMethodCall</code> method, so I won't explain it further. The implementation of <code>VisitMember</code> is very simple: we just push the member name on a stack. Why a stack ? That's because the expression is not visited in the order one would intuitively expect. For instance, in an expression like <code>o.OrderDetails.Select(od =&gt; od.Product)</code>, the first visited node is not <code>o</code> but the call to <code>Select</code>, because what precedes it (<code>o.OrderDetails</code>) is actually the first parameter of the static <code>Select</code> method&hellip; To retrieve the properties in the correct order, we put them on a stack so that we can read them back in reverse order when we need to build the property path.<br><br>The <code>GetPropertyPath</code> method probably doesn't need a long explanation: it initializes the stack, visits the expression, and builds the property path from the stack.<br><br>We can now rewrite the code from the second example as follows:<br><br></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; OrderDetails.Select(od =&gt; od.Product))
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
-</code></pre></div><p><br><br>This method also works for more complex cases. Let&rsquo;s add a few new entities to our model: one or more discounts can be applied to each purchased product, and each discount is linked to a sales campaign. If we need to retrieve the associated discounts and campaigns in the query results, we can write something like that:<br><br></p>
+</code></pre></div><p><br><br>This method also works for more complex cases. Let's add a few new entities to our model: one or more discounts can be applied to each purchased product, and each discount is linked to a sales campaign. If we need to retrieve the associated discounts and campaigns in the query results, we can write something like that:<br><br></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; OrderDetails.Select(od =&gt; od.Discounts.Select(d =&gt; d.Campaign)))
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
@@ -198,7 +198,7 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">select</span> ord;
 </code></pre></div><p>To conclude, I just have two remarks regarding this solution:
 - A similar extension method is included in the Entity Framework Feature CTP4 (see <a href="http://romiller.com/2010/07/14/ef-ctp4-tips-tricks-include-with-lambda/">this article</a> for details). So it is possible that it will eventually be included in the framework (perhaps in a service pack for .NET 4.0 ?).
-- Even though this solution targets Entity Framework 4.0, it should be possible to adapt it for EF 3.5. The <code>ExpressionVisitor</code> class is not available in 3.5, but there is another implementation of it in Joseph Albahari&rsquo;s <a href="http://www.albahari.com/nutshell/linqkit.aspx">LINQKit</a>. I didn&rsquo;t try it, but it should work the same way&hellip;</p>
+- Even though this solution targets Entity Framework 4.0, it should be possible to adapt it for EF 3.5. The <code>ExpressionVisitor</code> class is not available in 3.5, but there is another implementation of it in Joseph Albahari's <a href="http://www.albahari.com/nutshell/linqkit.aspx">LINQKit</a>. I didn't try it, but it should work the same way&hellip;</p>
 
 		</div>
 		<footer class="post__footer">

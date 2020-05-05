@@ -125,7 +125,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2013-05-21T00:00:00Z">May 21, 2013</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		If you&rsquo;re writing a client application that needs to store user credentials, it&rsquo;s usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration.
+		If you're writing a client application that needs to store user credentials, it's usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -139,7 +139,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2011-09-02T00:00:00Z">September 02, 2011</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Regardless of the programming language you&rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .
+		Regardless of the programming language you're using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it's not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -153,7 +153,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2010-10-03T00:00:00Z">October 03, 2010</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		I&rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
+		I'm currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
 var query = from ord in db.Orders.Include(&#34;OrderDetails&#34;) where ord.Date &gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
 var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where ord.Date &gt;= DateTime.
 	</div>
@@ -184,7 +184,7 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2010-05-17T00:00:00Z">May 17, 2010</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.
+		As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they're not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -199,7 +199,7 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.
+X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it's not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -213,7 +213,7 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-10-08T00:00:00Z">October 08, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		If you&rsquo;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.
+		If you've been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.
 	</div>
 </article>
 </main>

@@ -17,7 +17,7 @@
       <pubDate>Thu, 08 Oct 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</guid>
-      <description>If you&amp;rsquo;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.</description>
+      <description>If you&#39;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.</description>
     </item>
     
   </channel>

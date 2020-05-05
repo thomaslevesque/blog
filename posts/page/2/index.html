@@ -83,7 +83,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-01-10T00:00:00Z">January 10, 2019</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP.
+		A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn't affect you as a developer; but if you're using Google authentication in an ASP.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -98,7 +98,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
-openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&rsquo;t match the issuer specified in the OpenID metadata.
+openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won't match the issuer specified in the OpenID metadata.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -112,8 +112,8 @@ openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organiza
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-11-23T00:00:00Z">November 23, 2018</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Ever since the first stable release of the .NET Core SDK, we&rsquo;ve enjoyed a better C# project format, often called &ldquo;SDK-style&rdquo; because you specify a SDK to use in the project file. It&rsquo;s still a .csproj XML file, it&rsquo;s still based on MSBuild, but it&rsquo;s much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.
-However, out of the box, it&rsquo;s only usable for some project types: ASP.
+		Ever since the first stable release of the .NET Core SDK, we've enjoyed a better C# project format, often called &ldquo;SDK-style&rdquo; because you specify a SDK to use in the project file. It's still a .csproj XML file, it's still based on MSBuild, but it's much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.
+However, out of the box, it's only usable for some project types: ASP.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -128,7 +128,7 @@ However, out of the box, it&rsquo;s only usable for some project types: ASP.
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
-Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&rsquo;t such a good approach.
+Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn't such a good approach.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -142,7 +142,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-09-04T00:00:00Z">September 04, 2018</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
+		Suppose we're writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
  Embed the image bytes as base64 in the JSON payload, e.g.  { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!
 	</div>
 </article><article class="list__item post">
@@ -157,9 +157,9 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-07-20T00:00:00Z">July 20, 2018</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
+		*Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.*
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp.
+ There's no current scope in the Configure method, so you can't use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -188,7 +188,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
-A bit of background As you may already know, I&rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.
+A bit of background As you may already know, I'm one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -217,7 +217,7 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.
-Fortunately, it&rsquo;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&rsquo;t have been there in the first place.
+Fortunately, it's rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn't have been there in the first place.
 	</div>
 </article>
 </main>

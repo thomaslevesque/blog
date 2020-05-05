@@ -18,7 +18,7 @@
       
       <guid>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:
-openIdConnectOptions.Authority = &amp;#34;https://login.microsoftonline.com/organizations/v2.0&amp;#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&amp;rsquo;t match the issuer specified in the OpenID metadata.</description>
+openIdConnectOptions.Authority = &amp;#34;https://login.microsoftonline.com/organizations/v2.0&amp;#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&#39;t match the issuer specified in the OpenID metadata.</description>
     </item>
     
   </channel>

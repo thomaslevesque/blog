@@ -38,7 +38,7 @@ When you write unit tests for a class that takes dependencies, you typically nee
       <guid>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator{public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y){// simulate long calculationawait Task.</description>
+ public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.</description>
     </item>
     
   </channel>

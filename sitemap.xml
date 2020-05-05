@@ -9,7 +9,7 @@
   
   <url>
     <loc>https://thomaslevesque.com/</loc>
-    <lastmod>2020-05-01T23:42:43+02:00</lastmod>
+    <lastmod>2020-05-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -19,11 +19,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/tags/authentication/</loc>
-    <lastmod>2020-03-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/azure/</loc>
     <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
@@ -103,11 +98,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/tags/asp.net/</loc>
-    <lastmod>2020-05-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
     <lastmod>2020-05-05T00:00:00+00:00</lastmod>
   </url>
@@ -173,11 +163,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/tags/unit/</loc>
-    <lastmod>2019-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/unit-testing/</loc>
     <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url>
@@ -225,6 +210,11 @@
   <url>
     <loc>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</loc>
     <lastmod>2019-10-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/azure/</loc>
+    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -328,12 +318,12 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/tags/wpf/</loc>
+    <loc>https://thomaslevesque.com/categories/wpf/</loc>
     <lastmod>2018-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/categories/wpf/</loc>
+    <loc>https://thomaslevesque.com/tags/wpf/</loc>
     <lastmod>2018-11-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -408,11 +398,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/tags/git/</loc>
-    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/github/</loc>
     <lastmod>2018-03-30T00:00:00+00:00</lastmod>
   </url>
@@ -433,6 +418,11 @@
   </url>
   
   <url>
+    <loc>https://thomaslevesque.com/tags/asp.net/</loc>
+    <lastmod>2018-03-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://thomaslevesque.com/tags/pipeline/</loc>
     <lastmod>2018-03-27T00:00:00+00:00</lastmod>
   </url>
@@ -444,6 +434,11 @@
   
   <url>
     <loc>https://thomaslevesque.com/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</loc>
+    <lastmod>2018-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/git/</loc>
     <lastmod>2018-03-06T00:00:00+00:00</lastmod>
   </url>
   
@@ -664,6 +659,11 @@
   
   <url>
     <loc>https://thomaslevesque.com/tags/testing/</loc>
+    <lastmod>2016-06-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/unit/</loc>
     <lastmod>2016-06-21T00:00:00+00:00</lastmod>
   </url>
   
@@ -1153,11 +1153,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/tags/grid/</loc>
-    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/gridview/</loc>
     <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
@@ -1333,11 +1328,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/tags/collection/</loc>
-    <lastmod>2011-11-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/collectionview/</loc>
     <lastmod>2011-11-30T00:00:00+00:00</lastmod>
   </url>
@@ -1448,6 +1438,11 @@
   </url>
   
   <url>
+    <loc>https://thomaslevesque.com/tags/grid/</loc>
+    <lastmod>2010-07-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://thomaslevesque.com/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</loc>
     <lastmod>2010-05-17T00:00:00+00:00</lastmod>
   </url>
@@ -1539,6 +1534,16 @@
   
   <url>
     <loc>https://thomaslevesque.com/2009/06/12/c-parentchild-relationship-and-xml-serialization/</loc>
+    <lastmod>2009-06-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/collection/</loc>
+    <lastmod>2009-06-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/parent/child/</loc>
     <lastmod>2009-06-12T00:00:00+00:00</lastmod>
   </url>
   
@@ -1640,10 +1645,6 @@
   <url>
     <loc>https://thomaslevesque.com/tags/settings/</loc>
     <lastmod>2008-11-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/parent/child/</loc>
   </url>
   
 </urlset>

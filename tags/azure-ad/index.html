@@ -99,7 +99,7 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
-openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&rsquo;t match the issuer specified in the OpenID metadata.
+openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won't match the issuer specified in the OpenID metadata.
 	</div>
 </article>
 </main>

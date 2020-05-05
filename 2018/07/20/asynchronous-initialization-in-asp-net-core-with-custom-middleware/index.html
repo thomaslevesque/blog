@@ -8,9 +8,9 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="Asynchronous initialization in ASP.NET Core with custom middleware" />
-<meta property="og:description" content="Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
+<meta property="og:description" content="*Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.*
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp." />
+ There&#39;s no current scope in the Configure method, so you can&#39;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/" />
 <meta property="article:published_time" content="2018-07-20T00:00:00+00:00" />
@@ -18,9 +18,9 @@ Sometimes you need to perform some initialization steps when your web applicatio
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Asynchronous initialization in ASP.NET Core with custom middleware"/>
-<meta name="twitter:description" content="Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
+<meta name="twitter:description" content="*Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.*
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp."/>
+ There&#39;s no current scope in the Configure method, so you can&#39;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -80,11 +80,11 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-07-20T00:00:00Z">July 20, 2018</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p><em><strong>Update:</strong> I no longer recommend the approach described in this post. I propose a better solution here: <a href="/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/">Asynchronous initialization in ASP.NET Core, revisited</a>.</em></p>
+			<p>*<strong>Update:</strong> I no longer recommend the approach described in this post. I propose a better solution here: <a href="/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/">Asynchronous initialization in ASP.NET Core, revisited</a>.*</p>
 <p>Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the <code>Startup.Configure</code> method is generally not a good idea, because:</p>
 <ul>
-<li>There&rsquo;s no current scope in the <code>Configure</code> method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an <code>InvalidOperationException</code>: <em>Cannot resolve scoped service &lsquo;MyApp.IMyService&rsquo; from root provider</em>).</li>
-<li>If the initialization code is asynchronous, you can&rsquo;t await it, because the <code>Configure</code> method can&rsquo;t be asynchronous. You could use <code>.Wait</code> to block until it&rsquo;s done, but it&rsquo;s ugly.</li>
+<li>There's no current scope in the <code>Configure</code> method, so you can't use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an <code>InvalidOperationException</code>: <em>Cannot resolve scoped service &lsquo;MyApp.IMyService&rsquo; from root provider</em>).</li>
+<li>If the initialization code is asynchronous, you can't await it, because the <code>Configure</code> method can't be asynchronous. You could use <code>.Wait</code> to block until it's done, but it's ugly.</li>
 </ul>
 <h2 id="async-initialization-middleware">Async initialization middleware</h2>
 <p>A simple way to do it involves writing a custom <a href="/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/">middleware</a> that ensures initialization is complete before processing a request. This middleware starts the initialization process when the app starts, and upon receiving a request, will wait until the initialization is done before passing the request to the next middleware. A basic implementation could look like this:</p>
@@ -115,7 +115,7 @@ if (!doNotTrack) {
             _logger.LogInformation(<span style="color:#e6db74">&#34;Initialization starting&#34;</span>);
 
             <span style="color:#75715e">// Do async initialization here
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">2000</span>);
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">2</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">0</span>);
 
             _logger.LogInformation(<span style="color:#e6db74">&#34;Initialization complete&#34;</span>);
         }
@@ -156,14 +156,14 @@ if (!doNotTrack) {
     app.UseMvc();
 }
 </code></pre></div><h2 id="dependencies">Dependencies</h2>
-<p>At this point, our initialization middleware doesn&rsquo;t depend on any service. If it has transient or singleton dependencies, they can just be injected into the middleware constructor as usual, and used from the <code>InitializeAsync</code> method.</p>
-<p>However, if the dependencies are scoped, we&rsquo;re in trouble: the middleware is instantiated directly from the root provider, not from a scope, so it can&rsquo;t take scoped dependencies in its constructor.</p>
-<p>Depending on scoped dependencies for initialization code doesn&rsquo;t make a lot of sense anyway, since by definition scoped dependencies only exist in the context of a request. But if for some reason you need to do it anyway, the solution is to perform initialization in the middleware&rsquo;s <code>Invoke</code> method, injecting the dependencies as method parameters. This approach has at least two drawbacks:</p>
+<p>At this point, our initialization middleware doesn't depend on any service. If it has transient or singleton dependencies, they can just be injected into the middleware constructor as usual, and used from the <code>InitializeAsync</code> method.</p>
+<p>However, if the dependencies are scoped, we're in trouble: the middleware is instantiated directly from the root provider, not from a scope, so it can't take scoped dependencies in its constructor.</p>
+<p>Depending on scoped dependencies for initialization code doesn't make a lot of sense anyway, since by definition scoped dependencies only exist in the context of a request. But if for some reason you need to do it anyway, the solution is to perform initialization in the middleware's <code>Invoke</code> method, injecting the dependencies as method parameters. This approach has at least two drawbacks:</p>
 <ul>
-<li>Initialization won&rsquo;t start until a request is received, so the first requests will have a delayed response time; this can be an issue if the initialization takes a long time.</li>
+<li>Initialization won't start until a request is received, so the first requests will have a delayed response time; this can be an issue if the initialization takes a long time.</li>
 <li>You need to take special care to ensure thread safety: the initialization code must run only once, even if several requests arrive before initialization is done.</li>
 </ul>
-<p>Writing thread-safe code is hard and error-prone, so avoid getting in this situation if possible, e.g. by refactoring your services so that your initialization middleware doesn&rsquo;t depend on any scoped service.</p>
+<p>Writing thread-safe code is hard and error-prone, so avoid getting in this situation if possible, e.g. by refactoring your services so that your initialization middleware doesn't depend on any scoped service.</p>
 
 		</div>
 		<footer class="post__footer">

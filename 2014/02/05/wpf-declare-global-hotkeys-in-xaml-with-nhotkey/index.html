@@ -85,13 +85,13 @@ if (!doNotTrack) {
 <li>I don’t really like the approach of intercepting all keystrokes. It usually means that you end up with a big method with lots of <code>if/else if</code> to decide what to do based on which keys were pressed.</li>
 </ul>
 <p>A better option, in my opinion, is to listen only to the keys you’re interested in, and declare what to do for each of those. The approach used in WPF for key bindings is quite elegant:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Window.InputBindings&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Window.InputBindings</span><span style="color:#f92672">&gt;</span>
     <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Gesture=</span><span style="color:#e6db74">&#34;Ctrl+Alt+Add&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding IncrementCommand}&#34;</span> <span style="color:#f92672">/&gt;</span>
     <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Gesture=</span><span style="color:#e6db74">&#34;Ctrl+Alt+Subtract&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding DecrementCommand}&#34;</span> <span style="color:#f92672">/&gt;</span>
 <span style="color:#f92672">&lt;/Window.InputBindings&gt;</span>
 </code></pre></div><p>But of course, key bindings are not global, they require that your app has focus… What if we could change that?</p>
 <p><a href="https://github.com/thomaslevesque/NHotkey">NHotkey</a> is a very simple hotkey library that enables global key bindings. All you have to do is set an attached property to true on your key bindings:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Window.InputBindings&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Window.InputBindings</span><span style="color:#f92672">&gt;</span>
     <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Gesture=</span><span style="color:#e6db74">&#34;Ctrl+Alt+Add&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding IncrementCommand}&#34;</span>
                 <span style="color:#a6e22e">HotkeyManager.RegisterGlobalHotkey=</span><span style="color:#e6db74">&#34;True&#34;</span> <span style="color:#f92672">/&gt;</span>
     <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Gesture=</span><span style="color:#e6db74">&#34;Ctrl+Alt+Subtract&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding DecrementCommand}&#34;</span>

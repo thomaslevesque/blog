@@ -18,7 +18,7 @@
       
       <guid>https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/</guid>
       <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
-A bit of background As you may already know, I&amp;rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
+A bit of background As you may already know, I&#39;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
     </item>
     
   </channel>

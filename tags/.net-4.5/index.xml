@@ -17,7 +17,7 @@
       <pubDate>Fri, 23 Sep 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</guid>
-      <description>It&amp;rsquo;s been a while since I last wrote about markup extensions&amp;hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&amp;rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events. Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&amp;rsquo;t do the same to subscribe to an event.</description>
+      <description>It&#39;s been a while since I last wrote about markup extensions&amp;hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&#39;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events. Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&#39;t do the same to subscribe to an event.</description>
     </item>
     
   </channel>

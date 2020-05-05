@@ -108,7 +108,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre><p>This code runs without any error, and the suggestions are displayed… but the image is not shown!</p>
-<p><img src="BiF0g.png" alt="http://i.stack.imgur.com/BiF0g.png"></p>
+<p><img src="BiF0g.png" alt=""></p>
 <p>I spent a long time double-checking everything, making lots of minor changes to try and locate the issue, I even wrote a custom implementation of <code>IRandomAccessStreamReference</code>… to no avail.</p>
 <p>I eventually <a href="http://stackoverflow.com/questions/19769689/image-not-shown-for-result-suggestions-in-searchbox">submitted the problem to Stack Overflow</a>, and someone kindly provided the solution, which was very simple: instead of <code>StorageFile</code>, use <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.randomaccessstreamreference"><code>RandomAccessStreamReference</code></a> (seems pretty obvious once you know that it exists). The code now becomes :</p>
 <pre><code>private void SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
@@ -123,7 +123,7 @@ if (!doNotTrack) {
 }
 </code></pre><p>(Note that the method is not asynchronous anymore, so there is no need to use the deferral object).</p>
 <p>The suggestions are now displayed as expected, with the image:</p>
-<p><img src="cjmogKp.png" alt="http://i.imgur.com/cjmogKp.png"></p>
+<p><img src="cjmogKp.png" alt=""></p>
 <p>So, the lesson of this story is that even though the <code>image</code> parameter is of type <code>IRandomAccessStreamReference</code>, <strong>it doesn’t seem to accept anything other than an instance of the <code>RandomAccessStreamReference</code> class</strong>. If you pass any other implementation of the interface, it just fails silently and the image is not shown. This is obviously a bug: if the parameter type in the method signature is an interface, it should accept any implementation of that interface, not just a specific implementation; if it doesn’t, it should be declared of the concrete type. I submitted the <a href="https://connect.microsoft.com/VisualStudio/feedback/details/807704/searchbox-windows-8-1-doesnt-show-the-image-if-it-is-not-an-instance-of-randomaccessstreamreference">bug</a> to Connect, hopefully it will be fixed in a future version.</p>
 <p>I hope this helps someone!</p>
 

@@ -98,7 +98,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
-static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyException ex) when (ex.Code == 42){Console.WriteLine(&quot;Error 42 occurred&quot;);}}As you might expect, the catch block will be entered if and only if ex.
+static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&quot;Error 42 occurred&quot;); } } As you might expect, the catch block will be entered if and only if ex.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -156,7 +156,7 @@ static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyExcept
 	<div class="content list__excerpt post__content clearfix">
 		I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
 I just came up with this one:
-static void Test(out int x, out int y){x = 42;y = 123;Console.WriteLine (x == y);}What do you think this code prints? Can you be sure? Post your answer in the comments!
+static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!
 I’ll try to post more puzzles in the future if I can come up with others.
 	</div>
 </article><article class="list__item post">
@@ -172,7 +172,7 @@ I’ll try to post more puzzles in the future if I can come up with others.
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
-string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:
+string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -188,7 +188,7 @@ string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;;A lesser know
 	<div class="content list__excerpt post__content clearfix">
 		Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator{public async Task&lt;int&gt; AddAsync(int x, int y){// simulate long calculationawait Task.
+ public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation await Task.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">

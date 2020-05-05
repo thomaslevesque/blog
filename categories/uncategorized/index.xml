@@ -28,7 +28,7 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
       
       <guid>https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</guid>
       <description>The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
-It is generally agreed that this should be avoided; I won&amp;rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</description>
+It is generally agreed that this should be avoided; I won&#39;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</description>
     </item>
     
     <item>
@@ -39,7 +39,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
       <guid>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
       <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
  query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
- But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.</description>
+ But it&#39;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.</description>
     </item>
     
     <item>
@@ -48,8 +48,8 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
-      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
- appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
+      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&#39;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
+ appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&#39;t have to specify unchanged settings in every environment if they&#39;re already specified in the global settings file.</description>
     </item>
     
     <item>
@@ -69,7 +69,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
       
       <guid>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</guid>
       <description>Just a quick tip today!
-for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.
+for and foreach loops are among the most useful constructs in a C# developer&#39;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&#39;t require to access the current element by its index.
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
     </item>
     
@@ -80,7 +80,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
       
       <guid>https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
       <description>This is the second post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
+ Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&#39;s TypeNameHandling feature. In this post, I&#39;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
     </item>
     
     <item>
@@ -90,7 +90,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
       
       <guid>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
       <description>This is the first post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
+ Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&#39;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&#39;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
     </item>
     
     <item>
@@ -99,8 +99,8 @@ But sometimes, you do need the index of the current item; this usually leads to 
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</guid>
-      <description>Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&amp;rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&amp;rsquo;t hesitate to let me know in the comments!
-Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&amp;rsquo;s a very different world.</description>
+      <description>Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&#39;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&#39;t hesitate to let me know in the comments!
+Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&#39;s a very different world.</description>
     </item>
     
     <item>
@@ -119,7 +119,7 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
       
       <guid>https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/</guid>
       <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
-A bit of background As you may already know, I&amp;rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
+A bit of background As you may already know, I&#39;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
     </item>
     
     <item>
@@ -138,7 +138,7 @@ A bit of background As you may already know, I&amp;rsquo;m one of the maintainer
       
       <guid>https://thomaslevesque.com/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</guid>
       <description>I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&amp;hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.
-Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&amp;rsquo;t have been there in the first place.</description>
+Fortunately, it&#39;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&#39;t have been there in the first place.</description>
     </item>
     
     <item>
@@ -157,7 +157,7 @@ Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreat
       <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/</guid>
-      <description>T4 (Text Template Transformation Toolkit) is a great tool to generate code at design time; you can, for instance, create POCO classes from database tables, generate repetitive code, etc. In Visual Studio, T4 files (.tt extension) are associated with the TextTemplatingFileGenerator custom tool, which transforms the template to generate an output file every time you save the template. But sometimes it&amp;rsquo;s not enough, and you want to ensure that the template&amp;rsquo;s output is regenerated before build.</description>
+      <description>T4 (Text Template Transformation Toolkit) is a great tool to generate code at design time; you can, for instance, create POCO classes from database tables, generate repetitive code, etc. In Visual Studio, T4 files (.tt extension) are associated with the TextTemplatingFileGenerator custom tool, which transforms the template to generate an output file every time you save the template. But sometimes it&#39;s not enough, and you want to ensure that the template&#39;s output is regenerated before build.</description>
     </item>
     
     <item>
@@ -166,8 +166,8 @@ Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreat
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/</guid>
-      <description>To be honest, I never really liked MSBuild until recently. The project files generated by Visual Studio were a mess, most of their content was redundant, you had to unload the projects to edit them, it was poorly documented&amp;hellip; But with the advent of .NET Core and the new &amp;ldquo;SDK-style&amp;rdquo; projects, it&amp;rsquo;s become much, much better.
-MSBuild 15 introduced a pretty cool feature: implicit imports (I don&amp;rsquo;t know if it&amp;rsquo;s the official name, but I&amp;rsquo;ll use it anyway).</description>
+      <description>To be honest, I never really liked MSBuild until recently. The project files generated by Visual Studio were a mess, most of their content was redundant, you had to unload the projects to edit them, it was poorly documented&amp;hellip; But with the advent of .NET Core and the new &amp;ldquo;SDK-style&amp;rdquo; projects, it&#39;s become much, much better.
+MSBuild 15 introduced a pretty cool feature: implicit imports (I don&#39;t know if it&#39;s the official name, but I&#39;ll use it anyway).</description>
     </item>
     
     <item>
@@ -176,7 +176,7 @@ MSBuild 15 introduced a pretty cool feature: implicit imports (I don&amp;rsquo;t
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/03/29/linq-performance-improvements-in-net-core/</guid>
-      <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
+      <description>By now, you&#39;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&#39;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
 For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:</description>
     </item>
     
@@ -186,7 +186,7 @@ For instance, Linq has been made faster in .NET Core. I made a little benchmark 
       <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/02/23/easy-text-parsing-in-c-with-sprache/</guid>
-      <description>A few days ago, I discovered a little gem: Sprache. The name means &amp;ldquo;language&amp;rdquo; in German. It&amp;rsquo;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&amp;rsquo;ll see in a minute, Sprache makes it very simple.
+      <description>A few days ago, I discovered a little gem: Sprache. The name means &amp;ldquo;language&amp;rdquo; in German. It&#39;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&#39;ll see in a minute, Sprache makes it very simple.
 Text parsing Parsing text is a common task, but it can be tedious and error-prone.</description>
     </item>
     
@@ -196,9 +196,9 @@ Text parsing Parsing text is a common task, but it can be tedious and error-pron
       <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/02/20/whats-new-in-fakeiteasy-3-0-0/</guid>
-      <description>FakeItEasy is a popular mocking framework for .NET, with an very intuitive and easy-to-use API. For about one year, I&amp;rsquo;ve been a maintainer of FakeItEasy, along with Adam Ralph and Blair Conrad. It&amp;rsquo;s been a real pleasure working with them and I had a lot of fun!
-Today I&amp;rsquo;m glad to announce that we&amp;rsquo;re releasing FakeItEasy 3.0.0, which supports .NET Core and introduces a few useful features.
-Let&amp;rsquo;s see what&amp;rsquo;s new!</description>
+      <description>FakeItEasy is a popular mocking framework for .NET, with an very intuitive and easy-to-use API. For about one year, I&#39;ve been a maintainer of FakeItEasy, along with Adam Ralph and Blair Conrad. It&#39;s been a real pleasure working with them and I had a lot of fun!
+Today I&#39;m glad to announce that we&#39;re releasing FakeItEasy 3.0.0, which supports .NET Core and introduces a few useful features.
+Let&#39;s see what&#39;s new!</description>
     </item>
     
     <item>
@@ -217,8 +217,8 @@ diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program
       <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
-      <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.
-You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&amp;rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
+      <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&#39;s also easily extensible.
+You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&#39;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
     </item>
     
     <item>
@@ -279,7 +279,7 @@ public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = awai
       
       <guid>https://thomaslevesque.com/2015/06/21/exception-filters-in-c-6/</guid>
       <description>Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
-static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyException ex) when (ex.Code == 42){Console.WriteLine(&amp;quot;Error 42 occurred&amp;quot;);}}As you might expect, the catch block will be entered if and only if ex.</description>
+static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&amp;quot;Error 42 occurred&amp;quot;); } } As you might expect, the catch block will be entered if and only if ex.</description>
     </item>
     
     <item>
@@ -289,7 +289,7 @@ static void Main(){try{Foo.DoSomethingThatMightFail(null);}catch (MyExcept
       
       <guid>https://thomaslevesque.com/2015/02/24/customizing-string-interpolation-in-c-6/</guid>
       <description>One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
-string text = $&amp;quot;{p.Name} was born on {p.DateOfBirth:D}&amp;quot;;A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:</description>
+string text = $&amp;quot;{p.Name} was born on {p.DateOfBirth:D}&amp;quot;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:</description>
     </item>
     
     <item>

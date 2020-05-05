@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="Multitenant Azure AD issuer validation in ASP.NET Core" />
 <meta property="og:description" content="If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
-openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&rsquo;t match the issuer specified in the OpenID metadata." />
+openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&#39;t match the issuer specified in the OpenID metadata." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/" />
 <meta property="article:published_time" content="2018-12-24T00:00:00+00:00" />
@@ -18,7 +18,7 @@ openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organiza
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Multitenant Azure AD issuer validation in ASP.NET Core"/>
 <meta name="twitter:description" content="If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
-openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&rsquo;t match the issuer specified in the OpenID metadata."/>
+openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&#39;t match the issuer specified in the OpenID metadata."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -80,16 +80,16 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as <code>organizations</code> or <code>common</code> in the authority URL:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">openIdConnectOptions.Authority = <span style="color:#e6db74">&#34;https://login.microsoftonline.com/organizations/v2.0&#34;</span>;
-</code></pre></div><p>The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&rsquo;t match the issuer specified in the <a href="https://login.microsoftonline.com/organizations/v2.0/.well-known/openid-configuration">OpenID metadata</a>. This is because the issuer from the metadata includes a placeholder for the tenant id:</p>
+</code></pre></div><p>The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won't match the issuer specified in the <a href="https://login.microsoftonline.com/organizations/v2.0/.well-known/openid-configuration">OpenID metadata</a>. This is because the issuer from the metadata includes a placeholder for the tenant id:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">https://login.microsoftonline.com/{tenantid}/v2.0
 </code></pre></div><p>But the <code>iss</code> claim in the token contains the URL for the actual tenant, e.g.:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">https://login.microsoftonline.com/64c5f641-7e94-4d21-ae5c-9747994e4211/v2.0
 </code></pre></div><p>A workaround that is often suggested is to disable issuer validation in the token validation parameters:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">openIdConnectOptions.TokenValidationParameters.ValidateIssuer = <span style="color:#66d9ef">false</span>;
-</code></pre></div><p>However, if you do that the issuer won&rsquo;t be validated at all. Admittedly, it&rsquo;s not much of a problem, since the token signature will prove the issuer identity anyway, but it still bothers me&hellip;</p>
+</code></pre></div><p>However, if you do that the issuer won't be validated at all. Admittedly, it's not much of a problem, since the token signature will prove the issuer identity anyway, but it still bothers me&hellip;</p>
 <p>Fortunately, you can control <em>how</em> the issuer is validated, by specifying the <code>TokenValidator</code> property:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">options.TokenValidationParameters.IssuerValidator = ValidateIssuerWithPlaceholder;
-</code></pre></div><p>Where <code>ValidateIssuerWithPlaceholder</code> is the method that validates the issuer. In that method, we need to check if the issuer from the token matches the issuer with a placeholder from the metadata. To do this, we just replace the <code>{tenantid}</code> placeholder with the value of the token&rsquo;s <code>tid</code> claim (which contains the tenant id), and check that the result matches the token&rsquo;s issuer:</p>
+</code></pre></div><p>Where <code>ValidateIssuerWithPlaceholder</code> is the method that validates the issuer. In that method, we need to check if the issuer from the token matches the issuer with a placeholder from the metadata. To do this, we just replace the <code>{tenantid}</code> placeholder with the value of the token's <code>tid</code> claim (which contains the tenant id), and check that the result matches the token's issuer:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> ValidateIssuerWithPlaceholder(<span style="color:#66d9ef">string</span> issuer, SecurityToken token, TokenValidationParameters parameters)
 {
     <span style="color:#75715e">// Accepts any issuer of the form &#34;https://login.microsoftonline.com/{tenantid}/v2.0&#34;,
@@ -125,7 +125,7 @@ if (!doNotTrack) {
         InvalidIssuer = issuer
     };
 }
-</code></pre></div><p>With this in place, you&rsquo;re now able to fully validate tokens from any Azure AD tenant without skipping issuer validation.</p>
+</code></pre></div><p>With this in place, you're now able to fully validate tokens from any Azure AD tenant without skipping issuer validation.</p>
 <p>Happy coding, and merry Christmas!</p>
 
 		</div>

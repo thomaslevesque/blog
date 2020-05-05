@@ -17,7 +17,7 @@
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/03/29/linq-performance-improvements-in-net-core/</guid>
-      <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
+      <description>By now, you&#39;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&#39;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
 For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:</description>
     </item>
     

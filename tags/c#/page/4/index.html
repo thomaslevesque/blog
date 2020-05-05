@@ -99,7 +99,7 @@ if (!doNotTrack) {
 	<div class="content list__excerpt post__content clearfix">
 		I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
 I just came up with this one:
-static void Test(out int x, out int y){x = 42;y = 123;Console.WriteLine (x == y);}What do you think this code prints? Can you be sure? Post your answer in the comments!
+static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!
 I’ll try to post more puzzles in the future if I can come up with others.
 	</div>
 </article><article class="list__item post">
@@ -116,7 +116,7 @@ I’ll try to post more puzzles in the future if I can come up with others.
 	<div class="content list__excerpt post__content clearfix">
 		Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator{public async Task&lt;int&gt; AddAsync(int x, int y){// simulate long calculationawait Task.
+ public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation await Task.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -218,7 +218,7 @@ It’s often useful to be notified when the value of a dependency property chang
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2011-09-02T00:00:00Z">September 02, 2011</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Regardless of the programming language you&rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .
+		Regardless of the programming language you're using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it's not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .
 	</div>
 </article>
 </main>

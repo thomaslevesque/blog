@@ -28,7 +28,7 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
       
       <guid>https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</guid>
       <description>The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
-It is generally agreed that this should be avoided; I won&amp;rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</description>
+It is generally agreed that this should be avoided; I won&#39;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</description>
     </item>
     
     <item>
@@ -39,7 +39,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
       <guid>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
       <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
  query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
- But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.</description>
+ But it&#39;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.</description>
     </item>
     
     <item>
@@ -48,8 +48,8 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
-      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
- appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
+      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&#39;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
+ appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&#39;t have to specify unchanged settings in every environment if they&#39;re already specified in the global settings file.</description>
     </item>
     
     <item>
@@ -69,7 +69,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
       
       <guid>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</guid>
       <description>Just a quick tip today!
-for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.
+for and foreach loops are among the most useful constructs in a C# developer&#39;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&#39;t require to access the current element by its index.
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
     </item>
     
@@ -80,7 +80,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
       
       <guid>https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
       <description>This is the second post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
+ Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&#39;s TypeNameHandling feature. In this post, I&#39;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
     </item>
     
     <item>
@@ -90,7 +90,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
       
       <guid>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
       <description>This is the first post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
+ Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&#39;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&#39;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
     </item>
     
     <item>
@@ -100,7 +100,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
       
       <guid>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:
-openIdConnectOptions.Authority = &amp;#34;https://login.microsoftonline.com/organizations/v2.0&amp;#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&amp;rsquo;t match the issuer specified in the OpenID metadata.</description>
+openIdConnectOptions.Authority = &amp;#34;https://login.microsoftonline.com/organizations/v2.0&amp;#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&#39;t match the issuer specified in the OpenID metadata.</description>
     </item>
     
     <item>
@@ -110,7 +110,7 @@ openIdConnectOptions.Authority = &amp;#34;https://login.microsoftonline.com/orga
       
       <guid>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</guid>
       <description>Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
-Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&amp;rsquo;t such a good approach.</description>
+Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&#39;t such a good approach.</description>
     </item>
     
     <item>
@@ -119,7 +119,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
       <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
-      <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
+      <description>Suppose we&#39;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
  Embed the image bytes as base64 in the JSON payload, e.g.  { &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
     </item>
     
@@ -129,9 +129,9 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
-      <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
+      <description>*Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.*
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
+ There&#39;s no current scope in the Configure method, so you can&#39;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
     </item>
     
     <item>
@@ -141,7 +141,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
       
       <guid>https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/</guid>
       <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
-A bit of background As you may already know, I&amp;rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
+A bit of background As you may already know, I&#39;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
     </item>
     
     <item>
@@ -169,7 +169,7 @@ A bit of background As you may already know, I&amp;rsquo;m one of the maintainer
       <pubDate>Sat, 26 Aug 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/08/26/testing-and-debugging-library-code-from-linqpad/</guid>
-      <description>I&amp;rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&amp;rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&amp;rsquo;s also extremely useful as a general-purpose .</description>
+      <description>I&#39;ve been meaning to blog about LINQPad in a very long time. In case you don&#39;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&#39;s also extremely useful as a general-purpose .</description>
     </item>
     
     <item>
@@ -178,7 +178,7 @@ A bit of background As you may already know, I&amp;rsquo;m one of the maintainer
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/03/29/linq-performance-improvements-in-net-core/</guid>
-      <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
+      <description>By now, you&#39;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&#39;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
 For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:</description>
     </item>
     
@@ -198,8 +198,8 @@ diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program
       <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
-      <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.
-You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&amp;rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
+      <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&#39;s also easily extensible.
+You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&#39;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
     </item>
     
     <item>
@@ -290,8 +290,8 @@ When I googled for a way to prevent that, the only solutions I found suggested t
       <guid>https://thomaslevesque.com/2015/07/30/c-puzzle-2/</guid>
       <description>Just another little puzzle based on an issue I had at work…
 Consider this piece of code :
-Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;);Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;);How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
-x &amp;gt; y is False!(x &amp;lt;= y) is True</description>
+Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;); Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
+x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
     </item>
     
     <item>
@@ -329,7 +329,7 @@ x &amp;gt; y is False!(x &amp;lt;= y) is True</description>
       <guid>https://thomaslevesque.com/2015/03/10/c-puzzle-1/</guid>
       <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
 I just came up with this one:
-static void Test(out int x, out int y){x = 42;y = 123;Console.WriteLine (x == y);}What do you think this code prints? Can you be sure? Post your answer in the comments!
+static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!
 I’ll try to post more puzzles in the future if I can come up with others.</description>
     </item>
     
@@ -341,7 +341,7 @@ I’ll try to post more puzzles in the future if I can come up with others.</des
       <guid>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator{public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y){// simulate long calculationawait Task.</description>
+ public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.</description>
     </item>
     
     <item>
@@ -408,7 +408,7 @@ It’s often useful to be notified when the value of a dependency property chang
       <pubDate>Fri, 02 Sep 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/09/02/tail-recursion-in-c/</guid>
-      <description>Regardless of the programming language you&amp;rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&amp;rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .</description>
+      <description>Regardless of the programming language you&#39;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&#39;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .</description>
     </item>
     
     <item>
@@ -417,7 +417,7 @@ It’s often useful to be notified when the value of a dependency property chang
       <pubDate>Mon, 17 May 2010 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</guid>
-      <description>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&amp;rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.</description>
+      <description>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&#39;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.</description>
     </item>
     
     <item>
@@ -427,7 +427,7 @@ It’s often useful to be notified when the value of a dependency property chang
       
       <guid>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
       <description>The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
+X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&#39;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
     </item>
     
     <item>
@@ -436,7 +436,7 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
       <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/06/12/c-parentchild-relationship-and-xml-serialization/</guid>
-      <description>Today I&amp;rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&amp;rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).</description>
+      <description>Today I&#39;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&#39;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).</description>
     </item>
     
   </channel>

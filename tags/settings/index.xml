@@ -18,7 +18,7 @@
       
       <guid>https://thomaslevesque.com/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</guid>
       <description>Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.
-The end-user of any application expects that his preferences (window size, state of this or that option&amp;hellip;) are saved to be restored at the next run : that&amp;rsquo;s why .NET 2.0 introduced application settings as a unified way to persist these settings.</description>
+The end-user of any application expects that his preferences (window size, state of this or that option&amp;hellip;) are saved to be restored at the next run : that&#39;s why .NET 2.0 introduced application settings as a unified way to persist these settings.</description>
     </item>
     
   </channel>

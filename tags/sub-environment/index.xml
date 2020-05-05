@@ -17,8 +17,8 @@
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
-      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
- appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
+      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&#39;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
+ appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&#39;t have to specify unchanged settings in every environment if they&#39;re already specified in the global settings file.</description>
     </item>
     
   </channel>

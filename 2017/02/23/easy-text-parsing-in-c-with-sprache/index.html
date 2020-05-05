@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="Easy text parsing in C# with Sprache" />
-<meta property="og:description" content="A few days ago, I discovered a little gem: Sprache. The name means &ldquo;language&rdquo; in German. It&rsquo;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&rsquo;ll see in a minute, Sprache makes it very simple.
+<meta property="og:description" content="A few days ago, I discovered a little gem: Sprache. The name means &ldquo;language&rdquo; in German. It&#39;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&#39;ll see in a minute, Sprache makes it very simple.
 Text parsing Parsing text is a common task, but it can be tedious and error-prone." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2017/02/23/easy-text-parsing-in-c-with-sprache/" />
@@ -17,7 +17,7 @@ Text parsing Parsing text is a common task, but it can be tedious and error-pron
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Easy text parsing in C# with Sprache"/>
-<meta name="twitter:description" content="A few days ago, I discovered a little gem: Sprache. The name means &ldquo;language&rdquo; in German. It&rsquo;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&rsquo;ll see in a minute, Sprache makes it very simple.
+<meta name="twitter:description" content="A few days ago, I discovered a little gem: Sprache. The name means &ldquo;language&rdquo; in German. It&#39;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&#39;ll see in a minute, Sprache makes it very simple.
 Text parsing Parsing text is a common task, but it can be tedious and error-prone."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -78,7 +78,7 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-02-23T00:00:00Z">February 23, 2017</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>A few days ago, I discovered a little gem: <a href="https://github.com/sprache/sprache">Sprache</a>. The name means &ldquo;language&rdquo; in German. It&rsquo;s a very elegant and easy to use library to create text parsers, using <a href="https://en.wikipedia.org/wiki/Parser_combinator">parser combinators</a>, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&rsquo;ll see in a minute, Sprache makes it very simple.</p>
+			<p>A few days ago, I discovered a little gem: <a href="https://github.com/sprache/sprache">Sprache</a>. The name means &ldquo;language&rdquo; in German. It's a very elegant and easy to use library to create text parsers, using <a href="https://en.wikipedia.org/wiki/Parser_combinator">parser combinators</a>, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you'll see in a minute, Sprache makes it very simple.</p>
 <h2 id="text-parsing">Text parsing</h2>
 <p>Parsing text is a common task, but it can be tedious and error-prone. There are plenty of ways to do it:</p>
 <ul>
@@ -88,8 +88,8 @@ if (!doNotTrack) {
 <li>full blown parser generated with ANTLR or a similar tool</li>
 <li>and probably many others&hellip;</li>
 </ul>
-<p>None of these options is very appealing. For simple cases, splitting the string or using a regex can be enough, but it doesn&rsquo;t scale to more complex grammars. Building a real parser by hand for non-trivial grammars is, well, non-trivial. ANTLR requires Java, a bit of knowledge, and it relies on code generation, which complicates the build process.</p>
-<p>Fortunately, <a href="https://github.com/sprache/sprache">Sprache</a> offers a very nice alternative. It provides many predefined parsers and combinators that you can use to define a grammar. Let&rsquo;s walk through an example: parsing the challenge in the <code>WWW-Authenticate</code> header of an HTTP response (I recently had to write a parser by hand for this recently, and I wish I had known Sprache then).</p>
+<p>None of these options is very appealing. For simple cases, splitting the string or using a regex can be enough, but it doesn't scale to more complex grammars. Building a real parser by hand for non-trivial grammars is, well, non-trivial. ANTLR requires Java, a bit of knowledge, and it relies on code generation, which complicates the build process.</p>
+<p>Fortunately, <a href="https://github.com/sprache/sprache">Sprache</a> offers a very nice alternative. It provides many predefined parsers and combinators that you can use to define a grammar. Let's walk through an example: parsing the challenge in the <code>WWW-Authenticate</code> header of an HTTP response (I recently had to write a parser by hand for this recently, and I wish I had known Sprache then).</p>
 <h2 id="the-grammar">The grammar</h2>
 <p>The <code>WWW-Authenticate</code> header is sent by an HTTP server as part of a 401 (Unauthorized) response to indicate how you should authenticate:</p>
 <pre><code># Basic challenge
@@ -97,7 +97,7 @@ WWW-Authenticate: Basic realm=&quot;FooCorp&quot;
 
 # OAuth 2.0 challenge after sending an expired token
 WWW-Authenticate: Bearer realm=&quot;FooCorp&quot;, error=invalid_token, error_description=&quot;The access token has expired&quot;
-</code></pre><p>What we want to parse is the &ldquo;challenge&rdquo;, i.e. the value of the header. So, we have an authentication scheme (<code>Basic</code>, <code>Bearer</code>), followed by one or more parameters (name-value pairs). This looks simple enough, we could probably just split by <code>','</code> then by <code>'='</code> to get the values&hellip; but the double quotes complicate things, since quoted strings could contain the <code>','</code> or <code>'='</code> characters. Also, the double quotes are optional if the parameter value is a single token, so we can&rsquo;t rely on the fact they will (or won&rsquo;t) be there. If we want to parse this reliably, we&rsquo;re going to have to look at the specs.</p>
+</code></pre><p>What we want to parse is the &ldquo;challenge&rdquo;, i.e. the value of the header. So, we have an authentication scheme (<code>Basic</code>, <code>Bearer</code>), followed by one or more parameters (name-value pairs). This looks simple enough, we could probably just split by <code>','</code> then by <code>'='</code> to get the values&hellip; but the double quotes complicate things, since quoted strings could contain the <code>','</code> or <code>'='</code> characters. Also, the double quotes are optional if the parameter value is a single token, so we can't rely on the fact they will (or won't) be there. If we want to parse this reliably, we're going to have to look at the specs.</p>
 <p>The <code>WWW-Authenticate</code> header is described in detail in <a href="https://tools.ietf.org/html/rfc2617">RFC-2617</a>. The grammar looks like this, in what the RFC calls &ldquo;augmented Backus-Naur Form&rdquo; (see <a href="https://tools.ietf.org/html/rfc2616#section-2.1">RFC 2616 §2.1</a>):</p>
 <pre><code># from RFC-2617 (HTTP Basic and Digest authentication)
 
@@ -115,10 +115,10 @@ separators     = &quot;(&quot; | &quot;)&quot; | &quot;&lt;&quot; | &quot;&gt;&q
 quoted-string  = ( &lt;&quot;&gt; *(qdtext | quoted-pair ) &lt;&quot;&gt; )
 qdtext         = &lt;any TEXT except &lt;&quot;&gt;&gt;
 quoted-pair    = &quot;\&quot; CHAR
-</code></pre><p>So, we have a few grammar rules, let&rsquo;s see how we can encode them in C# code with Sprache, and use them to parse a challenge.</p>
+</code></pre><p>So, we have a few grammar rules, let's see how we can encode them in C# code with Sprache, and use them to parse a challenge.</p>
 <h2 id="parsing-tokens">Parsing tokens</h2>
-<p>Let&rsquo;s start with the most simple parts of the grammar: tokens. A token is declared as one or more of any characters that are not control chars or separators.</p>
-<p>We&rsquo;ll define our rules in a <code>Grammar</code> class. Let&rsquo;s start by defining some character classes:</p>
+<p>Let's start with the most simple parts of the grammar: tokens. A token is declared as one or more of any characters that are not control chars or separators.</p>
+<p>We'll define our rules in a <code>Grammar</code> class. Let's start by defining some character classes:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Grammar</span>
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">char</span>&gt; SeparatorChar =
@@ -134,7 +134,7 @@ quoted-pair    = &quot;\&quot; CHAR
 <li><code>Parse.Chars</code> matches any character from the specified string, we use it to specify the list of separator characters.</li>
 <li>The overload of <code>Parse.Char</code> that we use here takes a predicate that will be called to check if the character matches, and a description of the character class. Here we just use <code>System.Char.IsControl</code> as the predicate to match control characters.</li>
 </ul>
-<p>Now, let&rsquo;s define a <code>TokenChar</code> character class to match characters that can be part of a token. As per the RFC, this can be any character not in the previous classes:</p>
+<p>Now, let's define a <code>TokenChar</code> character class to match characters that can be part of a token. As per the RFC, this can be any character not in the previous classes:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">char</span>&gt; TokenChar =
         Parse.AnyChar
             .Except(SeparatorChar)
@@ -151,7 +151,7 @@ quoted-pair    = &quot;\&quot; CHAR
 <li><code>AtLeastOnce()</code> means one or more repetitions, and since <code>TokenChar</code> is a <code>Parser&lt;char&gt;</code>, it returns a <code>Parser&lt;IEnumerable&lt;char&gt;&gt;</code>.</li>
 <li><code>Text()</code> combines the sequence of characters into a string, returning a <code>Parser&lt;string&gt;</code>.</li>
 </ul>
-<p>We&rsquo;re now able to parse a token. But it&rsquo;s just a small step, and we still have a lot to do&hellip;</p>
+<p>We're now able to parse a token. But it's just a small step, and we still have a lot to do&hellip;</p>
 <h2 id="parsing-quoted-strings">Parsing quoted strings</h2>
 <p>The grammar defines a quoted string as a sequence of:</p>
 <ul>
@@ -164,7 +164,7 @@ quoted-pair    = &quot;\&quot; CHAR
 </li>
 <li>a closing double quote</li>
 </ul>
-<p>Let&rsquo;s write the rules for &ldquo;qdtext&rdquo; and &ldquo;quoted pair&rdquo;:</p>
+<p>Let's write the rules for &ldquo;qdtext&rdquo; and &ldquo;quoted pair&rdquo;:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">char</span>&gt; DoubleQuote = Parse.Char(<span style="color:#e6db74">&#39;&#34;&#39;</span>);
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">char</span>&gt; Backslash = Parse.Char(<span style="color:#e6db74">&#39;\\&#39;</span>);
 
@@ -175,7 +175,7 @@ quoted-pair    = &quot;\&quot; CHAR
         <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> Backslash
         <span style="color:#66d9ef">from</span> c <span style="color:#66d9ef">in</span> Parse.AnyChar
         <span style="color:#66d9ef">select</span> c;
-</code></pre></div><p>The <code>QdText</code> rule doesn&rsquo;t require much explanation, but <code>QuotedPair</code> is more interesting&hellip; As you can see, it looks like a Linq query: this is Sprache&rsquo;s way of specifying a sequence. This particular query means: <em>match a backslash (named <code>_</code> because we ignore it) followed by any character named <code>c</code>, and return just <code>c</code></em> (quoted pairs are not escape sequences in the same sense as in C, Java or C#, so <code>&quot;\n&quot;</code> isn&rsquo;t interpreted as &ldquo;new line&rdquo; but just as <code>&quot;n&quot;</code>).</p>
+</code></pre></div><p>The <code>QdText</code> rule doesn't require much explanation, but <code>QuotedPair</code> is more interesting&hellip; As you can see, it looks like a Linq query: this is Sprache's way of specifying a sequence. This particular query means: <em>match a backslash (named <code>_</code> because we ignore it) followed by any character named <code>c</code>, and return just <code>c</code></em> (quoted pairs are not escape sequences in the same sense as in C, Java or C#, so <code>&quot;\n&quot;</code> isn't interpreted as &ldquo;new line&rdquo; but just as <code>&quot;n&quot;</code>).</p>
 <p>We can now write the rule for a quoted string:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">string</span>&gt; QuotedString =
         <span style="color:#66d9ef">from</span> open <span style="color:#66d9ef">in</span> DoubleQuote
@@ -189,11 +189,11 @@ quoted-pair    = &quot;\&quot; CHAR
 </ul>
 <p>We now have all the basic building blocks, so we can move on to higher level rules.</p>
 <h3 id="parsing-challenge-parameters">Parsing challenge parameters</h3>
-<p>A challenge is made of an auth scheme followed by one or more parameters. The auth scheme is trivial (it&rsquo;s just a token), so let&rsquo;s start by parsing the parameters.</p>
-<p>Although there isn&rsquo;t a named rule for it in the grammar, let&rsquo;s define a rule for parameter values. The value can be either a token or a quoted string:</p>
+<p>A challenge is made of an auth scheme followed by one or more parameters. The auth scheme is trivial (it's just a token), so let's start by parsing the parameters.</p>
+<p>Although there isn't a named rule for it in the grammar, let's define a rule for parameter values. The value can be either a token or a quoted string:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">string</span>&gt; ParameterValue =
         Token.Or(QuotedString);
-</code></pre></div><p>Since a parameter is a composite element (name and value), let&rsquo;s define a class to represent it:</p>
+</code></pre></div><p>Since a parameter is a composite element (name and value), let's define a class to represent it:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parameter</span>
 {
     <span style="color:#66d9ef">public</span> Parameter(<span style="color:#66d9ef">string</span> name, <span style="color:#66d9ef">string</span> <span style="color:#66d9ef">value</span>)
@@ -205,7 +205,7 @@ quoted-pair    = &quot;\&quot; CHAR
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; }
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Value { <span style="color:#66d9ef">get</span>; }
 }
-</code></pre></div><p>The <code>T</code> in <code>Parser&lt;T&gt;</code> isn&rsquo;t restricted to characters and strings, it can be any type. So the rule for parsing parameters will be of type <code>Parser&lt;Parameter&gt;</code>:</p>
+</code></pre></div><p>The <code>T</code> in <code>Parser&lt;T&gt;</code> isn't restricted to characters and strings, it can be any type. So the rule for parsing parameters will be of type <code>Parser&lt;Parameter&gt;</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">char</span>&gt; EqualSign = Parse.Char(<span style="color:#e6db74">&#39;=&#39;</span>);
 
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;Parameter&gt; Parameter =
@@ -214,7 +214,7 @@ quoted-pair    = &quot;\&quot; CHAR
         <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> ParameterValue
         <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">new</span> Parameter(name, <span style="color:#66d9ef">value</span>);
 </code></pre></div><p>Here we match a token (the parameter name), followed by the <code>'='</code> sign, followed by a parameter value, and we combine the name and value into a <code>Parameter</code> instance.</p>
-<p>Now let&rsquo;s parse a sequence of one or more parameters. Parameters are separated by commas (<code>','</code>), with optional leading and trailing whitespace (look for &ldquo;#rule&rdquo; in <a href="https://tools.ietf.org/html/rfc2616#section-2.1">RFC 2616 §2.1</a>). The grammar for lists allows several commas without items in between, e.g. &ldquo;item1 ,, item2,item3, ,item4&rdquo;, so the rule for the delimiter can be written like this:</p>
+<p>Now let's parse a sequence of one or more parameters. Parameters are separated by commas (<code>','</code>), with optional leading and trailing whitespace (look for &ldquo;#rule&rdquo; in <a href="https://tools.ietf.org/html/rfc2616#section-2.1">RFC 2616 §2.1</a>). The grammar for lists allows several commas without items in between, e.g. &ldquo;item1 ,, item2,item3, ,item4&rdquo;, so the rule for the delimiter can be written like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">char</span>&gt; Comma = Parse.Char(<span style="color:#e6db74">&#39;,&#39;</span>);
 
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">char</span>&gt; ListDelimiter =
@@ -222,7 +222,7 @@ quoted-pair    = &quot;\&quot; CHAR
         <span style="color:#66d9ef">from</span> c <span style="color:#66d9ef">in</span> Comma
         <span style="color:#66d9ef">from</span> trailing <span style="color:#66d9ef">in</span> Parse.WhiteSpace.Or(Comma).Many()
         <span style="color:#66d9ef">select</span> c;
-</code></pre></div><p>We just match the first comma, the rest can be any number of commas or whitespace characters. We return the comma because we have to return something, but we won&rsquo;t actually use it.</p>
+</code></pre></div><p>We just match the first comma, the rest can be any number of commas or whitespace characters. We return the comma because we have to return something, but we won't actually use it.</p>
 <p>We could now match the sequence of parameters like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;Parameter[]&gt; Parameters =
         <span style="color:#66d9ef">from</span> first <span style="color:#66d9ef">in</span> Parameter.Once()
@@ -231,12 +231,12 @@ quoted-pair    = &quot;\&quot; CHAR
             <span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> Parameter
             <span style="color:#66d9ef">select</span> p).Many()
         <span style="color:#66d9ef">select</span> first.Concat(others).ToArray();
-</code></pre></div><p>But it&rsquo;s not very straightforward&hellip; fortunately Sprache provides an easier option with the <code>DelimitedBy</code> method:</p>
+</code></pre></div><p>But it's not very straightforward&hellip; fortunately Sprache provides an easier option with the <code>DelimitedBy</code> method:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;Parameter[]&gt; Parameters =
         <span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> Parameter.DelimitedBy(ListDelimiter)
         <span style="color:#66d9ef">select</span> p.ToArray();
 </code></pre></div><h2 id="parsing-the-challenge">Parsing the challenge</h2>
-<p>We&rsquo;re almost done. We now have everything we need to parse the whole challenge. Let&rsquo;s define a class to represent it first:</p>
+<p>We're almost done. We now have everything we need to parse the whole challenge. Let's define a class to represent it first:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Challenge</span>
 {
     <span style="color:#66d9ef">public</span> Challenge(<span style="color:#66d9ef">string</span> scheme, Parameter[] parameters)
@@ -253,7 +253,7 @@ quoted-pair    = &quot;\&quot; CHAR
         <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> Parse.WhiteSpace.AtLeastOnce()
         <span style="color:#66d9ef">from</span> parameters <span style="color:#66d9ef">in</span> Parameters
         <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">new</span> Challenge(scheme, parameters);
-</code></pre></div><p>Note that I made this rule public, unlike the others: it&rsquo;s the only one we need to expose.</p>
+</code></pre></div><p>Note that I made this rule public, unlike the others: it's the only one we need to expose.</p>
 <h2 id="using-the-parser">Using the parser</h2>
 <p>Our parser is done, now we just have to use it, which is pretty straightforward:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">void</span> ParseAndPrintChallenge(<span style="color:#66d9ef">string</span> input)
@@ -272,13 +272,13 @@ Parameters:
 - realm = FooCorp
 - error = invalid_token
 - error_description = The access token has expired
-</code></pre><p>If there&rsquo;s a syntax error in the input text, the <code>Parse</code> will throw a <code>ParseException</code> with a message describing where and why the parsing failed. For instance, if I remove the space between &ldquo;Bearer&rdquo; and &ldquo;realm&rdquo;, I get the following error:</p>
+</code></pre><p>If there's a syntax error in the input text, the <code>Parse</code> will throw a <code>ParseException</code> with a message describing where and why the parsing failed. For instance, if I remove the space between &ldquo;Bearer&rdquo; and &ldquo;realm&rdquo;, I get the following error:</p>
 <blockquote>
 <p>Parsing failure: unexpected &lsquo;=&rsquo;; expected whitespace (Line 1, Column 12); recently consumed: earerrealm</p>
 </blockquote>
 <p>You can find the full code for this article <a href="https://gist.github.com/thomaslevesque/d8ee28be1cf383a3f8aaf39cee776f92">here</a>.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>As you can see, Sprache makes it very simple to parse complex text. The code isn&rsquo;t particularly short, but it&rsquo;s completely declarative; there are no loops, no conditionals, no temporary variables, no state&hellip; This makes it very easy to understand, and it can easily be compared with the actual grammar definition to check its correctness. It also provides pretty good feedback in case of error, which is hard to accomplish with a hand-built parser.</p>
+<p>As you can see, Sprache makes it very simple to parse complex text. The code isn't particularly short, but it's completely declarative; there are no loops, no conditionals, no temporary variables, no state&hellip; This makes it very easy to understand, and it can easily be compared with the actual grammar definition to check its correctness. It also provides pretty good feedback in case of error, which is hard to accomplish with a hand-built parser.</p>
 
 		</div>
 		<footer class="post__footer">

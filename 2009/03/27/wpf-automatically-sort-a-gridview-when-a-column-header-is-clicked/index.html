@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="[WPF] Automatically sort a GridView when a column header is clicked" />
-<meta property="og:description" content="It&rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&hellip; With the DataGridView in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class." />
+<meta property="og:description" content="It&#39;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&hellip; With the DataGridView in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/" />
 <meta property="article:published_time" content="2009-03-27T00:00:00+00:00" />
@@ -16,7 +16,7 @@
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Automatically sort a GridView when a column header is clicked"/>
-<meta name="twitter:description" content="It&rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&hellip; With the DataGridView in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class."/>
+<meta name="twitter:description" content="It&#39;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&hellip; With the DataGridView in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -76,22 +76,22 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-03-27T00:00:00Z">March 27, 2009</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>It&rsquo;s quite simple, in WPF, to present data in a grid, thanks to the <code>GridView</code> class. If you want to sort it, however, it gets a little harder&hellip; With the <code>DataGridView</code> in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in <a href="http://msdn.microsoft.com/en-us/library/ms745786.aspx">this article</a> ; it is based on the <code>Click</code> event of the <code>GridViewColumnHeader</code> class. In my view, this approach has two major drawbacks :</p>
+			<p>It's quite simple, in WPF, to present data in a grid, thanks to the <code>GridView</code> class. If you want to sort it, however, it gets a little harder&hellip; With the <code>DataGridView</code> in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in <a href="http://msdn.microsoft.com/en-us/library/ms745786.aspx">this article</a> ; it is based on the <code>Click</code> event of the <code>GridViewColumnHeader</code> class. In my view, this approach has two major drawbacks :</p>
 <ul>
 <li>
 <p>The sorting must be done in code-behind, something we usually want to avoid if the application is designed according to the MVVM pattern. It also makes the code harder to reuse.</p>
 </li>
 <li>
-<p>This method assumes that the text of the column header is also the name of the property to use as the sort criteria, which isn&rsquo;t always true, far from it&hellip; We could use the <code>DisplayMemberBinding</code> of the column, but it&rsquo;s not always set (for instance if a <code>CellTemplate</code> is defined instead).</p>
+<p>This method assumes that the text of the column header is also the name of the property to use as the sort criteria, which isn't always true, far from it&hellip; We could use the <code>DisplayMemberBinding</code> of the column, but it's not always set (for instance if a <code>CellTemplate</code> is defined instead).</p>
 <p>After spending a long time trying to find a flexible and elegant approach, I came up with an interesting solution. It consists of a class with a few attached properties that can be set in XAML.  This class can be used as follows :</p>
 </li>
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
           <span style="color:#a6e22e">IsSynchronizedWithCurrentItem=</span><span style="color:#e6db74">&#34;True&#34;</span>
           <span style="color:#a6e22e">util:GridViewSort.AutoSort=</span><span style="color:#e6db74">&#34;True&#34;</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;ListView.View&gt;</span>
-            <span style="color:#f92672">&lt;GridView&gt;</span>
-                <span style="color:#f92672">&lt;GridView.Columns&gt;</span>
+        <span style="color:#f92672">&lt;ListView.View</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;GridView</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;GridView.Columns</span><span style="color:#f92672">&gt;</span>
                     <span style="color:#f92672">&lt;GridViewColumn</span> <span style="color:#a6e22e">Header=</span><span style="color:#e6db74">&#34;Name&#34;</span>
                                     <span style="color:#a6e22e">DisplayMemberBinding=</span><span style="color:#e6db74">&#34;{Binding Name}&#34;</span>
                                     <span style="color:#a6e22e">util:GridViewSort.PropertyName=</span><span style="color:#e6db74">&#34;Name&#34;</span><span style="color:#f92672">/&gt;</span>
@@ -295,7 +295,7 @@ if (!doNotTrack) {
         <span style="color:#75715e">#endregion
 </span><span style="color:#75715e"></span>    }
 }
-</code></pre></div><p>Of course, this class could probably be improved&hellip; for instance, we could add an arrow glyph on the sorted column (maybe by using an <code>Adorner</code>). Maybe I&rsquo;ll do that someday&hellip; meanwhile, please feel free to use it ;)</p>
+</code></pre></div><p>Of course, this class could probably be improved&hellip; for instance, we could add an arrow glyph on the sorted column (maybe by using an <code>Adorner</code>). Maybe I'll do that someday&hellip; meanwhile, please feel free to use it ;)</p>
 <p><strong>Update :</strong> A new version that displays the sort glyph in the sorted column is now available in <a href="/2009/08/04/wpf-automatically-sort-a-gridview-continued/">this blog post</a>.</p>
 
 		</div>

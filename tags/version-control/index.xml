@@ -18,7 +18,7 @@
       
       <guid>https://thomaslevesque.com/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</guid>
       <description>I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&amp;hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.
-Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&amp;rsquo;t have been there in the first place.</description>
+Fortunately, it&#39;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&#39;t have been there in the first place.</description>
     </item>
     
   </channel>
