@@ -6,10 +6,20 @@
     <description>Recent content in Uncategorized on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://thomaslevesque.com/categories/uncategorized/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Moving my blog to Hugo</title>
+      <link>https://thomaslevesque.com/2020/05/06/moving-my-blog-to-hugo/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/2020/05/06/moving-my-blog-to-hugo/</guid>
+      <description>If you&#39;re a regular reader of my blog, you probably noticed that the design has changed. In fact, it&#39;s not just the design, it&#39;s just about everything!
+My blog used to be hosted on WordPress. It did the job, but honestly, I didn&#39;t really like WordPress. It&#39;s slow, bloated, and the editing and publishing experience is a bit of a mess (or at least, it&#39;s not a good fit for the way I like to work).</description>
+    </item>
     
     <item>
       <title>Using the OAuth 2.0 device flow to authenticate users in desktop apps</title>

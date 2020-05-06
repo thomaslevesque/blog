@@ -12,7 +12,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/" />
-<meta property="og:updated_time" content="2020-05-01T23:42:43+02:00" />
+<meta property="og:updated_time" content="2020-05-06T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thomas Levesque&#39;s .NET Blog"/>
@@ -71,6 +71,21 @@ if (!doNotTrack) {
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2020/05/06/moving-my-blog-to-hugo/" rel="bookmark">
+			Moving my blog to Hugo
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-05-06T00:00:00Z">May 06, 2020</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		If you're a regular reader of my blog, you probably noticed that the design has changed. In fact, it's not just the design, it's just about everything!
+My blog used to be hosted on WordPress. It did the job, but honestly, I didn't really like WordPress. It's slow, bloated, and the editing and publishing experience is a bit of a mess (or at least, it's not a good fit for the way I like to work).
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/" rel="bookmark">
@@ -208,20 +223,6 @@ But sometimes, you do need the index of the current item; this usually leads to 
 		Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it's entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don't hesitate to let me know in the comments!
 Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it's a very different world.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/" rel="bookmark">
-			Scaling out ASP.NET Core SignalR using Azure Service Bus
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-03-18T00:00:00Z">March 18, 2019</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client's capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.
-	</div>
 </article>
 </main>
 
@@ -255,11 +256,11 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/">Using the OAuth 2.0 device flow to authenticate users in desktop apps</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/">Lazily resolving services to fix circular dependencies in .NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/">Handling query string parameters with no value in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/">ASP.NET Core: when environments are not enough, use sub-environments!</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/">Easy unit testing of null argument validation (C# 8 edition)</a></li>
 		</ul>
 	</div>
 </div>

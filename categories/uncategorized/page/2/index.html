@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/categories/uncategorized/" />
-<meta property="og:updated_time" content="2020-03-28T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-05-06T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Uncategorized"/>
@@ -72,6 +72,20 @@ if (!doNotTrack) {
 	<header class="main__header">
 		<h1 class="main__title">Uncategorized</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/" rel="bookmark">
+			Hosting an ASP.NET Core 2 application on a Raspberry Pi
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-04-17T00:00:00Z">April 17, 2018</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&hellip; For instance, is a very small machine like a Raspberry Pi, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is!
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2018/03/30/writing-a-github-webhook-as-an-azure-function/" rel="bookmark">
@@ -205,21 +219,6 @@ Text parsing Parsing text is a common task, but it can be tedious and error-pron
 Today I'm glad to announce that we're releasing FakeItEasy 3.0.0, which supports .NET Core and introduces a few useful features.
 Let's see what's new!
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2017/01/17/c-methods-in-git-diff-hunk-headers/" rel="bookmark">
-			C# methods in git diff hunk headers
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-01-17T00:00:00Z">January 17, 2017</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); + Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff.
-	</div>
 </article>
 </main>
 
@@ -255,11 +254,11 @@ diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/">Using the OAuth 2.0 device flow to authenticate users in desktop apps</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/">Lazily resolving services to fix circular dependencies in .NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/">Handling query string parameters with no value in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/">ASP.NET Core: when environments are not enough, use sub-environments!</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/">Easy unit testing of null argument validation (C# 8 edition)</a></li>
 		</ul>
 	</div>
 </div>
