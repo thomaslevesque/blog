@@ -3,7 +3,6 @@ layout: post
 title: Moving my blog to Hugo
 date: 2020-05-06
 url: /2020/05/06/moving-my-blog-to-hugo/
-draft: true
 tags:
   - hugo
   - blog
