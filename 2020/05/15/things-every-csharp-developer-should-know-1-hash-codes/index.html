@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Things every C# developer should know - #1: hash codes - Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Things every C# developer should know - #1: hash codes" />
+<meta property="og:description" content="As a C# developer, there are obviously a lot of skills you need to master to be effective: language syntax, framework classes, third-party libraries, databases, regular expressions, the HTTP protocol, etc. But there are a handful of things that I consider to be really fundamental, and I often see C# developers, even experienced ones, who don&#39;t master them. So, I&#39;m doing a series about those things! Today: hash codes.
+The GetHashCode method OK, I realize that most developers don&#39;t need to implement their own hash table, or even implement GetHashCode very often, but still, it&#39;s important to know about this." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://thomaslevesque.com/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/" />
+<meta property="article:published_time" content="2020-05-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-15T00:00:00+00:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Things every C# developer should know - #1: hash codes"/>
+<meta name="twitter:description" content="As a C# developer, there are obviously a lot of skills you need to master to be effective: language syntax, framework classes, third-party libraries, databases, regular expressions, the HTTP protocol, etc. But there are a handful of things that I consider to be really fundamental, and I often see C# developers, even experienced ones, who don&#39;t master them. So, I&#39;m doing a series about those things! Today: hash codes.
+The GetHashCode method OK, I realize that most developers don&#39;t need to implement their own hash table, or even implement GetHashCode very often, but still, it&#39;s important to know about this."/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/social.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-31621259-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Things every C# developer should know - #1: hash codes</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-05-15T00:00:00Z">May 15, 2020</time></div></div>
+		</header><div class="content post__content clearfix">
+			<p>As a C# developer, there are obviously a lot of skills you need to master to be effective: language syntax, framework classes, third-party libraries, databases, regular expressions, the HTTP protocol, etc. But there are a handful of things that I consider to be really fundamental, and I often see C# developers, even experienced ones, who don't master them. So, I'm doing a series about those things! Today: <strong>hash codes</strong>.</p>
+<h2 id="the-gethashcode-method">The <code>GetHashCode</code> method</h2>
+<p>OK, I realize that most developers don't need to implement their own hash table, or even implement <code>GetHashCode</code> very often, but still, it's important to know about this. Every C# class inherits (directly or indirectly) from <code>Object</code>, which exposes only 3 virtual methods. The purpose of <code>ToString</code> and <code>Equals</code> is quite obvious, but what about the third one, <code>GetHashCode</code>?</p>
+<p>When I ask candidates about <code>GetHashCode</code> in job interviews, I typically get answers along these lines:</p>
+<ul>
+<li>&ldquo;I don't know&rdquo; (at least there's nothing to unlearn!)</li>
+<li>&ldquo;It returns an id for the object&rdquo;</li>
+<li>&ldquo;It returns a unique value that I can use as a key&rdquo;</li>
+<li>&ldquo;It can be used to test if two objects are equal&rdquo;</li>
+</ul>
+<p><strong>NO!</strong> A hash code is not an id, and it doesn't return a unique value. This is kind of obvious, when you think about it: <code>GetHashCode</code> returns an <code>Int32</code>, which has &ldquo;only&rdquo; about 4.2 billion possible values, and there's potentially an infinity of different objects, so some of them are bound to have the same hash code.</p>
+<p>And no, it can't be used to test if two objects are equal. Two objects that have the same hash code are not necessarily equal, for the reason mentioned above. It works the other way, though: two objects that are equal have the same hash code (or at least they should, if <code>Equals</code> and <code>GetHashCode</code> are correctly implemented).</p>
+<h2 id="hash-tables">Hash tables</h2>
+<p>So, if <code>GetHashCode</code> doesn't return an id and cannot be used to test equality, what is it good for?</p>
+<p><code>GetHashCode</code> mostly exists for one purpose: to serve as a hash function when the object is used as a key in a hash table. OK, but what <em>is</em> a hash table? Maybe the term doesn't sound familiar to you, but if you've been programming in C# for more than a few hours, you've probably used one already: the <code>Dictionary&lt;TKey, TValue&gt;</code> class is the most commonly used hash table implementation. <code>HashSet&lt;T&gt;</code> is also based on a hash table, as the name implies. If you want a complete explanation of hash tables, Wikipedia has a <a href="https://en.wikipedia.org/wiki/Hash_table">pretty good article</a>, but I'll try to give a brief introduction here.</p>
+<p>A hash table is a data structure that associates a value with a key. It enables looking up the value for a given key, and does so with an average time complexity of <code>O(1)</code>; in other words, the time to find an entry by key doesn't depend on the number of entries in the hash table. The general principle is to place entries in a fixed number of &ldquo;buckets&rdquo;, according to the <em>hash code</em> of the key.</p>
+<p>Let's call <code>B</code> the number of buckets, and <code>H</code> the hash code of the key.</p>
+<p>Adding an entry to a hash table looks like this (pseudo code):</p>
+<pre><code>// Calculate the hash code of the key
+H = key.GetHashCode()
+// Calculate the index of the bucket where the entry should be added
+bucketIndex = H mod B
+// Add the entry to that bucket
+buckets[bucketIndex].Add(entry)
+</code></pre><p>Note that there can be more than one entry per bucket, since there's only a fixed number of buckets. The way this is handled varies between implementations, but a common approach is to use a linked list.</p>
+<p>Searching for an entry by key is done following this process:</p>
+<pre><code>// Calculate the hash code of the key
+H = key.GetHashCode()
+// Calculate the index of the bucket where the entry would be, if it exists
+bucketIndex = H mod B
+// Enumerate entries in the bucket to find one whose key is equal to the
+// key we're looking for
+entry = buckets[bucketIndex].Find(key)
+</code></pre><p>What makes hash tables so efficient is that finding which bucket contains a given key is very fast, and doesn't depend on the number of entries. When you have the bucket, there's usually very few entries in it, so searching through them is fast as well. For instance, if you have 2000 entries and the hash table has 1000 buckets, each bucket will contain only 2 entries on average.</p>
+<p>But for this to work, an important condition must be met: <strong>the entries have to be evenly distributed among the buckets</strong>. If the 2000 entries end up in the same bucket, you will find the right bucket immediately, but then you will still have to go through each of the 2000 entries to find the right one, so you gain nothing at all compared to a simple list.</p>
+<h2 id="how-to-achieve-an-even-distribution">How to achieve an even distribution</h2>
+<p>To make sure the entries will be evenly distributed among the buckets, the hash code values must also be evenly distributed. This is why <code>GetHashCode</code> can't just return any random or arbitrary value, but must strive to return different values for different objects.</p>
+<p>This is typically done by combining the values that are considered for equality, with a few prime numbers thrown in to improve the distribution. Here's an example, inspired by <a href="https://stackoverflow.com/a/263416/98713">Jon Skeet's answer on StackOverflow</a>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point3D</span>
+{
+    <span style="color:#66d9ef">public</span> Point3D(<span style="color:#66d9ef">double</span> x, <span style="color:#66d9ef">double</span> y, <span style="color:#66d9ef">double</span> z) =&gt; (X, Y, Z) = (x, y, z);
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> X { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Y { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Z { <span style="color:#66d9ef">get</span>; }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> Equals(<span style="color:#66d9ef">object</span> other)
+    {
+        <span style="color:#66d9ef">return</span> other <span style="color:#66d9ef">is</span> Point3D p
+            &amp;&amp; p.X == X
+            &amp;&amp; p.Y == Y
+            &amp;&amp; p.Z == Z;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">int</span> GetHashCode()
+    {
+        <span style="color:#66d9ef">unchecked</span> <span style="color:#75715e">// Allow arithmetic overflow, numbers will just &#34;wrap around&#34;
+</span><span style="color:#75715e"></span>        {
+            <span style="color:#66d9ef">int</span> hashcode = <span style="color:#ae81ff">1</span><span style="color:#ae81ff">4</span><span style="color:#ae81ff">3</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">2</span><span style="color:#ae81ff">8</span><span style="color:#ae81ff">7</span>;
+            hashcode = hashcode * <span style="color:#ae81ff">7</span><span style="color:#ae81ff">3</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">2</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">1</span><span style="color:#ae81ff">3</span> ^ X.GetHashCode();
+            hashcode = hashcode * <span style="color:#ae81ff">7</span><span style="color:#ae81ff">3</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">2</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">1</span><span style="color:#ae81ff">3</span> ^ Y.GetHashCode();
+            hashcode = hashcode * <span style="color:#ae81ff">7</span><span style="color:#ae81ff">3</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">2</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">1</span><span style="color:#ae81ff">3</span> ^ Z.GetHashCode();
+            <span style="color:#66d9ef">return</span> hashcode;
+        }
+    }
+}
+</code></pre></div><p>The <code>Point3D</code> class above has 3 properties. To be considered equal, two instances of <code>Point3D</code> must have the same values for these properties. To compute the hash code, we use the same properties that are considered for equality (this is important to ensure equal objects have the same hash code). The values are then combined using XORs and multiplications with prime numbers. I'm not sure exactly why it's important to use prime numbers, but it is; if you're better at math than me, maybe you can take a guess! Of course, you can use different values than the ones shown above, just make sure they're prime.</p>
+<h2 id="an-easier-way">An easier way</h2>
+<p>The implementation shown above is fine, but it's a little tricky to get right without looking at a reference implementation. Also, you need to be careful with null values.</p>
+<p>Fortunately, there's a very easy alternative: tuples! Using the value tuples introduced in C# 7, the <code>GetHashCode</code> implementation can be made much simpler by taking advantage of the tuple's <code>GetHashCode</code> method:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> GetHashCode() =&gt; (X, Y, Z).GetHashCode();
+</code></pre></div><p>Note that it can also be used to simplify <code>Equals</code> a bit:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> Equals(<span style="color:#66d9ef">object</span> other) =&gt;
+    other <span style="color:#66d9ef">is</span> Point3D p &amp;&amp; (p.X, p.Y, p.Z).Equals((X, Y, Z));
+</code></pre></div><h2 id="closing">Closing</h2>
+<p>Well, this post was a bit longer than I expected. Hopefully you learned something from it! I'll probably write a few more of these articles, depending on my inspiration. I already have a few ideas (reference types vs. value types, memory management&hellip;), but feel free to suggest other topics. I can't promise I'll cover them, but at least I'll consider them!</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/c%23/" rel="tag">C#</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/gethashcode/" rel="tag">GetHashCode</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/hash-code/" rel="tag">hash code</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/hash-table/" rel="tag">hash table</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Thomas Levesque</span>
+	</div>
+	<div class="authorbox__description">
+		Thomas Levesque is a French software developer from Paris.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/2020/05/06/moving-my-blog-to-hugo/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Moving my blog to Hugo</p>
+		</a>
+	</div>
+</nav>
+
+<div>
+    <script src="https://utteranc.es/client.js"
+            repo="thomaslevesque/blog"
+            issue-term="pathname"
+            label="post-comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://thomaslevesque.com/" />
+	</form>
+</div>
+<div class="widget-social widget">
+    <h4 class="widget-social__title widget__title">Social</h4>
+    <div class="widget-social__content widget__content">
+        <a class="widget-social__link-custom widget__link" title="GitHub" rel="noopener noreferrer" href="https://github.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="Twitter" rel="noopener noreferrer" href="https://twitter.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-twitter" width="24" height="24" viewBox="0 0 384 312"><path d="m384 36.9c-14.1 6.3-29.3 10.5-45.2 12.4 16.3-9.7 28.8-25.2 34.6-43.6-15.2 9-32.1 15.6-50 19.1-14.4-15.2-34.9-24.8-57.5-24.8-43.5 0-78.8 35.3-78.8 78.8 0 6.2.7 12.2 2 17.9-65.5-3.3-123.5-34.6-162.4-82.3-6.7 11.6-10.6 25.2-10.6 39.6 0 27.3 13.9 51.4 35 65.6-12.9-.4-25.1-4-35.7-9.9v1c0 38.2 27.2 70 63.2 77.2-6.6 1.8-13.6 2.8-20.8 2.8-5.1 0-10-.5-14.8-1.4 10 31.3 39.1 54.1 73.6 54.7-27 21.1-60.9 33.7-97.8 33.7-6.4 0-12.6-.4-18.8-1.1 34.9 22.4 76.3 35.4 120.8 35.4 144.9 0 224.1-120 224.1-224.1 0-3.4-.1-6.8-.2-10.2 15.4-11.1 28.7-25 39.3-40.8z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="RSS feed" rel="noopener noreferrer" href="/index.xml">
+            <svg class="widget-social__link-icon-custom icon icon-rss" x="0px" y="0px" width="24" height="24" viewBox="0 0 1000 1000"><path d="M277.2,856.3c0,37.1-13,68.7-39,94.6c-26,26-57.5,39-94.6,39S75,976.9,49,951c-26-26-39-57.5-39-94.6c0-37.1,13-68.7,39-94.6c26-26,57.5-39,94.6-39s68.7,13,94.6,39C264.3,787.7,277.2,819.2,277.2,856.3z M633.6,941.9c0.9,13-3,24.1-11.8,33.4c-8.4,9.7-19.3,14.6-32.7,14.6h-94c-11.6,0-21.6-3.8-29.9-11.5c-8.4-7.7-13-17.3-13.9-28.9c-10.2-106.2-53-197.1-128.4-272.5c-75.4-75.4-166.2-118.2-272.5-128.4c-11.6-0.9-21.2-5.6-28.9-13.9c-7.7-8.4-11.5-18.3-11.5-29.9v-94c0-13.5,4.9-24.4,14.6-32.7c7.9-7.9,17.9-11.8,29.9-11.8H58c74.2,6,145.2,24.7,213,56c67.7,31.3,127.8,73.4,180.2,126.3c52.9,52.4,95,112.5,126.3,180.2C608.8,796.7,627.5,867.7,633.6,941.9L633.6,941.9z M989.9,943.3c0.9,12.5-3.2,23.4-12.5,32.7c-8.3,9.3-19,13.9-32,13.9h-99.5c-12.1,0-22.4-4.1-31-12.2s-13.1-18-13.6-29.6c-5.6-99.8-29-194.5-70.3-284.3c-41.3-89.8-95-167.7-161.1-233.8C503.8,363.9,425.8,310.2,336,269c-89.8-41.3-184.5-65-284.3-71c-11.6-0.5-21.5-5-29.6-13.6c-8.1-8.6-12.2-18.7-12.2-30.3V54.6c0-13,4.6-23.7,13.9-32c8.4-8.4,18.6-12.5,30.6-12.5h2.1c121.6,6,237.9,33.9,349,83.5c111.1,49.6,209.8,117.8,296.1,204.6c86.8,86.3,155,185,204.6,296.1C956,705.4,983.8,821.8,989.9,943.3L989.9,943.3z"/></svg>
+        </a>
+    </div>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/">Things every C# developer should know - #1: hash codes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/">Using the OAuth 2.0 device flow to authenticate users in desktop apps</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/">Lazily resolving services to fix circular dependencies in .NET Core</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/">Handling query string parameters with no value in ASP.NET Core</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Top tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Thomas Levesque.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

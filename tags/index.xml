@@ -6,10 +6,46 @@
     <description>Recent content in Tags on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 06 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://thomaslevesque.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>C#</title>
+      <link>https://thomaslevesque.com/tags/c#/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/c#/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GetHashCode</title>
+      <link>https://thomaslevesque.com/tags/gethashcode/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/gethashcode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hash code</title>
+      <link>https://thomaslevesque.com/tags/hash-code/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/hash-code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hash table</title>
+      <link>https://thomaslevesque.com/tags/hash-table/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/hash-table/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>blog</title>
@@ -98,15 +134,6 @@
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/azure-ad/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>C#</title>
-      <link>https://thomaslevesque.com/tags/c#/</link>
-      <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/c#/</guid>
       <description></description>
     </item>
     
