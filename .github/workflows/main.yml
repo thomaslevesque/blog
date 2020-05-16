@@ -26,7 +26,7 @@ jobs:
         path: out
 
     - name: Clear output before build
-      run: rm -rf $GITHUB_WORKSPACE/out
+      run: rm -rf $GITHUB_WORKSPACE/out/*
 
     - name: Build website with Hugo
       uses: srt32/hugo-action@v0.0.3
