@@ -8,11 +8,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/categories/</loc>
-    <lastmod>2020-05-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/gethashcode/</loc>
     <lastmod>2020-05-15T00:00:00+00:00</lastmod>
   </url>
@@ -33,7 +28,17 @@
   </url>
   
   <url>
+    <loc>https://thomaslevesque.com/series/</loc>
+    <lastmod>2020-05-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://thomaslevesque.com/tags/</loc>
+    <lastmod>2020-05-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/series/things-every-c#-developer-should-know/</loc>
     <lastmod>2020-05-15T00:00:00+00:00</lastmod>
   </url>
   
@@ -44,11 +49,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/</loc>
-    <lastmod>2020-05-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/categories/uncategorized/</loc>
     <lastmod>2020-05-15T00:00:00+00:00</lastmod>
   </url>
   
@@ -303,16 +303,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/categories/asp.net-core/</loc>
-    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/categories/azure/</loc>
-    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/scale-out/</loc>
     <lastmod>2019-03-18T00:00:00+00:00</lastmod>
   </url>
@@ -379,11 +369,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/tags/wpf/</loc>
-    <lastmod>2018-11-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/categories/wpf/</loc>
     <lastmod>2018-11-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -588,11 +573,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/categories/tips-and-tricks/</loc>
-    <lastmod>2017-08-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/2017/03/29/linq-performance-improvements-in-net-core/</loc>
     <lastmod>2017-03-29T00:00:00+00:00</lastmod>
   </url>
@@ -753,22 +733,12 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/categories/tutorial/</loc>
-    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</loc>
     <lastmod>2016-04-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</loc>
-    <lastmod>2016-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/categories/unit-testing/</loc>
     <lastmod>2016-01-17T00:00:00+00:00</lastmod>
   </url>
   
@@ -789,11 +759,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/tags/await/</loc>
-    <lastmod>2015-11-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/categories/code-sample/</loc>
     <lastmod>2015-11-11T00:00:00+00:00</lastmod>
   </url>
   
@@ -838,11 +803,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/categories/libraries/</loc>
-    <lastmod>2015-08-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/memory-leak/</loc>
     <lastmod>2015-08-16T00:00:00+00:00</lastmod>
   </url>
@@ -873,17 +833,7 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/categories/puzzles/</loc>
-    <lastmod>2015-07-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/ado.net/</loc>
-    <lastmod>2015-06-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/categories/database/</loc>
     <lastmod>2015-06-28T00:00:00+00:00</lastmod>
   </url>
   
@@ -964,11 +914,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/2015/03/13/leveraging-resharper-annotations/</loc>
-    <lastmod>2015-03-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/categories/tools/</loc>
     <lastmod>2015-03-13T00:00:00+00:00</lastmod>
   </url>
   
@@ -1238,11 +1183,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/categories/winrt/</loc>
-    <lastmod>2013-11-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/winrt/</loc>
     <lastmod>2013-11-21T00:00:00+00:00</lastmod>
   </url>
@@ -1473,11 +1413,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/categories/c#-4.0/</loc>
-    <lastmod>2010-10-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/entity-framework/</loc>
     <lastmod>2010-10-03T00:00:00+00:00</lastmod>
   </url>
@@ -1619,11 +1554,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/tags/dragmove/</loc>
-    <lastmod>2009-05-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/categories/windows-forms/</loc>
     <lastmod>2009-05-06T00:00:00+00:00</lastmod>
   </url>
   

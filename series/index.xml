@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Series on Thomas Levesque&#39;s .NET Blog</title>
+    <link>https://thomaslevesque.com/series/</link>
+    <description>Recent content in Series on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://thomaslevesque.com/series/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Things every C# developer should know</title>
+      <link>https://thomaslevesque.com/series/things-every-c#-developer-should-know/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/series/things-every-c#-developer-should-know/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
