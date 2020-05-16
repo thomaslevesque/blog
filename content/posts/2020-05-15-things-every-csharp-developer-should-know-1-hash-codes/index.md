@@ -8,6 +8,8 @@ tags:
   - GetHashCode
   - hash code
   - hash table
+series:
+  - Things every C# developer should know
 categories:
   - Uncategorized
 ---

@@ -1,0 +1,12 @@
+{{- $taxo := "series" -}}
+{{- with .Param $taxo -}}
+<div class="meta__item-series meta__item">
+	{{- partial "svg/series.svg" (dict "class" "meta__icon") -}}
+	<span class="meta__text">
+		{{- range $index, $series := . }}
+			{{- if gt $index 0 }}, {{ end -}}
+			<a class="meta__link" href="{{ "series/" | relLangURL}}{{ replace $series "#" "%23" | urlize }}/" rel="series">{{ $series }}</a>
+		{{- end }}
+	</span>
+</div>
+{{- end }}
