@@ -1,0 +1,17 @@
+{{ define "main" }}
+<main class="main list" role="main">
+	<header class="main__header">
+		<a class="main__header__type" href="/{{ .Type }}/">{{ .Type | pluralize }}</a>
+		<h1 class="main__title">{{ .Title }}</h1>
+	</header>
+	{{- with .Content }}
+	<div class="content main__content clearfix">
+		{{ . }}
+	</div>
+	{{- end }}
+	{{- range .Paginator.Pages }}
+		{{- .Render "summary" }}
+	{{- end }}
+</main>
+{{ partial "pagination.html" . }}
+{{ end }}

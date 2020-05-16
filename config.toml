@@ -36,7 +36,7 @@ googleAnalytics = "UA-31621259-1"
   twitter_cards = true
   post_meta = ["date", "series" ]
   pager = true
-  customCSS = ["css/social.css"]
+  customCSS = ["css/custom.css"]
 
 [Params.sidebar]
   home = "right" # Configure layout for home page

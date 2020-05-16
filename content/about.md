@@ -1,6 +1,6 @@
 ---
 title: "About"
-layout: post
+layout: page
 date: 2020-05-01T23:42:43+02:00
 ---
 

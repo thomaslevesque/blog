@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Things every C# developer should know - #1: hash codes"
+title: "Things every C# developer should know #1: hash codes"
 date: 2020-05-15
 url: /2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/
 tags:
