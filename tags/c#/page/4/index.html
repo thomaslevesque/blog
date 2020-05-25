@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/tags/c#/" />
-<meta property="og:updated_time" content="2020-05-15T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-05-25T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="C#"/>
@@ -73,6 +73,20 @@ if (!doNotTrack) {
 		<a class="main__header__type" href="/tags/">tags</a>
 		<h1 class="main__title">C#</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/" rel="bookmark">
+			How to retrieve dates as UTC in SQLite
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-06-28T00:00:00Z">June 28, 2015</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		SQLite is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an official ADO.NET provider that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a DateTime converted to local time, with Kind = Unspecified.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/" rel="bookmark">
@@ -206,21 +220,6 @@ This should be a no-brainer, but there are actually a number of different ways t
 The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:
  History suggestions are search queries previously entered by the user.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2013/04/21/detecting-dependency-property-changes-in-winrt/" rel="bookmark">
-			Detecting dependency property changes in WinRT
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2013-04-21T00:00:00Z">April 21, 2013</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
-It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.
-	</div>
 </article>
 </main>
 
@@ -259,11 +258,11 @@ It’s often useful to be notified when the value of a dependency property chang
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/05/25/exciting-new-features-in-csharp-9/">Exciting new features in C# 9</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/">Things every C# developer should know #1: hash codes</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/">Using the OAuth 2.0 device flow to authenticate users in desktop apps</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/">Lazily resolving services to fix circular dependencies in .NET Core</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/">Handling query string parameters with no value in ASP.NET Core</a></li>
 		</ul>
 	</div>
 </div>

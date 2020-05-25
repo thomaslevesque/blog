@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/posts/" />
-<meta property="og:updated_time" content="2020-05-15T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-05-25T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -72,6 +72,21 @@ if (!doNotTrack) {
 	<header class="main__header">
 		<h1 class="main__title">Posts</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2020/05/25/exciting-new-features-in-csharp-9/" rel="bookmark">
+			Exciting new features in C# 9
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-05-25T00:00:00Z">May 25, 2020</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Last week at Microsoft Build, there have been a lot of exciting annoucements! .NET 5, Blazor WebAssembly, .NET MAUI, WinUI… But the thing I'm most eager to get my hands on is C# 9, which introduces many interesting new features, so let's take a quick tour! There's a long list, so I won't cover all of them here, but I will highlight the ones I find the most interesting.
+Note: Unfortunately the new C# features aren't supported yet in the latest SDK preview, so we can't test them in actual projects.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/" rel="bookmark">
@@ -220,21 +235,6 @@ But sometimes, you do need the index of the current item; this usually leads to 
 		This is the second post in a series of 2:
  Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET's TypeNameHandling feature. In this post, I'll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/" rel="bookmark">
-			Handling type hierarchies in Cosmos DB (part 1)
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-10-14T00:00:00Z">October 14, 2019</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		This is the first post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft's NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don't need to split complex objects into multiple tables and use joins like in relational databases.
-	</div>
 </article>
 </main>
 
@@ -272,11 +272,11 @@ But sometimes, you do need the index of the current item; this usually leads to 
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/05/25/exciting-new-features-in-csharp-9/">Exciting new features in C# 9</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/">Things every C# developer should know #1: hash codes</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/">Using the OAuth 2.0 device flow to authenticate users in desktop apps</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/">Lazily resolving services to fix circular dependencies in .NET Core</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/">Handling query string parameters with no value in ASP.NET Core</a></li>
 		</ul>
 	</div>
 </div>
