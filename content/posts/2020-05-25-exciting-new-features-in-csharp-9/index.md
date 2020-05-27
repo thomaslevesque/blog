@@ -103,7 +103,7 @@ Note that records are immutable: you can't change the values of their properties
 
 ```csharp
 Point p1 = new Point(1, 2);
-Point p2 = new Point(p.X, 3);
+Point p2 = new Point(p1.X, 3);
 ```
 
 Basically, copy all properties from the original instance, except the ones you want to change. In this case, it's OK because there are only 2 properties, but it can quickly become annoying when there are many properties.
