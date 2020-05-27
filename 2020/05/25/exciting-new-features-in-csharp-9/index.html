@@ -135,7 +135,7 @@ if (!doNotTrack) {
 </code></pre></div><p>Yup, just one line, and not even a long one! How great is that? Note that it also works with structs, if you need a value type.</p>
 <p>Note that records are immutable: you can't change the values of their properties. So if you want to modify an instance of a record type, you need to create a new one (this should be familiar, since the same is true of dates and strings, for instance). The current approach would be to do something like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Point p1 = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>);
-Point p2 = <span style="color:#66d9ef">new</span> Point(p.X, <span style="color:#ae81ff">3</span>);
+Point p2 = <span style="color:#66d9ef">new</span> Point(p1.X, <span style="color:#ae81ff">3</span>);
 </code></pre></div><p>Basically, copy all properties from the original instance, except the ones you want to change. In this case, it's OK because there are only 2 properties, but it can quickly become annoying when there are many properties.</p>
 <p>C# 9 introduces <code>with</code> expressions, which let you do this instead:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Point p1 = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>);
