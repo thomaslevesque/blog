@@ -3,6 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://thomaslevesque.com/tags/git/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/posts/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://thomaslevesque.com/tags/c#/</loc>
     <lastmod>2020-05-25T00:00:00+00:00</lastmod>
   </url>
@@ -14,21 +39,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/2020/05/25/exciting-new-features-in-csharp-9/</loc>
-    <lastmod>2020-05-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/posts/</loc>
-    <lastmod>2020-05-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/</loc>
-    <lastmod>2020-05-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/</loc>
     <lastmod>2020-05-25T00:00:00+00:00</lastmod>
   </url>
   
@@ -489,11 +499,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</loc>
-    <lastmod>2018-03-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/git/</loc>
     <lastmod>2018-03-06T00:00:00+00:00</lastmod>
   </url>
   

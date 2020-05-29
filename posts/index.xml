@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://thomaslevesque.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Git tip: how to fix an accidental commit on the wrong branch</title>
+      <link>https://thomaslevesque.com/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/</link>
+      <pubDate>Fri, 29 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/</guid>
+      <description>Oh no, you just accidentally commited to master, when you were supposed to work on a feature branch! How to fix it? It&#39;s actually pretty easy with Git!
+A common Git workflow nowadays is the &amp;ldquo;feature branch&amp;rdquo; workflow: you can&#39;t push directly to the &amp;ldquo;main&amp;rdquo; branch (usually master, but it can be something else); instead you have to create a branch from master, commit to that branch, publish it and submit a pull request.</description>
+    </item>
     
     <item>
       <title>Exciting new features in C# 9</title>

@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/posts/" />
-<meta property="og:updated_time" content="2020-05-25T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-05-29T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -72,6 +72,20 @@ if (!doNotTrack) {
 	<header class="main__header">
 		<h1 class="main__title">Posts</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/" rel="bookmark">
+			Explicitly switch to the UI thread in an async method
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-11-11T00:00:00Z">November 11, 2015</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/" rel="bookmark">
@@ -206,21 +220,6 @@ I just came up with this one:
 static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!
 I’ll try to post more puzzles in the future if I can come up with others.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2015/02/24/customizing-string-interpolation-in-c-6/" rel="bookmark">
-			Customizing string interpolation in C# 6
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-02-24T00:00:00Z">February 24, 2015</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
-string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:
-	</div>
 </article>
 </main>
 
@@ -259,11 +258,11 @@ string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;; A lesser know
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/">Git tip: how to fix an accidental commit on the wrong branch</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/25/exciting-new-features-in-csharp-9/">Exciting new features in C# 9</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/">Things every C# developer should know #1: hash codes</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/">Using the OAuth 2.0 device flow to authenticate users in desktop apps</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/">Lazily resolving services to fix circular dependencies in .NET Core</a></li>
 		</ul>
 	</div>
 </div>
@@ -284,7 +283,7 @@ string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;; A lesser know
 		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/git/" title="git">git</a>
 	</div>
 </div>
 </aside>
