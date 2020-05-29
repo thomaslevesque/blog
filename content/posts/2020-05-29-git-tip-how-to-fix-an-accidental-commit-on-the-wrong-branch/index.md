@@ -51,7 +51,7 @@ This can be done in 3 simple steps.
 
 You're now back on your feet, and you can keep working as if you never made the mistake in the first place.
 
-Note that this solution only works if you're ahead of your "base branch". If you committed on a completely different branch (e.g. you were on the `foobar` branch, but you were supposed to work on a new feature branched pulled from `master`), the steps to fix will be a bit different. Maybe I'll blog about it another time!
+Note that this solution only works if you're ahead of your "base branch". If you committed on a completely different branch (e.g. you were on the `foobar` branch, but you were supposed to work on a new feature branch pulled from `master`), the steps to fix will be a bit different. Maybe I'll blog about it another time!
 
 ---
 
