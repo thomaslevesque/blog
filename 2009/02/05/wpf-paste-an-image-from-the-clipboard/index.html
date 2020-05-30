@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)" />
 <meta property="og:description" content="Oops&hellip; 2 months already since my previous (and first) post&hellip; I really have to get on a more regular schedule ;)
-If you&#39;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&#39;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable." />
+If you&rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/" />
 <meta property="article:published_time" content="2009-02-05T00:00:00+00:00" />
@@ -18,7 +18,7 @@ If you&#39;ve ever tried to use the Clipboard.GetImage method in WPF, you probab
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)"/>
 <meta name="twitter:description" content="Oops&hellip; 2 months already since my previous (and first) post&hellip; I really have to get on a more regular schedule ;)
-If you&#39;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&#39;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable."/>
+If you&rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -80,8 +80,8 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-02-05T00:00:00Z">February 05, 2009</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>Oops&hellip; 2 months already since my previous (and first) post&hellip; I really have to get on a more regular schedule ;)</p>
-<p>If you've ever tried to use the <code>Clipboard.GetImage</code> method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an <code>InteropBitmap</code> which, in some cases (most cases actually), can't be displayed in an <code>Image</code> control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</p>
-<p>However, if we save that image to a stream and re-read it from the stream, we get a perfectly usable image&hellip; So this could be an acceptable workaround, but I think its pretty bad for performance, because the image gets decoded, re-encoded, and re-decoded. It is also possible to use the <code>Clipboard</code> class from Windows Forms, which works fine, and convert the <code>System.Drawing.Image</code> to a <code>System.Windows.Media.ImageSource</code>, but I don't like the idea of referencing the Windows Forms assembly in a WPF app&hellip; So I decided to manually retrieve the image from the clipboard and handle the decoding myself.</p>
+<p>If you&rsquo;ve ever tried to use the <code>Clipboard.GetImage</code> method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an <code>InteropBitmap</code> which, in some cases (most cases actually), can&rsquo;t be displayed in an <code>Image</code> control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</p>
+<p>However, if we save that image to a stream and re-read it from the stream, we get a perfectly usable image&hellip; So this could be an acceptable workaround, but I think its pretty bad for performance, because the image gets decoded, re-encoded, and re-decoded. It is also possible to use the <code>Clipboard</code> class from Windows Forms, which works fine, and convert the <code>System.Drawing.Image</code> to a <code>System.Windows.Media.ImageSource</code>, but I don&rsquo;t like the idea of referencing the Windows Forms assembly in a WPF app&hellip; So I decided to manually retrieve the image from the clipboard and handle the decoding myself.</p>
 <p>If we look at the image formats available from the clipboard (<code>Clipboard.GetDataObject().GetFormats()</code>), we can see that they depend on the origin of the image (screenshot, copy from Paint&hellip;). The only format that is always available is <code>DeviceIndependentBitmap</code> (DIB). So I tried to retrieve the <code>MemoryStream</code> for this format and decode it into a <code>BitmapSource</code> :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
         {
@@ -92,14 +92,14 @@ if (!doNotTrack) {
             bmp.EndInit();
             <span style="color:#66d9ef">return</span> bmp;
         }
-</code></pre></div><p>Unfortunately, this code throws a nasty <code>NotSupportedException</code> : « No imaging component suitable to complete this operation was found ». In other words, it doesn't know how to decode the contents of the stream&hellip; That's quite surprising, because DIB is a very common format. So I had a look at the structure of a DIB in MSDN documentation. Basically, a « classical » bitmap file (.bmp) is made of the following sections :</p>
+</code></pre></div><p>Unfortunately, this code throws a nasty <code>NotSupportedException</code> : « No imaging component suitable to complete this operation was found ». In other words, it doesn&rsquo;t know how to decode the contents of the stream&hellip; That&rsquo;s quite surprising, because DIB is a very common format. So I had a look at the structure of a DIB in MSDN documentation. Basically, a « classical » bitmap file (.bmp) is made of the following sections :</p>
 <ul>
 <li>File header (<code>BITMAPFILEHEADER</code> structure)</li>
 <li>Bitmap header (<code>BITMAPINFO</code> structure)</li>
 <li>Palette (array of RGBQUAD)</li>
 <li>Raw pixel data</li>
 </ul>
-<p>If we observe the content of the DIB from the clipboard, we can see that it has the same structure, without the <code>BITMAPFILEHEADER</code> part&hellip; so the trick is just to add that header at the beginning of the buffer, and use this complete buffer to decode the image. Doesn't seem so hard, does it ? Well, the trouble is that we have to fill in some of the header fields&hellip; for instance, we must provide the location at which the actual image data begins, so we must know the total size of the headers and palette. These values can be read or calculated from the content of the image. The following code performs that task and returns an ImageSource from the clipboard :</p>
+<p>If we observe the content of the DIB from the clipboard, we can see that it has the same structure, without the <code>BITMAPFILEHEADER</code> part&hellip; so the trick is just to add that header at the beginning of the buffer, and use this complete buffer to decode the image. Doesn&rsquo;t seem so hard, does it ? Well, the trouble is that we have to fill in some of the header fields&hellip; for instance, we must provide the location at which the actual image data begins, so we must know the total size of the headers and palette. These values can be read or calculated from the content of the image. The following code performs that task and returns an ImageSource from the clipboard :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
         {
             MemoryStream ms = Clipboard.GetData(<span style="color:#e6db74">&#34;DeviceIndependentBitmap&#34;</span>) <span style="color:#66d9ef">as</span> MemoryStream;
@@ -203,7 +203,7 @@ if (!doNotTrack) {
         }
     }
 </code></pre></div><p>The image returned by that code can be safely used in an <code>Image</code> control.</p>
-<p>That goes to show that, even with a state-of-the-art technology like WPF, we still have to get our hands dirty sometimes ;). Let's hope Microsoft will fix this in a later version&hellip;</p>
+<p>That goes to show that, even with a state-of-the-art technology like WPF, we still have to get our hands dirty sometimes ;). Let&rsquo;s hope Microsoft will fix this in a later version&hellip;</p>
 
 		</div>
 		<footer class="post__footer">

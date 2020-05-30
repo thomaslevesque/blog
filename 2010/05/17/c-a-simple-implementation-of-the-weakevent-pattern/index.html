@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="[C#] A simple implementation of the WeakEvent pattern" />
-<meta property="og:description" content="As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&#39;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available." />
+<meta property="og:description" content="As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/" />
 <meta property="article:published_time" content="2010-05-17T00:00:00+00:00" />
@@ -16,7 +16,7 @@
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[C#] A simple implementation of the WeakEvent pattern"/>
-<meta name="twitter:description" content="As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&#39;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available."/>
+<meta name="twitter:description" content="As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -77,9 +77,9 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2010-05-17T00:00:00Z">May 17, 2010</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they're not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.  The &ldquo;obvious&rdquo; solution, of course, is to unsubscribe from the event when you're done with it. Unfortunately, it's not always obvious to know <em>when</em> you can unsubscribe&hellip; an object that goes out of scope usually isn't aware of it, so it doesn't have a chance to unsubscribe from the event.  Another approach is to implement the <a href="http://msdn.microsoft.com/en-us/library/aa970850.aspx">WeakEvent pattern</a>, which principle is to keep only weak references to the listeners. That way, unsubscribed listeners can be claimed by the garbage collector. Microsoft included in WPF a few types to deal with the WeakEvent pattern (<code>WeakEventManager</code> class and <code>IWeakEventListener</code> interface), and gives guidelines on how to implement your own weak event. However this technique is not very convenient, because you need to create dedicated classes to expose new events, and the listeners need to implement a specific interface.  So I thought about another implementation, which allows creating weak events almost the same way as normal events. My first idea was to use a list of <code>WeakReference</code>s to store the list of subscribed delegates. But this doesn't work so well, because of the way we typically use delegates :</p>
+			<p>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.  The &ldquo;obvious&rdquo; solution, of course, is to unsubscribe from the event when you&rsquo;re done with it. Unfortunately, it&rsquo;s not always obvious to know <em>when</em> you can unsubscribe&hellip; an object that goes out of scope usually isn&rsquo;t aware of it, so it doesn&rsquo;t have a chance to unsubscribe from the event.  Another approach is to implement the <a href="http://msdn.microsoft.com/en-us/library/aa970850.aspx">WeakEvent pattern</a>, which principle is to keep only weak references to the listeners. That way, unsubscribed listeners can be claimed by the garbage collector. Microsoft included in WPF a few types to deal with the WeakEvent pattern (<code>WeakEventManager</code> class and <code>IWeakEventListener</code> interface), and gives guidelines on how to implement your own weak event. However this technique is not very convenient, because you need to create dedicated classes to expose new events, and the listeners need to implement a specific interface.  So I thought about another implementation, which allows creating weak events almost the same way as normal events. My first idea was to use a list of <code>WeakReference</code>s to store the list of subscribed delegates. But this doesn&rsquo;t work so well, because of the way we typically use delegates :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">myObject.MyEvent += <span style="color:#66d9ef">new</span> EventHandler(myObject_MyEvent);
-</code></pre></div><p>We create a delegate, subscribe it to the event, and&hellip; drop it. So the only accessible reference to the delegate is actually a weak reference, so there's nothing to prevent its garbage collection&hellip; and that's exactly what happens ! After a variable period of time (from my observations, no more than a few seconds), the delegate is garbage collected, and isn't called anymore when the event is raised.  Rather than keeping a weak reference to the delegate itself, we should use a less transient object : the target object of the delegate (<code>Delegate.Target</code>) would be a better choice. So I created the <code>WeakDelegate&lt;TDelegate&gt;</code> class, which wraps a delegate by storing separately the method and a weak reference to the target :</p>
+</code></pre></div><p>We create a delegate, subscribe it to the event, and&hellip; drop it. So the only accessible reference to the delegate is actually a weak reference, so there&rsquo;s nothing to prevent its garbage collection&hellip; and that&rsquo;s exactly what happens ! After a variable period of time (from my observations, no more than a few seconds), the delegate is garbage collected, and isn&rsquo;t called anymore when the event is raised.  Rather than keeping a weak reference to the delegate itself, we should use a less transient object : the target object of the delegate (<code>Delegate.Target</code>) would be a better choice. So I created the <code>WeakDelegate&lt;TDelegate&gt;</code> class, which wraps a delegate by storing separately the method and a weak reference to the target :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeakDelegate</span>&lt;TDelegate&gt; : IEquatable&lt;TDelegate&gt;
     {
         <span style="color:#66d9ef">private</span> WeakReference _targetReference;
@@ -190,35 +190,35 @@ if (!doNotTrack) {
         {
             _myEvent.Raise(<span style="color:#66d9ef">this</span>, EventArgs.Empty);
         }
-</code></pre></div><p>This is a bit longer to write than a &ldquo;regular&rdquo; event, but considering the benefits, it's very acceptable. Anyway, you can easily create a Visual Studio snippet to quickly create a weak event, with only 3 fields to fill in :</p>
+</code></pre></div><p>This is a bit longer to write than a &ldquo;regular&rdquo; event, but considering the benefits, it&rsquo;s very acceptable. Anyway, you can easily create a Visual Studio snippet to quickly create a weak event, with only 3 fields to fill in :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34; ?&gt;</span>
 <span style="color:#f92672">&lt;CodeSnippets</span>  <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet&#34;</span><span style="color:#f92672">&gt;</span>
   <span style="color:#f92672">&lt;CodeSnippet</span> <span style="color:#a6e22e">Format=</span><span style="color:#e6db74">&#34;1.0.0&#34;</span><span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;Header</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;Title</span><span style="color:#f92672">&gt;</span>wevt<span style="color:#f92672">&lt;/Title&gt;</span>
-      <span style="color:#f92672">&lt;Shortcut</span><span style="color:#f92672">&gt;</span>wevt<span style="color:#f92672">&lt;/Shortcut&gt;</span>
-      <span style="color:#f92672">&lt;Description</span><span style="color:#f92672">&gt;</span>Code snippet for a weak event<span style="color:#f92672">&lt;/Description&gt;</span>
-      <span style="color:#f92672">&lt;Author</span><span style="color:#f92672">&gt;</span>Thomas Levesque<span style="color:#f92672">&lt;/Author&gt;</span>
-      <span style="color:#f92672">&lt;SnippetTypes</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;SnippetType</span><span style="color:#f92672">&gt;</span>Expansion<span style="color:#f92672">&lt;/SnippetType&gt;</span>
+    <span style="color:#f92672">&lt;Header&gt;</span>
+      <span style="color:#f92672">&lt;Title&gt;</span>wevt<span style="color:#f92672">&lt;/Title&gt;</span>
+      <span style="color:#f92672">&lt;Shortcut&gt;</span>wevt<span style="color:#f92672">&lt;/Shortcut&gt;</span>
+      <span style="color:#f92672">&lt;Description&gt;</span>Code snippet for a weak event<span style="color:#f92672">&lt;/Description&gt;</span>
+      <span style="color:#f92672">&lt;Author&gt;</span>Thomas Levesque<span style="color:#f92672">&lt;/Author&gt;</span>
+      <span style="color:#f92672">&lt;SnippetTypes&gt;</span>
+        <span style="color:#f92672">&lt;SnippetType&gt;</span>Expansion<span style="color:#f92672">&lt;/SnippetType&gt;</span>
       <span style="color:#f92672">&lt;/SnippetTypes&gt;</span>
     <span style="color:#f92672">&lt;/Header&gt;</span>
-    <span style="color:#f92672">&lt;Snippet</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;Declarations</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;Literal</span><span style="color:#f92672">&gt;</span>
-          <span style="color:#f92672">&lt;ID</span><span style="color:#f92672">&gt;</span>type<span style="color:#f92672">&lt;/ID&gt;</span>
-          <span style="color:#f92672">&lt;ToolTip</span><span style="color:#f92672">&gt;</span>Event type<span style="color:#f92672">&lt;/ToolTip&gt;</span>
-          <span style="color:#f92672">&lt;Default</span><span style="color:#f92672">&gt;</span>EventHandler<span style="color:#f92672">&lt;/Default&gt;</span>
+    <span style="color:#f92672">&lt;Snippet&gt;</span>
+      <span style="color:#f92672">&lt;Declarations&gt;</span>
+        <span style="color:#f92672">&lt;Literal&gt;</span>
+          <span style="color:#f92672">&lt;ID&gt;</span>type<span style="color:#f92672">&lt;/ID&gt;</span>
+          <span style="color:#f92672">&lt;ToolTip&gt;</span>Event type<span style="color:#f92672">&lt;/ToolTip&gt;</span>
+          <span style="color:#f92672">&lt;Default&gt;</span>EventHandler<span style="color:#f92672">&lt;/Default&gt;</span>
         <span style="color:#f92672">&lt;/Literal&gt;</span>
-        <span style="color:#f92672">&lt;Literal</span><span style="color:#f92672">&gt;</span>
-          <span style="color:#f92672">&lt;ID</span><span style="color:#f92672">&gt;</span>event<span style="color:#f92672">&lt;/ID&gt;</span>
-          <span style="color:#f92672">&lt;ToolTip</span><span style="color:#f92672">&gt;</span>Event name<span style="color:#f92672">&lt;/ToolTip&gt;</span>
-          <span style="color:#f92672">&lt;Default</span><span style="color:#f92672">&gt;</span>MyEvent<span style="color:#f92672">&lt;/Default&gt;</span>
+        <span style="color:#f92672">&lt;Literal&gt;</span>
+          <span style="color:#f92672">&lt;ID&gt;</span>event<span style="color:#f92672">&lt;/ID&gt;</span>
+          <span style="color:#f92672">&lt;ToolTip&gt;</span>Event name<span style="color:#f92672">&lt;/ToolTip&gt;</span>
+          <span style="color:#f92672">&lt;Default&gt;</span>MyEvent<span style="color:#f92672">&lt;/Default&gt;</span>
         <span style="color:#f92672">&lt;/Literal&gt;</span>
-        <span style="color:#f92672">&lt;Literal</span><span style="color:#f92672">&gt;</span>
-          <span style="color:#f92672">&lt;ID</span><span style="color:#f92672">&gt;</span>field<span style="color:#f92672">&lt;/ID&gt;</span>
-          <span style="color:#f92672">&lt;ToolTip</span><span style="color:#f92672">&gt;</span>Name of the field holding the registered handlers<span style="color:#f92672">&lt;/ToolTip&gt;</span>
-          <span style="color:#f92672">&lt;Default</span><span style="color:#f92672">&gt;</span>_myEvent<span style="color:#f92672">&lt;/Default&gt;</span>
+        <span style="color:#f92672">&lt;Literal&gt;</span>
+          <span style="color:#f92672">&lt;ID&gt;</span>field<span style="color:#f92672">&lt;/ID&gt;</span>
+          <span style="color:#f92672">&lt;ToolTip&gt;</span>Name of the field holding the registered handlers<span style="color:#f92672">&lt;/ToolTip&gt;</span>
+          <span style="color:#f92672">&lt;Default&gt;</span>_myEvent<span style="color:#f92672">&lt;/Default&gt;</span>
         <span style="color:#f92672">&lt;/Literal&gt;</span>
       <span style="color:#f92672">&lt;/Declarations&gt;</span>
       <span style="color:#f92672">&lt;Code</span> <span style="color:#a6e22e">Language=</span><span style="color:#e6db74">&#34;csharp&#34;</span><span style="color:#f92672">&gt;</span>

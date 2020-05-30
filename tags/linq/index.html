@@ -85,7 +85,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Just a quick tip today!
-for and foreach loops are among the most useful constructs in a C# developer's toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&lt;T&gt;, and doesn't require to access the current element by its index.
+for and foreach loops are among the most useful constructs in a C# developer&rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&lt;T&gt;, and doesn&rsquo;t require to access the current element by its index.
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:
 	</div>
 </article><article class="list__item post">
@@ -100,7 +100,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-03-29T00:00:00Z">March 29, 2017</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		By now, you're probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn't end there: .NET Core also brings a lot of improvements to the Base Class Library.
+		By now, you&rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
 For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:
 	</div>
 </article><article class="list__item post">
@@ -144,7 +144,7 @@ For instance, Linq has been made faster in .NET Core. I made a little benchmark 
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2010-10-03T00:00:00Z">October 03, 2010</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		I'm currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
+		I&rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
 var query = from ord in db.Orders.Include(&#34;OrderDetails&#34;) where ord.Date &gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
 var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where ord.Date &gt;= DateTime.
 	</div>
@@ -161,7 +161,7 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it's not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.
+X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.
 	</div>
 </article>
 </main>

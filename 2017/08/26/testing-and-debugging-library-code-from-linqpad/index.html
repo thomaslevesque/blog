@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="Testing and debugging library code from LINQPad" />
-<meta property="og:description" content="I&#39;ve been meaning to blog about LINQPad in a very long time. In case you don&#39;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&#39;s also extremely useful as a general-purpose ." />
+<meta property="og:description" content="I&rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&rsquo;s also extremely useful as a general-purpose ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2017/08/26/testing-and-debugging-library-code-from-linqpad/" />
 <meta property="article:published_time" content="2017-08-26T00:00:00+00:00" />
@@ -16,7 +16,7 @@
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Testing and debugging library code from LINQPad"/>
-<meta name="twitter:description" content="I&#39;ve been meaning to blog about LINQPad in a very long time. In case you don&#39;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&#39;s also extremely useful as a general-purpose ."/>
+<meta name="twitter:description" content="I&rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&rsquo;s also extremely useful as a general-purpose ."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -77,10 +77,10 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-08-26T00:00:00Z">August 26, 2017</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>I've been meaning to blog about <a href="http://www.linqpad.net/">LINQPad</a> in a very long time. In case you don't know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his <em>C# in a Nutshell</em> book), but it's also extremely useful as a general-purpose .NET scratchpad.</p>
-<p>I frequently use LINQPad to quickly test a library that I'm working on. It's very easy, just reference the assembly you want to test and start using it. But when the library doesn't behave as expected, it's often useful to be able to debug it step by step&hellip; It turns out that it's pretty simple to do it from LINQPad!</p>
-<p>The premium version of LINQPad has an integrated debugger, which isn't as powerful as the one in Visual Studio, but is useful to debug LINQPad scripts. However, it doesn't let you step into library code&hellip; Fortunately, there's a trick to use the Visual Studio debugger to debug code running from LINQPad.</p>
-<p>First, open your library in Visual Studio if you haven't already. Build the solution, and add a reference to the assembly to your LINQPad script:</p>
+			<p>I&rsquo;ve been meaning to blog about <a href="http://www.linqpad.net/">LINQPad</a> in a very long time. In case you don&rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his <em>C# in a Nutshell</em> book), but it&rsquo;s also extremely useful as a general-purpose .NET scratchpad.</p>
+<p>I frequently use LINQPad to quickly test a library that I&rsquo;m working on. It&rsquo;s very easy, just reference the assembly you want to test and start using it. But when the library doesn&rsquo;t behave as expected, it&rsquo;s often useful to be able to debug it step by step&hellip; It turns out that it&rsquo;s pretty simple to do it from LINQPad!</p>
+<p>The premium version of LINQPad has an integrated debugger, which isn&rsquo;t as powerful as the one in Visual Studio, but is useful to debug LINQPad scripts. However, it doesn&rsquo;t let you step into library code&hellip; Fortunately, there&rsquo;s a trick to use the Visual Studio debugger to debug code running from LINQPad.</p>
+<p>First, open your library in Visual Studio if you haven&rsquo;t already. Build the solution, and add a reference to the assembly to your LINQPad script:</p>
 <p><img src="Testing-and-debugging-library-code-from-LINQPadlinqpad-add-reference-2.png" alt="Add reference to the library"></p>
 <p>Write some code that uses your library:</p>
 <p><img src="Testing-and-debugging-library-code-from-LINQPadlinqpad-use-library-2.png" alt="Use your library from LINQPad"></p>

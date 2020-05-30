@@ -1965,15 +1965,6 @@
     </item>
     
     <item>
-      <title>parent/child</title>
-      <link>https://thomaslevesque.com/tags/parent/child/</link>
-      <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/parent/child/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>XML serialization</title>
       <link>https://thomaslevesque.com/tags/xml-serialization/</link>
       <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
@@ -2060,6 +2051,15 @@
       <pubDate>Tue, 18 Nov 2008 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/settings/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>parent/child</title>
+      <link>https://thomaslevesque.com/tags/parent/child/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/parent/child/</guid>
       <description></description>
     </item>
     

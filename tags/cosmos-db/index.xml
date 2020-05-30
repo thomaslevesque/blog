@@ -18,7 +18,7 @@
       
       <guid>https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
       <description>This is the second post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&#39;s TypeNameHandling feature. In this post, I&#39;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
+ Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
     </item>
     
     <item>
@@ -28,7 +28,7 @@
       
       <guid>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
       <description>This is the first post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&#39;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&#39;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
+ Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
     </item>
     
     <item>
@@ -37,8 +37,8 @@
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</guid>
-      <description>Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&#39;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&#39;t hesitate to let me know in the comments!
-Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&#39;s a very different world.</description>
+      <description>Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&amp;rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&amp;rsquo;t hesitate to let me know in the comments!
+Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&amp;rsquo;s a very different world.</description>
     </item>
     
   </channel>

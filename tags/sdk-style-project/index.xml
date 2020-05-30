@@ -17,8 +17,8 @@
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</guid>
-      <description>Ever since the first stable release of the .NET Core SDK, we&#39;ve enjoyed a better C# project format, often called &amp;ldquo;SDK-style&amp;rdquo; because you specify a SDK to use in the project file. It&#39;s still a .csproj XML file, it&#39;s still based on MSBuild, but it&#39;s much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.
-However, out of the box, it&#39;s only usable for some project types: ASP.</description>
+      <description>Ever since the first stable release of the .NET Core SDK, we&amp;rsquo;ve enjoyed a better C# project format, often called &amp;ldquo;SDK-style&amp;rdquo; because you specify a SDK to use in the project file. It&amp;rsquo;s still a .csproj XML file, it&amp;rsquo;s still based on MSBuild, but it&amp;rsquo;s much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.
+However, out of the box, it&amp;rsquo;s only usable for some project types: ASP.</description>
     </item>
     
   </channel>

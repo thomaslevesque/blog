@@ -27,7 +27,7 @@ It’s often useful to be notified when the value of a dependency property chang
       <pubDate>Mon, 21 Mar 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</guid>
-      <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&#39;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip; Let&#39;s illustrate with a simple example: we want to display a list of products in a DataGrid.</description>
+      <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&amp;rsquo;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip; Let&amp;rsquo;s illustrate with a simple example: we want to display a list of products in a DataGrid.</description>
     </item>
     
     <item>
@@ -36,7 +36,7 @@ It’s often useful to be notified when the value of a dependency property chang
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
-      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&#39;t a DependencyProperty, so it wasn&#39;t possible to bind it. Furthermore, InputBindings didn&#39;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&amp;hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&#39;t really satisfied with it (it used reflection on private members, and had annoying limitations).</description>
+      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&amp;hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&amp;rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).</description>
     </item>
     
     <item>
@@ -47,7 +47,7 @@ It’s often useful to be notified when the value of a dependency property chang
       <guid>https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
       <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
  This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
- To illustrate this, let&#39;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
+ To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
     </item>
     
     <item>
@@ -57,7 +57,7 @@ It’s often useful to be notified when the value of a dependency property chang
       
       <guid>https://thomaslevesque.com/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</guid>
       <description>Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.
-The end-user of any application expects that his preferences (window size, state of this or that option&amp;hellip;) are saved to be restored at the next run : that&#39;s why .NET 2.0 introduced application settings as a unified way to persist these settings.</description>
+The end-user of any application expects that his preferences (window size, state of this or that option&amp;hellip;) are saved to be restored at the next run : that&amp;rsquo;s why .NET 2.0 introduced application settings as a unified way to persist these settings.</description>
     </item>
     
   </channel>

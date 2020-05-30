@@ -1553,11 +1553,6 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/tags/parent/child/</loc>
-    <lastmod>2009-06-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/xml-serialization/</loc>
     <lastmod>2009-06-12T00:00:00+00:00</lastmod>
   </url>
@@ -1650,6 +1645,10 @@
   <url>
     <loc>https://thomaslevesque.com/tags/settings/</loc>
     <lastmod>2008-11-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/parent/child/</loc>
   </url>
   
 </urlset>

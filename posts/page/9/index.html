@@ -84,7 +84,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it's not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.
+X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -98,7 +98,7 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-10-26T00:00:00Z">October 26, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn't a DependencyProperty, so it wasn't possible to bind it. Furthermore, InputBindings didn't inherit the parent DataContext, which made it difficult to provide alternative implementations&hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn't really satisfied with it (it used reflection on private members, and had annoying limitations).
+		THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&rsquo;t a DependencyProperty, so it wasn&rsquo;t possible to bind it. Furthermore, InputBindings didn&rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -112,7 +112,7 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-10-08T00:00:00Z">October 08, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		If you've been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.
+		If you&rsquo;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -126,7 +126,7 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-23T00:00:00Z">August 23, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I'll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let's take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :
+		Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I&rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let&rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -140,7 +140,7 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-04T00:00:00Z">August 04, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today's post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
+		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -154,7 +154,7 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-07-28T00:00:00Z">July 28, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		If you have read my previous posts on the topic, you know I'm a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
+		If you have read my previous posts on the topic, you know I&rsquo;m a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
   if the value of the markup extension can change in response to an event
 	</div>
 </article><article class="list__item post">
@@ -169,7 +169,7 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-06-12T00:00:00Z">June 12, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Today I'd like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It's very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).
+		Today I&rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -183,7 +183,7 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-05-06T00:00:00Z">May 06, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Here's a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip; In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
+		Here&rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip; In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
 private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;) Unfortunately, this method only exists in WPF, and a majority of developers are still working with Windows Forms.
 	</div>
 </article><article class="list__item post">
@@ -200,7 +200,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
 	<div class="content list__excerpt post__content clearfix">
 		As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
  This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
- To illustrate this, let's take a simple example : a ListBox bound to a collection of strings in the ViewModel :
+ To illustrate this, let&rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -214,7 +214,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-03-27T00:00:00Z">March 27, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		It's quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&hellip; With the DataGridView in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.
+		It&rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&hellip; With the DataGridView in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.
 	</div>
 </article>
 </main>

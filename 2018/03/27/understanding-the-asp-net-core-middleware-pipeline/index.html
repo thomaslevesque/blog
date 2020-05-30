@@ -82,7 +82,7 @@ if (!doNotTrack) {
 <p><img src="request-delegate-pipeline.png" alt="Middleware pipeline"></p>
 <p>Middleware can do all sort of things, such as handling authentication, errors, static files, etc&hellip; MVC in ASP.NET Core is also implemented as a middleware.</p>
 <h2 id="configuring-the-pipeline">Configuring the pipeline</h2>
-<p>You typically configure the ASP.NET pipeline in the <code>Configure</code> method of your <code>Startup</code> class, by calling <code>Use*</code> methods on the <code>IApplicationBuilder</code>. Here's an example straight from the docs:</p>
+<p>You typically configure the ASP.NET pipeline in the <code>Configure</code> method of your <code>Startup</code> class, by calling <code>Use*</code> methods on the <code>IApplicationBuilder</code>. Here&rsquo;s an example straight from the docs:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app)
 {
     app.UseExceptionHandler(<span style="color:#e6db74">&#34;/Home/Error&#34;</span>);
@@ -90,10 +90,10 @@ if (!doNotTrack) {
     app.UseAuthentication();
     app.UseMvcWithDefaultRoute();
 }
-</code></pre></div><p>Each <code>Use*</code> method adds a middleware to the pipeline. The order in which they're added determines the order in which requests will traverse them. So an incoming request will first traverse the exception handler middleware, then the static files middleware, then the authentication middleware, and will eventually be handled by the MVC middleware.</p>
+</code></pre></div><p>Each <code>Use*</code> method adds a middleware to the pipeline. The order in which they&rsquo;re added determines the order in which requests will traverse them. So an incoming request will first traverse the exception handler middleware, then the static files middleware, then the authentication middleware, and will eventually be handled by the MVC middleware.</p>
 <p>The <code>Use*</code> methods in this example are actually just &ldquo;shortcuts&rdquo; to make it easier to build the pipeline. Behind the scenes, they all end up using (directly or indirectly) these low-level primitives: <code>Use</code> and <code>Run</code>. Both add a middleware to the pipeline, the difference is that <code>Run</code> adds a <em>terminal</em> middleware, i.e. a middleware that is the last in the pipeline.</p>
 <h2 id="a-basic-pipeline-with-no-branches">A basic pipeline with no branches</h2>
-<p>Let's look at a simple example, using only the <code>Use</code> and <code>Run</code> primitives:</p>
+<p>Let&rsquo;s look at a simple example, using only the <code>Use</code> and <code>Run</code> primitives:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app)
 {
     <span style="color:#75715e">// Middleware A
@@ -119,7 +119,7 @@ if (!doNotTrack) {
         <span style="color:#66d9ef">await</span> context.Response.WriteAsync(<span style="color:#e6db74">&#34;Hello world&#34;</span>);
     });
 }
-</code></pre></div><p>Here, each middleware is defined inline as an anonymous method; they could also be defined as full-blown classes, but for this example I picked the more concise option. Non-terminal middleware take two arguments: the <code>HttpContext</code> and a delegate to call the next middleware. Terminal middleware only take the <code>HttpContext</code>. Here we have two middleware A and B that just log to the console, and a terminal middleware C which writes the response. Here's the console output when we send a request to our app:</p>
+</code></pre></div><p>Here, each middleware is defined inline as an anonymous method; they could also be defined as full-blown classes, but for this example I picked the more concise option. Non-terminal middleware take two arguments: the <code>HttpContext</code> and a delegate to call the next middleware. Terminal middleware only take the <code>HttpContext</code>. Here we have two middleware A and B that just log to the console, and a terminal middleware C which writes the response. Here&rsquo;s the console output when we send a request to our app:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">A (before)
 B (before)
 C
@@ -128,7 +128,7 @@ A (after)
 </code></pre></div><p>We can see that each middleware was traversed in the order in which it was added, then traversed again in reverse order. The pipeline can be represented like this:</p>
 <p><img src="basic-pipeline.png" alt="Basic pipeline"></p>
 <h2 id="short-circuiting-middleware">Short-circuiting middleware</h2>
-<p>A middleware doesn't necessarily have to call the next middleware. For instance, if the static files middleware can handle a request, it doesn't need to pass it down to the rest of the pipeline, it can respond immediately. This behavior is called short-circuiting the pipeline.</p>
+<p>A middleware doesn&rsquo;t necessarily have to call the next middleware. For instance, if the static files middleware can handle a request, it doesn&rsquo;t need to pass it down to the rest of the pipeline, it can respond immediately. This behavior is called short-circuiting the pipeline.</p>
 <p>In the previous example, if we comment out the call to <code>next()</code> in middleware B, we get the following output:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">A (before)
 B (before)
@@ -137,10 +137,10 @@ A (after)
 </code></pre></div><p>As you can see, middleware C is never invoked. The pipeline now looks like this:</p>
 <p><img src="short-circuit.png" alt="Short-circuited pipeline"></p>
 <h2 id="branching-the-pipeline">Branching the pipeline</h2>
-<p>In the previous examples, there was only one &ldquo;branch&rdquo; in the pipeline: the middleware coming after A was always B, and the middleware coming after B was always C. But it doesn't have to be that way. You might want a given request to be processed by a completely different pipeline, based on the path or anything else.</p>
-<p>There are two types of branches: branches that rejoin the main pipeline, and branches that don't.</p>
+<p>In the previous examples, there was only one &ldquo;branch&rdquo; in the pipeline: the middleware coming after A was always B, and the middleware coming after B was always C. But it doesn&rsquo;t have to be that way. You might want a given request to be processed by a completely different pipeline, based on the path or anything else.</p>
+<p>There are two types of branches: branches that rejoin the main pipeline, and branches that don&rsquo;t.</p>
 <h3 id="making-a-non-rejoining-branch">Making a non-rejoining branch</h3>
-<p>This can be done using the <code>Map</code> or <code>MapWhen</code> method. <code>Map</code> lets you specify a branch based on the request path. <code>MapWhen</code> gives you more control: you can specify a predicate on the <code>HttpContext</code> to decide whether to branch or not. Let's look at a simple example using <code>Map</code>:</p>
+<p>This can be done using the <code>Map</code> or <code>MapWhen</code> method. <code>Map</code> lets you specify a branch based on the request path. <code>MapWhen</code> gives you more control: you can specify a predicate on the <code>HttpContext</code> to decide whether to branch or not. Let&rsquo;s look at a simple example using <code>Map</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app)
 {
     app.Use(<span style="color:#66d9ef">async</span> (context, next) =&gt;
@@ -165,23 +165,23 @@ A (after)
         <span style="color:#66d9ef">await</span> context.Response.WriteAsync(<span style="color:#e6db74">&#34;Hello world&#34;</span>);
     });
 }
-</code></pre></div><p>The first argument for <code>Map</code> is a <code>PathString</code> representing the path prefix of the request. The second argument is a delegate that configures the branch's pipeline (the <code>a</code> parameter represents the <code>IApplicationBuilder</code> for the branch). The branch defined by the delegate will process the request if its path starts with the specified path prefix.</p>
-<p>For a request that doesn't start with <code>/foo</code>, this code produces the following output:</p>
+</code></pre></div><p>The first argument for <code>Map</code> is a <code>PathString</code> representing the path prefix of the request. The second argument is a delegate that configures the branch&rsquo;s pipeline (the <code>a</code> parameter represents the <code>IApplicationBuilder</code> for the branch). The branch defined by the delegate will process the request if its path starts with the specified path prefix.</p>
+<p>For a request that doesn&rsquo;t start with <code>/foo</code>, this code produces the following output:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">A (before)
 C
 A (after)
-</code></pre></div><p>Middleware B is not invoked, since it's in the branch and the request doesn't match the prefix for the branch. But for a request that does start with <code>/foo</code>, we get the following output:</p>
+</code></pre></div><p>Middleware B is not invoked, since it&rsquo;s in the branch and the request doesn&rsquo;t match the prefix for the branch. But for a request that does start with <code>/foo</code>, we get the following output:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">A (before)
 B (before)
 B (after)
 A (after)
-</code></pre></div><p>Note that this request returns a 404 (Not found) response: this is because the B middleware calls <code>next()</code>, but there's no next middleware, so it falls back to returning a 404 response. To solve this, we could use <code>Run</code> instead of <code>Use</code>, or just not call <code>next()</code>.</p>
+</code></pre></div><p>Note that this request returns a 404 (Not found) response: this is because the B middleware calls <code>next()</code>, but there&rsquo;s no next middleware, so it falls back to returning a 404 response. To solve this, we could use <code>Run</code> instead of <code>Use</code>, or just not call <code>next()</code>.</p>
 <p>The pipeline defined by this code can be represented as follows:</p>
 <p><img src="non-rejoining.png" alt="Non-rejoining branch"></p>
 <p>(I omited the response arrows for clarity)</p>
-<p>As you can see, the branch with middleware B doesn't rejoin the main pipeline, so middleware C isn't called.</p>
+<p>As you can see, the branch with middleware B doesn&rsquo;t rejoin the main pipeline, so middleware C isn&rsquo;t called.</p>
 <h3 id="making-a-rejoining-branch">Making a rejoining branch</h3>
-<p>You can make a branch that rejoins the main pipeline by using the <code>UseWhen</code> method. This method accepts a predicate on the <code>HttpContext</code> to decide whether to branch or not. The branch will rejoin the main pipeline where it left it. Here's an example similar to the previous one, but with a rejoining branch:</p>
+<p>You can make a branch that rejoins the main pipeline by using the <code>UseWhen</code> method. This method accepts a predicate on the <code>HttpContext</code> to decide whether to branch or not. The branch will rejoin the main pipeline where it left it. Here&rsquo;s an example similar to the previous one, but with a rejoining branch:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app)
 {
     app.Use(<span style="color:#66d9ef">async</span> (context, next) =&gt;
@@ -206,11 +206,11 @@ A (after)
         <span style="color:#66d9ef">await</span> context.Response.WriteAsync(<span style="color:#e6db74">&#34;Hello world&#34;</span>);
     });
 }
-</code></pre></div><p>For a request that doesn't start with <code>/foo</code>, this code produces the same output as the previous example:</p>
+</code></pre></div><p>For a request that doesn&rsquo;t start with <code>/foo</code>, this code produces the same output as the previous example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">A (before)
 C
 A (after)
-</code></pre></div><p>Again, middleware B is not invoked, since it's in the branch and the request doesn't match the predicate for the branch. But for a request that does start with <code>/foo</code>, we get the following output:</p>
+</code></pre></div><p>Again, middleware B is not invoked, since it&rsquo;s in the branch and the request doesn&rsquo;t match the predicate for the branch. But for a request that does start with <code>/foo</code>, we get the following output:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">A (before)
 B (before)
 C
@@ -218,7 +218,7 @@ B (after)
 A (after)
 </code></pre></div><p>We can see that the request passes trough the branch (middleware B), then goes back to the main pipeline, ending with middleware C. This pipeline can be represented like this:</p>
 <p><img src="rejoining.png" alt="Rejoining branch"></p>
-<p>Note that there is no <code>Use</code> method that accepts a <code>PathString</code> to specify the path prefix. I'm not sure why it's not included, but it would be easy to write, using <code>UseWhen</code>:</p>
+<p>Note that there is no <code>Use</code> method that accepts a <code>PathString</code> to specify the path prefix. I&rsquo;m not sure why it&rsquo;s not included, but it would be easy to write, using <code>UseWhen</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IApplicationBuilder Use(<span style="color:#66d9ef">this</span> IApplicationBuilder builder, PathString pathMatch, Action&lt;IApplicationBuilder&gt; configuration)
 {
     <span style="color:#66d9ef">return</span> builder.UseWhen(
@@ -226,7 +226,7 @@ A (after)
         configuration);
 }
 </code></pre></div><h2 id="conclusion">Conclusion</h2>
-<p>As you can see, the idea behind the middleware pipeline is quite simple, but it's very powerful. Most of the features baked in ASP.NET Core (authentication, static files, caching, MVC, etc) are implemented as middleware. And of course, it's easy to write your own!</p>
+<p>As you can see, the idea behind the middleware pipeline is quite simple, but it&rsquo;s very powerful. Most of the features baked in ASP.NET Core (authentication, static files, caching, MVC, etc) are implemented as middleware. And of course, it&rsquo;s easy to write your own!</p>
 
 		</div>
 		<footer class="post__footer">

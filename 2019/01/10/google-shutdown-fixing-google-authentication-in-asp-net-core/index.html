@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="Google&#43; shutdown: fixing Google authentication in ASP.NET Core" />
-<meta property="og:description" content="A few months ago, Google decided to shutdown Google&#43;, due to multiple data leaks. More recently, they announced that the Google&#43; APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&#39;t affect you as a developer; but if you&#39;re using Google authentication in an ASP." />
+<meta property="og:description" content="A few months ago, Google decided to shutdown Google&#43;, due to multiple data leaks. More recently, they announced that the Google&#43; APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/" />
 <meta property="article:published_time" content="2019-01-10T00:00:00+00:00" />
@@ -16,7 +16,7 @@
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Google&#43; shutdown: fixing Google authentication in ASP.NET Core"/>
-<meta name="twitter:description" content="A few months ago, Google decided to shutdown Google&#43;, due to multiple data leaks. More recently, they announced that the Google&#43; APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&#39;t affect you as a developer; but if you&#39;re using Google authentication in an ASP."/>
+<meta name="twitter:description" content="A few months ago, Google decided to shutdown Google&#43;, due to multiple data leaks. More recently, they announced that the Google&#43; APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -77,16 +77,16 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-01-10T00:00:00Z">January 10, 2019</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that <a href="https://developers.google.com/+/api-shutdown">the Google+ APIs will be shutdown</a> on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn't affect you as a developer; but if you're using Google authentication in an ASP.NET Core app, think again! The built-in Google authentication provider (<code>services.AddAuthentication().AddGoogle(...)</code>) uses a Google+ API to retrieve information about the signed-in user, which will soon stop working. You can read the details in <a href="https://github.com/aspnet/AspNetCore/issues/6069">this Github thread</a>. <em>Note that it also affects classic ASP.NET MVC</em>.</p>
-<h2 id="ok-now-im-listening-how-do-i-fix-it">OK, now I'm listening. How do I fix it?</h2>
-<p>Fortunately, it's not too difficult to fix. There's already a <a href="https://github.com/aspnet/AspNetCore/pull/6338">pull request</a> to fix it in ASP.NET Core, and hopefully an update will be released soon. In the meantime, you can either:</p>
+			<p>A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that <a href="https://developers.google.com/+/api-shutdown">the Google+ APIs will be shutdown</a> on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP.NET Core app, think again! The built-in Google authentication provider (<code>services.AddAuthentication().AddGoogle(...)</code>) uses a Google+ API to retrieve information about the signed-in user, which will soon stop working. You can read the details in <a href="https://github.com/aspnet/AspNetCore/issues/6069">this Github thread</a>. <em>Note that it also affects classic ASP.NET MVC</em>.</p>
+<h2 id="ok-now-im-listening-how-do-i-fix-it">OK, now I&rsquo;m listening. How do I fix it?</h2>
+<p>Fortunately, it&rsquo;s not too difficult to fix. There&rsquo;s already a <a href="https://github.com/aspnet/AspNetCore/pull/6338">pull request</a> to fix it in ASP.NET Core, and hopefully an update will be released soon. In the meantime, you can either:</p>
 <ul>
 <li>use the workaround <a href="https://github.com/aspnet/AspNetCore/issues/6069#issuecomment-449461197">described here</a>, which basically specifies a different user information endpoint and adjusts the JSON mappings.</li>
 <li>or use the generic OpenID Connect authentication provider instead, which I think is better than the built-in provider anyway, because you can get all the necessary information directly from the ID token, without making an extra API call.</li>
 </ul>
 <h2 id="using-openid-connect-to-authenticate-with-google">Using OpenID Connect to authenticate with Google</h2>
-<p>So, let's see how to change our app to use the OpenID Connect provider instead of the built-in Google provider, and configure it to get the same results as before.</p>
-<p>First, let's install the <code>Microsoft.AspNetCore.Authentication.OpenIdConnect</code> NuGet package to the project, if it's not already there.</p>
+<p>So, let&rsquo;s see how to change our app to use the OpenID Connect provider instead of the built-in Google provider, and configure it to get the same results as before.</p>
+<p>First, let&rsquo;s install the <code>Microsoft.AspNetCore.Authentication.OpenIdConnect</code> NuGet package to the project, if it&rsquo;s not already there.</p>
 <p>Then, we go to the place where we add the built-in Google provider (the call to <code>AddGoogle</code>, usually in the <code>Startup</code> class), and remove that call.</p>
 <p>Instead, we add the OpenID Connect provider, point it to the Google OpenID Connect authority URL, and set the client id (the same that we were using for the built-in Google provider):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services
@@ -99,17 +99,17 @@ if (!doNotTrack) {
             options.Authority = <span style="color:#e6db74">&#34;https://accounts.google.com/&#34;</span>;
             options.ClientId = configuration[<span style="color:#e6db74">&#34;Authentication:Google:ClientId&#34;</span>];
         });
-</code></pre></div><p>We also need to adjust the callback path to be the same as before, so that the redirect URI configured for the Google app still works; and while we're at it, let's also configure the signout paths.</p>
+</code></pre></div><p>We also need to adjust the callback path to be the same as before, so that the redirect URI configured for the Google app still works; and while we&rsquo;re at it, let&rsquo;s also configure the signout paths.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">options.CallbackPath = <span style="color:#e6db74">&#34;/signin-google&#34;</span>;
 options.SignedOutCallbackPath = <span style="color:#e6db74">&#34;/signout-callback-google&#34;</span>;
 options.RemoteSignOutPath = <span style="color:#e6db74">&#34;/signout-google&#34;</span>;
-</code></pre></div><p>The default configuration already includes the <code>openid</code> and <code>profile</code> scopes, but if we want to have access to the user's email address as we did before, we also need to add the <code>email</code> scope:</p>
+</code></pre></div><p>The default configuration already includes the <code>openid</code> and <code>profile</code> scopes, but if we want to have access to the user&rsquo;s email address as we did before, we also need to add the <code>email</code> scope:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">options.Scope.Add(<span style="color:#e6db74">&#34;email&#34;</span>);
-</code></pre></div><p>And that's it! Everything should work as it did before. Here's a <a href="https://gist.github.com/thomaslevesque/fe2cb14377e30833484f75ac416134bb">Gist</a> that shows the code before and after the change.</p>
-<h2 id="hey-wheres-the-client-secret">Hey, where's the client secret?</h2>
-<p>You might have noticed that we didn't specify the client secret. Why is this?</p>
+</code></pre></div><p>And that&rsquo;s it! Everything should work as it did before. Here&rsquo;s a <a href="https://gist.github.com/thomaslevesque/fe2cb14377e30833484f75ac416134bb">Gist</a> that shows the code before and after the change.</p>
+<h2 id="hey-wheres-the-client-secret">Hey, where&rsquo;s the client secret?</h2>
+<p>You might have noticed that we didn&rsquo;t specify the client secret. Why is this?</p>
 <p>The built-in Google provider is actually just a generic OAuth provider with Google-specific configuration. It uses the authorization code flow, which requires the client secret to exchange the authorization code for an access token, which in turn is used to call the user information endpoint.</p>
-<p>But by default the OpenId Connect provider uses the implicit flow. There isn't an authorization code: an <code>id_token</code> is provided directly to the <code>redirect_uri</code>, and there's no need to call any API, so no secret is needed. If, for some reason, you don't want to use the implicit flow, just change <code>options.ResponseType</code> to <code>code</code> (the default is <code>id_token</code>), and set <code>options.ClientSecret</code> as appropriate. You should also set <code>options.GetClaimsFromUserInfoEndpoint</code> to true to get the user details (name, email&hellip;), since you won't have an <code>id_token</code> to get them from.</p>
+<p>But by default the OpenId Connect provider uses the implicit flow. There isn&rsquo;t an authorization code: an <code>id_token</code> is provided directly to the <code>redirect_uri</code>, and there&rsquo;s no need to call any API, so no secret is needed. If, for some reason, you don&rsquo;t want to use the implicit flow, just change <code>options.ResponseType</code> to <code>code</code> (the default is <code>id_token</code>), and set <code>options.ClientSecret</code> as appropriate. You should also set <code>options.GetClaimsFromUserInfoEndpoint</code> to true to get the user details (name, email&hellip;), since you won&rsquo;t have an <code>id_token</code> to get them from.</p>
 
 		</div>
 		<footer class="post__footer">

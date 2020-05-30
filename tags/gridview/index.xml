@@ -26,7 +26,7 @@
       <pubDate>Tue, 04 Aug 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/</guid>
-      <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&#39;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
+      <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
     </item>
     
     <item>
@@ -35,7 +35,7 @@
       <pubDate>Fri, 27 Mar 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</guid>
-      <description>It&#39;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&amp;hellip; With the DataGridView in Windows Forms, it was &amp;ldquo;automagic&amp;rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&amp;hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.</description>
+      <description>It&amp;rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&amp;hellip; With the DataGridView in Windows Forms, it was &amp;ldquo;automagic&amp;rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&amp;hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.</description>
     </item>
     
   </channel>

@@ -17,7 +17,7 @@
       <pubDate>Fri, 13 Feb 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/02/13/build-an-rss-reader-in-5-minutes/</guid>
-      <description>Today, I stumbled upon a very handy class : SyndicationFeed. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones. For instance, here&#39;s how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it&#39;s items :</description>
+      <description>Today, I stumbled upon a very handy class : SyndicationFeed. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones. For instance, here&amp;rsquo;s how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it&amp;rsquo;s items :</description>
     </item>
     
   </channel>

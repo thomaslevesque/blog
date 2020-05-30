@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="Writing a GitHub Webhook as an Azure Function" />
 <meta property="og:description" content="I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
-A bit of background As you may already know, I&#39;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history." />
+A bit of background As you may already know, I&rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/" />
 <meta property="article:published_time" content="2018-03-30T00:00:00+00:00" />
@@ -18,7 +18,7 @@ A bit of background As you may already know, I&#39;m one of the maintainers of t
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Writing a GitHub Webhook as an Azure Function"/>
 <meta name="twitter:description" content="I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
-A bit of background As you may already know, I&#39;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history."/>
+A bit of background As you may already know, I&rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -81,32 +81,32 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.</p>
 <h2 id="a-bit-of-background">A bit of background</h2>
-<p>As you may already know, I'm one of the maintainers of the <a href="https://fakeiteasy.github.io/">FakeItEasy</a> mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a <a href="http://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html">fixup commit</a>, because it makes it easier to review, and because we like to keep a clean history. When the changes are approved, the author squashes the fixup commits before the PR is merged. Unfortunately, I'm a little absent minded, and when I review a PR, I often forget to wait for the author to squash their commits before I merge&hellip; This causes the fixup commits to appear in the main dev branch, which is ugly.</p>
+<p>As you may already know, I&rsquo;m one of the maintainers of the <a href="https://fakeiteasy.github.io/">FakeItEasy</a> mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a <a href="http://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html">fixup commit</a>, because it makes it easier to review, and because we like to keep a clean history. When the changes are approved, the author squashes the fixup commits before the PR is merged. Unfortunately, I&rsquo;m a little absent minded, and when I review a PR, I often forget to wait for the author to squash their commits before I merge&hellip; This causes the fixup commits to appear in the main dev branch, which is ugly.</p>
 <p>Which leads me to the point of this post: I wanted to make a bot that could prevent a PR from being merged if it had commits that needed to be squashed (i.e. commits whose messages start with <code>fixup!</code> or <code>squash!</code>). And while I was at it, I thought I might as well make it usable by everyone, so I made it a <a href="https://developer.github.com/apps/">GitHub app</a>: <a href="https://github.com/apps/dontmergemeyet">DontMergeMeYet</a>.</p>
 <h2 id="github-apps">GitHub apps</h2>
-<p>Now, you might be wondering, what on Earth is a GitHub app? It's simply a third-party application that is granted access to a GitHub repository using its own identity; what it can do with the repo depends on which permissions were granted. A GitHub app can also receive <a href="https://developer.github.com/webhooks/">webhook</a> notifications when events occur in the repo (e.g. a comment is posted, a pull request is opened, etc.).</p>
-<p>A GitHub app could, for instance, react when a pull request is opened or updated, examine the PR details, and add a <a href="https://developer.github.com/v3/repos/statuses/">commit status</a> to indicate whether the PR is ready to merge or not (this <a href="https://github.com/apps/wip">WIP app</a> does this, but doesn't take fixup commits into account).</p>
-<p>As you can see, it's a pretty good fit for what I'm trying to do!</p>
+<p>Now, you might be wondering, what on Earth is a GitHub app? It&rsquo;s simply a third-party application that is granted access to a GitHub repository using its own identity; what it can do with the repo depends on which permissions were granted. A GitHub app can also receive <a href="https://developer.github.com/webhooks/">webhook</a> notifications when events occur in the repo (e.g. a comment is posted, a pull request is opened, etc.).</p>
+<p>A GitHub app could, for instance, react when a pull request is opened or updated, examine the PR details, and add a <a href="https://developer.github.com/v3/repos/statuses/">commit status</a> to indicate whether the PR is ready to merge or not (this <a href="https://github.com/apps/wip">WIP app</a> does this, but doesn&rsquo;t take fixup commits into account).</p>
+<p>As you can see, it&rsquo;s a pretty good fit for what I&rsquo;m trying to do!</p>
 <p>In order to create a GitHub app, you need to go to the <a href="https://github.com/settings/apps">GitHub apps page</a>, and click <em>New GitHub app</em>. You then fill in at least the name, homepage, and webhook URL, give the app the necessary permissions, and subscribe to the webhook events you need. In my case, I only needed read-only access to pull requests, read-write access to commit statuses, and to receive pull request events.</p>
-<p>At this point, we don't yet have an URL for the webhook, so enter any valid URL; we'll change it later after we actually implemented the app.</p>
+<p>At this point, we don&rsquo;t yet have an URL for the webhook, so enter any valid URL; we&rsquo;ll change it later after we actually implemented the app.</p>
 <h2 id="azure-functions">Azure Functions</h2>
-<p>I hadn't paid much attention to <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview">Azure Functions</a> before, because I didn't really see the point. So I started to implement my webhook as a full-blown ASP.NET Core app, but then I realized several things:</p>
+<p>I hadn&rsquo;t paid much attention to <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview">Azure Functions</a> before, because I didn&rsquo;t really see the point. So I started to implement my webhook as a full-blown ASP.NET Core app, but then I realized several things:</p>
 <ul>
 <li>My app only had a single HTTP endpoint</li>
-<li>It was fully stateless and didn't need a database</li>
-<li>If I wanted the webhook to always respond quickly, the Azure App Service had to be &ldquo;always on&rdquo;; that option isn't available in free plans, and I didn't want to pay a fortune for a better service plan.</li>
+<li>It was fully stateless and didn&rsquo;t need a database</li>
+<li>If I wanted the webhook to always respond quickly, the Azure App Service had to be &ldquo;always on&rdquo;; that option isn&rsquo;t available in free plans, and I didn&rsquo;t want to pay a fortune for a better service plan.</li>
 </ul>
 <p>I looked around and realized that Azure Functions had a &ldquo;consumption plan&rdquo;, with a generous amount (1 million per month) of free requests before I had to pay anything, and functions using this plan are &ldquo;always on&rdquo;. Since I had a single endpoint and no persistent state, an Azure Function seemed to be the best fit for my requirements.</p>
 <p>Interestingly, Azure Functions can be triggered, among other things, by GitHub webhooks. This is very convenient as it takes care of <a href="https://developer.github.com/webhooks/securing/">validating the payload signature</a>.</p>
-<p>So, Azure Functions turn out to be a perfect match for implementing my webhook. Let's look at how to create one.</p>
+<p>So, Azure Functions turn out to be a perfect match for implementing my webhook. Let&rsquo;s look at how to create one.</p>
 <h2 id="creating-an-azure-function-triggered-by-a-github-webhook">Creating an Azure Function triggered by a GitHub webhook</h2>
-<p>It's possible to write Azure functions in JavaScript, C# (csx) or F# directly in the portal, but I wanted the comfort of the IDE, so I used Visual Studio. To write an Azure Function in VS, follow the instructions on <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-your-first-function-visual-studio">this page</a>. When you create the project, a dialog appears to let you choose some options:</p>
+<p>It&rsquo;s possible to write Azure functions in JavaScript, C# (csx) or F# directly in the portal, but I wanted the comfort of the IDE, so I used Visual Studio. To write an Azure Function in VS, follow the instructions on <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-your-first-function-visual-studio">this page</a>. When you create the project, a dialog appears to let you choose some options:</p>
 <p><img src="new-function-dialog.png" alt="New function dialog"></p>
 <ul>
 <li>version of the Azure Functions runtime: v1 targets the full .NET Framework, v2 targets .NET Core. I picked v1, because I had trouble with the dependencies in .NET Core.</li>
-<li>Trigger: GitHub webhooks don't appear here, so just pick &ldquo;HTTP Trigger&rdquo;, we'll make the necessary changes in the code.</li>
+<li>Trigger: GitHub webhooks don&rsquo;t appear here, so just pick &ldquo;HTTP Trigger&rdquo;, we&rsquo;ll make the necessary changes in the code.</li>
 <li>Storage account: pick the storage emulator; when you publish the function, a real Azure storage account will be set instead</li>
-<li>Access rights: it doesn't matter what you pick, we'll override it in the code.</li>
+<li>Access rights: it doesn&rsquo;t matter what you pick, we&rsquo;ll override it in the code.</li>
 </ul>
 <p>The project template creates a class named <code>Function1</code> with a <code>Run</code> method that looks like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Function1</span>
@@ -118,31 +118,31 @@ if (!doNotTrack) {
         ...
     }
 }
-</code></pre></div><p>Rename the class to something that makes more sense, e.g. <code>GitHubWebHook</code>, and don't forget to change the name in the <code>FunctionName</code> attribute as well.</p>
+</code></pre></div><p>Rename the class to something that makes more sense, e.g. <code>GitHubWebHook</code>, and don&rsquo;t forget to change the name in the <code>FunctionName</code> attribute as well.</p>
 <p>Now we need to tell the Azure Functions runtime that this function is triggered by a GitHub webhook. To do this, change the method signature to look like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">    [FunctionName(&#34;GitHubWebHook&#34;)]</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; Run(
 <span style="color:#a6e22e">        [HttpTrigger(&#34;POST&#34;, WebHookType = &#34;github&#34;)]</span> HttpRequestMessage req,
         TraceWriter log)
-</code></pre></div><p>GitHub webhooks always use the HTTP <code>POST</code> method; the <code>WebHookType</code> property is set to <code>&quot;github&quot;</code> to indicate that it's a GitHub webhook.</p>
-<p>Note that it doesn't really matter what we respond to the webhook request; GitHub doesn't do anything with the response. I chose to return a 204 (No content) response, but you can return a 200 or anything else, it doesn't matter.</p>
+</code></pre></div><p>GitHub webhooks always use the HTTP <code>POST</code> method; the <code>WebHookType</code> property is set to <code>&quot;github&quot;</code> to indicate that it&rsquo;s a GitHub webhook.</p>
+<p>Note that it doesn&rsquo;t really matter what we respond to the webhook request; GitHub doesn&rsquo;t do anything with the response. I chose to return a 204 (No content) response, but you can return a 200 or anything else, it doesn&rsquo;t matter.</p>
 <h2 id="publishing-the-azure-function">Publishing the Azure Function</h2>
-<p>To publish your function, just right click on the Function App project, and click <em>Publish</em>. This will show a wizard that will let you create a new Function App resource on your Azure subscription, or select an existing one. Not much to explain here, it's pretty straightforward; just follow the wizard!</p>
+<p>To publish your function, just right click on the Function App project, and click <em>Publish</em>. This will show a wizard that will let you create a new Function App resource on your Azure subscription, or select an existing one. Not much to explain here, it&rsquo;s pretty straightforward; just follow the wizard!</p>
 <p>When the function is published, you need to tell GitHub how to invoke it. Open the <a href="https://portal.azure.com/">Azure portal</a> in your browser, navigate to your new Function App, and select the <code>GitHubWebHook</code> function. This will show the content of the (generated) <code>function.json</code> file. Above the code view, you will see two links: <em>Get function URL</em>, and <em>Get GitHub secret</em>:</p>
 <p><img src="azure-function-url-and-secret.png" alt="Azure Function URL and secret"></p>
 <p>You need to copy the URL to the <em>Webhook URL</em> field in the GitHub app settings, and copy the secret to the <em>Webhook secret</em> field. This secret is used to calculate a signature for webhook payloads, so that the Azure Function can ensure the payloads really come from GitHub. As I mentioned earlier, this verification is done automatically when you use a GitHub HTTP trigger.</p>
-<p>And that's it, your webhook is online! Now you can go install the GitHub app into one of your repositories, and your webhook will start receiving events for this repo.</p>
+<p>And that&rsquo;s it, your webhook is online! Now you can go install the GitHub app into one of your repositories, and your webhook will start receiving events for this repo.</p>
 <h2 id="points-of-interest">Points of interest</h2>
-<p>I won't describe the whole implementation of my webhook in this post, because it would be too long and most of it isn't that interesting, but I will just highlight a few points of interest. You can find the complete code <a href="https://github.com/thomaslevesque/DontMergeMeYet">on GitHub</a>.</p>
+<p>I won&rsquo;t describe the whole implementation of my webhook in this post, because it would be too long and most of it isn&rsquo;t that interesting, but I will just highlight a few points of interest. You can find the complete code <a href="https://github.com/thomaslevesque/DontMergeMeYet">on GitHub</a>.</p>
 <h3 id="parsing-the-payload">Parsing the payload</h3>
-<p>Rather than reinventing the wheel, we can leverage the <a href="https://github.com/octokit/octokit.net">Octokit .NET library</a>. Octokit is a library made by GitHub to consume the GitHub REST API. It contains classes representing the entities used in the API, including webhook payloads, so we can just deserialize the request content as a <code>PullRequestEventPayload</code>. However, if we just try to do this with JSON.NET, this isn't going to work: Octokit doesn't use JSON.NET, so the classes aren't decorated with JSON.NET attributes to map the C# property names to the JSON property names. Instead, we need to use the JSON serializer that is included in Octokit, called <code>SimpleJsonSerializer</code>:</p>
+<p>Rather than reinventing the wheel, we can leverage the <a href="https://github.com/octokit/octokit.net">Octokit .NET library</a>. Octokit is a library made by GitHub to consume the GitHub REST API. It contains classes representing the entities used in the API, including webhook payloads, so we can just deserialize the request content as a <code>PullRequestEventPayload</code>. However, if we just try to do this with JSON.NET, this isn&rsquo;t going to work: Octokit doesn&rsquo;t use JSON.NET, so the classes aren&rsquo;t decorated with JSON.NET attributes to map the C# property names to the JSON property names. Instead, we need to use the JSON serializer that is included in Octokit, called <code>SimpleJsonSerializer</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;PullRequestEventPayload&gt; DeserializePayloadAsync(HttpContent content)
 {
     <span style="color:#66d9ef">string</span> json = <span style="color:#66d9ef">await</span> content.ReadAsStringAsync();
     <span style="color:#66d9ef">var</span> serializer = <span style="color:#66d9ef">new</span> SimpleJsonSerializer();
     <span style="color:#66d9ef">return</span> serializer.Deserialize&lt;PullRequestEventPayload&gt;(json);
 }
-</code></pre></div><p>There's also another issue: the <code>PullRequestEventPayload</code> from Octokit is missing the <code>Installation</code> property, which we're going to need later to authenticate with the GitHub API. An easy workaround is to make a new class that inherits <code>PullRequestEventPayload</code> and add the new property:</p>
+</code></pre></div><p>There&rsquo;s also another issue: the <code>PullRequestEventPayload</code> from Octokit is missing the <code>Installation</code> property, which we&rsquo;re going to need later to authenticate with the GitHub API. An easy workaround is to make a new class that inherits <code>PullRequestEventPayload</code> and add the new property:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PullRequestPayload</span> : PullRequestEventPayload
 {
     <span style="color:#66d9ef">public</span> Installation Installation { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
@@ -152,15 +152,15 @@ if (!doNotTrack) {
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 }
-</code></pre></div><p>And we'll just use <code>PullRequestPayload</code> instead of <code>PullRequestEventPayload</code>.</p>
+</code></pre></div><p>And we&rsquo;ll just use <code>PullRequestPayload</code> instead of <code>PullRequestEventPayload</code>.</p>
 <h3 id="authenticating-with-the-github-api">Authenticating with the GitHub API</h3>
-<p>We're going to need to call the GitHub REST API for two things:</p>
+<p>We&rsquo;re going to need to call the GitHub REST API for two things:</p>
 <ul>
 <li>to get the list of commits in the pull request</li>
 <li>to update the commit status</li>
 </ul>
-<p>In order to access the API, we're going to need credentials&hellip; but which credentials? We could just generate a <a href="https://github.com/settings/tokens">personal access token</a> and use that, but then we would access the API as a &ldquo;real&rdquo; GitHub user, and we would only be able to access our own repositories (for writing, at least).</p>
-<p>As I mentioned earlier, GitHub apps have their own identity. What I didn't say is that when authenticated as themselves, there isn't much they're allowed to do: they can only get management information about themselves, and get a token to authenticate as an <em>installation</em>. An installation is, roughly, an instance of the application that is installed on one or more repo. When someone installs your app on their repo, it creates an installation. Once you get a token for an installation, you can access all the APIs allowed by the app's permissions on the repos it's installed on.</p>
+<p>In order to access the API, we&rsquo;re going to need credentials&hellip; but which credentials? We could just generate a <a href="https://github.com/settings/tokens">personal access token</a> and use that, but then we would access the API as a &ldquo;real&rdquo; GitHub user, and we would only be able to access our own repositories (for writing, at least).</p>
+<p>As I mentioned earlier, GitHub apps have their own identity. What I didn&rsquo;t say is that when authenticated as themselves, there isn&rsquo;t much they&rsquo;re allowed to do: they can only get management information about themselves, and get a token to authenticate as an <em>installation</em>. An installation is, roughly, an instance of the application that is installed on one or more repo. When someone installs your app on their repo, it creates an installation. Once you get a token for an installation, you can access all the APIs allowed by the app&rsquo;s permissions on the repos it&rsquo;s installed on.</p>
 <p>However, there are a few hoops to jump through to get this token&hellip; <a href="https://developer.github.com/apps/building-github-apps/authentication-options-for-github-apps/">This page</a> describes the process in detail.</p>
 <p>The first step is to generate a JSON Web Token (JWT) for the app. This token has to contain the following claims:</p>
 <ul>
@@ -168,7 +168,7 @@ if (!doNotTrack) {
 <li><code>exp</code>: the timestamp at which the token expires</li>
 <li><code>iss</code>: the issuer, which is actually the app ID (found in the GitHub app settings page)</li>
 </ul>
-<p>This JWT needs to be signed with the RS256 algorithm (RSA signature with SHA256); in order to sign it, you need a private key, which must be generated from the GitHub app settings page. You can download the private key in PEM format, and store it somewhere your app can access it. Unfortunately, the .NET APIs to generate and sign a JWT don't handle the PEM format, they need an <code>RSAParameters</code> object&hellip; But Stackoverflow is our friend, and <a href="https://stackoverflow.com/a/26978561/98713">this answer</a> contains the code we need to convert a PEM private key to an <code>RSAParameters</code> object. I just kept <a href="https://github.com/thomaslevesque/DontMergeMeYet/blob/master/src/DontMergeMeYet/Services/CryptoHelper.cs">the part I needed</a>, and manually reformatted the PEM private key to remove the header, footer, and newlines, so that it could easily be stored in the settings as a single line of text.</p>
+<p>This JWT needs to be signed with the RS256 algorithm (RSA signature with SHA256); in order to sign it, you need a private key, which must be generated from the GitHub app settings page. You can download the private key in PEM format, and store it somewhere your app can access it. Unfortunately, the .NET APIs to generate and sign a JWT don&rsquo;t handle the PEM format, they need an <code>RSAParameters</code> object&hellip; But Stackoverflow is our friend, and <a href="https://stackoverflow.com/a/26978561/98713">this answer</a> contains the code we need to convert a PEM private key to an <code>RSAParameters</code> object. I just kept <a href="https://github.com/thomaslevesque/DontMergeMeYet/blob/master/src/DontMergeMeYet/Services/CryptoHelper.cs">the part I needed</a>, and manually reformatted the PEM private key to remove the header, footer, and newlines, so that it could easily be stored in the settings as a single line of text.</p>
 <p>Once you have the private key as an <code>RSAParameters</code> object, you can generate a JWT like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetTokenForApplication()
 {
@@ -178,7 +178,7 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">var</span> token = <span style="color:#66d9ef">new</span> JwtSecurityToken(claims: <span style="color:#66d9ef">new</span>[]
         {
             <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;iat&#34;</span>, now.ToUnixTimeStamp().ToString(), ClaimValueTypes.Integer),
-            <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;exp&#34;</span>, now.AddMinutes(<span style="color:#ae81ff">1</span><span style="color:#ae81ff">0</span>).ToUnixTimeStamp().ToString(), ClaimValueTypes.Integer),
+            <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;exp&#34;</span>, now.AddMinutes(<span style="color:#ae81ff">10</span>).ToUnixTimeStamp().ToString(), ClaimValueTypes.Integer),
             <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;iss&#34;</span>, _settings.AppId)
         },
         signingCredentials: creds);
@@ -237,14 +237,14 @@ if (!doNotTrack) {
         Credentials = <span style="color:#66d9ef">new</span> Credentials(installationToken)
     };
 }
-</code></pre></div><p>And that's it, you can now call the GitHub API as an installation of your app.</p>
-<p>Note: the code above isn't exactly what you'll find in <a href="https://github.com/thomaslevesque/DontMergeMeYet">the repo</a>; I simplified it a little for the sake of clarity.</p>
+</code></pre></div><p>And that&rsquo;s it, you can now call the GitHub API as an installation of your app.</p>
+<p>Note: the code above isn&rsquo;t exactly what you&rsquo;ll find in <a href="https://github.com/thomaslevesque/DontMergeMeYet">the repo</a>; I simplified it a little for the sake of clarity.</p>
 <h3 id="testing-locally-using-ngrok">Testing locally using ngrok</h3>
-<p>When creating your Azure Function, it's useful to be able to debug on your local machine. However, how will GitHub be able to call your function if it doesn't have a publicly accessible URL? The answer is a tool called <a href="https://ngrok.com/">ngrok</a>. Ngrok can create a temporary host name that forwards all traffic to a port on your local machine. To use it, create an account (it's free) and download the command line tool. Once logged in to the ngrok website, a <a href="https://dashboard.ngrok.com/get-started">page</a> will give you the command to save an authentication token on your machine. Just execute this command:</p>
+<p>When creating your Azure Function, it&rsquo;s useful to be able to debug on your local machine. However, how will GitHub be able to call your function if it doesn&rsquo;t have a publicly accessible URL? The answer is a tool called <a href="https://ngrok.com/">ngrok</a>. Ngrok can create a temporary host name that forwards all traffic to a port on your local machine. To use it, create an account (it&rsquo;s free) and download the command line tool. Once logged in to the ngrok website, a <a href="https://dashboard.ngrok.com/get-started">page</a> will give you the command to save an authentication token on your machine. Just execute this command:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ngrok authtoken 1beErG2VTJJ0azL3r2SBn_2iz8johqNv612vaXa3Rkm
 </code></pre></div><p>Start your Azure Function in debug from Visual Studio; the console will show you the local URL of the function, something like <code>http://localhost:7071/api/GitHubWebHook</code>. Note the port, and in a new console, start ngrok like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ngrok http <span style="color:#ae81ff">7071</span> --host-header rewrite
-</code></pre></div><p>This will create a new hostname and start forwarding traffic to the 7071 port on your machine. The <code>--host-header rewrite</code> argument causes ngrok to change the <code>Host</code> HTTP header to localhost, rather than the temporary hostname; Azure Functions don't work correctly without this.</p>
+</code></pre></div><p>This will create a new hostname and start forwarding traffic to the 7071 port on your machine. The <code>--host-header rewrite</code> argument causes ngrok to change the <code>Host</code> HTTP header to localhost, rather than the temporary hostname; Azure Functions don&rsquo;t work correctly without this.</p>
 <p>You can see the temporary hostname in the command output:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">ngrok by @inconshreveable                                                                                                                                                                                         (Ctrl+C to quit)
 
@@ -259,10 +259,10 @@ Forwarding                    https://89e14c16.ngrok.io -&gt; localhost:7071
 Connections                   ttl     opn     rt1     rt5     p50     p90
                               0       0       0.00    0.00    0.00    0.00
 </code></pre></div><p>Finally, go to the GitHub app settings, and change the webook URL to <code>https://89e14c16.ngrok.io/api/GitHubWebHook</code> (i.e. the temporary domain with the same path as the local URL).</p>
-<p>Now you're all set. GitHub will send the webhook payloads to ngrok, which will forward them to your app running locally.</p>
-<p>Note that unless you have a paid plan for ngrok, the temporary subdomain changes every time you start the tool, which is annoying. So it's better to keep it running for the whole development session, otherwise you will need to change the GitHub app settings again.</p>
+<p>Now you&rsquo;re all set. GitHub will send the webhook payloads to ngrok, which will forward them to your app running locally.</p>
+<p>Note that unless you have a paid plan for ngrok, the temporary subdomain changes every time you start the tool, which is annoying. So it&rsquo;s better to keep it running for the whole development session, otherwise you will need to change the GitHub app settings again.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>Hopefully you learned a few things from this article. With Azure Functions, it's almost trivial to implement a GitHub webhook (the only tricky part is the authentication to call the GitHub API, but not all webhooks need it). It's much lighter than a full-blown web app, and much simpler to write: you don't have to care about MVC, routing, services, etc. And if it wasn't enough, the pricing model for Azure Functions make it a very cheap option for hosting a webhook!</p>
+<p>Hopefully you learned a few things from this article. With Azure Functions, it&rsquo;s almost trivial to implement a GitHub webhook (the only tricky part is the authentication to call the GitHub API, but not all webhooks need it). It&rsquo;s much lighter than a full-blown web app, and much simpler to write: you don&rsquo;t have to care about MVC, routing, services, etc. And if it wasn&rsquo;t enough, the pricing model for Azure Functions make it a very cheap option for hosting a webhook!</p>
 
 		</div>
 		<footer class="post__footer">

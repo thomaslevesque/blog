@@ -27,7 +27,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
       <pubDate>Wed, 06 May 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</guid>
-      <description>Here&#39;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&amp;hellip; In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
+      <description>Here&amp;rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&amp;hellip; In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
 private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;) Unfortunately, this method only exists in WPF, and a majority of developers are still working with Windows Forms.</description>
     </item>
     

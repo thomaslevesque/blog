@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="Lazily resolving services to fix circular dependencies in .NET Core" />
 <meta property="og:description" content="The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
-It is generally agreed that this should be avoided; I won&#39;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web." />
+It is generally agreed that this should be avoided; I won&rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/" />
 <meta property="article:published_time" content="2020-03-18T00:00:00+00:00" />
@@ -18,7 +18,7 @@ It is generally agreed that this should be avoided; I won&#39;t go into the deta
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Lazily resolving services to fix circular dependencies in .NET Core"/>
 <meta name="twitter:description" content="The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
-It is generally agreed that this should be avoided; I won&#39;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web."/>
+It is generally agreed that this should be avoided; I won&rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -82,22 +82,22 @@ if (!doNotTrack) {
 			<h2 id="the-problem-with-circular-dependencies">The problem with circular dependencies</h2>
 <p>When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. <code>A</code> depends on <code>B</code> which depends on <code>C</code> which depends on <code>A</code>:</p>
 <p><img src="circular-dependency.png" alt="Circular dependency"></p>
-<p>It is generally agreed that this should be avoided; I won't go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</p>
+<p>It is generally agreed that this should be avoided; I won&rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</p>
 <p>But circular dependencies also have a very concrete effect. If you accidentally introduce a circular dependency in an NET Core app that uses dependency injection, you will know immediately, because the resolution of a component involved in the dependency cycle will fail. For instance, if you have these components:</p>
 <ul>
 <li><code>A</code>, which implements interface <code>IA</code> and depends on <code>IB</code></li>
 <li><code>B</code>, which implements interface <code>IB</code> and depends on <code>IC</code></li>
 <li><code>C</code>, which implements interface <code>IC</code> and depends on <code>IA</code></li>
 </ul>
-<p>When you try to resolve <code>IA</code>, the dependency injection container will try to create an instance of <code>A</code>; to do that, it will need to resolve <code>IB</code>, so it will try to create an instance of <code>B</code>; to do that, it will need to resolve <code>IC</code>, so it will try to create an instance of <code>C</code>; and to do that, it will need to resolve <code>IA</code>&hellip; which was already being resolved. Here you have it: circular dependency. The resolution of <code>IA</code> will cannot complete; in fact, .NET Core's built-in IoC container detects this, and throws a helpful exception:</p>
+<p>When you try to resolve <code>IA</code>, the dependency injection container will try to create an instance of <code>A</code>; to do that, it will need to resolve <code>IB</code>, so it will try to create an instance of <code>B</code>; to do that, it will need to resolve <code>IC</code>, so it will try to create an instance of <code>C</code>; and to do that, it will need to resolve <code>IA</code>&hellip; which was already being resolved. Here you have it: circular dependency. The resolution of <code>IA</code> will cannot complete; in fact, .NET Core&rsquo;s built-in IoC container detects this, and throws a helpful exception:</p>
 <blockquote>
 <p><strong>System.InvalidOperationException</strong>: A circular dependency was detected for the service of type &lsquo;Demo.IA&rsquo;.</p>
 </blockquote>
 <p>So, clearly, this situation should be avoided.</p>
 <h2 id="workaround">Workaround</h2>
-<p>However, when a real-world app reaches a certain level of complexity, it can sometimes be difficult to avoid. One day, you innocently add a dependency to a service, and things blow up in your face. So you're faced with a choice: refactor a significant part of your app to avoid the dependency cycle, or &ldquo;cheat&rdquo;.</p>
-<p>While, ideally, you would opt for a refactoring, it's not always practical. Because of deadlines, you might not have the time to refactor your code and thoroughly test it for regressions.</p>
-<p>Fortunately, if you're willing to incur a bit of technical debt, there's a simple workaround that works in most cases (what I referred to as &ldquo;cheating&rdquo; earlier). The trick is to resolve one of the dependencies in the cycle lazily, i.e. resolve it at the last possible moment, when you actually need to use it.</p>
+<p>However, when a real-world app reaches a certain level of complexity, it can sometimes be difficult to avoid. One day, you innocently add a dependency to a service, and things blow up in your face. So you&rsquo;re faced with a choice: refactor a significant part of your app to avoid the dependency cycle, or &ldquo;cheat&rdquo;.</p>
+<p>While, ideally, you would opt for a refactoring, it&rsquo;s not always practical. Because of deadlines, you might not have the time to refactor your code and thoroughly test it for regressions.</p>
+<p>Fortunately, if you&rsquo;re willing to incur a bit of technical debt, there&rsquo;s a simple workaround that works in most cases (what I referred to as &ldquo;cheating&rdquo; earlier). The trick is to resolve one of the dependencies in the cycle lazily, i.e. resolve it at the last possible moment, when you actually need to use it.</p>
 <p>One way to do that is to inject the <code>IServiceProvider</code> into your class, and use <code>services.GetRequiredService&lt;T&gt;()</code> when you need to use <code>T</code>. For instance, the <code>C</code> class I mentioned earlier might initially look like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
 {
@@ -133,11 +133,11 @@ if (!doNotTrack) {
         ...
     }
 }
-</code></pre></div><p>Because it's no longer necessary to resolve <code>IA</code> while <code>C</code> is being constructed, the cycle is broken (at least during construction), and the problem fixed.</p>
-<p>However, I don't really like this approach, because it smells of the <a href="https://en.wikipedia.org/wiki/Service_locator_pattern">Service Locator pattern</a>, which is a known anti-pattern. I see two main issues with it:</p>
+</code></pre></div><p>Because it&rsquo;s no longer necessary to resolve <code>IA</code> while <code>C</code> is being constructed, the cycle is broken (at least during construction), and the problem fixed.</p>
+<p>However, I don&rsquo;t really like this approach, because it smells of the <a href="https://en.wikipedia.org/wiki/Service_locator_pattern">Service Locator pattern</a>, which is a known anti-pattern. I see two main issues with it:</p>
 <ul>
-<li>It makes your class depend explicitly on the service provider. This is bad, because your class shouldn't have to know anything about the injection dependency mechanism being used; after all, the app could be using <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>, i.e. not use an IoC container at all.</li>
-<li>It hides the dependencies of your class. Instead of having them all clearly declared at the constructor level, you now have just an <code>IServiceProvider</code> which doesn't tell you anything about the actual dependencies. You have to scan the code of the class to find them.</li>
+<li>It makes your class depend explicitly on the service provider. This is bad, because your class shouldn&rsquo;t have to know anything about the injection dependency mechanism being used; after all, the app could be using <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>, i.e. not use an IoC container at all.</li>
+<li>It hides the dependencies of your class. Instead of having them all clearly declared at the constructor level, you now have just an <code>IServiceProvider</code> which doesn&rsquo;t tell you anything about the actual dependencies. You have to scan the code of the class to find them.</li>
 </ul>
 <h2 id="a-cleaner-workaround">A cleaner workaround</h2>
 <p>The approach I actually use in this situation takes advantage of the <code>Lazy&lt;T&gt;</code> class. You will need the following extension method and class:</p>
@@ -158,7 +158,7 @@ if (!doNotTrack) {
 </code></pre></div><p>Call this new method on your service collection during service registration:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddLazyResolution();
 </code></pre></div><p>This enables the resolution of a <code>Lazy&lt;T&gt;</code> which will lazily resolve a <code>T</code> from the service provider.</p>
-<p>In the class that depends on <code>IA</code>, inject <code>Lazy&lt;IA&gt;</code> instead. When you need to use <code>IA</code>, just access the lazy's value:</p>
+<p>In the class that depends on <code>IA</code>, inject <code>Lazy&lt;IA&gt;</code> instead. When you need to use <code>IA</code>, just access the lazy&rsquo;s value:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Lazy&lt;IA&gt; _a;
@@ -176,7 +176,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p><strong>Note:</strong> DO NOT access the value in the constructor, just store the <code>Lazy</code> itself. Accessing the value in the constructor would eagerly resolve <code>IA</code>, which would cause the same problem we were trying to solve.</p>
-<p>This solution isn't perfect, but it solves the initial problem without too much hassle, and the dependencies are still clearly declared in the constructor.</p>
+<p>This solution isn&rsquo;t perfect, but it solves the initial problem without too much hassle, and the dependencies are still clearly declared in the constructor.</p>
 
 		</div>
 		<footer class="post__footer">

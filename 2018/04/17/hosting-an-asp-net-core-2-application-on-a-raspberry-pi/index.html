@@ -77,15 +77,15 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-04-17T00:00:00Z">April 17, 2018</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&hellip; For instance, is a very small machine like a <strong>Raspberry Pi</strong>, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is! At least as long as you don't expect it to handle a very heavy load. So let's see in practice how to deploy an expose an ASP.NET Core web app on a Raspberry Pi.</p>
+			<p>As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&hellip; For instance, is a very small machine like a <strong>Raspberry Pi</strong>, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is! At least as long as you don&rsquo;t expect it to handle a very heavy load. So let&rsquo;s see in practice how to deploy an expose an ASP.NET Core web app on a Raspberry Pi.</p>
 <h2 id="creating-the-app">Creating the app</h2>
-<p>Let's start from a basic ASP.NET Core 2.0 MVC app template:</p>
+<p>Let&rsquo;s start from a basic ASP.NET Core 2.0 MVC app template:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dotnet new mvc
-</code></pre></div><p>You don't even need to open the project for now, just compile it as is and publish it for the Raspberry Pi:</p>
+</code></pre></div><p>You don&rsquo;t even need to open the project for now, just compile it as is and publish it for the Raspberry Pi:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dotnet publish -c Release -r linux-arm
 </code></pre></div><h2 id="prerequisites">Prerequisites</h2>
-<p>We're going to use a Raspberry Pi running Raspbian, the official Linux distro for Raspberry Pi, which is based on Debian. To run a .NET Core 2.0 app, you'll need version Jessie or higher (I used Raspbian Stretch Lite). <em><strong>Update</strong>: as Tomasz mentioned in the comments, you also need a Raspberry Pi 2 or more recent, with an ARMv7 processor; The first RPi has an ARMv6 processor and cannot run .NET Core.</em></p>
-<p>Even though the app is self-contained and doesn't require .NET Core to be installed on the RPi, you will still need a few low-level dependencies; they are listed <a href="https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md#linux">here</a>. You can install them using <code>apt-get</code>:</p>
+<p>We&rsquo;re going to use a Raspberry Pi running Raspbian, the official Linux distro for Raspberry Pi, which is based on Debian. To run a .NET Core 2.0 app, you&rsquo;ll need version Jessie or higher (I used Raspbian Stretch Lite). <em><strong>Update</strong>: as Tomasz mentioned in the comments, you also need a Raspberry Pi 2 or more recent, with an ARMv7 processor; The first RPi has an ARMv6 processor and cannot run .NET Core.</em></p>
+<p>Even though the app is self-contained and doesn&rsquo;t require .NET Core to be installed on the RPi, you will still need a few low-level dependencies; they are listed <a href="https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md#linux">here</a>. You can install them using <code>apt-get</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update
 sudo apt-get install curl libunwind8 gettext apt-transport-https
 </code></pre></div><h2 id="deploy-and-run-the-application">Deploy and run the application</h2>
@@ -93,10 +93,10 @@ sudo apt-get install curl libunwind8 gettext apt-transport-https
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod <span style="color:#ae81ff">755</span> ./MyWebApp
 </code></pre></div><p>Run the app:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./MyWebApp
-</code></pre></div><p>If nothing went wrong, the app should start listening on port 5000. But since it listens only on <code>localhost</code>, it's only accessible from the Raspberry Pi itself&hellip;</p>
+</code></pre></div><p>If nothing went wrong, the app should start listening on port 5000. But since it listens only on <code>localhost</code>, it&rsquo;s only accessible from the Raspberry Pi itself&hellip;</p>
 <h2 id="exposing-the-app-on-the-network">Exposing the app on the network</h2>
-<p>There are several ways to fix that. The easiest is to set the <code>ASPNETCORE_URLS</code> environment variable to a value like <code>http://*:5000/</code>, in order to listen on all addresses. But if you intend to expose the app on the Internet, it might not be a good idea: the Kestrel server used by ASP.NET Core isn't designed to be exposed directly to the outside world, and isn't well protected against attacks. It is strongly recommended to put it behind a reverse proxy, such as <a href="https://www.nginx.com/">nginx</a>. Let's see how to do that.</p>
-<p>First, you need to install nginx if it's not already there, using this command:</p>
+<p>There are several ways to fix that. The easiest is to set the <code>ASPNETCORE_URLS</code> environment variable to a value like <code>http://*:5000/</code>, in order to listen on all addresses. But if you intend to expose the app on the Internet, it might not be a good idea: the Kestrel server used by ASP.NET Core isn&rsquo;t designed to be exposed directly to the outside world, and isn&rsquo;t well protected against attacks. It is strongly recommended to put it behind a reverse proxy, such as <a href="https://www.nginx.com/">nginx</a>. Let&rsquo;s see how to do that.</p>
+<p>First, you need to install nginx if it&rsquo;s not already there, using this command:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install nginx
 </code></pre></div><p>And start it like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo service nginx start
@@ -107,11 +107,11 @@ sudo apt-get install curl libunwind8 gettext apt-transport-https
         proxy_set_header Connection keep-alive;
 }
 </code></pre></div><p>Be careful to include the final slash in the destination URL.</p>
-<p>This configuration is intentionnally minimal, we'll expand it a bit later.</p>
-<p>Once you're done editing the file, tell nginx to reload its configuration:</p>
+<p>This configuration is intentionnally minimal, we&rsquo;ll expand it a bit later.</p>
+<p>Once you&rsquo;re done editing the file, tell nginx to reload its configuration:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo nginx -s reload
 </code></pre></div><p>From your PC, try to access the app on the Raspberry Pi by entering its IP address in your browser. If you did everything right, you should see the familiar home page from the ASP.NET Core app template!</p>
-<p>Note that you'll need to be patient: the first time the home page is loaded, its Razor view is compiled, which can take a while on the RPi's low-end hardware. ASP.NET Core 2.0 doesn't support precompilation of Razor views for self-contained apps; this is fixed in 2.1, which is currently in preview. So for now you have 3 options:</p>
+<p>Note that you&rsquo;ll need to be patient: the first time the home page is loaded, its Razor view is compiled, which can take a while on the RPi&rsquo;s low-end hardware. ASP.NET Core 2.0 doesn&rsquo;t support precompilation of Razor views for self-contained apps; this is fixed in 2.1, which is currently in preview. So for now you have 3 options:</p>
 <ul>
 <li>be patient and endure the delay on first page load</li>
 <li>migrate to ASP.NET Core 2.1 preview, as explained <a href="https://blogs.msdn.microsoft.com/webdev/2018/04/12/asp-net-core-2-1-0-preview2-now-available/#migrating">here</a></li>
@@ -119,24 +119,24 @@ sudo apt-get install curl libunwind8 gettext apt-transport-https
 </ul>
 <p>For this article, I chose the first options to keep things simple.</p>
 <h2 id="proxy-headers">Proxy headers</h2>
-<p>At this point, we could just leave the app alone and call it a day. However, if your app is going to evolve into something more useful, there are a few things that aren't going to work correctly in the current state. The problem is that the app isn't aware that it's behind a reverse proxy; as far as it knows, it's only listening to requests on localhost on port 5000. Which means it cannot know:</p>
+<p>At this point, we could just leave the app alone and call it a day. However, if your app is going to evolve into something more useful, there are a few things that aren&rsquo;t going to work correctly in the current state. The problem is that the app isn&rsquo;t aware that it&rsquo;s behind a reverse proxy; as far as it knows, it&rsquo;s only listening to requests on localhost on port 5000. Which means it cannot know:</p>
 <ul>
 <li>the actual client IP (requests seem to come from localhost)</li>
 <li>the protocol scheme used by the client</li>
 <li>the actual host name specified by the client</li>
 </ul>
-<p>For the app to know these things, it has to be told by the reverse proxy. Let's change the nginx configuration so that it adds a few headers to incoming requests. These headers are not standard, but they're widely used by proxy servers.</p>
+<p>For the app to know these things, it has to be told by the reverse proxy. Let&rsquo;s change the nginx configuration so that it adds a few headers to incoming requests. These headers are not standard, but they&rsquo;re widely used by proxy servers.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">    proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Host   $http_host;
     proxy_set_header X-Forwarded-Proto  http;
 </code></pre></div><p><code>X-Forwarded-For</code> contains the client IP address, and optionally the addresses of proxies along the way. <code>X-Forwarded-Host</code> contains the host name initially specified by the client, and <code>X-Forwarded-Proto</code> contains the original protocol scheme (hard-coded to <code>http</code> here since HTTPS is not configured).</p>
-<p>(Don't forget to reload the nginx configuration)</p>
+<p>(Don&rsquo;t forget to reload the nginx configuration)</p>
 <p>We also need to change the ASP.NET Core app so that it takes these headers into account. This can be done easily using the <code>ForwardedHeaders</code> middleware; add this code at the start of the <code>Startup.Configure</code> method:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">app.UseForwardedHeaders(<span style="color:#66d9ef">new</span> ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.All
 });
-</code></pre></div><p>In case you're wondering what a middleware is, <a href="/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/">this article</a> might help!</p>
+</code></pre></div><p>In case you&rsquo;re wondering what a middleware is, <a href="/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/">this article</a> might help!</p>
 <p>This middleware will read the <code>X-Forwarded-*</code> headers from incoming requests, and use them to modify:</p>
 <ul>
 <li>the <code>Host</code> and <code>Scheme</code> of the request</li>
@@ -144,11 +144,11 @@ sudo apt-get install curl libunwind8 gettext apt-transport-https
 </ul>
 <p>This way, the app will behave as if the request was received directly from the client.</p>
 <h2 id="expose-the-app-on-a-specific-path">Expose the app on a specific path</h2>
-<p>Our app is now accessible at the URL <code>http://&lt;ip-address&gt;/</code>, i.e. at the root of the server. But if we want to host several applications on the Raspberry Pi, it's going to be a problem&hellip; We could put each app on a different port, but it's not very convenient. It would be better to have each app on its own path, e.g. with URLs like <code>http://&lt;ip-address&gt;/MyWebApp/</code>.</p>
-<p>It's pretty easy to do with nginx. Edit the nginx configuration again, and replace <code>location /</code> with <code>location /MyWebApp/</code> (note the final slash, it's important). Reload the configuration, and try to access the app at its new URL&hellip; The home page loads, but the CSS and JS scripts don't: error 404. In addition, links to other pages are now incorrect, and point to <code>http://&lt;ip-address&gt;/Something</code> instead of <code>http://&lt;ip-address&gt;/MyWebApp/Something</code>. What's going on?</p>
-<p>The reason is quite simple: the app isn't aware that it's not served from the root of the server, and generates all its links as if it were&hellip; To fix this, we can ask nginx to pass yet another header to our app:</p>
+<p>Our app is now accessible at the URL <code>http://&lt;ip-address&gt;/</code>, i.e. at the root of the server. But if we want to host several applications on the Raspberry Pi, it&rsquo;s going to be a problem&hellip; We could put each app on a different port, but it&rsquo;s not very convenient. It would be better to have each app on its own path, e.g. with URLs like <code>http://&lt;ip-address&gt;/MyWebApp/</code>.</p>
+<p>It&rsquo;s pretty easy to do with nginx. Edit the nginx configuration again, and replace <code>location /</code> with <code>location /MyWebApp/</code> (note the final slash, it&rsquo;s important). Reload the configuration, and try to access the app at its new URL&hellip; The home page loads, but the CSS and JS scripts don&rsquo;t: error 404. In addition, links to other pages are now incorrect, and point to <code>http://&lt;ip-address&gt;/Something</code> instead of <code>http://&lt;ip-address&gt;/MyWebApp/Something</code>. What&rsquo;s going on?</p>
+<p>The reason is quite simple: the app isn&rsquo;t aware that it&rsquo;s not served from the root of the server, and generates all its links as if it were&hellip; To fix this, we can ask nginx to pass yet another header to our app:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">proxy_set_header X-Forwarded-Path   /MyWebApp;
-</code></pre></div><p>Note that this <code>X-Forwarded-Path</code> header is even less standard than the other ones, since I just made it up&hellip; So of course, there's no built-in ASP.NET Core middleware that can handle it, and we'll need to do it ourselves. Fortunately it's pretty easy: we just need to use the path specified in the header as the path base. In the <code>Startup.Configure</code> method, add this after the <code>UseForwardHeaders</code> statement:</p>
+</code></pre></div><p>Note that this <code>X-Forwarded-Path</code> header is even less standard than the other ones, since I just made it up&hellip; So of course, there&rsquo;s no built-in ASP.NET Core middleware that can handle it, and we&rsquo;ll need to do it ourselves. Fortunately it&rsquo;s pretty easy: we just need to use the path specified in the header as the path base. In the <code>Startup.Configure</code> method, add this after the <code>UseForwardHeaders</code> statement:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Patch path base with forwarded path
 </span><span style="color:#75715e"></span>app.Use(<span style="color:#66d9ef">async</span> (context, next) =&gt;
 {
@@ -162,7 +162,7 @@ sudo apt-get install curl libunwind8 gettext apt-transport-https
 });
 </code></pre></div><p>Redeploy and restart the app, reload the nginx configuration, and try again: now it works!</p>
 <h2 id="run-the-app-as-a-service">Run the app as a service</h2>
-<p>If we want our app to be always running, restarting it manually every time it crashes or when the Raspberry Pi reboots isn't going to be sustainable&hellip; What we want is to run it as a service, so that it starts when the system starts, and is automatically restarted if it stops working. To do this, we'll take advantage of <strong>systemd</strong>, which manages services in most Linux distros, including Raspbian.</p>
+<p>If we want our app to be always running, restarting it manually every time it crashes or when the Raspberry Pi reboots isn&rsquo;t going to be sustainable&hellip; What we want is to run it as a service, so that it starts when the system starts, and is automatically restarted if it stops working. To do this, we&rsquo;ll take advantage of <strong>systemd</strong>, which manages services in most Linux distros, including Raspbian.</p>
 <p>To create a systemd service, create a <code>MyWebApp.service</code> file in the <code>/lib/systemd/system/</code> directory, with the following content:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">[Unit]
 Description=My ASP.NET Core Web App
@@ -180,11 +180,11 @@ WantedBy=multi-user.target
 </code></pre></div><p>(replace the name and paths to match your app of course)</p>
 <p>Enable the service like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl enable MyWebApp
-</code></pre></div><p>And start it like this (new services aren't started automatically):</p>
+</code></pre></div><p>And start it like this (new services aren&rsquo;t started automatically):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl start MyWebApp
-</code></pre></div><p>And that's it, your app is now monitored by systemd, which will take care of starting or restarting it as needed.</p>
+</code></pre></div><p>And that&rsquo;s it, your app is now monitored by systemd, which will take care of starting or restarting it as needed.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>As you can see, running an ASP.NET Core 2.0 app on a Raspberry Pi is not only possible, but reasonably easy too; you just need a bit of fiddling with headers and reverse proxy settings. You won't host the next Facebook or StackOverflow on your RPi, but it's fine for small utility applications. Just give free rein to your imagination!</p>
+<p>As you can see, running an ASP.NET Core 2.0 app on a Raspberry Pi is not only possible, but reasonably easy too; you just need a bit of fiddling with headers and reverse proxy settings. You won&rsquo;t host the next Facebook or StackOverflow on your RPi, but it&rsquo;s fine for small utility applications. Just give free rein to your imagination!</p>
 
 		</div>
 		<footer class="post__footer">

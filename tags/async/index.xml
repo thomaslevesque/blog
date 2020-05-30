@@ -18,7 +18,7 @@
       
       <guid>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</guid>
       <description>Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
-Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&#39;t such a good approach.</description>
+Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&amp;rsquo;t such a good approach.</description>
     </item>
     
     <item>
@@ -27,9 +27,9 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
-      <description>*Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.*
+      <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&#39;s no current scope in the Configure method, so you can&#39;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
+ There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
     </item>
     
     <item>

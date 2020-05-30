@@ -17,7 +17,7 @@
       <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/02/23/easy-text-parsing-in-c-with-sprache/</guid>
-      <description>A few days ago, I discovered a little gem: Sprache. The name means &amp;ldquo;language&amp;rdquo; in German. It&#39;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&#39;ll see in a minute, Sprache makes it very simple.
+      <description>A few days ago, I discovered a little gem: Sprache. The name means &amp;ldquo;language&amp;rdquo; in German. It&amp;rsquo;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&amp;rsquo;ll see in a minute, Sprache makes it very simple.
 Text parsing Parsing text is a common task, but it can be tedious and error-prone.</description>
     </item>
     

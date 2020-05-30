@@ -128,7 +128,7 @@ Console.WriteLine(<span style="color:#e6db74">$&#34;Coordinates: ({x}, {y})&#34;
 
 ...
 
-<span style="color:#66d9ef">var</span> tuple = Tuple.Create(<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#ae81ff">4</span><span style="color:#ae81ff">2</span>);
+<span style="color:#66d9ef">var</span> tuple = Tuple.Create(<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#ae81ff">42</span>);
 <span style="color:#66d9ef">var</span> (name, <span style="color:#66d9ef">value</span>) = tuple;
 Console.WriteLine(<span style="color:#e6db74">$&#34;Name: {name}, Value = {value}&#34;</span>);
 </code></pre></div><p>Finally, methods that return tuples are now decorated with a <code>[TupleElementNames]</code> attribute that indicates the names of the tuple members:</p>

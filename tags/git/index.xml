@@ -17,8 +17,8 @@
       <pubDate>Fri, 29 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/</guid>
-      <description>Oh no, you just accidentally commited to master, when you were supposed to work on a feature branch! How to fix it? It&#39;s actually pretty easy with Git!
-A common Git workflow nowadays is the &amp;ldquo;feature branch&amp;rdquo; workflow: you can&#39;t push directly to the &amp;ldquo;main&amp;rdquo; branch (usually master, but it can be something else); instead you have to create a branch from master, commit to that branch, publish it and submit a pull request.</description>
+      <description>Oh no, you just accidentally commited to master, when you were supposed to work on a feature branch! How to fix it? It&amp;rsquo;s actually pretty easy with Git!
+A common Git workflow nowadays is the &amp;ldquo;feature branch&amp;rdquo; workflow: you can&amp;rsquo;t push directly to the &amp;ldquo;main&amp;rdquo; branch (usually master, but it can be something else); instead you have to create a branch from master, commit to that branch, publish it and submit a pull request.</description>
     </item>
     
     <item>
@@ -28,7 +28,7 @@ A common Git workflow nowadays is the &amp;ldquo;feature branch&amp;rdquo; workf
       
       <guid>https://thomaslevesque.com/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</guid>
       <description>I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&amp;hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.
-Fortunately, it&#39;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&#39;t have been there in the first place.</description>
+Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&amp;rsquo;t have been there in the first place.</description>
     </item>
     
     <item>

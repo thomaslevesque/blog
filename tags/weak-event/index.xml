@@ -27,7 +27,7 @@ My initial solution was more a proof of concept than anything else, and had a ma
       <pubDate>Mon, 17 May 2010 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</guid>
-      <description>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&#39;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.</description>
+      <description>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&amp;rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.</description>
     </item>
     
   </channel>

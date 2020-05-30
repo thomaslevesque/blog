@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/tags/asp.net-core/" />
-<meta property="og:updated_time" content="2020-01-30T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-05-05T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="asp.net core"/>
@@ -87,7 +87,7 @@ if (!doNotTrack) {
 	<div class="content list__excerpt post__content clearfix">
 		Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
  query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
- But it's just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.
+ But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -101,8 +101,8 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-12-20T00:00:00Z">December 20, 2019</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Out of the box, ASP.NET Core has the concept of &ldquo;environments&rdquo;, which allows your app to use different settings based on which environment it's running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
- appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don't have to specify unchanged settings in every environment if they're already specified in the global settings file.
+		Out of the box, ASP.NET Core has the concept of &ldquo;environments&rdquo;, which allows your app to use different settings based on which environment it&rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
+ appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&rsquo;t have to specify unchanged settings in every environment if they&rsquo;re already specified in the global settings file.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -116,7 +116,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-03-18T00:00:00Z">March 18, 2019</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client's capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.
+		ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -130,7 +130,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-01-10T00:00:00Z">January 10, 2019</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn't affect you as a developer; but if you're using Google authentication in an ASP.
+		A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -145,7 +145,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
-openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won't match the issuer specified in the OpenID metadata.
+openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&rsquo;t match the issuer specified in the OpenID metadata.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -160,7 +160,7 @@ openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organiza
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
-Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn't such a good approach.
+Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&rsquo;t such a good approach.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -174,7 +174,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-09-04T00:00:00Z">September 04, 2018</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Suppose we're writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
+		Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
  Embed the image bytes as base64 in the JSON payload, e.g.  { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!
 	</div>
 </article><article class="list__item post">
@@ -189,9 +189,9 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-07-20T00:00:00Z">July 20, 2018</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		*Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.*
+		Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There's no current scope in the Configure method, so you can't use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp.
+ There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">

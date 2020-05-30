@@ -10,7 +10,7 @@
 	<meta property="og:title" content="Handling query string parameters with no value in ASP.NET Core" />
 <meta property="og:description" content="Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
  query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
- But it&#39;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc." />
+ But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/" />
 <meta property="article:published_time" content="2020-01-30T00:00:00+00:00" />
@@ -20,7 +20,7 @@
 <meta name="twitter:title" content="Handling query string parameters with no value in ASP.NET Core"/>
 <meta name="twitter:description" content="Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
  query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
- But it&#39;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc."/>
+ But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -86,9 +86,9 @@ if (!doNotTrack) {
 <blockquote>
 <p>query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs</p>
 </blockquote>
-<p>But it's just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it's not standardized. The use of key-value pairs separated by <code>&amp;</code> is just a convention, not a requirement.</p>
-<p>And as it happens, it's not uncommon to see URLs with query strings like this: <code>?foo</code>, i.e. a key without a value. How it should be interpreted is entirely implementation-dependent, but in most cases, it probably means the same as <code>?foo=true</code>: the presence of the parameter is interpreted as an implicit true value.</p>
-<p>Unfortunately, in ASP.NET Core MVC, there's no built-in support for this form of query string. If you have a controller action like this:</p>
+<p>But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&rsquo;s not standardized. The use of key-value pairs separated by <code>&amp;</code> is just a convention, not a requirement.</p>
+<p>And as it happens, it&rsquo;s not uncommon to see URLs with query strings like this: <code>?foo</code>, i.e. a key without a value. How it should be interpreted is entirely implementation-dependent, but in most cases, it probably means the same as <code>?foo=true</code>: the presence of the parameter is interpreted as an implicit true value.</p>
+<p>Unfortunately, in ASP.NET Core MVC, there&rsquo;s no built-in support for this form of query string. If you have a controller action like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[HttpGet(&#34;search&#34;)]</span>
 <span style="color:#66d9ef">public</span> IActionResult Search(
 <span style="color:#a6e22e">    [FromQuery]</span> <span style="color:#66d9ef">string</span> term,
@@ -108,8 +108,8 @@ if (!doNotTrack) {
     ]
   }
 }
-</code></pre></div><p>It's not a very big issue, but it's annoying… So, let's see what we can do about it!</p>
-<p>By default, a boolean parameter is bound using <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.modelbinding.binders.simpletypemodelbinder?view=aspnetcore-3.1"><code>SimpleTypeModelBinder</code></a>, which is used for most primitive types. This model binder uses the <code>TypeConverter</code> of the target type to convert a string value to the target type. In this case, the converter is a <code>BooleanConverter</code>, which doesn't recognize an empty value…</p>
+</code></pre></div><p>It&rsquo;s not a very big issue, but it&rsquo;s annoying… So, let&rsquo;s see what we can do about it!</p>
+<p>By default, a boolean parameter is bound using <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.modelbinding.binders.simpletypemodelbinder?view=aspnetcore-3.1"><code>SimpleTypeModelBinder</code></a>, which is used for most primitive types. This model binder uses the <code>TypeConverter</code> of the target type to convert a string value to the target type. In this case, the converter is a <code>BooleanConverter</code>, which doesn&rsquo;t recognize an empty value…</p>
 <p>So we need to create our own model binder, which will interpret the presence of a key with no value as an implicit <code>true</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">QueryBooleanModelBinder</span> : IModelBinder
 {
@@ -172,11 +172,11 @@ if (!doNotTrack) {
 </code></pre></div><p><em>Note: This code is for an ASP.NET Core 3 Web API project.</em></p>
 <ul>
 <li><em>If your project also has views or pages, replace <code>AddControllers</code> with <code>AddControllersWithViews</code> or <code>AddRazorPages</code>, as appropriate.</em></li>
-<li><em>If you're using ASP.NET Core 2, replace <code>AddControllers</code> with <code>AddMvc</code>.</em></li>
+<li><em>If you&rsquo;re using ASP.NET Core 2, replace <code>AddControllers</code> with <code>AddMvc</code>.</em></li>
 </ul>
-<p>Note that we need to insert our new model binder provider at the beginning of the list. If we add it at the end, another provider will match first, and our provider won't even be called.</p>
-<p>And that's it: you should now be able to call your endpoint with a query string like <code>?term=foo&amp;ignoreCase</code>, without explicitly specifying <code>true</code> as the value of <code>ignoreCase</code>.</p>
-<p>A possible improvement to this binder would be to also accept <code>0</code> or <code>1</code> as valid values for boolean parameters. I'll leave that as an exercise to you!</p>
+<p>Note that we need to insert our new model binder provider at the beginning of the list. If we add it at the end, another provider will match first, and our provider won&rsquo;t even be called.</p>
+<p>And that&rsquo;s it: you should now be able to call your endpoint with a query string like <code>?term=foo&amp;ignoreCase</code>, without explicitly specifying <code>true</code> as the value of <code>ignoreCase</code>.</p>
+<p>A possible improvement to this binder would be to also accept <code>0</code> or <code>1</code> as valid values for boolean parameters. I&rsquo;ll leave that as an exercise to you!</p>
 
 		</div>
 		<footer class="post__footer">

@@ -17,7 +17,7 @@
       <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/</guid>
-      <description>T4 (Text Template Transformation Toolkit) is a great tool to generate code at design time; you can, for instance, create POCO classes from database tables, generate repetitive code, etc. In Visual Studio, T4 files (.tt extension) are associated with the TextTemplatingFileGenerator custom tool, which transforms the template to generate an output file every time you save the template. But sometimes it&#39;s not enough, and you want to ensure that the template&#39;s output is regenerated before build.</description>
+      <description>T4 (Text Template Transformation Toolkit) is a great tool to generate code at design time; you can, for instance, create POCO classes from database tables, generate repetitive code, etc. In Visual Studio, T4 files (.tt extension) are associated with the TextTemplatingFileGenerator custom tool, which transforms the template to generate an output file every time you save the template. But sometimes it&amp;rsquo;s not enough, and you want to ensure that the template&amp;rsquo;s output is regenerated before build.</description>
     </item>
     
     <item>

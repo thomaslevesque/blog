@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="Handling type hierarchies in Cosmos DB (part 2)" />
 <meta property="og:description" content="This is the second post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&#39;s TypeNameHandling feature. In this post, I&#39;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB ." />
+ Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&rsquo;s TypeNameHandling feature. In this post, I&rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/" />
 <meta property="article:published_time" content="2019-10-15T00:00:00+00:00" />
@@ -18,7 +18,7 @@
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Handling type hierarchies in Cosmos DB (part 2)"/>
 <meta name="twitter:description" content="This is the second post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&#39;s TypeNameHandling feature. In this post, I&#39;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB ."/>
+ Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&rsquo;s TypeNameHandling feature. In this post, I&rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB ."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -84,9 +84,9 @@ if (!doNotTrack) {
 <li><a href="/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/">Handling type hierarchies in Cosmos DB (part 1)</a></li>
 <li>Handling type hierarchies in Cosmos DB (part 2) (this post)</li>
 </ul>
-<p>In the <a href="/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/">previous post</a>, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET's <code>TypeNameHandling</code> feature. In this post, I'll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .NET SDK.</p>
+<p>In the <a href="/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/">previous post</a>, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&rsquo;s <code>TypeNameHandling</code> feature. In this post, I&rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .NET SDK.</p>
 <h2 id="custom-json-converter">Custom JSON converter</h2>
-<p>With JSON.NET, we can create custom converters to tell the serializer how to serialize and deserialize specific types. Let's see how to apply this feature to our problem.</p>
+<p>With JSON.NET, we can create custom converters to tell the serializer how to serialize and deserialize specific types. Let&rsquo;s see how to apply this feature to our problem.</p>
 <p>First, let add an abstract <code>Type</code> property to the base class of our object model, and implement it in the concrete classes:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileSystemItem</span>
 {
@@ -109,7 +109,7 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> Type =&gt; <span style="color:#e6db74">&#34;folderItem&#34;</span>;
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ChildrenCount { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 }
-</code></pre></div><p>There's nothing special to do for serialization, as JSON.NET will automatically serialize the <code>Type</code> property. However, we need a converter to handle deserialization when the target type is the abstract <code>FileSystemItem</code> class. Here it is:</p>
+</code></pre></div><p>There&rsquo;s nothing special to do for serialization, as JSON.NET will automatically serialize the <code>Type</code> property. However, we need a converter to handle deserialization when the target type is the abstract <code>FileSystemItem</code> class. Here it is:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileSystemItemJsonConverter</span> : JsonConverter
 {
     <span style="color:#75715e">// This converter handles only deserialization, not serialization.
@@ -147,7 +147,7 @@ if (!doNotTrack) {
         <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NotSupportedException(<span style="color:#e6db74">&#34;This converter handles only deserialization, not serialization.&#34;</span>);
     }
 }
-</code></pre></div><p>And here's how we can now use this converter:</p>
+</code></pre></div><p>And here&rsquo;s how we can now use this converter:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> settings = <span style="color:#66d9ef">new</span> JsonSerializerSettings
 {
     Converters =
@@ -161,12 +161,12 @@ if (!doNotTrack) {
 
 <span style="color:#66d9ef">var</span> deserializedItems = JsonConvert.DeserializeObject&lt;FileSystemItem[]&gt;(json, settings);
 </code></pre></div><p>And we get the same results as with the custom serialization binder, except that we have control over which types are serialized with a <code>$type</code> property.</p>
-<p>This converter is specific to <code>FileSystemItem</code>, but of course, it's possible to make a more generic one, based on reflection.</p>
+<p>This converter is specific to <code>FileSystemItem</code>, but of course, it&rsquo;s possible to make a more generic one, based on reflection.</p>
 <h2 id="integration-with-the-cosmos-db-sdk">Integration with the Cosmos DB SDK</h2>
-<p>OK, we now have two ways of serializing and deserializing type hierarchies in JSON. In my opinion, the one based on <code>TypeNameHandling</code> is either overly verbose when using <code>TypeNameHandling.Objects</code>, or a bit risky when using <code>TypeNameHandling.Auto</code>, because it's easy to forget to specify the root type and end up with no <code>$type</code> property on the root object. So I'll stick to the solution based on a converter, at least until my feature suggestion for JSON.NET is implemented.</p>
-<p>Now, let's see how to integrate this with the Cosmos DB .NET SDK.</p>
-<p>If you're still using the 2.x SDK, it's trivial: just pass the <code>JsonSerializerSettings</code> with the converter to the <code>DocumentClient</code> constructor (but you should totally consider switching to 3.X, which is much nicer to work with in my opinion).</p>
-<p>In the 3.x SDK, it requires a little more work. The default serializer is based on JSON.NET, so it <em>should</em> be easy to pass custom <code>JsonSerializerSettings</code>&hellip; but unfortunately, the class is not public, so we can't instantiate it ourselves. All we can do is specify <code>CosmosSerializationOptions</code> that are passed to it, and those options only expose a very small subset of what is possible with JSON.NET. So the alternative is to implement our own serializer, based on JSON.NET.</p>
+<p>OK, we now have two ways of serializing and deserializing type hierarchies in JSON. In my opinion, the one based on <code>TypeNameHandling</code> is either overly verbose when using <code>TypeNameHandling.Objects</code>, or a bit risky when using <code>TypeNameHandling.Auto</code>, because it&rsquo;s easy to forget to specify the root type and end up with no <code>$type</code> property on the root object. So I&rsquo;ll stick to the solution based on a converter, at least until my feature suggestion for JSON.NET is implemented.</p>
+<p>Now, let&rsquo;s see how to integrate this with the Cosmos DB .NET SDK.</p>
+<p>If you&rsquo;re still using the 2.x SDK, it&rsquo;s trivial: just pass the <code>JsonSerializerSettings</code> with the converter to the <code>DocumentClient</code> constructor (but you should totally consider switching to 3.X, which is much nicer to work with in my opinion).</p>
+<p>In the 3.x SDK, it requires a little more work. The default serializer is based on JSON.NET, so it <em>should</em> be easy to pass custom <code>JsonSerializerSettings</code>&hellip; but unfortunately, the class is not public, so we can&rsquo;t instantiate it ourselves. All we can do is specify <code>CosmosSerializationOptions</code> that are passed to it, and those options only expose a very small subset of what is possible with JSON.NET. So the alternative is to implement our own serializer, based on JSON.NET.</p>
 <p>To do this, we must derive from the <a href="https://github.com/Azure/azure-cosmos-dotnet-v3/blob/06b961a6c181995590097f764b296403169974f8/Microsoft.Azure.Cosmos/src/Serializer/CosmosSerializer.cs"><code>CosmosSerializer</code></a> abstract class:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">public abstract class CosmosSerializer
 {
@@ -174,8 +174,8 @@ if (!doNotTrack) {
     public abstract Stream ToStream&lt;T&gt;(T input);
 }
 </code></pre></div><p><code>FromStream</code> takes a stream and reads an object of the specified type from the stream. <code>ToStream</code> takes an object, writes it to a stream and returns the stream.</p>
-<p><em><strong>Aside</strong>: To be honest, I don't think it's a very good abstraction&hellip; Returning a <code>Stream</code> is weird, it would be more natural to receive a stream and write to it. The way it's designed, you <strong>have</strong> to create a new <code>MemoryStream</code> for every object you serialize, and then the data will be copied from that stream to the document. That's hardly efficient&hellip; Also, you must dispose the stream you receive in <code>FromStream</code>, which is unusual (you're usually not responsible for disposing an object you didn't create); it also means that the SDK creates a new stream for each document to read, which is, again, inefficient. Ah, well&hellip; It's too late to fix it v3 (it would be a breaking change), but maybe in v4?</em></p>
-<p>Fortunately, we don't have to reinvent the wheel: we can just copy the code from the <a href="https://github.com/Azure/azure-cosmos-dotnet-v3/blob/06b961a6c181995590097f764b296403169974f8/Microsoft.Azure.Cosmos/src/Serializer/CosmosJsonDotNetSerializer.cs">default implementation</a>, and adapt it to our needs. Here it goes:</p>
+<p><em><strong>Aside</strong>: To be honest, I don&rsquo;t think it&rsquo;s a very good abstraction&hellip; Returning a <code>Stream</code> is weird, it would be more natural to receive a stream and write to it. The way it&rsquo;s designed, you <strong>have</strong> to create a new <code>MemoryStream</code> for every object you serialize, and then the data will be copied from that stream to the document. That&rsquo;s hardly efficient&hellip; Also, you must dispose the stream you receive in <code>FromStream</code>, which is unusual (you&rsquo;re usually not responsible for disposing an object you didn&rsquo;t create); it also means that the SDK creates a new stream for each document to read, which is, again, inefficient. Ah, well&hellip; It&rsquo;s too late to fix it v3 (it would be a breaking change), but maybe in v4?</em></p>
+<p>Fortunately, we don&rsquo;t have to reinvent the wheel: we can just copy the code from the <a href="https://github.com/Azure/azure-cosmos-dotnet-v3/blob/06b961a6c181995590097f764b296403169974f8/Microsoft.Azure.Cosmos/src/Serializer/CosmosJsonDotNetSerializer.cs">default implementation</a>, and adapt it to our needs. Here it goes:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NewtonsoftJsonCosmosSerializer</span> : CosmosSerializer
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Encoding DefaultEncoding = <span style="color:#66d9ef">new</span> UTF8Encoding(<span style="color:#66d9ef">false</span>, <span style="color:#66d9ef">true</span>);
@@ -206,7 +206,7 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> Stream ToStream&lt;T&gt;(T input)
     {
         <span style="color:#66d9ef">var</span> streamPayload = <span style="color:#66d9ef">new</span> MemoryStream();
-        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> streamWriter = <span style="color:#66d9ef">new</span> StreamWriter(streamPayload, encoding: DefaultEncoding, bufferSize: <span style="color:#ae81ff">1</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">2</span><span style="color:#ae81ff">4</span>, leaveOpen: <span style="color:#66d9ef">true</span>))
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> streamWriter = <span style="color:#66d9ef">new</span> StreamWriter(streamPayload, encoding: DefaultEncoding, bufferSize: <span style="color:#ae81ff">1024</span>, leaveOpen: <span style="color:#66d9ef">true</span>))
         {
             <span style="color:#66d9ef">using</span> (JsonWriter writer = <span style="color:#66d9ef">new</span> JsonTextWriter(streamWriter))
             {
@@ -234,7 +234,7 @@ if (!doNotTrack) {
     Serializer = <span style="color:#66d9ef">new</span> NewtonsoftJsonCosmosSerializer(serializerSettings)
 };
 <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> CosmosClient(connectionString, clientOptions);
-</code></pre></div><p>And that's it! We can now query our collection of mixed <code>FileItem</code>s and <code>FolderItem</code>s, and have them deserialized to the proper type:</p>
+</code></pre></div><p>And that&rsquo;s it! We can now query our collection of mixed <code>FileItem</code>s and <code>FolderItem</code>s, and have them deserialized to the proper type:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query = container.GetItemLinqQueryable&lt;FileSystemItem&gt;();
 <span style="color:#66d9ef">var</span> iterator = query.ToFeedIterator();
 <span style="color:#66d9ef">while</span> (iterator.HasMoreResults)
@@ -254,7 +254,7 @@ if (!doNotTrack) {
         Console.WriteLine(description);
     }
 }
-</code></pre></div><p>There might be better solutions out there. If you're using Entity Framework Core 3.0, which supports Cosmos DB, this scenario <em>seems</em> to be supported, but I was unable to make it work so far. In the meantime, this solution is working very well for me, and I hope it helps you too!</p>
+</code></pre></div><p>There might be better solutions out there. If you&rsquo;re using Entity Framework Core 3.0, which supports Cosmos DB, this scenario <em>seems</em> to be supported, but I was unable to make it work so far. In the meantime, this solution is working very well for me, and I hope it helps you too!</p>
 
 		</div>
 		<footer class="post__footer">

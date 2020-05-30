@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="Scaling out ASP.NET Core SignalR using Azure Service Bus" />
-<meta property="og:description" content="ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&#39;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it." />
+<meta property="og:description" content="ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/" />
 <meta property="article:published_time" content="2019-03-18T00:00:00+00:00" />
@@ -16,7 +16,7 @@
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Scaling out ASP.NET Core SignalR using Azure Service Bus"/>
-<meta name="twitter:description" content="ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&#39;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it."/>
+<meta name="twitter:description" content="ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -77,14 +77,14 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-03-18T00:00:00Z">March 18, 2019</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p><a href="https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction">ASP.NET Core SignalR</a> is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client's capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it. Microsoft has two documented solutions to this problem:</p>
+			<p><a href="https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction">ASP.NET Core SignalR</a> is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it. Microsoft has two documented solutions to this problem:</p>
 <ul>
 <li><a href="https://docs.microsoft.com/en-us/aspnet/core/signalr/redis-backplane">Using Redis as a backplane</a> for sharing information between server instances.</li>
 <li><a href="https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-overview?toc=/aspnet/core/toc.json&amp;bc=/aspnet/core/breadcrumb/toc.json">Using Azure SignalR Service</a>, which is basically &ldquo;SignalR As A Service&rdquo;.</li>
 </ul>
-<p>Derek Comartin did a good job explaining these solutions (<a href="https://codeopinion.com/practical-asp-net-core-signalr-scaling/">Redis</a>, <a href="https://codeopinion.com/practical-asp-net-core-signalr-azure/">Azure SignalR Service</a>), so I won't go into the details. Both are perfectly viable, however they're relatively expensive. A Redis Cache resource in Azure starts at about 14€/month for the smallest size, and Azure SignalR Service starts at about 40€/month for a single unit (I'm entirely dismissing the free plan, which is too limited to use beyond development scenarios). Sure, it's not <em>that</em> expensive, but why pay more when you can pay less?</p>
-<p>What I want to talk about in this post is a third option that will probably be cheaper in many scenarios: using <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview">Azure Service Bus</a> to dispatch SignalR messages between server instances. In fact, <a href="https://docs.microsoft.com/en-us/aspnet/signalr/overview/performance/scaleout-with-windows-azure-service-bus">this approach was supported in classic ASP.NET</a>, but it hasn't been ported to ASP.NET Core.</p>
-<p>Here's an overview of how one could manually implement the Azure Service Bus approach:</p>
+<p>Derek Comartin did a good job explaining these solutions (<a href="https://codeopinion.com/practical-asp-net-core-signalr-scaling/">Redis</a>, <a href="https://codeopinion.com/practical-asp-net-core-signalr-azure/">Azure SignalR Service</a>), so I won&rsquo;t go into the details. Both are perfectly viable, however they&rsquo;re relatively expensive. A Redis Cache resource in Azure starts at about 14€/month for the smallest size, and Azure SignalR Service starts at about 40€/month for a single unit (I&rsquo;m entirely dismissing the free plan, which is too limited to use beyond development scenarios). Sure, it&rsquo;s not <em>that</em> expensive, but why pay more when you can pay less?</p>
+<p>What I want to talk about in this post is a third option that will probably be cheaper in many scenarios: using <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview">Azure Service Bus</a> to dispatch SignalR messages between server instances. In fact, <a href="https://docs.microsoft.com/en-us/aspnet/signalr/overview/performance/scaleout-with-windows-azure-service-bus">this approach was supported in classic ASP.NET</a>, but it hasn&rsquo;t been ported to ASP.NET Core.</p>
+<p>Here&rsquo;s an overview of how one could manually implement the Azure Service Bus approach:</p>
 <ul>
 <li>
 <p>When an instance of the application wants to send a SignalR message to all clients, it sends it:</p>
@@ -111,7 +111,7 @@ if (!doNotTrack) {
 <li>
 <p>Each instance of the application runs a <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services">hosted service</a> that subscribes to the topic and processes the messages</p>
 <ul>
-<li>When a message is received, it's sent to the relevant clients via the hub context, unless it's from the current instance.</li>
+<li>When a message is received, it&rsquo;s sent to the relevant clients via the hub context, unless it&rsquo;s from the current instance.</li>
 </ul>
 </li>
 </ul>
@@ -133,15 +133,15 @@ subscriptionClient.RegisterMessageHandler(OnMessageReceived, OnError);
     <span style="color:#75715e">// Send the message to clients connected to the current instance
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">await</span> _hubContext.Clients.All.ReceiveMessageAsync(message.Text);
 }
-</code></pre></div><p>I'm not showing the full details of how to implement this solution, because to be honest, it kind of sucks. It works, but it's a bit ugly: the fact that it's using a service bus to share messages with other server instances is too visible, you can't just ignore it. Every time you send a message via SignalR, you also have to explicitly send one to the service bus. It would be better to hide that ugliness behind an abstraction, or even better, make it completely invisible&hellip;</p>
-<p>If you have used the Redis or Azure SignalR Service approaches before, you might have noticed how simple they are to use. Basically, in your <code>Startup.ConfigureServices</code> method, just append <code>AddRedis(...)</code> or <code>AddAzureSignalR(...)</code> after <code>services.AddSignalR()</code>, and you're done: you can use SignalR as usual, the details of how it handles scale-out are completely abstracted away. Wouldn't it be nice to be able to do the same for Azure Service Bus? I thought so too, so I made a library that does exactly that: <a href="https://github.com/thomaslevesque/AspNetCore.SignalR.AzureServiceBus">AspNetCore.SignalR.AzureServiceBus</a>. To use it, reference the <a href="https://www.nuget.org/packages/AspNetCore.SignalR.AzureServiceBus/1.0.0-alpha.1">NuGet package</a>, and just add this in your <code>Startup.ConfigureServices</code> method:</p>
+</code></pre></div><p>I&rsquo;m not showing the full details of how to implement this solution, because to be honest, it kind of sucks. It works, but it&rsquo;s a bit ugly: the fact that it&rsquo;s using a service bus to share messages with other server instances is too visible, you can&rsquo;t just ignore it. Every time you send a message via SignalR, you also have to explicitly send one to the service bus. It would be better to hide that ugliness behind an abstraction, or even better, make it completely invisible&hellip;</p>
+<p>If you have used the Redis or Azure SignalR Service approaches before, you might have noticed how simple they are to use. Basically, in your <code>Startup.ConfigureServices</code> method, just append <code>AddRedis(...)</code> or <code>AddAzureSignalR(...)</code> after <code>services.AddSignalR()</code>, and you&rsquo;re done: you can use SignalR as usual, the details of how it handles scale-out are completely abstracted away. Wouldn&rsquo;t it be nice to be able to do the same for Azure Service Bus? I thought so too, so I made a library that does exactly that: <a href="https://github.com/thomaslevesque/AspNetCore.SignalR.AzureServiceBus">AspNetCore.SignalR.AzureServiceBus</a>. To use it, reference the <a href="https://www.nuget.org/packages/AspNetCore.SignalR.AzureServiceBus/1.0.0-alpha.1">NuGet package</a>, and just add this in your <code>Startup.ConfigureServices</code> method:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddSignalR()
         .AddAzureServiceBus(options =&gt;
         {
             options.ConnectionString = <span style="color:#e6db74">&#34;(your service bus connection string)&#34;</span>;
             options.TopicName = <span style="color:#e6db74">&#34;(your topic name)&#34;</span>;
         });
-</code></pre></div><p><strong>Disclaimer:</strong> The library is still in alpha status, probably not ready for production use. I'm not aware of any issue, but it hasn't been battle tested yet. Use at your own risk, and please report any issues you find!</p>
+</code></pre></div><p><strong>Disclaimer:</strong> The library is still in alpha status, probably not ready for production use. I&rsquo;m not aware of any issue, but it hasn&rsquo;t been battle tested yet. Use at your own risk, and please report any issues you find!</p>
 
 		</div>
 		<footer class="post__footer">

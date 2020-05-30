@@ -18,7 +18,7 @@
       
       <guid>https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
       <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)
-If you&#39;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&amp;hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&#39;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</description>
+If you&amp;rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&amp;hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&amp;rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</description>
     </item>
     
   </channel>

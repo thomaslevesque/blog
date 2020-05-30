@@ -17,7 +17,7 @@
       <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
-      <description>Suppose we&#39;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
+      <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
  Embed the image bytes as base64 in the JSON payload, e.g.  { &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
     </item>
     

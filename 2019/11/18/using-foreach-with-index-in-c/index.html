@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="Using foreach with index in C#" />
 <meta property="og:description" content="Just a quick tip today!
-for and foreach loops are among the most useful constructs in a C# developer&#39;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&lt;T&gt;, and doesn&#39;t require to access the current element by its index.
+for and foreach loops are among the most useful constructs in a C# developer&rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&lt;T&gt;, and doesn&rsquo;t require to access the current element by its index.
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/" />
@@ -19,7 +19,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Using foreach with index in C#"/>
 <meta name="twitter:description" content="Just a quick tip today!
-for and foreach loops are among the most useful constructs in a C# developer&#39;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&lt;T&gt;, and doesn&#39;t require to access the current element by its index.
+for and foreach loops are among the most useful constructs in a C# developer&rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&lt;T&gt;, and doesn&rsquo;t require to access the current element by its index.
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:"/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -82,7 +82,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-11-18T00:00:00Z">November 18, 2019</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>Just a quick tip today!</p>
-<p><code>for</code> and <code>foreach</code> loops are among the most useful constructs in a C# developer's toolbox. To iterate a collection, <code>foreach</code> is, in my opinion, more convenient than <code>for</code> in most cases. It works with all collection types, including those that are not indexable such as <code>IEnumerable&lt;T&gt;</code>, and doesn't require to access the current element by its index.</p>
+<p><code>for</code> and <code>foreach</code> loops are among the most useful constructs in a C# developer&rsquo;s toolbox. To iterate a collection, <code>foreach</code> is, in my opinion, more convenient than <code>for</code> in most cases. It works with all collection types, including those that are not indexable such as <code>IEnumerable&lt;T&gt;</code>, and doesn&rsquo;t require to access the current element by its index.</p>
 <p>But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// foreach with a &#34;manual&#34; index
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> index = <span style="color:#ae81ff">0</span>;
@@ -98,7 +98,7 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">var</span> item = collection[index];
     DoSomething(item, index);
 }
-</code></pre></div><p>It's something that has always annoyed me; couldn't we have the benefits of both <code>foreach</code> and <code>for</code>? It turns out that there's a simple solution, using Linq and tuples. Just write an extension method like this:</p>
+</code></pre></div><p>It&rsquo;s something that has always annoyed me; couldn&rsquo;t we have the benefits of both <code>foreach</code> and <code>for</code>? It turns out that there&rsquo;s a simple solution, using Linq and tuples. Just write an extension method like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System.Linq;
 ...
 

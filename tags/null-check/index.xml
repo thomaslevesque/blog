@@ -28,7 +28,7 @@
       
       <guid>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
       <description>The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&#39;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
+X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
     </item>
     
   </channel>

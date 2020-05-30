@@ -84,7 +84,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-23T00:00:00Z">August 23, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I'll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let's take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :
+		Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I&rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let&rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -98,7 +98,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-04T00:00:00Z">August 04, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today's post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
+		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -112,7 +112,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-07-28T00:00:00Z">July 28, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		If you have read my previous posts on the topic, you know I'm a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
+		If you have read my previous posts on the topic, you know I&rsquo;m a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
   if the value of the markup extension can change in response to an event
 	</div>
 </article><article class="list__item post">
@@ -129,7 +129,7 @@ if (!doNotTrack) {
 	<div class="content list__excerpt post__content clearfix">
 		As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
  This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
- To illustrate this, let's take a simple example : a ListBox bound to a collection of strings in the ViewModel :
+ To illustrate this, let&rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -143,7 +143,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-03-27T00:00:00Z">March 27, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		It's quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&hellip; With the DataGridView in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.
+		It&rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&hellip; With the DataGridView in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -158,8 +158,8 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
-&lt;UserControl.InputBindings&gt; &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt; &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn't work, for two reasons :
- The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don't inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.
+&lt;UserControl.InputBindings&gt; &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt; &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
+ The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -187,7 +187,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-02-13T00:00:00Z">February 13, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Today, I stumbled upon a very handy class : SyndicationFeed. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones. For instance, here's how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it's items :
+		Today, I stumbled upon a very handy class : SyndicationFeed. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones. For instance, here&rsquo;s how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it&rsquo;s items :
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -202,7 +202,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Oops&hellip; 2 months already since my previous (and first) post&hellip; I really have to get on a more regular schedule ;)
-If you've ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can't be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.
+If you&rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -217,7 +217,7 @@ If you've ever tried to use the Clipboard.GetImage method in WPF, you probably h
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.
-The end-user of any application expects that his preferences (window size, state of this or that option&hellip;) are saved to be restored at the next run : that's why .NET 2.0 introduced application settings as a unified way to persist these settings.
+The end-user of any application expects that his preferences (window size, state of this or that option&hellip;) are saved to be restored at the next run : that&rsquo;s why .NET 2.0 introduced application settings as a unified way to persist these settings.
 	</div>
 </article>
 </main>

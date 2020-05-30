@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="[WPF] A markup extension that can update its target" />
-<meta property="og:description" content="If you have read my previous posts on the topic, you know I&#39;m a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
+<meta property="og:description" content="If you have read my previous posts on the topic, you know I&rsquo;m a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
   if the value of the markup extension can change in response to an event" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/" />
@@ -17,7 +17,7 @@
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] A markup extension that can update its target"/>
-<meta name="twitter:description" content="If you have read my previous posts on the topic, you know I&#39;m a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
+<meta name="twitter:description" content="If you have read my previous posts on the topic, you know I&rsquo;m a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
   if the value of the markup extension can change in response to an event"/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -79,13 +79,13 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-07-28T00:00:00Z">July 28, 2009</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>If you have read my previous posts on the topic, you know I'm a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :</p>
+			<p>If you have read my previous posts on the topic, you know I&rsquo;m a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :</p>
 <ul>
 <li>
 <p>if the value of the markup extension can change in response to an event</p>
 </li>
 <li>
-<p>if the state of the target object when the markup extension is evaluated doesn't allow to determine the value yet, and the evaluation needs to be deferred (for instance, if the DataContext of the target object is needed, but is not yet defined when the markup extension is evaluated)</p>
+<p>if the state of the target object when the markup extension is evaluated doesn&rsquo;t allow to determine the value yet, and the evaluation needs to be deferred (for instance, if the DataContext of the target object is needed, but is not yet defined when the markup extension is evaluated)</p>
 <p>This post explains how to update the target of a markup extension after the initial evaluation.  The  <code>ProvideValue</code> method of a markup extension takes a parameter of type <code>IServiceProvider</code>, which provides, among others, a <code>IProvideValueTarget</code> service. This interface exposes two properties, <code>TargetObject</code> and <code>TargetProperty</code>, which allow to retrieve the target object and property of the markup extension. It is then possible, if you retain this information, to update the property after the markup extension has already been evaluated.  To carry out this task, we can create an abstract class <code>UpdatableMarkupExtension</code>, which saves the target object and property, and provides a method to update the value :</p>
 </li>
 </ul>
@@ -145,7 +145,7 @@ if (!doNotTrack) {
 
         <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">object</span> ProvideValueInternal(IServiceProvider serviceProvider);
     }
-</code></pre></div><p>Since it is essential that the target object and property are saved, we mark the <code>ProvideValue</code> method as <code>sealed</code> so that it cannot be overriden, and we add an abstract <code>ProvideValueInternal</code> method so that inheritors can provide their implementation.  The <code>UpdateValue</code> method handles the update of the target property, which can be either a dependency property (<code>DependencyProperty</code>), or a standard CLR property (<code>PropertyInfo</code>). In the case of a <code>DependencyProperty</code>, the target object inherits from <code>DependencyObject</code>, which itself inherits from <code>DispatcherObject</code> : it is therefore necessary to make sure that the object is only accessed from the thread that owns it, using the <code>CheckAccess</code> and <code>Invoke</code> methods.  Here's a simple example to illustrate how to use this class. Let's assume we want to create a custom markup extension which indicates whether the network is available. It would be used like that :</p>
+</code></pre></div><p>Since it is essential that the target object and property are saved, we mark the <code>ProvideValue</code> method as <code>sealed</code> so that it cannot be overriden, and we add an abstract <code>ProvideValueInternal</code> method so that inheritors can provide their implementation.  The <code>UpdateValue</code> method handles the update of the target property, which can be either a dependency property (<code>DependencyProperty</code>), or a standard CLR property (<code>PropertyInfo</code>). In the case of a <code>DependencyProperty</code>, the target object inherits from <code>DependencyObject</code>, which itself inherits from <code>DispatcherObject</code> : it is therefore necessary to make sure that the object is only accessed from the thread that owns it, using the <code>CheckAccess</code> and <code>Invoke</code> methods.  Here&rsquo;s a simple example to illustrate how to use this class. Let&rsquo;s assume we want to create a custom markup extension which indicates whether the network is available. It would be used like that :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;CheckBox</span> <span style="color:#a6e22e">IsChecked=</span><span style="color:#e6db74">&#34;{my:NetworkAvailable}&#34;</span> <span style="color:#a6e22e">Content=</span><span style="color:#e6db74">&#34;Network is available&#34;</span> <span style="color:#f92672">/&gt;</span>
 </code></pre></div><p>Obviously, we want the checkbox to be updated when the availability of the network changes (e.g. when the network cable is plugged or unplugged, or when the Wifi network is out of reach). So we need to handle the <code>NetworkChange.NetworkAvailabilityChanged</code> event, and update the <code>IsChecked</code> property accordingly. So the extension will inherit the <code>UpdatableMarkupExtension</code> class to take advantage of the <code>UpdateValue</code> method :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NetworkAvailableExtension</span> : UpdatableMarkupExtension
@@ -166,7 +166,7 @@ if (!doNotTrack) {
         }
     }
 </code></pre></div><p>Note that we subscribe to the <code>NetworkAvailabilityChanged</code> event in the class constructor. If we wanted to subscribe to an event of the target object, we would have to do it in the <code>ProvideValueInternal</code> method, so that the target object can be accessed.  I hope this post let you see how simple it is to implement a markup extension that can update its target at a later time. This enables a behavior similar to a binding, but is not limited to dependency properties. An example of where I use this technique is to create a localization framework that allows to switch language &ldquo;on the fly&rdquo;, without restarting the application.</p>
-<p><strong>Update :</strong> In its current state, this markup extension can't be used in a template. For an explanation and a solution to that issue, please read <a href="/2009/08/23/wpf-markup-extensions-and-templates/">this post</a>.</p>
+<p><strong>Update :</strong> In its current state, this markup extension can&rsquo;t be used in a template. For an explanation and a solution to that issue, please read <a href="/2009/08/23/wpf-markup-extensions-and-templates/">this post</a>.</p>
 
 		</div>
 		<footer class="post__footer">

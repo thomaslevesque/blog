@@ -27,8 +27,8 @@
       <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
-      <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&#39;s also easily extensible.
-You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&#39;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
+      <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.
+You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&amp;rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
     </item>
     
     <item>
