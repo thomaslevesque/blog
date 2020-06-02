@@ -70,3 +70,4 @@ index 655a213..5ae1016 100644
 
 It took me a while to figure it out, so I hope you find it helpful!
 
+**Update**: using [submitgit](https://github.com/rtyley/submitgit), I was able to submit the change, which has been integrated into Git, so you no longer need to edit the Git configuration to support async methods.

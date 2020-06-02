@@ -27,7 +27,7 @@ To provide suggestions, you need to handle the [`SuggestionsRequested`](http://m
 
 The `AppendResultSuggestion` method takes several parameters, and one of them is the image to display for the suggestion. It is mandatory (passing null will throw an exception), and the parameter is of type [`IRandomAccessStreamReference`](http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.irandomaccessstreamreference), i.e. something that can provide a stream. I find this a little peculiar, since it would be more natural to pass an `ImageSource`, but that’s the way it is… So I looked for a class that implements the `IRandomAccessStreamReference` interface, and the first obvious candidate I found was `StorageFile`, which represents a file. So I wrote the following code:
 
-```
+```csharp
 private async void SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
 {
     var deferral = args.Request.GetDeferral();
@@ -56,7 +56,7 @@ I spent a long time double-checking everything, making lots of minor changes to 
 
 I eventually [submitted the problem to Stack Overflow](http://stackoverflow.com/questions/19769689/image-not-shown-for-result-suggestions-in-searchbox), and someone kindly provided the solution, which was very simple: instead of `StorageFile`, use [`RandomAccessStreamReference`](http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.randomaccessstreamreference) (seems pretty obvious once you know that it exists). The code now becomes :
 
-```
+```csharp
 private void SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
 {
     var imageUri = new Uri("ms-appx:///test.png");

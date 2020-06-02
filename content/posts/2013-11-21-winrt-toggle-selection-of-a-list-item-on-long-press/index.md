@@ -22,7 +22,7 @@ Sure, in the default style, there is visual hint (a discrete “slide down” an
 
 A simple way to do it is to create an attached property which, when set to `true`, subscribes to the `Holding` event of an item, and toggles the `IsSelected` property when the event occurs. Here’s a possible implementation:
 
-```
+```csharp
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -85,7 +85,7 @@ namespace TestSelectOnHold
 
 You can then set this property in the `ItemContainerStyle` of the list control
 
-```
+```xml
 <GridView.ItemContainerStyle>
     <Style TargetType="GridViewItem">
         ...
@@ -100,5 +100,3 @@ Note that this feature could also have been implemented as a full-fledged `Behav
 
 - Behaviors are not natively supported in WinRT (though they can be added as a [Nuget package](http://www.nuget.org/packages/Windows.UI.Interactivity/))
 - Behaviors don’t play well with styles, because `Interaction.Behaviors` is a collection, and you can’t add items to a collection from a style. A possible workaround would be to create an `IsEnabled` attached property that would add the behavior to the item when set to true, but then we would end up with a solution almost identical to the one described above, only more complex…
-
-

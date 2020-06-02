@@ -17,7 +17,7 @@ categories:
 
 [SQLite](http://sqlite.org/) is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an [official ADO.NET provider](http://system.data.sqlite.org/) that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a `DateTime` converted to local time, with `Kind` = `Unspecified`. Here’s an example that exhibits the problem (using [Dapper](https://github.com/StackExchange/dapper-dot-net) in [LINQPad](http://www.linqpad.net/)):
 
-```
+```csharp
 void Main()
 {
     string connectionString = @"Data Source=D:\tmp\testSQLiteDate.db";
@@ -50,7 +50,7 @@ As you can see, after reading it from the database, the date is no longer in UTC
 
 I initially tried to fix that in my code by manually converting the date, before I realized that the solution was much simpler (although [not very well documented](http://www.nudoq.org/#!/Packages/System.Data.SQLite/System.Data.SQLite/SQLiteConnectionStringBuilder/P/DateTimeKind)): there is a connection string setting to control how dates are handled. You just need to specify `DateTimeKind=Utc` in your connection string:
 
-```
+```csharp
 string connectionString = @"Data Source=D:\tmp\testSQLiteDate.db;DateTimeKind=Utc";
 ```
 

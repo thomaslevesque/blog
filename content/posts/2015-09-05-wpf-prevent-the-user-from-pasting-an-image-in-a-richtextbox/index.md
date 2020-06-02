@@ -23,7 +23,7 @@ When I googled for a way to prevent that, the only solutions I found suggested t
 - it doesn’t prevent the user from inserting an image using drag and drop
 
 
-Since I wasn’t satisfied with this solution, I used the [.NET Framework Reference Source website](http://referencesource.microsoft.com/) to look for a way to intercept the paste operation itself. I followed the code from the `ApplicationCommands.Paste` property, and eventually found the [DataObject.Pasting](https://msdn.microsoft.com/en-us/library/system.windows.dataobject.pasting.aspx)`` attached event. It’s not a place where I had thought to look, but when you think about it, it actually makes sense. This event can be used to intercept a paste or drag and drop operation, and lets the hander do a few things:
+Since I wasn’t satisfied with this solution, I used the [.NET Framework Reference Source website](http://referencesource.microsoft.com/) to look for a way to intercept the paste operation itself. I followed the code from the `ApplicationCommands.Paste` property, and eventually found the [`DataObject.Pasting`](https://msdn.microsoft.com/en-us/library/system.windows.dataobject.pasting.aspx) attached event. It’s not a place where I had thought to look, but when you think about it, it actually makes sense. This event can be used to intercept a paste or drag and drop operation, and lets the hander do a few things:
 
 - cancel the operation completely
 - change which data format will be pasted from the clipboard
@@ -34,13 +34,13 @@ In my case, I just wanted to prevent an image from being pasted or drag and drop
 
 XAML:
 
-```
+```xml
 <RichTextBox DataObject.Pasting="RichTextBox1_Pasting" ... />
 ```
 
 Code-behind:
 
-```
+```csharp
 private void RichTextBox1_Pasting(object sender, DataObjectPastingEventArgs e)
 {
     if (e.FormatToApply == "Bitmap")

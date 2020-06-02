@@ -38,12 +38,12 @@ If you apply it to a method or property, it means that the method or property wi
 
 
 
-```
-        [NotNull]
-        public string GetString()
-        {
-            return "Hello world!";
-        }
+```csharp
+[NotNull]
+public string GetString()
+{
+    return "Hello world!";
+}
 ```
 
 When a method has this attribute, if you test if the return value is null (or not null), R# will warn you that the condition is always false (or true):
@@ -54,12 +54,12 @@ When a method has this attribute, if you test if the return value is null (or no
 
 If you apply it to a method parameter, it means that null is not a valid argument value:
 
-```
-        public string Repeat([NotNull] string s)
-        {
-            if (s == null) throw new ArgumentNullException("s");
-            return s + s;
-        }
+```csharp
+public string Repeat([NotNull] string s)
+{
+    if (s == null) throw new ArgumentNullException("s");
+    return s + s;
+}
 ```
 
 If R# determines that the value passed for `s` can be null, it warns you about it, as shown in the first example.
@@ -88,12 +88,12 @@ This one is very useful. Applied to a method, it means that the method is [pure]
 
 This annotation indicates that a method works like the `String.Format` method, i.e. it takes a composite format string followed by arguments that will replace the placeholders in the format string:
 
-```
-        [StringFormatMethod("format")]
-        public static void Log(string format, params object[] args)
-        {
-            ...
-        }
+```csharp
+[StringFormatMethod("format")]
+public static void Log(string format, params object[] args)
+{
+    ...
+}
 ```
 
 It lets R# warn you if the placeholders and arguments don’t match:
@@ -110,11 +110,11 @@ This annotation is applied to an `IEnumerable` parameter, and means that the met
 
 
 
-```
-        public static IEnumerable<T> EmptyIfNull<T>([NoEnumeration] this IEnumerable<T> source)
-        {
-            return source ?? Enumerable.Empty<T>();
-        }
+```csharp
+public static IEnumerable<T> EmptyIfNull<T>([NoEnumeration] this IEnumerable<T> source)
+{
+    return source ?? Enumerable.Empty<T>();
+}
 ```
 
 
@@ -129,28 +129,28 @@ This annotation is a powerful way to describe how the output of a method depends
 
 
 
-```
-        [ContractAnnotation("null => null; notnull => notnull")]
-        public object Transform(object data)
-        {
-            ...
-        }
+```csharp
+[ContractAnnotation("null => null; notnull => notnull")]
+public object Transform(object data)
+{
+    ...
+}
 ```
 
 Thanks to the annotation, ReSharper will know that if the argument was not null, the result will not be null either.
 
 This method doesn’t return normally (it throws an exception) if its argument is null:
 
-```
-        [ContractAnnotation("value:null => halt")]
-        public static void CheckArgumentNull<T>(
-            [NoEnumeration] this T value,
-            [InvokerParameterName] string paramName)
-            where T : class
-        {
-            if (value == null)
-                throw new ArgumentNullException(paramName);
-        }
+```csharp
+[ContractAnnotation("value:null => halt")]
+public static void CheckArgumentNull<T>(
+    [NoEnumeration] this T value,
+    [InvokerParameterName] string paramName)
+    where T : class
+{
+    if (value == null)
+        throw new ArgumentNullException(paramName);
+}
 ```
 
 This lets R# know that if you pass a null to this method, the code following the call will never be reached; if it is reached, the value can be assumed to be not null.

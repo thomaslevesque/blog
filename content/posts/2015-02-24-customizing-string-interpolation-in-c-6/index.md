@@ -15,7 +15,7 @@ categories:
 
 One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
 
-```
+```csharp
 string text = $"{p.Name} was born on {p.DateOfBirth:D}";
 ```
 
@@ -33,7 +33,7 @@ During the design of the string interpolation feature, there was a lot of debate
 
 C# 6 provides an easy way to do that, by taking advantage of the conversion to `IFormattable`. You just need to create a method like this:
 
-```
+```csharp
 static string Invariant(FormattableString formattable)
 {
     return formattable.ToString(CultureInfo.InvariantCulture);
@@ -42,7 +42,7 @@ static string Invariant(FormattableString formattable)
 
 And you can then use it as follows:
 
-```
+```csharp
 string text = Invariant($"{p.Name} was born on {p.DateOfBirth:D}");
 ```
 
@@ -52,7 +52,7 @@ The values in the interpolated strings will now be formatted with the invariant 
 
 Here’s a more advanced example. String interpolation is a convenient way to build URLs, but if you include arbitrary strings in a URL, you need to be careful to URL-encode them. A custom string interpolator can do that for you; you just need to create a custom `IFormatProvider` that will take care of encoding the values. The implementation was not obvious at first, but after some trial and error I came up with this:
 
-```
+```csharp
 class UrlFormatProvider : IFormatProvider
 {
     private readonly UrlFormatter _formatter = new UrlFormatter();
@@ -80,7 +80,7 @@ class UrlFormatProvider : IFormatProvider
 
 You can use the formatter like this:
 
-```
+```csharp
 static string Url(FormattableString formattable)
 {
     return formattable.ToString(new UrlFormatProvider());
@@ -109,7 +109,7 @@ You can do something similar for SQL queries. Of course, it’s a known bad prac
 
 We can use the same approach as for URLs and create a `SqlFormatProvider`:
 
-```
+```csharp
 class SqlFormatProvider : IFormatProvider
 {
     private readonly SqlFormatter _formatter = new SqlFormatter();
@@ -141,7 +141,7 @@ class SqlFormatProvider : IFormatProvider
 
 You can then use the formatter like this:
 
-```
+```csharp
 static string Sql(FormattableString formattable)
 {
     return formattable.ToString(new SqlFormatProvider());
@@ -160,7 +160,7 @@ As is often the case for language features that leverage .NET framework types, y
 
 
 
-```
+```csharp
 using System;
 
 namespace System.Runtime.CompilerServices

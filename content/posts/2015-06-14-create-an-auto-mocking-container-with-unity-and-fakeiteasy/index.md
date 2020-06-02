@@ -19,7 +19,7 @@ Unit testing can be tedious sometimes, especially when testing classes that have
 
 But as nice as FakeItEasy is, the process of registering all the fake dependencies for the class you are testing is still a bit tedious. Wouldn’t it be nice if the IoC container could automatically create the fakes on demand ? So this code:
 
-```
+```csharp
 var container = new UnityContainer();
 
 // Setup dependencies
@@ -35,7 +35,7 @@ var sut = container.Resolve<SystemUnderTest>();
 
 Could be reduced to this:
 
-```
+```csharp
 var container = new UnityContainer();
 
 // This will cause the container to provide fakes for all dependencies
@@ -46,7 +46,7 @@ var sut = container.Resolve<SystemUnderTest>();
 
 Well, it’s actually pretty easy to do with Unity. Unity is usually not considered the “cool kid” in the small world of IoC containers, but it’s well supported, easy to use, and extensible. I came up with the following extension to enable the above scenario:
 
-```
+```csharp
 public class AutoFakeExtension : UnityContainerExtension
 {
     protected override void Initialize()
@@ -90,14 +90,14 @@ A few comments on this code:
 - The lifetime is set to “container controlled”, because if you need to configure method calls, you will need to access the same instance that is injected into the system under test:
 
 
-```
+```csharp
 var fooProvider = container.Resolve<IFooProvider>();
 A.CallTo(() => fooProvider.GetFoo(42)).Returns(new Foo { Id = 42, Name = “test” });
 ```
 
 Note that if you register a dependency explicitly, it will take precedence and no fake will be created. So you can use this extension and still be able to manually specify a dependency:
 
-```
+```csharp
 var container = new UnityContainer();
 container.AddNewExtension<AutoFakeExtension>();
 container.RegisterType<IFooProvider, TestFooProvider>();

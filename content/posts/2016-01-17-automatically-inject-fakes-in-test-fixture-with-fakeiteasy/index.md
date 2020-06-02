@@ -18,47 +18,47 @@ Today I’d like to share a nice feature I discovered recently in [FakeItEasy](h
 
 When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with [an auto-mocking Unity extension](/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/) to make it easier. Now I just realized that FakeItEasy offers an even better solution: just declare the dependencies and SUT as fields or properties in your test fixture, and call `Fake.InitializeFixture` on the fixture to initialize them. Here’s how it looks:
 
-```
-    public class BlogManagerTests
+```csharp
+public class BlogManagerTests
+{
+    [Fake] public IBlogPostRepository BlogPostRepository { get; set; }
+    [Fake] public ISocialNetworkNotifier SocialNetworkNotifier { get; set; }
+    [Fake] public ITimeService TimeService { get; set; }
+
+    [UnderTest] public BlogManager BlogManager { get; set; }
+
+    public BlogManagerTests()
     {
-        [Fake] public IBlogPostRepository BlogPostRepository { get; set; }
-        [Fake] public ISocialNetworkNotifier SocialNetworkNotifier { get; set; }
-        [Fake] public ITimeService TimeService { get; set; }
-
-        [UnderTest] public BlogManager BlogManager { get; set; }
-
-        public BlogManagerTests()
-        {
-            Fake.InitializeFixture(this);
-        }
-
-        [Fact]
-        public void NewPost_should_add_blog_post_to_repository()
-        {
-            var post = A.Dummy();
-
-            BlogManager.NewPost(post);
-
-            A.CallTo(() => BlogPostRepository.Add(post)).MustHaveHappened();
-        }
-
-        [Fact]
-        public void PublishPost_should_update_post_in_repository_and_publish_link_to_social_networks()
-        {
-            var publishDate = DateTimeOffset.Now;
-            A.CallTo(() => TimeService.Now).Returns(publishDate);
-
-            var post = A.Dummy();
-
-            BlogManager.PublishPost(post);
-
-            Assert.Equal(BlogPostStatus.Published, post.Status);
-            Assert.Equal(publishDate, post.PublishDate);
-
-            A.CallTo(() => BlogPostRepository.Update(post)).MustHaveHappened();
-            A.CallTo(() => SocialNetworkNotifier.PublishLink(post)).MustHaveHappened();
-        }
+        Fake.InitializeFixture(this);
     }
+
+    [Fact]
+    public void NewPost_should_add_blog_post_to_repository()
+    {
+        var post = A.Dummy();
+
+        BlogManager.NewPost(post);
+
+        A.CallTo(() => BlogPostRepository.Add(post)).MustHaveHappened();
+    }
+
+    [Fact]
+    public void PublishPost_should_update_post_in_repository_and_publish_link_to_social_networks()
+    {
+        var publishDate = DateTimeOffset.Now;
+        A.CallTo(() => TimeService.Now).Returns(publishDate);
+
+        var post = A.Dummy();
+
+        BlogManager.PublishPost(post);
+
+        Assert.Equal(BlogPostStatus.Published, post.Status);
+        Assert.Equal(publishDate, post.PublishDate);
+
+        A.CallTo(() => BlogPostRepository.Update(post)).MustHaveHappened();
+        A.CallTo(() => SocialNetworkNotifier.PublishLink(post)).MustHaveHappened();
+    }
+}
 ```
 
 The SUT is declared as a property marked with the `[UnderTest]` attribute. Each dependency that you need to manipulate is declared as a property marked with the `[Fake]` attribute. `Fake.InitializeFixture` then initializes the SUT, creating fake dependencies on the fly, and assigns those dependencies to the corresponding properties.

@@ -17,7 +17,9 @@ I recently started using Visual Studio Online for personal projects, and I must 
 
 However, I noticed a little gotcha when using Git for source control : the remote for VS Online **must** be named `origin`, otherwise Team Explorer won’t detect that it’s a VS Online project, and it won’t show the “Builds” and “Work items” pages.
 
-![When VSO remote is named &quot;origin&quot;](image.png "When VSO remote is named &quot;origin&quot;") ![When VSO remote is named &quot;vso&quot;](image1.png "When VSO remote is named &quot;vso&quot;")
+![When VSO remote is named &quot;origin&quot;](image.png "When VSO remote is named &quot;origin&quot;")
+
+![When VSO remote is named &quot;vso&quot;](image1.png "When VSO remote is named &quot;vso&quot;")
 
 
 

@@ -40,7 +40,7 @@ So as you can see, displaying a byte size in human-readable form isn’t as stra
 
 Its usage is quite simple. It’s based on a class named `ByteSizeFormatter`, which has a few properties to control how the value is rendered:
 
-```
+```csharp
 var formatter = new ByteSizeFormatter
 {
     Convention = ByteSizeConvention.Binary,
@@ -58,7 +58,7 @@ Console.WriteLine("The size of '{0}' is {1}", f, formatter.Format(f.Length));
 
 In most cases, though, you will just want to use the default settings. You can do that easily with the `Bytes` extension method:
 
-```
+```csharp
 var f = new FileInfo("TheFile.jpg");
 Console.WriteLine("The size of '{0}' is {1}", f, f.Length.Bytes());
 ```

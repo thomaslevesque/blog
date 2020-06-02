@@ -16,13 +16,13 @@ categories:
 
 With the upcoming version 6 of C#, there’s a lot of talk on CodePlex and elsewhere about string interpolation. Not very surprising, since it’s one of the major features of that release… In case you were living under a rock during the last few months and you haven’t heard about it, string interpolation is a way to insert C# expressions inside a string, so that they’re evaluated at runtime and replaced with their values. Basically, you write something like this:
 
-```
+```csharp
 string text = $"{p.Name} was born on {p.DateOfBirth:D}";
 ```
 
 And the compiler transforms it to this:
 
-```
+```csharp
 string text = String.Format("{0} was born on {1:D}", p.Name, p.DateOfBirth);
 ```
 
@@ -36,13 +36,13 @@ Or are we really?
 
 For a few years now, I’ve been using a [custom string interpolation engine](https://github.com/thomaslevesque/NString#stringtemplate) that can be used like `String.Format`, but with named placeholders instead of numeric ones. It takes a format string, and an object with properties that match the placeholder names:
 
-```
+```csharp
 string text = StringTemplate.Format("{Name} was born on {DateOfBirth:D}", new { p.Name, p.DateOfBirth });
 ```
 
 Obviously, if you already have an object with the properties you want to include in the string, you can just pass that object directly:
 
-```
+```csharp
 string text = StringTemplate.Format("{Name} was born on {DateOfBirth:D}", p);
 ```
 

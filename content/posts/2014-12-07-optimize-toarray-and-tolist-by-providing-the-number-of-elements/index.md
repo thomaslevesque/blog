@@ -19,14 +19,14 @@ The `ToArray` and `ToList` extension methods are convenient ways to eagerly mate
 
 Basically, `ToArray` takes a sequence, and returns an array that contains all the elements from the sequence. If the sequence implements `ICollection<T>`, it uses the `Count` property to allocate an array of the right size, and copy the elements into it; here’s an example:
 
-```
+```csharp
 List<User> users = GetUsers();
 User[] array = users.ToArray();
 ```
 
 In this scenario, `ToArray` is fairly efficient. Now, let’s change that code to extract just the names from the users:
 
-```
+```csharp
 List<User> users = GetUsers();
 string[] array = users.Select(u => u.Name).ToArray();
 ```
@@ -49,7 +49,7 @@ What is annoying is that, in many cases, we *know* the number of elements in the
 
 Well, it’s actually very easy to do: all we have to do is create a new extension method that accepts the count as a parameter. Here’s what it might look like:
 
-```
+```csharp
 public static TSource[] ToArray<TSource>(this IEnumerable<TSource> source, int count)
 {
     if (source == null) throw new ArgumentNullException("source");
@@ -66,7 +66,7 @@ public static TSource[] ToArray<TSource>(this IEnumerable<TSource> source, int c
 
 Now we can optimize our previous example like this:
 
-```
+```csharp
 List<User> users = GetUsers();
 string[] array = users.Select(u => u.Name).ToArray(users.Count);
 ```
@@ -77,7 +77,7 @@ So, what do we actually gain by doing that? From my benchmarks, this improved `T
 
 Note that we can improve `ToList` in the same way, by using the `List<T>` constructor that lets us specify the initial capacity:
 
-```
+```csharp
 public static List<TSource> ToList<TSource>(this IEnumerable<TSource> source, int count)
 {
     if (source == null) throw new ArgumentNullException("source");

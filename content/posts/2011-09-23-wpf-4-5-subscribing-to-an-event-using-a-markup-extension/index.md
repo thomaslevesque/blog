@@ -13,23 +13,33 @@ categories:
   - WPF
 ---
 
-It's been a while since I last wrote about markup extensions... The release of Visual Studio 11 Developer Preview, which introduces a number of [new features](http://msdn.microsoft.com/en-us/library/bb613588%28v=VS.110%29.aspx) to WPF, just gave me a reason to play with them again. The feature I'm going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events.  Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn't do the same to subscribe to an event. In WPF 4.5, it is now possible. So here is a small example of the kind we can do with it...  When using the MVVM pattern, we often associate commands of the ViewModel with controls of the view, via the binding mechanism. This approach usually works well, but it has some downsides:  
+It's been a while since I last wrote about markup extensions... The release of Visual Studio 11 Developer Preview, which introduces a number of [new features](http://msdn.microsoft.com/en-us/library/bb613588%28v=VS.110%29.aspx) to WPF, just gave me a reason to play with them again. The feature I'm going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events.
+
+Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn't do the same to subscribe to an event. In WPF 4.5, it is now possible. So here is a small example of the kind we can do with it...
+
+When using the MVVM pattern, we often associate commands of the ViewModel with controls of the view, via the binding mechanism. This approach usually works well, but it has some downsides:
+
 - it introduces a lot of boilerplate code in the ViewModel
 - not all controls have a `Command` property (actually, most don't), and when this property exists, it corresponds only to one event of the control (e.g. the click on a button). There is no really easy way to "bind" the other events to commands of the ViewModel
 
-  It would be nice to be able to bind events directly to ViewModel methods, like this:  
+It would be nice to be able to bind events directly to ViewModel methods, like this:
+
 ```xml
-        <Button Content="Click me"
-                Click="{my:EventBinding OnClick}" />
+<Button Content="Click me"
+        Click="{my:EventBinding OnClick}" />
 ```
- With the `OnClick` method defined in the ViewModel: 
+
+With the `OnClick` method defined in the ViewModel:
+
 ```csharp
-        public void OnClick(object sender, EventArgs e)
-        {
-            MessageBox.Show("Hello world!");
-        }
+public void OnClick(object sender, EventArgs e)
+{
+    MessageBox.Show("Hello world!");
+}
 ```
-  Well, this is now possible! Here's a proof of concept... The `EventBindingExtension` class shown below first gets the `DataContext` of the control, then looks for the specified method on the `DataContext`, and eventually returns a delegate for this method: 
+
+Well, this is now possible! Here's a proof of concept... The `EventBindingExtension` class shown below first gets the `DataContext` of the control, then looks for the specified method on the `DataContext`, and eventually returns a delegate for this method:
+
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -114,7 +124,13 @@ using System.Windows.Markup;
         #endregion
     }
 ```
-  This class can be used as shown in the example above.  As it is now, this markup extension has an annoying limitation: the `DataContext` must be set before the call to `ProvideValue`, otherwise it won't be possible to find the event handler method. A solution could be to subscribe to the `DataContextChanged` event to look for the method after the `DataContext` is set, but in the meantime we still need to return something... and we can't return null, because it would cause an exception (since you can't subscribe to an event with a null handler). So we need to return a dummy handler generated dynamically from the event signature. It makes things a bit harder... but it's still feasible.  Here's a second version that implements this improvement :  
+
+This class can be used as shown in the example above.
+
+As it is now, this markup extension has an annoying limitation: the `DataContext` must be set before the call to `ProvideValue`, otherwise it won't be possible to find the event handler method. A solution could be to subscribe to the `DataContextChanged` event to look for the method after the `DataContext` is set, but in the meantime we still need to return something... and we can't return null, because it would cause an exception (since you can't subscribe to an event with a null handler). So we need to return a dummy handler generated dynamically from the event signature. It makes things a bit harder... but it's still feasible.
+
+Here's a second version that implements this improvement :
+
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -281,5 +297,5 @@ using System.Windows.Markup;
         #endregion
     }
 ```
-  So this is the kind of things we can do thanks to this new WPF feature. We could also imagine a behavior system similar to what we can do with attached properties, e.g. to execute a standard action when an event occurs. There are lots of possible applications for this, I leave it to you to find them ;)  
 
+So this is the kind of things we can do thanks to this new WPF feature. We could also imagine a behavior system similar to what we can do with attached properties, e.g. to execute a standard action when an event occurs. There are lots of possible applications for this, I leave it to you to find them ;)

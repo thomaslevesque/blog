@@ -11,7 +11,6 @@ categories:
   - Uncategorized
 ---
 
-
 About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the [release notes](https://www.visualstudio.com/en-us/news/vs15-preview-vs.aspx#CsharpAndVB). Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!
 
 ### Enabling the new features
@@ -22,7 +21,7 @@ The new features are not enabled by default. You can enable them individually wi
 
 Most functional languages allow you to declare functions in the body of other functions. It’s now possible to do the same in C# 7! The syntax for declaring a method inside another is pretty much what you would expect:
 
-```
+```csharp
 long Factorial(int n)
 {
     long Fact(int i, long acc)
@@ -55,7 +54,7 @@ You can read more about this feature [in the Roslyn Github repository](https://g
 
 Since the first version of C#, it has always been possible to pass parameters by reference, which is conceptually similar to passing a pointer to a variable in languages like C. Until now, this feature was limited to parameters, but in C# 7 it becomes possible to return values by reference, or to have local variables that refer to the location of another variable. Here’s an example:
 
-```
+```csharp
 static void TestRefReturn()
 {
     var foo = new Foo();
@@ -95,7 +94,7 @@ Let’s have a closer look at this code.
 
 Note that you can also return an array location by reference:
 
-```
+```csharp
 private MyBigStruct[] array = new MyBigStruct[10];
 private int current;
 
@@ -115,7 +114,7 @@ Pattern matching is a feature very common in functional languages. C# 7 introduc
 
 Typically, if you need to test that a value is of type `DateTime`, then do something with that `DateTime`, you need to test the type, then cast to that type:
 
-```
+```csharp
 object o = GetValue();
 if (o is DateTime)
 {
@@ -126,7 +125,7 @@ if (o is DateTime)
 
 In C# 7, you can do this instead:
 
-```
+```csharp
 object o = GetValue();
 if (o is DateTime d)
 {
@@ -138,7 +137,7 @@ if (o is DateTime d)
 
 This feature can also be used in a switch statement:
 
-```
+```csharp
 object v = GetValue();
 switch (v)
 {
@@ -158,7 +157,7 @@ In this code, each case introduces a variable of the appropriate type, which you
 
 So far I only covered pattern matching against a simple type, but there are also more advanced forms. For instance:
 
-```
+```csharp
 switch (DateTime.Today)
 {
     case DateTime(*, 10, 31):
@@ -180,7 +179,7 @@ How cool is that!
 
 There’s also another (still experimental) form of pattern matching, using a new `match` keyword:
 
-```
+```csharp
 object o = GetValue();
 string description = o match
     (
@@ -200,7 +199,7 @@ These features were not explicitly mentioned in the VS Preview release notes, bu
 
 You can now write numeric literal in binary, in addition to decimal an hexadecimal:
 
-```
+```csharp
 int x = 0b11001010;
 ```
 
@@ -208,7 +207,7 @@ Very convenient to define bit masks!
 
 To make large numbers more readable, you can also group digits by introducing separators. This can be used for decimal, hexadecimal or binary literals:
 
-```
+```csharp
 int oneBillion = 1_000_000_000;
 int foo = 0x7FFF_1234;
 int bar = 0b1001_0110_1010_0101;

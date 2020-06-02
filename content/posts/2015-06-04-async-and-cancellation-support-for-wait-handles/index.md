@@ -20,21 +20,21 @@ Let’s start with the easiest one: cancellation. There are cases where it would
 
 A `CancellationToken` exposes a `WaitHandle`, which is signaled when cancellation is requested. We can take advantage of this to implement a cancellable wait on a wait handle:
 
-```
-    public static bool WaitOne(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
+```csharp
+public static bool WaitOne(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
+{
+    int n = WaitHandle.WaitAny(new[] { handle, cancellationToken.WaitHandle }, millisecondsTimeout);
+    switch (n)
     {
-        int n = WaitHandle.WaitAny(new[] { handle, cancellationToken.WaitHandle }, millisecondsTimeout);
-        switch (n)
-        {
-            case WaitHandle.WaitTimeout:
-                return false;
-            case 0:
-                return true;
-            default:
-                cancellationToken.ThrowIfCancellationRequested();
-                return false; // never reached
-        }
+        case WaitHandle.WaitTimeout:
+            return false;
+        case 0:
+            return true;
+        default:
+            cancellationToken.ThrowIfCancellationRequested();
+            return false; // never reached
     }
+}
 ```
 
 We use `WaitHandle.WaitAny` to wait for either the original wait handle or the cancellation token’s wait handle to be signaled. `WaitAny` returns the index of the first wait handle that was signaled, or `WaitHandle.WaitTimeout` if a timeout occurred before any of the wait handles was signaled. So we can have 3 possible outcomes:
@@ -42,17 +42,18 @@ We use `WaitHandle.WaitAny` to wait for either the original wait handle or the c
 - the original wait handle is signaled first: we return true (like the standard `WaitOne` method);
 - the cancellation token’s wait handle is signaled first: we throw an `OperationCancelledException`. <br><br>  For completeness, let’s add some overloads for common use cases:
 
+```csharp
+public static bool WaitOne(this WaitHandle handle, TimeSpan timeout, CancellationToken cancellationToken)
+{
+    return handle.WaitOne((int)timeout.TotalMilliseconds, cancellationToken);
+}
+
+public static bool WaitOne(this WaitHandle handle, CancellationToken cancellationToken)
+{
+    return handle.WaitOne(Timeout.Infinite, cancellationToken);
+}
 ```
-    public static bool WaitOne(this WaitHandle handle, TimeSpan timeout, CancellationToken cancellationToken)
-    {
-        return handle.WaitOne((int)timeout.TotalMilliseconds, cancellationToken);
-    }
-    
-    public static bool WaitOne(this WaitHandle handle, CancellationToken cancellationToken)
-    {
-        return handle.WaitOne(Timeout.Infinite, cancellationToken);
-    }
-```
+
 And that’s it, we now have a cancellable `WaitOne` method!
 
 ### Asynchronous wait
@@ -64,47 +65,48 @@ So here’s what we’ll do:
 - register a delegate to mark the task as cancelled when the cancellation token is signaled, using `CancellationToken.Register`;
 - unregister both delegates after the task completes <br>  Here’s the implementation:
 
+```csharp
+public static async Task<bool> WaitOneAsync(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
+{
+    RegisteredWaitHandle registeredHandle = null;
+    CancellationTokenRegistration tokenRegistration = default(CancellationTokenRegistration);
+    try
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        registeredHandle = ThreadPool.RegisterWaitForSingleObject(
+            handle,
+            (state, timedOut) => ((TaskCompletionSource<bool>)state).TrySetResult(!timedOut),
+            tcs,
+            millisecondsTimeout,
+            true);
+        tokenRegistration = cancellationToken.Register(
+            state => ((TaskCompletionSource<bool>)state).TrySetCanceled(),
+            tcs);
+        return await tcs.Task;
+    }
+    finally
+    {
+        if (registeredHandle != null)
+            registeredHandle.Unregister(null);
+        tokenRegistration.Dispose();
+    }
+}
+
+public static Task<bool> WaitOneAsync(this WaitHandle handle, TimeSpan timeout, CancellationToken cancellationToken)
+{
+    return handle.WaitOneAsync((int)timeout.TotalMilliseconds, cancellationToken);
+}
+
+public static Task<bool> WaitOneAsync(this WaitHandle handle, CancellationToken cancellationToken)
+{
+    return handle.WaitOneAsync(Timeout.Infinite, cancellationToken);
+}
 ```
-    public static async Task<bool> WaitOneAsync(this WaitHandle handle, int millisecondsTimeout, CancellationToken cancellationToken)
-    {
-        RegisteredWaitHandle registeredHandle = null;
-        CancellationTokenRegistration tokenRegistration = default(CancellationTokenRegistration);
-        try
-        {
-            var tcs = new TaskCompletionSource<bool>();
-            registeredHandle = ThreadPool.RegisterWaitForSingleObject(
-                handle,
-                (state, timedOut) => ((TaskCompletionSource<bool>)state).TrySetResult(!timedOut),
-                tcs,
-                millisecondsTimeout,
-                true);
-            tokenRegistration = cancellationToken.Register(
-                state => ((TaskCompletionSource<bool>)state).TrySetCanceled(),
-                tcs);
-            return await tcs.Task;
-        }
-        finally
-        {
-            if (registeredHandle != null)
-                registeredHandle.Unregister(null);
-            tokenRegistration.Dispose();
-        }
-    }
-    
-    public static Task<bool> WaitOneAsync(this WaitHandle handle, TimeSpan timeout, CancellationToken cancellationToken)
-    {
-        return handle.WaitOneAsync((int)timeout.TotalMilliseconds, cancellationToken);
-    }
-    
-    public static Task<bool> WaitOneAsync(this WaitHandle handle, CancellationToken cancellationToken)
-    {
-        return handle.WaitOneAsync(Timeout.Infinite, cancellationToken);
-    }
-```
+
 Note that the lambda expressions could have used the `tcs` variable directly; this would make the code more readable, but it would cause a closure to be created, so as a small performance optimization, `tcs` is passed as the `state` parameter.
 We can now use the `WaitOneAsync` method like this:
 
-```
+```csharp
 var mre = new ManualResetEvent(false);
 …
 if (await mre.WaitOneAsync(2000, cancellationToken))
@@ -112,8 +114,10 @@ if (await mre.WaitOneAsync(2000, cancellationToken))
     …
 }
 ```
+
 Important note: this method will not work for a `Mutex`, because it relies on `RegisterWaitForSingleObject`, which is documented to work only on wait handles other than `Mutex`.
 
 ### Conclusion
+
 We saw that with just a few extension methods, we made the standard synchronization primitives much more usable in typical modern code involving asynchrony and cancellation. However, I can hardly finish this post without mentioning Stephen Cleary’s [AsyncEx](https://github.com/StephenCleary/AsyncEx) library; it’s a rich toolbox which offers async-friendly versions of most standard primitives, some of which will let you achieve the same result as the code above. I encourage you to have a look at it, there’s plenty of good stuff in it.
 

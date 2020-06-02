@@ -14,7 +14,7 @@ categories:
 
 Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
 
-```
+```csharp
 static void Main()
 {
     try
@@ -32,7 +32,7 @@ As you might expect, the `catch` block will be entered if and only if `ex.Code =
 
 At first glance, this feature doesn’t seem to bring anything really new. After all, it has always been possible to do this:
 
-```
+```csharp
 static void Main()
 {
     try
@@ -75,7 +75,7 @@ You may have noticed that I talked about the stack, not the stack trace. Even th
 
 It’s interesting to note that an exception filter can contain any expression that returns a `bool` (well, almost… you can’t use `await`, for instance). It can be an inline condition, a property, a method call, etc. Technically, there’s nothing to prevent you from causing side effects in the exception filter. In most cases, I would strongly advise against doing that, as it can cause very confusing behavior; it can become really hard to understand the order in which things are executed. However, there is a common scenario that could benefit from side effects in exception filters: logging. You could easily create a method that logs the exception and returns false so that the catch block is not entered. This would allow logging exceptions on the fly without actually catching them, hence without unwinding the stack:
 
-```
+```csharp
 try
 {
     DoSomethingThatMightFail(s);

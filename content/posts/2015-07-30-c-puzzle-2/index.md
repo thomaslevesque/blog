@@ -15,7 +15,7 @@ Just another little puzzle based on an issue I had at work…
 
 Consider this piece of code :
 
-```
+```csharp
 Console.WriteLine($"x > y is {x > y}");
 Console.WriteLine($"!(x <= y) is {!(x <= y)}");
 ```
@@ -26,4 +26,3 @@ How would you declare and initialize `x` and `y` for the program to produce the 
 x > y is False
 !(x <= y) is True
 ```
-

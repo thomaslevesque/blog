@@ -29,7 +29,7 @@ Each handler has a chance to examine and/or modify the request before passing it
 
 The handler chain can be setup like this:
 
-```
+```csharp
 var pipeline = new MyHandler1()
 {
     InnerHandler = new MyHandler2()
@@ -42,7 +42,7 @@ var client = new HttpClient(pipeline);
 
 But if you prefer fluent interfaces, you can easily create an extension method to do it like this:
 
-```
+```csharp
 var pipeline = new HttpClientHandler()
     .DecorateWith(new MyHandler2())
     .DecorateWith(new MyHandler1());
