@@ -26,7 +26,9 @@
       <pubDate>Sun, 27 Mar 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/03/27/wpf-display-an-animated-gif-image/</guid>
-      <description>Note: The code in this article is out of date; the current code is hosted on GitHub. WPF is a great technology, but sometimes it seems to be missing some really basic features&amp;hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation. Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:</description>
+      <description>Note: The code in this article is out of date; the current code is hosted on GitHub.
+WPF is a great technology, but sometimes it seems to be missing some really basic features&amp;hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation.
+Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:</description>
     </item>
     
   </channel>

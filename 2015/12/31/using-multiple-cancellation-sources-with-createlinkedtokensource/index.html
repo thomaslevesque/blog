@@ -78,123 +78,123 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-12-31T00:00:00Z">December 31, 2015</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, <a href="https://msdn.microsoft.com/en-us/library/dd997364%28v=vs.110%29.aspx">a standardized approach to cancellation</a> has been introduced : cancellation tokens. The basic idea is that you create a <code>CancellationTokenSource</code> that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel. That method will then pass it to the other methods it calls, if they can be canceled, and/or regularly check if cancellation was requested. Upon cancellation, the method will typically throw an <code>OperationCanceledException</code>. Quick and dirty example:</p>
-<pre><code>private readonly IBusinessService _businessService;
-private CancellationTokenSource _cancellationSource;
-private Task _asyncOperation;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IBusinessService _businessService;
+<span style="color:#66d9ef">private</span> CancellationTokenSource _cancellationSource;
+<span style="color:#66d9ef">private</span> Task _asyncOperation;
 
-private void StartAsyncOperation()
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> StartAsyncOperation()
 {
-    if (_asyncOperation != null)
-        return;
-    var _cancellationSource = new CancellationTokenSource();
+    <span style="color:#66d9ef">if</span> (_asyncOperation != <span style="color:#66d9ef">null</span>)
+        <span style="color:#66d9ef">return</span>;
+    <span style="color:#66d9ef">var</span> _cancellationSource = <span style="color:#66d9ef">new</span> CancellationTokenSource();
     _asyncOperation = _businessService.DoSomethingAsync(_cancellationSource.Token);
 }
 
-// async void is bad; like I said, this is a quick and dirty example
-private async void StopAsyncOperation()
+<span style="color:#75715e">// async void is bad; like I said, this is a quick and dirty example
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> StopAsyncOperation()
 {
-    try
+    <span style="color:#66d9ef">try</span>
     {
         _cancellationSource.Cancel();
-        // wait for the operation to finish
-        await _asyncOperation;
+        <span style="color:#75715e">// wait for the operation to finish
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">await</span> _asyncOperation;
     }
-    catch (OperationCanceledException)
+    <span style="color:#66d9ef">catch</span> (OperationCanceledException)
     {
-        // Operation was successfully canceled
-    }
-    catch (Exception)
+        <span style="color:#75715e">// Operation was successfully canceled
+</span><span style="color:#75715e"></span>    }
+    <span style="color:#66d9ef">catch</span> (Exception)
     {
-        // Oops, something went wrong
-    }
-    finally
+        <span style="color:#75715e">// Oops, something went wrong
+</span><span style="color:#75715e"></span>    }
+    <span style="color:#66d9ef">finally</span>
     {
-        _asyncOperation = null;
+        _asyncOperation = <span style="color:#66d9ef">null</span>;
         _cancellationSource.Dispose();
-        _cancellationSource = null;
+        _cancellationSource = <span style="color:#66d9ef">null</span>;
     }
 
 ...
 
-class BusinessService : IBusinessService
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BusinessService</span> : IBusinessService
 {
-    public async Task DoSomethingAsync(CancellationToken cancellationToken)
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task DoSomethingAsync(CancellationToken cancellationToken)
     {
-        var data = await GetDataFromServerAsync(cancellationToken);
-        foreach (string line in data)
+        <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromServerAsync(cancellationToken);
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> line <span style="color:#66d9ef">in</span> data)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await ProcessLineAsync(line, cancellationToken);
+            <span style="color:#66d9ef">await</span> ProcessLineAsync(line, cancellationToken);
         }
     }
 
     ...
 }
-</code></pre><p>In this case, <code>StopAsyncOperation</code> would be called, for instance, if the user chooses to abort the operation.</p>
+</code></pre></div><p>In this case, <code>StopAsyncOperation</code> would be called, for instance, if the user chooses to abort the operation.</p>
 <p>This all works pretty well and is rather easy to setup. But what if there is another reason to cancel the operation, known only by the <code>BusinessService</code> and outside the control of the calling method? That’s where the <code>CancellationSource.CreateLinkedTokenSource</code> method comes into play; basically, this method creates a cancellation source that will be canceled when any of the specified tokens is canceled.</p>
 <p>Let’s start with a simple case: you have another cancellation token that you also want to take into account. The code would look like this:</p>
-<pre><code>    public async Task DoSomethingAsync(CancellationToken cancellationToken)
-    {
-        var otherToken = GetOtherCancellationToken();
-        using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, otherToken))
-        {
-            var data = await GetDataFromServerAsync(linkedCts.Token);
-            foreach (string line in data)
-            {
-                linkedCts.Token.ThrowIfCancellationRequested();
-                await ProcessLineAsync(line, linkedCts.Token);
-            }
-        }
-    }
-</code></pre><p>We created a linked cancellation source based on the two cancellation tokens, then used the token from this new source instead of <code>cancellationToken</code>. If either <code>cancellationToken</code> or <code>otherToken</code> is canceled, <code>linkedCts.Token</code> will be canceled as well. If necessary, the calling code can detect how the operation was canceled by checking the <code>CancellationToken</code> property of the <code>OperationCanceledException</code>.</p>
-<p>Now let’s see a slightly more difficult case: the second cancellation source is actually an event. You want to cancel the operation when the event occurs, in addition to user cancellation represented by the <code>cancellationToken</code> parameter. So you need to subscribe to the event and trigger the cancellation when it occurs. Here’s a way to do it:</p>
-<pre><code>    public async Task DoSomethingAsync(CancellationToken cancellationToken)
-    {
-        using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
-        {
-            EventHandler handler = (sender, e) =&gt; linkedCts.Cancel();
-            try
-            {
-                SomeEvent += handler;
-                var data = await GetDataFromServerAsync(linkedCts.Token);
-                foreach (string line in data)
-                {
-                    linkedCts.Token.ThrowIfCancellationRequested();
-                    await ProcessLineAsync(line, linkedCts.Token);
-                }
-            }
-            finally
-            {
-                SomeEvent -= handler;
-            }
-        }
-    }
-</code></pre><p>Here we only pass <code>cancellationToken</code> to <code>CreateLinkedTokenSource</code>, and we directly cancel <code>linkedCts</code> when the event is raised. The code is getting a bit convoluted, but it achieves the desired result.</p>
-<p>I can’t really give you a specific real-world use case of this technique, because the cases where I used it are too specific to be of public interest, but I can outline the general scenario. I have a long running operation that is made up of multiple long running operations. The whole operation can be canceled globally, and each of the sub-operations can also be canceled individually, without affecting the others. Here’s the rough outline of what it looks like:</p>
-<pre><code>async Task GlobalOperationAsync(CancellationToken cancellationToken)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task DoSomethingAsync(CancellationToken cancellationToken)
 {
-    foreach (var subOperation is SubOperations)
+    <span style="color:#66d9ef">var</span> otherToken = GetOtherCancellationToken();
+    <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, otherToken))
     {
-        cancellationToken.ThrowIfCancellationRequested();
-        var subToken = subOperation.GetSpecificCancellationToken();
-        using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, subToken))
+        <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromServerAsync(linkedCts.Token);
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> line <span style="color:#66d9ef">in</span> data)
         {
-            try
-            {
-                await subOperation.RunAsync(linkedCts.Token);
-            }
-            catch (OperationCanceledException ex)
-            {
-                // Rethrow only if global cancellation was requested
-                if (cancellationToken.IsCancellationRequested)
-                    throw;
-                    
-                // otherwise continue running the other sub-operations
-            }
+            linkedCts.Token.ThrowIfCancellationRequested();
+            <span style="color:#66d9ef">await</span> ProcessLineAsync(line, linkedCts.Token);
         }
     }
 }
-</code></pre><p>Note that even though <code>CancellationToken</code> was introduced with the TPL and all the examples I gave were asynchronous, nothing prevents you from using this technique with synchronous code.</p>
+</code></pre></div><p>We created a linked cancellation source based on the two cancellation tokens, then used the token from this new source instead of <code>cancellationToken</code>. If either <code>cancellationToken</code> or <code>otherToken</code> is canceled, <code>linkedCts.Token</code> will be canceled as well. If necessary, the calling code can detect how the operation was canceled by checking the <code>CancellationToken</code> property of the <code>OperationCanceledException</code>.</p>
+<p>Now let’s see a slightly more difficult case: the second cancellation source is actually an event. You want to cancel the operation when the event occurs, in addition to user cancellation represented by the <code>cancellationToken</code> parameter. So you need to subscribe to the event and trigger the cancellation when it occurs. Here’s a way to do it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task DoSomethingAsync(CancellationToken cancellationToken)
+{
+    <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+    {
+        EventHandler handler = (sender, e) =&gt; linkedCts.Cancel();
+        <span style="color:#66d9ef">try</span>
+        {
+            SomeEvent += handler;
+            <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromServerAsync(linkedCts.Token);
+            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> line <span style="color:#66d9ef">in</span> data)
+            {
+                linkedCts.Token.ThrowIfCancellationRequested();
+                <span style="color:#66d9ef">await</span> ProcessLineAsync(line, linkedCts.Token);
+            }
+        }
+        <span style="color:#66d9ef">finally</span>
+        {
+            SomeEvent -= handler;
+        }
+    }
+}
+</code></pre></div><p>Here we only pass <code>cancellationToken</code> to <code>CreateLinkedTokenSource</code>, and we directly cancel <code>linkedCts</code> when the event is raised. The code is getting a bit convoluted, but it achieves the desired result.</p>
+<p>I can’t really give you a specific real-world use case of this technique, because the cases where I used it are too specific to be of public interest, but I can outline the general scenario. I have a long running operation that is made up of multiple long running operations. The whole operation can be canceled globally, and each of the sub-operations can also be canceled individually, without affecting the others. Here’s the rough outline of what it looks like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task GlobalOperationAsync(CancellationToken cancellationToken)
+{
+    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> subOperation <span style="color:#66d9ef">is</span> SubOperations)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        <span style="color:#66d9ef">var</span> subToken = subOperation.GetSpecificCancellationToken();
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, subToken))
+        {
+            <span style="color:#66d9ef">try</span>
+            {
+                <span style="color:#66d9ef">await</span> subOperation.RunAsync(linkedCts.Token);
+            }
+            <span style="color:#66d9ef">catch</span> (OperationCanceledException ex)
+            {
+                <span style="color:#75715e">// Rethrow only if global cancellation was requested
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> (cancellationToken.IsCancellationRequested)
+                    <span style="color:#66d9ef">throw</span>;
+                    
+                <span style="color:#75715e">// otherwise continue running the other sub-operations
+</span><span style="color:#75715e"></span>            }
+        }
+    }
+}
+</code></pre></div><p>Note that even though <code>CancellationToken</code> was introduced with the TPL and all the examples I gave were asynchronous, nothing prevents you from using this technique with synchronous code.</p>
 <p>I hope you find this helpful. Have a great New Year’s Eve celebration and a happy new year!</p>
 
 		</div>

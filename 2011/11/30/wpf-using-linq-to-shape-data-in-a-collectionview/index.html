@@ -98,14 +98,11 @@ view.SortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription
 </span><span style="color:#75715e"></span>view.GroupDescriptions.Add(<span style="color:#66d9ef">new</span> PropertyGroupDescription(<span style="color:#e6db74">&#34;Country&#34;</span>));
 </code></pre></div><p>Even though this technique is not difficult to use, it has a few drawbacks:</p>
 <ul>
-<li>
-<p>The syntax is a bit clumsy and unnatural: the fact that the filter parameter is an <code>object</code> whereas we know it&rsquo;s actually of type <code>Person</code> makes the code less readable because of the cast, and the specification of the sort and group descriptions is a little repetitive</p>
-</li>
-<li>
-<p>Specifying the property names as strings introduces a risk of error, since they&rsquo;re not verified by the compiler</p>
-<p>In the last few years, we got used to use Linq to do this kind of things… it would be nice to be able to do the same for the shaping of an <code>ICollectionView</code>.  Let&rsquo;s see what syntax we could use to do it with Linq… something like this perhaps?</p>
-</li>
+<li>The syntax is a bit clumsy and unnatural: the fact that the filter parameter is an <code>object</code> whereas we know it&rsquo;s actually of type <code>Person</code> makes the code less readable because of the cast, and the specification of the sort and group descriptions is a little repetitive</li>
+<li>Specifying the property names as strings introduces a risk of error, since they&rsquo;re not verified by the compiler</li>
 </ul>
+<p>In the last few years, we got used to use Linq to do this kind of things… it would be nice to be able to do the same for the shaping of an <code>ICollectionView</code>.</p>
+<p>Let&rsquo;s see what syntax we could use to do it with Linq… something like this perhaps?</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">People.Where(p =&gt; p.Age &gt;= <span style="color:#ae81ff">18</span>)
       .OrderBy(p =&gt; p.LastName)
       .ThenBy(p =&gt; p.FirstName)
@@ -115,7 +112,7 @@ view.SortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription
 <span style="color:#66d9ef">where</span> p.Age &gt;= <span style="color:#ae81ff">18</span>
 <span style="color:#66d9ef">orderby</span> p.LastName, p.FirstName
 <span style="color:#66d9ef">group</span> p <span style="color:#66d9ef">by</span> p.Country;
-</code></pre></div><p>Obviously, this is not enough: this code only creates a  query on the collection, it doesn&rsquo;t modify the <code>CollectionView</code>… but with just a little extra work, we can get the desired result:</p>
+</code></pre></div><p>Obviously, this is not enough: this code only creates a query on the collection, it doesn&rsquo;t modify the <code>CollectionView</code>… but with just a little extra work, we can get the desired result:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> People.ShapeView()
     <span style="color:#66d9ef">where</span> p.Age &gt;= <span style="color:#ae81ff">18</span>
@@ -123,145 +120,149 @@ view.SortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription
     <span style="color:#66d9ef">group</span> p <span style="color:#66d9ef">by</span> p.Country;
 
 query.Apply();
-</code></pre></div><p>The <code>ShapeView</code> method returns a wrapper which encapsulates the default view of the collection, and exposes <code>Where</code>, <code>OrderBy</code> and <code>GroupBy</code> methods with appropriate signatures to specify the shaping of the <code>CollectionView</code>. Creating the query has no direct effect, the changes are only applied to the view when  <code>Apply</code> is called: that&rsquo;s because it&rsquo;s better to apply all changes at the same time, using <code>ICollectionView.DeferRefresh</code>, to avoid causing a refresh of the view for each clause of the query. When <code>Apply</code> is called, we can see that the view is correctly updated to reflect the query.  This solution allows to define the filter, sort and grouping in a strongly-typed way, which implies that the code is verified by the compiler. It&rsquo;s also more concise and readable than the original code… Just be careful with one thing: some queries that are correct from the compiler&rsquo;s point of view won&rsquo;t be applicable to a <code>CollectionView</code>. For instance, if you try to group the data by the first letter of the last name (<code>p.LastName.Substring(0, 1)</code>), the <code>GroupBy</code> method will fail because only properties are supported by <code>PropertyGroupDescription</code>.  Note that the wrapper won&rsquo;t overwrite the shaping properties of the <code>CollectionView</code> if you don&rsquo;t specify the corresponding Linq clause, so you can just modify the current view without specifying everything again. If you need to clear the properties, you can use the <code>ClearFilter</code>, <code>ClearSort</code> and <code>ClearGrouping</code> methods:</p>
+</code></pre></div><p>The <code>ShapeView</code> method returns a wrapper which encapsulates the default view of the collection, and exposes <code>Where</code>, <code>OrderBy</code> and <code>GroupBy</code> methods with appropriate signatures to specify the shaping of the <code>CollectionView</code>. Creating the query has no direct effect, the changes are only applied to the view when</p>
+<p><code>Apply</code> is called: that&rsquo;s because it&rsquo;s better to apply all changes at the same time, using <code>ICollectionView.DeferRefresh</code>, to avoid causing a refresh of the view for each clause of the query. When <code>Apply</code> is called, we can see that the view is correctly updated to reflect the query.</p>
+<p>This solution allows to define the filter, sort and grouping in a strongly-typed way, which implies that the code is verified by the compiler. It&rsquo;s also more concise and readable than the original code… Just be careful with one thing: some queries that are correct from the compiler&rsquo;s point of view won&rsquo;t be applicable to a <code>CollectionView</code>. For instance, if you try to group the data by the first letter of the last name (<code>p.LastName.Substring(0, 1)</code>), the <code>GroupBy</code> method will fail because only properties are supported by <code>PropertyGroupDescription</code>.</p>
+<p>Note that the wrapper won&rsquo;t overwrite the shaping properties of the <code>CollectionView</code> if you don&rsquo;t specify the corresponding Linq clause, so you can just modify the current view without specifying everything again. If you need to clear the properties, you can use the <code>ClearFilter</code>, <code>ClearSort</code> and <code>ClearGrouping</code> methods:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Remove the grouping and add a sort criteria
 </span><span style="color:#75715e"></span>People.ShapeView()
       .ClearGrouping()
       .OrderBy(p =&gt; p.LastName);
       .Apply();
-</code></pre></div><p>Note that as for a normal Linq query, it&rsquo;s possible to use either the query comprehension syntax or to call the methods directly, since the former is just syntactic sugar for the latter.  Finally, here&rsquo;s the complete code of the wrapper and the associated extension methods:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CollectionViewShaper</span>
+</code></pre></div><p>Note that as for a normal Linq query, it&rsquo;s possible to use either the query comprehension syntax or to call the methods directly, since the former is just syntactic sugar for the latter.</p>
+<p>Finally, here&rsquo;s the complete code of the wrapper and the associated extension methods:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CollectionViewShaper</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> CollectionViewShaper&lt;TSource&gt; ShapeView&lt;TSource&gt;(<span style="color:#66d9ef">this</span> IEnumerable&lt;TSource&gt; source)
     {
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> CollectionViewShaper&lt;TSource&gt; ShapeView&lt;TSource&gt;(<span style="color:#66d9ef">this</span> IEnumerable&lt;TSource&gt; source)
-        {
-            <span style="color:#66d9ef">var</span> view = CollectionViewSource.GetDefaultView(source);
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> CollectionViewShaper&lt;TSource&gt;(view);
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> CollectionViewShaper&lt;TSource&gt; Shape&lt;TSource&gt;(<span style="color:#66d9ef">this</span> ICollectionView view)
-        {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> CollectionViewShaper&lt;TSource&gt;(view);
-        }
+        <span style="color:#66d9ef">var</span> view = CollectionViewSource.GetDefaultView(source);
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> CollectionViewShaper&lt;TSource&gt;(view);
     }
 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CollectionViewShaper</span>&lt;TSource&gt;
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> CollectionViewShaper&lt;TSource&gt; Shape&lt;TSource&gt;(<span style="color:#66d9ef">this</span> ICollectionView view)
     {
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICollectionView _view;
-        <span style="color:#66d9ef">private</span> Predicate&lt;<span style="color:#66d9ef">object</span>&gt; _filter;
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;SortDescription&gt; _sortDescriptions = <span style="color:#66d9ef">new</span> List&lt;SortDescription&gt;();
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;GroupDescription&gt; _groupDescriptions = <span style="color:#66d9ef">new</span> List&lt;GroupDescription&gt;();
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> CollectionViewShaper&lt;TSource&gt;(view);
+    }
+}
 
-        <span style="color:#66d9ef">public</span> CollectionViewShaper(ICollectionView view)
-        {
-            <span style="color:#66d9ef">if</span> (view == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;view&#34;</span>);
-            _view = view;
-            _filter = view.Filter;
-            _sortDescriptions = view.SortDescriptions.ToList();
-            _groupDescriptions = view.GroupDescriptions.ToList();
-        }
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CollectionViewShaper</span>&lt;TSource&gt;
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICollectionView _view;
+    <span style="color:#66d9ef">private</span> Predicate&lt;<span style="color:#66d9ef">object</span>&gt; _filter;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;SortDescription&gt; _sortDescriptions = <span style="color:#66d9ef">new</span> List&lt;SortDescription&gt;();
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;GroupDescription&gt; _groupDescriptions = <span style="color:#66d9ef">new</span> List&lt;GroupDescription&gt;();
 
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Apply()
+    <span style="color:#66d9ef">public</span> CollectionViewShaper(ICollectionView view)
+    {
+        <span style="color:#66d9ef">if</span> (view == <span style="color:#66d9ef">null</span>)
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;view&#34;</span>);
+        _view = view;
+        _filter = view.Filter;
+        _sortDescriptions = view.SortDescriptions.ToList();
+        _groupDescriptions = view.GroupDescriptions.ToList();
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Apply()
+    {
+        <span style="color:#66d9ef">using</span> (_view.DeferRefresh())
         {
-            <span style="color:#66d9ef">using</span> (_view.DeferRefresh())
+            _view.Filter = _filter;
+            _view.SortDescriptions.Clear();
+            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> s <span style="color:#66d9ef">in</span> _sortDescriptions)
             {
-                _view.Filter = _filter;
-                _view.SortDescriptions.Clear();
-                <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> s <span style="color:#66d9ef">in</span> _sortDescriptions)
-                {
-                    _view.SortDescriptions.Add(s);
-                }
-                _view.GroupDescriptions.Clear();
-                <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> g <span style="color:#66d9ef">in</span> _groupDescriptions)
-                {
-                    _view.GroupDescriptions.Add(g);
-                }
+                _view.SortDescriptions.Add(s);
             }
-        }
-            
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearGrouping()
-        {
-            _groupDescriptions.Clear();
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
-        }
-
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearSort()
-        {
-            _sortDescriptions.Clear();
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
-        }
-
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearFilter()
-        {
-            _filter = <span style="color:#66d9ef">null</span>;
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
-        }
-
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearAll()
-        {
-            _filter = <span style="color:#66d9ef">null</span>;
-            _sortDescriptions.Clear();
-            _groupDescriptions.Clear();
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
-        }
-
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; Where(Func&lt;TSource, <span style="color:#66d9ef">bool</span>&gt; predicate)
-        {
-            _filter = o =&gt; predicate((TSource)o);
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
-        }
-
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; OrderBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
-        {
-            <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">true</span>, ListSortDirection.Ascending);
-        }
-
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; OrderByDescending&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
-        {
-            <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">true</span>, ListSortDirection.Descending);
-        }
-
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ThenBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
-        {
-            <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">false</span>, ListSortDirection.Ascending);
-        }
-
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ThenByDescending&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
-        {
-            <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">false</span>, ListSortDirection.Descending);
-        }
-
-        <span style="color:#66d9ef">private</span> CollectionViewShaper&lt;TSource&gt; OrderBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector, <span style="color:#66d9ef">bool</span> clear, ListSortDirection direction)
-        {
-            <span style="color:#66d9ef">string</span> path = GetPropertyPath(keySelector.Body);
-            <span style="color:#66d9ef">if</span> (clear)
-                _sortDescriptions.Clear();
-            _sortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription(path, direction));
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
-        }
-
-        <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; GroupBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
-        {
-            <span style="color:#66d9ef">string</span> path = GetPropertyPath(keySelector.Body);
-            _groupDescriptions.Add(<span style="color:#66d9ef">new</span> PropertyGroupDescription(path));
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
-        }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> GetPropertyPath(Expression expression)
-        {
-            <span style="color:#66d9ef">var</span> names = <span style="color:#66d9ef">new</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt;();
-            <span style="color:#66d9ef">var</span> expr = expression;
-            <span style="color:#66d9ef">while</span> (expr != <span style="color:#66d9ef">null</span> &amp;&amp; !(expr <span style="color:#66d9ef">is</span> ParameterExpression) &amp;&amp; !(expr <span style="color:#66d9ef">is</span> ConstantExpression))
+            _view.GroupDescriptions.Clear();
+            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> g <span style="color:#66d9ef">in</span> _groupDescriptions)
             {
-                <span style="color:#66d9ef">var</span> memberExpr = expr <span style="color:#66d9ef">as</span> MemberExpression;
-                <span style="color:#66d9ef">if</span> (memberExpr == <span style="color:#66d9ef">null</span>)
-                    <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;The selector body must contain only property or field access expressions&#34;</span>);
-                names.Push(memberExpr.Member.Name);
-                expr = memberExpr.Expression;
+                _view.GroupDescriptions.Add(g);
             }
-            <span style="color:#66d9ef">return</span> String.Join(<span style="color:#e6db74">&#34;.&#34;</span>, names.ToArray());
         }
     }
+        
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearGrouping()
+    {
+        _groupDescriptions.Clear();
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearSort()
+    {
+        _sortDescriptions.Clear();
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearFilter()
+    {
+        _filter = <span style="color:#66d9ef">null</span>;
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ClearAll()
+    {
+        _filter = <span style="color:#66d9ef">null</span>;
+        _sortDescriptions.Clear();
+        _groupDescriptions.Clear();
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; Where(Func&lt;TSource, <span style="color:#66d9ef">bool</span>&gt; predicate)
+    {
+        _filter = o =&gt; predicate((TSource)o);
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; OrderBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+    {
+        <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">true</span>, ListSortDirection.Ascending);
+    }
+
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; OrderByDescending&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+    {
+        <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">true</span>, ListSortDirection.Descending);
+    }
+
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ThenBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+    {
+        <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">false</span>, ListSortDirection.Ascending);
+    }
+
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; ThenByDescending&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+    {
+        <span style="color:#66d9ef">return</span> OrderBy(keySelector, <span style="color:#66d9ef">false</span>, ListSortDirection.Descending);
+    }
+
+    <span style="color:#66d9ef">private</span> CollectionViewShaper&lt;TSource&gt; OrderBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector, <span style="color:#66d9ef">bool</span> clear, ListSortDirection direction)
+    {
+        <span style="color:#66d9ef">string</span> path = GetPropertyPath(keySelector.Body);
+        <span style="color:#66d9ef">if</span> (clear)
+            _sortDescriptions.Clear();
+        _sortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription(path, direction));
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> CollectionViewShaper&lt;TSource&gt; GroupBy&lt;TKey&gt;(Expression&lt;Func&lt;TSource, TKey&gt;&gt; keySelector)
+    {
+        <span style="color:#66d9ef">string</span> path = GetPropertyPath(keySelector.Body);
+        _groupDescriptions.Add(<span style="color:#66d9ef">new</span> PropertyGroupDescription(path));
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+    }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> GetPropertyPath(Expression expression)
+    {
+        <span style="color:#66d9ef">var</span> names = <span style="color:#66d9ef">new</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt;();
+        <span style="color:#66d9ef">var</span> expr = expression;
+        <span style="color:#66d9ef">while</span> (expr != <span style="color:#66d9ef">null</span> &amp;&amp; !(expr <span style="color:#66d9ef">is</span> ParameterExpression) &amp;&amp; !(expr <span style="color:#66d9ef">is</span> ConstantExpression))
+        {
+            <span style="color:#66d9ef">var</span> memberExpr = expr <span style="color:#66d9ef">as</span> MemberExpression;
+            <span style="color:#66d9ef">if</span> (memberExpr == <span style="color:#66d9ef">null</span>)
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;The selector body must contain only property or field access expressions&#34;</span>);
+            names.Push(memberExpr.Member.Name);
+            expr = memberExpr.Expression;
+        }
+        <span style="color:#66d9ef">return</span> String.Join(<span style="color:#e6db74">&#34;.&#34;</span>, names.ToArray());
+    }
+}
 </code></pre></div>
 		</div>
 		<footer class="post__footer">

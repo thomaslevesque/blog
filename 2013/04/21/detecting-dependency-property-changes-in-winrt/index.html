@@ -82,76 +82,76 @@ if (!doNotTrack) {
 			<p>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…</p>
 <p>It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the <code>Content</code> property of a <code>ContentControl</code> changed. In WPF, I would have used the <a href="http://msdn.microsoft.com/en-us/library/system.componentmodel.dependencypropertydescriptor.aspx"><code>DependencyPropertyDescriptor</code></a> class, but it’s not available in WinRT.</p>
 <p>Fortunately, there is a mechanism which is available on all XAML platforms, and can solve this problem: binding. So, the solution is just to create a class with a dummy property that is bound to the property we want to watch, and call a handler when the value of the dummy property changes. To make it cleaner and hide the actual implementation, I wrapped it as an extension method that returns an <code>IDisposable</code>:</p>
-<pre><code>    public static class DependencyObjectExtensions
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DependencyObjectExtensions</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IDisposable WatchProperty(<span style="color:#66d9ef">this</span> DependencyObject target,
+                                            <span style="color:#66d9ef">string</span> propertyPath,
+                                            DependencyPropertyChangedEventHandler handler)
     {
-        public static IDisposable WatchProperty(this DependencyObject target,
-                                                string propertyPath,
-                                                DependencyPropertyChangedEventHandler handler)
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> DependencyPropertyWatcher(target, propertyPath, handler);
+    }
+
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DependencyPropertyWatcher</span> : DependencyObject, IDisposable
+    {
+        <span style="color:#66d9ef">private</span> DependencyPropertyChangedEventHandler _handler;
+
+        <span style="color:#66d9ef">public</span> DependencyPropertyWatcher(DependencyObject target,
+                                            <span style="color:#66d9ef">string</span> propertyPath,
+                                            DependencyPropertyChangedEventHandler handler)
         {
-            return new DependencyPropertyWatcher(target, propertyPath, handler);
+            <span style="color:#66d9ef">if</span> (target == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;target&#34;</span>);
+            <span style="color:#66d9ef">if</span> (propertyPath == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;propertyPath&#34;</span>);
+            <span style="color:#66d9ef">if</span> (handler == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;handler&#34;</span>);
+
+            _handler = handler;
+
+            <span style="color:#66d9ef">var</span> binding = <span style="color:#66d9ef">new</span> Binding
+            {
+                Source = target,
+                Path = <span style="color:#66d9ef">new</span> PropertyPath(propertyPath),
+                Mode = BindingMode.OneWay
+            };
+            BindingOperations.SetBinding(<span style="color:#66d9ef">this</span>, ValueProperty, binding);
         }
 
-        class DependencyPropertyWatcher : DependencyObject, IDisposable
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty ValueProperty =
+            DependencyProperty.Register(
+                <span style="color:#e6db74">&#34;Value&#34;</span>,
+                <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">object</span>),
+                <span style="color:#66d9ef">typeof</span>(DependencyPropertyWatcher),
+                <span style="color:#66d9ef">new</span> PropertyMetadata(<span style="color:#66d9ef">null</span>, ValuePropertyChanged));
+
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            private DependencyPropertyChangedEventHandler _handler;
+            <span style="color:#66d9ef">var</span> watcher = d <span style="color:#66d9ef">as</span> DependencyPropertyWatcher;
+            <span style="color:#66d9ef">if</span> (watcher == <span style="color:#66d9ef">null</span>)
+                <span style="color:#66d9ef">return</span>;
 
-            public DependencyPropertyWatcher(DependencyObject target,
-                                             string propertyPath,
-                                             DependencyPropertyChangedEventHandler handler)
-            {
-                if (target == null) throw new ArgumentNullException(&quot;target&quot;);
-                if (propertyPath == null) throw new ArgumentNullException(&quot;propertyPath&quot;);
-                if (handler == null) throw new ArgumentNullException(&quot;handler&quot;);
+            watcher.OnValueChanged(e);
+        }
 
-                _handler = handler;
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> OnValueChanged(DependencyPropertyChangedEventArgs e)
+        {
+            <span style="color:#66d9ef">var</span> handler = _handler;
+            <span style="color:#66d9ef">if</span> (handler != <span style="color:#66d9ef">null</span>)
+                handler(<span style="color:#66d9ef">this</span>, e);
+        }
 
-                var binding = new Binding
-                {
-                    Source = target,
-                    Path = new PropertyPath(propertyPath),
-                    Mode = BindingMode.OneWay
-                };
-                BindingOperations.SetBinding(this, ValueProperty, binding);
-            }
-
-            private static readonly DependencyProperty ValueProperty =
-                DependencyProperty.Register(
-                    &quot;Value&quot;,
-                    typeof(object),
-                    typeof(DependencyPropertyWatcher),
-                    new PropertyMetadata(null, ValuePropertyChanged));
-
-            private static void ValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-            {
-                var watcher = d as DependencyPropertyWatcher;
-                if (watcher == null)
-                    return;
-
-                watcher.OnValueChanged(e);
-            }
-
-            private void OnValueChanged(DependencyPropertyChangedEventArgs e)
-            {
-                var handler = _handler;
-                if (handler != null)
-                    handler(this, e);
-            }
-
-            public void Dispose()
-            {
-                _handler = null;
-                // There is no ClearBinding method, so set a dummy binding instead
-                BindingOperations.SetBinding(this, ValueProperty, new Binding());
-            }
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Dispose()
+        {
+            _handler = <span style="color:#66d9ef">null</span>;
+            <span style="color:#75715e">// There is no ClearBinding method, so set a dummy binding instead
+</span><span style="color:#75715e"></span>            BindingOperations.SetBinding(<span style="color:#66d9ef">this</span>, ValueProperty, <span style="color:#66d9ef">new</span> Binding());
         }
     }
-</code></pre><p>It can be used like this:</p>
-<pre><code>// Subscribe
-watcher = myControl.WatchProperty(&quot;Content&quot;, myControl_ContentChanged);
+}
+</code></pre></div><p>It can be used like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Subscribe
+</span><span style="color:#75715e"></span>watcher = myControl.WatchProperty(<span style="color:#e6db74">&#34;Content&#34;</span>, myControl_ContentChanged);
 
-// Unsubscribe
-watcher.Dispose();
-</code></pre><p>I hope you will find this useful!</p>
+<span style="color:#75715e">// Unsubscribe
+</span><span style="color:#75715e"></span>watcher.Dispose();
+</code></pre></div><p>I hope you will find this useful!</p>
 
 		</div>
 		<footer class="post__footer">

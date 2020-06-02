@@ -85,7 +85,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
-static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&quot;Error 42 occurred&quot;); } } As you might expect, the catch block will be entered if and only if ex.
+static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&#34;Error 42 occurred&#34;); } } As you might expect, the catch block will be entered if and only if ex.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -100,7 +100,7 @@ static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyExcept
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
-string text = $&quot;{p.Name} was born on {p.DateOfBirth:D}&quot;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:
+string text = $&#34;{p.Name} was born on {p.DateOfBirth:D}&#34;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">

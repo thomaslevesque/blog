@@ -99,23 +99,23 @@ if (!doNotTrack) {
 <h3 id="ok-enough-of-this-whats-your-point">OK, enough of this! What’s your point?</h3>
 <p>So as you can see, displaying a byte size in human-readable form isn’t as straightforward as you might have expected… I’ve had to write code to do it in a number of apps, and I eventually got tired of doing it again over and over, so I wrote a library that attempts to cover all use cases. I called it <a href="https://github.com/thomaslevesque/HumanBytes">HumanBytes</a>, for reasons that should be obvious… It is also available as a <a href="https://www.nuget.org/packages/HumanBytes">NuGet package</a>.</p>
 <p>Its usage is quite simple. It’s based on a class named <code>ByteSizeFormatter</code>, which has a few properties to control how the value is rendered:</p>
-<pre><code>var formatter = new ByteSizeFormatter
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> formatter = <span style="color:#66d9ef">new</span> ByteSizeFormatter
 {
     Convention = ByteSizeConvention.Binary,
-    DecimalPlaces = 1,
-    NumberFormat = &quot;#,##0.###&quot;,
+    DecimalPlaces = <span style="color:#ae81ff">1</span>,
+    NumberFormat = <span style="color:#e6db74">&#34;#,##0.###&#34;</span>,
     MinUnit = ByteSizeUnit.Kilobyte,
     MaxUnit = ByteSizeUnit.Gigabyte,
     RoundingRule = ByteSizeRounding.Closest,
-    UseFullWordForBytes = true,
+    UseFullWordForBytes = <span style="color:#66d9ef">true</span>,
 };
 
-var f = new FileInfo(&quot;TheFile.jpg&quot;);
-Console.WriteLine(&quot;The size of '{0}' is {1}&quot;, f, formatter.Format(f.Length));
-</code></pre><p>In most cases, though, you will just want to use the default settings. You can do that easily with the <code>Bytes</code> extension method:</p>
-<pre><code>var f = new FileInfo(&quot;TheFile.jpg&quot;);
-Console.WriteLine(&quot;The size of '{0}' is {1}&quot;, f, f.Length.Bytes());
-</code></pre><p>This method returns an instance of the <code>ByteSize</code> structure, whose <code>ToString</code> method formats the value using the default formatter. You can change the default formatter settings globally through the <code>ByteSizeFormatter.Default</code> static property.</p>
+<span style="color:#66d9ef">var</span> f = <span style="color:#66d9ef">new</span> FileInfo(<span style="color:#e6db74">&#34;TheFile.jpg&#34;</span>);
+Console.WriteLine(<span style="color:#e6db74">&#34;The size of &#39;{0}&#39; is {1}&#34;</span>, f, formatter.Format(f.Length));
+</code></pre></div><p>In most cases, though, you will just want to use the default settings. You can do that easily with the <code>Bytes</code> extension method:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> f = <span style="color:#66d9ef">new</span> FileInfo(<span style="color:#e6db74">&#34;TheFile.jpg&#34;</span>);
+Console.WriteLine(<span style="color:#e6db74">&#34;The size of &#39;{0}&#39; is {1}&#34;</span>, f, f.Length.Bytes());
+</code></pre></div><p>This method returns an instance of the <code>ByteSize</code> structure, whose <code>ToString</code> method formats the value using the default formatter. You can change the default formatter settings globally through the <code>ByteSizeFormatter.Default</code> static property.</p>
 <h3 id="a-note-on-localization">A note on localization</h3>
 <p>Not all languages use the same symbol for “byte”, and obviously the word “byte” itself is different across languages. Currently the library only supports English and French; if you want your language to be supported as well, please fork, add your translation, and make a pull request. There are only 3 terms to translate, so it shouldn’t take long <img src="wlEmoticon-winkingsmile.png" alt="Winking smile">.</p>
 

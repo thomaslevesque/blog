@@ -93,113 +93,111 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">select</span> ord;
 </code></pre></div><p>However, there&rsquo;s something that really bothers me with this <code>Include</code> method: the property path is passed as a string. This approach has two major drawbacks:</p>
 <ul>
-<li>
-<p>It&rsquo;s easy to make a mistake when typing the property path, and since it&rsquo;s a string, the compiler doesn&rsquo;t complain. So we get a runtime error, rather than a compilation error.</p>
-</li>
-<li>
-<p>We can&rsquo;t take advantage of IDE features like Intellisense and refactoring. If we rename a property in the model, automatic refactoring won&rsquo;t check the content of the string. We have to manually update all calls to <code>Include</code> that refer to this property, with the risk of missing some of them in the process&hellip;</p>
-<p>It would be much more convenient to use a lambda expression to specify the property path. The principle is well known, and frequently used to avoid using a string to refer to a property.  The trivial case, where the property to include is directly accessible from the source, is pretty easy to handle, and many implementation can be found on the Internet. We just need to use a method that extracts the property name from an expression :</p>
-</li>
+<li>It&rsquo;s easy to make a mistake when typing the property path, and since it&rsquo;s a string, the compiler doesn&rsquo;t complain. So we get a runtime error, rather than a compilation error.</li>
+<li>We can&rsquo;t take advantage of IDE features like Intellisense and refactoring. If we rename a property in the model, automatic refactoring won&rsquo;t check the content of the string. We have to manually update all calls to <code>Include</code> that refer to this property, with the risk of missing some of them in the process&hellip;</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ObjectQueryExtensions</span>
+<p>It would be much more convenient to use a lambda expression to specify the property path. The principle is well known, and frequently used to avoid using a string to refer to a property.</p>
+<p>The trivial case, where the property to include is directly accessible from the source, is pretty easy to handle, and many implementation can be found on the Internet. We just need to use a method that extracts the property name from an expression :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ObjectQueryExtensions</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ObjectQuery&lt;T&gt; Include&lt;T&gt;(<span style="color:#66d9ef">this</span> ObjectQuery&lt;T&gt; query, Expression&lt;Func&lt;T, <span style="color:#66d9ef">object</span>&gt;&gt; selector)
     {
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ObjectQuery&lt;T&gt; Include&lt;T&gt;(<span style="color:#66d9ef">this</span> ObjectQuery&lt;T&gt; query, Expression&lt;Func&lt;T, <span style="color:#66d9ef">object</span>&gt;&gt; selector)
-        {
-            <span style="color:#66d9ef">string</span> propertyName = GetPropertyName(selector);
-            <span style="color:#66d9ef">return</span> query.Include(propertyName);
-        }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> GetPropertyName&lt;T&gt;(Expression&lt;Func&lt;T, <span style="color:#66d9ef">object</span>&gt;&gt; expression)
-        {
-            MemberExpression memberExpr = expression.Body <span style="color:#66d9ef">as</span> MemberExpression;
-            <span style="color:#66d9ef">if</span> (memberExpr == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;Expression body must be a member expression&#34;</span>);
-            <span style="color:#66d9ef">return</span> memberExpr.Member.Name;
-        }
+        <span style="color:#66d9ef">string</span> propertyName = GetPropertyName(selector);
+        <span style="color:#66d9ef">return</span> query.Include(propertyName);
     }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> GetPropertyName&lt;T&gt;(Expression&lt;Func&lt;T, <span style="color:#66d9ef">object</span>&gt;&gt; expression)
+    {
+        MemberExpression memberExpr = expression.Body <span style="color:#66d9ef">as</span> MemberExpression;
+        <span style="color:#66d9ef">if</span> (memberExpr == <span style="color:#66d9ef">null</span>)
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;Expression body must be a member expression&#34;</span>);
+        <span style="color:#66d9ef">return</span> memberExpr.Member.Name;
+    }
+}
 </code></pre></div><p>Using that extension method, the code from the first sample can be rewritten as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; o.OrderDetails)
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
-</code></pre></div><p>This code works fine, but only for the simplest cases&hellip; In the second example, we also want to eagerly load the <code>OrderDetail.Product</code> property, but the code above can&rsquo;t handle that case. Indeed, the expression we would use to include the <code>Product</code> property would be something like <code>o.OrderDetails.Select(od =&gt; od.Product)</code>, but the <code>GetPropertyName</code> method can only handle property accesses, not method calls, and it works only for an expression with a single level.  To get the full path of the property to include, we have to walk through the whole expression tree to extract the name of each property. It sounds like a complicated task, but there&rsquo;s a class that can help us with it: <a href="http://msdn.microsoft.com/en-us/library/system.linq.expressions.expressionvisitor.aspx"><code>ExpressionVisitor</code></a>. This class was introduced in .NET 4.0 and implements the Visitor pattern to walk through all nodes in the expression tree. It&rsquo;s just a base class for implementing custom visitors, and it does nothing else than just visiting each node. All we need to do is inherit it, and override some methods to extract the properties from the expression. Here are the methods we need to override:</p>
+</code></pre></div><p>This code works fine, but only for the simplest cases&hellip; In the second example, we also want to eagerly load the <code>OrderDetail.Product</code> property, but the code above can&rsquo;t handle that case. Indeed, the expression we would use to include the <code>Product</code> property would be something like <code>o.OrderDetails.Select(od =&gt; od.Product)</code>, but the <code>GetPropertyName</code> method can only handle property accesses, not method calls, and it works only for an expression with a single level.</p>
+<p>To get the full path of the property to include, we have to walk through the whole expression tree to extract the name of each property. It sounds like a complicated task, but there&rsquo;s a class that can help us with it: <a href="http://msdn.microsoft.com/en-us/library/system.linq.expressions.expressionvisitor.aspx"><code>ExpressionVisitor</code></a>. This class was introduced in .NET 4.0 and implements the Visitor pattern to walk through all nodes in the expression tree. It&rsquo;s just a base class for implementing custom visitors, and it does nothing else than just visiting each node. All we need to do is inherit it, and override some methods to extract the properties from the expression. Here are the methods we need to override:</p>
 <ul>
 <li><code>VisitMember</code> : used to visit a property or field access</li>
-<li><code>VisitMethodCall</code> : used to visit a method call. Even though method calls aren&rsquo;t directly related to what we want to do, we need to change its behavior in the case of Linq operators: the default implementation visits each parameter in their normal order, but for extension method like <code>Select</code> or <code>SelectMany</code>, we need to visit the first parameter (the <code>this</code> parameter) last, so that we retrieve the properties in the correct order.<br><br>Here&rsquo;s a new version of the <code>Include</code> method, along with the <code>ExpressionVisitor</code> implementation:<br><br></li>
+<li><code>VisitMethodCall</code> : used to visit a method call. Even though method calls aren&rsquo;t directly related to what we want to do, we need to change its behavior in the case of Linq operators: the default implementation visits each parameter in their normal order, but for extension method like <code>Select</code> or <code>SelectMany</code>, we need to visit the first parameter (the <code>this</code> parameter) last, so that we retrieve the properties in the correct order.</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ObjectQueryExtensions</span>
+<p>Here&rsquo;s a new version of the <code>Include</code> method, along with the <code>ExpressionVisitor</code> implementation:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ObjectQueryExtensions</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ObjectQuery&lt;T&gt; Include&lt;T&gt;(<span style="color:#66d9ef">this</span> ObjectQuery&lt;T&gt; query, Expression&lt;Func&lt;T, <span style="color:#66d9ef">object</span>&gt;&gt; selector)
     {
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ObjectQuery&lt;T&gt; Include&lt;T&gt;(<span style="color:#66d9ef">this</span> ObjectQuery&lt;T&gt; query, Expression&lt;Func&lt;T, <span style="color:#66d9ef">object</span>&gt;&gt; selector)
+        <span style="color:#66d9ef">string</span> path = <span style="color:#66d9ef">new</span> PropertyPathVisitor().GetPropertyPath(selector);
+        <span style="color:#66d9ef">return</span> query.Include(path);
+    }
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PropertyPathVisitor</span> : ExpressionVisitor
+    {
+        <span style="color:#66d9ef">private</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt; _stack;
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetPropertyPath(Expression expression)
         {
-            <span style="color:#66d9ef">string</span> path = <span style="color:#66d9ef">new</span> PropertyPathVisitor().GetPropertyPath(selector);
-            <span style="color:#66d9ef">return</span> query.Include(path);
+            _stack = <span style="color:#66d9ef">new</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt;();
+            Visit(expression);
+            <span style="color:#66d9ef">return</span> _stack
+                .Aggregate(
+                    <span style="color:#66d9ef">new</span> StringBuilder(),
+                    (sb, name) =&gt;
+                        (sb.Length &gt; <span style="color:#ae81ff">0</span> ? sb.Append(<span style="color:#e6db74">&#34;.&#34;</span>) : sb).Append(name))
+                .ToString();
         }
-
-        <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PropertyPathVisitor</span> : ExpressionVisitor
+        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Expression VisitMember(MemberExpression expression)
         {
-            <span style="color:#66d9ef">private</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt; _stack;
-
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetPropertyPath(Expression expression)
+            <span style="color:#66d9ef">if</span> (_stack != <span style="color:#66d9ef">null</span>)
+                _stack.Push(expression.Member.Name);
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">base</span>.VisitMember(expression);
+        }
+        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Expression VisitMethodCall(MethodCallExpression expression)
+        {
+            <span style="color:#66d9ef">if</span> (IsLinqOperator(expression.Method))
             {
-                _stack = <span style="color:#66d9ef">new</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt;();
-                Visit(expression);
-                <span style="color:#66d9ef">return</span> _stack
-                    .Aggregate(
-                        <span style="color:#66d9ef">new</span> StringBuilder(),
-                        (sb, name) =&gt;
-                            (sb.Length &gt; <span style="color:#ae81ff">0</span> ? sb.Append(<span style="color:#e6db74">&#34;.&#34;</span>) : sb).Append(name))
-                    .ToString();
-            }
-
-            <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Expression VisitMember(MemberExpression expression)
-            {
-                <span style="color:#66d9ef">if</span> (_stack != <span style="color:#66d9ef">null</span>)
-                    _stack.Push(expression.Member.Name);
-                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">base</span>.VisitMember(expression);
-            }
-
-            <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Expression VisitMethodCall(MethodCallExpression expression)
-            {
-                <span style="color:#66d9ef">if</span> (IsLinqOperator(expression.Method))
+                <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i = <span style="color:#ae81ff">1</span>; i &lt; expression.Arguments.Count; i++)
                 {
-                    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i = <span style="color:#ae81ff">1</span>; i &lt; expression.Arguments.Count; i++)
-                    {
-                        Visit(expression.Arguments[i]);
-                    }
-                    Visit(expression.Arguments[<span style="color:#ae81ff">0</span>]);
-                    <span style="color:#66d9ef">return</span> expression;
+                    Visit(expression.Arguments[i]);
                 }
-                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">base</span>.VisitMethodCall(expression);
+                Visit(expression.Arguments[<span style="color:#ae81ff">0</span>]);
+                <span style="color:#66d9ef">return</span> expression;
             }
-
-            <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsLinqOperator(MethodInfo method)
-            {
-                <span style="color:#66d9ef">if</span> (method.DeclaringType != <span style="color:#66d9ef">typeof</span>(Queryable) &amp;&amp; method.DeclaringType != <span style="color:#66d9ef">typeof</span>(Enumerable))
-                    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-                <span style="color:#66d9ef">return</span> Attribute.GetCustomAttribute(method, <span style="color:#66d9ef">typeof</span>(ExtensionAttribute)) != <span style="color:#66d9ef">null</span>;
-            }
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">base</span>.VisitMethodCall(expression);
+        }
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsLinqOperator(MethodInfo method)
+        {
+            <span style="color:#66d9ef">if</span> (method.DeclaringType != <span style="color:#66d9ef">typeof</span>(Queryable) &amp;&amp; method.DeclaringType != <span style="color:#66d9ef">typeof</span>(Enumerable))
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+            <span style="color:#66d9ef">return</span> Attribute.GetCustomAttribute(method, <span style="color:#66d9ef">typeof</span>(ExtensionAttribute)) != <span style="color:#66d9ef">null</span>;
         }
     }
-</code></pre></div><p><br><br>I already talked about the <code>VisitMethodCall</code> method, so I won&rsquo;t explain it further. The implementation of <code>VisitMember</code> is very simple: we just push the member name on a stack. Why a stack ? That&rsquo;s because the expression is not visited in the order one would intuitively expect. For instance, in an expression like <code>o.OrderDetails.Select(od =&gt; od.Product)</code>, the first visited node is not <code>o</code> but the call to <code>Select</code>, because what precedes it (<code>o.OrderDetails</code>) is actually the first parameter of the static <code>Select</code> method&hellip; To retrieve the properties in the correct order, we put them on a stack so that we can read them back in reverse order when we need to build the property path.<br><br>The <code>GetPropertyPath</code> method probably doesn&rsquo;t need a long explanation: it initializes the stack, visits the expression, and builds the property path from the stack.<br><br>We can now rewrite the code from the second example as follows:<br><br></p>
+}
+</code></pre></div><p>I already talked about the <code>VisitMethodCall</code> method, so I won&rsquo;t explain it further. The implementation of <code>VisitMember</code> is very simple: we just push the member name on a stack. Why a stack ? That&rsquo;s because the expression is not visited in the order one would intuitively expect. For instance, in an expression like <code>o.OrderDetails.Select(od =&gt; od.Product)</code>, the first visited node is not <code>o</code> but the call to <code>Select</code>, because what precedes it (<code>o.OrderDetails</code>) is actually the first parameter of the static <code>Select</code> method&hellip; To retrieve the properties in the correct order, we put them on a stack so that we can read them back in reverse order when we need to build the property path.</p>
+<p>The <code>GetPropertyPath</code> method probably doesn&rsquo;t need a long explanation: it initializes the stack, visits the expression, and builds the property path from the stack.</p>
+<p>We can now rewrite the code from the second example as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; OrderDetails.Select(od =&gt; od.Product))
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
-</code></pre></div><p><br><br>This method also works for more complex cases. Let&rsquo;s add a few new entities to our model: one or more discounts can be applied to each purchased product, and each discount is linked to a sales campaign. If we need to retrieve the associated discounts and campaigns in the query results, we can write something like that:<br><br></p>
+</code></pre></div><p>This method also works for more complex cases. Let&rsquo;s add a few new entities to our model: one or more discounts can be applied to each purchased product, and each discount is linked to a sales campaign. If we need to retrieve the associated discounts and campaigns in the query results, we can write something like that:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
-    <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; OrderDetails.Select(od =&gt; od.Discounts.Select(d =&gt; d.Campaign)))
+    <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; OrderDetails.Select(od =&gt; od.Discounts.Select  (d =&gt; d.Campaign)))
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
-</code></pre></div><p><br><br>The result is the same as if we had passed &ldquo;OrderDetails.Discounts.Campaign&rdquo; to the standard <code>Include</code> method. Since the nested <code>Select</code> calls impair the readability, we can also use a different expression, with the same result:<br><br></p>
+</code></pre></div><p>The result is the same as if we had passed &ldquo;OrderDetails.Discounts.Campaign&rdquo; to the standard <code>Include</code> method. Since the nested <code>Select</code> calls impair the readability, we can also use a different expression, with the same result:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> ord <span style="color:#66d9ef">in</span> db.Orders.Include(o =&gt; o.OrderDetails
                                         .SelectMany(od =&gt; od.Discounts)
                                         .Select(d =&gt; d.Campaign))
     <span style="color:#66d9ef">where</span> ord.Date &gt;= DateTime.Today
     <span style="color:#66d9ef">select</span> ord;
-</code></pre></div><p>To conclude, I just have two remarks regarding this solution:
-- A similar extension method is included in the Entity Framework Feature CTP4 (see <a href="http://romiller.com/2010/07/14/ef-ctp4-tips-tricks-include-with-lambda/">this article</a> for details). So it is possible that it will eventually be included in the framework (perhaps in a service pack for .NET 4.0 ?).
-- Even though this solution targets Entity Framework 4.0, it should be possible to adapt it for EF 3.5. The <code>ExpressionVisitor</code> class is not available in 3.5, but there is another implementation of it in Joseph Albahari&rsquo;s <a href="http://www.albahari.com/nutshell/linqkit.aspx">LINQKit</a>. I didn&rsquo;t try it, but it should work the same way&hellip;</p>
+</code></pre></div><p>To conclude, I just have two remarks regarding this solution:</p>
+<ul>
+<li>A similar extension method is included in the Entity Framework Feature CTP4 (see <a href="http://romiller.com/2010/07/14/ef-ctp4-tips-tricks-include-with-lambda/">this article</a> for details). So it is possible that it will eventually be included in the framework (perhaps in a service pack for .NET 4.0 ?).</li>
+<li>Even though this solution targets Entity Framework 4.0, it should be possible to adapt it for EF 3.5. The <code>ExpressionVisitor</code> class is not available in 3.5, but there is another implementation of it in Joseph Albahari&rsquo;s <a href="http://www.albahari.com/nutshell/linqkit.aspx">LINQKit</a>. I didn&rsquo;t try it, but it should work the same way&hellip;</li>
+</ul>
 
 		</div>
 		<footer class="post__footer">

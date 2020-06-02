@@ -98,7 +98,8 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-10-26T00:00:00Z">October 26, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&rsquo;t a DependencyProperty, so it wasn&rsquo;t possible to bind it. Furthermore, InputBindings didn&rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).
+		THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings.
+As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&rsquo;t a DependencyProperty, so it wasn&rsquo;t possible to bind it. Furthermore, InputBindings didn&rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&hellip;
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -126,7 +127,9 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-23T00:00:00Z">August 23, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I&rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let&rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :
+		Note : This post follows the one about a a markup extension that can update its target, and reuses the same code.
+You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I&rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template.
+The problem Let&rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -140,7 +143,8 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-04T00:00:00Z">August 04, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
+		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
+To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -183,8 +187,9 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-05-06T00:00:00Z">May 06, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Here&rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip; In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
-private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;) Unfortunately, this method only exists in WPF, and a majority of developers are still working with Windows Forms.
+		Here&rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip;
+In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
+private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">

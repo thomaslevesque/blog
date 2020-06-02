@@ -8,7 +8,8 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="[WPF] Creating parameterized styles with attached properties" />
-<meta property="og:description" content="Today I&rsquo;d like to share a trick that I used quite often in the past few months. Let&rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls: OK, I&rsquo;m not a designer&hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks." />
+<meta property="og:description" content="Today I&rsquo;d like to share a trick that I used quite often in the past few months. Let&rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls:
+OK, I&rsquo;m not a designer&hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/" />
 <meta property="article:published_time" content="2011-10-01T00:00:00+00:00" />
@@ -16,7 +17,8 @@
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Creating parameterized styles with attached properties"/>
-<meta name="twitter:description" content="Today I&rsquo;d like to share a trick that I used quite often in the past few months. Let&rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls: OK, I&rsquo;m not a designer&hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks."/>
+<meta name="twitter:description" content="Today I&rsquo;d like to share a trick that I used quite often in the past few months. Let&rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls:
+OK, I&rsquo;m not a designer&hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -77,167 +79,175 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2011-10-01T00:00:00Z">October 01, 2011</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>Today I&rsquo;d like to share a trick that I used quite often in the past few months. Let&rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls:  <img src="parameterized_styles11.png" alt="">  OK, I&rsquo;m not a designer&hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&rsquo;re just the default styles of <code>CheckBox</code> and <code>RadioButton</code> in which I only changed the templates to replace the <code>BulletChrome</code>s with these awesome blue tick marks. Here&rsquo;s the code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">        <span style="color:#f92672">&lt;Style</span> <span style="color:#a6e22e">x:Key=</span><span style="color:#e6db74">&#34;{x:Type CheckBox}&#34;</span> <span style="color:#a6e22e">TargetType=</span><span style="color:#e6db74">&#34;{x:Type CheckBox}&#34;</span><span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Foreground&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Background&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckBoxFillNormal}&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;BorderBrush&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckBoxStroke}&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;BorderThickness&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;FocusVisualStyle&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource EmptyCheckBoxFocusVisual}&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Template&#34;</span><span style="color:#f92672">&gt;</span>
-                <span style="color:#f92672">&lt;Setter.Value&gt;</span>
-                    <span style="color:#f92672">&lt;ControlTemplate</span> <span style="color:#a6e22e">TargetType=</span><span style="color:#e6db74">&#34;{x:Type CheckBox}&#34;</span><span style="color:#f92672">&gt;</span>
-                        <span style="color:#f92672">&lt;BulletDecorator</span> <span style="color:#a6e22e">Background=</span><span style="color:#e6db74">&#34;Transparent&#34;</span>
-                                         <span style="color:#a6e22e">SnapsToDevicePixels=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">&gt;</span>
-                            <span style="color:#f92672">&lt;BulletDecorator.Bullet&gt;</span>
-                                <span style="color:#f92672">&lt;Border</span> <span style="color:#a6e22e">BorderBrush=</span><span style="color:#e6db74">&#34;{TemplateBinding BorderBrush}&#34;</span>
-                                        <span style="color:#a6e22e">Background=</span><span style="color:#e6db74">&#34;{TemplateBinding Background}&#34;</span>
-                                        <span style="color:#a6e22e">BorderThickness=</span><span style="color:#e6db74">&#34;1&#34;</span>
-                                        <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;11&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;11&#34;</span> <span style="color:#a6e22e">Margin=</span><span style="color:#e6db74">&#34;0,1,0,0&#34;</span><span style="color:#f92672">&gt;</span>
-                                    <span style="color:#f92672">&lt;Grid&gt;</span>
-                                        <span style="color:#f92672">&lt;Path</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;TickMark&#34;</span>
-                                              <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;Blue&#34;</span>
-                                              <span style="color:#a6e22e">Data=</span><span style="color:#e6db74">&#34;M0,4 5,9 9,0 4,5&#34;</span>
-                                              <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
-                                        <span style="color:#f92672">&lt;Rectangle</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span>
-                                                   <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;Blue&#34;</span>
-                                                   <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;7&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;7&#34;</span>
-                                                   <span style="color:#a6e22e">HorizontalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span>
-                                                   <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span>
-                                                   <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
-                                    <span style="color:#f92672">&lt;/Grid&gt;</span>
-                                <span style="color:#f92672">&lt;/Border&gt;</span>
-                            <span style="color:#f92672">&lt;/BulletDecorator.Bullet&gt;</span>
-                            <span style="color:#f92672">&lt;ContentPresenter</span> <span style="color:#a6e22e">HorizontalAlignment=</span><span style="color:#e6db74">&#34;{TemplateBinding HorizontalContentAlignment}&#34;</span>
-                                              <span style="color:#a6e22e">Margin=</span><span style="color:#e6db74">&#34;{TemplateBinding Padding}&#34;</span>
-                                              <span style="color:#a6e22e">RecognizesAccessKey=</span><span style="color:#e6db74">&#34;True&#34;</span>
-                                              <span style="color:#a6e22e">SnapsToDevicePixels=</span><span style="color:#e6db74">&#34;{TemplateBinding SnapsToDevicePixels}&#34;</span>
-                                              <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;{TemplateBinding VerticalContentAlignment}&#34;</span><span style="color:#f92672">/&gt;</span>
-                        <span style="color:#f92672">&lt;/BulletDecorator&gt;</span>
-                        <span style="color:#f92672">&lt;ControlTemplate.Triggers&gt;</span>
-                            <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;HasContent&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;FocusVisualStyle&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckRadioFocusVisual}&#34;</span><span style="color:#f92672">/&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Padding&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;4,0,0,0&#34;</span><span style="color:#f92672">/&gt;</span>
-                            <span style="color:#f92672">&lt;/Trigger&gt;</span>
-                            <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsEnabled&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;false&#34;</span><span style="color:#f92672">&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Foreground&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}&#34;</span><span style="color:#f92672">/&gt;</span>
-                            <span style="color:#f92672">&lt;/Trigger&gt;</span>
-                            <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsChecked&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;True&#34;</span><span style="color:#f92672">&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">TargetName=</span><span style="color:#e6db74">&#34;TickMark&#34;</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Visibility&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;Visible&#34;</span> <span style="color:#f92672">/&gt;</span>
-                            <span style="color:#f92672">&lt;/Trigger&gt;</span>
-                            <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsChecked&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{x:Null}&#34;</span><span style="color:#f92672">&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">TargetName=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Visibility&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;Visible&#34;</span> <span style="color:#f92672">/&gt;</span>
-                            <span style="color:#f92672">&lt;/Trigger&gt;</span>
-                        <span style="color:#f92672">&lt;/ControlTemplate.Triggers&gt;</span>
-                    <span style="color:#f92672">&lt;/ControlTemplate&gt;</span>
-                <span style="color:#f92672">&lt;/Setter.Value&gt;</span>
-            <span style="color:#f92672">&lt;/Setter&gt;</span>
-        <span style="color:#f92672">&lt;/Style&gt;</span>
-        <span style="color:#f92672">&lt;Style</span> <span style="color:#a6e22e">x:Key=</span><span style="color:#e6db74">&#34;{x:Type RadioButton}&#34;</span> <span style="color:#a6e22e">TargetType=</span><span style="color:#e6db74">&#34;{x:Type RadioButton}&#34;</span><span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Foreground&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Background&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;#F4F4F4&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;BorderBrush&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckBoxStroke}&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;BorderThickness&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Template&#34;</span><span style="color:#f92672">&gt;</span>
-                <span style="color:#f92672">&lt;Setter.Value&gt;</span>
-                    <span style="color:#f92672">&lt;ControlTemplate</span> <span style="color:#a6e22e">TargetType=</span><span style="color:#e6db74">&#34;{x:Type RadioButton}&#34;</span><span style="color:#f92672">&gt;</span>
-                        <span style="color:#f92672">&lt;BulletDecorator</span> <span style="color:#a6e22e">Background=</span><span style="color:#e6db74">&#34;Transparent&#34;</span><span style="color:#f92672">&gt;</span>
-                            <span style="color:#f92672">&lt;BulletDecorator.Bullet&gt;</span>
-                                <span style="color:#f92672">&lt;Grid</span> <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span> <span style="color:#a6e22e">Margin=</span><span style="color:#e6db74">&#34;0,1,0,0&#34;</span><span style="color:#f92672">&gt;</span>
-                                    <span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;11&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;11&#34;</span>
-                                             <span style="color:#a6e22e">Stroke=</span><span style="color:#e6db74">&#34;{TemplateBinding BorderBrush}&#34;</span>
-                                             <span style="color:#a6e22e">StrokeThickness=</span><span style="color:#e6db74">&#34;1&#34;</span>
-                                             <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding Background}&#34;</span> <span style="color:#f92672">/&gt;</span>
-                                    <span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;TickMark&#34;</span>
-                                             <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;7&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;7&#34;</span>
-                                             <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;Blue&#34;</span>
-                                             <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
-                                    <span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span>
-                                             <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;3&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;3&#34;</span>
-                                             <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;Blue&#34;</span>
-                                             <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
-                                <span style="color:#f92672">&lt;/Grid&gt;</span>
-                            <span style="color:#f92672">&lt;/BulletDecorator.Bullet&gt;</span>
-                            <span style="color:#f92672">&lt;ContentPresenter</span> <span style="color:#a6e22e">HorizontalAlignment=</span><span style="color:#e6db74">&#34;{TemplateBinding HorizontalContentAlignment}&#34;</span>
-                                              <span style="color:#a6e22e">Margin=</span><span style="color:#e6db74">&#34;{TemplateBinding Padding}&#34;</span>
-                                              <span style="color:#a6e22e">RecognizesAccessKey=</span><span style="color:#e6db74">&#34;True&#34;</span>
-                                              <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;{TemplateBinding VerticalContentAlignment}&#34;</span><span style="color:#f92672">/&gt;</span>
-                        <span style="color:#f92672">&lt;/BulletDecorator&gt;</span>
-                        <span style="color:#f92672">&lt;ControlTemplate.Triggers&gt;</span>
-                            <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;HasContent&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;FocusVisualStyle&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckRadioFocusVisual}&#34;</span><span style="color:#f92672">/&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Padding&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;4,0,0,0&#34;</span><span style="color:#f92672">/&gt;</span>
-                            <span style="color:#f92672">&lt;/Trigger&gt;</span>
-                            <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsEnabled&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;false&#34;</span><span style="color:#f92672">&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Foreground&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}&#34;</span><span style="color:#f92672">/&gt;</span>
-                            <span style="color:#f92672">&lt;/Trigger&gt;</span>
-                            <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsChecked&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;True&#34;</span><span style="color:#f92672">&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">TargetName=</span><span style="color:#e6db74">&#34;TickMark&#34;</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Visibility&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;Visible&#34;</span> <span style="color:#f92672">/&gt;</span>
-                            <span style="color:#f92672">&lt;/Trigger&gt;</span>
-                            <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsChecked&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{x:Null}&#34;</span><span style="color:#f92672">&gt;</span>
-                                <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">TargetName=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Visibility&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;Visible&#34;</span> <span style="color:#f92672">/&gt;</span>
-                            <span style="color:#f92672">&lt;/Trigger&gt;</span>
-                        <span style="color:#f92672">&lt;/ControlTemplate.Triggers&gt;</span>
-                    <span style="color:#f92672">&lt;/ControlTemplate&gt;</span>
-                <span style="color:#f92672">&lt;/Setter.Value&gt;</span>
-            <span style="color:#f92672">&lt;/Setter&gt;</span>
-        <span style="color:#f92672">&lt;/Style&gt;</span>
-</code></pre></div><p>OK, so you now have beautiful controls that are going to make the app a big success, management is happy, everything is for the best&hellip; until you realize that in another view of the application, the controls need to have the same style, but with green tick marks!  The first solution that comes to mind is to duplicate the style, and replace blue with green in the copy. But since you&rsquo;re a good developer who cares about best practices, you know that duplicate code is evil: if you ever need to make changes to the style of the blue <code>CheckBox</code>, you will also have to modify the green one&hellip; and perhaps the red one, and the black one, etc. Clearly it would soon become unmanageable. So we need to refactor, but how? Ideally we would pass parameters to the style, but a style is not a method that you can call with various parameters&hellip;  What we need is an extra property that controls the color of the tick marks, so we can bind to this property in the template. A possible approach is to create custom controls that inherit <code>CheckBox</code> and <code>RadioButton</code>, with an extra <code>TickBrush</code> property&hellip; but personnally I don&rsquo;t really like this approach, I always prefer to use the built-in controls when they can fit the bill.  Anyway, there is an easier solution: we just need to create a <code>ThemeProperties</code> class with an attached property of type <code>Brush</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ThemeProperties</span>
+			<p>Today I&rsquo;d like to share a trick that I used quite often in the past few months. Let&rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls:</p>
+<p><img src="parameterized_styles11.png" alt="Custom styles"></p>
+<p>OK, I&rsquo;m not a designer&hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&rsquo;re just the default styles of <code>CheckBox</code> and <code>RadioButton</code> in which I only changed the templates to replace the <code>BulletChrome</code>s with these awesome blue tick marks. Here&rsquo;s the code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Style</span> <span style="color:#a6e22e">x:Key=</span><span style="color:#e6db74">&#34;{x:Type CheckBox}&#34;</span> <span style="color:#a6e22e">TargetType=</span><span style="color:#e6db74">&#34;{x:Type CheckBox}&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Foreground&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Background&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckBoxFillNormal}&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;BorderBrush&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckBoxStroke}&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;BorderThickness&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;FocusVisualStyle&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource EmptyCheckBoxFocusVisual}&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Template&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;Setter.Value&gt;</span>
+            <span style="color:#f92672">&lt;ControlTemplate</span> <span style="color:#a6e22e">TargetType=</span><span style="color:#e6db74">&#34;{x:Type CheckBox}&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;BulletDecorator</span> <span style="color:#a6e22e">Background=</span><span style="color:#e6db74">&#34;Transparent&#34;</span>
+                                    <span style="color:#a6e22e">SnapsToDevicePixels=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">&gt;</span>
+                    <span style="color:#f92672">&lt;BulletDecorator.Bullet&gt;</span>
+                        <span style="color:#f92672">&lt;Border</span> <span style="color:#a6e22e">BorderBrush=</span><span style="color:#e6db74">&#34;{TemplateBinding BorderBrush}&#34;</span>
+                                <span style="color:#a6e22e">Background=</span><span style="color:#e6db74">&#34;{TemplateBinding Background}&#34;</span>
+                                <span style="color:#a6e22e">BorderThickness=</span><span style="color:#e6db74">&#34;1&#34;</span>
+                                <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;11&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;11&#34;</span> <span style="color:#a6e22e">Margin=</span><span style="color:#e6db74">&#34;0,1,0,0&#34;</span><span style="color:#f92672">&gt;</span>
+                            <span style="color:#f92672">&lt;Grid&gt;</span>
+                                <span style="color:#f92672">&lt;Path</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;TickMark&#34;</span>
+                                        <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;Blue&#34;</span>
+                                        <span style="color:#a6e22e">Data=</span><span style="color:#e6db74">&#34;M0,4 5,9 9,0 4,5&#34;</span>
+                                        <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
+                                <span style="color:#f92672">&lt;Rectangle</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span>
+                                            <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;Blue&#34;</span>
+                                            <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;7&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;7&#34;</span>
+                                            <span style="color:#a6e22e">HorizontalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span>
+                                            <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span>
+                                            <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
+                            <span style="color:#f92672">&lt;/Grid&gt;</span>
+                        <span style="color:#f92672">&lt;/Border&gt;</span>
+                    <span style="color:#f92672">&lt;/BulletDecorator.Bullet&gt;</span>
+                    <span style="color:#f92672">&lt;ContentPresenter</span> <span style="color:#a6e22e">HorizontalAlignment=</span><span style="color:#e6db74">&#34;{TemplateBinding HorizontalContentAlignment}&#34;</span>
+                                        <span style="color:#a6e22e">Margin=</span><span style="color:#e6db74">&#34;{TemplateBinding Padding}&#34;</span>
+                                        <span style="color:#a6e22e">RecognizesAccessKey=</span><span style="color:#e6db74">&#34;True&#34;</span>
+                                        <span style="color:#a6e22e">SnapsToDevicePixels=</span><span style="color:#e6db74">&#34;{TemplateBinding SnapsToDevicePixels}&#34;</span>
+                                        <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;{TemplateBinding VerticalContentAlignment}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;/BulletDecorator&gt;</span>
+                <span style="color:#f92672">&lt;ControlTemplate.Triggers&gt;</span>
+                    <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;HasContent&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;FocusVisualStyle&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckRadioFocusVisual}&#34;</span><span style="color:#f92672">/&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Padding&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;4,0,0,0&#34;</span><span style="color:#f92672">/&gt;</span>
+                    <span style="color:#f92672">&lt;/Trigger&gt;</span>
+                    <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsEnabled&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;false&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Foreground&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}&#34;</span><span style="color:#f92672">/&gt;</span>
+                    <span style="color:#f92672">&lt;/Trigger&gt;</span>
+                    <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsChecked&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;True&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">TargetName=</span><span style="color:#e6db74">&#34;TickMark&#34;</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Visibility&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;Visible&#34;</span> <span style="color:#f92672">/&gt;</span>
+                    <span style="color:#f92672">&lt;/Trigger&gt;</span>
+                    <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsChecked&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{x:Null}&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">TargetName=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Visibility&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;Visible&#34;</span> <span style="color:#f92672">/&gt;</span>
+                    <span style="color:#f92672">&lt;/Trigger&gt;</span>
+                <span style="color:#f92672">&lt;/ControlTemplate.Triggers&gt;</span>
+            <span style="color:#f92672">&lt;/ControlTemplate&gt;</span>
+        <span style="color:#f92672">&lt;/Setter.Value&gt;</span>
+    <span style="color:#f92672">&lt;/Setter&gt;</span>
+<span style="color:#f92672">&lt;/Style&gt;</span>
+<span style="color:#f92672">&lt;Style</span> <span style="color:#a6e22e">x:Key=</span><span style="color:#e6db74">&#34;{x:Type RadioButton}&#34;</span> <span style="color:#a6e22e">TargetType=</span><span style="color:#e6db74">&#34;{x:Type RadioButton}&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Foreground&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Background&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;#F4F4F4&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;BorderBrush&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckBoxStroke}&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;BorderThickness&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Template&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;Setter.Value&gt;</span>
+            <span style="color:#f92672">&lt;ControlTemplate</span> <span style="color:#a6e22e">TargetType=</span><span style="color:#e6db74">&#34;{x:Type RadioButton}&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;BulletDecorator</span> <span style="color:#a6e22e">Background=</span><span style="color:#e6db74">&#34;Transparent&#34;</span><span style="color:#f92672">&gt;</span>
+                    <span style="color:#f92672">&lt;BulletDecorator.Bullet&gt;</span>
+                        <span style="color:#f92672">&lt;Grid</span> <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span> <span style="color:#a6e22e">Margin=</span><span style="color:#e6db74">&#34;0,1,0,0&#34;</span><span style="color:#f92672">&gt;</span>
+                            <span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;11&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;11&#34;</span>
+                                        <span style="color:#a6e22e">Stroke=</span><span style="color:#e6db74">&#34;{TemplateBinding BorderBrush}&#34;</span>
+                                        <span style="color:#a6e22e">StrokeThickness=</span><span style="color:#e6db74">&#34;1&#34;</span>
+                                        <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding Background}&#34;</span> <span style="color:#f92672">/&gt;</span>
+                            <span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;TickMark&#34;</span>
+                                        <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;7&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;7&#34;</span>
+                                        <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;Blue&#34;</span>
+                                        <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
+                            <span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span>
+                                        <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;3&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;3&#34;</span>
+                                        <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;Blue&#34;</span>
+                                        <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
+                        <span style="color:#f92672">&lt;/Grid&gt;</span>
+                    <span style="color:#f92672">&lt;/BulletDecorator.Bullet&gt;</span>
+                    <span style="color:#f92672">&lt;ContentPresenter</span> <span style="color:#a6e22e">HorizontalAlignment=</span><span style="color:#e6db74">&#34;{TemplateBinding HorizontalContentAlignment}&#34;</span>
+                                        <span style="color:#a6e22e">Margin=</span><span style="color:#e6db74">&#34;{TemplateBinding Padding}&#34;</span>
+                                        <span style="color:#a6e22e">RecognizesAccessKey=</span><span style="color:#e6db74">&#34;True&#34;</span>
+                                        <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;{TemplateBinding VerticalContentAlignment}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;/BulletDecorator&gt;</span>
+                <span style="color:#f92672">&lt;ControlTemplate.Triggers&gt;</span>
+                    <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;HasContent&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;FocusVisualStyle&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{StaticResource CheckRadioFocusVisual}&#34;</span><span style="color:#f92672">/&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Padding&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;4,0,0,0&#34;</span><span style="color:#f92672">/&gt;</span>
+                    <span style="color:#f92672">&lt;/Trigger&gt;</span>
+                    <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsEnabled&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;false&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Foreground&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}&#34;</span><span style="color:#f92672">/&gt;</span>
+                    <span style="color:#f92672">&lt;/Trigger&gt;</span>
+                    <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsChecked&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;True&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">TargetName=</span><span style="color:#e6db74">&#34;TickMark&#34;</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Visibility&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;Visible&#34;</span> <span style="color:#f92672">/&gt;</span>
+                    <span style="color:#f92672">&lt;/Trigger&gt;</span>
+                    <span style="color:#f92672">&lt;Trigger</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;IsChecked&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;{x:Null}&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;Setter</span> <span style="color:#a6e22e">TargetName=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span> <span style="color:#a6e22e">Property=</span><span style="color:#e6db74">&#34;Visibility&#34;</span> <span style="color:#a6e22e">Value=</span><span style="color:#e6db74">&#34;Visible&#34;</span> <span style="color:#f92672">/&gt;</span>
+                    <span style="color:#f92672">&lt;/Trigger&gt;</span>
+                <span style="color:#f92672">&lt;/ControlTemplate.Triggers&gt;</span>
+            <span style="color:#f92672">&lt;/ControlTemplate&gt;</span>
+        <span style="color:#f92672">&lt;/Setter.Value&gt;</span>
+    <span style="color:#f92672">&lt;/Setter&gt;</span>
+<span style="color:#f92672">&lt;/Style&gt;</span>
+</code></pre></div><p>OK, so you now have beautiful controls that are going to make the app a big success, management is happy, everything is for the best&hellip; until you realize that in another view of the application, the controls need to have the same style, but with green tick marks!</p>
+<p>The first solution that comes to mind is to duplicate the style, and replace blue with green in the copy. But since you&rsquo;re a good developer who cares about best practices, you know that duplicate code is evil: if you ever need to make changes to the style of the blue <code>CheckBox</code>, you will also have to modify the green one&hellip; and perhaps the red one, and the black one, etc. Clearly it would soon become unmanageable. So we need to refactor, but how? Ideally we would pass parameters to the style, but a style is not a method that you can call with various parameters&hellip;</p>
+<p>What we need is an extra property that controls the color of the tick marks, so we can bind to this property in the template. A possible approach is to create custom controls that inherit <code>CheckBox</code> and <code>RadioButton</code>, with an extra <code>TickBrush</code> property&hellip; but personnally I don&rsquo;t really like this approach, I always prefer to use the built-in controls when they can fit the bill.</p>
+<p>Anyway, there is an easier solution: we just need to create a <code>ThemeProperties</code> class with an attached property of type <code>Brush</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ThemeProperties</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Brush GetTickBrush(DependencyObject obj)
     {
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Brush GetTickBrush(DependencyObject obj)
-        {
-            <span style="color:#66d9ef">return</span> (Brush)obj.GetValue(TickBrushProperty);
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetTickBrush(DependencyObject obj, Brush <span style="color:#66d9ef">value</span>)
-        {
-            obj.SetValue(TickBrushProperty, <span style="color:#66d9ef">value</span>);
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty TickBrushProperty =
-            DependencyProperty.RegisterAttached(
-                <span style="color:#e6db74">&#34;TickBrush&#34;</span>,
-                <span style="color:#66d9ef">typeof</span>(Brush),
-                <span style="color:#66d9ef">typeof</span>(ThemeProperties),
-                <span style="color:#66d9ef">new</span> FrameworkPropertyMetadata(Brushes.Black));
+        <span style="color:#66d9ef">return</span> (Brush)obj.GetValue(TickBrushProperty);
     }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetTickBrush(DependencyObject obj, Brush <span style="color:#66d9ef">value</span>)
+    {
+        obj.SetValue(TickBrushProperty, <span style="color:#66d9ef">value</span>);
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty TickBrushProperty =
+        DependencyProperty.RegisterAttached(
+            <span style="color:#e6db74">&#34;TickBrush&#34;</span>,
+            <span style="color:#66d9ef">typeof</span>(Brush),
+            <span style="color:#66d9ef">typeof</span>(ThemeProperties),
+            <span style="color:#66d9ef">new</span> FrameworkPropertyMetadata(Brushes.Black));
+}
 </code></pre></div><p>We change the templates a bit to replace the hard-coded color with a binding to this property:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">                                ...
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">...
 
-                                <span style="color:#75715e">&lt;!-- CheckBox --&gt;</span>
-                                        <span style="color:#f92672">&lt;Path</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;TickMark&#34;</span>
-                                              <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding my:ThemeProperties.TickBrush}&#34;</span>
-                                              <span style="color:#a6e22e">Data=</span><span style="color:#e6db74">&#34;M0,4 5,9 9,0 4,5&#34;</span>
-                                              <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
-                                        <span style="color:#f92672">&lt;Rectangle</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span>
-                                                   <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding my:ThemeProperties.TickBrush}&#34;</span>
-                                                   <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;7&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;7&#34;</span>
-                                                   <span style="color:#a6e22e">HorizontalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span>
-                                                   <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span>
-                                                   <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#75715e">&lt;!-- CheckBox --&gt;</span>
+<span style="color:#f92672">&lt;Path</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;TickMark&#34;</span>
+        <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding my:ThemeProperties.TickBrush}&#34;</span>
+        <span style="color:#a6e22e">Data=</span><span style="color:#e6db74">&#34;M0,4 5,9 9,0 4,5&#34;</span>
+        <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;Rectangle</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span>
+            <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding my:ThemeProperties.TickBrush}&#34;</span>
+            <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;7&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;7&#34;</span>
+            <span style="color:#a6e22e">HorizontalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span>
+            <span style="color:#a6e22e">VerticalAlignment=</span><span style="color:#e6db74">&#34;Center&#34;</span>
+            <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
 
-                                ...
+...
 
-                                <span style="color:#75715e">&lt;!-- RadioButton --&gt;</span>
-                                    <span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;TickMark&#34;</span>
-                                             <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;7&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;7&#34;</span>
-                                             <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding my:ThemeProperties.TickBrush}&#34;</span>
-                                             <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
-                                    <span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span>
-                                             <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;3&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;3&#34;</span>
-                                             <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding my:ThemeProperties.TickBrush}&#34;</span>
-                                             <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#75715e">&lt;!-- RadioButton --&gt;</span>
+<span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;TickMark&#34;</span>
+            <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;7&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;7&#34;</span>
+            <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding my:ThemeProperties.TickBrush}&#34;</span>
+            <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;Ellipse</span> <span style="color:#a6e22e">Name=</span><span style="color:#e6db74">&#34;IndeterminateMark&#34;</span>
+            <span style="color:#a6e22e">Width=</span><span style="color:#e6db74">&#34;3&#34;</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;3&#34;</span>
+            <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;{TemplateBinding my:ThemeProperties.TickBrush}&#34;</span>
+            <span style="color:#a6e22e">Visibility=</span><span style="color:#e6db74">&#34;Hidden&#34;</span> <span style="color:#f92672">/&gt;</span>
 </code></pre></div><p>And when we use the controls, we set the property to the desired tick color:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;CheckBox</span> <span style="color:#a6e22e">Content=</span><span style="color:#e6db74">&#34;Checked&#34;</span> <span style="color:#a6e22e">IsChecked=</span><span style="color:#e6db74">&#34;True&#34;</span> <span style="color:#a6e22e">my:ThemeProperties.TickBrush=</span><span style="color:#e6db74">&#34;Blue&#34;</span> <span style="color:#f92672">/&gt;</span>
-</code></pre></div><p>So we can now have controls that share the same style, but have different colors for the tick mark:  <img src="parameterized_styles42.png" alt="">  Isn&rsquo;t it great? However there is a small problem left: since controls on the same view all use the same tick color, it&rsquo;s not very convenient to repeat the color on each one. It would be nice to be able to specify the color just once, on the root of the view&hellip; Well, as it happens, dependency properties have a nice feature that allows to do exactly that: value inheritance. We just need to specify the <code>Inherits</code> flag in the declaration of the <code>TickBrush</code> property:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty TickBrushProperty =
-            DependencyProperty.RegisterAttached(
-                <span style="color:#e6db74">&#34;TickBrush&#34;</span>,
-                <span style="color:#66d9ef">typeof</span>(Brush),
-                <span style="color:#66d9ef">typeof</span>(ThemeProperties),
-                <span style="color:#66d9ef">new</span> FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.Inherits));
-</code></pre></div><p>With this flag, the property becomes &ldquo;ambient&rdquo;: we only need to specify its value on a parent control, and all descendant controls will automatically inherit the value. So if you need a view where all the checkboxes and radiobuttons are red, just set the <code>TickBrush</code> property to <code>Red</code> on the root element of the view.  Obviously this concept can be extended to other cases: actually, every time an element of the template must change based on arbitrary criteria, this technique can be used. It can be a good alternative to duplicating a template when you only need to change a small part of it.</p>
+</code></pre></div><p>So we can now have controls that share the same style, but have different colors for the tick mark:</p>
+<p><img src="parameterized_styles42.png" alt="Parameterized styles with colors"></p>
+<p>Isn&rsquo;t it great? However there is a small problem left: since controls on the same view all use the same tick color, it&rsquo;s not very convenient to repeat the color on each one. It would be nice to be able to specify the color just once, on the root of the view&hellip; Well, as it happens, dependency properties have a nice feature that allows to do exactly that: value inheritance. We just need to specify the <code>Inherits</code> flag in the declaration of the <code>TickBrush</code> property:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty TickBrushProperty =
+    DependencyProperty.RegisterAttached(
+        <span style="color:#e6db74">&#34;TickBrush&#34;</span>,
+        <span style="color:#66d9ef">typeof</span>(Brush),
+        <span style="color:#66d9ef">typeof</span>(ThemeProperties),
+        <span style="color:#66d9ef">new</span> FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.Inherits));
+</code></pre></div><p>With this flag, the property becomes &ldquo;ambient&rdquo;: we only need to specify its value on a parent control, and all descendant controls will automatically inherit the value. So if you need a view where all the checkboxes and radiobuttons are red, just set the <code>TickBrush</code> property to <code>Red</code> on the root element of the view.</p>
+<p>Obviously this concept can be extended to other cases: actually, every time an element of the template must change based on arbitrary criteria, this technique can be used. It can be a good alternative to duplicating a template when you only need to change a small part of it.</p>
 
 		</div>
 		<footer class="post__footer">

@@ -79,39 +79,39 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, <code>await</code> it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a <a href="https://msdn.microsoft.com/en-us/library/system.threading.synchronizationcontext.aspx">synchronization context</a> (such as the UI thread in Windows Forms, WPF or WinRT). If you don’t have a sync context when the async operation starts, or if resuming on the sync context is explicitly disabled with <code>ConfigureAwait(false)</code>, then the method resumes on a thread pool thread after the <code>await</code>, and there is no obvious way to get back to the UI thread.</p>
 <p>For instance, let’s assume you want to do something like this:</p>
-<pre><code>public async void btnStart_Click(object sender, RoutedEventArgs e)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> btnStart_Click(<span style="color:#66d9ef">object</span> sender, RoutedEventArgs e)
 {
-    lblStatus.Text = &quot;Working...&quot;;
+    lblStatus.Text = <span style="color:#e6db74">&#34;Working...&#34;</span>;
     
-    // non blocking call
-    var data = await GetDataFromRemoteServerAsync().ConfigureAwait(false);
-    // blocking call, but runs on a worker thread
-    DoSomeCpuBoundWorkWithTheData(data);
+    <span style="color:#75715e">// non blocking call
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromRemoteServerAsync().ConfigureAwait(<span style="color:#66d9ef">false</span>);
+    <span style="color:#75715e">// blocking call, but runs on a worker thread
+</span><span style="color:#75715e"></span>    DoSomeCpuBoundWorkWithTheData(data);
     
-    // Oops, not on the UI thread!
-    lblStatus.Text = &quot;Done&quot;;
+    <span style="color:#75715e">// Oops, not on the UI thread!
+</span><span style="color:#75715e"></span>    lblStatus.Text = <span style="color:#e6db74">&#34;Done&#34;</span>;
 }
-</code></pre><p>This method starts an async operation to retrieve some data, and doesn’t resume on the UI thread, because it has some work to do in the background. When it’s done, it tries to update the UI, but since it’s not on the UI thread, it fails. This is a well known issue, and there are several workarounds. The most obvious one is to explicitly marshall the action to the dispatcher thread:</p>
-<pre><code>Dispatcher.Invoke(new Action(() =&gt; lblStatus.Text = &quot;Done&quot;));
-</code></pre><p>But it’s not very elegant and readable. A better way to do it is simply to extract the part of the method that does the actual work to another method:</p>
-<pre><code>public async void btnStart_Click(object sender, RoutedEventArgs e)
+</code></pre></div><p>This method starts an async operation to retrieve some data, and doesn’t resume on the UI thread, because it has some work to do in the background. When it’s done, it tries to update the UI, but since it’s not on the UI thread, it fails. This is a well known issue, and there are several workarounds. The most obvious one is to explicitly marshall the action to the dispatcher thread:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Dispatcher.Invoke(<span style="color:#66d9ef">new</span> Action(() =&gt; lblStatus.Text = <span style="color:#e6db74">&#34;Done&#34;</span>));
+</code></pre></div><p>But it’s not very elegant and readable. A better way to do it is simply to extract the part of the method that does the actual work to another method:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> btnStart_Click(<span style="color:#66d9ef">object</span> sender, RoutedEventArgs e)
 {
-    lblStatus.Text = &quot;Working...&quot;;
-    await DoSomeWorkAsync();
-    lblStatus.Text = &quot;Done&quot;;
+    lblStatus.Text = <span style="color:#e6db74">&#34;Working...&#34;</span>;
+    <span style="color:#66d9ef">await</span> DoSomeWorkAsync();
+    lblStatus.Text = <span style="color:#e6db74">&#34;Done&#34;</span>;
 }
 
-private async Task DoSomeWorkAsync()
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> Task DoSomeWorkAsync()
 {
-    // non blocking call
-    var data = await GetDataFromRemoteServerAsync().ConfigureAwait(false);
-    // blocking call, but runs on a worker thread
-    DoSomeCpuBoundWorkWithTheData(data);
+    <span style="color:#75715e">// non blocking call
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromRemoteServerAsync().ConfigureAwait(<span style="color:#66d9ef">false</span>);
+    <span style="color:#75715e">// blocking call, but runs on a worker thread
+</span><span style="color:#75715e"></span>    DoSomeCpuBoundWorkWithTheData(data);
 }
-</code></pre><p>It takes advantage of the normal behavior of <code>await</code>, which is to resume on the captured sync context if it was available.</p>
+</code></pre></div><p>It takes advantage of the normal behavior of <code>await</code>, which is to resume on the captured sync context if it was available.</p>
 <p>However, there might be some cases where it’s not practical to split the method like this. Or perhaps you want to switch to the UI thread in a method that didn’t start on the UI thread. Of course, you can use <code>Dispatcher.Invoke</code>, but it doesn’t look very nice with all those lambda expressions. What would be nice would be to be able to write something like this:</p>
-<pre><code>await syncContext;
-</code></pre><p>Well, it’s actually pretty simple to do: we just need to create a custom awaiter. The <code>async</code>/<code>await</code> feature is pattern-based; for something to be “awaitable”, it must:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">await</span> syncContext;
+</code></pre></div><p>Well, it’s actually pretty simple to do: we just need to create a custom awaiter. The <code>async</code>/<code>await</code> feature is pattern-based; for something to be “awaitable”, it must:</p>
 <ul>
 <li>have a <code>GetAwaiter()</code>method (which can be an extension method), which returns an object that:
 <ul>
@@ -122,50 +122,50 @@ private async Task DoSomeWorkAsync()
 </li>
 </ul>
 <p>So, we need to create an awaiter that captures a synchronization context, and causes the awaiting method to resume on this synchronization context. Here’s how it looks like:</p>
-<pre><code>public struct SynchronizationContextAwaiter : INotifyCompletion
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">SynchronizationContextAwaiter</span> : INotifyCompletion
 {
-    private static readonly SendOrPostCallback _postCallback = state =&gt; ((Action)state)();
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> SendOrPostCallback _postCallback = state =&gt; ((Action)state)();
 
-    private readonly SynchronizationContext _context;
-    public SynchronizationContextAwaiter(SynchronizationContext context)
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SynchronizationContext _context;
+    <span style="color:#66d9ef">public</span> SynchronizationContextAwaiter(SynchronizationContext context)
     {
         _context = context;
     }
 
-    public bool IsCompleted =&gt; _context == SynchronizationContext.Current;
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsCompleted =&gt; _context == SynchronizationContext.Current;
 
-    public void OnCompleted(Action continuation) =&gt; _context.Post(_postCallback, continuation);
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnCompleted(Action continuation) =&gt; _context.Post(_postCallback, continuation);
 
-    public void GetResult() { }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> GetResult() { }
 }
-</code></pre><ul>
+</code></pre></div><ul>
 <li>The constructor takes the synchronization context that the continuation needs to resume on.</li>
 <li>The <code>IsCompleted</code> property returns true only if we’re already on this synchronization context.</li>
 <li><code>OnCompleted</code> is called only if <code>IsCompleted</code> was false. It accepts a “continuation”, i.e. that code that must be executed when the operation completes. In an async method, the continuation is just the code that is after the awaited call. Since we want that continuation to run on the UI thread, we just post it to the sync context.</li>
 <li><code>GetResult()</code> doesn’t need to do anything; it will just be called as part of the continuation.</li>
 </ul>
 <p>Now that we have this awaiter, we just need to create a <code>GetAwaiter</code> extension method for the synchronization context that returns this awaiter:</p>
-<pre><code>public static SynchronizationContextAwaiter GetAwaiter(this SynchronizationContext context)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> SynchronizationContextAwaiter GetAwaiter(<span style="color:#66d9ef">this</span> SynchronizationContext context)
 {
-    return new SynchronizationContextAwaiter(context);
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> SynchronizationContextAwaiter(context);
 }
-</code></pre><p>And we’re done!</p>
+</code></pre></div><p>And we’re done!</p>
 <p>The original method can now be rewritten like this:</p>
-<pre><code>public async void btnStart_Click(object sender, RoutedEventArgs e)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> btnStart_Click(<span style="color:#66d9ef">object</span> sender, RoutedEventArgs e)
 {
-    var syncContext = SynchronizationContext.Current;
-    lblStatus.Text = &quot;Working...&quot;;
+    <span style="color:#66d9ef">var</span> syncContext = SynchronizationContext.Current;
+    lblStatus.Text = <span style="color:#e6db74">&#34;Working...&#34;</span>;
     
-    // non blocking call
-    var data = await GetDataFromRemoteServerAsync().ConfigureAwait(false);
-    // blocking call, but runs on a worker thread
-    DoSomeCpuBoundWorkWithTheData(data);
+    <span style="color:#75715e">// non blocking call
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromRemoteServerAsync().ConfigureAwait(<span style="color:#66d9ef">false</span>);
+    <span style="color:#75715e">// blocking call, but runs on a worker thread
+</span><span style="color:#75715e"></span>    DoSomeCpuBoundWorkWithTheData(data);
     
-    // switch back to the UI thread
-    await syncContext;
-    lblStatus.Text = &quot;Done&quot;;
+    <span style="color:#75715e">// switch back to the UI thread
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">await</span> syncContext;
+    lblStatus.Text = <span style="color:#e6db74">&#34;Done&#34;</span>;
 }
-</code></pre>
+</code></pre></div>
 		</div>
 		<footer class="post__footer">
 			

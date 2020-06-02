@@ -88,50 +88,50 @@ if (!doNotTrack) {
 <li><code>StreamContent</code>: represents raw binary content in the form of a <code>Stream</code></li>
 </ul>
 <p>For instance, here’s how you would upload the content of a file:</p>
-<pre><code>async Task UploadFileAsync(Uri uri, string filename)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadFileAsync(Uri uri, <span style="color:#66d9ef">string</span> filename)
 {
-    using (var stream = File.OpenRead(filename))
+    <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> stream = File.OpenRead(filename))
     {
-        var client = new HttpClient();
-        var response = await client.PostAsync(uri, new StreamContent(stream));
+        <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient();
+        <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.PostAsync(uri, <span style="color:#66d9ef">new</span> StreamContent(stream));
         response.EnsureSuccessStatusCode();
     }
 }
-</code></pre><p>As you may have noticed, nowhere in this code do we write to the request stream explicitly: the content is <em>pulled</em> from the source stream.</p>
+</code></pre></div><p>As you may have noticed, nowhere in this code do we write to the request stream explicitly: the content is <em>pulled</em> from the source stream.</p>
 <p>This “pull” model is fine most of the time, but it has a drawback: it requires that the data to upload already exists in a form that can be sent directly to the server. This is not always practical, because sometimes you want to generate the request content “on the fly”. For instance, if you want to send an object serialized as JSON, with the “pull” approach you first need to serialize it in memory as a string or <code>MemoryStream</code>, then assign that to the request’s content:</p>
-<pre><code>async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 {
-    var client = new HttpClient();
-    string json = JsonConvert.SerializeObject(data);
-    var response = await client.PostAsync(uri, new StringContent(json));
+    <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient();
+    <span style="color:#66d9ef">string</span> json = JsonConvert.SerializeObject(data);
+    <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.PostAsync(uri, <span style="color:#66d9ef">new</span> StringContent(json));
     response.EnsureSuccessStatusCode();
 }
-</code></pre><p>This is fine for small objects, but obviously not optimal for large object graphs…</p>
+</code></pre></div><p>This is fine for small objects, but obviously not optimal for large object graphs…</p>
 <p>So, how could we reverse this pull model to a push model? Well, it’s actually pretty simple: all you have to do is to create a class that inherits <code>HttpContent</code>, and override the <code>SerializeToStreamAsync</code> method to write to the request stream directly. Actually, I intended to blog about my own implementation, but then I did some research, and it turns out that Microsoft has already done the work: the <a href="https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client">Web API 2 Client</a> library provides a `PushStreamContent``` class that does exactly that. Basically, you just pass a delegate that defines what to do with the request stream. Here’s how it works:</p>
-<pre><code>async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 {
-    var client = new HttpClient();
-    var content = new PushStreamContent((stream, httpContent, transportContext) =&gt;
+    <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient();
+    <span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> PushStreamContent((stream, httpContent, transportContext) =&gt;
     {
-        var serializer = new JsonSerializer();
-        using (var writer = new StreamWriter(stream))
+        <span style="color:#66d9ef">var</span> serializer = <span style="color:#66d9ef">new</span> JsonSerializer();
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> writer = <span style="color:#66d9ef">new</span> StreamWriter(stream))
         {
             serializer.Serialize(writer, data);
         }
     });
-    var response = await client.PostAsync(uri, content);
+    <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.PostAsync(uri, content);
     response.EnsureSuccessStatusCode();
 }
-</code></pre><p>Note that the <code>PushStreamContent</code> class also provides a constructor overload that accepts an asynchronous delegate, if you want to write to the stream asynchronously.</p>
+</code></pre></div><p>Note that the <code>PushStreamContent</code> class also provides a constructor overload that accepts an asynchronous delegate, if you want to write to the stream asynchronously.</p>
 <p>Actually, for this specific use case, the Web API 2 Client library provides a less convoluted approach: the <code>ObjectContent</code> class. You just pass it the object to send and a <code>MediaTypeFormatter</code>, and it takes care of serializing the object to the request stream:</p>
-<pre><code>async Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 {
-    var client = new HttpClient();
-    var content = new ObjectContent&lt;T&gt;(data, new JsonMediaTypeFormatter());
-    var response = await client.PostAsync(uri, content);
+    <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient();
+    <span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> ObjectContent&lt;T&gt;(data, <span style="color:#66d9ef">new</span> JsonMediaTypeFormatter());
+    <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.PostAsync(uri, content);
     response.EnsureSuccessStatusCode();
 }
-</code></pre><p>By default, the <code>JsonMediaTypeFormatter</code> class uses <a href="http://james.newtonking.com/json">Json.NET</a> as its JSON serializer, but there is an option to use <code>DataContractJsonSerializer</code> instead.</p>
+</code></pre></div><p>By default, the <code>JsonMediaTypeFormatter</code> class uses <a href="http://james.newtonking.com/json">Json.NET</a> as its JSON serializer, but there is an option to use <code>DataContractJsonSerializer</code> instead.</p>
 <p>Note that if you need to read an object from the response content, this is even easier: just use the <a href="http://msdn.microsoft.com/en-us/library/system.net.http.httpcontentextensions.readasasync%28v=vs.118%29.aspx"><code>ReadAsAsync&lt;T&gt;</code></a> extension method (also in the Web API 2 Client library). So as you can see, <code>HttpClient</code> makes it <em>very</em> easy to consume REST APIs.</p>
 
 		</div>

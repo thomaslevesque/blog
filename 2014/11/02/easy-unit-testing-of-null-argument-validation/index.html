@@ -78,57 +78,57 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2014-11-02T00:00:00Z">November 02, 2014</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>When unit testing a method, one of the things to test is argument validation : for instance, ensure that the method throws a <code>ArgumentNullException</code> when a null argument is passed for a parameter that isn’t allowed to be null. Writing this kind of test is very easy, but it’s also a tedious and repetitive task, especially if the method has many parameters… So I wrote a method that automates part of this task: it tries to pass null for each of the specified arguments, and asserts that the method throws an <code>ArgumentNullException</code>. Here’s an example that tests a <code>FullOuterJoin</code> extension method:</p>
-<pre><code>[Test]
-public void FullOuterJoin_Throws_If_Argument_Null()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[Test]</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> FullOuterJoin_Throws_If_Argument_Null()
 {
-    var left = Enumerable.Empty&lt;int&gt;();
-    var right = Enumerable.Empty&lt;int&gt;();
+    <span style="color:#66d9ef">var</span> left = Enumerable.Empty&lt;<span style="color:#66d9ef">int</span>&gt;();
+    <span style="color:#66d9ef">var</span> right = Enumerable.Empty&lt;<span style="color:#66d9ef">int</span>&gt;();
     TestHelper.AssertThrowsWhenArgumentNull(
-        () =&gt; left.FullOuterJoin(right, x =&gt; x, y =&gt; y, (k, x, y) =&gt; 0, 0, 0, null),
-        &quot;left&quot;, &quot;right&quot;, &quot;leftKeySelector&quot;, &quot;rightKeySelector&quot;, &quot;resultSelector&quot;);
+        () =&gt; left.FullOuterJoin(right, x =&gt; x, y =&gt; y, (k, x, y) =&gt; <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">null</span>),
+        <span style="color:#e6db74">&#34;left&#34;</span>, <span style="color:#e6db74">&#34;right&#34;</span>, <span style="color:#e6db74">&#34;leftKeySelector&#34;</span>, <span style="color:#e6db74">&#34;rightKeySelector&#34;</span>, <span style="color:#e6db74">&#34;resultSelector&#34;</span>);
 }
-</code></pre><p>The first parameter is a lambda expression that represents how to call the method. In this lambda, you should only pass valid arguments. The following parameters are the names of the parameters that are not allowed to be null. For each of the specified names, <code>AssertThrowsWhenArgumentNull</code> will replace the corresponding argument with null in the provided lambda, compile and invoke the lambda, and assert that the method throws a <code>ArgumentNullException</code>.</p>
+</code></pre></div><p>The first parameter is a lambda expression that represents how to call the method. In this lambda, you should only pass valid arguments. The following parameters are the names of the parameters that are not allowed to be null. For each of the specified names, <code>AssertThrowsWhenArgumentNull</code> will replace the corresponding argument with null in the provided lambda, compile and invoke the lambda, and assert that the method throws a <code>ArgumentNullException</code>.</p>
 <p>Using this method, instead of writing a test for each of the arguments that are not allowed to be null, you only need one test.</p>
 <p>Here’s the code for the <code>TestHelper.AssertThrowsWhenArgumentNull</code> method (you can also find it on <a href="https://gist.github.com/thomaslevesque/c4cb9f537316b122f5b9">Gist</a>):</p>
-<pre><code>using System;
-using System.Linq;
-using System.Linq.Expressions;
-using NUnit.Framework;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<span style="color:#66d9ef">using</span> System.Linq;
+<span style="color:#66d9ef">using</span> System.Linq.Expressions;
+<span style="color:#66d9ef">using</span> NUnit.Framework;
 
-namespace MyLibrary.Tests
+<span style="color:#66d9ef">namespace</span> MyLibrary.Tests
 {
-    static class TestHelper
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestHelper</span>
     {
-        public static void AssertThrowsWhenArgumentNull(Expression&lt;TestDelegate&gt; expr, params string[] paramNames)
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> AssertThrowsWhenArgumentNull(Expression&lt;TestDelegate&gt; expr, <span style="color:#66d9ef">params</span> <span style="color:#66d9ef">string</span>[] paramNames)
         {
-            var realCall = expr.Body as MethodCallExpression;
-            if (realCall == null)
-                throw new ArgumentException(&quot;Expression body is not a method call&quot;, &quot;expr&quot;);
+            <span style="color:#66d9ef">var</span> realCall = expr.Body <span style="color:#66d9ef">as</span> MethodCallExpression;
+            <span style="color:#66d9ef">if</span> (realCall == <span style="color:#66d9ef">null</span>)
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;Expression body is not a method call&#34;</span>, <span style="color:#e6db74">&#34;expr&#34;</span>);
 
-            var realArgs = realCall.Arguments;
-            var paramIndexes = realCall.Method.GetParameters()
-                .Select((p, i) =&gt; new { p, i })
+            <span style="color:#66d9ef">var</span> realArgs = realCall.Arguments;
+            <span style="color:#66d9ef">var</span> paramIndexes = realCall.Method.GetParameters()
+                .Select((p, i) =&gt; <span style="color:#66d9ef">new</span> { p, i })
                 .ToDictionary(x =&gt; x.p.Name, x =&gt; x.i);
-            var paramTypes = realCall.Method.GetParameters()
+            <span style="color:#66d9ef">var</span> paramTypes = realCall.Method.GetParameters()
                 .ToDictionary(p =&gt; p.Name, p =&gt; p.ParameterType);
             
             
 
-            foreach (var paramName in paramNames)
+            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> paramName <span style="color:#66d9ef">in</span> paramNames)
             {
-                var args = realArgs.ToArray();
-                args[paramIndexes[paramName]] = Expression.Constant(null, paramTypes[paramName]);
-                var call = Expression.Call(realCall.Method, args);
-                var lambda = Expression.Lambda&lt;TestDelegate&gt;(call);
-                var action = lambda.Compile();
-                var ex = Assert.Throws&lt;ArgumentNullException&gt;(action, &quot;Expected ArgumentNullException for parameter '{0}', but none was thrown.&quot;, paramName);
+                <span style="color:#66d9ef">var</span> args = realArgs.ToArray();
+                args[paramIndexes[paramName]] = Expression.Constant(<span style="color:#66d9ef">null</span>, paramTypes[paramName]);
+                <span style="color:#66d9ef">var</span> call = Expression.Call(realCall.Method, args);
+                <span style="color:#66d9ef">var</span> lambda = Expression.Lambda&lt;TestDelegate&gt;(call);
+                <span style="color:#66d9ef">var</span> action = lambda.Compile();
+                <span style="color:#66d9ef">var</span> ex = Assert.Throws&lt;ArgumentNullException&gt;(action, <span style="color:#e6db74">&#34;Expected ArgumentNullException for parameter &#39;{0}&#39;, but none was thrown.&#34;</span>, paramName);
                 Assert.AreEqual(paramName, ex.ParamName);
             }
         }
 
     }
 }
-</code></pre><p>Note that it is written for NUnit, but can easily be adapted to other unit test frameworks.</p>
+</code></pre></div><p>Note that it is written for NUnit, but can easily be adapted to other unit test frameworks.</p>
 <p>I used this method in my <a href="https://github.com/thomaslevesque/Linq.Extras">Linq.Extras</a> library, which provides many additional extension methods for working with sequences and collections (including the <code>FullOuterJoin</code> method mentioned above).</p>
 
 		</div>

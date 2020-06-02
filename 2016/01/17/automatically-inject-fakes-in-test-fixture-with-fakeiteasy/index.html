@@ -81,47 +81,47 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Today I’d like to share a nice feature I discovered recently in <a href="http://fakeiteasy.github.io/">FakeItEasy</a>.</p>
 <p>When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with <a href="/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/">an auto-mocking Unity extension</a> to make it easier. Now I just realized that FakeItEasy offers an even better solution: just declare the dependencies and SUT as fields or properties in your test fixture, and call <code>Fake.InitializeFixture</code> on the fixture to initialize them. Here’s how it looks:</p>
-<pre><code>    public class BlogManagerTests
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BlogManagerTests</span>
+{
+<span style="color:#a6e22e">    [Fake]</span> <span style="color:#66d9ef">public</span> IBlogPostRepository BlogPostRepository { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">    [Fake]</span> <span style="color:#66d9ef">public</span> ISocialNetworkNotifier SocialNetworkNotifier { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">    [Fake]</span> <span style="color:#66d9ef">public</span> ITimeService TimeService { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [UnderTest]</span> <span style="color:#66d9ef">public</span> BlogManager BlogManager { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#66d9ef">public</span> BlogManagerTests()
     {
-        [Fake] public IBlogPostRepository BlogPostRepository { get; set; }
-        [Fake] public ISocialNetworkNotifier SocialNetworkNotifier { get; set; }
-        [Fake] public ITimeService TimeService { get; set; }
-
-        [UnderTest] public BlogManager BlogManager { get; set; }
-
-        public BlogManagerTests()
-        {
-            Fake.InitializeFixture(this);
-        }
-
-        [Fact]
-        public void NewPost_should_add_blog_post_to_repository()
-        {
-            var post = A.Dummy();
-
-            BlogManager.NewPost(post);
-
-            A.CallTo(() =&gt; BlogPostRepository.Add(post)).MustHaveHappened();
-        }
-
-        [Fact]
-        public void PublishPost_should_update_post_in_repository_and_publish_link_to_social_networks()
-        {
-            var publishDate = DateTimeOffset.Now;
-            A.CallTo(() =&gt; TimeService.Now).Returns(publishDate);
-
-            var post = A.Dummy();
-
-            BlogManager.PublishPost(post);
-
-            Assert.Equal(BlogPostStatus.Published, post.Status);
-            Assert.Equal(publishDate, post.PublishDate);
-
-            A.CallTo(() =&gt; BlogPostRepository.Update(post)).MustHaveHappened();
-            A.CallTo(() =&gt; SocialNetworkNotifier.PublishLink(post)).MustHaveHappened();
-        }
+        Fake.InitializeFixture(<span style="color:#66d9ef">this</span>);
     }
-</code></pre><p>The SUT is declared as a property marked with the <code>[UnderTest]</code> attribute. Each dependency that you need to manipulate is declared as a property marked with the <code>[Fake]</code> attribute. <code>Fake.InitializeFixture</code> then initializes the SUT, creating fake dependencies on the fly, and assigns those dependencies to the corresponding properties.</p>
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [Fact]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> NewPost_should_add_blog_post_to_repository()
+    {
+        <span style="color:#66d9ef">var</span> post = A.Dummy();
+
+        BlogManager.NewPost(post);
+
+        A.CallTo(() =&gt; BlogPostRepository.Add(post)).MustHaveHappened();
+    }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [Fact]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> PublishPost_should_update_post_in_repository_and_publish_link_to_social_networks()
+    {
+        <span style="color:#66d9ef">var</span> publishDate = DateTimeOffset.Now;
+        A.CallTo(() =&gt; TimeService.Now).Returns(publishDate);
+
+        <span style="color:#66d9ef">var</span> post = A.Dummy();
+
+        BlogManager.PublishPost(post);
+
+        Assert.Equal(BlogPostStatus.Published, post.Status);
+        Assert.Equal(publishDate, post.PublishDate);
+
+        A.CallTo(() =&gt; BlogPostRepository.Update(post)).MustHaveHappened();
+        A.CallTo(() =&gt; SocialNetworkNotifier.PublishLink(post)).MustHaveHappened();
+    }
+}
+</code></pre></div><p>The SUT is declared as a property marked with the <code>[UnderTest]</code> attribute. Each dependency that you need to manipulate is declared as a property marked with the <code>[Fake]</code> attribute. <code>Fake.InitializeFixture</code> then initializes the SUT, creating fake dependencies on the fly, and assigns those dependencies to the corresponding properties.</p>
 <p>I really like how clean the tests look with this technique; the boilerplate code is reduced to a minimum, all you have to do is configure the dependencies where necessary and get on with your tests.</p>
 <p>Two remarks about the code above:</p>
 <ul>

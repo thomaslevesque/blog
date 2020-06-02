@@ -19,7 +19,7 @@
       <guid>https://thomaslevesque.com/2015/07/30/c-puzzle-2/</guid>
       <description>Just another little puzzle based on an issue I had at work…
 Consider this piece of code :
-Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;); Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
+Console.WriteLine($&amp;#34;x &amp;gt; y is {x &amp;gt; y}&amp;#34;); Console.WriteLine($&amp;#34;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;#34;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
 x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
     </item>
     

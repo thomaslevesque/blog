@@ -86,7 +86,7 @@ if (!doNotTrack) {
 <li>it won’t work if the command’s shortcut has been changed</li>
 <li>it doesn’t prevent the user from inserting an image using drag and drop</li>
 </ul>
-<p>Since I wasn’t satisfied with this solution, I used the <a href="http://referencesource.microsoft.com/">.NET Framework Reference Source website</a> to look for a way to intercept the paste operation itself. I followed the code from the <code>ApplicationCommands.Paste</code> property, and eventually found the <a href="https://msdn.microsoft.com/en-us/library/system.windows.dataobject.pasting.aspx">DataObject.Pasting</a>`` attached event. It’s not a place where I had thought to look, but when you think about it, it actually makes sense. This event can be used to intercept a paste or drag and drop operation, and lets the hander do a few things:</p>
+<p>Since I wasn’t satisfied with this solution, I used the <a href="http://referencesource.microsoft.com/">.NET Framework Reference Source website</a> to look for a way to intercept the paste operation itself. I followed the code from the <code>ApplicationCommands.Paste</code> property, and eventually found the <a href="https://msdn.microsoft.com/en-us/library/system.windows.dataobject.pasting.aspx"><code>DataObject.Pasting</code></a> attached event. It’s not a place where I had thought to look, but when you think about it, it actually makes sense. This event can be used to intercept a paste or drag and drop operation, and lets the hander do a few things:</p>
 <ul>
 <li>cancel the operation completely</li>
 <li>change which data format will be pasted from the clipboard</li>
@@ -94,16 +94,16 @@ if (!doNotTrack) {
 </ul>
 <p>In my case, I just wanted to prevent an image from being pasted or drag and dropped, so I just cancelled the operation when the <code>FormatToApply</code> was <code>&quot;Bitmap&quot;</code>, as shown below.</p>
 <p>XAML:</p>
-<pre><code>&lt;RichTextBox DataObject.Pasting=&quot;RichTextBox1_Pasting&quot; ... /&gt;
-</code></pre><p>Code-behind:</p>
-<pre><code>private void RichTextBox1_Pasting(object sender, DataObjectPastingEventArgs e)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;RichTextBox</span> <span style="color:#a6e22e">DataObject.Pasting=</span><span style="color:#e6db74">&#34;RichTextBox1_Pasting&#34;</span> <span style="color:#960050;background-color:#1e0010">...</span> <span style="color:#f92672">/&gt;</span>
+</code></pre></div><p>Code-behind:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> RichTextBox1_Pasting(<span style="color:#66d9ef">object</span> sender, DataObjectPastingEventArgs e)
 {
-    if (e.FormatToApply == &quot;Bitmap&quot;)
+    <span style="color:#66d9ef">if</span> (e.FormatToApply == <span style="color:#e6db74">&#34;Bitmap&#34;</span>)
     {
         e.CancelCommand();
     }
 }
-</code></pre><p>Of course, it’s also possible to handle this in a smarter way. For instance, if the <code>DataObject</code> contains several formats, we could create a new <code>DataObject</code> with only the acceptable formats. This way the user is still able to paste <em>something</em>, if not the image.</p>
+</code></pre></div><p>Of course, it’s also possible to handle this in a smarter way. For instance, if the <code>DataObject</code> contains several formats, we could create a new <code>DataObject</code> with only the acceptable formats. This way the user is still able to paste <em>something</em>, if not the image.</p>
 
 		</div>
 		<footer class="post__footer">

@@ -446,7 +446,7 @@ My initial solution was more a proof of concept than anything else, and had a ma
       <guid>https://thomaslevesque.com/2015/07/30/c-puzzle-2/</guid>
       <description>Just another little puzzle based on an issue I had at work…
 Consider this piece of code :
-Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;); Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
+Console.WriteLine($&amp;#34;x &amp;gt; y is {x &amp;gt; y}&amp;#34;); Console.WriteLine($&amp;#34;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;#34;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
 x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
     </item>
     
@@ -466,7 +466,7 @@ x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
       
       <guid>https://thomaslevesque.com/2015/06/21/exception-filters-in-c-6/</guid>
       <description>Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
-static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&amp;quot;Error 42 occurred&amp;quot;); } } As you might expect, the catch block will be entered if and only if ex.</description>
+static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&amp;#34;Error 42 occurred&amp;#34;); } } As you might expect, the catch block will be entered if and only if ex.</description>
     </item>
     
     <item>
@@ -515,7 +515,7 @@ I’ll try to post more puzzles in the future if I can come up with others.</des
       
       <guid>https://thomaslevesque.com/2015/02/24/customizing-string-interpolation-in-c-6/</guid>
       <description>One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
-string text = $&amp;quot;{p.Name} was born on {p.DateOfBirth:D}&amp;quot;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:</description>
+string text = $&amp;#34;{p.Name} was born on {p.DateOfBirth:D}&amp;#34;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:</description>
     </item>
     
     <item>
@@ -526,7 +526,7 @@ string text = $&amp;quot;{p.Name} was born on {p.DateOfBirth:D}&amp;quot;; A les
       <guid>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.</description>
+public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation  await Task.</description>
     </item>
     
     <item>
@@ -725,7 +725,8 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/</guid>
-      <description>Today I&amp;rsquo;d like to share a trick that I used quite often in the past few months. Let&amp;rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls: OK, I&amp;rsquo;m not a designer&amp;hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&amp;rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.</description>
+      <description>Today I&amp;rsquo;d like to share a trick that I used quite often in the past few months. Let&amp;rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls:
+OK, I&amp;rsquo;m not a designer&amp;hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&amp;rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.</description>
     </item>
     
     <item>
@@ -734,7 +735,8 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
       <pubDate>Fri, 23 Sep 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</guid>
-      <description>It&amp;rsquo;s been a while since I last wrote about markup extensions&amp;hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&amp;rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events. Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&amp;rsquo;t do the same to subscribe to an event.</description>
+      <description>It&amp;rsquo;s been a while since I last wrote about markup extensions&amp;hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&amp;rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events.
+Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&amp;rsquo;t do the same to subscribe to an event.</description>
     </item>
     
     <item>
@@ -752,7 +754,9 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
       <pubDate>Sun, 27 Mar 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/03/27/wpf-display-an-animated-gif-image/</guid>
-      <description>Note: The code in this article is out of date; the current code is hosted on GitHub. WPF is a great technology, but sometimes it seems to be missing some really basic features&amp;hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation. Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:</description>
+      <description>Note: The code in this article is out of date; the current code is hosted on GitHub.
+WPF is a great technology, but sometimes it seems to be missing some really basic features&amp;hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation.
+Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:</description>
     </item>
     
     <item>
@@ -761,7 +765,7 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
       <pubDate>Mon, 21 Mar 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</guid>
-      <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&amp;rsquo;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip; Let&amp;rsquo;s illustrate with a simple example: we want to display a list of products in a DataGrid.</description>
+      <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&amp;rsquo;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip;</description>
     </item>
     
     <item>
@@ -810,7 +814,8 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
-      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&amp;hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&amp;rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).</description>
+      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings.
+As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip;</description>
     </item>
     
     <item>
@@ -828,7 +833,9 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
       <pubDate>Sun, 23 Aug 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/08/23/wpf-markup-extensions-and-templates/</guid>
-      <description>Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&amp;hellip; In this post I&amp;rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let&amp;rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</description>
+      <description>Note : This post follows the one about a a markup extension that can update its target, and reuses the same code.
+You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&amp;hellip; In this post I&amp;rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template.
+The problem Let&amp;rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</description>
     </item>
     
     <item>
@@ -837,7 +844,8 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
       <pubDate>Tue, 04 Aug 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/</guid>
-      <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
+      <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
+To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
     </item>
     
     <item>
@@ -865,8 +873,9 @@ X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;
       <pubDate>Wed, 06 May 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</guid>
-      <description>Here&amp;rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&amp;hellip; In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
-private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;) Unfortunately, this method only exists in WPF, and a majority of developers are still working with Windows Forms.</description>
+      <description>Here&amp;rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&amp;hellip;
+In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
+private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)</description>
     </item>
     
     <item>
@@ -906,7 +915,9 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
       <pubDate>Thu, 05 Mar 2009 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/2009/03/05/visual-studio-trick-make-a-project-item-a-child-item-of-another/</guid>
-      <description>You probably noticed that, in a C# project tree, some items are placed &amp;ldquo;under&amp;rdquo; a parent item : it is the case, for instance, for files generated by a designer or wizard : The following trick shows how to apply the same behavior to your own files. Let&amp;rsquo;s assume that you want to customize the classes generated by the EDM designer. You can&amp;rsquo;t modify the Model1.designer.cs file, because you changes would be overwritten by the designer.</description>
+      <description>You probably noticed that, in a C# project tree, some items are placed &amp;ldquo;under&amp;rdquo; a parent item : it is the case, for instance, for files generated by a designer or wizard :
+The following trick shows how to apply the same behavior to your own files.
+Let&amp;rsquo;s assume that you want to customize the classes generated by the EDM designer. You can&amp;rsquo;t modify the Model1.designer.cs file, because you changes would be overwritten by the designer.</description>
     </item>
     
     <item>

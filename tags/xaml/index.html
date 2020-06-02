@@ -128,7 +128,8 @@ It’s often useful to be notified when the value of a dependency property chang
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2011-09-23T00:00:00Z">September 23, 2011</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		It&rsquo;s been a while since I last wrote about markup extensions&hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events. Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&rsquo;t do the same to subscribe to an event.
+		It&rsquo;s been a while since I last wrote about markup extensions&hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events.
+Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&rsquo;t do the same to subscribe to an event.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -157,7 +158,8 @@ It’s often useful to be notified when the value of a dependency property chang
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-10-26T00:00:00Z">October 26, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings. As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&rsquo;t a DependencyProperty, so it wasn&rsquo;t possible to bind it. Furthermore, InputBindings didn&rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&hellip; Until now, in order to bind the Command of a KeyBinding or MouseBinding to a property of the DataContext, we had to resort to clumsy workarounds&hellip; I had eventually came up with an acceptable solution, described in this post, but I wasn&rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).
+		THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings.
+As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&rsquo;t a DependencyProperty, so it wasn&rsquo;t possible to bind it. Furthermore, InputBindings didn&rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&hellip;
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -171,7 +173,9 @@ It’s often useful to be notified when the value of a dependency property chang
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-23T00:00:00Z">August 23, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Note : This post follows the one about a a markup extension that can update its target, and reuses the same code. You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I&rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template. The problem Let&rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :
+		Note : This post follows the one about a a markup extension that can update its target, and reuses the same code.
+You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&hellip; In this post I&rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template.
+The problem Let&rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -185,7 +189,8 @@ It’s often useful to be notified when the value of a dependency property chang
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-08-04T00:00:00Z">August 04, 2009</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph. To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
+		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
+To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">

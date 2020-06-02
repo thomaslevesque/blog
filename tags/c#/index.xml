@@ -310,7 +310,7 @@ When I googled for a way to prevent that, the only solutions I found suggested t
       <guid>https://thomaslevesque.com/2015/07/30/c-puzzle-2/</guid>
       <description>Just another little puzzle based on an issue I had at work…
 Consider this piece of code :
-Console.WriteLine($&amp;quot;x &amp;gt; y is {x &amp;gt; y}&amp;quot;); Console.WriteLine($&amp;quot;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;quot;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
+Console.WriteLine($&amp;#34;x &amp;gt; y is {x &amp;gt; y}&amp;#34;); Console.WriteLine($&amp;#34;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;#34;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
 x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
     </item>
     
@@ -361,7 +361,7 @@ I’ll try to post more puzzles in the future if I can come up with others.</des
       <guid>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.</description>
+public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation  await Task.</description>
     </item>
     
     <item>

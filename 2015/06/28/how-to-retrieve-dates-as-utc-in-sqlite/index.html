@@ -78,34 +78,34 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-06-28T00:00:00Z">June 28, 2015</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p><a href="http://sqlite.org/">SQLite</a> is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an <a href="http://system.data.sqlite.org/">official ADO.NET provider</a> that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a <code>DateTime</code> converted to local time, with <code>Kind</code> = <code>Unspecified</code>. Here’s an example that exhibits the problem (using <a href="https://github.com/StackExchange/dapper-dot-net">Dapper</a> in <a href="http://www.linqpad.net/">LINQPad</a>):</p>
-<pre><code>void Main()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">void</span> Main()
 {
-    string connectionString = @&quot;Data Source=D:\tmp\testSQLiteDate.db&quot;;
-    using (var connection = new SQLiteConnection(connectionString))
+    <span style="color:#66d9ef">string</span> connectionString = <span style="color:#e6db74">@&#34;Data Source=D:\tmp\testSQLiteDate.db&#34;</span>;
+    <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> connection = <span style="color:#66d9ef">new</span> SQLiteConnection(connectionString))
     {
         connection.Open();
-        connection.Execute(&quot;create table Foo(Id integer not null primary key, CreationDateUtc datetime not null)&quot;);
+        connection.Execute(<span style="color:#e6db74">&#34;create table Foo(Id integer not null primary key, CreationDateUtc datetime not null)&#34;</span>);
         
-        var foo = new Foo{Id = 42, CreationDateUtc = DateTime.UtcNow};
-        foo.Dump(&quot;Original object&quot;);
-        connection.Execute(&quot;insert into Foo(Id, CreationDateUtc) values (@Id, @CreationDateUtc)&quot;, foo);
-        var foo2 = connection.Query&lt;Foo&gt;(&quot;select * from Foo where Id = @Id&quot;, new{ Id = 42 }).SingleOrDefault();
-        foo2.Dump(&quot;After reading from DB&quot;);
+        <span style="color:#66d9ef">var</span> foo = <span style="color:#66d9ef">new</span> Foo{Id = <span style="color:#ae81ff">42</span>, CreationDateUtc = DateTime.UtcNow};
+        foo.Dump(<span style="color:#e6db74">&#34;Original object&#34;</span>);
+        connection.Execute(<span style="color:#e6db74">&#34;insert into Foo(Id, CreationDateUtc) values (@Id, @CreationDateUtc)&#34;</span>, foo);
+        <span style="color:#66d9ef">var</span> foo2 = connection.Query&lt;Foo&gt;(<span style="color:#e6db74">&#34;select * from Foo where Id = @Id&#34;</span>, <span style="color:#66d9ef">new</span>{ Id = <span style="color:#ae81ff">42</span> }).SingleOrDefault();
+        foo2.Dump(<span style="color:#e6db74">&#34;After reading from DB&#34;</span>);
     }
 }
 
-class Foo
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>
 {
-    public int Id { get; set; }
-    public DateTime CreationDateUtc { get; set; }
-    public DateTimeKind Kind { get { return CreationDateUtc.Kind; } }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> DateTime CreationDateUtc { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> DateTimeKind Kind { <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> CreationDateUtc.Kind; } }
 }
-</code></pre><p>Here’s the output:</p>
+</code></pre></div><p>Here’s the output:</p>
 <p><img src="image.png" alt="image" title="image"></p>
 <p>As you can see, after reading it from the database, the date is no longer in UTC, and doesn’t even contain an indication that it’s a local date. This can cause all kinds of bugs if your code is comparing dates that are supposed to be UTC.</p>
 <p>I initially tried to fix that in my code by manually converting the date, before I realized that the solution was much simpler (although <a href="http://www.nudoq.org/#!/Packages/System.Data.SQLite/System.Data.SQLite/SQLiteConnectionStringBuilder/P/DateTimeKind">not very well documented</a>): there is a connection string setting to control how dates are handled. You just need to specify <code>DateTimeKind=Utc</code> in your connection string:</p>
-<pre><code>string connectionString = @&quot;Data Source=D:\tmp\testSQLiteDate.db;DateTimeKind=Utc&quot;;
-</code></pre><p>If you’re using <code>SqliteConnectionStringBuilder</code> to build the connection string, just set the <code>DateTimeKind</code> property to <code>DateTimeKind.Utc</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> connectionString = <span style="color:#e6db74">@&#34;Data Source=D:\tmp\testSQLiteDate.db;DateTimeKind=Utc&#34;</span>;
+</code></pre></div><p>If you’re using <code>SqliteConnectionStringBuilder</code> to build the connection string, just set the <code>DateTimeKind</code> property to <code>DateTimeKind.Utc</code>.</p>
 <p>As you can see, the date kind is now preserved:</p>
 <p><img src="image1.png" alt="image" title="image"></p>
 <p><strong>Important caveat:</strong> this setting will apply to <strong>all</strong> dates read from this connection. If you have dates that were not stored as UTC, the provider will assume that they are UTC dates anyway, which will produce incorrect results. So, only do this if you store all dates as UTC.</p>

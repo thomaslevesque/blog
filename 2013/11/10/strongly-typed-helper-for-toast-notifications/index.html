@@ -79,23 +79,23 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Windows 8 provides an API for showing toast notifications. Unfortunately, it’s very cumbersome: to define the content of a notification, you must use a predefined template that is provided in the form of an <code>XmlDocumen</code>t, and set the value for each field in the XML. There is nothing in the API to let you know which fields the template defines, you need to check the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh761494.aspx">toast template catalog</a> in the documentation. It would be much more convenient to have a strongly typed API…</p>
 <p>So I created a simple wrapper around the standard toast API. It can be used like this:</p>
-<pre><code>var content = new ToastContent.ImageAndText02
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> ToastContent.ImageAndText02
 {
-    Image = &quot;ms-appx:///Images/dotnet.png&quot;,
-    Title = &quot;Hello world!&quot;,
-    Text = &quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&quot;,
+    Image = <span style="color:#e6db74">&#34;ms-appx:///Images/dotnet.png&#34;</span>,
+    Title = <span style="color:#e6db74">&#34;Hello world!&#34;</span>,
+    Text = <span style="color:#e6db74">&#34;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&#34;</span>,
 };
-var notifier = ToastNotificationManager.CreateToastNotifier();
+<span style="color:#66d9ef">var</span> notifier = ToastNotificationManager.CreateToastNotifier();
 notifier.Show(content.CreateNotification());
-</code></pre><p>Note that I kept the original names from the toast template catalog, because sufficiently descriptive names would have been too long. I included XML documentation comments on each class to make it easier to choose the correct template.</p>
+</code></pre></div><p>Note that I kept the original names from the toast template catalog, because sufficiently descriptive names would have been too long. I included XML documentation comments on each class to make it easier to choose the correct template.</p>
 <p>If you want more flexibility than a strongly typed template can provide, but don’t want to manipulate the template’s XML, you can use the <code>ToastContent</code> class directly:</p>
-<pre><code>var content = new ToastContent(ToastTemplateType.ToastImageAndText02);
-content.SetImage(1, &quot;ms-appx:///Images/dotnet.png&quot;);
-content.SetText(1, &quot;Hello world!&quot;);
-content.SetText(2, &quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&quot;);
-var notifier = ToastNotificationManager.CreateToastNotifier();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> ToastContent(ToastTemplateType.ToastImageAndText02);
+content.SetImage(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;ms-appx:///Images/dotnet.png&#34;</span>);
+content.SetText(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Hello world!&#34;</span>);
+content.SetText(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&#34;</span>);
+<span style="color:#66d9ef">var</span> notifier = ToastNotificationManager.CreateToastNotifier();
 notifier.Show(content.CreateNotification());
-</code></pre><p>The code is <a href="https://github.com/thomaslevesque/ToastHelper">available on GitHub</a>, along with a demo app. A <a href="https://www.nuget.org/packages/ToastHelper/">NuGet package</a> is also available.</p>
+</code></pre></div><p>The code is <a href="https://github.com/thomaslevesque/ToastHelper">available on GitHub</a>, along with a demo app. A <a href="https://www.nuget.org/packages/ToastHelper/">NuGet package</a> is also available.</p>
 <p>A point of interest is how I created the template classes: I could have done it manually, but it would have been quite tedious. So instead I extracted the toast templates to an XML file, I added some extra information (property names, description for XML doc comments) in the XML, and created a T4 template to generate the classes automatically from the XML file.</p>
 
 		</div>

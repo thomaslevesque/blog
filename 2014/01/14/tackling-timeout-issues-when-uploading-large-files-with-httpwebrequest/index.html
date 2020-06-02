@@ -77,48 +77,55 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2014-01-14T00:00:00Z">January 14, 2014</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default <code>Timeout</code> value for <code>HttpWebRequest</code> is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?  If you know the available bandwidth, you could calculate a rough estimate of how long it should take to upload the file, but it’s not very reliable, because if there is some network congestion, it will take longer, and your request will fail even though it could have succeeded given enough time. So, should you set the timeout to a very large value, like several hours, or even <a href="http://msdn.microsoft.com/en-us/library/system.threading.timeout.infinite.aspx">Timeout.Infinite</a>? Probably not. The most compelling reason is that even though the transfer itself could take hours, some phases of the exchange shouldn’t take that long. Let’s decompose the phases of an HTTP upload:  <img src="timeout1.png" alt="timeout1" title="timeout1">  Obtaining the request stream or getting the response (orange parts) isn’t supposed to take very long, so obviously we need a rather short timeout there (the default value of 100 seconds seems reasonable). But sending the request body (blue part) could take much longer, and there is no reliable way  to decide how long that should be; as long as we keep sending data and the server is receiving it, there is no reason not to continue, even if it’s taking hours. So we actually don’t want a timeout at all there! Unfortunately, the behavior of the <code>Timeout</code> property is to consider everything from the call to <code>GetRequestStream</code> to the return of <code>GetResponse</code>…  In my opinion, it’s a design flaw of the <code>HttpWebRequest</code> class, and one that has bothered me for a very long time. So I eventually came up with a solution. It relies on the fact that the asynchronous versions of <code>GetRequestStream</code> and <code>GetResponse</code> don’t have a timeout mechanism. Here’s what the documentation says:</p>
+			<p>If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default <code>Timeout</code> value for <code>HttpWebRequest</code> is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?</p>
+<p>If you know the available bandwidth, you could calculate a rough estimate of how long it should take to upload the file, but it’s not very reliable, because if there is some network congestion, it will take longer, and your request will fail even though it could have succeeded given enough time. So, should you set the timeout to a very large value, like several hours, or even <a href="http://msdn.microsoft.com/en-us/library/system.threading.timeout.infinite.aspx">Timeout.Infinite</a>? Probably not. The most compelling reason is that even though the transfer itself could take hours, some phases of the exchange shouldn’t take that long. Let’s decompose the phases of an HTTP upload:</p>
+<p><img src="timeout1.png" alt="timeout1" title="timeout1"></p>
+<p>Obtaining the request stream or getting the response (orange parts) isn’t supposed to take very long, so obviously we need a rather short timeout there (the default value of 100 seconds seems reasonable). But sending the request body (blue part) could take much longer, and there is no reliable way to decide how long that should be; as long as we keep sending data and the server is receiving it, there is no reason not to continue, even if it’s taking hours. So we actually don’t want a timeout at all there! Unfortunately, the behavior of the <code>Timeout</code> property is to consider everything from the call to <code>GetRequestStream</code> to the return of <code>GetResponse</code>…</p>
+<p>In my opinion, it’s a design flaw of the <code>HttpWebRequest</code> class, and one that has bothered me for a very long time. So I eventually came up with a solution. It relies on the fact that the asynchronous versions of <code>GetRequestStream</code> and <code>GetResponse</code> don’t have a timeout mechanism. Here’s what the documentation says:</p>
 <blockquote>
 <p>*The Timeout property has no effect on asynchronous requests made with the BeginGetResponse or BeginGetRequestStream method.*<em>In the case of asynchronous requests, the client application implements its own time-out mechanism. Refer to the example in the BeginGetResponse method.</em></p>
 </blockquote>
 <p>So, a solution could be to to use these methods directly (or the new <code>Task</code>-based versions: <code>GetRequestStreamAsync</code> and <code>GetResponseAsync</code>); but more often than not, you already have an existing code base that uses the synchronous methods, and changing the code to make it fully asynchronous is usually not trivial. So, the easy approach is to create synchronous wrappers around <code>BeginGetRequestStream</code> and <code>BeginGetResponse</code>, with a way to specify a timeout for these operations:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebRequestExtensions</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebRequestExtensions</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Stream GetRequestStreamWithTimeout(
+        <span style="color:#66d9ef">this</span> WebRequest request,
+        <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
     {
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Stream GetRequestStreamWithTimeout(
-            <span style="color:#66d9ef">this</span> WebRequest request,
-            <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
-        {
-            <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
-                request.BeginGetRequestStream,
-                request.EndGetRequestStream,
-                millisecondsTimeout ?? request.Timeout);
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> WebResponse GetResponseWithTimeout(
-            <span style="color:#66d9ef">this</span> HttpWebRequest request,
-            <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
-        {
-            <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
-                request.BeginGetResponse,
-                request.EndGetResponse,
-                millisecondsTimeout ?? request.Timeout);
-        }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> T AsyncToSyncWithTimeout&lt;T&gt;(
-            Func&lt;AsyncCallback, <span style="color:#66d9ef">object</span>, IAsyncResult&gt; begin,
-            Func&lt;IAsyncResult, T&gt; end,
-            <span style="color:#66d9ef">int</span> millisecondsTimeout)
-        {
-            <span style="color:#66d9ef">var</span> iar = begin(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>);
-            <span style="color:#66d9ef">if</span> (!iar.AsyncWaitHandle.WaitOne(millisecondsTimeout))
-            {
-                <span style="color:#66d9ef">var</span> ex = <span style="color:#66d9ef">new</span> TimeoutException();
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> WebException(ex.Message, ex, WebExceptionStatus.Timeout, <span style="color:#66d9ef">null</span>);
-            }
-            <span style="color:#66d9ef">return</span> end(iar);
-        }
+        <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
+            request.BeginGetRequestStream,
+            request.EndGetRequestStream,
+            millisecondsTimeout ?? request.Timeout);
     }
-</code></pre></div><p>(note that I used the Begin/End methods rather than the Async methods, in order to keep compatibility with older versions of .NET)  These extension methods can be used instead of <code>GetRequestStream</code> and <code>GetResponse</code>; each of them will timeout if they take too long, but once you have the request stream, you can take as long as you want to upload the data. Note that the stream itself has its own read and write timeout (5 minutes by default), so if 5 minutes go by without any data being uploaded, the Write method will cause an exception. Here is the new upload scenario using these methods:  <img src="timeout2.png" alt="timeout2" title="timeout2">  As you can see, the only difference is that the timeout doesn&rsquo;t apply anymore to the transfer of the request body, but only to obtaining the request stream and getting the response. Here’s a full example that corresponds to the scenario above:</p>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> WebResponse GetResponseWithTimeout(
+        <span style="color:#66d9ef">this</span> HttpWebRequest request,
+        <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
+    {
+        <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
+            request.BeginGetResponse,
+            request.EndGetResponse,
+            millisecondsTimeout ?? request.Timeout);
+    }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> T AsyncToSyncWithTimeout&lt;T&gt;(
+        Func&lt;AsyncCallback, <span style="color:#66d9ef">object</span>, IAsyncResult&gt; begin,
+        Func&lt;IAsyncResult, T&gt; end,
+        <span style="color:#66d9ef">int</span> millisecondsTimeout)
+    {
+        <span style="color:#66d9ef">var</span> iar = begin(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>);
+        <span style="color:#66d9ef">if</span> (!iar.AsyncWaitHandle.WaitOne(millisecondsTimeout))
+        {
+            <span style="color:#66d9ef">var</span> ex = <span style="color:#66d9ef">new</span> TimeoutException();
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> WebException(ex.Message, ex, WebExceptionStatus.Timeout, <span style="color:#66d9ef">null</span>);
+        }
+        <span style="color:#66d9ef">return</span> end(iar);
+    }
+}
+</code></pre></div><p>(note that I used the Begin/End methods rather than the Async methods, in order to keep compatibility with older versions of .NET)</p>
+<p>These extension methods can be used instead of <code>GetRequestStream</code> and <code>GetResponse</code>; each of them will timeout if they take too long, but once you have the request stream, you can take as long as you want to upload the data. Note that the stream itself has its own read and write timeout (5 minutes by default), so if 5 minutes go by without any data being uploaded, the Write method will cause an exception. Here is the new upload scenario using these methods:</p>
+<p><img src="timeout2.png" alt="timeout2" title="timeout2"></p>
+<p>As you can see, the only difference is that the timeout doesn&rsquo;t apply anymore to the transfer of the request body, but only to obtaining the request stream and getting the response. Here’s a full example that corresponds to the scenario above:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">long</span> UploadFile(<span style="color:#66d9ef">string</span> path, <span style="color:#66d9ef">string</span> url, <span style="color:#66d9ef">string</span> contentType)
 {
     <span style="color:#75715e">// Build request

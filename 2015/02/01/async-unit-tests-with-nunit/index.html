@@ -10,7 +10,7 @@
 	<meta property="og:title" content="Async unit tests with NUnit" />
 <meta property="og:description" content="Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation await Task." />
+public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation  await Task." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/" />
 <meta property="article:published_time" content="2015-02-01T00:00:00+00:00" />
@@ -20,7 +20,7 @@ Let’s assume the system under test is this very interesting Calculator class:
 <meta name="twitter:title" content="Async unit tests with NUnit"/>
 <meta name="twitter:description" content="Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
- public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation await Task."/>
+public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation  await Task."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -83,31 +83,31 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.</p>
 <p>Let’s assume the system under test is this very interesting <code>Calculator</code> class:</p>
-<pre><code>    public class Calculator
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Calculator</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">int</span>&gt; AddAsync(<span style="color:#66d9ef">int</span> x, <span style="color:#66d9ef">int</span> y)
     {
-        public async Task&lt;int&gt; AddAsync(int x, int y)
-        {
-            // simulate long calculation
-            await Task.Delay(100).ConfigureAwait(false);
-            // the answer to life, the universe and everything.
-            return 42;
-        }
+        <span style="color:#75715e">// simulate long calculation
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">100</span>).ConfigureAwait(<span style="color:#66d9ef">false</span>);
+        <span style="color:#75715e">// the answer to life, the universe and everything.
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">42</span>;
     }
-</code></pre><p><em>(Hint: this code has a bug… 42 isn’t always the answer. This came to me as a shock!)</em></p>
+}
+</code></pre></div><p><em>(Hint: this code has a bug… 42 isn’t always the answer. This came to me as a shock!)</em></p>
 <p>And here’s a unit test for the <code>AddAsync</code> method:</p>
-<pre><code>        [Test]
-        public async void AddAsync_Returns_The_Sum_Of_X_And_Y()
-        {
-            var calculator = new Calculator();
-            int result = await calculator.AddAsync(1, 1);
-            Assert.AreEqual(2, result);
-        }
-</code></pre><p>``</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[Test]</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> AddAsync_Returns_The_Sum_Of_X_And_Y()
+{
+    <span style="color:#66d9ef">var</span> calculator = <span style="color:#66d9ef">new</span> Calculator();
+    <span style="color:#66d9ef">int</span> result = <span style="color:#66d9ef">await</span> calculator.AddAsync(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>);
+    Assert.AreEqual(<span style="color:#ae81ff">2</span>, result);
+}
+</code></pre></div><p>``</p>
 <h2 id="async-void-vs-async-task"><code>async void</code> vs. <code>async Task</code></h2>
 <p>Even before trying to run this test, I thought to myself: <em>This isn’t gonna work! an <code>async void</code> method will return immediately on the first <code>await</code>, so NUnit will think the test is complete before the assertion is executed, and the test will always pass even if the assertion fails</em>. So I changed the method signature to <code>async Task</code> instead, thinking myself very clever for having avoided this trap…</p>
-<pre><code>        [Test]
-        public async Task AddAsync_Returns_The_Sum_Of_X_And_Y()
-</code></pre><p>As expected, the test failed, confirming that NUnit knew how to handle async tests. I fixed the <code>Calculator</code> class, and stopped thinking about it. Until one day, I noticed that my colleague was writing test methods with <code>async void</code>. So I started to explain to him why it couldn’t work, and tried to demonstrate it by introducing an assertion that would fail… and to my surprise, the test failed, proving that I was wrong. Mind blown!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[Test]</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task AddAsync_Returns_The_Sum_Of_X_And_Y()
+</code></pre></div><p>As expected, the test failed, confirming that NUnit knew how to handle async tests. I fixed the <code>Calculator</code> class, and stopped thinking about it. Until one day, I noticed that my colleague was writing test methods with <code>async void</code>. So I started to explain to him why it couldn’t work, and tried to demonstrate it by introducing an assertion that would fail… and to my surprise, the test failed, proving that I was wrong. Mind blown!</p>
 <p>Having an inquisitive mind, I immediately started to investigate… My first idea was to check the current <code>SynchronizationContext</code>, and indeed I saw that NUnit had changed it to an instance of <code>NUnit.Framework.AsyncSynchronizationContext</code>. This class maintains a queue of all the continuations that are posted to it. After the <code>async void</code> test method has returned (i.e., the first time a not-yet-completed task is awaited), NUnit calls the <code>WaitForPendingOperationsToComplete</code> method, which executes all the continuations in the queue, until the queue is empty. Only then is the test considered complete.</p>
 <p>So, the moral of the story is: you <em>can</em> write <code>async void</code> unit tests in NUnit 2.6. It also works for delegates passed to <code>Assert.Throws</code>, which can have an <code>async</code> modified. Now, just because you can doesn’t mean you should. Not all test frameworks seem to have the same support for this. <strong>The next version of NUnit (3.0, still in alpha) <a href="https://github.com/nunit/nunit/blob/d922adae5cd30ad5544ee693f6ae6177722e3569/src/NUnitFramework/framework/Internal/AsyncInvocationRegion.cs#L76">will not support async void tests</a>.</strong></p>
 <p>So, unless you plan on staying with NUnit 2.6.4 forever, it’s probably better to always use <code>async Task</code> in your unit tests.</p>

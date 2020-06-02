@@ -87,20 +87,20 @@ if (!doNotTrack) {
 (Image from the <a href="https://www.asp.net/web-api/overview/advanced/httpclient-message-handlers">official ASP.NET website</a>)</p>
 <p>Each handler has a chance to examine and/or modify the request before passing it to the next handler in the chain, and to examine and/or modify the response it receives from the next handler. Typically, the last handler in the pipeline is the <code>HttpClientHandler</code>, which communicates directly with the network.</p>
 <p>The handler chain can be setup like this:</p>
-<pre><code>var pipeline = new MyHandler1()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> pipeline = <span style="color:#66d9ef">new</span> MyHandler1()
 {
-    InnerHandler = new MyHandler2()
+    InnerHandler = <span style="color:#66d9ef">new</span> MyHandler2()
     {
-        InnerHandler = new HttpClientHandler()
+        InnerHandler = <span style="color:#66d9ef">new</span> HttpClientHandler()
     }
 };
-var client = new HttpClient(pipeline);
-</code></pre><p>But if you prefer fluent interfaces, you can easily create an extension method to do it like this:</p>
-<pre><code>var pipeline = new HttpClientHandler()
-    .DecorateWith(new MyHandler2())
-    .DecorateWith(new MyHandler1());
-var client = new HttpClient(pipeline);
-</code></pre><p>All this might seem a little abstract at this point, but this pipeline architecture enables plenty of interesting scenarios. See, HTTP message handlers can be used to add custom behavior to how requests and responses are processed. I&rsquo;ll give a few examples.</p>
+<span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient(pipeline);
+</code></pre></div><p>But if you prefer fluent interfaces, you can easily create an extension method to do it like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> pipeline = <span style="color:#66d9ef">new</span> HttpClientHandler()
+    .DecorateWith(<span style="color:#66d9ef">new</span> MyHandler2())
+    .DecorateWith(<span style="color:#66d9ef">new</span> MyHandler1());
+<span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient(pipeline);
+</code></pre></div><p>All this might seem a little abstract at this point, but this pipeline architecture enables plenty of interesting scenarios. See, HTTP message handlers can be used to add custom behavior to how requests and responses are processed. I&rsquo;ll give a few examples.</p>
 <p><strong>Side note:</strong> I&rsquo;m presenting this feature from a client-side perspective (since I primarily make client apps), but the same HTTP message handlers are also used <a href="https://www.asp.net/web-api/overview/advanced/http-message-handlers">on the server-side in ASP.NET Web API</a>.</p>
 <h2 id="unit-testing">Unit testing</h2>
 <p>The first use case that comes to mind, and the first I ever used, is unit testing. If you&rsquo;re testing a class that makes online payments over HTTP, you don&rsquo;t want it to actually send requests to the real server&hellip; you just want to ensure that the requests it sends are correct, and that it reacts correctly to specific responses. An easy solution to this problem is to create a &ldquo;stub&rdquo; handler, and inject it into your class to use instead of <code>HttpClientHandler</code>. Here&rsquo;s a simple implementation:</p>
