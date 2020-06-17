@@ -2,6 +2,7 @@
 layout: post
 title: Exciting new features in C# 9
 date: 2020-05-25
+lastmod: 2020-06-17
 url: /2020/05/25/exciting-new-features-in-csharp-9
 tags:
   - C#
@@ -11,6 +12,8 @@ tags:
 Last week at Microsoft Build, there have been a *lot* of exciting annoucements! .NET 5, Blazor WebAssembly, .NET MAUI, WinUI… But the thing I'm most eager to get my hands on is C# 9, which introduces [many interesting new features](https://github.com/dotnet/roslyn/blob/master/docs/Language%20Feature%20Status.md), so let's take a quick tour! There's a long list, so I won't cover all of them here, but I will highlight the ones I find the most interesting.
 
 *Note: Unfortunately the new C# features aren't supported yet in the latest SDK preview, so we can't test them in actual projects. Some features can be tried in [SharpLab](https://sharplab.io/), but things are moving fast, so the bits available in SharpLab don't always reflect what has been announced at Build.*
+
+*Update 2020/06/17: A few of the features mentioned in this post are now available in the .NET 5 preview 5 SDK.*
 
 ## Target typed `new`
 
