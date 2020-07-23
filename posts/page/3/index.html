@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/posts/" />
-<meta property="og:updated_time" content="2020-06-27T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-07-23T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -72,6 +72,21 @@ if (!doNotTrack) {
 	<header class="main__header">
 		<h1 class="main__title">Posts</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/" rel="bookmark">
+			Handling multipart requests with JSON and file uploads in ASP.NET Core
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-09-04T00:00:00Z">September 04, 2018</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
+ Embed the image bytes as base64 in the JSON payload, e.g.  { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/" rel="bookmark">
@@ -203,21 +218,6 @@ MSBuild 15 introduced a pretty cool feature: implicit imports (I don&rsquo;t kno
 	<div class="content list__excerpt post__content clearfix">
 		I&rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&rsquo;s also extremely useful as a general-purpose .
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2017/03/29/linq-performance-improvements-in-net-core/" rel="bookmark">
-			Linq performance improvements in .NET Core
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-03-29T00:00:00Z">March 29, 2017</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		By now, you&rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
-For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:
-	</div>
 </article>
 </main>
 
@@ -256,11 +256,11 @@ For instance, Linq has been made faster in .NET Core. I made a little benchmark 
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/">Git tip: how to fix an accidental commit on the wrong branch</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/25/exciting-new-features-in-csharp-9/">Exciting new features in C# 9</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/">Things every C# developer should know #1: hash codes</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
 		</ul>
 	</div>
 </div>

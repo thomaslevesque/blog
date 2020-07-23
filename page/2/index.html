@@ -12,7 +12,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/" />
-<meta property="og:updated_time" content="2020-06-27T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-07-23T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thomas Levesque&#39;s .NET Blog"/>
@@ -71,6 +71,21 @@ if (!doNotTrack) {
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/" rel="bookmark">
+			Easy unit testing of null argument validation (C# 8 edition)
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-11-19T00:00:00Z">November 19, 2019</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
+[Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&lt;int&gt;(); var right = Enumerable.Empty&lt;int&gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&gt; left.FullOuterJoin(right, x =&gt; x, y =&gt; y, (k, x, y) =&gt; 0, 0, 0, null), &#34;left&#34;, &#34;right&#34;, &#34;leftKeySelector&#34;, &#34;rightKeySelector&#34;, &#34;resultSelector&#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2019/11/18/using-foreach-with-index-in-c/" rel="bookmark">
@@ -204,21 +219,6 @@ However, out of the box, it&rsquo;s only usable for some project types: ASP.
 		Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
 Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&rsquo;t such a good approach.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/" rel="bookmark">
-			Handling multipart requests with JSON and file uploads in ASP.NET Core
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-09-04T00:00:00Z">September 04, 2018</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
- Embed the image bytes as base64 in the JSON payload, e.g.  { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!
-	</div>
 </article>
 </main>
 
@@ -256,11 +256,11 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/">Git tip: how to fix an accidental commit on the wrong branch</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/25/exciting-new-features-in-csharp-9/">Exciting new features in C# 9</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/">Things every C# developer should know #1: hash codes</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
 		</ul>
 	</div>
 </div>

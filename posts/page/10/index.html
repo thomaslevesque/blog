@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/posts/" />
-<meta property="og:updated_time" content="2020-06-27T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-07-23T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -72,6 +72,22 @@ if (!doNotTrack) {
 	<header class="main__header">
 		<h1 class="main__title">Posts</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2009/04/17/wpf-binding-to-an-asynchronous-collection/" rel="bookmark">
+			[WPF] Binding to an asynchronous collection
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-04-17T00:00:00Z">April 17, 2009</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
+ This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
+ To illustrate this, let&rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/" rel="bookmark">
@@ -212,11 +228,11 @@ The end-user of any application expects that his preferences (window size, state
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/">Git tip: how to fix an accidental commit on the wrong branch</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/25/exciting-new-features-in-csharp-9/">Exciting new features in C# 9</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/">Things every C# developer should know #1: hash codes</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
 		</ul>
 	</div>
 </div>

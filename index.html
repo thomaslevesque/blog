@@ -12,7 +12,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/" />
-<meta property="og:updated_time" content="2020-06-27T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-07-23T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thomas Levesque&#39;s .NET Blog"/>
@@ -71,6 +71,21 @@ if (!doNotTrack) {
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/" rel="bookmark">
+			ASP.NET Core 3, IIS and empty HTTP headers
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-07-23T00:00:00Z">July 23, 2020</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		HTTP headers are key/value pairs sent at the beginning of a request or response. According to the grammar in RFC 7230, a field could have an empty value. In practice, it probably doesn&rsquo;t make much sense: semantically, a header with an empty value or the absence of that header are equivalent.
+However, some client or server implementations actually require that a given header is present, even if it&rsquo;s empty. For instance, the validation tests for WOPI (an HTTP-based protocol used to integrate Office for the Web with an application) require that the X-WOPI-Lock header is included in the response in certain situations, even if it&rsquo;s empty (even though the spec says it can be omitted).
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/" rel="bookmark">
@@ -218,21 +233,6 @@ It is generally agreed that this should be avoided; I won&rsquo;t go into the de
 		Out of the box, ASP.NET Core has the concept of &ldquo;environments&rdquo;, which allows your app to use different settings based on which environment it&rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
  appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&rsquo;t have to specify unchanged settings in every environment if they&rsquo;re already specified in the global settings file.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/" rel="bookmark">
-			Easy unit testing of null argument validation (C# 8 edition)
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-11-19T00:00:00Z">November 19, 2019</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
-[Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&lt;int&gt;(); var right = Enumerable.Empty&lt;int&gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&gt; left.FullOuterJoin(right, x =&gt; x, y =&gt; y, (k, x, y) =&gt; 0, 0, 0, null), &#34;left&#34;, &#34;right&#34;, &#34;leftKeySelector&#34;, &#34;rightKeySelector&#34;, &#34;resultSelector&#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.
-	</div>
 </article>
 </main>
 
@@ -269,11 +269,11 @@ It is generally agreed that this should be avoided; I won&rsquo;t go into the de
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/">Git tip: how to fix an accidental commit on the wrong branch</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/25/exciting-new-features-in-csharp-9/">Exciting new features in C# 9</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/">Things every C# developer should know #1: hash codes</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/05/06/moving-my-blog-to-hugo/">Moving my blog to Hugo</a></li>
 		</ul>
 	</div>
 </div>

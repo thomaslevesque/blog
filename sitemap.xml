@@ -3,12 +3,52 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://thomaslevesque.com/tags/api/</loc>
-    <lastmod>2020-06-27T00:00:00+00:00</lastmod>
+    <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
+    <lastmod>2020-07-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
+    <loc>https://thomaslevesque.com/2020/07/23/aspnet-core-iis-and-empty-http-headers/</loc>
+    <lastmod>2020-07-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/headers/</loc>
+    <lastmod>2020-07-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/http/</loc>
+    <lastmod>2020-07-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/iis/</loc>
+    <lastmod>2020-07-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/posts/</loc>
+    <lastmod>2020-07-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/</loc>
+    <lastmod>2020-07-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/</loc>
+    <lastmod>2020-07-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/wopi/</loc>
+    <lastmod>2020-07-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/api/</loc>
     <lastmod>2020-06-27T00:00:00+00:00</lastmod>
   </url>
   
@@ -23,22 +63,7 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/posts/</loc>
-    <lastmod>2020-06-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/swagger/</loc>
-    <lastmod>2020-06-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/</loc>
-    <lastmod>2020-06-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/</loc>
     <lastmod>2020-06-27T00:00:00+00:00</lastmod>
   </url>
   
@@ -529,11 +554,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/tags/handler/</loc>
-    <lastmod>2018-02-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/http/</loc>
     <lastmod>2018-02-25T00:00:00+00:00</lastmod>
   </url>
   
