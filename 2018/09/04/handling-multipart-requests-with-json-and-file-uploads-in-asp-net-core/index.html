@@ -89,8 +89,7 @@ if (!doNotTrack) {
     <span style="color:#e6db74">&#34;tags&#34;</span><span style="color:#f92672">:</span> [ <span style="color:#e6db74">&#34;first post&#34;</span>, <span style="color:#e6db74">&#34;hello&#34;</span> ],
     <span style="color:#e6db74">&#34;image&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==&#34;</span>
 }
-</code></pre></div><pre><code>This works fine, but it's probably not a very good idea to embed an arbitrarily long blob in JSON, because it could use a lot of memory if the image is very large.
-</code></pre>
+</code></pre></div><p>This works fine, but it&rsquo;s probably not a very good idea to embed an arbitrarily long blob in JSON, because it could use a lot of memory if the image is very large.</p>
 <ul>
 <li>Send the JSON and image as separate requests. Easy, but what if we want the image to be mandatory? There&rsquo;s no guarantee that the client will send the image in a second request, so our post object will be in an invalid state.</li>
 <li>Send the JSON and image as a multipart request.</li>
