@@ -26,7 +26,8 @@ Suppose we're writing an API for a blog. Our "create post" endpoint should recei
     "image": "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="
 }
 ```
-    This works fine, but it's probably not a very good idea to embed an arbitrarily long blob in JSON, because it could use a lot of memory if the image is very large.
+
+This works fine, but it's probably not a very good idea to embed an arbitrarily long blob in JSON, because it could use a lot of memory if the image is very large.
 - Send the JSON and image as separate requests. Easy, but what if we want the image to be mandatory? There's no guarantee that the client will send the image in a second request, so our post object will be in an invalid state.
 - Send the JSON and image as a multipart request.
 
