@@ -103,7 +103,7 @@ service it depends on to the constructor, and add it to the
 };
 </code></pre></div><p>This works fine when you&rsquo;re explicitly serializing something, but typically in
 an ASP.NET Core app, JSON serialization is done automatically by the MVC
-framework. You configure the JSON serialization with the <code>AddJsonOptions</code>,
+framework. You configure the JSON serialization with the <code>AddJsonOptions</code> method,
 where you don&rsquo;t have access to the services, because the service provider isn&rsquo;t
 built yet. In this case, you can register a class that will configure the
 options, like this:</p>
