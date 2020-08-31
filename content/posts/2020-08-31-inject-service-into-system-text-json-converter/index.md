@@ -42,7 +42,7 @@ var options = new JsonSerializerOptions
 
 This works fine when you're explicitly serializing something, but typically in
 an ASP.NET Core app, JSON serialization is done automatically by the MVC
-framework. You configure the JSON serialization with the `AddJsonOptions`,
+framework. You configure the JSON serialization with the `AddJsonOptions` method,
 where you don't have access to the services, because the service provider isn't
 built yet. In this case, you can register a class that will configure the
 options, like this:
