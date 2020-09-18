@@ -3,6 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://thomaslevesque.com/tags/cosmos-db/</loc>
+    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/desktop-app/</loc>
+    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/developer-tools/</loc>
+    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/2020/09/17/introducing-cosmos-db-studio/</loc>
+    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/posts/</loc>
+    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/</loc>
+    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/</loc>
+    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
     <lastmod>2020-08-31T00:00:00+00:00</lastmod>
   </url>
@@ -23,22 +58,7 @@
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/posts/</loc>
-    <lastmod>2020-08-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://thomaslevesque.com/tags/system.text.json/</loc>
-    <lastmod>2020-08-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/</loc>
-    <lastmod>2020-08-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/</loc>
     <lastmod>2020-08-31T00:00:00+00:00</lastmod>
   </url>
   
@@ -325,11 +345,6 @@
   <url>
     <loc>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</loc>
     <lastmod>2019-11-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/cosmos-db/</loc>
-    <lastmod>2019-10-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
