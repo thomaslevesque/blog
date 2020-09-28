@@ -12,7 +12,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/" />
-<meta property="og:updated_time" content="2020-09-17T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-09-27T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thomas Levesque&#39;s .NET Blog"/>
@@ -71,6 +71,20 @@ if (!doNotTrack) {
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/" rel="bookmark">
+			Transform T4 templates as part of the build, and pass variables from the project
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-11-13T00:00:00Z">November 13, 2017</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		T4 (Text Template Transformation Toolkit) is a great tool to generate code at design time; you can, for instance, create POCO classes from database tables, generate repetitive code, etc. In Visual Studio, T4 files (.tt extension) are associated with the TextTemplatingFileGenerator custom tool, which transforms the template to generate an output file every time you save the template. But sometimes it&rsquo;s not enough, and you want to ensure that the template&rsquo;s output is regenerated before build.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/" rel="bookmark">
@@ -208,27 +222,12 @@ Well, it looks like the C# language team has been busy during the last month, be
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
 private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2016/06/21/pitfall-using-var-and-async-together/" rel="bookmark">
-			Pitfall: using var and async together
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-06-21T00:00:00Z">June 21, 2016</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
-public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync:  private Task&lt;IBookStore&gt; GetBookStoreAsync() { // actual implementation irrelevant  // .
-	</div>
 </article>
 </main>
 
 <div class="pagination">
 	<a class="pagination__item pagination__item--prev btn" href="/page/3/">«</a>
-	<span class="pagination__item pagination__item--current">4/10</span>
+	<span class="pagination__item pagination__item--current">4/11</span>
 	<a class="pagination__item pagination__item--next btn" href="/page/5/">»</a>
 </div>
 
@@ -260,11 +259,11 @@ public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBoo
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/17/introducing-cosmos-db-studio/">Introducing Cosmos DB Studio</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/08/31/inject-service-into-system-text-json-converter/">Inject a service into a System.Text.Json converter</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/">Git tip: how to fix an accidental commit on the wrong branch</a></li>
 		</ul>
 	</div>
 </div>
@@ -282,10 +281,10 @@ public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBoo
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
 	</div>
 </div>
 </aside>

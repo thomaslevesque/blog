@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy - Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy" />
+<meta property="og:description" content="Dependency injection: the good and the bad Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&rsquo;s successor), Castle Windsor, etc., but lately I&rsquo;ve mostly been using the one provided by Microsoft in .NET Core : Microsoft.Extensions.DependencyInjection. It&rsquo;s not the most full-featured (in fact, it&rsquo;s pretty bare-bones), but I find it sufficient in most cases." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://thomaslevesque.com/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/" />
+<meta property="article:published_time" content="2020-09-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-09-27T00:00:00+00:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy"/>
+<meta name="twitter:description" content="Dependency injection: the good and the bad Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&rsquo;s successor), Castle Windsor, etc., but lately I&rsquo;ve mostly been using the one provided by Microsoft in .NET Core : Microsoft.Extensions.DependencyInjection. It&rsquo;s not the most full-featured (in fact, it&rsquo;s pretty bare-bones), but I find it sufficient in most cases."/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-31621259-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<a class="main__header__type" href="/posts/">posts</a>
+			<h1 class="post__title">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-09-27T00:00:00Z">September 27, 2020</time></div></div>
+		</header><div class="content post__content clearfix">
+			<h2 id="dependency-injection-the-good-and-the-bad">Dependency injection: the good and the bad</h2>
+<p>Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&rsquo;s successor), Castle Windsor, etc., but lately I&rsquo;ve mostly been using the one provided by Microsoft in .NET Core : <code>Microsoft.Extensions.DependencyInjection</code>. It&rsquo;s not the most full-featured (in fact, it&rsquo;s pretty bare-bones), but I find it sufficient in most cases.</p>
+<p>As much as I love dependency injection, in some situations it can become a little unwieldy… For instance, when you have a class that is instantiated explicitly with some data, and also needs service dependencies. Consider this class, for example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FooViewModel</span>
+  {
+      <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService _myService;
+
+      <span style="color:#66d9ef">public</span> FooViewModel(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name, IMyService myService)
+      {
+          Id = id;
+          Name = name;
+          _myService = myService;
+      }
+
+      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id { <span style="color:#66d9ef">get</span>; }
+      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; }
+  }
+</code></pre></div><p>To create an instance of <code>FooViewModel</code>, you need to pass values for <code>id</code> and <code>name</code>, and an instance of <code>IMyService</code>. Which means you must have access to <code>IMyService</code>, so you need to inject it into the class that creates an instance of <code>FooViewModel</code>, even if it doesn&rsquo;t need it itself. It&rsquo;s OK when there&rsquo;s just one dependency, but if there were more, it could get messy. That&rsquo;s a bit annoying…</p>
+<h2 id="factory-pattern">Factory pattern</h2>
+<p>Fortunately, this is a well known problem, and guess what? It has a well known solution! You typically solve this by introducing a factory. For instance, in this case, since we&rsquo;re creating ViewModels, we can create an <code>IViewModelFactory</code> interface like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IViewModelFactory
+{
+    FooViewModel CreateFooViewModel(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name);
+}
+</code></pre></div><p>Notice that the <code>CreateFooViewModel</code> has the same &ldquo;data&rdquo; parameters as the <code>FooViewModel</code> constructor, but not the &ldquo;service&rdquo; parameters. This way, a class that needs to instantiate a <code>FooViewModel</code> just needs to pass the data to <code>CreateViewModel</code>, without worrying about the service dependencies.</p>
+<p>An implementation of this factory looks like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewModelFactory</span> : IViewModelFactory
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService _myService;
+
+    <span style="color:#66d9ef">public</span> ViewModelFactory(IMyService myService)
+    {
+        _myService = myService;
+    }
+
+    <span style="color:#66d9ef">public</span> FooViewModel CreateFoo(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name)
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> FooViewModel(id, name, _myService);
+    }
+}
+</code></pre></div><p>Basically, the factory abstracts the dependencies, so that the rest of the code doesn&rsquo;t need to know about them.</p>
+<p>It&rsquo;s a very useful pattern, but what happens when you have dozens of different ViewModels, with many different dependencies? Well, you end up with as many methods as you have ViewModels, and you must inject the dependencies of <em>all</em> these ViewModels into the factory. It can quickly get messy in a non-trivial application.</p>
+<p>Sure, you could split the big factory into several smaller factories that are in charge of creating just one ViewModel, or a handful of related ones. But then, you&rsquo;d end up with many factories, which can also be painful to manage.</p>
+<h2 id="resolving-dependencies-automatically">Resolving dependencies automatically</h2>
+<p>Maybe it&rsquo;s time to take a step back and look at the problem from a different perspective…</p>
+<p>How did we get in this mess in the first place? DI containers are supposed to be good at creating instances of classes with dependencies (that&rsquo;s their job, after all!), but as soon as you introduce &ldquo;data&rdquo; parameters in addition to service dependencies, it all breaks down, and you need to do things manually. What we really need is to let the container resolve the service dependencies, and provide the rest ourselves.</p>
+<p>Fortunately, there&rsquo;s a relatively little-known class in <code>Microsoft.Extensions.DependencyInjection</code> that can help us: <code>ActivatorUtilities</code>. This static class has all the smarts to construct an object by resolving service dependencies from the container (a.k.a. service provider), and accepts additional arguments for non-service inputs. For instance, we could use it to construct a <code>FooViewModel</code> like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">ActivatorUtilities.CreateInstance(
+    serviceProvider,
+    <span style="color:#66d9ef">typeof</span>(FooViewModel),
+    <span style="color:#ae81ff">123</span>,      <span style="color:#75715e">// id
+</span><span style="color:#75715e"></span>    <span style="color:#e6db74">&#34;test&#34;</span>);  <span style="color:#75715e">// name
+</span></code></pre></div><p>This way, we don&rsquo;t need to worry about the dependencies: <code>ActivatorUtilities</code> looks at the constructor parameters, resolves what it can from the service provider, and takes the rest from the explicitly passed arguments.</p>
+<p>Of course, in this form, it&rsquo;s not very convenient, and it&rsquo;s not strongly-typed, so we&rsquo;ll need to wrap this in a factory to make it usable. But the factory code is going to be pretty tedious to write… What if we could automate this?</p>
+<h2 id="implementing-the-factory-automatically">Implementing the factory automatically</h2>
+<p>Castle DynamicProxy is a component of the venerable <a href="https://github.com/castleproject/Core">Castle Core library</a>. To put it simply, it makes it easy to implement types dynamically, optionally delegating to another object, and using interceptors to control the behavior of methods and properties. This makes it very well suited for implementing cross-cutting concerns, and things like mocking libraries (FakeItEasy, Moq and NSubstitute all rely on Castle DynamicProxy).</p>
+<p>But how can it help with our factory problem? Well, we&rsquo;re going to use it to automatically implement our <code>IViewModelFactory</code> interface!</p>
+<p>First, we need to write an interceptor. As the name implies, it will intercept all calls to the proxy object create by Castle DynamicProxy. Here it goes:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider _serviceProvider;
+
+    <span style="color:#66d9ef">public</span> FactoryInterceptor(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Intercept(IInvocation invocation)
+    {
+        invocation.ReturnValue =
+            ActivatorUtilities.CreateInstance(
+                serviceProvider,
+                invocation.Method.ReturnType,
+                invocation.Arguments);
+    }
+}
+</code></pre></div><p>The <code>IInvocation</code> object represents the call. We can examine the method and arguments, and specify the return value. Here we just use the method&rsquo;s return type as the type to create, and we use <code>ActivatorUtilities</code> to create an instance.</p>
+<p>Now, we just need to create the actual proxy object for <code>IViewModelFactory</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> generator = <span style="color:#66d9ef">new</span> ProxyGenerator();
+<span style="color:#66d9ef">var</span> interceptor = <span style="color:#66d9ef">new</span> FactoryInterceptor(serviceProvider);
+<span style="color:#66d9ef">var</span> factory = generator.
+    CreateInterfaceProxyWithoutTarget&lt;IViewModelFactory&gt;(
+        interceptor);
+</code></pre></div><p>And that&rsquo;s it, we have our factory! We no longer need to implement the factory&rsquo;s method ourselves, we just need to declare them. We just need to ensure that the methods in the factory interface match the constructors of the ViewModels, or it will fail at runtime.</p>
+<h2 id="wrapping-it-up">Wrapping it up</h2>
+<p>OK, we&rsquo;re almost done. Let&rsquo;s just package this solution in a handy extension method that we can use to register a factory:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServiceCollectionExtensions</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceCollection AddAutoFactory&lt;TFactory&gt;(<span style="color:#66d9ef">this</span> IServiceCollection services)
+        <span style="color:#66d9ef">where</span> TFactory : <span style="color:#66d9ef">class</span>
+    {
+        services.AddSingleton&lt;TFactory&gt;(CreateFactory&lt;TFactory&gt;);
+        <span style="color:#66d9ef">return</span> services;
+    }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> TFactory CreateFactory&lt;TFactory&gt;(IServiceProvider serviceProvider)
+        <span style="color:#66d9ef">where</span> TFactory : <span style="color:#66d9ef">class</span>
+    {
+        <span style="color:#66d9ef">var</span> generator = <span style="color:#66d9ef">new</span> ProxyGenerator();
+        <span style="color:#66d9ef">return</span> generator.CreateInterfaceProxyWithoutTarget&lt;TFactory&gt;(
+            <span style="color:#66d9ef">new</span> FactoryInterceptor(serviceProvider));
+    }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
+    {
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider _serviceProvider;
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt; _factories;
+
+        <span style="color:#66d9ef">public</span> FactoryInterceptor(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            _factories = <span style="color:#66d9ef">new</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt;();
+        }
+
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Intercept(IInvocation invocation)
+        {
+            <span style="color:#66d9ef">var</span> factory = _factories.GetOrAdd(invocation.Method, CreateFactory);
+            invocation.ReturnValue = factory(_serviceProvider, invocation.Arguments);
+        }
+
+        <span style="color:#66d9ef">private</span> ObjectFactory CreateFactory(MethodInfo method)
+        {
+            <span style="color:#66d9ef">return</span> ActivatorUtilities.CreateFactory(
+                method.ReturnType,
+                method.GetParameters().Select(p =&gt; p.ParameterType).ToArray());
+        }
+    }
+}
+</code></pre></div><p><em>Note that I included an optimization in the interceptor: instead of calling <code>ActivatorUtilities.CreateInstance</code> for every call, I used <code>ActivatorUtilities.CreateFactory</code> to create and cache a reusable delegate for each method.</em></p>
+<p>Using this method, we can register our factory like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+{
+    ...
+    services.AddAutoFactory&lt;IViewModelFactory&gt;();
+    ...
+}
+</code></pre></div><p>And that&rsquo;s it, we can now inject our auto-implemented factory anywhere it&rsquo;s needed!</p>
+<p><strong>Note:</strong> This solution has an important limitation: the factory interface methods must declare <em>concrete</em> return types, not interfaces or abstract classes. Otherwise <code>ActivatorUtilities</code> won&rsquo;t know which concrete type to create.</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/castle.core/" rel="tag">Castle.Core</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/castle/" rel="tag">Castle</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/dynamicproxy/" rel="tag">DynamicProxy</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/dependency-injection/" rel="tag">dependency injection</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/.net-core/" rel="tag">.NET Core</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/factory/" rel="tag">factory</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/c%23/" rel="tag">C#</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Thomas Levesque</span>
+	</div>
+	<div class="authorbox__description">
+		Thomas Levesque is a French software developer from Paris.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/2020/09/17/introducing-cosmos-db-studio/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Introducing Cosmos DB Studio</p>
+		</a>
+	</div>
+</nav>
+
+<div>
+    <script src="https://utteranc.es/client.js"
+            repo="thomaslevesque/blog"
+            issue-term="pathname"
+            label="post-comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://thomaslevesque.com/" />
+	</form>
+</div>
+<div class="widget-social widget">
+    <h4 class="widget-social__title widget__title">Social</h4>
+    <div class="widget-social__content widget__content">
+        <a class="widget-social__link-custom widget__link" title="GitHub" rel="noopener noreferrer" href="https://github.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="Twitter" rel="noopener noreferrer" href="https://twitter.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-twitter" width="24" height="24" viewBox="0 0 384 312"><path d="m384 36.9c-14.1 6.3-29.3 10.5-45.2 12.4 16.3-9.7 28.8-25.2 34.6-43.6-15.2 9-32.1 15.6-50 19.1-14.4-15.2-34.9-24.8-57.5-24.8-43.5 0-78.8 35.3-78.8 78.8 0 6.2.7 12.2 2 17.9-65.5-3.3-123.5-34.6-162.4-82.3-6.7 11.6-10.6 25.2-10.6 39.6 0 27.3 13.9 51.4 35 65.6-12.9-.4-25.1-4-35.7-9.9v1c0 38.2 27.2 70 63.2 77.2-6.6 1.8-13.6 2.8-20.8 2.8-5.1 0-10-.5-14.8-1.4 10 31.3 39.1 54.1 73.6 54.7-27 21.1-60.9 33.7-97.8 33.7-6.4 0-12.6-.4-18.8-1.1 34.9 22.4 76.3 35.4 120.8 35.4 144.9 0 224.1-120 224.1-224.1 0-3.4-.1-6.8-.2-10.2 15.4-11.1 28.7-25 39.3-40.8z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="RSS feed" rel="noopener noreferrer" href="/index.xml">
+            <svg class="widget-social__link-icon-custom icon icon-rss" x="0px" y="0px" width="24" height="24" viewBox="0 0 1000 1000"><path d="M277.2,856.3c0,37.1-13,68.7-39,94.6c-26,26-57.5,39-94.6,39S75,976.9,49,951c-26-26-39-57.5-39-94.6c0-37.1,13-68.7,39-94.6c26-26,57.5-39,94.6-39s68.7,13,94.6,39C264.3,787.7,277.2,819.2,277.2,856.3z M633.6,941.9c0.9,13-3,24.1-11.8,33.4c-8.4,9.7-19.3,14.6-32.7,14.6h-94c-11.6,0-21.6-3.8-29.9-11.5c-8.4-7.7-13-17.3-13.9-28.9c-10.2-106.2-53-197.1-128.4-272.5c-75.4-75.4-166.2-118.2-272.5-128.4c-11.6-0.9-21.2-5.6-28.9-13.9c-7.7-8.4-11.5-18.3-11.5-29.9v-94c0-13.5,4.9-24.4,14.6-32.7c7.9-7.9,17.9-11.8,29.9-11.8H58c74.2,6,145.2,24.7,213,56c67.7,31.3,127.8,73.4,180.2,126.3c52.9,52.4,95,112.5,126.3,180.2C608.8,796.7,627.5,867.7,633.6,941.9L633.6,941.9z M989.9,943.3c0.9,12.5-3.2,23.4-12.5,32.7c-8.3,9.3-19,13.9-32,13.9h-99.5c-12.1,0-22.4-4.1-31-12.2s-13.1-18-13.6-29.6c-5.6-99.8-29-194.5-70.3-284.3c-41.3-89.8-95-167.7-161.1-233.8C503.8,363.9,425.8,310.2,336,269c-89.8-41.3-184.5-65-284.3-71c-11.6-0.5-21.5-5-29.6-13.6c-8.1-8.6-12.2-18.7-12.2-30.3V54.6c0-13,4.6-23.7,13.9-32c8.4-8.4,18.6-12.5,30.6-12.5h2.1c121.6,6,237.9,33.9,349,83.5c111.1,49.6,209.8,117.8,296.1,204.6c86.8,86.3,155,185,204.6,296.1C956,705.4,983.8,821.8,989.9,943.3L989.9,943.3z"/></svg>
+        </a>
+    </div>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/09/17/introducing-cosmos-db-studio/">Introducing Cosmos DB Studio</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/08/31/inject-service-into-system-text-json-converter/">Inject a service into a System.Text.Json converter</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Top tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Thomas Levesque.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

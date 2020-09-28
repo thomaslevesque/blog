@@ -6,10 +6,73 @@
     <description>Recent content in Tags on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://thomaslevesque.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>.net core</title>
+      <link>https://thomaslevesque.com/tags/.net-core/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/.net-core/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C#</title>
+      <link>https://thomaslevesque.com/tags/c#/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/c#/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Castle</title>
+      <link>https://thomaslevesque.com/tags/castle/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/castle/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Castle.Core</title>
+      <link>https://thomaslevesque.com/tags/castle.core/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/castle.core/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dependency injection</title>
+      <link>https://thomaslevesque.com/tags/dependency-injection/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/dependency-injection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DynamicProxy</title>
+      <link>https://thomaslevesque.com/tags/dynamicproxy/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/dynamicproxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>factory</title>
+      <link>https://thomaslevesque.com/tags/factory/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/factory/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Cosmos DB</title>
@@ -44,15 +107,6 @@
       <pubDate>Mon, 31 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/asp.net-core/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>dependency injection</title>
-      <link>https://thomaslevesque.com/tags/dependency-injection/</link>
-      <pubDate>Mon, 31 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/dependency-injection/</guid>
       <description></description>
     </item>
     
@@ -134,15 +188,6 @@
       <pubDate>Fri, 29 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/git/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>C#</title>
-      <link>https://thomaslevesque.com/tags/c#/</link>
-      <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/c#/</guid>
       <description></description>
     </item>
     
@@ -296,15 +341,6 @@
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/openid-connect/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>.net core</title>
-      <link>https://thomaslevesque.com/tags/.net-core/</link>
-      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/.net-core/</guid>
       <description></description>
     </item>
     

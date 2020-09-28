@@ -12,7 +12,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/" />
-<meta property="og:updated_time" content="2020-09-17T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-09-27T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thomas Levesque&#39;s .NET Blog"/>
@@ -71,6 +71,22 @@ if (!doNotTrack) {
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2011/03/27/wpf-display-an-animated-gif-image/" rel="bookmark">
+			[WPF] Display an animated GIF image
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2011-03-27T00:00:00Z">March 27, 2011</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Note: The code in this article is out of date; the current code is hosted on GitHub.
+WPF is a great technology, but sometimes it seems to be missing some really basic features&hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation.
+Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/" rel="bookmark">
@@ -204,27 +220,12 @@ The problem Let&rsquo;s take the example from the previous post : a markup exte
 		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
 To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/" rel="bookmark">
-			[WPF] A markup extension that can update its target
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-07-28T00:00:00Z">July 28, 2009</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		If you have read my previous posts on the topic, you know I&rsquo;m a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
-  if the value of the markup extension can change in response to an event
-	</div>
 </article>
 </main>
 
 <div class="pagination">
 	<a class="pagination__item pagination__item--prev btn" href="/page/8/">«</a>
-	<span class="pagination__item pagination__item--current">9/10</span>
+	<span class="pagination__item pagination__item--current">9/11</span>
 	<a class="pagination__item pagination__item--next btn" href="/page/10/">»</a>
 </div>
 
@@ -256,11 +257,11 @@ To achieve this result, I used an Adorner : this is a component which allows to 
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/17/introducing-cosmos-db-studio/">Introducing Cosmos DB Studio</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/08/31/inject-service-into-system-text-json-converter/">Inject a service into a System.Text.Json converter</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/">Git tip: how to fix an accidental commit on the wrong branch</a></li>
 		</ul>
 	</div>
 </div>
@@ -278,10 +279,10 @@ To achieve this result, I used an Adorner : this is a component which allows to 
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
 	</div>
 </div>
 </aside>

@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/tags/c#/" />
-<meta property="og:updated_time" content="2020-06-17T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-09-27T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="C#"/>
@@ -73,6 +73,21 @@ if (!doNotTrack) {
 		<a class="main__header__type" href="/tags/">tags</a>
 		<h1 class="main__title">C#</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/" rel="bookmark">
+			Handling type hierarchies in Cosmos DB (part 1)
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-10-14T00:00:00Z">October 14, 2019</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		This is the first post in a series of 2:
+ Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/" rel="bookmark">
@@ -206,21 +221,6 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 		By now, you&rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
 For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2017/01/17/c-methods-in-git-diff-hunk-headers/" rel="bookmark">
-			C# methods in git diff hunk headers
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-01-17T00:00:00Z">January 17, 2017</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); + Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff.
-	</div>
 </article>
 </main>
 
@@ -259,11 +259,11 @@ diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/17/introducing-cosmos-db-studio/">Introducing Cosmos DB Studio</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/08/31/inject-service-into-system-text-json-converter/">Inject a service into a System.Text.Json converter</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/">Git tip: how to fix an accidental commit on the wrong branch</a></li>
 		</ul>
 	</div>
 </div>
@@ -281,10 +281,10 @@ diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
 	</div>
 </div>
 </aside>

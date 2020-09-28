@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/posts/" />
-<meta property="og:updated_time" content="2020-09-17T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-09-27T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -72,6 +72,21 @@ if (!doNotTrack) {
 	<header class="main__header">
 		<h1 class="main__title">Posts</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/" rel="bookmark">
+			Multitenant Azure AD issuer validation in ASP.NET Core
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-12-24T00:00:00Z">December 24, 2018</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
+openIdConnectOptions.Authority = &#34;https://login.microsoftonline.com/organizations/v2.0&#34;; The problem when you do that is that with the default configuration, the token validation will fail because the issuer in the token won&rsquo;t match the issuer specified in the OpenID metadata.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/" rel="bookmark">
@@ -205,26 +220,12 @@ Fortunately, it&rsquo;s rather easy with Git to cleanup a branch, by recreating 
 		The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
  The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/" rel="bookmark">
-			Transform T4 templates as part of the build, and pass variables from the project
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-11-13T00:00:00Z">November 13, 2017</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		T4 (Text Template Transformation Toolkit) is a great tool to generate code at design time; you can, for instance, create POCO classes from database tables, generate repetitive code, etc. In Visual Studio, T4 files (.tt extension) are associated with the TextTemplatingFileGenerator custom tool, which transforms the template to generate an output file every time you save the template. But sometimes it&rsquo;s not enough, and you want to ensure that the template&rsquo;s output is regenerated before build.
-	</div>
 </article>
 </main>
 
 <div class="pagination">
 	<a class="pagination__item pagination__item--prev btn" href="/posts/page/2/">«</a>
-	<span class="pagination__item pagination__item--current">3/10</span>
+	<span class="pagination__item pagination__item--current">3/11</span>
 	<a class="pagination__item pagination__item--next btn" href="/posts/page/4/">»</a>
 </div>
 
@@ -257,11 +258,11 @@ Fortunately, it&rsquo;s rather easy with Git to cleanup a branch, by recreating 
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/17/introducing-cosmos-db-studio/">Introducing Cosmos DB Studio</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/08/31/inject-service-into-system-text-json-converter/">Inject a service into a System.Text.Json converter</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/">Git tip: how to fix an accidental commit on the wrong branch</a></li>
 		</ul>
 	</div>
 </div>
@@ -279,10 +280,10 @@ Fortunately, it&rsquo;s rather easy with Git to cleanup a branch, by recreating 
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/.net/" title=".net">.net</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/azure/" title="azure">azure</a>
 	</div>
 </div>
 </aside>
