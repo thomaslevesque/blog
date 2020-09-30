@@ -50,7 +50,7 @@ public interface IViewModelFactory
 }
 ```
 
-Notice that the `CreateFooViewModel` has the same "data" parameters as the `FooViewModel` constructor, but not the "service" parameters. This way, a class that needs to instantiate a `FooViewModel` just needs to pass the data to `CreateViewModel`, without worrying about the service dependencies.
+Notice that the `CreateFooViewModel` method has the same "data" parameters as the `FooViewModel` constructor, but not the "service" parameters. This way, a class that needs to instantiate a `FooViewModel` just needs to pass the data to `CreateViewModel`, without worrying about the service dependencies.
 
 An implementation of this factory looks like this:
 
