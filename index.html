@@ -12,7 +12,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/" />
-<meta property="og:updated_time" content="2020-09-27T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-10-30T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thomas Levesque&#39;s .NET Blog"/>
@@ -71,6 +71,21 @@ if (!doNotTrack) {
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/" rel="bookmark">
+			Using C# 9 records as strongly-typed ids
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-10-30T00:00:00Z">October 30, 2020</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Strongly-typed ids Entities typically have integer, GUID or string ids, because those types are supported directly by databases. However, if all your entities have ids of the same type, it becomes pretty easy to mix them up, and use the id of a Product where the id of an Order was expected. This is actually a pretty common source of bugs.
+public void AddProductToOrder(int orderId, int productId, int count) { .
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/" rel="bookmark">
@@ -215,21 +230,6 @@ The GetHashCode method OK, I realize that most developers don&rsquo;t need to im
 		If you&rsquo;re a regular reader of my blog, you probably noticed that the design has changed. In fact, it&rsquo;s not just the design, it&rsquo;s just about everything!
 My blog used to be hosted on WordPress. It did the job, but honestly, I didn&rsquo;t really like WordPress. It&rsquo;s slow, bloated, and the editing and publishing experience is a bit of a mess (or at least, it&rsquo;s not a good fit for the way I like to work).
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/" rel="bookmark">
-			Using the OAuth 2.0 device flow to authenticate users in desktop apps
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-03-28T00:00:00Z">March 28, 2020</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
-Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:
-	</div>
 </article>
 </main>
 
@@ -266,11 +266,11 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">Using C# 9 records as strongly-typed ids</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/17/introducing-cosmos-db-studio/">Introducing Cosmos DB Studio</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/08/31/inject-service-into-system-text-json-converter/">Inject a service into a System.Text.Json converter</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/">Exposing a custom type as a JSON string in an ASP.NET Core API</a></li>
 		</ul>
 	</div>
 </div>
