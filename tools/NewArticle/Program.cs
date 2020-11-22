@@ -27,8 +27,7 @@ namespace NewArticle
             using var writer = new StreamWriter(path, false, Encoding.UTF8);
             writer.WriteLine("---");
             writer.WriteLine("layout: post");
-            writer.WriteLine("layout: post");
-            writer.WriteLine($"title: {title}");
+            writer.WriteLine($"title: \"{title.Replace("\"", "\\\"")}\"");
             writer.WriteLine($"date: {date:yyyy-MM-dd}");
             writer.WriteLine($"url: {url}");
             writer.WriteLine("tags:");
@@ -43,7 +42,9 @@ namespace NewArticle
                 return s;
 
             s = s.RemoveDiacritics();
-            s = Regex.Replace(s, "[^a-zA-Z0-9]", "-");
+            s = Regex.Replace(s, @"([cf])#", "$1sharp", RegexOptions.IgnoreCase);
+            s = Regex.Replace(s, @"\s+", "-");
+            s = Regex.Replace(s, @"[^a-zA-Z0-9-]", "");
             s = s.ToLowerInvariant();
             return s;
         }

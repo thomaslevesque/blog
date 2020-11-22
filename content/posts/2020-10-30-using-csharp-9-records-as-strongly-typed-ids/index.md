@@ -8,6 +8,8 @@ tags:
   - records
   - strong typing
   - strongly-typed ids
+series:
+  - Using C# 9 records as strongly-typed ids
 ---
 
 ## Strongly-typed ids
@@ -77,7 +79,7 @@ Nothing difficult here, but let's be honest: it's a bit of a pain to write this 
 ```csharp
 public record ProductId(int Value);
 ```
-  
+
 Yes, you read that right, it's just one line, and a short one at that. And it does everything that our manual implementation did (quite a bit more, in fact!).
 
 The main difference is this: our manual implementation was a `struct`, i.e. a value type, but records are reference types, which means they can be null. It might not be a major issue, especially if you use nullable reference types, but it's something to keep in mind.
