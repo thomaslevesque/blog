@@ -18,6 +18,11 @@
   </url>
   
   <url>
+    <loc>https://thomaslevesque.com/series/</loc>
+    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://thomaslevesque.com/tags/strong-typing/</loc>
     <lastmod>2020-10-30T00:00:00+00:00</lastmod>
   </url>
@@ -34,6 +39,11 @@
   
   <url>
     <loc>https://thomaslevesque.com/</loc>
+    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/</loc>
     <lastmod>2020-10-30T00:00:00+00:00</lastmod>
   </url>
   
@@ -189,11 +199,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/tags/hash-table/</loc>
-    <lastmod>2020-05-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/series/</loc>
     <lastmod>2020-05-15T00:00:00+00:00</lastmod>
   </url>
   
