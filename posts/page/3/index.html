@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/posts/" />
-<meta property="og:updated_time" content="2020-10-30T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-11-23T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -72,6 +72,20 @@ if (!doNotTrack) {
 	<header class="main__header">
 		<h1 class="main__title">Posts</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/" rel="bookmark">
+			Scaling out ASP.NET Core SignalR using Azure Service Bus
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2019-03-18T00:00:00Z">March 18, 2019</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/" rel="bookmark">
@@ -204,21 +218,6 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 	<div class="content list__excerpt post__content clearfix">
 		Middlewhat? The ASP.NET Core architecture features a system of middleware, which are pieces of code that handle requests and responses. Middleware are chained to each other to form a pipeline. Incoming requests are passed through the pipeline, where each middleware has a chance to do something with them before passing them to the next middleware. Outgoing responses are also passed through the pipeline, in reverse order. If this sounds very abstract, the following schema from the official ASP.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2018/03/06/cleanup-git-history-to-remove-unwanted-files/" rel="bookmark">
-			Cleanup Git history to remove unwanted files
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-03-06T00:00:00Z">March 06, 2018</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.
-Fortunately, it&rsquo;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&rsquo;t have been there in the first place.
-	</div>
 </article>
 </main>
 
@@ -257,11 +256,11 @@ Fortunately, it&rsquo;s rather easy with Git to cleanup a branch, by recreating 
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">Using C# 9 records as strongly-typed ids</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/17/introducing-cosmos-db-studio/">Introducing Cosmos DB Studio</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/08/31/inject-service-into-system-text-json-converter/">Inject a service into a System.Text.Json converter</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/07/23/aspnet-core-iis-and-empty-http-headers/">ASP.NET Core 3, IIS and empty HTTP headers</a></li>
 		</ul>
 	</div>
 </div>

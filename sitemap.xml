@@ -3,48 +3,58 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://thomaslevesque.com/tags/c#-9/</loc>
-    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</loc>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/posts/</loc>
-    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/tags/records/</loc>
-    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/series/</loc>
-    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/tags/strong-typing/</loc>
-    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/tags/strongly-typed-ids/</loc>
-    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/tags/</loc>
-    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/</loc>
-    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/</loc>
-    <lastmod>2020-10-30T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -110,11 +120,6 @@
   <url>
     <loc>https://thomaslevesque.com/2020/09/17/introducing-cosmos-db-studio/</loc>
     <lastmod>2020-09-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
-    <lastmod>2020-08-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
