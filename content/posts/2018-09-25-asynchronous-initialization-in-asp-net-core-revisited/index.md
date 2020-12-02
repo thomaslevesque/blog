@@ -79,7 +79,8 @@ public class MyAppInitializer : IAsyncInitializer
 ```csharp
 services.AddAsyncInitializer<MyAppInitializer>();
 ```
-    It's possible to register multiple initializers.
+It's possible to register multiple initializers.
+
 3. Call the `InitAsync` extension method on the web host in the `Main` method:
 
 ```csharp
@@ -90,7 +91,8 @@ public static async Task Main(string[] args)
     host.Run();
 }
 ```
-    This will run all registered initializers.
+
+This will run all registered initializers.
 
 
 There you have it, a nice and clean way to initialize your app. Enjoy!
