@@ -126,8 +126,7 @@ if (!doNotTrack) {
 <li>Register the initializer in <code>Startup.ConfigureServices</code>, using the <code>AddAsyncInitializer</code> extension method:</li>
 </ol>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddAsyncInitializer&lt;MyAppInitializer&gt;();
-</code></pre></div><pre><code>It's possible to register multiple initializers.
-</code></pre>
+</code></pre></div><p>It&rsquo;s possible to register multiple initializers.</p>
 <ol start="3">
 <li>Call the <code>InitAsync</code> extension method on the web host in the <code>Main</code> method:</li>
 </ol>
@@ -137,8 +136,7 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">await</span> host.InitAsync();
     host.Run();
 }
-</code></pre></div><pre><code>This will run all registered initializers.
-</code></pre>
+</code></pre></div><p>This will run all registered initializers.</p>
 <p>There you have it, a nice and clean way to initialize your app. Enjoy!</p>
 
 		</div>
