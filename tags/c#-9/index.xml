@@ -6,10 +6,20 @@
     <description>Recent content in C# 9 on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Dec 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://thomaslevesque.com/tags/c#-9/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>C# 9 records as strongly-typed ids - Part 3: JSON serialization</title>
+      <link>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</guid>
+      <description>In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
+{ &amp;#34;id&amp;#34;: { &amp;#34;value&amp;#34;: 1 }, &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;, &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
+    </item>
     
     <item>
       <title>C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</title>

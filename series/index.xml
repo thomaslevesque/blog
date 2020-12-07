@@ -6,7 +6,7 @@
     <description>Recent content in Series on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Dec 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://thomaslevesque.com/series/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Using C# 9 records as strongly-typed ids</title>
       <link>https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/</link>
-      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/</guid>
       <description></description>

@@ -4,56 +4,71 @@
   
   <url>
     <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/tags/c#-9/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <loc>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/json/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/posts/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/tags/records/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/tags/serialization/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/series/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/tags/strong-typing/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/tags/strongly-typed-ids/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/tags/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/</loc>
-    <lastmod>2020-11-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</loc>
     <lastmod>2020-11-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -124,11 +139,6 @@
   
   <url>
     <loc>https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/</loc>
-    <lastmod>2020-08-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://thomaslevesque.com/tags/json/</loc>
     <lastmod>2020-08-31T00:00:00+00:00</lastmod>
   </url>
   

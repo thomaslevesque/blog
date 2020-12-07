@@ -12,7 +12,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/" />
-<meta property="og:updated_time" content="2020-11-23T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-12-07T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thomas Levesque&#39;s .NET Blog"/>
@@ -71,6 +71,21 @@ if (!doNotTrack) {
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/" rel="bookmark">
+			[WPF] Creating parameterized styles with attached properties
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2011-10-01T00:00:00Z">October 01, 2011</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Today I&rsquo;d like to share a trick that I used quite often in the past few months. Let&rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls:
+OK, I&rsquo;m not a designer&hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/" rel="bookmark">
@@ -204,20 +219,6 @@ X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo
 		THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings.
 As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&rsquo;t a DependencyProperty, so it wasn&rsquo;t possible to bind it. Furthermore, InputBindings didn&rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&hellip;
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/" rel="bookmark">
-			[C# 4.0] Implementing a custom dynamic object
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-10-08T00:00:00Z">October 08, 2009</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		If you&rsquo;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.
-	</div>
 </article>
 </main>
 
@@ -255,11 +256,11 @@ As a reminder, the issue in previous releases was that the Command property of t
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">Using C# 9 records as strongly-typed ids</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/09/17/introducing-cosmos-db-studio/">Introducing Cosmos DB Studio</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/08/31/inject-service-into-system-text-json-converter/">Inject a service into a System.Text.Json converter</a></li>
 		</ul>
 	</div>
 </div>
