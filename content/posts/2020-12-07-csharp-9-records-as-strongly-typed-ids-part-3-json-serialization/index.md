@@ -15,7 +15,7 @@ series:
   - Using C# 9 records as strongly-typed ids
 ---
 
-In the [previous post](/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/) in this [series](https://thomaslevesque.com/series/using-c%23-9-records-as-strongly-typed-ids/), we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
+In the [previous post](/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/) in this [series](/series/using-c%23-9-records-as-strongly-typed-ids/), we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
 
 ```json
 {
