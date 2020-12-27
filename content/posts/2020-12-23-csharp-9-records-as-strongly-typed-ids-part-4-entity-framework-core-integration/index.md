@@ -50,7 +50,7 @@ Note that this has to be done for each property that is a strongly-typed id (whe
 
 Manually applying these conversions to each and every strongly-typed id in the model is going to get old pretty fast, right? So let's fix that!
 
-We're going to examine each property of each entity in the EF Core model, and if it's a strongly-typed id, we'll use reflecion to generate the appropriate converter, and apply it to the property. This is done by the following method, to be called from `OnModelCreating`:
+We're going to examine each property of each entity in the EF Core model, and if it's a strongly-typed id, we'll use reflection to generate the appropriate converter, and apply it to the property. This is done by the following method, to be called from `OnModelCreating`:
 
 ```csharp
 private static void AddStronglyTypedIdConversions(ModelBuilder modelBuilder)
