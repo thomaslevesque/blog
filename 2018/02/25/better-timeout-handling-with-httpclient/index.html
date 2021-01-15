@@ -85,7 +85,7 @@ if (!doNotTrack) {
 <li><strong>The timeout is defined at the <code>HttpClient</code> level</strong> and applies to all requests made with this <code>HttpClient</code>; it would be more convenient to be able to specify a timeout individually for each request.</li>
 <li>The exception thrown when the timeout is elapsed <strong>doesn&rsquo;t let you determine the cause of the error</strong>. When a timeout occurs, you&rsquo;d expect to get a <code>TimeoutException</code>, right? Well, surprise, it throws a <code>TaskCanceledException</code>! So, there&rsquo;s no way to tell from the exception if the request was actually canceled, or if a timeout occurred.</li>
 </ul>
-<p>Fortunately, thanks to <code>HttpClient</code>'s flexibility, it&rsquo;s quite easy to make up for this design flaw.</p>
+<p>Fortunately, thanks to <code>HttpClient</code>&rsquo;s flexibility, it&rsquo;s quite easy to make up for this design flaw.</p>
 <p>So we&rsquo;re going to implement a workaround for these two issues. Let&rsquo;s recap what we want:</p>
 <ul>
 <li>the ability to <strong>specify timeout on a per-request basis</strong></li>
@@ -212,7 +212,7 @@ if (!doNotTrack) {
     client.Timeout = Timeout.InfiniteTimeSpan;
     ...
 }
-</code></pre></div><p>Note that we need to <strong>disable the <code>HttpClient</code>'s timeout by setting it to an infinite value</strong>, otherwise the default behavior will interfere with our handler.</p>
+</code></pre></div><p>Note that we need to <strong>disable the <code>HttpClient</code>&rsquo;s timeout by setting it to an infinite value</strong>, otherwise the default behavior will interfere with our handler.</p>
 <p>Now let&rsquo;s try to send a request with a timeout of 5 seconds to a server that takes to long to respond:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> request = <span style="color:#66d9ef">new</span> HttpRequestMessage(HttpMethod.Get, <span style="color:#e6db74">&#34;http://foo/&#34;</span>);
 request.SetTimeout(TimeSpan.FromSeconds(<span style="color:#ae81ff">5</span>));
@@ -262,7 +262,7 @@ request.SetTimeout(TimeSpan.FromSeconds(<span style="color:#ae81ff">5</span>));
 		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
 	</figure>
 	<div class="authorbox__header">
-		<span class="authorbox__name">About Thomas Levesque</span>
+		<span class="authorbox__name"></span>
 	</div>
 	<div class="authorbox__description">
 		Thomas Levesque is a French software developer from Paris.

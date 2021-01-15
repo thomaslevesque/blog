@@ -6,11 +6,7 @@
     <description>Recent content in Using C# 9 records as strongly-typed ids on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Dec 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 23 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</title>
       <link>https://thomaslevesque.com/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/</link>

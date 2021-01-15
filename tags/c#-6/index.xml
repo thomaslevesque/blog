@@ -6,11 +6,7 @@
     <description>Recent content in C# 6 on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2015 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://thomaslevesque.com/tags/c#-6/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 21 Jun 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/c#-6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Exception filters in C# 6: their biggest advantage is not what you think</title>
       <link>https://thomaslevesque.com/2015/06/21/exception-filters-in-c-6/</link>

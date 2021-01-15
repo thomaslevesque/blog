@@ -6,11 +6,7 @@
     <description>Recent content in puzzle on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Jul 2015 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://thomaslevesque.com/tags/puzzle/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 30 Jul 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/puzzle/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>C# Puzzle 2</title>
       <link>https://thomaslevesque.com/2015/07/30/c-puzzle-2/</link>

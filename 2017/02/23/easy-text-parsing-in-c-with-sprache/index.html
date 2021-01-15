@@ -275,7 +275,7 @@ Parameters:
 - error_description = The access token has expired
 </code></pre><p>If there&rsquo;s a syntax error in the input text, the <code>Parse</code> will throw a <code>ParseException</code> with a message describing where and why the parsing failed. For instance, if I remove the space between &ldquo;Bearer&rdquo; and &ldquo;realm&rdquo;, I get the following error:</p>
 <blockquote>
-<p>Parsing failure: unexpected &lsquo;=&rsquo;; expected whitespace (Line 1, Column 12); recently consumed: earerrealm</p>
+<p>Parsing failure: unexpected &lsquo;='; expected whitespace (Line 1, Column 12); recently consumed: earerrealm</p>
 </blockquote>
 <p>You can find the full code for this article <a href="https://gist.github.com/thomaslevesque/d8ee28be1cf383a3f8aaf39cee776f92">here</a>.</p>
 <h2 id="conclusion">Conclusion</h2>
@@ -310,7 +310,7 @@ Parameters:
 		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
 	</figure>
 	<div class="authorbox__header">
-		<span class="authorbox__name">About Thomas Levesque</span>
+		<span class="authorbox__name"></span>
 	</div>
 	<div class="authorbox__description">
 		Thomas Levesque is a French software developer from Paris.

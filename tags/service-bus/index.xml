@@ -6,11 +6,7 @@
     <description>Recent content in Service Bus on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Mar 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://thomaslevesque.com/tags/service-bus/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 18 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/service-bus/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Scaling out ASP.NET Core SignalR using Azure Service Bus</title>
       <link>https://thomaslevesque.com/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</link>

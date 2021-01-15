@@ -6,11 +6,7 @@
     <description>Recent content in fakeiteasy on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Feb 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://thomaslevesque.com/tags/fakeiteasy/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 20 Feb 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/fakeiteasy/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>What&#39;s new in FakeItEasy 3.0.0?</title>
       <link>https://thomaslevesque.com/2017/02/20/whats-new-in-fakeiteasy-3-0-0/</link>

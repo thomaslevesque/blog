@@ -86,11 +86,11 @@ if (!doNotTrack) {
 <h2 id="promise-based-wrapper">Promise-based wrapper</h2>
 <p>Of course, I wouldn&rsquo;t be writing this post if there wasn&rsquo;t a way to make things better. Cosmos DB Product Manager <a href="https://twitter.com/aliuy8">Andrew Liu</a> was kind enough to show me how to write a wrapper around the callback-based API to enable the use of promises and <code>async</code>/<code>await</code>. Basically, it&rsquo;s just a few functions that you can add to your stored procedures:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() {
-    <span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">main</span>() {
-        <span style="color:#66d9ef">let</span> { <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
+    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">main</span>() {
+        <span style="color:#66d9ef">let</span> { <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span> } <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
         <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">doc</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">feed</span>) {
             <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
-            <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>);
+            <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>);
         }
     }
 
@@ -164,11 +164,11 @@ if (!doNotTrack) {
 <span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">AsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/AsyncCosmosContext&#34;</span>;
 
 <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() {
-    <span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">main</span>(<span style="color:#a6e22e">context</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IAsyncCosmosContext</span>) {
-        <span style="color:#66d9ef">let</span> { <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
+    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">main</span>(<span style="color:#a6e22e">context</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IAsyncCosmosContext</span>) {
+        <span style="color:#66d9ef">let</span> { <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span> } <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
         <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">doc</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">feed</span>) {
             <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
-            <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>);
+            <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>);
         }
     }
 
@@ -218,11 +218,11 @@ if (!doNotTrack) {
 
 <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() 
 {
-    <span style="color:#a6e22e">AsyncHelper</span>.<span style="color:#a6e22e">execute</span>(<span style="color:#a6e22e">async</span> <span style="color:#a6e22e">context</span> =&gt; {
-        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
+    <span style="color:#a6e22e">AsyncHelper</span>.<span style="color:#a6e22e">execute</span>(<span style="color:#66d9ef">async</span> <span style="color:#a6e22e">context</span> =&gt; {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
         <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">doc</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">feed</span>) {
             <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
-            <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>);
+            <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>);
         }
     });
 }
@@ -305,7 +305,7 @@ if (!doNotTrack) {
 		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
 	</figure>
 	<div class="authorbox__header">
-		<span class="authorbox__name">About Thomas Levesque</span>
+		<span class="authorbox__name"></span>
 	</div>
 	<div class="authorbox__description">
 		Thomas Levesque is a French software developer from Paris.
