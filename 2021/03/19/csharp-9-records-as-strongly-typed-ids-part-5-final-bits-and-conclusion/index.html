@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>C# 9 records as strongly-typed ids - Part 5: final bits and conclusion - Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="C# 9 records as strongly-typed ids - Part 5: final bits and conclusion" />
+<meta property="og:description" content="We&rsquo;re reaching the end of this series on records as strongly-typed ids. Sorry for the long delay since the last post… life happened! So far we&rsquo;ve covered ASP.NET Core model binding, JSON serialization, and EF Core integration. Almost everything is working, we just need to fix a few more details.
+Handling database-generated values in EF Core First, I want to address a question asked by @OpsOwns in the comments of the last post:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://thomaslevesque.com/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/" />
+<meta property="article:published_time" content="2021-03-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-03-19T00:00:00+00:00" />
+
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="C# 9 records as strongly-typed ids - Part 5: final bits and conclusion"/>
+<meta name="twitter:description" content="We&rsquo;re reaching the end of this series on records as strongly-typed ids. Sorry for the long delay since the last post… life happened! So far we&rsquo;ve covered ASP.NET Core model binding, JSON serialization, and EF Core integration. Almost everything is working, we just need to fix a few more details.
+Handling database-generated values in EF Core First, I want to address a question asked by @OpsOwns in the comments of the last post:"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-31621259-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<a class="main__header__type" href="/posts/">posts</a>
+			<h1 class="post__title">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-03-19T00:00:00Z">March 19, 2021</time></div><div class="meta__item-series meta__item"><svg class="meta__icon icon icon-rss" viewBox="0 0 16 16" x="0px" y="0px" width="24" height="24" transform="scale(0.9)">
+    <rect x="5" y="3" width="9" height="2" rx="0.5" ry="0.5"/>
+    <rect x="5" y="7" width="9" height="2" rx="0.5" ry="0.5"/>
+    <rect x="5" y="11" width="9" height="2" rx="0.5" ry="0.5"/>
+    <path d="M2.43844,1.99608H3.64156V4.99216H3.00387V2.58688H2.43844V1.99608Z"/>
+    <path d="M3.15234,7.1875a0.53606,0.53606,0,0,0,.1123-0.30811A0.33978,0.33978,0,0,0,3.167,6.63086a0.33473,0.33473,0,0,0-.251-0.1001,0.68292,0.68292,0,0,0-.53125.39941L1.85352,6.61572a1.6386,1.6386,0,0,1,.457-0.48877,1.12077,1.12077,0,0,1,.63281-0.16553,1.019,1.019,0,0,1,.67578.24414,0.82292,0.82292,0,0,1,.292.665,0.89053,0.89053,0,0,1-.11719.43994,2.87918,2.87918,0,0,1-.43164.5376l-0.53516.55664H4V9H1.9043V8.50684l0.87207-.89258A3.90321,3.90321,0,0,0,3.15234,7.1875Z"/>
+    <path d="M2.04,10.56055V9.99512H3.85938v0.459L3.252,11.14746A0.84687,0.84687,0,0,1,4,12.001a0.90244,0.90244,0,0,1-.31738.7334A1.21725,1.21725,0,0,1,2.873,13a1.75524,1.75524,0,0,1-.998-0.34863L2.14648,12.124a1.34788,1.34788,0,0,0,.75293.29785,0.531,0.531,0,0,0,.3291-0.09766A0.33367,0.33367,0,0,0,3.3584,12.042,0.34392,0.34392,0,0,0,3.209,11.748a0.68668,0.68668,0,0,0-.41211-0.1084,1.42638,1.42638,0,0,0-.39551.08105V11.23145l0.56934-.6709H2.04Z"/>
+    <text x="0" y="31" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">Created by Wireform</text>
+    <text x="0" y="36" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">from the Noun Project</text>
+</svg><span class="meta__text"><a class="meta__link" href="/series/using-c%23-9-records-as-strongly-typed-ids/" rel="series">Using C# 9 records as strongly-typed ids</a>
+	</span>
+</div></div>
+		</header><div class="content post__content clearfix">
+			<p>We&rsquo;re reaching the end of this <a href="https://thomaslevesque.com/series/using-c%23-9-records-as-strongly-typed-ids/">series</a> on records as strongly-typed ids. Sorry for the long delay since the last post… life happened! So far we&rsquo;ve covered ASP.NET Core model binding, JSON serialization, and EF Core integration. Almost everything is working, we just need to fix a few more details.</p>
+<h2 id="handling-database-generated-values-in-ef-core">Handling database-generated values in EF Core</h2>
+<p>First, I want to address a question asked by @OpsOwns in the comments of the last post:</p>
+<blockquote>
+<p>How can I deal with autoincrement ? like <code>ValueGeneratedOnAdd().UseIdentityColumn()</code> ?</p>
+</blockquote>
+<p>Unfortunately, I don&rsquo;t have a good answer to that. I experimented a bit, and ran into an error, because apparently EF Core doesn&rsquo;t support a property that has a value conversion <em>and</em> has its value generated by the database. There&rsquo;s an <a href="https://github.com/dotnet/efcore/issues/11597">open Github issue about this</a>, and hopefully it will be addressed in the next EF Core release. In the meantime, you can either:</p>
+<ul>
+<li>avoid using database generated values (e.g. get the next id value from a sequence in the C# code, or use a GUID instead of an int)</li>
+<li>or look at the <a href="https://github.com/dotnet/efcore/issues/11597#issuecomment-752362943">workaround suggested by user @Dresel</a></li>
+</ul>
+<p>I know, it&rsquo;s not much of a solution…</p>
+<h2 id="fixing-tostring">Fixing ToString()</h2>
+<p>In the second post of this series, I <a href="https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/#common-base-type-for-strongly-typed-ids">suggested</a> implementing <code>ToString()</code> in the <code>StronglyTypedId&lt;TValue&gt;</code> base type, so that you don&rsquo;t need to do it again in every strongly-typed id:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; Value.ToString();
+</code></pre></div><p>This seemed like a good idea… except for the fact that it doesn&rsquo;t work! If you create a new record that inherits from <code>StronglyTypedId&lt;TValue&gt;</code>, the compiler will always generate a new <code>ToString()</code> method, overriding the one from the base class. This compiler-provided implementation outputs the type and property values, like <code>&quot;ProductId { Value = 42 }&quot;</code>. While this looks nice in the debugger, it&rsquo;s not what we want for strongly-typed ids.</p>
+<p>We need the string representation to be that of the wrapped value. The main reason is that this representation will be used in URL generation. For instance, if you do something like this in a controller:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">return</span> CreatedAtAction(nameof(GetProduct), <span style="color:#66d9ef">new</span> { id = product.Id }, product);
+</code></pre></div><p>ASP.NET Core will add a <code>Location</code> header to the response, containing the URL for the <code>GetProduct</code> action with the specified value for <code>id</code>. This URL should be something like <code>https://localhost:5000/product/42</code>. The problem is that, if you don&rsquo;t replace the compiler-generated implementation of <code>ToString()</code>, it will actually generate something like this: <code>https://localhost:5000/product/ProductId { Value = 42 }</code>. Oops!</p>
+<p>The obvious fix would be to mark the <code>ToString()</code> override as <code>sealed</code>; unfortunately this is explicitly forbidden, and produces a compilation error.</p>
+<p>So, what&rsquo;s the solution? Override <code>ToString()</code> explicitly in every strongly-typed id? Well, it would work, but it would be pretty annoying… A better option is to use another new feature of C# 9: source generators. Basically, we&rsquo;re going to automatically generate the method for every strongly-typed id.</p>
+<h3 id="writing-a-source-generator">Writing a source generator</h3>
+<p>Source generators are a similar to Roslyn analyzers, in that they run during compilation of the project and rely on the same Roslyn package. They can add new code to the project, based on the existing code.</p>
+<p>First, we need to create a new project in our solution to contain the source generator. It&rsquo;s a simple class library with a reference to the <code>Microsoft.CodeAnalysis.CSharp</code> package:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Project</span> <span style="color:#a6e22e">Sdk=</span><span style="color:#e6db74">&#34;Microsoft.NET.Sdk&#34;</span><span style="color:#f92672">&gt;</span>
+
+  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+    <span style="color:#f92672">&lt;TargetFramework&gt;</span>net5.0<span style="color:#f92672">&lt;/TargetFramework&gt;</span>
+  <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
+
+  <span style="color:#f92672">&lt;ItemGroup&gt;</span>
+    <span style="color:#f92672">&lt;PackageReference</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;Microsoft.CodeAnalysis.CSharp&#34;</span> <span style="color:#a6e22e">Version=</span><span style="color:#e6db74">&#34;3.9.0&#34;</span> <span style="color:#a6e22e">PrivateAssets=</span><span style="color:#e6db74">&#34;All&#34;</span> <span style="color:#f92672">/&gt;</span>
+  <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
+<span style="color:#f92672">&lt;/Project&gt;</span>
+</code></pre></div><p>In this project, let&rsquo;s create a <code>StronglyTypedIdGenerator</code> class that implements <code>ISourceGenerator</code> and has the <code>[Generator]</code> attribute:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<span style="color:#66d9ef">using</span> System.Collections.Generic;
+<span style="color:#66d9ef">using</span> System.Linq;
+<span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis;
+<span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis.CSharp;
+<span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis.CSharp.Syntax;
+
+<span style="color:#66d9ef">namespace</span> MyProject.SourceGen
+{
+<span style="color:#a6e22e">    [Generator]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StronglyTypedIdGenerator</span> : ISourceGenerator
+    {
+        <span style="color:#75715e">// Adjust the namespace for your project
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> StronglyTypedIdMetadataName = <span style="color:#e6db74">&#34;MyProject.StronglyTypedId`1&#34;</span>;
+
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Initialize(GeneratorInitializationContext context)
+        {
+            <span style="color:#75715e">// Uncomment the next line to debug the source generator
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">//System.Diagnostics.Debugger.Launch();
+</span><span style="color:#75715e"></span>            context.RegisterForSyntaxNotifications(() =&gt; <span style="color:#66d9ef">new</span> SyntaxReceiver());
+        }
+
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Execute(GeneratorExecutionContext context)
+        {
+            <span style="color:#66d9ef">if</span> (context.SyntaxReceiver <span style="color:#66d9ef">is</span> not SyntaxReceiver receiver)
+                <span style="color:#66d9ef">return</span>;
+
+            INamedTypeSymbol stronglyTypedIdBaseType = context.Compilation.GetTypeByMetadataName(StronglyTypedIdMetadataName)
+                ?? <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">$&#34;Type &#39;{StronglyTypedIdMetadataName}&#39; could not be found&#34;</span>);
+
+            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> declaration <span style="color:#66d9ef">in</span> receiver.CandidateDeclarations)
+            {
+                <span style="color:#66d9ef">var</span> model = context.Compilation.GetSemanticModel(declaration.SyntaxTree);
+                <span style="color:#66d9ef">var</span> type = model.GetDeclaredSymbol(declaration);
+                <span style="color:#66d9ef">if</span> (type <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span>)
+                    <span style="color:#66d9ef">continue</span>;
+
+                <span style="color:#66d9ef">if</span> (!IsStronglyTypedId(type))
+                    <span style="color:#66d9ef">continue</span>;
+
+                <span style="color:#66d9ef">string</span> fullNamespace = type.ContainingNamespace.ToDisplayString();
+                <span style="color:#66d9ef">string</span> typeName = type.Name;
+
+                <span style="color:#66d9ef">var</span> source = <span style="color:#e6db74">$@&#34;namespace {fullNamespace}
+</span><span style="color:#e6db74">{{
+</span><span style="color:#e6db74">    partial record {typeName}
+</span><span style="color:#e6db74">    {{
+</span><span style="color:#e6db74">        public override string ToString() =&gt; Value.ToString();
+</span><span style="color:#e6db74">    }}
+</span><span style="color:#e6db74">}}&#34;</span>;
+                context.AddSource(<span style="color:#e6db74">$&#34;{typeName}.Generated&#34;</span>, source);
+            }
+
+            <span style="color:#66d9ef">bool</span> IsStronglyTypedId(INamedTypeSymbol type)
+            {
+                <span style="color:#66d9ef">return</span> type.BaseType.IsGenericType
+                    &amp;&amp; !type.BaseType.IsUnboundGenericType
+                    &amp;&amp; SymbolEqualityComparer.Default.Equals(type.BaseType.ConstructedFrom, stronglyTypedIdBaseType);
+            }
+        }
+
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SyntaxReceiver</span> : ISyntaxReceiver
+        {
+            <span style="color:#66d9ef">public</span> List&lt;RecordDeclarationSyntax&gt; CandidateDeclarations { <span style="color:#66d9ef">get</span>; } = <span style="color:#66d9ef">new</span>();
+
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnVisitSyntaxNode(SyntaxNode syntaxNode)
+            {
+                <span style="color:#66d9ef">if</span> (syntaxNode <span style="color:#66d9ef">is</span> RecordDeclarationSyntax declaration)
+                {
+                    <span style="color:#75715e">// Must declare a base type (we don&#39;t care which at this point)
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">if</span> (declaration.BaseList <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span> || !declaration.BaseList.Types.Any())
+                        <span style="color:#66d9ef">return</span>;
+
+                    <span style="color:#75715e">// Must be partial (otherwise we can&#39;t add new members)
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">if</span> (!declaration.Modifiers.Any(SyntaxKind.PartialKeyword))
+                        <span style="color:#66d9ef">return</span>;
+
+                    <span style="color:#75715e">// Must have a single parameter, either in the parameter list or in an explicit constructor
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">if</span> (declaration.ParameterList <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span>)
+                    {
+                        <span style="color:#66d9ef">var</span> ctors = declaration.Members.OfType&lt;ConstructorDeclarationSyntax&gt;().ToList();
+                        <span style="color:#75715e">// We need at least one constructor with one parameter
+</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">if</span> (!ctors.Any(c =&gt; c.ParameterList.Parameters.Count == <span style="color:#ae81ff">1</span>))
+                            <span style="color:#66d9ef">return</span>;
+                        <span style="color:#75715e">// And there can&#39;t be a constructor with more than one parameter
+</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">if</span> (ctors.Any(c =&gt; c.ParameterList.Parameters.Count &gt; <span style="color:#ae81ff">1</span>))
+                            <span style="color:#66d9ef">return</span>;
+                    }
+                    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (declaration.ParameterList.Parameters.Count != <span style="color:#ae81ff">1</span>)
+                    {
+                        <span style="color:#66d9ef">return</span>;
+                    }
+
+                    CandidateDeclarations.Add(declaration);
+                }
+            }
+        }
+    }
+}
+</code></pre></div><p>I&rsquo;m not going to describe this code line by line, but here are the important parts:</p>
+<ul>
+<li>
+<p>The <code>Initialize</code> method is called when compilation starts. It gives the generator an opportunity to register syntax receivers. Syntax receivers are called every time the compiler encounters a syntax node. In our case, we use it to collect record declarations that we might want to augment. We don&rsquo;t check too many things here because at this point, we don&rsquo;t have access to the semantic model of the code. We just check that:</p>
+<ul>
+<li>the record is <code>partial</code> (because we can&rsquo;t actually modify existing code, we can only add new code, so the <code>ToString()</code> override will need to be in another partial declaration)</li>
+<li>it has a base type (we only want to augment records that inherit <code>StronglyTypedId&lt;TValue&gt;</code>)</li>
+<li>it has exactly one parameter (the <code>Value</code> of the strongly typed id)</li>
+</ul>
+<p>We store the matching record declarations in a collection that we will use in the <code>Execute</code> method.</p>
+</li>
+<li>
+<p>The <code>Execute</code> method is called after the compiler has finished parsing the existing code, and it&rsquo;s where we have the opportunity to actually generate new code. In this method, we do the following:</p>
+<ul>
+<li>Look at each candidate record declaration and ensure it really is a strongly-typed id</li>
+<li>If it is, generate a partial declaration to override the <code>ToString()</code> method, and add that as a source file to be compiled. Note that we <em>could</em> use the Roslyn API to generate the code, but that API is quite verbose, so it&rsquo;s often simpler to just generate the code as a string.</li>
+</ul>
+</li>
+</ul>
+<p>At this point, we have a very simple source generator that just generates a <code>ToString()</code> method, but of course it could be enriched to generate anything we might need in our strongly-typed ids (e.g. implicit conversion to <code>TValue</code>, a <code>Parse</code> method, etc.)</p>
+<h3 id="using-the-source-generator">Using the source generator</h3>
+<p>Using the source generator is pretty easy: just reference the source generator project in the projects that declare strongly-typed ids. Actually, it&rsquo;s not really &ldquo;just&rdquo; a project reference; we need to specify additional attributes on the reference for this to work:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ProjectReference</span>
+  <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;../MyProject.SourceGen/MyProject.SourceGen.csproj&#34;</span>
+  <span style="color:#a6e22e">OutputItemType=</span><span style="color:#e6db74">&#34;Analyzer&#34;</span>
+  <span style="color:#a6e22e">ReferenceOutputAssembly=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#f92672">/&gt;</span>
+</code></pre></div><p><code>OutputItemType</code> is <code>Analyzer</code>, which seems a bit strange, but as I mentioned before, source generators work similarly to analyzers, so it&rsquo;s not really surprising. <code>ReferenceOutputAssembly</code> is false, because we don&rsquo;t need the source generator at runtime, only during compilation.</p>
+<p>Now, we just need to modify our strongly-typed ids to make them partial, so that the source generator can augment them:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">partial</span> record ProductId(<span style="color:#66d9ef">int</span> Value) : StronglyTypedId&lt;<span style="color:#66d9ef">int</span>&gt;(Value);
+</code></pre></div><p>And that&rsquo;s it! If we rebuild our project, the source generator kicks in and adds the <code>ToString()</code> overrides to all our strongly-typed ids.</p>
+<p>Of course, at this point, we can&rsquo;t <em>see</em> the generated code, so how can we know if it&rsquo;s there, and if it&rsquo;s correct? Fortunately, there&rsquo;s a simple way to see that code. In the project that references the source generator, add the following properties:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+    <span style="color:#f92672">&lt;EmitCompilerGeneratedFiles&gt;</span>true<span style="color:#f92672">&lt;/EmitCompilerGeneratedFiles&gt;</span>
+    <span style="color:#f92672">&lt;CompilerGeneratedFilesOutputPath&gt;</span>.generated<span style="color:#f92672">&lt;/CompilerGeneratedFilesOutputPath&gt;</span>
+  <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
+</code></pre></div><p>The generated code files will now be added to the <code>.generated</code> folder in the project, so we can inspect them:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">namespace</span> MyProject
+{
+    <span style="color:#66d9ef">partial</span> record ProductId
+    {
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; Value.ToString();
+    }
+}
+</code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>Well, that was quite a ride! We&rsquo;ve seen that using records as strongly-typed ids is possible today with C# 9, ASP.NET Core 5.0 and EF Core 5.0, but there are many issues to overcome to make it work. I already use the solutions described in this series in a fairly complex project, and it works great; it already prevented me from introducing a few bugs!</p>
+<p>There are still a few wrinkles, though:</p>
+<ul>
+<li>The fact that our strongly-typed ids are reference types is annoying; ideally, they should be value types to make them non-nullable.</li>
+<li>The EF Core integration is much more painful than it should be, because:
+<ul>
+<li>We need to manually specify entity keys instead of relying on convention</li>
+<li>There&rsquo;s no easy way to support database-generated ids</li>
+<li>We need to apply a converter to every strongly-typed id property</li>
+</ul>
+</li>
+<li>Having to rely on a source generator to override <code>ToString()</code> automatically seems a bit overkill</li>
+</ul>
+<p>All of these problems have already been identified in the relevant GitHub repos, so I&rsquo;m hoping that at least some of them will be solved in the near future:</p>
+<ul>
+<li>C#
+<ul>
+<li>There&rsquo;s a proposal (<a href="https://github.com/dotnet/csharplang/issues/4334">dotnet/csharplang#4334</a>) to support record structs that seems to be getting some traction; it&rsquo;s already been discussed in several language design meetings, so it might be included in C# 10.</li>
+<li>There&rsquo;s a proposal (<a href="https://github.com/dotnet/csharplang/issues/4174">dotnet/csharplang#4174</a>) to make it possible to seal the <code>ToString()</code> override in records, so that the base type implementation won&rsquo;t be replaced by a compiler-generated one. There&rsquo;s no guarantee that it will be included in C# 10, but it&rsquo;s a pretty small feature, so I guess it&rsquo;s possible.</li>
+</ul>
+</li>
+<li>Entity Framework Core
+<ul>
+<li><a href="https://github.com/dotnet/efcore/issues/11597">dotnet/efcore#11597</a> addresses the problem of database-generated values with converters. It&rsquo;s been postposed for several releases but hopefully it will be implemented at some point</li>
+<li><a href="https://github.com/dotnet/efcore/issues/10784">dotnet/efcore#10784</a> will provide a mechanism to set a converter for all properties of a given type; it&rsquo;s in the 6.0 milestone, so unless it&rsquo;s postponed, it should be in the next major release.</li>
+</ul>
+</li>
+</ul>
+<p>In the meantime, feel free to use the code provided in this series!</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/c%23-9/" rel="tag">C# 9</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/records/" rel="tag">records</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/strong-typing/" rel="tag">strong typing</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/strongly-typed-ids/" rel="tag">strongly-typed ids</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/source-generator/" rel="tag">source generator</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+	<div class="authorbox__description">
+		Thomas Levesque is a French software developer from Paris.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</p>
+		</a>
+	</div>
+</nav>
+
+<div>
+    <script src="https://utteranc.es/client.js"
+            repo="thomaslevesque/blog"
+            issue-term="pathname"
+            label="post-comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://thomaslevesque.com/" />
+	</form>
+</div>
+<div class="widget-social widget">
+    <h4 class="widget-social__title widget__title">Social</h4>
+    <div class="widget-social__content widget__content">
+        <a class="widget-social__link-custom widget__link" title="GitHub" rel="noopener noreferrer" href="https://github.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="Twitter" rel="noopener noreferrer" href="https://twitter.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-twitter" width="24" height="24" viewBox="0 0 384 312"><path d="m384 36.9c-14.1 6.3-29.3 10.5-45.2 12.4 16.3-9.7 28.8-25.2 34.6-43.6-15.2 9-32.1 15.6-50 19.1-14.4-15.2-34.9-24.8-57.5-24.8-43.5 0-78.8 35.3-78.8 78.8 0 6.2.7 12.2 2 17.9-65.5-3.3-123.5-34.6-162.4-82.3-6.7 11.6-10.6 25.2-10.6 39.6 0 27.3 13.9 51.4 35 65.6-12.9-.4-25.1-4-35.7-9.9v1c0 38.2 27.2 70 63.2 77.2-6.6 1.8-13.6 2.8-20.8 2.8-5.1 0-10-.5-14.8-1.4 10 31.3 39.1 54.1 73.6 54.7-27 21.1-60.9 33.7-97.8 33.7-6.4 0-12.6-.4-18.8-1.1 34.9 22.4 76.3 35.4 120.8 35.4 144.9 0 224.1-120 224.1-224.1 0-3.4-.1-6.8-.2-10.2 15.4-11.1 28.7-25 39.3-40.8z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="RSS feed" rel="noopener noreferrer" href="/index.xml">
+            <svg class="widget-social__link-icon-custom icon icon-rss" x="0px" y="0px" width="24" height="24" viewBox="0 0 1000 1000"><path d="M277.2,856.3c0,37.1-13,68.7-39,94.6c-26,26-57.5,39-94.6,39S75,976.9,49,951c-26-26-39-57.5-39-94.6c0-37.1,13-68.7,39-94.6c26-26,57.5-39,94.6-39s68.7,13,94.6,39C264.3,787.7,277.2,819.2,277.2,856.3z M633.6,941.9c0.9,13-3,24.1-11.8,33.4c-8.4,9.7-19.3,14.6-32.7,14.6h-94c-11.6,0-21.6-3.8-29.9-11.5c-8.4-7.7-13-17.3-13.9-28.9c-10.2-106.2-53-197.1-128.4-272.5c-75.4-75.4-166.2-118.2-272.5-128.4c-11.6-0.9-21.2-5.6-28.9-13.9c-7.7-8.4-11.5-18.3-11.5-29.9v-94c0-13.5,4.9-24.4,14.6-32.7c7.9-7.9,17.9-11.8,29.9-11.8H58c74.2,6,145.2,24.7,213,56c67.7,31.3,127.8,73.4,180.2,126.3c52.9,52.4,95,112.5,126.3,180.2C608.8,796.7,627.5,867.7,633.6,941.9L633.6,941.9z M989.9,943.3c0.9,12.5-3.2,23.4-12.5,32.7c-8.3,9.3-19,13.9-32,13.9h-99.5c-12.1,0-22.4-4.1-31-12.2s-13.1-18-13.6-29.6c-5.6-99.8-29-194.5-70.3-284.3c-41.3-89.8-95-167.7-161.1-233.8C503.8,363.9,425.8,310.2,336,269c-89.8-41.3-184.5-65-284.3-71c-11.6-0.5-21.5-5-29.6-13.6c-8.1-8.6-12.2-18.7-12.2-30.3V54.6c0-13,4.6-23.7,13.9-32c8.4-8.4,18.6-12.5,30.6-12.5h2.1c121.6,6,237.9,33.9,349,83.5c111.1,49.6,209.8,117.8,296.1,204.6c86.8,86.3,155,185,204.6,296.1C956,705.4,983.8,821.8,989.9,943.3L989.9,943.3z"/></svg>
+        </a>
+    </div>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">Using C# 9 records as strongly-typed ids</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Top tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Thomas Levesque.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

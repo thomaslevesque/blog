@@ -11,7 +11,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/" />
-<meta property="og:updated_time" content="2020-12-23T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-03-19T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Using C# 9 records as strongly-typed ids"/>
@@ -73,6 +73,32 @@ if (!doNotTrack) {
 		<a class="main__header__type" href="/series/">series</a>
 		<h1 class="main__title">Using C# 9 records as strongly-typed ids</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/" rel="bookmark">
+			C# 9 records as strongly-typed ids - Part 5: final bits and conclusion
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-03-19T00:00:00Z">March 19, 2021</time></div><div class="meta__item-series meta__item"><svg class="meta__icon icon icon-rss" viewBox="0 0 16 16" x="0px" y="0px" width="24" height="24" transform="scale(0.9)">
+    <rect x="5" y="3" width="9" height="2" rx="0.5" ry="0.5"/>
+    <rect x="5" y="7" width="9" height="2" rx="0.5" ry="0.5"/>
+    <rect x="5" y="11" width="9" height="2" rx="0.5" ry="0.5"/>
+    <path d="M2.43844,1.99608H3.64156V4.99216H3.00387V2.58688H2.43844V1.99608Z"/>
+    <path d="M3.15234,7.1875a0.53606,0.53606,0,0,0,.1123-0.30811A0.33978,0.33978,0,0,0,3.167,6.63086a0.33473,0.33473,0,0,0-.251-0.1001,0.68292,0.68292,0,0,0-.53125.39941L1.85352,6.61572a1.6386,1.6386,0,0,1,.457-0.48877,1.12077,1.12077,0,0,1,.63281-0.16553,1.019,1.019,0,0,1,.67578.24414,0.82292,0.82292,0,0,1,.292.665,0.89053,0.89053,0,0,1-.11719.43994,2.87918,2.87918,0,0,1-.43164.5376l-0.53516.55664H4V9H1.9043V8.50684l0.87207-.89258A3.90321,3.90321,0,0,0,3.15234,7.1875Z"/>
+    <path d="M2.04,10.56055V9.99512H3.85938v0.459L3.252,11.14746A0.84687,0.84687,0,0,1,4,12.001a0.90244,0.90244,0,0,1-.31738.7334A1.21725,1.21725,0,0,1,2.873,13a1.75524,1.75524,0,0,1-.998-0.34863L2.14648,12.124a1.34788,1.34788,0,0,0,.75293.29785,0.531,0.531,0,0,0,.3291-0.09766A0.33367,0.33367,0,0,0,3.3584,12.042,0.34392,0.34392,0,0,0,3.209,11.748a0.68668,0.68668,0,0,0-.41211-0.1084,1.42638,1.42638,0,0,0-.39551.08105V11.23145l0.56934-.6709H2.04Z"/>
+    <text x="0" y="31" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">Created by Wireform</text>
+    <text x="0" y="36" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">from the Noun Project</text>
+</svg><span class="meta__text"><a class="meta__link" href="/series/using-c%23-9-records-as-strongly-typed-ids/" rel="series">Using C# 9 records as strongly-typed ids</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		We&rsquo;re reaching the end of this series on records as strongly-typed ids. Sorry for the long delay since the last post… life happened! So far we&rsquo;ve covered ASP.NET Core model binding, JSON serialization, and EF Core integration. Almost everything is working, we just need to fix a few more details.
+Handling database-generated values in EF Core First, I want to address a question asked by @OpsOwns in the comments of the last post:
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/" rel="bookmark">
@@ -212,11 +238,11 @@ public void AddProductToOrder(int orderId, int productId, int count) { .
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">Using C# 9 records as strongly-typed ids</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
 		</ul>
 	</div>
 </div>
@@ -231,10 +257,10 @@ public void AddProductToOrder(int orderId, int productId, int count) { .
 		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>

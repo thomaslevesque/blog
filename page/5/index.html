@@ -12,7 +12,7 @@
 <meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://thomaslevesque.com/" />
-<meta property="og:updated_time" content="2020-12-23T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-03-19T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thomas Levesque&#39;s .NET Blog"/>
@@ -71,6 +71,22 @@ if (!doNotTrack) {
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/2017/02/20/whats-new-in-fakeiteasy-3-0-0/" rel="bookmark">
+			What&#39;s new in FakeItEasy 3.0.0?
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-02-20T00:00:00Z">February 20, 2017</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		FakeItEasy is a popular mocking framework for .NET, with an very intuitive and easy-to-use API. For about one year, I&rsquo;ve been a maintainer of FakeItEasy, along with Adam Ralph and Blair Conrad. It&rsquo;s been a real pleasure working with them and I had a lot of fun!
+Today I&rsquo;m glad to announce that we&rsquo;re releasing FakeItEasy 3.0.0, which supports .NET Core and introduces a few useful features.
+Let&rsquo;s see what&rsquo;s new!
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/2017/01/17/c-methods-in-git-diff-hunk-headers/" rel="bookmark">
@@ -205,20 +221,6 @@ When you write unit tests for a class that takes dependencies, you typically nee
 	<div class="content list__excerpt post__content clearfix">
 		Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/" rel="bookmark">
-			Explicitly switch to the UI thread in an async method
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-11-11T00:00:00Z">November 11, 2015</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).
-	</div>
 </article>
 </main>
 
@@ -256,11 +258,11 @@ When you write unit tests for a class that takes dependencies, you typically nee
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">Using C# 9 records as strongly-typed ids</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/">Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</a></li>
 		</ul>
 	</div>
 </div>
@@ -275,10 +277,10 @@ When you write unit tests for a class that takes dependencies, you typically nee
 		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
