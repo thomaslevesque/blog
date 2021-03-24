@@ -242,7 +242,7 @@ All of these problems have already been identified in the relevant GitHub repos,
   - There's a proposal ([dotnet/csharplang#4334](https://github.com/dotnet/csharplang/issues/4334)) to support record structs that seems to be getting some traction; it's already been discussed in several language design meetings, so it might be included in C# 10.
   - There's a proposal ([dotnet/csharplang#4174](https://github.com/dotnet/csharplang/issues/4174)) to make it possible to seal the `ToString()` override in records, so that the base type implementation won't be replaced by a compiler-generated one. There's no guarantee that it will be included in C# 10, but it's a pretty small feature, so I guess it's possible.
 - Entity Framework Core
-  - [dotnet/efcore#11597](https://github.com/dotnet/efcore/issues/11597) addresses the problem of database-generated values with converters. It's been postposed for several releases but hopefully it will be implemented at some point
+  - [dotnet/efcore#11597](https://github.com/dotnet/efcore/issues/11597) addresses the problem of database-generated values with converters. It's been postponed for several releases but hopefully it will be implemented at some point.
   - [dotnet/efcore#10784](https://github.com/dotnet/efcore/issues/10784) will provide a mechanism to set a converter for all properties of a given type; it's in the 6.0 milestone, so unless it's postponed, it should be in the next major release.
 
 In the meantime, feel free to use the code provided in this series!
