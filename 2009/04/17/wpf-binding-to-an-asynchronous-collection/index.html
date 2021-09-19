@@ -12,9 +12,10 @@
  This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
  To illustrate this, let&rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/" />
-<meta property="article:published_time" content="2009-04-17T00:00:00+00:00" />
-<meta property="article:modified_time" content="2009-04-17T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2009-04-17T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2009-04-17T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Binding to an asynchronous collection"/>
@@ -86,13 +87,13 @@ if (!doNotTrack) {
 <p>This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread</p>
 </blockquote>
 <p>To illustrate this, let&rsquo;s take a simple example : a <code>ListBox</code> bound to a collection of strings in the ViewModel :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; _strings = <span style="color:#66d9ef">new</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt;();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; <span style="color:#ae81ff">_</span>strings = <span style="color:#66d9ef">new</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt;();
         <span style="color:#66d9ef">public</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; Strings
         {
-            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _strings; }
+            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>strings; }
             <span style="color:#66d9ef">set</span>
             {
-                _strings = <span style="color:#66d9ef">value</span>;
+                <span style="color:#ae81ff">_</span>strings = <span style="color:#66d9ef">value</span>;
                 OnPropertyChanged(<span style="color:#e6db74">&#34;Strings&#34;</span>);
             }
         }
@@ -144,12 +145,12 @@ if (!doNotTrack) {
         }
     }
 </code></pre></div><p>The only constraint when using this class is that instances of the collection must be created on the UI thread, so that events are raised on that thread.  In the previous example, the only thing to change to make the collection modifiable across threads is the instantiation of the collection in the ViewModel :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; _strings = <span style="color:#66d9ef">new</span> AsyncObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt;();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; <span style="color:#ae81ff">_</span>strings = <span style="color:#66d9ef">new</span> AsyncObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt;();
 </code></pre></div><p>The <code>ListBox</code> can now reflect in real-time the changes made on the collection.  Enjoy ;)</p>
 <p><strong>Update :</strong> I just found a bug in my implementation : in some cases, using <code>Post</code> to raise the event when the collection is modified from the main thread can cause unpredictable behavior. In that case, the event should of course be raised directly on the main thread, after checking that the current <code>SynchronizationContext</code> is the one in which the collection was created. This also made me realize that the <code>AsyncOperation</code> actually doesn&rsquo;t bring any benefit : we can use the <code>SynchronizationContext</code> directly instead. So here&rsquo;s the new implementation :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncObservableCollection</span>&lt;T&gt; : ObservableCollection&lt;T&gt;
     {
-        <span style="color:#66d9ef">private</span> SynchronizationContext _synchronizationContext = SynchronizationContext.Current;
+        <span style="color:#66d9ef">private</span> SynchronizationContext <span style="color:#ae81ff">_</span>synchronizationContext = SynchronizationContext.Current;
 
         <span style="color:#66d9ef">public</span> AsyncObservableCollection()
         {
@@ -162,7 +163,7 @@ if (!doNotTrack) {
 
         <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            <span style="color:#66d9ef">if</span> (SynchronizationContext.Current == _synchronizationContext)
+            <span style="color:#66d9ef">if</span> (SynchronizationContext.Current == <span style="color:#ae81ff">_</span>synchronizationContext)
             {
                 <span style="color:#75715e">// Execute the CollectionChanged event on the current thread
 </span><span style="color:#75715e"></span>                RaiseCollectionChanged(e);
@@ -170,7 +171,7 @@ if (!doNotTrack) {
             <span style="color:#66d9ef">else</span>
             {
                 <span style="color:#75715e">// Raises the CollectionChanged event on the creator thread
-</span><span style="color:#75715e"></span>                _synchronizationContext.Send(RaiseCollectionChanged, e);
+</span><span style="color:#75715e"></span>                <span style="color:#ae81ff">_</span>synchronizationContext.Send(RaiseCollectionChanged, e);
             }
         }
 
@@ -182,7 +183,7 @@ if (!doNotTrack) {
 
         <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            <span style="color:#66d9ef">if</span> (SynchronizationContext.Current == _synchronizationContext)
+            <span style="color:#66d9ef">if</span> (SynchronizationContext.Current == <span style="color:#ae81ff">_</span>synchronizationContext)
             {
                 <span style="color:#75715e">// Execute the PropertyChanged event on the current thread
 </span><span style="color:#75715e"></span>                RaisePropertyChanged(e);
@@ -190,7 +191,7 @@ if (!doNotTrack) {
             <span style="color:#66d9ef">else</span>
             {
                 <span style="color:#75715e">// Raises the PropertyChanged event on the creator thread
-</span><span style="color:#75715e"></span>                _synchronizationContext.Send(RaisePropertyChanged, e);
+</span><span style="color:#75715e"></span>                <span style="color:#ae81ff">_</span>synchronizationContext.Send(RaisePropertyChanged, e);
             }
         }
 

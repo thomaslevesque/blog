@@ -12,9 +12,10 @@
 var query = from ord in db.Orders.Include(&#34;OrderDetails&#34;) where ord.Date &gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
 var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where ord.Date &gt;= DateTime." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2010/10/03/entity-framework-using-include-with-lambda-expressions/" />
-<meta property="article:published_time" content="2010-10-03T00:00:00+00:00" />
-<meta property="article:modified_time" content="2010-10-03T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2010/10/03/entity-framework-using-include-with-lambda-expressions/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2010-10-03T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2010-10-03T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[Entity Framework] Using Include with lambda expressions"/>
@@ -135,12 +136,12 @@ if (!doNotTrack) {
     }
     <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PropertyPathVisitor</span> : ExpressionVisitor
     {
-        <span style="color:#66d9ef">private</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt; _stack;
+        <span style="color:#66d9ef">private</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt; <span style="color:#ae81ff">_</span>stack;
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetPropertyPath(Expression expression)
         {
-            _stack = <span style="color:#66d9ef">new</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt;();
+            <span style="color:#ae81ff">_</span>stack = <span style="color:#66d9ef">new</span> Stack&lt;<span style="color:#66d9ef">string</span>&gt;();
             Visit(expression);
-            <span style="color:#66d9ef">return</span> _stack
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>stack
                 .Aggregate(
                     <span style="color:#66d9ef">new</span> StringBuilder(),
                     (sb, name) =&gt;
@@ -149,8 +150,8 @@ if (!doNotTrack) {
         }
         <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Expression VisitMember(MemberExpression expression)
         {
-            <span style="color:#66d9ef">if</span> (_stack != <span style="color:#66d9ef">null</span>)
-                _stack.Push(expression.Member.Name);
+            <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>stack != <span style="color:#66d9ef">null</span>)
+                <span style="color:#ae81ff">_</span>stack.Push(expression.Member.Name);
             <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">base</span>.VisitMember(expression);
         }
         <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Expression VisitMethodCall(MethodCallExpression expression)

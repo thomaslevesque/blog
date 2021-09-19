@@ -11,9 +11,10 @@
 <meta property="og:description" content="A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
 To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/" />
-<meta property="article:published_time" content="2009-08-04T00:00:00+00:00" />
-<meta property="article:modified_time" content="2009-08-04T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2009-08-04T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2009-08-04T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Automatically sort a GridView (continued)"/>
@@ -379,27 +380,27 @@ if (!doNotTrack) {
 </span><span style="color:#75715e"></span>
         <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SortGlyphAdorner</span> : Adorner
         {
-            <span style="color:#66d9ef">private</span> GridViewColumnHeader _columnHeader;
-            <span style="color:#66d9ef">private</span> ListSortDirection _direction;
-            <span style="color:#66d9ef">private</span> ImageSource _sortGlyph;
+            <span style="color:#66d9ef">private</span> GridViewColumnHeader <span style="color:#ae81ff">_</span>columnHeader;
+            <span style="color:#66d9ef">private</span> ListSortDirection <span style="color:#ae81ff">_d</span>irection;
+            <span style="color:#66d9ef">private</span> ImageSource <span style="color:#ae81ff">_</span>sortGlyph;
 
             <span style="color:#66d9ef">public</span> SortGlyphAdorner(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
                 : <span style="color:#66d9ef">base</span>(columnHeader)
             {
-                _columnHeader = columnHeader;
-                _direction = direction;
-                _sortGlyph = sortGlyph;
+                <span style="color:#ae81ff">_</span>columnHeader = columnHeader;
+                <span style="color:#ae81ff">_d</span>irection = direction;
+                <span style="color:#ae81ff">_</span>sortGlyph = sortGlyph;
             }
 
             <span style="color:#66d9ef">private</span> Geometry GetDefaultGlyph()
             {
-                <span style="color:#66d9ef">double</span> x1 = _columnHeader.ActualWidth - <span style="color:#ae81ff">13</span>;
+                <span style="color:#66d9ef">double</span> x1 = <span style="color:#ae81ff">_</span>columnHeader.ActualWidth - <span style="color:#ae81ff">13</span>;
                 <span style="color:#66d9ef">double</span> x2 = x1 + <span style="color:#ae81ff">10</span>;
                 <span style="color:#66d9ef">double</span> x3 = x1 + <span style="color:#ae81ff">5</span>;
-                <span style="color:#66d9ef">double</span> y1 = _columnHeader.ActualHeight / <span style="color:#ae81ff">2</span> - <span style="color:#ae81ff">3</span>;
+                <span style="color:#66d9ef">double</span> y1 = <span style="color:#ae81ff">_</span>columnHeader.ActualHeight / <span style="color:#ae81ff">2</span> - <span style="color:#ae81ff">3</span>;
                 <span style="color:#66d9ef">double</span> y2 = y1 + <span style="color:#ae81ff">5</span>;
 
-                <span style="color:#66d9ef">if</span> (_direction == ListSortDirection.Ascending)
+                <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_d</span>irection == ListSortDirection.Ascending)
                 {
                     <span style="color:#66d9ef">double</span> tmp = y1;
                     y1 = y2;
@@ -426,12 +427,12 @@ if (!doNotTrack) {
             {
                 <span style="color:#66d9ef">base</span>.OnRender(drawingContext);
 
-                <span style="color:#66d9ef">if</span> (_sortGlyph != <span style="color:#66d9ef">null</span>)
+                <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>sortGlyph != <span style="color:#66d9ef">null</span>)
                 {
-                    <span style="color:#66d9ef">double</span> x = _columnHeader.ActualWidth - <span style="color:#ae81ff">13</span>;
-                    <span style="color:#66d9ef">double</span> y = _columnHeader.ActualHeight / <span style="color:#ae81ff">2</span> - <span style="color:#ae81ff">5</span>;
+                    <span style="color:#66d9ef">double</span> x = <span style="color:#ae81ff">_</span>columnHeader.ActualWidth - <span style="color:#ae81ff">13</span>;
+                    <span style="color:#66d9ef">double</span> y = <span style="color:#ae81ff">_</span>columnHeader.ActualHeight / <span style="color:#ae81ff">2</span> - <span style="color:#ae81ff">5</span>;
                     Rect rect = <span style="color:#66d9ef">new</span> Rect(x, y, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>);
-                    drawingContext.DrawImage(_sortGlyph, rect);
+                    drawingContext.DrawImage(<span style="color:#ae81ff">_</span>sortGlyph, rect);
                 }
                 <span style="color:#66d9ef">else</span>
                 {

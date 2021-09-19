@@ -11,9 +11,10 @@
 <meta property="og:description" content="This is the second post in a series of 2:
  Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&rsquo;s TypeNameHandling feature. In this post, I&rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB ." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/" />
-<meta property="article:published_time" content="2019-10-15T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-10-15T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-10-15T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-10-15T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Handling type hierarchies in Cosmos DB (part 2)"/>
@@ -180,11 +181,11 @@ if (!doNotTrack) {
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Encoding DefaultEncoding = <span style="color:#66d9ef">new</span> UTF8Encoding(<span style="color:#66d9ef">false</span>, <span style="color:#66d9ef">true</span>);
 
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> JsonSerializer _serializer;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> JsonSerializer <span style="color:#ae81ff">_</span>serializer;
 
     <span style="color:#66d9ef">public</span> NewtonsoftJsonCosmosSerializer(JsonSerializerSettings settings)
     {
-        _serializer = JsonSerializer.Create(settings);
+        <span style="color:#ae81ff">_</span>serializer = JsonSerializer.Create(settings);
     }
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> T FromStream&lt;T&gt;(Stream stream)
@@ -198,7 +199,7 @@ if (!doNotTrack) {
         {
             <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> jsonTextReader = <span style="color:#66d9ef">new</span> JsonTextReader(sr))
             {
-                <span style="color:#66d9ef">return</span> _serializer.Deserialize&lt;T&gt;(jsonTextReader);
+                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>serializer.Deserialize&lt;T&gt;(jsonTextReader);
             }
         }
     }
@@ -210,8 +211,8 @@ if (!doNotTrack) {
         {
             <span style="color:#66d9ef">using</span> (JsonWriter writer = <span style="color:#66d9ef">new</span> JsonTextWriter(streamWriter))
             {
-                writer.Formatting = _serializer.Formatting;
-                _serializer.Serialize(writer, input);
+                writer.Formatting = <span style="color:#ae81ff">_</span>serializer.Formatting;
+                <span style="color:#ae81ff">_</span>serializer.Serialize(writer, input);
                 writer.Flush();
                 streamWriter.Flush();
             }
@@ -248,7 +249,7 @@ if (!doNotTrack) {
                 <span style="color:#e6db74">$&#34;File {file.Name} (id {file.Id}) has a size of {file.Size} bytes&#34;</span>,
             FolderItem folder =&gt;
                 <span style="color:#e6db74">$&#34;Folder {folder.Name} (id {folder.Id}) has {folder.ChildrenCount} children&#34;</span>,
-            _ =&gt;
+            <span style="color:#ae81ff">_</span> =&gt;
                 <span style="color:#e6db74">$&#34;Item {item.Name} (id {item.Id}) is of type {item.GetType()}... I don&#39;t know what that is.&#34;</span>
         };
         Console.WriteLine(description);

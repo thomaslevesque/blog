@@ -11,9 +11,10 @@
 <meta property="og:description" content="Last week at Microsoft Build, there have been a lot of exciting annoucements! .NET 5, Blazor WebAssembly, .NET MAUI, WinUI… But the thing I&rsquo;m most eager to get my hands on is C# 9, which introduces many interesting new features, so let&rsquo;s take a quick tour! There&rsquo;s a long list, so I won&rsquo;t cover all of them here, but I will highlight the ones I find the most interesting.
 Note: Unfortunately the new C# features aren&rsquo;t supported yet in the latest SDK preview, so we can&rsquo;t test them in actual projects." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2020/05/25/exciting-new-features-in-csharp-9/" />
-<meta property="article:published_time" content="2020-05-25T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-06-17T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2020/05/25/exciting-new-features-in-csharp-9/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-25T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-06-17T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Exciting new features in C# 9"/>
@@ -85,7 +86,7 @@ if (!doNotTrack) {
 <p><em>Update 2020/06/17: A few of the features mentioned in this post are now available in the .NET 5 preview 5 SDK.</em></p>
 <h2 id="target-typed-new">Target typed <code>new</code></h2>
 <p>In C# 9, it will be possible to omit the type in object creation expressions, if the type can be inferred from the context, making code terser and less repetitive:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; _properties = <span style="color:#66d9ef">new</span>();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; <span style="color:#ae81ff">_</span>properties = <span style="color:#66d9ef">new</span>();
 </code></pre></div><h2 id="parameter-null-checking">Parameter null-checking</h2>
 <p>This feature introduces a simple syntax to automate null checks on method parameters. For instance, this code :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SayHello(<span style="color:#66d9ef">string</span> name)
@@ -106,7 +107,7 @@ if (!doNotTrack) {
 {
     &lt; <span style="color:#ae81ff">10</span> =&gt; <span style="color:#e6db74">&#34;small&#34;</span>,
     &gt;= <span style="color:#ae81ff">10</span> and &lt; <span style="color:#ae81ff">100</span> =&gt; <span style="color:#e6db74">&#34;medium&#34;</span>,
-    _ =&gt; <span style="color:#e6db74">&#34;large&#34;</span>
+    <span style="color:#ae81ff">_</span> =&gt; <span style="color:#e6db74">&#34;large&#34;</span>
 }
 </code></pre></div><h2 id="records-and-with-expressions">Records and <code>with</code> expressions</h2>
 <p>This is the big one, in my opinion. Creating simple data types in C# have always been more painful than it should be; you have to create a class, declare properties, add a constructor if you want your type to be immutable, override <code>Equals</code> and <code>GetHashCode</code>, maybe add a deconstructor, etc. C# 7 tuples made this a little easier, but still not ideal since a tuple is anonymous. The new Record feature in C# 9 makes things <em>much</em> easier!</p>

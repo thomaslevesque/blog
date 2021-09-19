@@ -11,9 +11,10 @@
 <meta property="og:description" content="A few days ago, I discovered a little gem: Sprache. The name means &ldquo;language&rdquo; in German. It&rsquo;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&rsquo;ll see in a minute, Sprache makes it very simple.
 Text parsing Parsing text is a common task, but it can be tedious and error-prone." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2017/02/23/easy-text-parsing-in-c-with-sprache/" />
-<meta property="article:published_time" content="2017-02-23T00:00:00+00:00" />
-<meta property="article:modified_time" content="2017-02-23T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2017/02/23/easy-text-parsing-in-c-with-sprache/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-02-23T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2017-02-23T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Easy text parsing in C# with Sprache"/>
@@ -173,7 +174,7 @@ quoted-pair    = &quot;\&quot; CHAR
         Parse.AnyChar.Except(DoubleQuote);
 
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">char</span>&gt; QuotedPair =
-        <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> Backslash
+        <span style="color:#66d9ef">from</span> <span style="color:#ae81ff">_</span> <span style="color:#66d9ef">in</span> Backslash
         <span style="color:#66d9ef">from</span> c <span style="color:#66d9ef">in</span> Parse.AnyChar
         <span style="color:#66d9ef">select</span> c;
 </code></pre></div><p>The <code>QdText</code> rule doesn&rsquo;t require much explanation, but <code>QuotedPair</code> is more interesting&hellip; As you can see, it looks like a Linq query: this is Sprache&rsquo;s way of specifying a sequence. This particular query means: <em>match a backslash (named <code>_</code> because we ignore it) followed by any character named <code>c</code>, and return just <code>c</code></em> (quoted pairs are not escape sequences in the same sense as in C, Java or C#, so <code>&quot;\n&quot;</code> isn&rsquo;t interpreted as &ldquo;new line&rdquo; but just as <code>&quot;n&quot;</code>).</p>
@@ -211,7 +212,7 @@ quoted-pair    = &quot;\&quot; CHAR
 
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;Parameter&gt; Parameter =
         <span style="color:#66d9ef">from</span> name <span style="color:#66d9ef">in</span> Token
-        <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> EqualSign
+        <span style="color:#66d9ef">from</span> <span style="color:#ae81ff">_</span> <span style="color:#66d9ef">in</span> EqualSign
         <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> ParameterValue
         <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">new</span> Parameter(name, <span style="color:#66d9ef">value</span>);
 </code></pre></div><p>Here we match a token (the parameter name), followed by the <code>'='</code> sign, followed by a parameter value, and we combine the name and value into a <code>Parameter</code> instance.</p>
@@ -228,7 +229,7 @@ quoted-pair    = &quot;\&quot; CHAR
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;Parameter[]&gt; Parameters =
         <span style="color:#66d9ef">from</span> first <span style="color:#66d9ef">in</span> Parameter.Once()
         <span style="color:#66d9ef">from</span> others <span style="color:#66d9ef">in</span> (
-            <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> ListDelimiter
+            <span style="color:#66d9ef">from</span> <span style="color:#ae81ff">_</span> <span style="color:#66d9ef">in</span> ListDelimiter
             <span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> Parameter
             <span style="color:#66d9ef">select</span> p).Many()
         <span style="color:#66d9ef">select</span> first.Concat(others).ToArray();
@@ -251,7 +252,7 @@ quoted-pair    = &quot;\&quot; CHAR
 </code></pre></div><p>And finally we can write the top-level rule:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;Challenge&gt; Challenge =
         <span style="color:#66d9ef">from</span> scheme <span style="color:#66d9ef">in</span> Token
-        <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> Parse.WhiteSpace.AtLeastOnce()
+        <span style="color:#66d9ef">from</span> <span style="color:#ae81ff">_</span> <span style="color:#66d9ef">in</span> Parse.WhiteSpace.AtLeastOnce()
         <span style="color:#66d9ef">from</span> parameters <span style="color:#66d9ef">in</span> Parameters
         <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">new</span> Challenge(scheme, parameters);
 </code></pre></div><p>Note that I made this rule public, unlike the others: it&rsquo;s the only one we need to expose.</p>

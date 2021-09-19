@@ -10,9 +10,10 @@
 	<meta property="og:title" content="Using multiple cancellation sources with CreateLinkedTokenSource" />
 <meta property="og:description" content="Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/" />
-<meta property="article:published_time" content="2015-12-31T00:00:00+00:00" />
-<meta property="article:modified_time" content="2015-12-31T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-12-31T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2015-12-31T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Using multiple cancellation sources with CreateLinkedTokenSource"/>
@@ -78,16 +79,16 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-12-31T00:00:00Z">December 31, 2015</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, <a href="https://msdn.microsoft.com/en-us/library/dd997364%28v=vs.110%29.aspx">a standardized approach to cancellation</a> has been introduced : cancellation tokens. The basic idea is that you create a <code>CancellationTokenSource</code> that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel. That method will then pass it to the other methods it calls, if they can be canceled, and/or regularly check if cancellation was requested. Upon cancellation, the method will typically throw an <code>OperationCanceledException</code>. Quick and dirty example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IBusinessService _businessService;
-<span style="color:#66d9ef">private</span> CancellationTokenSource _cancellationSource;
-<span style="color:#66d9ef">private</span> Task _asyncOperation;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IBusinessService <span style="color:#ae81ff">_</span>businessService;
+<span style="color:#66d9ef">private</span> CancellationTokenSource <span style="color:#ae81ff">_</span>cancellationSource;
+<span style="color:#66d9ef">private</span> Task <span style="color:#ae81ff">_</span>asyncOperation;
 
 <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> StartAsyncOperation()
 {
-    <span style="color:#66d9ef">if</span> (_asyncOperation != <span style="color:#66d9ef">null</span>)
+    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>asyncOperation != <span style="color:#66d9ef">null</span>)
         <span style="color:#66d9ef">return</span>;
-    <span style="color:#66d9ef">var</span> _cancellationSource = <span style="color:#66d9ef">new</span> CancellationTokenSource();
-    _asyncOperation = _businessService.DoSomethingAsync(_cancellationSource.Token);
+    <span style="color:#66d9ef">var</span> <span style="color:#ae81ff">_</span>cancellationSource = <span style="color:#66d9ef">new</span> CancellationTokenSource();
+    <span style="color:#ae81ff">_</span>asyncOperation = <span style="color:#ae81ff">_</span>businessService.DoSomethingAsync(<span style="color:#ae81ff">_</span>cancellationSource.Token);
 }
 
 <span style="color:#75715e">// async void is bad; like I said, this is a quick and dirty example
@@ -95,9 +96,9 @@ if (!doNotTrack) {
 {
     <span style="color:#66d9ef">try</span>
     {
-        _cancellationSource.Cancel();
+        <span style="color:#ae81ff">_</span>cancellationSource.Cancel();
         <span style="color:#75715e">// wait for the operation to finish
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">await</span> _asyncOperation;
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_</span>asyncOperation;
     }
     <span style="color:#66d9ef">catch</span> (OperationCanceledException)
     {
@@ -109,9 +110,9 @@ if (!doNotTrack) {
 </span><span style="color:#75715e"></span>    }
     <span style="color:#66d9ef">finally</span>
     {
-        _asyncOperation = <span style="color:#66d9ef">null</span>;
-        _cancellationSource.Dispose();
-        _cancellationSource = <span style="color:#66d9ef">null</span>;
+        <span style="color:#ae81ff">_</span>asyncOperation = <span style="color:#66d9ef">null</span>;
+        <span style="color:#ae81ff">_</span>cancellationSource.Dispose();
+        <span style="color:#ae81ff">_</span>cancellationSource = <span style="color:#66d9ef">null</span>;
     }
 
 ...

@@ -10,9 +10,10 @@
 	<meta property="og:title" content="[C#] Parent/child relationship and XML serialization" />
 <meta property="og:description" content="Today I&rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent)." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2009/06/12/c-parentchild-relationship-and-xml-serialization/" />
-<meta property="article:published_time" content="2009-06-12T00:00:00+00:00" />
-<meta property="article:modified_time" content="2009-06-12T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2009/06/12/c-parentchild-relationship-and-xml-serialization/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2009-06-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2009-06-12T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[C#] Parent/child relationship and XML serialization"/>
@@ -141,39 +142,39 @@ if (!doNotTrack) {
         <span style="color:#66d9ef">where</span> P : <span style="color:#66d9ef">class</span>
         <span style="color:#a6e22e">where</span> T : IChildItem&lt;P&gt;
     {
-        <span style="color:#66d9ef">private</span> P _parent;
-        <span style="color:#66d9ef">private</span> IList&lt;T&gt; _collection;
+        <span style="color:#66d9ef">private</span> P <span style="color:#ae81ff">_</span>parent;
+        <span style="color:#66d9ef">private</span> IList&lt;T&gt; <span style="color:#ae81ff">_</span>collection;
 
         <span style="color:#66d9ef">public</span> ChildItemCollection(P parent)
         {
-            <span style="color:#66d9ef">this</span>._parent = parent;
-            <span style="color:#66d9ef">this</span>._collection = <span style="color:#66d9ef">new</span> List&lt;T&gt;();
+            <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_</span>parent = parent;
+            <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_</span>collection = <span style="color:#66d9ef">new</span> List&lt;T&gt;();
         }
 
         <span style="color:#66d9ef">public</span> ChildItemCollection(P parent, IList&lt;T&gt; collection)
         {
-            <span style="color:#66d9ef">this</span>._parent = parent;
-            <span style="color:#66d9ef">this</span>._collection = collection;
+            <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_</span>parent = parent;
+            <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_</span>collection = collection;
         }
 
         <span style="color:#75715e">#region IList&lt;T&gt; Members
 </span><span style="color:#75715e"></span>
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> IndexOf(T item)
         {
-            <span style="color:#66d9ef">return</span> _collection.IndexOf(item);
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.IndexOf(item);
         }
 
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Insert(<span style="color:#66d9ef">int</span> index, T item)
         {
             <span style="color:#66d9ef">if</span> (item != <span style="color:#66d9ef">null</span>)
-                item.Parent = _parent;
-            _collection.Insert(index, item);
+                item.Parent = <span style="color:#ae81ff">_</span>parent;
+            <span style="color:#ae81ff">_</span>collection.Insert(index, item);
         }
 
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> RemoveAt(<span style="color:#66d9ef">int</span> index)
         {
-            T oldItem = _collection[index];
-            _collection.RemoveAt(index);
+            T oldItem = <span style="color:#ae81ff">_</span>collection[index];
+            <span style="color:#ae81ff">_</span>collection.RemoveAt(index);
             <span style="color:#66d9ef">if</span> (oldItem != <span style="color:#66d9ef">null</span>)
                 oldItem.Parent = <span style="color:#66d9ef">null</span>;
         }
@@ -182,14 +183,14 @@ if (!doNotTrack) {
         {
             <span style="color:#66d9ef">get</span>
             {
-                <span style="color:#66d9ef">return</span> _collection[index];
+                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection[index];
             }
             <span style="color:#66d9ef">set</span>
             {
-                T oldItem = _collection[index];
+                T oldItem = <span style="color:#ae81ff">_</span>collection[index];
                 <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> != <span style="color:#66d9ef">null</span>)
-                    <span style="color:#66d9ef">value</span>.Parent = _parent;
-                _collection[index] = <span style="color:#66d9ef">value</span>;
+                    <span style="color:#66d9ef">value</span>.Parent = <span style="color:#ae81ff">_</span>parent;
+                <span style="color:#ae81ff">_</span>collection[index] = <span style="color:#66d9ef">value</span>;
                 <span style="color:#66d9ef">if</span> (oldItem != <span style="color:#66d9ef">null</span>)
                     oldItem.Parent = <span style="color:#66d9ef">null</span>;
             }
@@ -202,43 +203,43 @@ if (!doNotTrack) {
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Add(T item)
         {
             <span style="color:#66d9ef">if</span> (item != <span style="color:#66d9ef">null</span>)
-                item.Parent = _parent;
-            _collection.Add(item);
+                item.Parent = <span style="color:#ae81ff">_</span>parent;
+            <span style="color:#ae81ff">_</span>collection.Add(item);
         }
 
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Clear()
         {
-            <span style="color:#66d9ef">foreach</span> (T item <span style="color:#66d9ef">in</span> _collection)
+            <span style="color:#66d9ef">foreach</span> (T item <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">_</span>collection)
             {
                 <span style="color:#66d9ef">if</span> (item != <span style="color:#66d9ef">null</span>)
                     item.Parent = <span style="color:#66d9ef">null</span>;
             }
-            _collection.Clear();
+            <span style="color:#ae81ff">_</span>collection.Clear();
         }
 
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> Contains(T item)
         {
-            <span style="color:#66d9ef">return</span> _collection.Contains(item);
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.Contains(item);
         }
 
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> CopyTo(T[] array, <span style="color:#66d9ef">int</span> arrayIndex)
         {
-            _collection.CopyTo(array, arrayIndex);
+            <span style="color:#ae81ff">_</span>collection.CopyTo(array, arrayIndex);
         }
 
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Count
         {
-            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _collection.Count; }
+            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.Count; }
         }
 
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsReadOnly
         {
-            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _collection.IsReadOnly; }
+            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.IsReadOnly; }
         }
 
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> Remove(T item)
         {
-            <span style="color:#66d9ef">bool</span> b = _collection.Remove(item);
+            <span style="color:#66d9ef">bool</span> b = <span style="color:#ae81ff">_</span>collection.Remove(item);
             <span style="color:#66d9ef">if</span> (item != <span style="color:#66d9ef">null</span>)
                 item.Parent = <span style="color:#66d9ef">null</span>;
             <span style="color:#66d9ef">return</span> b;
@@ -250,7 +251,7 @@ if (!doNotTrack) {
 </span><span style="color:#75715e"></span>
         <span style="color:#66d9ef">public</span> IEnumerator&lt;T&gt; GetEnumerator()
         {
-            <span style="color:#66d9ef">return</span> _collection.GetEnumerator();
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.GetEnumerator();
         }
 
         <span style="color:#75715e">#endregion
@@ -259,7 +260,7 @@ if (!doNotTrack) {
 </span><span style="color:#75715e"></span>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            <span style="color:#66d9ef">return</span> (_collection <span style="color:#66d9ef">as</span> System.Collections.IEnumerable).GetEnumerator();
+            <span style="color:#66d9ef">return</span> (<span style="color:#ae81ff">_</span>collection <span style="color:#66d9ef">as</span> System.Collections.IEnumerable).GetEnumerator();
         }
 
         <span style="color:#75715e">#endregion

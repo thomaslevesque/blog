@@ -11,9 +11,10 @@
 <meta property="og:description" content="One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
 string text = $&#34;{p.Name} was born on {p.DateOfBirth:D}&#34;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2015/02/24/customizing-string-interpolation-in-c-6/" />
-<meta property="article:published_time" content="2015-02-24T00:00:00+00:00" />
-<meta property="article:modified_time" content="2015-02-24T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2015/02/24/customizing-string-interpolation-in-c-6/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-02-24T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2015-02-24T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Customizing string interpolation in C# 6"/>
@@ -101,12 +102,12 @@ if (!doNotTrack) {
 <p>Here’s a more advanced example. String interpolation is a convenient way to build URLs, but if you include arbitrary strings in a URL, you need to be careful to URL-encode them. A custom string interpolator can do that for you; you just need to create a custom <code>IFormatProvider</code> that will take care of encoding the values. The implementation was not obvious at first, but after some trial and error I came up with this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UrlFormatProvider</span> : IFormatProvider
 {
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UrlFormatter _formatter = <span style="color:#66d9ef">new</span> UrlFormatter();
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UrlFormatter <span style="color:#ae81ff">_f</span>ormatter = <span style="color:#66d9ef">new</span> UrlFormatter();
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> GetFormat(Type formatType)
     {
         <span style="color:#66d9ef">if</span> (formatType == <span style="color:#66d9ef">typeof</span>(ICustomFormatter))
-            <span style="color:#66d9ef">return</span> _formatter;
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_f</span>ormatter;
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
     }
 
@@ -145,12 +146,12 @@ if (!doNotTrack) {
 <p>We can use the same approach as for URLs and create a <code>SqlFormatProvider</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SqlFormatProvider</span> : IFormatProvider
 {
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SqlFormatter _formatter = <span style="color:#66d9ef">new</span> SqlFormatter();
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SqlFormatter <span style="color:#ae81ff">_f</span>ormatter = <span style="color:#66d9ef">new</span> SqlFormatter();
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> GetFormat(Type formatType)
     {
         <span style="color:#66d9ef">if</span> (formatType == <span style="color:#66d9ef">typeof</span>(ICustomFormatter))
-            <span style="color:#66d9ef">return</span> _formatter;
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_f</span>ormatter;
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
     }
 

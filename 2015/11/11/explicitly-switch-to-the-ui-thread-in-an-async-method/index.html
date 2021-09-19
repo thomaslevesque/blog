@@ -10,9 +10,10 @@
 	<meta property="og:title" content="Explicitly switch to the UI thread in an async method" />
 <meta property="og:description" content="Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT)." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/" />
-<meta property="article:published_time" content="2015-11-11T00:00:00+00:00" />
-<meta property="article:modified_time" content="2015-11-11T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-11-11T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2015-11-11T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Explicitly switch to the UI thread in an async method"/>
@@ -124,17 +125,17 @@ if (!doNotTrack) {
 <p>So, we need to create an awaiter that captures a synchronization context, and causes the awaiting method to resume on this synchronization context. Here’s how it looks like:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">SynchronizationContextAwaiter</span> : INotifyCompletion
 {
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> SendOrPostCallback _postCallback = state =&gt; ((Action)state)();
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> SendOrPostCallback <span style="color:#ae81ff">_</span>postCallback = state =&gt; ((Action)state)();
 
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SynchronizationContext _context;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SynchronizationContext <span style="color:#ae81ff">_</span>context;
     <span style="color:#66d9ef">public</span> SynchronizationContextAwaiter(SynchronizationContext context)
     {
-        _context = context;
+        <span style="color:#ae81ff">_</span>context = context;
     }
 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsCompleted =&gt; _context == SynchronizationContext.Current;
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsCompleted =&gt; <span style="color:#ae81ff">_</span>context == SynchronizationContext.Current;
 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnCompleted(Action continuation) =&gt; _context.Post(_postCallback, continuation);
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnCompleted(Action continuation) =&gt; <span style="color:#ae81ff">_</span>context.Post(<span style="color:#ae81ff">_</span>postCallback, continuation);
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> GetResult() { }
 }

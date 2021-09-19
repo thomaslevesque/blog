@@ -11,9 +11,10 @@
 <meta property="og:description" content="Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&rsquo;t hesitate to let me know in the comments!
 Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&rsquo;s a very different world." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/" />
-<meta property="article:published_time" content="2019-07-15T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-07-15T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-07-15T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-07-15T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Using TypeScript to write Cosmos DB stored procedures with async/await"/>
@@ -99,7 +100,7 @@ if (!doNotTrack) {
 
 <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">queryDocuments</span>(<span style="color:#a6e22e">sqlQuery</span>, <span style="color:#a6e22e">options</span>) {
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
-        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">getSelfLink</span>(), <span style="color:#a6e22e">sqlQuery</span>, <span style="color:#a6e22e">options</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">__</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#ae81ff">__</span>.<span style="color:#a6e22e">getSelfLink</span>(), <span style="color:#a6e22e">sqlQuery</span>, <span style="color:#a6e22e">options</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
             <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">err</span>);
             <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">resolve</span>({ <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">opts</span> });
         });
@@ -109,7 +110,7 @@ if (!doNotTrack) {
 
 <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>, <span style="color:#a6e22e">options</span>) {
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
-        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">_self</span>, <span style="color:#a6e22e">doc</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">__</span>.<span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>.<span style="color:#ae81ff">_</span><span style="color:#a6e22e">self</span>, <span style="color:#a6e22e">doc</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
             <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">err</span>);
             <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">resolve</span>({ <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">opts</span> });
         });
@@ -204,7 +205,7 @@ if (!doNotTrack) {
         <span style="color:#a6e22e">func</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AsyncCosmosContext</span>())
             .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">result</span> =&gt; {
                 <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">setBody</span>) {
-                    <span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">setBody</span>(<span style="color:#a6e22e">result</span>);
+                    <span style="color:#ae81ff">__</span>.<span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">setBody</span>(<span style="color:#a6e22e">result</span>);
                 }
             })
             .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">err</span> =&gt; {

@@ -11,9 +11,10 @@
 <meta property="og:description" content="I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
 A bit of background As you may already know, I&rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/" />
-<meta property="article:published_time" content="2018-03-30T00:00:00+00:00" />
-<meta property="article:modified_time" content="2018-03-30T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-03-30T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2018-03-30T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Writing a GitHub Webhook as an Azure Function"/>
@@ -172,14 +173,14 @@ if (!doNotTrack) {
 <p>Once you have the private key as an <code>RSAParameters</code> object, you can generate a JWT like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetTokenForApplication()
 {
-    <span style="color:#66d9ef">var</span> key = <span style="color:#66d9ef">new</span> RsaSecurityKey(_settings.RsaParameters);
+    <span style="color:#66d9ef">var</span> key = <span style="color:#66d9ef">new</span> RsaSecurityKey(<span style="color:#ae81ff">_</span>settings.RsaParameters);
     <span style="color:#66d9ef">var</span> creds = <span style="color:#66d9ef">new</span> SigningCredentials(key, SecurityAlgorithms.RsaSha256);
     <span style="color:#66d9ef">var</span> now = DateTime.UtcNow;
     <span style="color:#66d9ef">var</span> token = <span style="color:#66d9ef">new</span> JwtSecurityToken(claims: <span style="color:#66d9ef">new</span>[]
         {
             <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;iat&#34;</span>, now.ToUnixTimeStamp().ToString(), ClaimValueTypes.Integer),
             <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;exp&#34;</span>, now.AddMinutes(<span style="color:#ae81ff">10</span>).ToUnixTimeStamp().ToString(), ClaimValueTypes.Integer),
-            <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;iss&#34;</span>, _settings.AppId)
+            <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;iss&#34;</span>, <span style="color:#ae81ff">_</span>settings.AppId)
         },
         signingCredentials: creds);
 

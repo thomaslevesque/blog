@@ -11,9 +11,10 @@
 <meta property="og:description" content="The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
 It is generally agreed that this should be avoided; I won&rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/" />
-<meta property="article:published_time" content="2020-03-18T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-03-18T00:00:00+00:00" />
+<meta property="og:url" content="https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-03-18T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-03-18T00:00:00&#43;00:00" />
+
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Lazily resolving services to fix circular dependencies in .NET Core"/>
@@ -101,34 +102,34 @@ if (!doNotTrack) {
 <p>One way to do that is to inject the <code>IServiceProvider</code> into your class, and use <code>services.GetRequiredService&lt;T&gt;()</code> when you need to use <code>T</code>. For instance, the <code>C</code> class I mentioned earlier might initially look like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
 {
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IA _a;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IA <span style="color:#ae81ff">_</span>a;
 
     <span style="color:#66d9ef">public</span> C(IA a)
     {
-        _a = a;
+        <span style="color:#ae81ff">_</span>a = a;
     }
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Bar()
     {
         ...
-        _a.Foo()
+        <span style="color:#ae81ff">_</span>a.Foo()
         ...
     }
 }
 </code></pre></div><p>To avoid the dependency cycle, you could rewrite it like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
 {
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider _services;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>services;
 
     <span style="color:#66d9ef">public</span> C(IServiceProvider services)
     {
-        _services = services;
+        <span style="color:#ae81ff">_</span>services = services;
     }
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Bar()
     {
         ...
-        <span style="color:#66d9ef">var</span> a = _services.GetRequiredService&lt;IA&gt;();
+        <span style="color:#66d9ef">var</span> a = <span style="color:#ae81ff">_</span>services.GetRequiredService&lt;IA&gt;();
         a.Foo();
         ...
     }
@@ -161,17 +162,17 @@ if (!doNotTrack) {
 <p>In the class that depends on <code>IA</code>, inject <code>Lazy&lt;IA&gt;</code> instead. When you need to use <code>IA</code>, just access the lazy&rsquo;s value:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
 {
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Lazy&lt;IA&gt; _a;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Lazy&lt;IA&gt; <span style="color:#ae81ff">_</span>a;
 
     <span style="color:#66d9ef">public</span> C(Lazy&lt;IA&gt; a)
     {
-        _a = a;
+        <span style="color:#ae81ff">_</span>a = a;
     }
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Bar()
     {
         ...
-        _a.Value.Foo();
+        <span style="color:#ae81ff">_</span>a.Value.Foo();
         ...
     }
 }
