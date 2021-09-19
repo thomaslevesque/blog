@@ -17,6 +17,9 @@ categories:
   - ASP.NET Core
 ---
 
+***Update 2021/09/19:** If you're using the newer Microsoft.Identity.Web library, you don't have anything to do to handle this, as it's already handled by the library. This article only applies if you're using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!*
+
+<hr/>
 
 If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a "wildcard" tenant id such as `organizations` or `common` in the authority URL:
 
