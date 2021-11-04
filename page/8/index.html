@@ -73,6 +73,21 @@ if (!doNotTrack) {
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/2014/07/30/a-review-of-ndepend/" rel="bookmark">
+			A review of NDepend
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2014-07-30T00:00:00Z">July 30, 2014</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.
+NDepend is a static analysis tool for .NET that checks your code base against a large set of rules that fall in various categories, such as code quality, object-oriented design, architecture, naming conventions, etc. All of these rules are completely customizable.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/" rel="bookmark">
 			[WPF] Declare global hotkeys in XAML with NHotkey
 			</a>
@@ -201,21 +216,6 @@ The SearchBox control was introduced in Windows 8.1 to enable search scenarios f
 		Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
 It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/" rel="bookmark">
-			Using C# 5 caller info attributes when targeting earlier versions of the .NET framework
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2012-06-13T00:00:00Z">June 13, 2012</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Caller info attributes are one of the new features of C# 5. They&rsquo;re attributes applied to optional method parameters that enable you to pass caller information implicitly to a method. I&rsquo;m not sure that description is very clear, so an example will help you understand:
-static void Log( string message, [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null, [CallerLineNumber] int lineNumber = 0) { Console.WriteLine( &#34;[{0:g} - {1} - {2} - line {3}] {4}&#34;, DateTime.
-	</div>
 </article>
 </main>
 
@@ -253,11 +253,11 @@ static void Log( string message, [CallerMemberName] string memberName = null, [C
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">Using C# 9 records as strongly-typed ids</a></li>
 		</ul>
 	</div>
 </div>

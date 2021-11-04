@@ -2,13 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://thomaslevesque.com/2021/11/04/a-quick-review-of-csharp-10-new-language-features/</loc>
+    <lastmod>2021-11-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/c#/</loc>
+    <lastmod>2021-11-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/c#-10/</loc>
+    <lastmod>2021-11-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/features/</loc>
+    <lastmod>2021-11-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/language/</loc>
+    <lastmod>2021-11-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/posts/</loc>
+    <lastmod>2021-11-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/</loc>
+    <lastmod>2021-11-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/</loc>
+    <lastmod>2021-11-04T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://thomaslevesque.com/tags/c#-9/</loc>
     <lastmod>2021-03-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/</loc>
-    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/posts/</loc>
     <lastmod>2021-03-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/records/</loc>
@@ -24,12 +45,6 @@
     <lastmod>2021-03-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/strongly-typed-ids/</loc>
-    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/</loc>
-    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/</loc>
     <lastmod>2021-03-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/</loc>
@@ -66,9 +81,6 @@
     <lastmod>2020-09-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/</loc>
-    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/c#/</loc>
     <lastmod>2020-09-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/castle/</loc>
@@ -879,9 +891,6 @@
     <lastmod>2012-06-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/edit-and-continue/</loc>
-    <lastmod>2012-06-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/features/</loc>
     <lastmod>2012-06-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/lambda/</loc>
