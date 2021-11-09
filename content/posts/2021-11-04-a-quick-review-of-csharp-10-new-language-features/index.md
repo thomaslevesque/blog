@@ -273,7 +273,7 @@ Currently, when deconstructing a tuple or record (or any type with an appropriat
 
 ```csharp
 var p = new Point(10, 20);
-(int x1, int y2) = p; // OK
+(int x1, int y1) = p; // OK
 
 int x2;
 int y2;
@@ -285,7 +285,7 @@ int x3;
 
 ## Other features
 
-There are a few other new features in C# 10, but I won't present them in detail here, because they're either anecdotical or pretty obscure for the average developer. Here's a quick rundown.
+There are a few other new features in C# 10, but I won't present them in detail here, because they're either anecdotal or pretty obscure for the average developer. Here's a quick rundown.
 
 ### Sealed record ToString
 
