@@ -227,7 +227,7 @@ global <span style="color:#66d9ef">using</span> System.Reflection;
 <p>📄 <a href="https://github.com/dotnet/csharplang/issues/125">Proposal</a></p>
 <p>Currently, when deconstructing a tuple or record (or any type with an appropriate <code>Deconstruct</code> method), we can to assign the result either to new variables or existing ones, but not a mix of both. C# 10 relaxes this constraint to allow this.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> p = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>);
-(<span style="color:#66d9ef">int</span> x1, <span style="color:#66d9ef">int</span> y2) = p; <span style="color:#75715e">// OK
+(<span style="color:#66d9ef">int</span> x1, <span style="color:#66d9ef">int</span> y1) = p; <span style="color:#75715e">// OK
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">int</span> x2;
 <span style="color:#66d9ef">int</span> y2;
@@ -236,7 +236,7 @@ global <span style="color:#66d9ef">using</span> System.Reflection;
 <span style="color:#66d9ef">int</span> x3;
 (x3, <span style="color:#66d9ef">int</span> y3) = p; <span style="color:#75715e">// Was illegal, but is allowed in C# 10
 </span></code></pre></div><h2 id="other-features">Other features</h2>
-<p>There are a few other new features in C# 10, but I won&rsquo;t present them in detail here, because they&rsquo;re either anecdotical or pretty obscure for the average developer. Here&rsquo;s a quick rundown.</p>
+<p>There are a few other new features in C# 10, but I won&rsquo;t present them in detail here, because they&rsquo;re either anecdotal or pretty obscure for the average developer. Here&rsquo;s a quick rundown.</p>
 <h3 id="sealed-record-tostring">Sealed record ToString</h3>
 <p>📄 <a href="https://github.com/dotnet/csharplang/issues/4174">Proposal</a></p>
 <p>It&rsquo;s now possible to make the <code>ToString</code> method <code>sealed</code> in non-sealed records. It&rsquo;s a small thing, but it was my first contribution to the C# compiler!</p>
