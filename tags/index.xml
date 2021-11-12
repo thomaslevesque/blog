@@ -6,7 +6,52 @@
     <description>Recent content in Tags on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 12 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>.NET 4.5</title>
+      <link>https://thomaslevesque.com/tags/.net-4.5/</link>
+      <pubDate>Fri, 12 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/.net-4.5/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>.NET Framework</title>
+      <link>https://thomaslevesque.com/tags/.net-framework/</link>
+      <pubDate>Fri, 12 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/.net-framework/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>build</title>
+      <link>https://thomaslevesque.com/tags/build/</link>
+      <pubDate>Fri, 12 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/build/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reference assemblies</title>
+      <link>https://thomaslevesque.com/tags/reference-assemblies/</link>
+      <pubDate>Fri, 12 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/reference-assemblies/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Visual Studio 2022</title>
+      <link>https://thomaslevesque.com/tags/visual-studio-2022/</link>
+      <pubDate>Fri, 12 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://thomaslevesque.com/tags/visual-studio-2022/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>C#</title>
       <link>https://thomaslevesque.com/tags/c#/</link>
@@ -877,15 +922,6 @@
       <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/timeout/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>build</title>
-      <link>https://thomaslevesque.com/tags/build/</link>
-      <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/build/</guid>
       <description></description>
     </item>
     
@@ -1939,15 +1975,6 @@
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
       <guid>https://thomaslevesque.com/tags/template/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>.NET 4.5</title>
-      <link>https://thomaslevesque.com/tags/.net-4.5/</link>
-      <pubDate>Fri, 23 Sep 2011 00:00:00 +0000</pubDate>
-      
-      <guid>https://thomaslevesque.com/tags/.net-4.5/</guid>
       <description></description>
     </item>
     

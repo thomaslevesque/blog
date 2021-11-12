@@ -73,6 +73,21 @@ if (!doNotTrack) {
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/" rel="bookmark">
+			[WPF] A simpler Grid using XAML attribute syntax
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2010-07-20T00:00:00Z">July 20, 2010</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:
+&lt;Grid&gt; &lt;Grid.RowDefinitions&gt; &lt;RowDefinition Height=&#34;Auto&#34;/&gt; &lt;RowDefinition Height=&#34;5&#34;/&gt; &lt;RowDefinition Height=&#34;*&#34;/&gt; &lt;/Grid.RowDefinitions&gt; &lt;Grid.ColumnDefinitions&gt; &lt;ColumnDefinition Width=&#34;60&#34; /&gt; &lt;ColumnDefinition Width=&#34;*&#34; /&gt; &lt;/Grid.ColumnDefinitions&gt; &lt;Label Content=&#34;Name&#34; Grid.Row=&#34;0&#34; Grid.Column=&#34;0&#34; /&gt; &lt;TextBox Text=&#34;Hello world&#34; Grid.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/" rel="bookmark">
 			[C#] A simple implementation of the WeakEvent pattern
 			</a>
@@ -204,22 +219,6 @@ To achieve this result, I used an Adorner : this is a component which allows to 
 In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
 private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2009/04/17/wpf-binding-to-an-asynchronous-collection/" rel="bookmark">
-			[WPF] Binding to an asynchronous collection
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-04-17T00:00:00Z">April 17, 2009</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
- This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
- To illustrate this, let&rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :
-	</div>
 </article>
 </main>
 
@@ -257,11 +256,11 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</a></li>
 		</ul>
 	</div>
 </div>

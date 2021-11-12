@@ -73,6 +73,21 @@ if (!doNotTrack) {
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/2017/03/29/linq-performance-improvements-in-net-core/" rel="bookmark">
+			Linq performance improvements in .NET Core
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-03-29T00:00:00Z">March 29, 2017</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		By now, you&rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
+For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/2017/02/23/easy-text-parsing-in-c-with-sprache/" rel="bookmark">
 			Easy text parsing in C# with Sprache
 			</a>
@@ -207,21 +222,6 @@ public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBoo
 	<div class="content list__excerpt post__content clearfix">
 		About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/" rel="bookmark">
-			Automatically inject fakes in test fixture with FakeItEasy
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-01-17T00:00:00Z">January 17, 2016</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Today I’d like to share a nice feature I discovered recently in FakeItEasy.
-When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier.
-	</div>
 </article>
 </main>
 
@@ -259,11 +259,11 @@ When you write unit tests for a class that takes dependencies, you typically nee
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</a></li>
 		</ul>
 	</div>
 </div>
