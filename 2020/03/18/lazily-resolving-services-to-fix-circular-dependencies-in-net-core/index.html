@@ -12,8 +12,8 @@
 It is generally agreed that this should be avoided; I won&rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-03-18T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-03-18T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2020-03-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-03-18T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -100,7 +100,7 @@ if (!doNotTrack) {
 <p>While, ideally, you would opt for a refactoring, it&rsquo;s not always practical. Because of deadlines, you might not have the time to refactor your code and thoroughly test it for regressions.</p>
 <p>Fortunately, if you&rsquo;re willing to incur a bit of technical debt, there&rsquo;s a simple workaround that works in most cases (what I referred to as &ldquo;cheating&rdquo; earlier). The trick is to resolve one of the dependencies in the cycle lazily, i.e. resolve it at the last possible moment, when you actually need to use it.</p>
 <p>One way to do that is to inject the <code>IServiceProvider</code> into your class, and use <code>services.GetRequiredService&lt;T&gt;()</code> when you need to use <code>T</code>. For instance, the <code>C</code> class I mentioned earlier might initially look like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IA <span style="color:#ae81ff">_</span>a;
 
@@ -117,7 +117,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>To avoid the dependency cycle, you could rewrite it like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>services;
 
@@ -142,7 +142,7 @@ if (!doNotTrack) {
 </ul>
 <h2 id="a-cleaner-workaround">A cleaner workaround</h2>
 <p>The approach I actually use in this situation takes advantage of the <code>Lazy&lt;T&gt;</code> class. You will need the following extension method and class:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceCollection AddLazyResolution(<span style="color:#66d9ef">this</span> IServiceCollection services)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceCollection AddLazyResolution(<span style="color:#66d9ef">this</span> IServiceCollection services)
 {
     <span style="color:#66d9ef">return</span> services.AddTransient(
         <span style="color:#66d9ef">typeof</span>(Lazy&lt;&gt;),
@@ -157,10 +157,10 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>Call this new method on your service collection during service registration:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddLazyResolution();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddLazyResolution();
 </code></pre></div><p>This enables the resolution of a <code>Lazy&lt;T&gt;</code> which will lazily resolve a <code>T</code> from the service provider.</p>
 <p>In the class that depends on <code>IA</code>, inject <code>Lazy&lt;IA&gt;</code> instead. When you need to use <code>IA</code>, just access the lazy&rsquo;s value:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Lazy&lt;IA&gt; <span style="color:#ae81ff">_</span>a;
 

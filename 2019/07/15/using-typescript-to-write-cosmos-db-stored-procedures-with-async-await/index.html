@@ -12,8 +12,8 @@
 Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&rsquo;s a very different world." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2019-07-15T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2019-07-15T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2019-07-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-07-15T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -86,7 +86,7 @@ if (!doNotTrack) {
 <p>Unfortunately, on Cosmos DB, stored procedures are written… in Javascript 😢 (I know, plenty of folks love Javascript, but I don&rsquo;t. Sue me!). All APIs for database operations are asynchronous (which is a good thing), but these APIs are based on callbacks, not on promises, so even though ECMAScript 2017 is supported, you can&rsquo;t use <code>async</code>/<code>await</code> with them. This fact is enough to turn any non-trivial task (i.e. code that involves branches such as ifs or loops) into a nightmare, at least for a C# developer like me… I typically spend a full day to write and debug a stored procedure that should have taken less than an hour with async/await.</p>
 <h2 id="promise-based-wrapper">Promise-based wrapper</h2>
 <p>Of course, I wouldn&rsquo;t be writing this post if there wasn&rsquo;t a way to make things better. Cosmos DB Product Manager <a href="https://twitter.com/aliuy8">Andrew Liu</a> was kind enough to show me how to write a wrapper around the callback-based API to enable the use of promises and <code>async</code>/<code>await</code>. Basically, it&rsquo;s just a few functions that you can add to your stored procedures:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() {
     <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">main</span>() {
         <span style="color:#66d9ef">let</span> { <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span> } <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">queryDocuments</span>(<span style="color:#e6db74">&#34;SELECT * from c&#34;</span>);
         <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">doc</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">feed</span>) {
@@ -100,7 +100,7 @@ if (!doNotTrack) {
 
 <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">queryDocuments</span>(<span style="color:#a6e22e">sqlQuery</span>, <span style="color:#a6e22e">options</span>) {
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
-        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">__</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#ae81ff">__</span>.<span style="color:#a6e22e">getSelfLink</span>(), <span style="color:#a6e22e">sqlQuery</span>, <span style="color:#a6e22e">options</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">queryDocuments</span>(<span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">getSelfLink</span>(), <span style="color:#a6e22e">sqlQuery</span>, <span style="color:#a6e22e">options</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
             <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">err</span>);
             <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">resolve</span>({ <span style="color:#a6e22e">feed</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">opts</span> });
         });
@@ -110,7 +110,7 @@ if (!doNotTrack) {
 
 <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>, <span style="color:#a6e22e">options</span>) {
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
-        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">__</span>.<span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>.<span style="color:#ae81ff">_</span><span style="color:#a6e22e">self</span>, <span style="color:#a6e22e">doc</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">isAccepted</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">replaceDocument</span>(<span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">_self</span>, <span style="color:#a6e22e">doc</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">opts</span>) =&gt; {
             <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">err</span>);
             <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">resolve</span>({ <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">options</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">opts</span> });
         });
@@ -130,7 +130,7 @@ if (!doNotTrack) {
 <p>First, let&rsquo;s see how we can write our stored procedure in TypeScript and reduce the boilerplate code.</p>
 <p>Let&rsquo;s start by installing TypeScript. Create a <code>package.json</code> file with the <code>npm init</code> command (it will prompt you for a few details, you can leave everything empty), and run the <code>npm install typescript</code> command. We&rsquo;ll also need the TypeScript definitions of the Cosmos DB server-side APIs. For this, we&rsquo;ll install a npm package named <a href="https://www.npmjs.com/package/@types/documentdb-server"><code>@types/documentdb-server</code></a> which contains the definitions: <code>npm install @types/documentdb-server</code>.</p>
 <p>We also need a <code>tsconfig.json</code> file:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
     <span style="color:#e6db74">&#34;exclude&#34;</span><span style="color:#f92672">:</span> [
         <span style="color:#e6db74">&#34;node_modules&#34;</span>
     ],
@@ -140,7 +140,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>Now, let&rsquo;s create a few helpers to use in our stored procedures. I put them all in a <code>CosmosServerScriptHelpers</code> folder. The most important piece is the <code>AsyncCosmosContext</code> class, which is basically a strongly-typed, promise-based wrapper for <a href="https://azure.github.io/azure-cosmosdb-js-server/-__object.html">the <code>__</code> object</a>. It implements the following interface:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IAsyncCosmosContext</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IAsyncCosmosContext</span> {
 
     <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">request</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IRequest</span>;
     <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">response</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">IResponse</span>;
@@ -161,7 +161,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>I&rsquo;m not showing the whole code in this article because it would be too long, but you can see the implementation and auxiliary types in the GitHub repo here: <a href="https://github.com/thomaslevesque/TypeScriptCosmosDBStoredProceduresArticle">https://github.com/thomaslevesque/TypeScriptCosmosDBStoredProceduresArticle</a>.</p>
 <p>So, how can we use this? Let&rsquo;s look at our previous example again, and see how we can rewrite it in TypeScript using our wrappers:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">IAsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/IAsyncCosmosContext&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">IAsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/IAsyncCosmosContext&#34;</span>;
 <span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">AsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/AsyncCosmosContext&#34;</span>;
 
 <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() {
@@ -181,7 +181,7 @@ if (!doNotTrack) {
 <li>We pass an instance of <code>AsyncCosmosContext</code> to the <code>main</code> function.</li>
 </ul>
 <p>This looks pretty good already, but what&rsquo;s bugging me is having to explicitly create the context and do the <code>.catch(...)</code>. So let&rsquo;s create another helper to encapsulate this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">IAsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./IAsyncCosmosContext&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">IAsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./IAsyncCosmosContext&#34;</span>;
 <span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">AsyncCosmosContext</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./AsyncCosmosContext&#34;</span>;
 
 <span style="color:#66d9ef">export</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncHelper</span> {
@@ -205,7 +205,7 @@ if (!doNotTrack) {
         <span style="color:#a6e22e">func</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AsyncCosmosContext</span>())
             .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">result</span> =&gt; {
                 <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">setBody</span>) {
-                    <span style="color:#ae81ff">__</span>.<span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">setBody</span>(<span style="color:#a6e22e">result</span>);
+                    <span style="color:#a6e22e">__</span>.<span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">setBody</span>(<span style="color:#a6e22e">result</span>);
                 }
             })
             .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">err</span> =&gt; {
@@ -215,7 +215,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>Using this helper, our stored procedure now looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">AsyncHelper</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/AsyncHelper&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> {<span style="color:#a6e22e">AsyncHelper</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;CosmosServerScriptHelpers/AsyncHelper&#34;</span>;
 
 <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setFoo</span>() 
 {
@@ -235,7 +235,7 @@ if (!doNotTrack) {
 <li>all the helper code, without any <code>import</code> or <code>require</code>.</li>
 </ul>
 <p>Since it doesn&rsquo;t seem possible to get the desired result using just the TypeScript compiler, the solution I found was to use a Gulp pipeline to concatenate the output files and remove the extraneous <code>export</code>s and <code>import</code>s. Here&rsquo;s my <code>gulpfile.js</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">gulp</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;gulp&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">gulp</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;gulp&#34;</span>);
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ts</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;gulp-typescript&#34;</span>);
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;path&#34;</span>);
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">flatmap</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;gulp-flatmap&#34;</span>);

@@ -13,8 +13,8 @@ In WPF, there is a very handy method to move a window with no borders : Window.D
 private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2009-05-06T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2009-05-06T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2009-05-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2009-05-06T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -84,7 +84,7 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Here&rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip;</p>
 <p>In WPF, there is a very handy method to move a window with no borders : <code>Window.DragMove</code>. It can be used like that :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> Window_MouseDown(<span style="color:#66d9ef">object</span> sender, MouseButtonEventArgs e)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> Window_MouseDown(<span style="color:#66d9ef">object</span> sender, MouseButtonEventArgs e)
 {
     <span style="color:#66d9ef">this</span>.DragMove();
 }
@@ -110,14 +110,14 @@ if (!doNotTrack) {
 <p>The closest to WPF&rsquo;s DragMove : in the handler of the <code>MouseDown</code> event, call the <code>DragMove</code> extension method on the Form or control to move</p>
 </li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> label2_MouseDown(<span style="color:#66d9ef">object</span> sender, MouseEventArgs e)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> label2_MouseDown(<span style="color:#66d9ef">object</span> sender, MouseEventArgs e)
 {
     label2.DragMove();
 }
 </code></pre></div><ul>
 <li>The most flexible : call the <code>EnableDragMove</code> extension method on the Form or control to move (no event handling needed).</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> checkBox1_CheckedChanged(<span style="color:#66d9ef">object</span> sender, EventArgs e)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> checkBox1_CheckedChanged(<span style="color:#66d9ef">object</span> sender, EventArgs e)
 {
     <span style="color:#66d9ef">this</span>.EnableDragMove(checkBox1.Checked);
 }

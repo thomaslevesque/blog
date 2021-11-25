@@ -13,8 +13,8 @@ WPF is a great technology, but sometimes it seems to be missing some really basi
 Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2011/03/27/wpf-display-an-animated-gif-image/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2011-03-27T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2011-03-27T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2011-03-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-03-27T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -102,11 +102,11 @@ if (!doNotTrack) {
 <p>The next problem is to extract the frames from the image: fortunately WPF supports this natively, and the <a href="http://msdn.microsoft.com/en-us/library/system.windows.media.imaging.bitmapdecoder.aspx"><code>BitmapDecoder</code></a> class provides a <code>Frames</code> property to do exactly that. So, no big difficulty so far&hellip;</p>
 <p>Finally, last obstacle: extract the duration of each frame. It&rsquo;s the part that took me the longest, because I needed to do some research&hellip; I first thought I would need to read the file manually and decode the binary data myself. But eventually the solution is quite simple, and takes advantage of the <a href="http://msdn.microsoft.com/en-us/library/system.windows.media.imaging.bitmapmetadata.aspx"><code>BitmapMetadata</code></a> class. The only difficulty has been to find the &ldquo;path&rdquo; of the metadata that contains the delay, but after a few minutes of trial and error, here it is: <code>/grctlext/Delay</code>.</p>
 <p>The final solution is implemented as an attached property named <code>AnimatedSource</code>, that applies to the <code>Image</code> control, and can be used instead of <code>Source</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Image</span> <span style="color:#a6e22e">Stretch=</span><span style="color:#e6db74">&#34;None&#34;</span> <span style="color:#a6e22e">my:ImageBehavior.AnimatedSource=</span><span style="color:#e6db74">&#34;/Images/animation.gif&#34;</span> <span style="color:#f92672">/&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Image</span> <span style="color:#a6e22e">Stretch=</span><span style="color:#e6db74">&#34;None&#34;</span> <span style="color:#a6e22e">my:ImageBehavior.AnimatedSource=</span><span style="color:#e6db74">&#34;/Images/animation.gif&#34;</span> <span style="color:#f92672">/&gt;</span>
 </code></pre></div><p>This property can also be assigned a normal (not animated) image, it will be displayed normally; therefore this property can be used without worrying about whether the image to display will be animated or not.</p>
 <p>So in the end, all the goals have been achieved, and we even get some icing on the cake: this solution also works in the designer (at least in Visual Studio 2010), so the animation is immediately visible when you set the <code>AnimatedSource</code> property :)</p>
 <p>Without further ado, here&rsquo;s the complete code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ImageBehavior</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ImageBehavior</span>
 {
     <span style="color:#75715e">#region AnimatedSource
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">
@@ -339,7 +339,7 @@ if (!doNotTrack) {
     <span style="color:#75715e">#endregion
 </span><span style="color:#75715e"></span>}
 </code></pre></div><p>And here&rsquo;s the <code>DoWhenLoaded</code> extension method used in the code above:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> DoWhenLoaded&lt;T&gt;(<span style="color:#66d9ef">this</span> T element, Action&lt;T&gt; action)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> DoWhenLoaded&lt;T&gt;(<span style="color:#66d9ef">this</span> T element, Action&lt;T&gt; action)
     <span style="color:#66d9ef">where</span> T : FrameworkElement
 {
     <span style="color:#66d9ef">if</span> (element.IsLoaded)

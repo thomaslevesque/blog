@@ -13,8 +13,8 @@
  To illustrate this, let&rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2009-04-17T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2009-04-17T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2009-04-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2009-04-17T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -87,7 +87,7 @@ if (!doNotTrack) {
 <p>This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread</p>
 </blockquote>
 <p>To illustrate this, let&rsquo;s take a simple example : a <code>ListBox</code> bound to a collection of strings in the ViewModel :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; <span style="color:#ae81ff">_</span>strings = <span style="color:#66d9ef">new</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt;();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; <span style="color:#ae81ff">_</span>strings = <span style="color:#66d9ef">new</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt;();
         <span style="color:#66d9ef">public</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; Strings
         {
             <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>strings; }
@@ -97,9 +97,9 @@ if (!doNotTrack) {
                 OnPropertyChanged(<span style="color:#e6db74">&#34;Strings&#34;</span>);
             }
         }
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;ListBox</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Strings}&#34;</span><span style="color:#f92672">/&gt;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;ListBox</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Strings}&#34;</span><span style="color:#f92672">/&gt;</span>
 </code></pre></div><p>If we add items to this collection out of the main thread, we get the exception mentioned above. A possible solution would be to create a new collection, and assign it to the <code>Strings</code> property when it is filled, but in this case the UI won&rsquo;t reflect progress : all items will appear in the <code>ListBox</code> at the same time after the collection is filled, instead of appearing as they are added to the collection. It can be annoying in some cases : for instance, if the <code>ListBox</code> is used to display search results, the user expects to see the results as they are found, like in Windows Search.  A simple way to achieve the desired behavior is to inherit <code>ObservableCollection</code> and override <code>OnCollectionChanged</code> and <code>OnPropertyChanged</code> so that the events are raised on the main thread (actually, the thread that created the collection). The <code>AsyncOperation</code> class is perfectly suited for this need : it allows to &ldquo;post&rdquo; a method call on the thread that created it. It is used, for instance, in the <code>BackgroundWorker</code> component, and in many asynchronous methods in the framework (<code>PictureBox.LoadAsync</code>, <code>WebClient.DownloadAsync</code>, etc&hellip;).  So, here&rsquo;s the code of an <code>AsyncObservableCollection</code> class, that can be modified from any thread, and still notify the UI when it is modified :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncObservableCollection</span>&lt;T&gt; : ObservableCollection&lt;T&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncObservableCollection</span>&lt;T&gt; : ObservableCollection&lt;T&gt;
     {
         <span style="color:#66d9ef">private</span> AsyncOperation asyncOp = <span style="color:#66d9ef">null</span>;
 
@@ -145,10 +145,10 @@ if (!doNotTrack) {
         }
     }
 </code></pre></div><p>The only constraint when using this class is that instances of the collection must be created on the UI thread, so that events are raised on that thread.  In the previous example, the only thing to change to make the collection modifiable across threads is the instantiation of the collection in the ViewModel :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; <span style="color:#ae81ff">_</span>strings = <span style="color:#66d9ef">new</span> AsyncObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt;();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> ObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt; <span style="color:#ae81ff">_</span>strings = <span style="color:#66d9ef">new</span> AsyncObservableCollection&lt;<span style="color:#66d9ef">string</span>&gt;();
 </code></pre></div><p>The <code>ListBox</code> can now reflect in real-time the changes made on the collection.  Enjoy ;)</p>
 <p><strong>Update :</strong> I just found a bug in my implementation : in some cases, using <code>Post</code> to raise the event when the collection is modified from the main thread can cause unpredictable behavior. In that case, the event should of course be raised directly on the main thread, after checking that the current <code>SynchronizationContext</code> is the one in which the collection was created. This also made me realize that the <code>AsyncOperation</code> actually doesn&rsquo;t bring any benefit : we can use the <code>SynchronizationContext</code> directly instead. So here&rsquo;s the new implementation :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncObservableCollection</span>&lt;T&gt; : ObservableCollection&lt;T&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncObservableCollection</span>&lt;T&gt; : ObservableCollection&lt;T&gt;
     {
         <span style="color:#66d9ef">private</span> SynchronizationContext <span style="color:#ae81ff">_</span>synchronizationContext = SynchronizationContext.Current;
 

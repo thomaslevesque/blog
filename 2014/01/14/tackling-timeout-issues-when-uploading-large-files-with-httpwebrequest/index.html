@@ -11,8 +11,8 @@
 <meta property="og:description" content="If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2014-01-14T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2014-01-14T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2014-01-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-01-14T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -87,7 +87,7 @@ if (!doNotTrack) {
 <p>*The Timeout property has no effect on asynchronous requests made with the BeginGetResponse or BeginGetRequestStream method.*<em>In the case of asynchronous requests, the client application implements its own time-out mechanism. Refer to the example in the BeginGetResponse method.</em></p>
 </blockquote>
 <p>So, a solution could be to to use these methods directly (or the new <code>Task</code>-based versions: <code>GetRequestStreamAsync</code> and <code>GetResponseAsync</code>); but more often than not, you already have an existing code base that uses the synchronous methods, and changing the code to make it fully asynchronous is usually not trivial. So, the easy approach is to create synchronous wrappers around <code>BeginGetRequestStream</code> and <code>BeginGetResponse</code>, with a way to specify a timeout for these operations:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebRequestExtensions</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebRequestExtensions</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Stream GetRequestStreamWithTimeout(
         <span style="color:#66d9ef">this</span> WebRequest request,
@@ -127,7 +127,7 @@ if (!doNotTrack) {
 <p>These extension methods can be used instead of <code>GetRequestStream</code> and <code>GetResponse</code>; each of them will timeout if they take too long, but once you have the request stream, you can take as long as you want to upload the data. Note that the stream itself has its own read and write timeout (5 minutes by default), so if 5 minutes go by without any data being uploaded, the Write method will cause an exception. Here is the new upload scenario using these methods:</p>
 <p><img src="timeout2.png" alt="timeout2" title="timeout2"></p>
 <p>As you can see, the only difference is that the timeout doesn&rsquo;t apply anymore to the transfer of the request body, but only to obtaining the request stream and getting the response. Here’s a full example that corresponds to the scenario above:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">long</span> UploadFile(<span style="color:#66d9ef">string</span> path, <span style="color:#66d9ef">string</span> url, <span style="color:#66d9ef">string</span> contentType)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">long</span> UploadFile(<span style="color:#66d9ef">string</span> path, <span style="color:#66d9ef">string</span> url, <span style="color:#66d9ef">string</span> contentType)
 {
     <span style="color:#75715e">// Build request
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> request = (HttpWebRequest)WebRequest.Create(url);

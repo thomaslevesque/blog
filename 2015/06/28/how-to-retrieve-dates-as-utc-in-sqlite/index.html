@@ -11,8 +11,8 @@
 <meta property="og:description" content="SQLite is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an official ADO.NET provider that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a DateTime converted to local time, with Kind = Unspecified." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2015-06-28T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2015-06-28T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2015-06-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-06-28T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -79,7 +79,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-06-28T00:00:00Z">June 28, 2015</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p><a href="http://sqlite.org/">SQLite</a> is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an <a href="http://system.data.sqlite.org/">official ADO.NET provider</a> that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a <code>DateTime</code> converted to local time, with <code>Kind</code> = <code>Unspecified</code>. Here’s an example that exhibits the problem (using <a href="https://github.com/StackExchange/dapper-dot-net">Dapper</a> in <a href="http://www.linqpad.net/">LINQPad</a>):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">void</span> Main()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">void</span> Main()
 {
     <span style="color:#66d9ef">string</span> connectionString = <span style="color:#e6db74">@&#34;Data Source=D:\tmp\testSQLiteDate.db&#34;</span>;
     <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> connection = <span style="color:#66d9ef">new</span> SQLiteConnection(connectionString))
@@ -105,7 +105,7 @@ if (!doNotTrack) {
 <p><img src="image.png" alt="image" title="image"></p>
 <p>As you can see, after reading it from the database, the date is no longer in UTC, and doesn’t even contain an indication that it’s a local date. This can cause all kinds of bugs if your code is comparing dates that are supposed to be UTC.</p>
 <p>I initially tried to fix that in my code by manually converting the date, before I realized that the solution was much simpler (although <a href="http://www.nudoq.org/#!/Packages/System.Data.SQLite/System.Data.SQLite/SQLiteConnectionStringBuilder/P/DateTimeKind">not very well documented</a>): there is a connection string setting to control how dates are handled. You just need to specify <code>DateTimeKind=Utc</code> in your connection string:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> connectionString = <span style="color:#e6db74">@&#34;Data Source=D:\tmp\testSQLiteDate.db;DateTimeKind=Utc&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> connectionString = <span style="color:#e6db74">@&#34;Data Source=D:\tmp\testSQLiteDate.db;DateTimeKind=Utc&#34;</span>;
 </code></pre></div><p>If you’re using <code>SqliteConnectionStringBuilder</code> to build the connection string, just set the <code>DateTimeKind</code> property to <code>DateTimeKind.Utc</code>.</p>
 <p>As you can see, the date kind is now preserved:</p>
 <p><img src="image1.png" alt="image" title="image"></p>

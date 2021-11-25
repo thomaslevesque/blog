@@ -11,8 +11,8 @@
 <meta property="og:description" content="The ToArray and ToList extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on ToArray for now (ToList has a few differences, but the principle is mostly the same)." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2014-12-07T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2014-12-07T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2014-12-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-12-07T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -80,10 +80,10 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>The <code>ToArray</code> and <code>ToList</code> extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on <code>ToArray</code> for now (<code>ToList</code> has a few differences, but the principle is mostly the same).</p>
 <p>Basically, <code>ToArray</code> takes a sequence, and returns an array that contains all the elements from the sequence. If the sequence implements <code>ICollection&lt;T&gt;</code>, it uses the <code>Count</code> property to allocate an array of the right size, and copy the elements into it; here’s an example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">List&lt;User&gt; users = GetUsers();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">List&lt;User&gt; users = GetUsers();
 User[] array = users.ToArray();
 </code></pre></div><p>In this scenario, <code>ToArray</code> is fairly efficient. Now, let’s change that code to extract just the names from the users:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">List&lt;User&gt; users = GetUsers();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">List&lt;User&gt; users = GetUsers();
 <span style="color:#66d9ef">string</span>[] array = users.Select(u =&gt; u.Name).ToArray();
 </code></pre></div><p>Now, the argument of <code>ToArray</code> is an <code>IEnumerable&lt;User&gt;</code> returned by <code>Select</code>. It doesn’t implement <code>ICollection&lt;User&gt;</code>, so <code>ToArray</code> doesn’t know the number of elements, so it cannot allocate an array of the appropriate size. So here’s what it does:</p>
 <ol>
@@ -99,7 +99,7 @@ User[] array = users.ToArray();
 <p>If there are few elements, this is quite painless; but for a very long sequence, it’s very inefficient, because of the many allocations and copies.</p>
 <p>What is annoying is that, in many cases, we <em>know</em> the number of elements in the source! In the example above, we only use <code>Select</code>, which doesn’t change the number of elements, so we know that it’s the same as in the original list; but <code>ToArray</code> doesn’t know, because the information was lost along the way. If only we had a way to help it by providing this information ourselves….</p>
 <p>Well, it’s actually very easy to do: all we have to do is create a new extension method that accepts the count as a parameter. Here’s what it might look like:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TSource[] ToArray&lt;TSource&gt;(<span style="color:#66d9ef">this</span> IEnumerable&lt;TSource&gt; source, <span style="color:#66d9ef">int</span> count)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TSource[] ToArray&lt;TSource&gt;(<span style="color:#66d9ef">this</span> IEnumerable&lt;TSource&gt; source, <span style="color:#66d9ef">int</span> count)
 {
     <span style="color:#66d9ef">if</span> (source == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;source&#34;</span>);
     <span style="color:#66d9ef">if</span> (count &lt; <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentOutOfRangeException(<span style="color:#e6db74">&#34;count&#34;</span>);
@@ -112,12 +112,12 @@ User[] array = users.ToArray();
     <span style="color:#66d9ef">return</span> array;
 }
 </code></pre></div><p>Now we can optimize our previous example like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">List&lt;User&gt; users = GetUsers();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">List&lt;User&gt; users = GetUsers();
 <span style="color:#66d9ef">string</span>[] array = users.Select(u =&gt; u.Name).ToArray(users.Count);
 </code></pre></div><p>Note that if you specify a count that is less than the actual number of elements in the sequence, you will get an <code>IndexOutOfRangeException</code>; it’s your responsibility to provide the correct count to the method.</p>
 <p>So, what do we actually gain by doing that? From my benchmarks, this improved <code>ToArray</code> is about <strong>twice as fast</strong> as the built-in one, for a long sequence (tested with 1,000,000 elements). This is pretty good!</p>
 <p>Note that we can improve <code>ToList</code> in the same way, by using the <code>List&lt;T&gt;</code> constructor that lets us specify the initial capacity:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> List&lt;TSource&gt; ToList&lt;TSource&gt;(<span style="color:#66d9ef">this</span> IEnumerable&lt;TSource&gt; source, <span style="color:#66d9ef">int</span> count)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> List&lt;TSource&gt; ToList&lt;TSource&gt;(<span style="color:#66d9ef">this</span> IEnumerable&lt;TSource&gt; source, <span style="color:#66d9ef">int</span> count)
 {
     <span style="color:#66d9ef">if</span> (source == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;source&#34;</span>);
     <span style="color:#66d9ef">if</span> (count &lt; <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentOutOfRangeException(<span style="color:#e6db74">&#34;count&#34;</span>);

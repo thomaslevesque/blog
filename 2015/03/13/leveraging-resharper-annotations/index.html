@@ -11,8 +11,8 @@
 <meta property="og:description" content="I don’t think it’s really necessary to present ReSharper (often abbreviated R#), but in case you don’t know about it, it’s a tool made by JetBrains that performs real-time analysis of your C# or VB.NET code to warn you about possible bugs, bad practices, convention violations, etc. It also provides many useful refactorings and code generators. I’ve been using it for a few years now, and it has tremendously improved both my productivity and my coding style." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2015/03/13/leveraging-resharper-annotations/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2015-03-13T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2015-03-13T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2015-03-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-03-13T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -92,7 +92,7 @@ if (!doNotTrack) {
 <h3 id="notnull">NotNull</h3>
 <p>This annotation indicates that the element on which it is applied cannot, or must not be null.</p>
 <p>If you apply it to a method or property, it means that the method or property will never return null:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[NotNull]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[NotNull]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetString()
 {
     <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hello world!&#34;</span>;
@@ -100,7 +100,7 @@ if (!doNotTrack) {
 </code></pre></div><p>When a method has this attribute, if you test if the return value is null (or not null), R# will warn you that the condition is always false (or true):</p>
 <p><img src="image6.png" alt="image" title="image"></p>
 <p>If you apply it to a method parameter, it means that null is not a valid argument value:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Repeat([NotNull] <span style="color:#66d9ef">string</span> s)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Repeat([NotNull] <span style="color:#66d9ef">string</span> s)
 {
     <span style="color:#66d9ef">if</span> (s == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;s&#34;</span>);
     <span style="color:#66d9ef">return</span> s + s;
@@ -117,7 +117,7 @@ if (!doNotTrack) {
 <h3 id="heading"> </h3>
 <h3 id="stringformatmethod">StringFormatMethod</h3>
 <p>This annotation indicates that a method works like the <code>String.Format</code> method, i.e. it takes a composite format string followed by arguments that will replace the placeholders in the format string:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[StringFormatMethod(&#34;format&#34;)]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[StringFormatMethod(&#34;format&#34;)]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Log(<span style="color:#66d9ef">string</span> format, <span style="color:#66d9ef">params</span> <span style="color:#66d9ef">object</span>[] args)
 {
     ...
@@ -128,7 +128,7 @@ if (!doNotTrack) {
 <p>This one tells ReSharper that a code element is used, even though R# cannot statically detect it. It has the effect of suppressing the <em>“(…) is never used”</em> warning. It’s useful, for instance, when a type or member is used only via reflection.</p>
 <h3 id="noenumeration">NoEnumeration</h3>
 <p>This annotation is applied to an <code>IEnumerable</code> parameter, and means that the method will not enumerate the sequence. R# warns you when you enumerate an <code>IEnumerable</code> multiple times, so using this attribute prevents false positives for this warning:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IEnumerable&lt;T&gt; EmptyIfNull&lt;T&gt;([NoEnumeration] <span style="color:#66d9ef">this</span> IEnumerable&lt;T&gt; source)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IEnumerable&lt;T&gt; EmptyIfNull&lt;T&gt;([NoEnumeration] <span style="color:#66d9ef">this</span> IEnumerable&lt;T&gt; source)
 {
     <span style="color:#66d9ef">return</span> source ?? Enumerable.Empty&lt;T&gt;();
 }
@@ -136,14 +136,14 @@ if (!doNotTrack) {
 <p>This one is applied to a delegate parameter, and means that the delegate will be executed during the execution of the method. It prevents the <em>“Access to modified closure”</em> warning that occurs when a lambda captures a variable that is later modified.</p>
 <h3 id="contractannotation">ContractAnnotation</h3>
 <p>This annotation is a powerful way to describe how the output of a method depends on its inputs. It lets R# predict how the method will behave. For instance, this method will return null if its argument is null, an not null otherwise:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ContractAnnotation(&#34;null =&gt; null; notnull =&gt; notnull&#34;)]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ContractAnnotation(&#34;null =&gt; null; notnull =&gt; notnull&#34;)]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> Transform(<span style="color:#66d9ef">object</span> data)
 {
     ...
 }
 </code></pre></div><p>Thanks to the annotation, ReSharper will know that if the argument was not null, the result will not be null either.</p>
 <p>This method doesn’t return normally (it throws an exception) if its argument is null:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ContractAnnotation(&#34;value:null =&gt; halt&#34;)]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ContractAnnotation(&#34;value:null =&gt; halt&#34;)]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> CheckArgumentNull&lt;T&gt;(
 <span style="color:#a6e22e">    [NoEnumeration]</span> <span style="color:#66d9ef">this</span> T <span style="color:#66d9ef">value</span>,
 <span style="color:#a6e22e">    [InvokerParameterName]</span> <span style="color:#66d9ef">string</span> paramName)

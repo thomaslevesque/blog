@@ -12,8 +12,8 @@
 It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2013/04/21/detecting-dependency-property-changes-in-winrt/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2013-04-21T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2013-04-21T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2013-04-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-04-21T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -83,7 +83,7 @@ if (!doNotTrack) {
 			<p>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…</p>
 <p>It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the <code>Content</code> property of a <code>ContentControl</code> changed. In WPF, I would have used the <a href="http://msdn.microsoft.com/en-us/library/system.componentmodel.dependencypropertydescriptor.aspx"><code>DependencyPropertyDescriptor</code></a> class, but it’s not available in WinRT.</p>
 <p>Fortunately, there is a mechanism which is available on all XAML platforms, and can solve this problem: binding. So, the solution is just to create a class with a dummy property that is bound to the property we want to watch, and call a handler when the value of the dummy property changes. To make it cleaner and hide the actual implementation, I wrapped it as an extension method that returns an <code>IDisposable</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DependencyObjectExtensions</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DependencyObjectExtensions</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IDisposable WatchProperty(<span style="color:#66d9ef">this</span> DependencyObject target,
                                             <span style="color:#66d9ef">string</span> propertyPath,
@@ -147,7 +147,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>It can be used like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Subscribe
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Subscribe
 </span><span style="color:#75715e"></span>watcher = myControl.WatchProperty(<span style="color:#e6db74">&#34;Content&#34;</span>, myControl_ContentChanged);
 
 <span style="color:#75715e">// Unsubscribe

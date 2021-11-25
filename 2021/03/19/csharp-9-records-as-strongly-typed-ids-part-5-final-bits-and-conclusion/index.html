@@ -12,8 +12,8 @@
 Handling database-generated values in EF Core First, I want to address a question asked by @OpsOwns in the comments of the last post:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-03-19T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-03-19T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2021-03-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-03-19T00:00:00+00:00" />
 <meta property="og:see_also" content="https://thomaslevesque.com/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/" /><meta property="og:see_also" content="https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/" /><meta property="og:see_also" content="https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/" /><meta property="og:see_also" content="https://thomaslevesque.com/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/" />
 
 
@@ -106,17 +106,17 @@ if (!doNotTrack) {
 <p>I know, it&rsquo;s not much of a solution…</p>
 <h2 id="fixing-tostring">Fixing ToString()</h2>
 <p>In the second post of this series, I <a href="https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/#common-base-type-for-strongly-typed-ids">suggested</a> implementing <code>ToString()</code> in the <code>StronglyTypedId&lt;TValue&gt;</code> base type, so that you don&rsquo;t need to do it again in every strongly-typed id:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; Value.ToString();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; Value.ToString();
 </code></pre></div><p>This seemed like a good idea… except for the fact that it doesn&rsquo;t work! If you create a new record that inherits from <code>StronglyTypedId&lt;TValue&gt;</code>, the compiler will always generate a new <code>ToString()</code> method, overriding the one from the base class. This compiler-provided implementation outputs the type and property values, like <code>&quot;ProductId { Value = 42 }&quot;</code>. While this looks nice in the debugger, it&rsquo;s not what we want for strongly-typed ids.</p>
 <p>We need the string representation to be that of the wrapped value. The main reason is that this representation will be used in URL generation. For instance, if you do something like this in a controller:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">return</span> CreatedAtAction(nameof(GetProduct), <span style="color:#66d9ef">new</span> { id = product.Id }, product);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">return</span> CreatedAtAction(nameof(GetProduct), <span style="color:#66d9ef">new</span> { id = product.Id }, product);
 </code></pre></div><p>ASP.NET Core will add a <code>Location</code> header to the response, containing the URL for the <code>GetProduct</code> action with the specified value for <code>id</code>. This URL should be something like <code>https://localhost:5000/product/42</code>. The problem is that, if you don&rsquo;t replace the compiler-generated implementation of <code>ToString()</code>, it will actually generate something like this: <code>https://localhost:5000/product/ProductId { Value = 42 }</code>. Oops!</p>
 <p>The obvious fix would be to mark the <code>ToString()</code> override as <code>sealed</code>; unfortunately this is explicitly forbidden, and produces a compilation error.</p>
 <p>So, what&rsquo;s the solution? Override <code>ToString()</code> explicitly in every strongly-typed id? Well, it would work, but it would be pretty annoying… A better option is to use another new feature of C# 9: source generators. Basically, we&rsquo;re going to automatically generate the method for every strongly-typed id.</p>
 <h3 id="writing-a-source-generator">Writing a source generator</h3>
 <p>Source generators are a similar to Roslyn analyzers, in that they run during compilation of the project and rely on the same Roslyn package. They can add new code to the project, based on the existing code.</p>
 <p>First, we need to create a new project in our solution to contain the source generator. It&rsquo;s a simple class library with a reference to the <code>Microsoft.CodeAnalysis.CSharp</code> package:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Project</span> <span style="color:#a6e22e">Sdk=</span><span style="color:#e6db74">&#34;Microsoft.NET.Sdk&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Project</span> <span style="color:#a6e22e">Sdk=</span><span style="color:#e6db74">&#34;Microsoft.NET.Sdk&#34;</span><span style="color:#f92672">&gt;</span>
 
   <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
     <span style="color:#f92672">&lt;TargetFramework&gt;</span>net5.0<span style="color:#f92672">&lt;/TargetFramework&gt;</span>
@@ -127,7 +127,7 @@ if (!doNotTrack) {
   <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
 <span style="color:#f92672">&lt;/Project&gt;</span>
 </code></pre></div><p>In this project, let&rsquo;s create a <code>StronglyTypedIdGenerator</code> class that implements <code>ISourceGenerator</code> and has the <code>[Generator]</code> attribute:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
 <span style="color:#66d9ef">using</span> System.Collections.Generic;
 <span style="color:#66d9ef">using</span> System.Linq;
 <span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis;
@@ -248,21 +248,21 @@ if (!doNotTrack) {
 <p>At this point, we have a very simple source generator that just generates a <code>ToString()</code> method, but of course it could be enriched to generate anything we might need in our strongly-typed ids (e.g. implicit conversion to <code>TValue</code>, a <code>Parse</code> method, etc.)</p>
 <h3 id="using-the-source-generator">Using the source generator</h3>
 <p>Using the source generator is pretty easy: just reference the source generator project in the projects that declare strongly-typed ids. Actually, it&rsquo;s not really &ldquo;just&rdquo; a project reference; we need to specify additional attributes on the reference for this to work:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ProjectReference</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ProjectReference</span>
   <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;../MyProject.SourceGen/MyProject.SourceGen.csproj&#34;</span>
   <span style="color:#a6e22e">OutputItemType=</span><span style="color:#e6db74">&#34;Analyzer&#34;</span>
   <span style="color:#a6e22e">ReferenceOutputAssembly=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#f92672">/&gt;</span>
 </code></pre></div><p><code>OutputItemType</code> is <code>Analyzer</code>, which seems a bit strange, but as I mentioned before, source generators work similarly to analyzers, so it&rsquo;s not really surprising. <code>ReferenceOutputAssembly</code> is false, because we don&rsquo;t need the source generator at runtime, only during compilation.</p>
 <p>Now, we just need to modify our strongly-typed ids to make them partial, so that the source generator can augment them:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">partial</span> record ProductId(<span style="color:#66d9ef">int</span> Value) : StronglyTypedId&lt;<span style="color:#66d9ef">int</span>&gt;(Value);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">partial</span> record ProductId(<span style="color:#66d9ef">int</span> Value) : StronglyTypedId&lt;<span style="color:#66d9ef">int</span>&gt;(Value);
 </code></pre></div><p>And that&rsquo;s it! If we rebuild our project, the source generator kicks in and adds the <code>ToString()</code> overrides to all our strongly-typed ids.</p>
 <p>Of course, at this point, we can&rsquo;t <em>see</em> the generated code, so how can we know if it&rsquo;s there, and if it&rsquo;s correct? Fortunately, there&rsquo;s a simple way to see that code. In the project that references the source generator, add the following properties:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
     <span style="color:#f92672">&lt;EmitCompilerGeneratedFiles&gt;</span>true<span style="color:#f92672">&lt;/EmitCompilerGeneratedFiles&gt;</span>
     <span style="color:#f92672">&lt;CompilerGeneratedFilesOutputPath&gt;</span>.generated<span style="color:#f92672">&lt;/CompilerGeneratedFilesOutputPath&gt;</span>
   <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
 </code></pre></div><p>The generated code files will now be added to the <code>.generated</code> folder in the project, so we can inspect them:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">namespace</span> MyProject
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">namespace</span> MyProject
 {
     <span style="color:#66d9ef">partial</span> record ProductId
     {

@@ -12,8 +12,8 @@
 Fortunately, it&rsquo;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&rsquo;t have been there in the first place." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2018/03/06/cleanup-git-history-to-remove-unwanted-files/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2018-03-06T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2018-03-06T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2018-03-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-03-06T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -87,7 +87,7 @@ if (!doNotTrack) {
 <p>In my case, it didn&rsquo;t matter, because I didn&rsquo;t need to publish the rewritten branch (I just wanted to examine it locally). But don&rsquo;t do this on a branch your colleagues are currently working on, unless you want them to hate you 😉.</p>
 <h2 id="create-a-working-branch">Create a working branch</h2>
 <p>Since we&rsquo;re going to make pretty drastic and possibly risky changes on the repo, we&rsquo;d better be cautious. The easiest way to avoid causing damage to the original branch is, of course, to work on a separate branch. So, assuming the branch we want to cleanup is <code>master</code>, let&rsquo;s create a <code>master2</code> working branch:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git checkout -b master2 master
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git checkout -b master2 master
 </code></pre></div><h2 id="identify-the-files-to-remove">Identify the files to remove</h2>
 <p>Before we start to cleanup, we need to identify what needs to be cleaned up. In a typical .NET project, it&rsquo;s usually the contents of the <code>bin</code> and <code>obj</code> directories (wherever they&rsquo;re located) and the <code>packages</code> directory (usually at the root of the solution). Which gives us the following patterns to remove:</p>
 <ul>
@@ -104,16 +104,16 @@ if (!doNotTrack) {
 <li><code>--index-filter</code> : a filter that applies to the index (doesn&rsquo;t require checking out each commit, hence faster)</li>
 </ul>
 <p>In our current scenario, <code>--index-filter</code> is perfectly adequate, since we only need to filter files based on their path. The <code>filter-branch</code> command with this kind of filter can be used as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git filter-branch --index-filter <span style="color:#e6db74">&#39;&lt;command&gt;&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git filter-branch --index-filter <span style="color:#e6db74">&#39;&lt;command&gt;&#39;</span>
 </code></pre></div><p><code>&lt;command&gt;</code> is a bash command that will be executed for each commit on the branch. In our case, it will be a call to <code>git rm</code> to remove unwanted files from the index:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git filter-branch --index-filter <span style="color:#e6db74">&#39;git rm --cached --ignore-unmatch **/bin/** **/obj/** packages/**&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git filter-branch --index-filter <span style="color:#e6db74">&#39;git rm --cached --ignore-unmatch **/bin/** **/obj/** packages/**&#39;</span>
 </code></pre></div><p>The <code>--cached</code> parameter means we&rsquo;re working on the index rather than on the working tree; <code>--ignore-unmatch</code> tells Git to ignore patterns that don&rsquo;t match any file. By default, the command only applies to the current branch.</p>
 <p>If the branch has a long history, this command can take a while to run, so be patient&hellip; Once it&rsquo;s done, you should have a branch with the same commits as the original branch, but without the unwanted files.</p>
 <h2 id="more-complex-cases">More complex cases</h2>
 <p>In the example above, there were only 3 file patterns to remove, so the command was short enough to be written inline. But if there are many patterns, of if the logic to remove files is more complex, it doesn&rsquo;t really work out&hellip; In this case, you can just write a (bash) script that contains the necessary commands, and use this script as the command passed to <code>git filter-branch --index-filter</code>.</p>
 <h2 id="cleanup-from-a-specific-commit">Cleanup from a specific commit</h2>
 <p>In the previous example, we applied <code>filter-branch</code> to the whole branch. But it&rsquo;s also possible to apply it only from a given commit, by specifying a revision range:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git filter-branch --index-filter <span style="color:#e6db74">&#39;&lt;command&gt;&#39;</span> &lt;ref&gt;..HEAD
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git filter-branch --index-filter <span style="color:#e6db74">&#39;&lt;command&gt;&#39;</span> &lt;ref&gt;..HEAD
 </code></pre></div><p>Here <code>&lt;ref&gt;</code> is a commit reference (SHA1, branch or tag). Note that the end of the range has to be <code>HEAD</code>, i.e. the tip of the current branch: you can&rsquo;t rewrite the beginning or middle of a branch without touching the following commits, since each commit&rsquo;s SHA1 depends on the previous commit.</p>
 
 		</div>

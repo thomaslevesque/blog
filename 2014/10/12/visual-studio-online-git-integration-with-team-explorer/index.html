@@ -12,8 +12,8 @@
 However, I noticed a little gotcha when using Git for source control : the remote for VS Online must be named origin, otherwise Team Explorer won’t detect that it’s a VS Online project, and it won’t show the “Builds” and “Work items” pages." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2014/10/12/visual-studio-online-git-integration-with-team-explorer/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2014-10-12T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2014-10-12T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2014-10-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-10-12T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -85,7 +85,7 @@ if (!doNotTrack) {
 <p><img src="image.png" alt="When VSO remote is named &quot;origin&quot;" title="When VSO remote is named &quot;origin&quot;"></p>
 <p><img src="image1.png" alt="When VSO remote is named &quot;vso&quot;" title="When VSO remote is named &quot;vso&quot;"></p>
 <p>This is obviously a bug (although a minor one), since the name <code>origin</code> is just a convention and a git remote can have any name; I reported it <a href="https://connect.microsoft.com/VisualStudio/feedback/details/998359/visual-studio-online-git-integration-in-team-explorer-doesnt-work-if-the-remote-for-vso-isnt-named-origin">on Connect</a>. If you encounter it you can easily work around it by renaming your remote to <code>origin</code>:</p>
-<pre><code>git remote rename vso origin
+<pre tabindex="0"><code>git remote rename vso origin
 </code></pre>
 		</div>
 		<footer class="post__footer">

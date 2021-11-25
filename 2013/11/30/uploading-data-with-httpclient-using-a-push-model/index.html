@@ -12,8 +12,8 @@
 .NET 4.5 introduced the HttpClient class as a new way to communicate over HTTP. It actually relies on HttpWebRequest under the hood, but offers a more convenient and fully asynchronous API." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2013/11/30/uploading-data-with-httpclient-using-a-push-model/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2013-11-30T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2013-11-30T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2013-11-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-11-30T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -89,7 +89,7 @@ if (!doNotTrack) {
 <li><code>StreamContent</code>: represents raw binary content in the form of a <code>Stream</code></li>
 </ul>
 <p>For instance, here’s how you would upload the content of a file:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadFileAsync(Uri uri, <span style="color:#66d9ef">string</span> filename)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadFileAsync(Uri uri, <span style="color:#66d9ef">string</span> filename)
 {
     <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> stream = File.OpenRead(filename))
     {
@@ -100,7 +100,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>As you may have noticed, nowhere in this code do we write to the request stream explicitly: the content is <em>pulled</em> from the source stream.</p>
 <p>This “pull” model is fine most of the time, but it has a drawback: it requires that the data to upload already exists in a form that can be sent directly to the server. This is not always practical, because sometimes you want to generate the request content “on the fly”. For instance, if you want to send an object serialized as JSON, with the “pull” approach you first need to serialize it in memory as a string or <code>MemoryStream</code>, then assign that to the request’s content:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 {
     <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient();
     <span style="color:#66d9ef">string</span> json = JsonConvert.SerializeObject(data);
@@ -109,7 +109,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>This is fine for small objects, but obviously not optimal for large object graphs…</p>
 <p>So, how could we reverse this pull model to a push model? Well, it’s actually pretty simple: all you have to do is to create a class that inherits <code>HttpContent</code>, and override the <code>SerializeToStreamAsync</code> method to write to the request stream directly. Actually, I intended to blog about my own implementation, but then I did some research, and it turns out that Microsoft has already done the work: the <a href="https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client">Web API 2 Client</a> library provides a `PushStreamContent``` class that does exactly that. Basically, you just pass a delegate that defines what to do with the request stream. Here’s how it works:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 {
     <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient();
     <span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> PushStreamContent((stream, httpContent, transportContext) =&gt;
@@ -125,7 +125,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>Note that the <code>PushStreamContent</code> class also provides a constructor overload that accepts an asynchronous delegate, if you want to write to the stream asynchronously.</p>
 <p>Actually, for this specific use case, the Web API 2 Client library provides a less convoluted approach: the <code>ObjectContent</code> class. You just pass it the object to send and a <code>MediaTypeFormatter</code>, and it takes care of serializing the object to the request stream:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task UploadJsonObjectAsync&lt;T&gt;(Uri uri, T data)
 {
     <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient();
     <span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> ObjectContent&lt;T&gt;(data, <span style="color:#66d9ef">new</span> JsonMediaTypeFormatter());

@@ -12,8 +12,8 @@
 string text = $&#34;{p.Name} was born on {p.DateOfBirth:D}&#34;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2015/02/24/customizing-string-interpolation-in-c-6/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2015-02-24T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2015-02-24T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2015-02-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-02-24T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -81,7 +81,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-02-24T00:00:00Z">February 24, 2015</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>One of the major new features in C# 6 is string interpolation, which allows you to write things like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> text = <span style="color:#e6db74">$&#34;{p.Name} was born on {p.DateOfBirth:D}&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> text = <span style="color:#e6db74">$&#34;{p.Name} was born on {p.DateOfBirth:D}&#34;</span>;
 </code></pre></div><p>A lesser known aspect of this feature is that an interpolated string can be treated either as a <code>String</code>, or as an <code>IFormattable</code>, depending on the context. When it is converted to an <code>IFormattable</code>, it constructs a <code>FormattableString</code> object that implements the interface and exposes:</p>
 <ul>
 <li>the format string with the placeholders (“holes”) replaced by numbers (compatible with <code>String.Format</code>)</li>
@@ -91,16 +91,16 @@ if (!doNotTrack) {
 <h3 id="specifying-the-culture">Specifying the culture</h3>
 <p>During the design of the string interpolation feature, there was a lot of debate on whether to use the current culture or the invariant culture to format the values; there were good arguments on both sides, but eventually it was decided to use the current culture, for consistency with <code>String.Format</code> and similar APIs that use <a href="https://msdn.microsoft.com/en-us/library/txafckwd.aspx">composite formatting</a>. Using the current culture makes sense when you’re using string interpolation to build strings to be displayed in the user interface; but there are also scenarios where you want to build strings that will be consumed by an API or protocol (URLs, SQL queries…), and in those cases you usually want to use the invariant culture.</p>
 <p>C# 6 provides an easy way to do that, by taking advantage of the conversion to <code>IFormattable</code>. You just need to create a method like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Invariant(FormattableString formattable)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Invariant(FormattableString formattable)
 {
     <span style="color:#66d9ef">return</span> formattable.ToString(CultureInfo.InvariantCulture);
 }
 </code></pre></div><p>And you can then use it as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> text = Invariant(<span style="color:#e6db74">$&#34;{p.Name} was born on {p.DateOfBirth:D}&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> text = Invariant(<span style="color:#e6db74">$&#34;{p.Name} was born on {p.DateOfBirth:D}&#34;</span>);
 </code></pre></div><p>The values in the interpolated strings will now be formatted with the invariant culture, rather than the default culture.</p>
 <h3 id="building-urls">Building URLs</h3>
 <p>Here’s a more advanced example. String interpolation is a convenient way to build URLs, but if you include arbitrary strings in a URL, you need to be careful to URL-encode them. A custom string interpolator can do that for you; you just need to create a custom <code>IFormatProvider</code> that will take care of encoding the values. The implementation was not obvious at first, but after some trial and error I came up with this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UrlFormatProvider</span> : IFormatProvider
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UrlFormatProvider</span> : IFormatProvider
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UrlFormatter <span style="color:#ae81ff">_f</span>ormatter = <span style="color:#66d9ef">new</span> UrlFormatter();
 
@@ -124,7 +124,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>You can use the formatter like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Url(FormattableString formattable)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Url(FormattableString formattable)
 {
     <span style="color:#66d9ef">return</span> formattable.ToString(<span style="color:#66d9ef">new</span> UrlFormatProvider());
 }
@@ -144,7 +144,7 @@ if (!doNotTrack) {
 </ul>
 <p>(there are probably other things to take care of, but these are the most obvious).</p>
 <p>We can use the same approach as for URLs and create a <code>SqlFormatProvider</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SqlFormatProvider</span> : IFormatProvider
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SqlFormatProvider</span> : IFormatProvider
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SqlFormatter <span style="color:#ae81ff">_f</span>ormatter = <span style="color:#66d9ef">new</span> SqlFormatter();
 
@@ -172,7 +172,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>You can then use the formatter like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Sql(FormattableString formattable)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Sql(FormattableString formattable)
 {
     <span style="color:#66d9ef">return</span> formattable.ToString(<span style="color:#66d9ef">new</span> SqlFormatProvider());
 }
@@ -183,7 +183,7 @@ if (!doNotTrack) {
 </code></pre></div><p>This will take care of properly formatting the values to produce a valid SQL query.</p>
 <h3 id="using-string-interpolation-when-targeting-older-versions-of-net">Using string interpolation when targeting older versions of .NET</h3>
 <p>As is often the case for language features that leverage .NET framework types, you can use this feature with older versions of the framework that don’t have the <code>FormattableString</code> class; you just have to create the class yourself in the appropriate namespace. Actually, there are two classes to implement: <code>FormattableString</code> and <code>FormattableStringFactory</code>. <a href="https://twitter.com/jonskeet/status/569973023064887296">Jon Skeet was apparently in a hurry to try this</a>, and he has already <a href="https://gist.github.com/jskeet/9d297d0dc013d7a557ee">provided an example</a> with the code for these classes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
 
 <span style="color:#66d9ef">namespace</span> System.Runtime.CompilerServices
 {

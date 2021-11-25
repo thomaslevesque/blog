@@ -14,8 +14,8 @@ Today, I&rsquo;ll present another piece of the puzzle: how to make Entity Framew
 Value conversion for a specific strongly-typed id Out of the box, EF Core doesn&rsquo;t know anything about our strongly-typed ids." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-12-23T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-12-23T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2020-12-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-12-23T00:00:00+00:00" />
 <meta property="og:see_also" content="https://thomaslevesque.com/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/" /><meta property="og:see_also" content="https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/" /><meta property="og:see_also" content="https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/" /><meta property="og:see_also" content="https://thomaslevesque.com/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/" />
 
 
@@ -97,14 +97,14 @@ if (!doNotTrack) {
 </div></div>
 		</header><div class="content post__content clearfix">
 			<p>So far in this series, I showed <a href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">how to use C# 9 records to declare strongly-typed ids</a> as easily as this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> record ProductId(<span style="color:#66d9ef">int</span> Value) : StronglyTypedId&lt;<span style="color:#66d9ef">int</span>&gt;(Value);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> record ProductId(<span style="color:#66d9ef">int</span> Value) : StronglyTypedId&lt;<span style="color:#66d9ef">int</span>&gt;(Value);
 </code></pre></div><p>I also explained how to make them work correctly <a href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">with ASP.NET Core model binding</a> and <a href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">JSON serialization</a>.</p>
 <p>Today, I&rsquo;ll present another piece of the puzzle: how to make Entity Framework core handle strongly-typed ids correctly.</p>
 <h2 id="value-conversion-for-a-specific-strongly-typed-id">Value conversion for a specific strongly-typed id</h2>
 <p>Out of the box, EF Core doesn&rsquo;t know anything about our strongly-typed ids. It just sees a custom type with no known conversion to a database type, so it assumes that it&rsquo;s an entity. Which means that if we don&rsquo;t do anything, it will attempt to map <code>ProductId</code> to a <code>ProductId</code> table with a <code>Value</code> column. Definitely <em>not</em> what we want!</p>
 <p>A strongly-typed id is just wrapper for a single value, so it should be mapped to a single column in the same table as its declaring entity. That column should be of a type compatible with the underlying type of the strongly-typed id, i.e. <code>int</code> in the case of <code>ProductId</code>.</p>
 <p>The way to tell EF Core how to do that is to to configure a value converter for properties that are strongly-typed ids. The simplest way to do this is to specify expressions for converting the property to and from the database type:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">modelBuilder.Entity&lt;Product&gt;(builder =&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">modelBuilder.Entity&lt;Product&gt;(builder =&gt;
 {
     ...
     builder.Property(p =&gt; p.Id)
@@ -116,7 +116,7 @@ if (!doNotTrack) {
 <h2 id="applying-the-conversion-to-all-strongly-typed-id-properties">Applying the conversion to all strongly-typed id properties</h2>
 <p>Manually applying these conversions to each and every strongly-typed id in the model is going to get old pretty fast, right? So let&rsquo;s fix that!</p>
 <p>We&rsquo;re going to examine each property of each entity in the EF Core model, and if it&rsquo;s a strongly-typed id, we&rsquo;ll use reflection to generate the appropriate converter, and apply it to the property. This is done by the following method, to be called from <code>OnModelCreating</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> AddStronglyTypedIdConversions(ModelBuilder modelBuilder)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> AddStronglyTypedIdConversions(ModelBuilder modelBuilder)
 {
     <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> entityType <span style="color:#66d9ef">in</span> modelBuilder.Model.GetEntityTypes())
     {
@@ -171,12 +171,12 @@ if (!doNotTrack) {
 <p>If we explicitly configure our entity primary keys and relations, this works fine. However, if we just rely on the EF Core conventions, we&rsquo;re going to run into a problem: <code>entityType.GetProperties()</code> does <em>not</em> return the <code>Id</code> property of <code>Product</code>! Let&rsquo;s take a step back to understand why.</p>
 <p>Before calling <code>OnModelCreating</code> to let the user customize the model, EF Core creates the model based on conventions. One of the conventions is that a property named <code>Id</code> is assumed to be the key for the entity. However, because <code>ProductId</code> is a &ldquo;complex&rdquo; type, EF Core assumes that it&rsquo;s an entity, rather than a scalar value. So it considers the <code>Id</code> property to be a navigation property to the <code>ProductId</code> entity. As a result, it implicitly introduces an <code>IdTempId</code> property as the foreign key, and <code>Id</code> itself doesn&rsquo;t appear as a property (it&rsquo;s a <em>navigation</em> property instead).</p>
 <p>To fix this, we need to explicitly configure <code>Id</code> as the key for the entity, for each entity type:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">modelBuilder.Entity&lt;Product&gt;(builder =&gt; builder.HasKey(p =&gt; p.Id));
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">modelBuilder.Entity&lt;Product&gt;(builder =&gt; builder.HasKey(p =&gt; p.Id));
 </code></pre></div><p>(note that it has to be done <em>before</em> the call to <code>AddStronglyTypedIdConversions</code>)</p>
 <p>Similarly, relations between entities should be configured explicitly so that foreign keys are handled correctly.</p>
 <p>Personally it doesn&rsquo;t really bother me, because I prefer to configure my entities explicitly anyway, rather than just rely on conventions. If you prefer to rely on conventions, there&rsquo;s probably a way to make it work without manual configuration, but I haven&rsquo;t found a satisfying solution yet. It should be easier when <a href="https://github.com/dotnet/efcore/issues/10784">#10784</a> is resolved.</p>
 <p>So, in the end, the <code>OnModelCreating</code> method looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnModelCreating(ModelBuilder modelBuilder)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnModelCreating(ModelBuilder modelBuilder)
 {
     <span style="color:#66d9ef">base</span>.OnModelCreating(modelBuilder);
 
@@ -186,7 +186,7 @@ if (!doNotTrack) {
     AddStronglyTypedIdConversions(modelBuilder);
 }
 </code></pre></div><p>At this point, everything should be working as expected. Since records automatically generate the <code>==</code> operator, you can do this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> Product GetProductById(ProductId id)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> Product GetProductById(ProductId id)
 {
     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_d</span>bContext.Products.SingleOrDefault(p =&gt; p.Id == id);
 }

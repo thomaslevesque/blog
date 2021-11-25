@@ -12,8 +12,8 @@
 The GetHashCode method OK, I realize that most developers don&rsquo;t need to implement their own hash table, or even implement GetHashCode very often, but still, it&rsquo;s important to know about this." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-05-15T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-05-15T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2020-05-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-15T00:00:00+00:00" />
 
 
 
@@ -110,7 +110,7 @@ if (!doNotTrack) {
 <p>A hash table is a data structure that associates a value with a key. It enables looking up the value for a given key, and does so with an average time complexity of <code>O(1)</code>; in other words, the time to find an entry by key doesn&rsquo;t depend on the number of entries in the hash table. The general principle is to place entries in a fixed number of &ldquo;buckets&rdquo;, according to the <em>hash code</em> of the key.</p>
 <p>Let&rsquo;s call <code>B</code> the number of buckets, and <code>H</code> the hash code of the key.</p>
 <p>Adding an entry to a hash table looks like this (pseudo code):</p>
-<pre><code>// Calculate the hash code of the key
+<pre tabindex="0"><code>// Calculate the hash code of the key
 H = key.GetHashCode()
 // Calculate the index of the bucket where the entry should be added
 bucketIndex = H mod B
@@ -118,7 +118,7 @@ bucketIndex = H mod B
 buckets[bucketIndex].Add(entry)
 </code></pre><p>Note that there can be more than one entry per bucket, since there&rsquo;s only a fixed number of buckets. The way this is handled varies between implementations, but a common approach is to use a linked list.</p>
 <p>Searching for an entry by key is done following this process:</p>
-<pre><code>// Calculate the hash code of the key
+<pre tabindex="0"><code>// Calculate the hash code of the key
 H = key.GetHashCode()
 // Calculate the index of the bucket where the entry would be, if it exists
 bucketIndex = H mod B
@@ -130,7 +130,7 @@ entry = buckets[bucketIndex].Find(key)
 <h2 id="how-to-achieve-an-even-distribution">How to achieve an even distribution</h2>
 <p>To make sure the entries will be evenly distributed among the buckets, the hash code values must also be evenly distributed. This is why <code>GetHashCode</code> can&rsquo;t just return any random or arbitrary value, but must strive to return different values for different objects.</p>
 <p>This is typically done by combining the values that are considered for equality, with a few prime numbers thrown in to improve the distribution. Here&rsquo;s an example, inspired by <a href="https://stackoverflow.com/a/263416/98713">Jon Skeet&rsquo;s answer on StackOverflow</a>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point3D</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point3D</span>
 {
     <span style="color:#66d9ef">public</span> Point3D(<span style="color:#66d9ef">double</span> x, <span style="color:#66d9ef">double</span> y, <span style="color:#66d9ef">double</span> z) =&gt; (X, Y, Z) = (x, y, z);
 
@@ -162,9 +162,9 @@ entry = buckets[bucketIndex].Find(key)
 <h2 id="an-easier-way">An easier way</h2>
 <p>The implementation shown above is fine, but it&rsquo;s a little tricky to get right without looking at a reference implementation. Also, you need to be careful with null values.</p>
 <p>Fortunately, there&rsquo;s a very easy alternative: tuples! Using the value tuples introduced in C# 7, the <code>GetHashCode</code> implementation can be made much simpler by taking advantage of the tuple&rsquo;s <code>GetHashCode</code> method:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> GetHashCode() =&gt; (X, Y, Z).GetHashCode();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> GetHashCode() =&gt; (X, Y, Z).GetHashCode();
 </code></pre></div><p>Note that it can also be used to simplify <code>Equals</code> a bit:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> Equals(<span style="color:#66d9ef">object</span> other) =&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> Equals(<span style="color:#66d9ef">object</span> other) =&gt;
     other <span style="color:#66d9ef">is</span> Point3D p &amp;&amp; (p.X, p.Y, p.Z).Equals((X, Y, Z));
 </code></pre></div><h2 id="closing">Closing</h2>
 <p>Well, this post was a bit longer than I expected. Hopefully you learned something from it! I&rsquo;ll probably write a few more of these articles, depending on my inspiration. I already have a few ideas (reference types vs. value types, memory management&hellip;), but feel free to suggest other topics. I can&rsquo;t promise I&rsquo;ll cover them, but at least I&rsquo;ll consider them!</p>

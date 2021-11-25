@@ -12,8 +12,8 @@
 Note: Unfortunately the new C# features aren&rsquo;t supported yet in the latest SDK preview, so we can&rsquo;t test them in actual projects." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/05/25/exciting-new-features-in-csharp-9/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-05-25T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-06-17T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2020-05-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-17T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -86,24 +86,24 @@ if (!doNotTrack) {
 <p><em>Update 2020/06/17: A few of the features mentioned in this post are now available in the .NET 5 preview 5 SDK.</em></p>
 <h2 id="target-typed-new">Target typed <code>new</code></h2>
 <p>In C# 9, it will be possible to omit the type in object creation expressions, if the type can be inferred from the context, making code terser and less repetitive:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; <span style="color:#ae81ff">_</span>properties = <span style="color:#66d9ef">new</span>();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; <span style="color:#ae81ff">_</span>properties = <span style="color:#66d9ef">new</span>();
 </code></pre></div><h2 id="parameter-null-checking">Parameter null-checking</h2>
 <p>This feature introduces a simple syntax to automate null checks on method parameters. For instance, this code :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SayHello(<span style="color:#66d9ef">string</span> name)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SayHello(<span style="color:#66d9ef">string</span> name)
 {
     <span style="color:#66d9ef">if</span> (name == <span style="color:#66d9ef">null</span>)
         <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(nameof(name));
     <span style="color:#66d9ef">return</span> <span style="color:#e6db74">$&#34;Hello {name}&#34;</span>;
 }
 </code></pre></div><p>Can be simplified to this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SayHello(<span style="color:#66d9ef">string</span> name!) =&gt; <span style="color:#e6db74">$&#34;Hello {name}&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SayHello(<span style="color:#66d9ef">string</span> name!) =&gt; <span style="color:#e6db74">$&#34;Hello {name}&#34;</span>;
 </code></pre></div><p>The <code>!</code> after the parameter name automatically inserts a null check for that parameter.</p>
 <h2 id="pattern-matching-improvements">Pattern matching improvements</h2>
 <p>C# 9 comes with a few improvements to pattern matching. The most useful, in my opinion, is the <code>not</code> pattern, which lets you write code like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">if</span> (foo <span style="color:#66d9ef">is</span> not <span style="color:#66d9ef">null</span>) { ... }
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">if</span> (foo <span style="color:#66d9ef">is</span> not <span style="color:#66d9ef">null</span>) { ... }
 <span style="color:#66d9ef">if</span> (animal <span style="color:#66d9ef">is</span> not Dog) { ... }
 </code></pre></div><p>Relational (<code>&lt;</code>, <code>&gt;=</code>, etc.) and logical operators (<code>and</code> and <code>or</code>) can also be used in pattern matching:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">return</span> size <span style="color:#66d9ef">switch</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">return</span> size <span style="color:#66d9ef">switch</span>
 {
     &lt; <span style="color:#ae81ff">10</span> =&gt; <span style="color:#e6db74">&#34;small&#34;</span>,
     &gt;= <span style="color:#ae81ff">10</span> and &lt; <span style="color:#ae81ff">100</span> =&gt; <span style="color:#e6db74">&#34;medium&#34;</span>,
@@ -112,7 +112,7 @@ if (!doNotTrack) {
 </code></pre></div><h2 id="records-and-with-expressions">Records and <code>with</code> expressions</h2>
 <p>This is the big one, in my opinion. Creating simple data types in C# have always been more painful than it should be; you have to create a class, declare properties, add a constructor if you want your type to be immutable, override <code>Equals</code> and <code>GetHashCode</code>, maybe add a deconstructor, etc. C# 7 tuples made this a little easier, but still not ideal since a tuple is anonymous. The new Record feature in C# 9 makes things <em>much</em> easier!</p>
 <p>For instance, a simple class representing a point might look like this, if you implement equality, deconstructor, etc.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point</span> : IEquatable&lt;Point&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point</span> : IEquatable&lt;Point&gt;
 {
     <span style="color:#66d9ef">public</span> Point(<span style="color:#66d9ef">int</span> x, <span style="color:#66d9ef">int</span> y) =&gt;
         (X, Y) = (x, y);
@@ -134,25 +134,25 @@ if (!doNotTrack) {
         (x, y) = (X, Y);
 }
 </code></pre></div><p>In C# 9, using the Records feature, the above class can be reduced to this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> data <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point</span>(<span style="color:#66d9ef">int</span> X, <span style="color:#66d9ef">int</span> Y);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> data <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point</span>(<span style="color:#66d9ef">int</span> X, <span style="color:#66d9ef">int</span> Y);
 </code></pre></div><p>Yup, just one line, and not even a long one! How great is that? Note that it also works with structs, if you need a value type.</p>
 <p>Note that records are immutable: you can&rsquo;t change the values of their properties. So if you want to modify an instance of a record type, you need to create a new one (this should be familiar, since the same is true of dates and strings, for instance). The current approach would be to do something like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Point p1 = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Point p1 = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>);
 Point p2 = <span style="color:#66d9ef">new</span> Point(p1.X, <span style="color:#ae81ff">3</span>);
 </code></pre></div><p>Basically, copy all properties from the original instance, except the ones you want to change. In this case, it&rsquo;s OK because there are only 2 properties, but it can quickly become annoying when there are many properties.</p>
 <p>C# 9 introduces <code>with</code> expressions, which let you do this instead:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Point p1 = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Point p1 = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>);
 Point p2 = p1 with { Y = <span style="color:#ae81ff">3</span> };
 </code></pre></div><p>A <code>with</code> expression makes a clone of the original object, with the modified properties specified between curly brackets.</p>
 <p>There are several sub-features related to records (e.g. init-only properties), that I won&rsquo;t cover here. Check out <a href="https://devblogs.microsoft.com/dotnet/welcome-to-c-9-0/">Mads Torgersen&rsquo;s article</a> for a more in-depth description.</p>
 <h2 id="target-typed-conditionals">Target-typed conditionals</h2>
 <p>There&rsquo;s a small thing that has been annoying C# developers for years: when using the conditional operator (also known as &ldquo;ternary&rdquo;), there must be a type conversion from one side to the other. For instance, this code doesn&rsquo;t compile:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Stream s = inMemory ? <span style="color:#66d9ef">new</span> MemoryStream() : <span style="color:#66d9ef">new</span> FileStream(path);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Stream s = inMemory ? <span style="color:#66d9ef">new</span> MemoryStream() : <span style="color:#66d9ef">new</span> FileStream(path);
 </code></pre></div><p>Because there&rsquo;s no conversion between <code>MemoryStream</code> and <code>FileStream</code>. To fix it, one side has to be explicitly cast to <code>Stream</code>.</p>
 <p>In C# 9, the code above will be allowed, if both sides are convertible to the target type (in this case, <code>Stream</code>).</p>
 <h2 id="covariant-return">Covariant return</h2>
 <p>Currently, when you override a method from a base class, the overriding method <strong>must</strong> return the same type as the base class method. In some situations, it would be more practical to return a more specific type. C# 9 makes this possible by allowing overriding methods to return a type that derives from the base method&rsquo;s return type:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Thing</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Thing</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> Thing Clone() =&gt; <span style="color:#66d9ef">new</span> Thing();
 }
@@ -164,7 +164,7 @@ Point p2 = p1 with { Y = <span style="color:#ae81ff">3</span> };
 }
 </code></pre></div><h2 id="top-level-statements">Top-level statements</h2>
 <p>This feature aims to reduce boilerplate code for simple programs. Currently, even the simplest program needs a class with a <code>Main</code> method:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
 
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
 {
@@ -174,7 +174,7 @@ Point p2 = p1 with { Y = <span style="color:#ae81ff">3</span> };
     }
 }
 </code></pre></div><p>This just adds noise, and make things confusing for beginners. C# 9 will make it possible to omit the <code>Program</code> class and <code>Main</code> method, so that the code above can be simplified to this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
 Console.WriteLine(<span style="color:#e6db74">&#34;Hello world&#34;</span>);
 </code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>Most of the features introduced by C# 9 are relatively small ones, designed to make code simpler, less cluttered and more readable; they&rsquo;re very convenient, but probably won&rsquo;t change how we write code in a very fundamental way. Records are another story, though; they make it much easier and less painful to write immutable types, which I hope will encourage developers to take advantage of immutability whenever possible.</p>

@@ -14,8 +14,8 @@ Records were introduced in C# 9 as a simple way to define data types with value 
 public record Money(decimal Amount, string CurrencyCode); An annoying limitation was that records were always reference types, but in some scenarios it would have been better to use value types." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2021/11/04/a-quick-review-of-csharp-10-new-language-features/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-11-04T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-11-04T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2021-11-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-11-04T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -88,9 +88,9 @@ if (!doNotTrack) {
 <h2 id="record-structs">Record structs</h2>
 <p>📄 <a href="https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/record-structs.md">Proposal</a></p>
 <p>Records were introduced in C# 9 as a simple way to define data types with value equality semantics, for instance:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> record Money(<span style="color:#66d9ef">decimal</span> Amount, <span style="color:#66d9ef">string</span> CurrencyCode);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> record Money(<span style="color:#66d9ef">decimal</span> Amount, <span style="color:#66d9ef">string</span> CurrencyCode);
 </code></pre></div><p>An annoying limitation was that records were always reference types, but in some scenarios it would have been better to use value types. C# 10 fixes this by allowing the declaration of record structs:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> record <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Money</span>(<span style="color:#66d9ef">decimal</span> Amount, <span style="color:#66d9ef">string</span> CurrencyCode);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> record <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Money</span>(<span style="color:#66d9ef">decimal</span> Amount, <span style="color:#66d9ef">string</span> CurrencyCode);
 </code></pre></div><p>Note that this also supports the <code>readonly</code> struct modifier if the record is immutable.</p>
 <p>This is one of the most useful features of C# 10 in my opinion, as it makes it extremely easy to define immutable custom structs, without having to manually implement <code>Equals</code> and <code>GetHashCode</code>.</p>
 <h2 id="static-abstract-members-in-interfaces">Static abstract members in interfaces</h2>
@@ -99,13 +99,13 @@ if (!doNotTrack) {
 <p>(Note that interfaces can already have static methods since C# 8 and the introduction of <a href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#default-interface-methods">Default Interface Methods</a>. These methods are typically used by default implementations of interface methods.)</p>
 <p>Many types have static methods such as <code>Parse</code> or <code>Create</code>, or operators such as <code>+</code> or <code>-</code> (which are actually static methods). However, there&rsquo;s currently no way to use those members in generic code, because they can&rsquo;t be represented in interfaces or base classes. The goal of this feature is to be able to abstract these members in interfaces so that they can be used in generic code.</p>
 <p>The most obvious example is numbers: if you want to write a method that computes the sum of several numbers, it has to specify which type of number it&rsquo;s working on (<code>int</code>, <code>decimal</code>&hellip;). You can&rsquo;t write a generic method that works for all types of number, because there&rsquo;s no way to express the fact that the generic type argument must have an addition operator. In C# 10, it becomes possible to declare this at the interface level:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IAddable&lt;T&gt; <span style="color:#66d9ef">where</span> T : IAddable&lt;T&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IAddable&lt;T&gt; <span style="color:#66d9ef">where</span> T : IAddable&lt;T&gt;
 {
     <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> T Zero { <span style="color:#66d9ef">get</span>; }
     <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> T <span style="color:#66d9ef">operator</span> +(T t1, T t2);
 }
 </code></pre></div><p>Assuming this interface is implemented by all numeric types, this makes it possible to write a method like this, that can compute the sum of numbers of any type:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T Sum&lt;T&gt;(<span style="color:#66d9ef">params</span> T[] numbers) <span style="color:#66d9ef">where</span> T : IAddable&lt;T&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T Sum&lt;T&gt;(<span style="color:#66d9ef">params</span> T[] numbers) <span style="color:#66d9ef">where</span> T : IAddable&lt;T&gt;
 {
     T sum = T.Zero;
     <span style="color:#66d9ef">foreach</span> (T number <span style="color:#66d9ef">in</span> numbers)
@@ -119,12 +119,12 @@ if (!doNotTrack) {
 <p><strong>Note:</strong> this is a preview feature, and still will be when .NET 6.0 is released. To use it, you will need to:</p>
 <ul>
 <li>enable preview features by setting the <code>EnablePreviewFeatures</code> property to true in your project:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;PropertyGroup&gt;</span>
   <span style="color:#f92672">&lt;EnablePreviewFeatures&gt;</span>true<span style="color:#f92672">&lt;/EnablePreviewFeatures&gt;</span>
 <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
 </code></pre></div></li>
 <li>reference the <a href="https://www.nuget.org/packages/system.runtime.experimental">System.Runtime.Experimental package</a>:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ItemGroup&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ItemGroup&gt;</span>
   <span style="color:#f92672">&lt;PackageReference</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;System.Runtime.Experimental&#34;</span> <span style="color:#a6e22e">Version=</span><span style="color:#e6db74">&#34;6.0.0-preview.7.21377.19&#34;</span> <span style="color:#f92672">/&gt;</span>
 <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
 </code></pre></div></li>
@@ -132,7 +132,7 @@ if (!doNotTrack) {
 <h2 id="caller-argument-expression-attribute">Caller argument expression attribute</h2>
 <p>📄 <a href="https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/caller-argument-expression.md">Proposal</a></p>
 <p>This is something I&rsquo;ve been wanting for a looong time! The new <code>[CallerArgumentExpression]</code> attribute lets you capture the expression passed to a method as a string. It&rsquo;s similar to the <code>[CallerMemberName]</code> attribute, and is used like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> LogExpression&lt;T&gt;(T <span style="color:#66d9ef">value</span>, [CallerArgumentExpression(<span style="color:#e6db74">&#34;value&#34;</span>)] <span style="color:#66d9ef">string</span> expression = <span style="color:#66d9ef">null</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> LogExpression&lt;T&gt;(T <span style="color:#66d9ef">value</span>, [CallerArgumentExpression(<span style="color:#e6db74">&#34;value&#34;</span>)] <span style="color:#66d9ef">string</span> expression = <span style="color:#66d9ef">null</span>)
 {
     Console.WriteLine(<span style="color:#e6db74">$&#34;{expression}: {value}&#34;</span>);
 }
@@ -141,9 +141,9 @@ if (!doNotTrack) {
 <span style="color:#66d9ef">var</span> person = <span style="color:#66d9ef">new</span> Person(<span style="color:#e6db74">&#34;Thomas&#34;</span>, <span style="color:#e6db74">&#34;Levesque&#34;</span>);
 LogExpression(person.FirstName); <span style="color:#75715e">// Outputs &#34;person.FirstName: Thomas&#34;
 </span></code></pre></div><p>The <code>expression</code> parameter is optional, and if it isn&rsquo;t specified, the compiler will automatically pass the expression used as the <code>value</code> parameter, as a string. In other words, the call to <code>LogExpression</code> in the code above is equivalent to doing this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">LogExpression(person.FirstName, <span style="color:#e6db74">&#34;person.FirstName&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">LogExpression(person.FirstName, <span style="color:#e6db74">&#34;person.FirstName&#34;</span>);
 </code></pre></div><p>A common use case is a method that checks that an argument isn&rsquo;t null:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> EnsureArgumentIsNotNull&lt;T&gt;(T <span style="color:#66d9ef">value</span>, [CallerArgumentExpression(<span style="color:#e6db74">&#34;value&#34;</span>)] <span style="color:#66d9ef">string</span> expression = <span style="color:#66d9ef">null</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> EnsureArgumentIsNotNull&lt;T&gt;(T <span style="color:#66d9ef">value</span>, [CallerArgumentExpression(<span style="color:#e6db74">&#34;value&#34;</span>)] <span style="color:#66d9ef">string</span> expression = <span style="color:#66d9ef">null</span>)
 {
     <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span>)
         <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(expression);
@@ -161,43 +161,43 @@ LogExpression(person.FirstName); <span style="color:#75715e">// Outputs &#34;per
 <p>C# 10 brings a few improvements to lambda expressions:</p>
 <h3 id="apply-attributes-to-lambda-expression">Apply attributes to lambda expression</h3>
 <p>Currently, only named methods (including local functions) can have attributes; in C# 10, lambda expression can have them as well:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Func&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">bool</span>&gt; isEven = [Pure] n =&gt; n % <span style="color:#ae81ff">2</span> == <span style="color:#ae81ff">0</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Func&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">bool</span>&gt; isEven = [Pure] n =&gt; n % <span style="color:#ae81ff">2</span> == <span style="color:#ae81ff">0</span>;
 </code></pre></div><h3 id="automatically-infer-a-natural-type-for-a-lambda">Automatically infer a &ldquo;natural&rdquo; type for a lambda</h3>
 <p>Historically, C# lambda expressions didn&rsquo;t have an intrinsic type. The expression <code>(int n) =&gt; n % 2 == 0</code> didn&rsquo;t have a type on its own; the type was determined based on what it was assigned to, e.g.:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Func&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">bool</span>&gt; isEven = (<span style="color:#66d9ef">int</span> n) =&gt; n % <span style="color:#ae81ff">2</span> == <span style="color:#ae81ff">0</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Func&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">bool</span>&gt; isEven = (<span style="color:#66d9ef">int</span> n) =&gt; n % <span style="color:#ae81ff">2</span> == <span style="color:#ae81ff">0</span>;
 </code></pre></div><p>Now, the compiler will try to automatically infer a &ldquo;natural&rdquo; delegate type for a lambda, making it possible to use <code>var</code> to make the code more concise and readable:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// isEven is implicitly of type Func&lt;int, bool&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// isEven is implicitly of type Func&lt;int, bool&gt;
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> isEven = (<span style="color:#66d9ef">int</span> n) =&gt; n % <span style="color:#ae81ff">2</span> == <span style="color:#ae81ff">0</span>;
 </code></pre></div><p>The inferred type will always be a variant of the <code>System.Func&lt;...&gt;</code> or <code>System.Action&lt;...&gt;</code> delegate types, depending on the parameters and return type. Note that the compiler will only be able to infer a type if it has all the information it needs, especially the parameter types; it can&rsquo;t infer a type for <code>n =&gt; n % 2 == 0</code>, since it doesn&rsquo;t know the type of <code>n</code>.</p>
 <h3 id="explicitly-specify-the-return-type-for-a-lambda">Explicitly specify the return type for a lambda</h3>
 <p>C# 10 makes it possible to specify a return type for a lambda. This wasn&rsquo;t necessary before, since a lambda had to be assigned to a specific delegate type anyway, but with natural delegate type inference, there might be cases where you want the return type to be different from what is automatically inferred. For instance</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> oneTwoThreeArray = () =&gt; <span style="color:#66d9ef">new</span>[]{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}; <span style="color:#75715e">// inferred type is Func&lt;int[]&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> oneTwoThreeArray = () =&gt; <span style="color:#66d9ef">new</span>[]{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}; <span style="color:#75715e">// inferred type is Func&lt;int[]&gt;
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> oneTwoThreeList = IList&lt;<span style="color:#66d9ef">int</span>&gt; () =&gt; <span style="color:#66d9ef">new</span>[]{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}; <span style="color:#75715e">// same body, but inferred type is now Func&lt;IList&lt;int&gt;&gt;
 </span></code></pre></div><h2 id="extended-property-patterns">Extended property patterns</h2>
 <p>📄 <a href="https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/extended-property-patterns.md">Proposal</a></p>
 <p>Pattern matching was introduced in C# 7.0, and has been improved in every major language version since then. C# 10 is no exception, and makes it possible to use more concise property patterns. For instance, before C# 10, if you wanted to check nested properties in a pattern, you had to write something like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">if</span> (person <span style="color:#66d9ef">is</span> { LastName: { Length: &gt; <span style="color:#ae81ff">30</span>} })
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">if</span> (person <span style="color:#66d9ef">is</span> { LastName: { Length: &gt; <span style="color:#ae81ff">30</span>} })
     Console.WriteLine(<span style="color:#e6db74">&#34;What a long name!&#34;</span>);
 </code></pre></div><p>This was a little more verbose than we&rsquo;d like. With extended property patterns, you can now write it like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">if</span> (person <span style="color:#66d9ef">is</span> { LastName.Length: &gt; <span style="color:#ae81ff">30</span> })
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">if</span> (person <span style="color:#66d9ef">is</span> { LastName.Length: &gt; <span style="color:#ae81ff">30</span> })
     Console.WriteLine(<span style="color:#e6db74">&#34;What a long name!&#34;</span>);
 </code></pre></div><h2 id="file-scoped-namespace">File-scoped namespace</h2>
 <p>📄 <a href="https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/file-scoped-namespaces.md">Proposal</a></p>
 <p>In a typical C# source file, most of the code is indented because it&rsquo;s inside a namespace declaration. It&rsquo;s been like this for so long we don&rsquo;t even notice it anymore, but it&rsquo;s a waste of horizontal space! C# 10 fixes this by letting you declare a namespace for the whole file, without the need for braces:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">namespace</span> MyApp;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">namespace</span> MyApp;
 </code></pre></div><p>Note that it only works for files that contain a single namespace (which is probably the case for 99.9% of C# files).</p>
 <h2 id="global-usings-and-implicit-usings">Global usings and implicit usings</h2>
 <p>📄 <a href="https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/GlobalUsingDirective.md">Proposal</a></p>
 <p>You know how every source file in your projects begins with a wall of <code>using</code> directives, which are frequently the same across many files? Well, good news, it&rsquo;s now possible to write these directives once and for all, for all files in the project! Just prefix the using directives you want to apply everywhere with <code>global</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">global <span style="color:#66d9ef">using</span> System.Linq.Expressions;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">global <span style="color:#66d9ef">using</span> System.Linq.Expressions;
 global <span style="color:#66d9ef">using</span> System.Reflection;
 </code></pre></div><p>This can be done either in a separate file (e.g. <code>GlobalUsings.cs</code>), or in an existing file (e.g. <code>Program.cs</code>).</p>
 <p>Another interesting option (which is actually an SDK feature rather than a language feature) is &ldquo;implicit usings&rdquo;. Basically, depending on the type of project, the SDK will implicitly include global usings for the most commonly used namespaces, such as <code>System</code>, <code>System.Linq</code> (for all projects), <code>Microsoft.AspNetCore.Http</code>, <code>Microsoft.Extensions.Logging</code> (for ASP.NET Core projects), etc. This feature is opt-in, you need to enable it in your project by setting the <code>ImplicitUsings</code> property to <code>enable</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;PropertyGroup&gt;</span>
   <span style="color:#f92672">&lt;ImplicitUsings&gt;</span>enable<span style="color:#f92672">&lt;/ImplicitUsings&gt;</span>
 <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
 </code></pre></div><p>Note that you can also add global usings manually in your project file, like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ItemGroup&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ItemGroup&gt;</span>
   <span style="color:#f92672">&lt;Using</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;System.Linq.Expressions&#34;</span> <span style="color:#f92672">/&gt;</span>
   <span style="color:#f92672">&lt;Using</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;System.Reflection&#34;</span> <span style="color:#f92672">/&gt;</span>
 <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
@@ -206,12 +206,12 @@ global <span style="color:#66d9ef">using</span> System.Reflection;
 <p>This one has been on the radar for a <em>very</em> long time (I think it was already proposed for C# 6), but was always pushed back due to various design issues.</p>
 <p>Until now, it was not legal to explicitly declare a default (parameterless) constructor for a struct, so <code>new MyStruct()</code> was just equivalent to <code>default(MyStruct)</code>. Field initializers were also not allowed in structs.</p>
 <p>With C# 10, it becomes possible to write a struct like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MyStruct</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MyStruct</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Value { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#ae81ff">42</span>;
 }
 </code></pre></div><p>Or like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MyStruct</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MyStruct</span>
 {
     <span style="color:#66d9ef">public</span> MyStruct()
     {
@@ -226,7 +226,7 @@ global <span style="color:#66d9ef">using</span> System.Reflection;
 <h2 id="mix-declarations-and-variables-in-deconstruction">Mix declarations and variables in deconstruction</h2>
 <p>📄 <a href="https://github.com/dotnet/csharplang/issues/125">Proposal</a></p>
 <p>Currently, when deconstructing a tuple or record (or any type with an appropriate <code>Deconstruct</code> method), we can to assign the result either to new variables or existing ones, but not a mix of both. C# 10 relaxes this constraint to allow this.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> p = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> p = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>);
 (<span style="color:#66d9ef">int</span> x1, <span style="color:#66d9ef">int</span> y1) = p; <span style="color:#75715e">// OK
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">int</span> x2;
@@ -252,7 +252,7 @@ global <span style="color:#66d9ef">using</span> System.Reflection;
 <h3 id="constant-interpolated-strings">Constant interpolated strings</h3>
 <p>📄 <a href="https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/constant_interpolated_strings.md">Proposal</a></p>
 <p>It&rsquo;s now possible to use string interpolation to define constants, if the interpolated string only references other string constants:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> Name = <span style="color:#e6db74">&#34;World&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> Name = <span style="color:#e6db74">&#34;World&#34;</span>;
 <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> Hello = <span style="color:#e6db74">$&#34;Hello {Name}&#34;</span>;
 </code></pre></div><p>Nice, but probably not a game-changer&hellip;</p>
 <h3 id="interpolated-string-improvements">Interpolated string improvements</h3>

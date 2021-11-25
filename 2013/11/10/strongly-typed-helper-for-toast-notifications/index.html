@@ -11,8 +11,8 @@
 <meta property="og:description" content="Windows 8 provides an API for showing toast notifications. Unfortunately, it’s very cumbersome: to define the content of a notification, you must use a predefined template that is provided in the form of an XmlDocument, and set the value for each field in the XML. There is nothing in the API to let you know which fields the template defines, you need to check the toast template catalog in the documentation." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2013/11/10/strongly-typed-helper-for-toast-notifications/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2013-11-10T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2013-11-10T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2013-11-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-11-10T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -80,7 +80,7 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Windows 8 provides an API for showing toast notifications. Unfortunately, it’s very cumbersome: to define the content of a notification, you must use a predefined template that is provided in the form of an <code>XmlDocumen</code>t, and set the value for each field in the XML. There is nothing in the API to let you know which fields the template defines, you need to check the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh761494.aspx">toast template catalog</a> in the documentation. It would be much more convenient to have a strongly typed API…</p>
 <p>So I created a simple wrapper around the standard toast API. It can be used like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> ToastContent.ImageAndText02
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> ToastContent.ImageAndText02
 {
     Image = <span style="color:#e6db74">&#34;ms-appx:///Images/dotnet.png&#34;</span>,
     Title = <span style="color:#e6db74">&#34;Hello world!&#34;</span>,
@@ -90,7 +90,7 @@ if (!doNotTrack) {
 notifier.Show(content.CreateNotification());
 </code></pre></div><p>Note that I kept the original names from the toast template catalog, because sufficiently descriptive names would have been too long. I included XML documentation comments on each class to make it easier to choose the correct template.</p>
 <p>If you want more flexibility than a strongly typed template can provide, but don’t want to manipulate the template’s XML, you can use the <code>ToastContent</code> class directly:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> ToastContent(ToastTemplateType.ToastImageAndText02);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> content = <span style="color:#66d9ef">new</span> ToastContent(ToastTemplateType.ToastImageAndText02);
 content.SetImage(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;ms-appx:///Images/dotnet.png&#34;</span>);
 content.SetText(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Hello world!&#34;</span>);
 content.SetText(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&#34;</span>);

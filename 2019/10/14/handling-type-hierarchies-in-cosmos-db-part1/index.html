@@ -12,8 +12,8 @@
  Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&rsquo;t need to split complex objects into multiple tables and use joins like in relational databases." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2019-10-14T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2019-10-14T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2019-10-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-10-14T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -86,7 +86,7 @@ if (!doNotTrack) {
 <li><a href="/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/">Handling type hierarchies in Cosmos DB (part 2)</a></li>
 </ul>
 <p>Azure Cosmos DB is Microsoft&rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&rsquo;t need to split complex objects into multiple tables and use joins like in relational databases. You just serialize your full C# object graph to JSON and save it to the database. The <a href="https://github.com/Azure/azure-cosmos-dotnet-v3">Cosmos DB .NET SDK</a> takes care of serializing your objects, so you don&rsquo;t need to do it explicitly, and it lets you query the database in a strongly typed manner using Linq:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> var client = <span style="color:#66d9ef">new</span> CosmosClient(connectionString);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> var client = <span style="color:#66d9ef">new</span> CosmosClient(connectionString);
 <span style="color:#66d9ef">var</span> database = client.GetDatabase(databaseId);
 <span style="color:#66d9ef">var</span> container = database.GetContainer(<span style="color:#e6db74">&#34;Pets&#34;</span>);
 
@@ -111,7 +111,7 @@ if (!doNotTrack) {
 <p>Actually the problem isn&rsquo;t in the Cosmos DB SDK per se, but in <a href="https://github.com/Azure/azure-cosmos-dotnet-v3">JSON.NET</a>, which is used as the default serializer by the SDK. So, before we can solve the problem for Cosmos DB, we first need to solve it for JSON.NET; we&rsquo;ll see later how to integrate the solution with the Cosmos DB SDK.</p>
 <h2 id="a-simple-class-hierarchy">A simple class hierarchy</h2>
 <p>Let&rsquo;s take a concrete example: a (very simple) object model to represent a file system. We have two concrete types, <code>FileItem</code> and <code>FolderItem</code>, which both inherit from a common abstract base class, <code>FileSystemItem</code>. Here&rsquo;s the code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileSystemItem</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileSystemItem</span>
 {
 <span style="color:#a6e22e">    [JsonProperty(&#34;id&#34;)]</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Id { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
@@ -130,7 +130,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>In a real-world scenario, you&rsquo;d probably want more properties than that, but let&rsquo;s keep things simple for the sake of this demonstration.</p>
 <p>If you create a <code>FileItem</code> and a <code>FolderItem</code> and serialize them to JSON&hellip;</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> items = <span style="color:#66d9ef">new</span> FileSystemItem[]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> items = <span style="color:#66d9ef">new</span> FileSystemItem[]
 {
     <span style="color:#66d9ef">new</span> FolderItem
     {
@@ -148,7 +148,7 @@ if (!doNotTrack) {
 };
 <span style="color:#66d9ef">string</span> json = JsonConvert.SerializeObject(items, Formatting.Indented);
 </code></pre></div><p>&hellip;you&rsquo;ll notice that the JSON doesn&rsquo;t contain any information about the object&rsquo;s type:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">[
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">[
   {
     <span style="color:#e6db74">&#34;ChildrenCount&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>,
     <span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;1&#34;</span>,
@@ -165,13 +165,13 @@ if (!doNotTrack) {
 </code></pre></div><p>If the type information isn&rsquo;t available for deserialization, we can&rsquo;t really blame JSON.NET for not being able to guess. It just needs a bit of help!</p>
 <h2 id="typenamehandling">TypeNameHandling</h2>
 <p>One way to solve this is using a built-in feature of JSON.NET: <code>TypeNameHandling</code>. Basically, you tell JSON.NET to include the name of the type in serialized objects, like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> settings = <span style="color:#66d9ef">new</span> JsonSerializerSettings
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> settings = <span style="color:#66d9ef">new</span> JsonSerializerSettings
 {
     TypeNameHandling = TypeNameHandling.Objects
 };
 <span style="color:#66d9ef">string</span> json = JsonConvert.SerializeObject(items, Formatting.Indented, settings);
 </code></pre></div><p>And you get JSON objects annotated with the assembly-qualified type name of the objects:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">[
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">[
   {
     <span style="color:#e6db74">&#34;$type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;CosmosTypeHierarchy.FolderItem, CosmosTypeHierarchy&#34;</span>,
     <span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;1&#34;</span>,
@@ -187,12 +187,12 @@ if (!doNotTrack) {
   }
 ]
 </code></pre></div><p>This is nice! Using the type name and assembly, JSON.NET can then deserialize these objects correctly:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> deserializedItems = JsonConvert.DeserializeObject&lt;FileSystemItem[]&gt;(json, settings);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> deserializedItems = JsonConvert.DeserializeObject&lt;FileSystemItem[]&gt;(json, settings);
 </code></pre></div><p>There&rsquo;s just one issue, though: if you include actual .NET type names in your JSON documents, what happens when you decide to rename a class, or move it to a different namespace or assembly? Well, your existing documents can no longer be deserialized&hellip; Bummer.</p>
 <p>On the other hand, if we were able to control the type name written to the document, it would solve this problem. And guess what: we can!</p>
 <h2 id="serialization-binder">Serialization binder</h2>
 <p>We just need to implement our own <code>ISerializationBinder</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomSerializationBinder</span> : ISerializationBinder
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomSerializationBinder</span> : ISerializationBinder
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> BindToName(Type serializedType, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">string</span> assemblyName, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">string</span> typeName)
     {
@@ -241,7 +241,7 @@ if (!doNotTrack) {
 };
 <span style="color:#66d9ef">string</span> json = JsonConvert.SerializeObject(items, Formatting.Indented, settings);
 </code></pre></div><p>Which gives us the following JSON:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">[
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">[
   {
     <span style="color:#e6db74">&#34;$type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;folderItem&#34;</span>,
     <span style="color:#e6db74">&#34;ChildrenCount&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>,

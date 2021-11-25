@@ -11,8 +11,8 @@
 <meta property="og:description" content="I&rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&rsquo;s also extremely useful as a general-purpose ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2017/08/26/testing-and-debugging-library-code-from-linqpad/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2017-08-26T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2017-08-26T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2017-08-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-08-26T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -86,7 +86,7 @@ if (!doNotTrack) {
 <p>Write some code that uses your library:</p>
 <p><img src="Testing-and-debugging-library-code-from-LINQPadlinqpad-use-library-2.png" alt="Use your library from LINQPad"></p>
 <p>And add this line at the beginning of your LINQPad script:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Debugger.Launch();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Debugger.Launch();
 </code></pre></div><p>When you run the script, it will open a dialog window prompting you to choose a debugger:</p>
 <p><img src="Testing-and-debugging-library-code-from-LINQPadchoose-debugger-2.png" alt="Choose a debugger"></p>
 <p>Select the Visual Studio instance in which your solution is loaded and click OK. This will attach the Visual Studio debugger to the process that is running the LINQPad script, and pause the execution on the call to <code>Debugger.Launch()</code>:</p>

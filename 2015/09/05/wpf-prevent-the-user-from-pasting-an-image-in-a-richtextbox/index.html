@@ -12,8 +12,8 @@
 When I googled for a way to prevent that, the only solutions I found suggested to intercept the Ctrl-V keystroke, and swallow the event if the clipboard contains an image." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2015-09-05T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2015-09-05T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2015-09-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-09-05T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -95,9 +95,9 @@ if (!doNotTrack) {
 </ul>
 <p>In my case, I just wanted to prevent an image from being pasted or drag and dropped, so I just cancelled the operation when the <code>FormatToApply</code> was <code>&quot;Bitmap&quot;</code>, as shown below.</p>
 <p>XAML:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;RichTextBox</span> <span style="color:#a6e22e">DataObject.Pasting=</span><span style="color:#e6db74">&#34;RichTextBox1_Pasting&#34;</span> <span style="color:#960050;background-color:#1e0010">...</span> <span style="color:#f92672">/&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;RichTextBox</span> <span style="color:#a6e22e">DataObject.Pasting=</span><span style="color:#e6db74">&#34;RichTextBox1_Pasting&#34;</span> <span style="color:#960050;background-color:#1e0010">...</span> <span style="color:#f92672">/&gt;</span>
 </code></pre></div><p>Code-behind:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> RichTextBox1_Pasting(<span style="color:#66d9ef">object</span> sender, DataObjectPastingEventArgs e)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> RichTextBox1_Pasting(<span style="color:#66d9ef">object</span> sender, DataObjectPastingEventArgs e)
 {
     <span style="color:#66d9ef">if</span> (e.FormatToApply == <span style="color:#e6db74">&#34;Bitmap&#34;</span>)
     {

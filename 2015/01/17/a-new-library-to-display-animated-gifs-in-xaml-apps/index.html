@@ -11,8 +11,8 @@
 <meta property="og:description" content="A few years ago, I wrote an article that showed how to display an animated GIF in WPF. The article included the full code, and was quite successful, since WPF had no built-in support for animated GIFs. Based on the issues reported in the comments, I made many edits to the code in the article. At some point I realized it was very impractical, so I published the code on CodePlex (it has now moved to GitHub) under the name WpfAnimatedGif, and started maintaining it there." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2015-01-17T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2015-01-17T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2015-01-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-01-17T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -85,13 +85,13 @@ if (!doNotTrack) {
 <p>So I decided to restart from scratch to address these issues, and created a new project: <a href="https://github.com/thomaslevesque/XamlAnimatedGif">XamlAnimatedGif</a> (as you can see, I’m not very imaginative when it comes to names).</p>
 <p>On the surface, it seems very similar to WpfAnimatedGif, but at its core it uses a completely different approach. Instead of preparing the frames in advance, they are rendered on the fly using a <a href="http://msdn.microsoft.com/fr-fr/library/system.windows.media.imaging.writeablebitmap.aspx">WriteableBitmap</a>. This approach uses more CPU, but much less RAM. Also, in order to be portable, I couldn’t rely on WPF’s built-in image decoding, so I had to implement a full GIF decoder, including LZW decompression of the pixel data. Matthew Flickinger’s article <a href="http://www.matthewflickinger.com/lab/whatsinagif/index.html">“What’s In A GIF”</a> was a big help.</p>
 <p>The basic usage is roughly the same: just set an attached property on an <code>Image</code> control to specify the GIF animation source.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Image</span> <span style="color:#a6e22e">gif:AnimationBehavior.SourceUri=</span><span style="color:#e6db74">&#34;/images/working.gif&#34;</span> <span style="color:#f92672">/&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Image</span> <span style="color:#a6e22e">gif:AnimationBehavior.SourceUri=</span><span style="color:#e6db74">&#34;/images/working.gif&#34;</span> <span style="color:#f92672">/&gt;</span>
 </code></pre></div><p>Here’s the result in the Windows Phone emulator (yes, it’s a animated GIF representing an animated GIF… I guess it could be called a meta-GIF <img src="wlEmoticon-winkingsmile.png" alt="Winking smile">):</p>
 <p><img src="XamlAnimatedGif-WP.gif" alt="XamlAnimatedGif-WP" title="XamlAnimatedGif-WP"></p>
 <p>Unlike WpfAnimatedGif, the source is specified as an URI or as a stream, rather than an <code>ImageSource</code>. It makes the internal implementation much simpler and more robust.</p>
 <p>XamlAnimatedGif currently works on WPF 4.5, Windows 8.1 store apps, and Windows Phone 8.1. It could be extended to support other platforms (WPF 4.0, Windows 8.0, Windows Phone 8.0, Windows Phone Silverlight 8.1, perhaps Silverlight 5), but so far I just focused on making it work on the most recent XAML platforms. I’m not sure if it’s possible to support iOS and Android as well, as I haven’t looked into Xamarin yet. If you want to give it a try, I’ll be glad to accept contributions.</p>
 <p>The library is still labeled alpha because it’s new, but it seems reasonably stable so far. You can install it <a href="http://www.nuget.org/packages/XamlAnimatedGif/">from NuGet</a>:</p>
-<pre><code>PM&gt; Install-Package XamlAnimatedGif -Pre 
+<pre tabindex="0"><code>PM&gt; Install-Package XamlAnimatedGif -Pre 
 </code></pre>
 		</div>
 		<footer class="post__footer">

@@ -12,8 +12,8 @@
 A common Git workflow nowadays is the &ldquo;feature branch&rdquo; workflow: you can&rsquo;t push directly to the &ldquo;main&rdquo; branch (usually master, but it can be something else); instead you have to create a branch from master, commit to that branch, publish it and submit a pull request." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-05-29T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-05-29T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2020-05-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-29T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -98,17 +98,17 @@ if (!doNotTrack) {
 <ol>
 <li>
 <p>Create the feature branch pointing to your current commit. This way your commit will remain accessible via the branch. Note that we&rsquo;re not switching to the new branch, we&rsquo;re still on <code>master</code>.</p>
-<pre><code>git branch my-feature
+<pre tabindex="0"><code>git branch my-feature
 </code></pre><p><img src="fix1-create-branch.png" alt="Create the feature branch"></p>
 </li>
 <li>
 <p>Reset <code>master</code> to its previous state, without touching the working copy (you don&rsquo;t even need to stash your uncommitted changes, but you can if it makes you feel safer).</p>
-<pre><code>git reset --soft origin/master
+<pre tabindex="0"><code>git reset --soft origin/master
 </code></pre><p><img src="fix2-reset.png" alt="Reset to origin/master"></p>
 </li>
 <li>
 <p>Checkout your feature branch.</p>
-<pre><code>git checkout my-feature
+<pre tabindex="0"><code>git checkout my-feature
 </code></pre><p><img src="fix3-checkout.png" alt="Checkout the feature branch"></p>
 </li>
 </ol>

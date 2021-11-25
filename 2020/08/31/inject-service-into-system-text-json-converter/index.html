@@ -12,8 +12,8 @@
 There are basically two variants of this problem. One has a simple solution, the other is a bit of a hack…" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-08-31T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-08-31T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2020-08-31T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-08-31T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -95,7 +95,7 @@ of the supported type(s).</p>
 <p>In this case, it&rsquo;s pretty simple: create the converter manually by passing the
 service it depends on to the constructor, and add it to the
 <code>JsonSerializerOptions</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> options = <span style="color:#66d9ef">new</span> JsonSerializerOptions
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> options = <span style="color:#66d9ef">new</span> JsonSerializerOptions
 {
     Converters =
     {
@@ -108,7 +108,7 @@ framework. You configure the JSON serialization with the <code>AddJsonOptions</c
 where you don&rsquo;t have access to the services, because the service provider isn&rsquo;t
 built yet. In this case, you can register a class that will configure the
 options, like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 services.ConfigureOptions&lt;ConfigureJsonOptions&gt;();
 
 ...
@@ -132,7 +132,7 @@ services.ConfigureOptions&lt;ConfigureJsonOptions&gt;();
 <p>What I mean by that is a converter that you apply on a case by case basis, by
 adding a <code>JsonConverter</code> attribute to properties that need to use the
 converter. For instance:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[JsonConverter(typeof(FooConverter))]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[JsonConverter(typeof(FooConverter))]</span>
 <span style="color:#66d9ef">public</span> Foo Foo { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 </code></pre></div><p>In this situation, you have no control over how the converter is instantiated,
 so you can&rsquo;t inject a service in the constructor. The situation looks hopeless…
@@ -152,7 +152,7 @@ scoped services. We could, instead, inject a <code>IHttpContextAccessor</code>, 
 we&rsquo;ll be able to access the <code>IServiceProvider</code> for the current request. But
 then we would only be able to resolve services in the context of handling a
 HTTP request. So let&rsquo;s combine both approaches:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">/// &lt;summary&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">/// &lt;summary&gt;
 </span><span style="color:#75715e">/// This isn&#39;t a real converter. It only exists as a hack to expose
 </span><span style="color:#75715e">/// IServiceProvider on the JsonSerializerOptions.
 </span><span style="color:#75715e">/// &lt;/summary&gt;
@@ -206,7 +206,7 @@ expose a service provider.</p>
 <p>Then, let&rsquo;s add this converter to the JSON options, using <code>IConfigureOptions</code>.
 Note that we also need to register the <code>IHttpContextAccessor</code>, which isn&rsquo;t
 registered by default:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddHttpContextAccessor();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddHttpContextAccessor();
 services.ConfigureOptions&lt;ConfigureJsonOptions&gt;();
 
 ...
@@ -234,7 +234,7 @@ services.ConfigureOptions&lt;ConfigureJsonOptions&gt;();
 }
 </code></pre></div><p>Finally, let&rsquo;s write an extension method to easily retrieve the
 <code>IServiceProvider</code> from the JSON options:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceProvider GetServiceProvider(
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceProvider GetServiceProvider(
     <span style="color:#66d9ef">this</span> JsonSerializerOptions options)
 {
     <span style="color:#66d9ef">return</span> options.Converters.OfType&lt;IServiceProvider&gt;().FirstOrDefault()
@@ -243,7 +243,7 @@ services.ConfigureOptions&lt;ConfigureJsonOptions&gt;();
 }
 </code></pre></div><p>We now have everything we need. In our real JSON converter, we can now retrieve
 the service we need like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> Read(
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> Read(
     <span style="color:#66d9ef">ref</span> Utf8JsonReader reader,
     Type typeToConvert,
     JsonSerializerOptions options)

@@ -13,8 +13,8 @@ Sometimes you need to perform some initialization steps when your web applicatio
  There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2018-07-20T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2018-07-20T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2018-07-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-07-20T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -90,7 +90,7 @@ if (!doNotTrack) {
 </ul>
 <h2 id="async-initialization-middleware">Async initialization middleware</h2>
 <p>A simple way to do it involves writing a custom <a href="/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/">middleware</a> that ensures initialization is complete before processing a request. This middleware starts the initialization process when the app starts, and upon receiving a request, will wait until the initialization is done before passing the request to the next middleware. A basic implementation could look like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncInitializationMiddleware</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncInitializationMiddleware</span>
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> RequestDelegate <span style="color:#ae81ff">_</span>next;
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger <span style="color:#ae81ff">_l</span>ogger;
@@ -146,7 +146,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>We can then add this middleware to the pipeline in the <code>Startup.Configure</code> method. It should be added early in the pipeline, before any other middleware that would need the initialization to be complete.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app, IHostingEnvironment env)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app, IHostingEnvironment env)
 {
     <span style="color:#66d9ef">if</span> (env.IsDevelopment())
     {

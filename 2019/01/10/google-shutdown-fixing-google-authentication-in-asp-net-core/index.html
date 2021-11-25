@@ -11,8 +11,8 @@
 <meta property="og:description" content="A few months ago, Google decided to shutdown Google&#43;, due to multiple data leaks. More recently, they announced that the Google&#43; APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2019-01-10T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2019-01-10T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2019-01-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-01-10T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -90,7 +90,7 @@ if (!doNotTrack) {
 <p>First, let&rsquo;s install the <code>Microsoft.AspNetCore.Authentication.OpenIdConnect</code> NuGet package to the project, if it&rsquo;s not already there.</p>
 <p>Then, we go to the place where we add the built-in Google provider (the call to <code>AddGoogle</code>, usually in the <code>Startup</code> class), and remove that call.</p>
 <p>Instead, we add the OpenID Connect provider, point it to the Google OpenID Connect authority URL, and set the client id (the same that we were using for the built-in Google provider):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services
     .AddAuthentication()
     .AddOpenIdConnect(
         authenticationScheme: <span style="color:#e6db74">&#34;Google&#34;</span>,
@@ -101,11 +101,11 @@ if (!doNotTrack) {
             options.ClientId = configuration[<span style="color:#e6db74">&#34;Authentication:Google:ClientId&#34;</span>];
         });
 </code></pre></div><p>We also need to adjust the callback path to be the same as before, so that the redirect URI configured for the Google app still works; and while we&rsquo;re at it, let&rsquo;s also configure the signout paths.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">options.CallbackPath = <span style="color:#e6db74">&#34;/signin-google&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">options.CallbackPath = <span style="color:#e6db74">&#34;/signin-google&#34;</span>;
 options.SignedOutCallbackPath = <span style="color:#e6db74">&#34;/signout-callback-google&#34;</span>;
 options.RemoteSignOutPath = <span style="color:#e6db74">&#34;/signout-google&#34;</span>;
 </code></pre></div><p>The default configuration already includes the <code>openid</code> and <code>profile</code> scopes, but if we want to have access to the user&rsquo;s email address as we did before, we also need to add the <code>email</code> scope:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">options.Scope.Add(<span style="color:#e6db74">&#34;email&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">options.Scope.Add(<span style="color:#e6db74">&#34;email&#34;</span>);
 </code></pre></div><p>And that&rsquo;s it! Everything should work as it did before. Here&rsquo;s a <a href="https://gist.github.com/thomaslevesque/fe2cb14377e30833484f75ac416134bb">Gist</a> that shows the code before and after the change.</p>
 <h2 id="hey-wheres-the-client-secret">Hey, where&rsquo;s the client secret?</h2>
 <p>You might have noticed that we didn&rsquo;t specify the client secret. Why is this?</p>

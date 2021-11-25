@@ -11,8 +11,8 @@
 <meta property="og:description" content="Regardless of the programming language you&rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2011/09/02/tail-recursion-in-c/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2011-09-02T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2011-09-02T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2011-09-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-09-02T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -84,7 +84,7 @@ if (!doNotTrack) {
 <p>Unfortunately, the C# compiler doesn’t support tail recursion, which is a pity, since <a href="http://msdn.microsoft.com/en-us/library/system.reflection.emit.opcodes.tailcall.aspx">the CLR supports it</a>. However, all is not lost! Some people had a very clever idea to work around this issue: a technique called “trampoline” (because it makes the function “bounce”) that allows to easily transform a recursive algorithm into an iterative algorithm. Samuel Jack has a good explanation of this concept <a href="http://blog.functionalfun.net/2008/04/bouncing-on-your-tail.html">on his blog</a>. In the rest of this article, we will see how to apply this technique to a simple algorithm, using the class from Samuel Jack’s article; then I’ll present another implementation of the trampoline, which I find more flexible.</p>
 <h6 id="a-simple-use-case-in-c"><strong>A simple use case in C#</strong></h6>
 <p>Let’s see how we can transform a simple recursive algorithm, like the computation of the factorial of a number, into an algorithm that uses tail recursion (incidentally, the factorial can be computed much more efficiently with a non-recursive algorithm, but let’s assume we don’t know that…). Here’s a basic implementation that results directly from the definition:</p>
-<pre><code>BigInteger Factorial(int n)
+<pre tabindex="0"><code>BigInteger Factorial(int n)
 {
     if (n &lt; 2)
         return 1;
@@ -93,7 +93,7 @@ if (!doNotTrack) {
 </code></pre><p>(Note the use of <code>BigInteger</code>: if we are to make the recursion deep enough to observe the effects of tail recursion, the result will be far beyond the capacity of an int or even a <code>long</code>…)</p>
 <p>If we call this method with a large value (around 20000 on my machine), we get an error which was quite predictable: <code>StackOverflowException</code>. We made so many nested call to the <code>Factorial</code> method that we exhausted the capacity of the stack. So we’re going to modify this code so that it can benefit from tail recursion…</p>
 <p>As mentioned above, the key requirement for tail recursion is that the method calls itself as the last instruction. It <em>seems</em> to be the case here… but it’s not: the last operation is actually the multiplication, which can’t be executed until we know the result of <code>Factorial(n-1)</code>. So we need to redesign this method so that it ends with a call to itself, with different arguments. To do that, we can add a new parameter named <code>product</code>, which will act as an accumulator:</p>
-<pre><code>BigInteger Factorial(int n, BigInteger product)
+<pre tabindex="0"><code>BigInteger Factorial(int n, BigInteger product)
 {
     if (n &lt; 2)
         return product;
@@ -101,7 +101,7 @@ if (!doNotTrack) {
 }
 </code></pre><p>For the first call, we’ll just have to pass 1 for the initial value of the accumulator.</p>
 <p>We now have a method that meets the requirements for tail recursion: the recursive call to <code>Factorial</code> really is the last instruction. Now that we have put the algorithm in this form, the final transformation to enable tail recursion using Samuel Jack’s trampoline is trivial:</p>
-<pre><code>Bounce&lt;int, BigInteger, BigInteger&gt; Factorial(int n, BigInteger product)
+<pre tabindex="0"><code>Bounce&lt;int, BigInteger, BigInteger&gt; Factorial(int n, BigInteger product)
 {
     if (n &lt; 2)
         return Trampoline.ReturnResult&lt;int, BigInteger, BigInteger&gt;(product);
@@ -112,7 +112,7 @@ if (!doNotTrack) {
 <li>The recursive call to <code>Factorial</code> is replaced with a call to <code>Trampoline.Recurse</code>, which tells the trampoline that the method needs to be called again with different parameters</li>
 </ul>
 <p>This method can’t be used directly: it returns a <code>Bounce</code> object, and we don&rsquo;t really know what to do with this… To execute it, we use the <code>Trampoline.MakeTrampoline</code> method, which returns a new function on which tail recursion is applied. We can then use this new function directly:</p>
-<pre><code>Func&lt;int, BigInteger, BigInteger&gt; fact = Trampoline.MakeTrampoline&lt;int, BigInteger, BigInteger&gt;(Factorial);
+<pre tabindex="0"><code>Func&lt;int, BigInteger, BigInteger&gt; fact = Trampoline.MakeTrampoline&lt;int, BigInteger, BigInteger&gt;(Factorial);
 BigInteger result = fact(50000, 1);
 </code></pre><p>We can now compute the factorial of large numbers, with no risk of causing a stack overflow… Admittedly, it’s not very efficient: as mentioned before, there are better ways of computing a factorial, and furthermore, computations involving <code>BigInteger</code>s are much slower than with <code>int</code>s or <code>long</code>s.</p>
 <h6 id="can-we-make-it-better"><strong>Can we make it better?</strong></h6>
@@ -124,17 +124,17 @@ BigInteger result = fact(50000, 1);
 </ul>
 <p>And finally, I think the terminology isn’t very explicit… Names like <code>Trampoline</code> and <code>Bounce</code> sound like fun, but they don’t really reveal the intent.</p>
 <p>So I tried to improve the system to make it more convenient. My solution is based on lambda expressions. There is only one type argument (the return type), and the parameters are passed trough a closure, so there is no need for multiple methods to handle different numbers of parameters. Here’s what the <code>Factorial</code> method looks like with my implementation:</p>
-<pre><code>RecursionResult&lt;BigInteger&gt; Factorial(int n, BigInteger product)
+<pre tabindex="0"><code>RecursionResult&lt;BigInteger&gt; Factorial(int n, BigInteger product)
 {
     if (n &lt; 2)
         return TailRecursion.Return(product);
     return TailRecursion.Next(() =&gt; Factorial(n - 1, n * product));
 }
 </code></pre><p>It can be used as follows:</p>
-<pre><code>BigInteger result = TailRecursion.Execute(() =&gt; Factorial(50000, 1));
+<pre tabindex="0"><code>BigInteger result = TailRecursion.Execute(() =&gt; Factorial(50000, 1));
 </code></pre><p>It’s more flexible, more concise, and more readable…in my opinion at least<img src="wlemoticon-smile.png" alt="Sourire">. The downside is that performance is slightly worse than before (it takes about 20% longer to compute the factorial of 50000), probably because of the delegate creation at each level of recursion.</p>
 <p>Here’s the full code for the <code>TailRecursion</code> class:</p>
-<pre><code>public static class TailRecursion
+<pre tabindex="0"><code>public static class TailRecursion
 {
     public static T Execute&lt;T&gt;(Func&lt;RecursionResult&lt;T&gt;&gt; func)
     {
@@ -178,11 +178,11 @@ public class RecursionResult&lt;T&gt;
 </code></pre><h6 id="is-there-a-better-way-to-accomplish-tail-recursion-in-c"><strong>Is there a better way to accomplish tail recursion in C#?</strong></h6>
 <p>Sure! But it gets a little tricky, and it’s not pure C#. As I mentioned before, the CLR supports tail recursion, through the <code>tail</code> instruction. Ideally, the C# compiler would automatically generate this instruction for methods that are eligible to tail recursion, but unfortunately it’s not the case, and I don’t think this will ever be supported given the low demand for this feature.</p>
 <p>Anyway, we can cheat a little by helping the compiler to do its job: the .NET Framework SDK provides tools named <a href="http://msdn.microsoft.com/en-us/library/f7dy01k1.aspx">ildasm</a> (IL disassembler) and <a href="http://msdn.microsoft.com/en-us/library/496e4ekx.aspx">ilasm</a> (IL assembler), which can help to fill the gap between C# and the CLR… Let’s go back to the classical recursive implementation of <code>Factorial</code>, which doesn’t yet use tail recursion:</p>
-<pre><code>static BigInteger Factorial(int n, BigInteger product)
+<pre tabindex="0"><code>static BigInteger Factorial(int n, BigInteger product)
 {if (n &lt; 2)	return product;return Factorial(n - 1, n * product);
 }
 </code></pre><p>If we compile this code and disassemble it with ilasm, we get the following IL code:</p>
-<pre><code>.method private hidebysig static valuetype [System.Numerics]System.Numerics.BigInteger
+<pre tabindex="0"><code>.method private hidebysig static valuetype [System.Numerics]System.Numerics.BigInteger
         Factorial(int32 n,
                   valuetype [System.Numerics]System.Numerics.BigInteger product) cil managed
 {
@@ -221,7 +221,7 @@ public class RecursionResult&lt;T&gt;
   IL_0028:  ret
 } // end of method Program::Factorial
 </code></pre><p>It’s a bit hard on the eye if you’re not used to read IL code, but we can see roughly what’s going on… The recursive call is at offset <code>IL_001f;</code> this is where we’re going to fiddle with the generated code to introduce tail recursion. If we look at the documentation for the <code>tail</code> instruction, we see that it must immediately precede a <code>call</code> instruction, and that the instruction following the <code>call</code> must be <code>ret</code> (return). Right now, we have several instructions following the recursive call, because the compiler introduced a local variable to store the return value. We just need to modify the code so that it doesn’t use this variable, and add the <code>tail</code> instruction in the right place:</p>
-<pre><code>.method private hidebysig static valuetype [System.Numerics]System.Numerics.BigInteger
+<pre tabindex="0"><code>.method private hidebysig static valuetype [System.Numerics]System.Numerics.BigInteger
         Factorial(int32 n,
                   valuetype [System.Numerics]System.Numerics.BigInteger product) cil managed
 {

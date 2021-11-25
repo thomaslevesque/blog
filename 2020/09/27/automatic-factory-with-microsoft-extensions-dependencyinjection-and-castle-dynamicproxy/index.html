@@ -11,8 +11,8 @@
 <meta property="og:description" content="Dependency injection: the good and the bad Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&rsquo;s successor), Castle Windsor, etc., but lately I&rsquo;ve mostly been using the one provided by Microsoft in .NET Core : Microsoft.Extensions.DependencyInjection. It&rsquo;s not the most full-featured (in fact, it&rsquo;s pretty bare-bones), but I find it sufficient in most cases." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-09-27T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-09-27T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2020-09-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-09-27T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -81,7 +81,7 @@ if (!doNotTrack) {
 			<h2 id="dependency-injection-the-good-and-the-bad">Dependency injection: the good and the bad</h2>
 <p>Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&rsquo;s successor), Castle Windsor, etc., but lately I&rsquo;ve mostly been using the one provided by Microsoft in .NET Core : <code>Microsoft.Extensions.DependencyInjection</code>. It&rsquo;s not the most full-featured (in fact, it&rsquo;s pretty bare-bones), but I find it sufficient in most cases.</p>
 <p>As much as I love dependency injection, in some situations it can become a little unwieldy… For instance, when you have a class that is instantiated explicitly with some data, and also needs service dependencies. Consider this class, for example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FooViewModel</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FooViewModel</span>
   {
       <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService <span style="color:#ae81ff">_</span>myService;
 
@@ -98,13 +98,13 @@ if (!doNotTrack) {
 </code></pre></div><p>To create an instance of <code>FooViewModel</code>, you need to pass values for <code>id</code> and <code>name</code>, and an instance of <code>IMyService</code>. Which means you must have access to <code>IMyService</code>, so you need to inject it into the class that creates an instance of <code>FooViewModel</code>, even if it doesn&rsquo;t need it itself. It&rsquo;s OK when there&rsquo;s just one dependency, but if there were more, it could get messy. That&rsquo;s a bit annoying…</p>
 <h2 id="factory-pattern">Factory pattern</h2>
 <p>Fortunately, this is a well known problem, and guess what? It has a well known solution! You typically solve this by introducing a factory. For instance, in this case, since we&rsquo;re creating ViewModels, we can create an <code>IViewModelFactory</code> interface like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IViewModelFactory
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IViewModelFactory
 {
     FooViewModel CreateFooViewModel(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name);
 }
 </code></pre></div><p>Notice that the <code>CreateFooViewModel</code> method has the same &ldquo;data&rdquo; parameters as the <code>FooViewModel</code> constructor, but not the &ldquo;service&rdquo; parameters. This way, a class that needs to instantiate a <code>FooViewModel</code> just needs to pass the data to <code>CreateViewModel</code>, without worrying about the service dependencies.</p>
 <p>An implementation of this factory looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewModelFactory</span> : IViewModelFactory
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewModelFactory</span> : IViewModelFactory
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService <span style="color:#ae81ff">_</span>myService;
 
@@ -125,7 +125,7 @@ if (!doNotTrack) {
 <p>Maybe it&rsquo;s time to take a step back and look at the problem from a different perspective…</p>
 <p>How did we get in this mess in the first place? DI containers are supposed to be good at creating instances of classes with dependencies (that&rsquo;s their job, after all!), but as soon as you introduce &ldquo;data&rdquo; parameters in addition to service dependencies, it all breaks down, and you need to do things manually. What we really need is to let the container resolve the service dependencies, and provide the rest ourselves.</p>
 <p>Fortunately, there&rsquo;s a relatively little-known class in <code>Microsoft.Extensions.DependencyInjection</code> that can help us: <code>ActivatorUtilities</code>. This static class has all the smarts to construct an object by resolving service dependencies from the container (a.k.a. service provider), and accepts additional arguments for non-service inputs. For instance, we could use it to construct a <code>FooViewModel</code> like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">ActivatorUtilities.CreateInstance(
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">ActivatorUtilities.CreateInstance(
     serviceProvider,
     <span style="color:#66d9ef">typeof</span>(FooViewModel),
     <span style="color:#ae81ff">123</span>,      <span style="color:#75715e">// id
@@ -136,7 +136,7 @@ if (!doNotTrack) {
 <p>Castle DynamicProxy is a component of the venerable <a href="https://github.com/castleproject/Core">Castle Core library</a>. To put it simply, it makes it easy to implement types dynamically, optionally delegating to another object, and using interceptors to control the behavior of methods and properties. This makes it very well suited for implementing cross-cutting concerns, and things like mocking libraries (FakeItEasy, Moq and NSubstitute all rely on Castle DynamicProxy).</p>
 <p>But how can it help with our factory problem? Well, we&rsquo;re going to use it to automatically implement our <code>IViewModelFactory</code> interface!</p>
 <p>First, we need to write an interceptor. As the name implies, it will intercept all calls to the proxy object create by Castle DynamicProxy. Here it goes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>serviceProvider;
 
@@ -156,7 +156,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>The <code>IInvocation</code> object represents the call. We can examine the method and arguments, and specify the return value. Here we just use the method&rsquo;s return type as the type to create, and we use <code>ActivatorUtilities</code> to create an instance.</p>
 <p>Now, we just need to create the actual proxy object for <code>IViewModelFactory</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> generator = <span style="color:#66d9ef">new</span> ProxyGenerator();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> generator = <span style="color:#66d9ef">new</span> ProxyGenerator();
 <span style="color:#66d9ef">var</span> interceptor = <span style="color:#66d9ef">new</span> FactoryInterceptor(serviceProvider);
 <span style="color:#66d9ef">var</span> factory = generator.
     CreateInterfaceProxyWithoutTarget&lt;IViewModelFactory&gt;(
@@ -164,7 +164,7 @@ if (!doNotTrack) {
 </code></pre></div><p>And that&rsquo;s it, we have our factory! We no longer need to implement the factory&rsquo;s method ourselves, we just need to declare them. We just need to ensure that the methods in the factory interface match the constructors of the ViewModels, or it will fail at runtime.</p>
 <h2 id="wrapping-it-up">Wrapping it up</h2>
 <p>OK, we&rsquo;re almost done. Let&rsquo;s just package this solution in a handy extension method that we can use to register a factory:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServiceCollectionExtensions</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServiceCollectionExtensions</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceCollection AddAutoFactory&lt;TFactory&gt;(<span style="color:#66d9ef">this</span> IServiceCollection services)
         <span style="color:#66d9ef">where</span> TFactory : <span style="color:#66d9ef">class</span>
@@ -208,7 +208,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p><em>Note that I included an optimization in the interceptor: instead of calling <code>ActivatorUtilities.CreateInstance</code> for every call, I used <code>ActivatorUtilities.CreateFactory</code> to create and cache a reusable delegate for each method.</em></p>
 <p>Using this method, we can register our factory like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
 {
     ...
     services.AddAutoFactory&lt;IViewModelFactory&gt;();

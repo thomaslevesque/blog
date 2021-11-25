@@ -13,8 +13,8 @@ The SearchBox control was introduced in Windows 8.1 to enable search scenarios f
  History suggestions are search queries previously entered by the user." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2013-11-04T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2013-11-04T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2013-11-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-11-04T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -91,7 +91,7 @@ if (!doNotTrack) {
 </ul>
 <p>To provide suggestions, you need to handle the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.controls.searchbox.suggestionsrequested"><code>SuggestionsRequested</code></a> event of the <code>SearchBox</code>, and add suggestions using the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.search.searchsuggestioncollection.appendquerysuggestion"><code>AppendQuerySuggestion</code></a> and <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh700542"><code>AppendResultSuggestion</code></a> methods. Let’s focus on result suggestions.</p>
 <p>The <code>AppendResultSuggestion</code> method takes several parameters, and one of them is the image to display for the suggestion. It is mandatory (passing null will throw an exception), and the parameter is of type <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.irandomaccessstreamreference"><code>IRandomAccessStreamReference</code></a>, i.e. something that can provide a stream. I find this a little peculiar, since it would be more natural to pass an <code>ImageSource</code>, but that’s the way it is… So I looked for a class that implements the <code>IRandomAccessStreamReference</code> interface, and the first obvious candidate I found was <code>StorageFile</code>, which represents a file. So I wrote the following code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
 {
     <span style="color:#66d9ef">var</span> deferral = args.Request.GetDeferral();
     <span style="color:#66d9ef">try</span>
@@ -113,7 +113,7 @@ if (!doNotTrack) {
 <p><img src="BiF0g.png" alt="http://i.stack.imgur.com/BiF0g.png"></p>
 <p>I spent a long time double-checking everything, making lots of minor changes to try and locate the issue, I even wrote a custom implementation of <code>IRandomAccessStreamReference</code>… to no avail.</p>
 <p>I eventually <a href="http://stackoverflow.com/questions/19769689/image-not-shown-for-result-suggestions-in-searchbox">submitted the problem to Stack Overflow</a>, and someone kindly provided the solution, which was very simple: instead of <code>StorageFile</code>, use <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.randomaccessstreamreference"><code>RandomAccessStreamReference</code></a> (seems pretty obvious once you know that it exists). The code now becomes :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
 {
     <span style="color:#66d9ef">var</span> imageUri = <span style="color:#66d9ef">new</span> Uri(<span style="color:#e6db74">&#34;ms-appx:///test.png&#34;</span>);
     <span style="color:#66d9ef">var</span> imageRef = RandomAccessStreamReference.CreateFromUri(imageUri);

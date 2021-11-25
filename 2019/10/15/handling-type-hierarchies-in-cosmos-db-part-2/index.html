@@ -12,8 +12,8 @@
  Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&rsquo;s TypeNameHandling feature. In this post, I&rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2019-10-15T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2019-10-15T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2019-10-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-10-15T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -89,7 +89,7 @@ if (!doNotTrack) {
 <h2 id="custom-json-converter">Custom JSON converter</h2>
 <p>With JSON.NET, we can create custom converters to tell the serializer how to serialize and deserialize specific types. Let&rsquo;s see how to apply this feature to our problem.</p>
 <p>First, let add an abstract <code>Type</code> property to the base class of our object model, and implement it in the concrete classes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileSystemItem</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileSystemItem</span>
 {
 <span style="color:#a6e22e">    [JsonProperty(&#34;id&#34;)]</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Id { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
@@ -111,7 +111,7 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ChildrenCount { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 }
 </code></pre></div><p>There&rsquo;s nothing special to do for serialization, as JSON.NET will automatically serialize the <code>Type</code> property. However, we need a converter to handle deserialization when the target type is the abstract <code>FileSystemItem</code> class. Here it is:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileSystemItemJsonConverter</span> : JsonConverter
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileSystemItemJsonConverter</span> : JsonConverter
 {
     <span style="color:#75715e">// This converter handles only deserialization, not serialization.
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> CanRead =&gt; <span style="color:#66d9ef">true</span>;
@@ -149,7 +149,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>And here&rsquo;s how we can now use this converter:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> settings = <span style="color:#66d9ef">new</span> JsonSerializerSettings
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> settings = <span style="color:#66d9ef">new</span> JsonSerializerSettings
 {
     Converters =
     {
@@ -169,7 +169,7 @@ if (!doNotTrack) {
 <p>If you&rsquo;re still using the 2.x SDK, it&rsquo;s trivial: just pass the <code>JsonSerializerSettings</code> with the converter to the <code>DocumentClient</code> constructor (but you should totally consider switching to 3.X, which is much nicer to work with in my opinion).</p>
 <p>In the 3.x SDK, it requires a little more work. The default serializer is based on JSON.NET, so it <em>should</em> be easy to pass custom <code>JsonSerializerSettings</code>&hellip; but unfortunately, the class is not public, so we can&rsquo;t instantiate it ourselves. All we can do is specify <code>CosmosSerializationOptions</code> that are passed to it, and those options only expose a very small subset of what is possible with JSON.NET. So the alternative is to implement our own serializer, based on JSON.NET.</p>
 <p>To do this, we must derive from the <a href="https://github.com/Azure/azure-cosmos-dotnet-v3/blob/06b961a6c181995590097f764b296403169974f8/Microsoft.Azure.Cosmos/src/Serializer/CosmosSerializer.cs"><code>CosmosSerializer</code></a> abstract class:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">public abstract class CosmosSerializer
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">public abstract class CosmosSerializer
 {
     public abstract T FromStream&lt;T&gt;(Stream stream);
     public abstract Stream ToStream&lt;T&gt;(T input);
@@ -177,7 +177,7 @@ if (!doNotTrack) {
 </code></pre></div><p><code>FromStream</code> takes a stream and reads an object of the specified type from the stream. <code>ToStream</code> takes an object, writes it to a stream and returns the stream.</p>
 <p><em><strong>Aside</strong>: To be honest, I don&rsquo;t think it&rsquo;s a very good abstraction&hellip; Returning a <code>Stream</code> is weird, it would be more natural to receive a stream and write to it. The way it&rsquo;s designed, you <strong>have</strong> to create a new <code>MemoryStream</code> for every object you serialize, and then the data will be copied from that stream to the document. That&rsquo;s hardly efficient&hellip; Also, you must dispose the stream you receive in <code>FromStream</code>, which is unusual (you&rsquo;re usually not responsible for disposing an object you didn&rsquo;t create); it also means that the SDK creates a new stream for each document to read, which is, again, inefficient. Ah, well&hellip; It&rsquo;s too late to fix it v3 (it would be a breaking change), but maybe in v4?</em></p>
 <p>Fortunately, we don&rsquo;t have to reinvent the wheel: we can just copy the code from the <a href="https://github.com/Azure/azure-cosmos-dotnet-v3/blob/06b961a6c181995590097f764b296403169974f8/Microsoft.Azure.Cosmos/src/Serializer/CosmosJsonDotNetSerializer.cs">default implementation</a>, and adapt it to our needs. Here it goes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NewtonsoftJsonCosmosSerializer</span> : CosmosSerializer
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NewtonsoftJsonCosmosSerializer</span> : CosmosSerializer
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Encoding DefaultEncoding = <span style="color:#66d9ef">new</span> UTF8Encoding(<span style="color:#66d9ef">false</span>, <span style="color:#66d9ef">true</span>);
 
@@ -223,7 +223,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>We now have a serializer for which we can specify the <code>JsonSerializerSettings</code>. To use it, we just need to specify it when we create the <code>CosmosClient</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> serializerSettings = <span style="color:#66d9ef">new</span> JsonSerializerSettings
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> serializerSettings = <span style="color:#66d9ef">new</span> JsonSerializerSettings
 {
     Converters =
     {
@@ -236,7 +236,7 @@ if (!doNotTrack) {
 };
 <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> CosmosClient(connectionString, clientOptions);
 </code></pre></div><p>And that&rsquo;s it! We can now query our collection of mixed <code>FileItem</code>s and <code>FolderItem</code>s, and have them deserialized to the proper type:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query = container.GetItemLinqQueryable&lt;FileSystemItem&gt;();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query = container.GetItemLinqQueryable&lt;FileSystemItem&gt;();
 <span style="color:#66d9ef">var</span> iterator = query.ToFeedIterator();
 <span style="color:#66d9ef">while</span> (iterator.HasMoreResults)
 {

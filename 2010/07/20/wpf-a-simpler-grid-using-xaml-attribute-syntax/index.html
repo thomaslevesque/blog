@@ -12,8 +12,8 @@
 &lt;Grid&gt; &lt;Grid.RowDefinitions&gt; &lt;RowDefinition Height=&#34;Auto&#34;/&gt; &lt;RowDefinition Height=&#34;5&#34;/&gt; &lt;RowDefinition Height=&#34;*&#34;/&gt; &lt;/Grid.RowDefinitions&gt; &lt;Grid.ColumnDefinitions&gt; &lt;ColumnDefinition Width=&#34;60&#34; /&gt; &lt;ColumnDefinition Width=&#34;*&#34; /&gt; &lt;/Grid.ColumnDefinitions&gt; &lt;Label Content=&#34;Name&#34; Grid.Row=&#34;0&#34; Grid.Column=&#34;0&#34; /&gt; &lt;TextBox Text=&#34;Hello world&#34; Grid." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2010-07-20T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2010-07-20T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2010-07-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2010-07-20T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -81,7 +81,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2010-07-20T00:00:00Z">July 20, 2010</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>The <code>Grid</code> control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Grid&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Grid&gt;</span>
     <span style="color:#f92672">&lt;Grid.RowDefinitions&gt;</span>
         <span style="color:#f92672">&lt;RowDefinition</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;Auto&#34;</span><span style="color:#f92672">/&gt;</span>
         <span style="color:#f92672">&lt;RowDefinition</span> <span style="color:#a6e22e">Height=</span><span style="color:#e6db74">&#34;5&#34;</span><span style="color:#f92672">/&gt;</span>
@@ -99,18 +99,18 @@ if (!doNotTrack) {
     <span style="color:#f92672">&lt;Image</span> <span style="color:#a6e22e">Source=</span><span style="color:#e6db74">&#34;Resources/Desert.jpg&#34;</span> <span style="color:#a6e22e">Grid.Row=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">Grid.Column=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#f92672">/&gt;</span>
 <span style="color:#f92672">&lt;/Grid&gt;</span>
 </code></pre></div><p>In that example, more than half the code is made of the grid definition ! Even though this syntax offers a great flexibility and a precise control of the layout, in mot cases we just need to define the height of rows and the width of columns&hellip; so it would be much simpler if we could declare the grid using the attribute syntax, as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Grid</span> <span style="color:#a6e22e">Rows=</span><span style="color:#e6db74">&#34;Auto,5,*&#34;</span> <span style="color:#a6e22e">Columns=</span><span style="color:#e6db74">&#34;60,*&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Grid</span> <span style="color:#a6e22e">Rows=</span><span style="color:#e6db74">&#34;Auto,5,*&#34;</span> <span style="color:#a6e22e">Columns=</span><span style="color:#e6db74">&#34;60,*&#34;</span><span style="color:#f92672">&gt;</span>
     ...
 <span style="color:#f92672">&lt;/Grid&gt;</span>
 </code></pre></div><p>This article shows how to reach that goal, by creating a <code>SimpleGrid</code> class derived from <code>Grid</code>.</p>
 <p>First of all, our class needs two new properties: <code>Rows</code> and <code>Columns</code>. These properties define the heights and widths of rows and columns, respectively. These dimensions are not just numbers: values such as <code>&quot;*&quot;</code>, <code>&quot;2*&quot;</code> ou <code>&quot;Auto&quot;</code> are valid dimensions for grid bands. WPF has a specific type to represent these values: the <code>GridLength</code> structure. So our new properties will be collections of <code>GridLength</code> objects. Here&rsquo;s the signature of the <code>SimpleGrid</code> class:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SimpleGrid</span> : Grid
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SimpleGrid</span> : Grid
 {
     <span style="color:#66d9ef">public</span> IList&lt;GridLength&gt; Rows { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
     <span style="color:#66d9ef">public</span> IList&lt;GridLength&gt; Columns { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 }
 </code></pre></div><p>Since these properties are in charge of defining the grid&rsquo;s rows and columns, they have to modify the <code>RowDefinitions</code> and <code>ColumnDefinitions</code> properties of the base class. Here&rsquo;s how to implement them to get the desired result :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> IList&lt;GridLength&gt; <span style="color:#ae81ff">_</span>rows;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> IList&lt;GridLength&gt; <span style="color:#ae81ff">_</span>rows;
 <span style="color:#66d9ef">public</span> IList&lt;GridLength&gt; Rows
 {
     <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>rows; }
@@ -146,7 +146,7 @@ if (!doNotTrack) {
 </code></pre></div><p>At this point, our <code>SimpleGrid</code> is already usable&hellip; from C# code, which doesn&rsquo;t really help us since we&rsquo;re trying to make the <em>XAML</em> code simpler. So we need to find a way to declare the values of these properties in XAML attributes, which isn&rsquo;t obvious since they are collections&hellip;</p>
 <p>In XAML, all attributes are written in the form of strings. To convert these strings to values of the required type, WPF makes use of converters, which are classes derived from <code>TypeConverter</code>, associated with each type which supports conversion to and from other types. For instance, the converter for the <code>GridLength</code> structure is the <code>GridLengthConverter</code> class, which can convert numbers and strings to <code>GridLength</code> objects, and back. The conversion mechanism is described in more detail in <a href="http://msdn.microsoft.com/en-us/library/aa970913.aspx">this MSDN article</a>.</p>
 <p>So we need to create a converter and associate it to the type of the <code>Rows</code> and <code>Columns</code> properties. Since we don&rsquo;t have control over the <code>IList&lt;T&gt;</code> type, we&rsquo;ll start by creating a specific <code>GridLengthCollection</code> type to be used instead of <code>IList&lt;GridLength&gt;</code>, and we&rsquo;ll associate a custom converter with it (<code>GridLengthCollectionConverter</code>):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[TypeConverter(typeof(GridLengthCollectionConverter))]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[TypeConverter(typeof(GridLengthCollectionConverter))]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GridLengthCollection</span> : ReadOnlyCollection&lt;GridLength&gt;
 {
     <span style="color:#66d9ef">public</span> GridLengthCollection(IList&lt;GridLength&gt; lengths)
@@ -156,7 +156,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>Why is that collection read-only ? That just because allowing to add or remove rows and columns would make the implementation more complex, and it wouldn&rsquo;t bring any benefit for our objective, which is to make it easier to define a <code>Grid</code> in XAML. So, let&rsquo;s keep it simple, at least for now&hellip; The <code>ReadOnlyCollection&lt;T&gt;</code> does exactly what we need, so we just inherit from it, rather than reinventing the wheel.</p>
 <p>Notice the use of the <code>TypeConverter</code> attribute: that&rsquo;s how we tell the framework which converter should be used with the <code>GridLengthCollection</code> type. Now, all we need to do is to implement that converter :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GridLengthCollectionConverter</span> : TypeConverter
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GridLengthCollectionConverter</span> : TypeConverter
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
     {
@@ -202,7 +202,7 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>This class can converte a <code>GridLengthCollection</code> to and from a string, in which individual dimensions are separated by commas. Notice the use of the <code>GridLengthConverter</code>: since there already is a converter for the elements of the collections, we&rsquo;d better use it rather than try to reimplement the logic to parse a <code>GridLength</code>&hellip;</p>
 <p>Now that all pieces are ready, we can try our new simple grid:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;my:SimpleGrid</span> <span style="color:#a6e22e">Rows=</span><span style="color:#e6db74">&#34;Auto,5,*&#34;</span> <span style="color:#a6e22e">Columns=</span><span style="color:#e6db74">&#34;60,*&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;my:SimpleGrid</span> <span style="color:#a6e22e">Rows=</span><span style="color:#e6db74">&#34;Auto,5,*&#34;</span> <span style="color:#a6e22e">Columns=</span><span style="color:#e6db74">&#34;60,*&#34;</span><span style="color:#f92672">&gt;</span>
     <span style="color:#f92672">&lt;Label</span> <span style="color:#a6e22e">Content=</span><span style="color:#e6db74">&#34;Name&#34;</span> <span style="color:#a6e22e">Grid.Row=</span><span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#a6e22e">Grid.Column=</span><span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#f92672">/&gt;</span>
     <span style="color:#f92672">&lt;TextBox</span> <span style="color:#a6e22e">Text=</span><span style="color:#e6db74">&#34;Hello world&#34;</span> <span style="color:#a6e22e">Grid.Row=</span><span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#a6e22e">Grid.Column=</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">/&gt;</span>
     <span style="color:#f92672">&lt;Rectangle</span> <span style="color:#a6e22e">Fill=</span><span style="color:#e6db74">&#34;Black&#34;</span> <span style="color:#a6e22e">Grid.Row=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">Grid.ColumnSpan=</span><span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">/&gt;</span>
@@ -212,7 +212,7 @@ if (!doNotTrack) {
 </code></pre></div><p>We end up with a much shorter and more readable code than with a normal <code>Grid</code>, and the result is the same: mission complete :)</p>
 <p>Of course, we could improve this class in a number of ways: implement <code>Rows</code> and <code>Columns</code> as dependency properties in order to allow binding, handle addition and removal of rows and columns&hellip; However, this grid is intended for very simple scenarios, where the grid is defined once and for all, and is not modified at runtime (which is presumably the most frequent use case), so it seems sensible to keep it as simple as possible. For more specific needs, like specifying a minimum/maximum width or a shared sized group, we&rsquo;ll stick to the standard <code>Grid</code>.</p>
 <p>For reference, here&rsquo;s the final code of the <code>SimpleGrid</code> class:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SimpleGrid</span> : Grid
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SimpleGrid</span> : Grid
 {
     <span style="color:#66d9ef">private</span> GridLengthCollection <span style="color:#ae81ff">_</span>rows;
     <span style="color:#66d9ef">public</span> GridLengthCollection Rows

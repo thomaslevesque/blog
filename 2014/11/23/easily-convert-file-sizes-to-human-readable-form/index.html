@@ -12,8 +12,8 @@
 This should be a no-brainer, but there are actually a number of different ways to display byte sizes… For instance, there are several co-existing conventions for units and prefixes:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2014/11/23/easily-convert-file-sizes-to-human-readable-form/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2014-11-23T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2014-11-23T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2014-11-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-11-23T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -100,7 +100,7 @@ if (!doNotTrack) {
 <h3 id="ok-enough-of-this-whats-your-point">OK, enough of this! What’s your point?</h3>
 <p>So as you can see, displaying a byte size in human-readable form isn’t as straightforward as you might have expected… I’ve had to write code to do it in a number of apps, and I eventually got tired of doing it again over and over, so I wrote a library that attempts to cover all use cases. I called it <a href="https://github.com/thomaslevesque/HumanBytes">HumanBytes</a>, for reasons that should be obvious… It is also available as a <a href="https://www.nuget.org/packages/HumanBytes">NuGet package</a>.</p>
 <p>Its usage is quite simple. It’s based on a class named <code>ByteSizeFormatter</code>, which has a few properties to control how the value is rendered:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> formatter = <span style="color:#66d9ef">new</span> ByteSizeFormatter
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> formatter = <span style="color:#66d9ef">new</span> ByteSizeFormatter
 {
     Convention = ByteSizeConvention.Binary,
     DecimalPlaces = <span style="color:#ae81ff">1</span>,
@@ -114,7 +114,7 @@ if (!doNotTrack) {
 <span style="color:#66d9ef">var</span> f = <span style="color:#66d9ef">new</span> FileInfo(<span style="color:#e6db74">&#34;TheFile.jpg&#34;</span>);
 Console.WriteLine(<span style="color:#e6db74">&#34;The size of &#39;{0}&#39; is {1}&#34;</span>, f, formatter.Format(f.Length));
 </code></pre></div><p>In most cases, though, you will just want to use the default settings. You can do that easily with the <code>Bytes</code> extension method:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> f = <span style="color:#66d9ef">new</span> FileInfo(<span style="color:#e6db74">&#34;TheFile.jpg&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> f = <span style="color:#66d9ef">new</span> FileInfo(<span style="color:#e6db74">&#34;TheFile.jpg&#34;</span>);
 Console.WriteLine(<span style="color:#e6db74">&#34;The size of &#39;{0}&#39; is {1}&#34;</span>, f, f.Length.Bytes());
 </code></pre></div><p>This method returns an instance of the <code>ByteSize</code> structure, whose <code>ToString</code> method formats the value using the default formatter. You can change the default formatter settings globally through the <code>ByteSizeFormatter.Default</code> static property.</p>
 <h3 id="a-note-on-localization">A note on localization</h3>

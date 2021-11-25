@@ -12,8 +12,8 @@
 As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&rsquo;t a DependencyProperty, so it wasn&rsquo;t possible to bind it. Furthermore, InputBindings didn&rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&hellip;" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2009-10-26T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2009-10-26T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2009-10-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2009-10-26T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -86,7 +86,7 @@ if (!doNotTrack) {
 <p>Until now, in order to bind the <code>Command</code> of a <code>KeyBinding</code> or <code>MouseBinding</code> to a property of the <code>DataContext</code>, we had to resort to clumsy workarounds&hellip; I had eventually came up with an acceptable solution, described in <a href="/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/">this post</a>, but I wasn&rsquo;t really satisfied with it (it used reflection on private members, and had annoying limitations).</p>
 <p>More recently, I found a better solution in the <a href="http://www.codeplex.com/wpf/Release/ProjectReleases.aspx?ReleaseId=14962">MVVM toolkit</a> : a <code>CommandReference</code> class, inherited from <code>Freezable</code>, allows to put a reference to a ViewModel command in the page or control resources, so that it can be used later with <code>StaticResource</code>. It&rsquo;s much cleaner than my previous solution, but still not very straightforward&hellip;</p>
 <p>WPF 4.0 solves that problem once and for all : the <code>InputBinding</code> class now inherits from <code>Freezable</code>, which allows it to inherit the <code>DataContext</code>, and the <code>Command</code>, <code>CommandParameter</code> and <code>CommandTarget</code> properties are now dependency properties. So, at last, we can forget about the clumsy workarounds described above, and go straight to the point :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Window.InputBindings&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Window.InputBindings&gt;</span>
     <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Key=</span><span style="color:#e6db74">&#34;F5&#34;</span>
                 <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding RefreshCommand}&#34;</span> <span style="color:#f92672">/&gt;</span>
 <span style="color:#f92672">&lt;/Window.InputBindings&gt;</span>

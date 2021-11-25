@@ -11,8 +11,8 @@
 <meta property="og:description" content="Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (ref or out) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first await), so the location of the variable won’t exist anymore." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2014-11-04T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2014-11-04T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2014-11-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-11-04T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -80,7 +80,7 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (<code>ref</code> or <code>out</code>) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first <code>await</code>), so the location of the variable won’t exist anymore.</p>
 <p>However, it’s pretty easy to work around that limitation : you only need to create a <code>Ref&lt;T&gt;</code> class to hold the value, and pass an instance of this class by value to the async method:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> btnFilesStats_Click(<span style="color:#66d9ef">object</span> sender, EventArgs e)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> btnFilesStats_Click(<span style="color:#66d9ef">object</span> sender, EventArgs e)
 {
     <span style="color:#66d9ef">var</span> count = <span style="color:#66d9ef">new</span> Ref&lt;<span style="color:#66d9ef">int</span>&gt;();
     <span style="color:#66d9ef">var</span> size = <span style="color:#66d9ef">new</span> Ref&lt;<span style="color:#66d9ef">ulong</span>&gt;();
@@ -103,7 +103,7 @@ if (!doNotTrack) {
     }
 }
 </code></pre></div><p>The <code>Ref&lt;T&gt;</code> class looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Ref</span>&lt;T&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Ref</span>&lt;T&gt;
 {
     <span style="color:#66d9ef">public</span> Ref() { }
     <span style="color:#66d9ef">public</span> Ref(T <span style="color:#66d9ef">value</span>) { Value = <span style="color:#66d9ef">value</span>; }

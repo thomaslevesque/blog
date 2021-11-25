@@ -12,8 +12,8 @@
  appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&rsquo;t have to specify unchanged settings in every environment if they&rsquo;re already specified in the global settings file." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2019-12-20T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2019-12-20T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2019-12-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-20T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -97,13 +97,13 @@ if (!doNotTrack) {
 <h2 id="enter-sub-environments">Enter &ldquo;sub-environments&rdquo;</h2>
 <p>It&rsquo;s not an actual feature, it&rsquo;s just a name I made up. But the point is that you can easily introduce another &ldquo;level&rdquo; of configuration settings that just override some settings of the &ldquo;parent&rdquo; environment.</p>
 <p>For instance, in my scenario, I want to introduce a <code>appsettings.Development.LocalAuth.json</code> file that inherits the settings of the Development environment and just overrides the auth server URL:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
     <span style="color:#e6db74">&#34;Authentication&#34;</span><span style="color:#f92672">:</span> {
         <span style="color:#e6db74">&#34;Authority&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://localhost:6001&#34;</span>
     }
 }
 </code></pre></div><p>The way to do that is to add the new file as a configuration source when building the host in <code>Program.cs</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IHostBuilder CreateHostBuilder(<span style="color:#66d9ef">string</span>[] args) =&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IHostBuilder CreateHostBuilder(<span style="color:#66d9ef">string</span>[] args) =&gt;
     Host.CreateDefaultBuilder(args)
         .ConfigureAppConfiguration((context, builder) =&gt;
         {
@@ -123,7 +123,7 @@ if (!doNotTrack) {
 <p>The name of the sub-environment is retrieved from the host configuration, which itself is based on environment variables starting with <code>ASPNETCORE_</code> and command line arguments. So, to specify that you want the &ldquo;LocalAuth&rdquo; sub-environment, you need to set the <code>ASPNETCORE_SUBENVIRONMENT</code> environment variable to &ldquo;LocalAuth&rdquo;.</p>
 <p>And that&rsquo;s it! With this, you can refine existing environments for specific scenarios.</p>
 <p><strong>Note:</strong> Since the new configuration source is added last, it will override ALL previous configuration sources, not just the default <code>appsettings.json</code> files. The default host builder adds user secrets, environment variables, and command line arguments after the JSON files, so those will be overriden as well by the sub-environment settings. This is less than ideal, but probably not a major issue for most scenarios. If it&rsquo;s a concern, the fix is to insert the sub-environment config source after the existing JSON sources, but before the user secrets source. It makes the code a bit more involved, but it&rsquo;s doable:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        ...
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        ...
         .ConfigureAppConfiguration((context, builder) =&gt;
         {
             <span style="color:#66d9ef">string</span> subenv = context.Configuration[<span style="color:#e6db74">&#34;SubEnvironment&#34;</span>];

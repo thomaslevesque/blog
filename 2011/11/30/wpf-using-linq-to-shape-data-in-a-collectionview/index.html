@@ -12,8 +12,8 @@
 // Collection to which the view is bound public ObservableCollection People { get; private set; } ... // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People); // Show only adults view.Filter = o =&gt; ((Person)o).Age &gt;= 18; // Sort by last name and first name view.SortDescriptions.Add(new SortDescription(&#34;LastName&#34;, ListSortDirection." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2011-11-30T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2011-11-30T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2011-11-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-11-30T00:00:00+00:00" />
 
 
 	<meta name="twitter:card" content="summary"/>
@@ -81,7 +81,7 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2011-11-30T00:00:00Z">November 30, 2011</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>WPF provides a simple mechanism for shaping collections of data, via the <code>ICollectionView</code> interface and its <code>Filter</code>, <code>SortDescriptions</code> and <code>GroupDescriptions</code> properties:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Collection to which the view is bound
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Collection to which the view is bound
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> ObservableCollection People { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">set</span>; }
 ...
 
@@ -104,17 +104,17 @@ view.SortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription
 </ul>
 <p>In the last few years, we got used to use Linq to do this kind of things… it would be nice to be able to do the same for the shaping of an <code>ICollectionView</code>.</p>
 <p>Let&rsquo;s see what syntax we could use to do it with Linq… something like this perhaps?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">People.Where(p =&gt; p.Age &gt;= <span style="color:#ae81ff">18</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">People.Where(p =&gt; p.Age &gt;= <span style="color:#ae81ff">18</span>)
       .OrderBy(p =&gt; p.LastName)
       .ThenBy(p =&gt; p.FirstName)
       .GroupBy(p =&gt; p.Country);
 </code></pre></div><p>Or, with the Linq query comprehension syntax:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> People
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> People
 <span style="color:#66d9ef">where</span> p.Age &gt;= <span style="color:#ae81ff">18</span>
 <span style="color:#66d9ef">orderby</span> p.LastName, p.FirstName
 <span style="color:#66d9ef">group</span> p <span style="color:#66d9ef">by</span> p.Country;
 </code></pre></div><p>Obviously, this is not enough: this code only creates a query on the collection, it doesn&rsquo;t modify the <code>CollectionView</code>… but with just a little extra work, we can get the desired result:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> query =
     <span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> People.ShapeView()
     <span style="color:#66d9ef">where</span> p.Age &gt;= <span style="color:#ae81ff">18</span>
     <span style="color:#66d9ef">orderby</span> p.LastName, p.FirstName
@@ -125,14 +125,14 @@ query.Apply();
 <p><code>Apply</code> is called: that&rsquo;s because it&rsquo;s better to apply all changes at the same time, using <code>ICollectionView.DeferRefresh</code>, to avoid causing a refresh of the view for each clause of the query. When <code>Apply</code> is called, we can see that the view is correctly updated to reflect the query.</p>
 <p>This solution allows to define the filter, sort and grouping in a strongly-typed way, which implies that the code is verified by the compiler. It&rsquo;s also more concise and readable than the original code… Just be careful with one thing: some queries that are correct from the compiler&rsquo;s point of view won&rsquo;t be applicable to a <code>CollectionView</code>. For instance, if you try to group the data by the first letter of the last name (<code>p.LastName.Substring(0, 1)</code>), the <code>GroupBy</code> method will fail because only properties are supported by <code>PropertyGroupDescription</code>.</p>
 <p>Note that the wrapper won&rsquo;t overwrite the shaping properties of the <code>CollectionView</code> if you don&rsquo;t specify the corresponding Linq clause, so you can just modify the current view without specifying everything again. If you need to clear the properties, you can use the <code>ClearFilter</code>, <code>ClearSort</code> and <code>ClearGrouping</code> methods:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Remove the grouping and add a sort criteria
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Remove the grouping and add a sort criteria
 </span><span style="color:#75715e"></span>People.ShapeView()
       .ClearGrouping()
       .OrderBy(p =&gt; p.LastName);
       .Apply();
 </code></pre></div><p>Note that as for a normal Linq query, it&rsquo;s possible to use either the query comprehension syntax or to call the methods directly, since the former is just syntactic sugar for the latter.</p>
 <p>Finally, here&rsquo;s the complete code of the wrapper and the associated extension methods:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CollectionViewShaper</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CollectionViewShaper</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> CollectionViewShaper&lt;TSource&gt; ShapeView&lt;TSource&gt;(<span style="color:#66d9ef">this</span> IEnumerable&lt;TSource&gt; source)
     {
