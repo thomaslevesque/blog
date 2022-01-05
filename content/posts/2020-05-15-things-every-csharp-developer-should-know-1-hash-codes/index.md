@@ -113,7 +113,7 @@ The implementation shown above is fine, but it's a little tricky to get right wi
 Fortunately, there's a very easy alternative: tuples! Using the value tuples introduced in C# 7, the `GetHashCode` implementation can be made much simpler by taking advantage of the tuple's `GetHashCode` method:
 
 ```csharp
-public override bool GetHashCode() => (X, Y, Z).GetHashCode();
+public override int GetHashCode() => (X, Y, Z).GetHashCode();
 ```
 
 Note that it can also be used to simplify `Equals` a bit:
