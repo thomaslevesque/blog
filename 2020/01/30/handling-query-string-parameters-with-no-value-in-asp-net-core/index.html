@@ -90,87 +90,87 @@ if (!doNotTrack) {
 <p>But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&rsquo;s not standardized. The use of key-value pairs separated by <code>&amp;</code> is just a convention, not a requirement.</p>
 <p>And as it happens, it&rsquo;s not uncommon to see URLs with query strings like this: <code>?foo</code>, i.e. a key without a value. How it should be interpreted is entirely implementation-dependent, but in most cases, it probably means the same as <code>?foo=true</code>: the presence of the parameter is interpreted as an implicit true value.</p>
 <p>Unfortunately, in ASP.NET Core MVC, there&rsquo;s no built-in support for this form of query string. If you have a controller action like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[HttpGet(&#34;search&#34;)]</span>
-<span style="color:#66d9ef">public</span> IActionResult Search(
-<span style="color:#a6e22e">    [FromQuery]</span> <span style="color:#66d9ef">string</span> term,
-<span style="color:#a6e22e">    [FromQuery]</span> <span style="color:#66d9ef">bool</span> ignoreCase)
-{
-    <span style="color:#960050;background-color:#1e0010">…</span>
-}
-</code></pre></div><p>The default <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-3.1">model binder</a> expects the <code>ignoreCase</code> parameter to be specified with an explicit <code>true</code> or <code>false</code> value, e.g. <code>ignoreCase=true</code>. If you omit the value, it will be interpreted as empty, and the model binding will fail:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
-  <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://tools.ietf.org/html/rfc7231#section-6.5.1&#34;</span>,
-  <span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;One or more validation errors occurred.&#34;</span>,
-  <span style="color:#e6db74">&#34;status&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">400</span>,
-  <span style="color:#e6db74">&#34;traceId&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;|53613c25-4767e032425dfb92.&#34;</span>,
-  <span style="color:#e6db74">&#34;errors&#34;</span><span style="color:#f92672">:</span> {
-    <span style="color:#e6db74">&#34;ignoreCase&#34;</span><span style="color:#f92672">:</span> [
-      <span style="color:#e6db74">&#34;The value &#39;&#39; is invalid.&#34;</span>
-    ]
-  }
-}
-</code></pre></div><p>It&rsquo;s not a very big issue, but it&rsquo;s annoying… So, let&rsquo;s see what we can do about it!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[HttpGet(&#34;search&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> IActionResult Search(
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [FromQuery]</span> <span style="color:#66d9ef">string</span> term,
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [FromQuery]</span> <span style="color:#66d9ef">bool</span> ignoreCase)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">…</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The default <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-3.1">model binder</a> expects the <code>ignoreCase</code> parameter to be specified with an explicit <code>true</code> or <code>false</code> value, e.g. <code>ignoreCase=true</code>. If you omit the value, it will be interpreted as empty, and the model binding will fail:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://tools.ietf.org/html/rfc7231#section-6.5.1&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;One or more validation errors occurred.&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;status&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">400</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;traceId&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;|53613c25-4767e032425dfb92.&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;errors&#34;</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ignoreCase&#34;</span><span style="color:#f92672">:</span> [
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;The value &#39;&#39; is invalid.&#34;</span>
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It&rsquo;s not a very big issue, but it&rsquo;s annoying… So, let&rsquo;s see what we can do about it!</p>
 <p>By default, a boolean parameter is bound using <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.modelbinding.binders.simpletypemodelbinder?view=aspnetcore-3.1"><code>SimpleTypeModelBinder</code></a>, which is used for most primitive types. This model binder uses the <code>TypeConverter</code> of the target type to convert a string value to the target type. In this case, the converter is a <code>BooleanConverter</code>, which doesn&rsquo;t recognize an empty value…</p>
 <p>So we need to create our own model binder, which will interpret the presence of a key with no value as an implicit <code>true</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">QueryBooleanModelBinder</span> : IModelBinder
-{
-    <span style="color:#66d9ef">public</span> Task BindModelAsync(ModelBindingContext bindingContext)
-    {
-        <span style="color:#66d9ef">var</span> result = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
-        <span style="color:#66d9ef">if</span> (result == ValueProviderResult.None)
-        {
-            <span style="color:#75715e">// Parameter is missing, interpret as false
-</span><span style="color:#75715e"></span>            bindingContext.Result = ModelBindingResult.Success(<span style="color:#66d9ef">false</span>);
-        }
-        <span style="color:#66d9ef">else</span>
-        {
-            bindingContext.ModelState.SetModelValue(bindingContext.ModelName, result);
-            <span style="color:#66d9ef">var</span> rawValue = result.FirstValue;
-            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">string</span>.IsNullOrEmpty(rawValue))
-            {
-                <span style="color:#75715e">// Value is empty, interpret as true
-</span><span style="color:#75715e"></span>                bindingContext.Result = ModelBindingResult.Success(<span style="color:#66d9ef">true</span>);
-            }
-            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">bool</span>.TryParse(rawValue, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">var</span> boolValue))
-            {
-                <span style="color:#75715e">// Value is a valid boolean, use that value
-</span><span style="color:#75715e"></span>                bindingContext.Result = ModelBindingResult.Success(boolValue);
-            }
-            <span style="color:#66d9ef">else</span>
-            {
-                <span style="color:#75715e">// Value is something else, fail
-</span><span style="color:#75715e"></span>                bindingContext.ModelState.TryAddModelError(
-                    bindingContext.ModelName,
-                    <span style="color:#e6db74">&#34;Value must be false, true, or empty.&#34;</span>);
-            }
-        }
-
-        <span style="color:#66d9ef">return</span> Task.CompletedTask;
-    }
-}
-</code></pre></div><p>In order to use this model binder, we also need a model binder provider:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">QueryBooleanModelBinderProvider</span> : IModelBinderProvider
-{
-    <span style="color:#66d9ef">public</span> IModelBinder GetBinder(ModelBinderProviderContext context)
-    {
-        <span style="color:#66d9ef">if</span> (context.Metadata.ModelType == <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">bool</span>) &amp;&amp;
-            context.BindingInfo.BindingSource != <span style="color:#66d9ef">null</span> &amp;&amp;
-            context.BindingInfo.BindingSource.CanAcceptDataFrom(BindingSource.Query))
-        {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> QueryBooleanModelBinder();
-        }
-
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
-    }
-}
-</code></pre></div><p>It will return our model binder if the target type is <code>bool</code> <em>and</em> the binding source is the query string. Now we just need to add this provider to the list of model binder providers:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// In Startup.ConfigureServices
-</span><span style="color:#75715e"></span>services.AddControllers(options =&gt;
-{
-    options.ModelBinderProviders.Insert(
-        <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">new</span> QueryBooleanModelBinderProvider());
-});
-</code></pre></div><p><em>Note: This code is for an ASP.NET Core 3 Web API project.</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">QueryBooleanModelBinder</span> : IModelBinder
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Task BindModelAsync(ModelBindingContext bindingContext)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> result = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (result == ValueProviderResult.None)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Parameter is missing, interpret as false</span>
+</span></span><span style="display:flex;"><span>            bindingContext.Result = ModelBindingResult.Success(<span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            bindingContext.ModelState.SetModelValue(bindingContext.ModelName, result);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> rawValue = result.FirstValue;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">string</span>.IsNullOrEmpty(rawValue))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Value is empty, interpret as true</span>
+</span></span><span style="display:flex;"><span>                bindingContext.Result = ModelBindingResult.Success(<span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">bool</span>.TryParse(rawValue, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">var</span> boolValue))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Value is a valid boolean, use that value</span>
+</span></span><span style="display:flex;"><span>                bindingContext.Result = ModelBindingResult.Success(boolValue);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Value is something else, fail</span>
+</span></span><span style="display:flex;"><span>                bindingContext.ModelState.TryAddModelError(
+</span></span><span style="display:flex;"><span>                    bindingContext.ModelName,
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;Value must be false, true, or empty.&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Task.CompletedTask;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In order to use this model binder, we also need a model binder provider:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">QueryBooleanModelBinderProvider</span> : IModelBinderProvider
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> IModelBinder GetBinder(ModelBinderProviderContext context)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (context.Metadata.ModelType == <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">bool</span>) &amp;&amp;
+</span></span><span style="display:flex;"><span>            context.BindingInfo.BindingSource != <span style="color:#66d9ef">null</span> &amp;&amp;
+</span></span><span style="display:flex;"><span>            context.BindingInfo.BindingSource.CanAcceptDataFrom(BindingSource.Query))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> QueryBooleanModelBinder();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It will return our model binder if the target type is <code>bool</code> <em>and</em> the binding source is the query string. Now we just need to add this provider to the list of model binder providers:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// In Startup.ConfigureServices</span>
+</span></span><span style="display:flex;"><span>services.AddControllers(options =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    options.ModelBinderProviders.Insert(
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">new</span> QueryBooleanModelBinderProvider());
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p><em>Note: This code is for an ASP.NET Core 3 Web API project.</em></p>
 <ul>
 <li><em>If your project also has views or pages, replace <code>AddControllers</code> with <code>AddControllersWithViews</code> or <code>AddRazorPages</code>, as appropriate.</em></li>
 <li><em>If you&rsquo;re using ASP.NET Core 2, replace <code>AddControllers</code> with <code>AddMvc</code>.</em></li>

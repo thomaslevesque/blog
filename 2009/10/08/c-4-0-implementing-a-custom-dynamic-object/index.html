@@ -82,121 +82,121 @@ if (!doNotTrack) {
 <p>While playing with Visual Studio 2010 beta, I realized this <code>dynamic</code> type enabled very interesting scenarios&hellip; It is indeed possible to create your own dynamic objects, with the ability to control the resolution of dynamic members. To do that, you need to implement the <a href="http://msdn.microsoft.com/en-us/library/system.dynamic.idynamicmetaobjectprovider%28VS.100%29.aspx"><code>IDynamicMetaObjectProvider</code></a> interface. This interface seems pretty simple at first sight, since it only defines one member: the <code>GetMetaObject</code> method. But it actually gets trickier when you try to implement this method : you have to build a <code>DynamicMetaObject</code> from an <code>Expression</code>, which is far from trivial&hellip; I must admit I almost gave up when I saw the complexity of the task.</p>
 <p>Fortunately, there is a much easier way to create your own dynamic objects: you just have to inherit from the <code>DynamicObject</code> class, which provides a basic implementation of <code>IDynamicMetaObjectProvider</code>, and override a few methods to achieve the desired behavior.</p>
 <p>Here&rsquo;s a simple example, inspired from the Javascript language. In Javascript, it is possible to dynamically add members (properties or methods) to an existing type, as in the following sample:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object();
-<span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">Message</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello world !&#34;</span>;
-<span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">ShowMessage</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>()
-{
-  <span style="color:#a6e22e">alert</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">Message</span>);
-};
-<span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">ShowMessage</span>();
-</code></pre></div><p>This code creates an object, add a <code>Message</code> property to that object by defining its value, and also adds a <code>ShowMessage</code> method to display the message.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object();
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">Message</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello world !&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">ShowMessage</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">alert</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">Message</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">ShowMessage</span>();
+</span></span></code></pre></div><p>This code creates an object, add a <code>Message</code> property to that object by defining its value, and also adds a <code>ShowMessage</code> method to display the message.</p>
 <p>In previous versions of C#, it would have been impossible to do such a thing: indeed C# is a statically typed language, which implies that members are resolved at compile time, not at runtime. Since the <code>Object</code> class doesn&rsquo;t have a <code>Message</code> property or a <code>ShowMessage</code> method, the compiler won&rsquo;t accept things like <code>x.Message</code> or <code>x.ShowMessage()</code>. This is where the <code>dynamic</code> type comes to the rescue, since it doesn&rsquo;t resolve the members at compile time&hellip;</p>
 <p>Now let&rsquo;s try to create a dynamic object that allows to write a C# code similar to the Javascript code above. To do that, we will store the values of dynamic properties in a <code>Dictionary&lt;string, object&gt;</code>. To make this class work, we need to override the <a href="http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject.trygetmember%28VS.100%29.aspx"><code>TryGetMember</code></a> and <a href="http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject.trygetmember%28VS.100%29.aspx"><code>TrySetMember</code></a> methods. These methods implement the logic to read or write a member of the dynamic object. To illustrate the idea, let&rsquo;s have a look at the code, I&rsquo;ll comment it later:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDynamicObject</span> : DynamicObject
-{
-    <span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; <span style="color:#ae81ff">_</span>properties = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;();
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TryGetMember(GetMemberBinder binder, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">object</span> result)
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>properties.TryGetValue(binder.Name, <span style="color:#66d9ef">out</span> result);
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TrySetMember(SetMemberBinder binder, <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span>)
-    {
-        <span style="color:#ae81ff">_</span>properties[binder.Name] = <span style="color:#66d9ef">value</span>;
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-    }
-}
-</code></pre></div><p>Now let&rsquo;s explain the code above. The <code>TryGetMember</code> tries to find the requested property in the dictionary. Note that the name of the property is exposed as the <code>Name</code> property of the <code>binder</code> parameter. If the property exists, its value is returned in the <code>result</code> output parameter, and the method returns <code>true</code>. Otherwise, the method returns <code>false</code>, which will cause a <code>RuntimeBinderException</code> at the call site. This exception simply means that the dynamic resolution of the property failed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDynamicObject</span> : DynamicObject
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; <span style="color:#ae81ff">_</span>properties = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TryGetMember(GetMemberBinder binder, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">object</span> result)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>properties.TryGetValue(binder.Name, <span style="color:#66d9ef">out</span> result);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TrySetMember(SetMemberBinder binder, <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>properties[binder.Name] = <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Now let&rsquo;s explain the code above. The <code>TryGetMember</code> tries to find the requested property in the dictionary. Note that the name of the property is exposed as the <code>Name</code> property of the <code>binder</code> parameter. If the property exists, its value is returned in the <code>result</code> output parameter, and the method returns <code>true</code>. Otherwise, the method returns <code>false</code>, which will cause a <code>RuntimeBinderException</code> at the call site. This exception simply means that the dynamic resolution of the property failed.</p>
 <p>The <code>TrySetMember</code> method performs the opposite task: it defines the value of a property. If the member doesn&rsquo;t exist, it is added to the dictionary, so the method always returns <code>true</code>.</p>
 <p>The following sample shows how to use this object:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">dynamic</span> x = <span style="color:#66d9ef">new</span> MyDynamicObject();
-x.Message = <span style="color:#e6db74">&#34;Hello world !&#34;</span>;
-Console.WriteLine(x.Message);
-</code></pre></div><p>This code compiles and runs fine, and prints &ldquo;Hello world !&rdquo; to the console&hellip; easy, isn&rsquo;t it ?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">dynamic</span> x = <span style="color:#66d9ef">new</span> MyDynamicObject();
+</span></span><span style="display:flex;"><span>x.Message = <span style="color:#e6db74">&#34;Hello world !&#34;</span>;
+</span></span><span style="display:flex;"><span>Console.WriteLine(x.Message);
+</span></span></code></pre></div><p>This code compiles and runs fine, and prints &ldquo;Hello world !&rdquo; to the console&hellip; easy, isn&rsquo;t it ?</p>
 <p>But what about methods ? Well, I could tell you that you need to override the <code>TryInvokeMember</code> method, which is used to handle dynamic method calls&hellip; but actually it&rsquo;s not even necessary ! Our implementation already handles this feature: we just need to assign a delegate to a property of the object. It won&rsquo;t actually be a real member method, just a property returning a delegate, but since the syntax to call it will be the same as a method call, it will do fine for now. Here&rsquo;s an example of adding a method to the object:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">dynamic</span> x = <span style="color:#66d9ef">new</span> MyDynamicObject();
-x.Message = <span style="color:#e6db74">&#34;Hello world !&#34;</span>;
-x.ShowMessage = <span style="color:#66d9ef">new</span> Action(
-    () =&gt;
-    {
-        Console.WriteLine(x.Message);
-    });
-x.ShowMessage();
-</code></pre></div><p>Eventually, we end up with something very close to the Javascript we were trying to imitate, all with a class of less than 10 lines of code (not counting the braces)&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">dynamic</span> x = <span style="color:#66d9ef">new</span> MyDynamicObject();
+</span></span><span style="display:flex;"><span>x.Message = <span style="color:#e6db74">&#34;Hello world !&#34;</span>;
+</span></span><span style="display:flex;"><span>x.ShowMessage = <span style="color:#66d9ef">new</span> Action(
+</span></span><span style="display:flex;"><span>    () =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Console.WriteLine(x.Message);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>x.ShowMessage();
+</span></span></code></pre></div><p>Eventually, we end up with something very close to the Javascript we were trying to imitate, all with a class of less than 10 lines of code (not counting the braces)&hellip;</p>
 <p>This class can be quite handy to use as an general purpose object, for instance to group some data together without having to create a specific class. In that aspect, it&rsquo;s similar to an anonymous type (already existing in C# 3), but with the benefit that it can be used as a method return value, which is not possible with an anonymous type.</p>
 <p>Of course there are many more useful things to do with a custom dynamic object&hellip; for instance, here&rsquo;s a simple wrapper for a <code>DataRow</code>, to make it easier to access the fields:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicDataRow</span> : DynamicObject
-{
-    <span style="color:#66d9ef">private</span> DataRow <span style="color:#ae81ff">_d</span>ataRow;
-
-    <span style="color:#66d9ef">public</span> DynamicDataRow(DataRow dataRow)
-    {
-        <span style="color:#66d9ef">if</span> (dataRow == <span style="color:#66d9ef">null</span>)
-            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;dataRow&#34;</span>);
-        <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_d</span>ataRow = dataRow;
-    }
-
-    <span style="color:#66d9ef">public</span> DataRow DataRow
-    {
-        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_d</span>ataRow; }
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TryGetMember(GetMemberBinder binder, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">object</span> result)
-    {
-        result = <span style="color:#66d9ef">null</span>;
-        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_d</span>ataRow.Table.Columns.Contains(binder.Name))
-        {
-            result = <span style="color:#ae81ff">_d</span>ataRow[binder.Name];
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-        }
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TrySetMember(SetMemberBinder binder, <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span>)
-    {
-        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_d</span>ataRow.Table.Columns.Contains(binder.Name))
-        {
-            <span style="color:#ae81ff">_d</span>ataRow[binder.Name] = <span style="color:#66d9ef">value</span>;
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-        }
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-    }
-}
-</code></pre></div><p>Let&rsquo;s add a helper extension method to get the wrapper for a row:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicDataRowExtensions</span>
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">dynamic</span> AsDynamic(<span style="color:#66d9ef">this</span> DataRow dataRow)
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> DynamicDataRow(dataRow);
-    }
-}
-</code></pre></div><p>We can now write things like that:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">DataTable table = <span style="color:#66d9ef">new</span> DataTable();
-table.Columns.Add(<span style="color:#e6db74">&#34;FirstName&#34;</span>, <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>));
-table.Columns.Add(<span style="color:#e6db74">&#34;LastName&#34;</span>, <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>));
-table.Columns.Add(<span style="color:#e6db74">&#34;DateOfBirth&#34;</span>, <span style="color:#66d9ef">typeof</span>(DateTime));
-
-<span style="color:#66d9ef">dynamic</span> row = table.NewRow().AsDynamic();
-row.FirstName = <span style="color:#e6db74">&#34;John&#34;</span>;
-row.LastName = <span style="color:#e6db74">&#34;Doe&#34;</span>;
-row.DateOfBirth = <span style="color:#66d9ef">new</span> DateTime(<span style="color:#ae81ff">1981</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">12</span>);
-table.Rows.Add(row.DataRow);
-
-<span style="color:#75715e">// Add more rows...
-</span><span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">var</span> bornInThe20thCentury = <span style="color:#66d9ef">from</span> r <span style="color:#66d9ef">in</span> table.AsEnumerable()
-                           <span style="color:#66d9ef">let</span> dr = r.AsDynamic()
-                           <span style="color:#66d9ef">where</span> dr.DateOfBirth.Year &gt; <span style="color:#ae81ff">1900</span>
-                           &amp;&amp; dr.DateOfBirth.Year &lt;= <span style="color:#ae81ff">2000</span>
-                           <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">new</span> { dr.LastName, dr.FirstName };
-
-<span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> item <span style="color:#66d9ef">in</span> bornInThe20thCentury)
-{
-    Console.WriteLine(<span style="color:#e6db74">&#34;{0} {1}&#34;</span>, item.FirstName, item.LastName);
-}
-</code></pre></div><p>Now that you understand the basic principles for creating custom dynamic objects, you can imagine many more useful applications :)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicDataRow</span> : DynamicObject
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> DataRow <span style="color:#ae81ff">_d</span>ataRow;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> DynamicDataRow(DataRow dataRow)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (dataRow == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;dataRow&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_d</span>ataRow = dataRow;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> DataRow DataRow
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_d</span>ataRow; }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TryGetMember(GetMemberBinder binder, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">object</span> result)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        result = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_d</span>ataRow.Table.Columns.Contains(binder.Name))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            result = <span style="color:#ae81ff">_d</span>ataRow[binder.Name];
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TrySetMember(SetMemberBinder binder, <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_d</span>ataRow.Table.Columns.Contains(binder.Name))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_d</span>ataRow[binder.Name] = <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Let&rsquo;s add a helper extension method to get the wrapper for a row:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicDataRowExtensions</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">dynamic</span> AsDynamic(<span style="color:#66d9ef">this</span> DataRow dataRow)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> DynamicDataRow(dataRow);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We can now write things like that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>DataTable table = <span style="color:#66d9ef">new</span> DataTable();
+</span></span><span style="display:flex;"><span>table.Columns.Add(<span style="color:#e6db74">&#34;FirstName&#34;</span>, <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>));
+</span></span><span style="display:flex;"><span>table.Columns.Add(<span style="color:#e6db74">&#34;LastName&#34;</span>, <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>));
+</span></span><span style="display:flex;"><span>table.Columns.Add(<span style="color:#e6db74">&#34;DateOfBirth&#34;</span>, <span style="color:#66d9ef">typeof</span>(DateTime));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">dynamic</span> row = table.NewRow().AsDynamic();
+</span></span><span style="display:flex;"><span>row.FirstName = <span style="color:#e6db74">&#34;John&#34;</span>;
+</span></span><span style="display:flex;"><span>row.LastName = <span style="color:#e6db74">&#34;Doe&#34;</span>;
+</span></span><span style="display:flex;"><span>row.DateOfBirth = <span style="color:#66d9ef">new</span> DateTime(<span style="color:#ae81ff">1981</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">12</span>);
+</span></span><span style="display:flex;"><span>table.Rows.Add(row.DataRow);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Add more rows...</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> bornInThe20thCentury = <span style="color:#66d9ef">from</span> r <span style="color:#66d9ef">in</span> table.AsEnumerable()
+</span></span><span style="display:flex;"><span>                           <span style="color:#66d9ef">let</span> dr = r.AsDynamic()
+</span></span><span style="display:flex;"><span>                           <span style="color:#66d9ef">where</span> dr.DateOfBirth.Year &gt; <span style="color:#ae81ff">1900</span>
+</span></span><span style="display:flex;"><span>                           &amp;&amp; dr.DateOfBirth.Year &lt;= <span style="color:#ae81ff">2000</span>
+</span></span><span style="display:flex;"><span>                           <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">new</span> { dr.LastName, dr.FirstName };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> item <span style="color:#66d9ef">in</span> bornInThe20thCentury)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    Console.WriteLine(<span style="color:#e6db74">&#34;{0} {1}&#34;</span>, item.FirstName, item.LastName);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Now that you understand the basic principles for creating custom dynamic objects, you can imagine many more useful applications :)</p>
 <p><strong>Update :</strong> Just after posting this article, I stumbled upon the <a href="http://msdn.microsoft.com/en-us/library/system.dynamic.expandoobject%28VS.100%29.aspx"><code>ExpandoObject</code></a> class, which does exactly the same thing as the <code>MyDynamicObject</code> class above&hellip; It seems I reinvented the wheel again ;). Anyway, it&rsquo;s interesting to see how dynamic objects work internally, if only for learning purposes&hellip; For more details about the <code>ExpandoObject</code> class, check out <a href="https://devblogs.microsoft.com/visualstudio/dynamic-in-c-4-0-introducing-the-expandoobject/">this post on the C# FAQ blog</a>.</p>
 
 		</div>

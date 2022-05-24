@@ -97,100 +97,100 @@ if (!doNotTrack) {
 </div></div>
 		</header><div class="content post__content clearfix">
 			<p>So far in this series, I showed <a href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">how to use C# 9 records to declare strongly-typed ids</a> as easily as this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> record ProductId(<span style="color:#66d9ef">int</span> Value) : StronglyTypedId&lt;<span style="color:#66d9ef">int</span>&gt;(Value);
-</code></pre></div><p>I also explained how to make them work correctly <a href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">with ASP.NET Core model binding</a> and <a href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">JSON serialization</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">record</span> <span style="color:#a6e22e">ProductId</span>(<span style="color:#66d9ef">int</span> Value) : StronglyTypedId&lt;<span style="color:#66d9ef">int</span>&gt;(Value);
+</span></span></code></pre></div><p>I also explained how to make them work correctly <a href="/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/">with ASP.NET Core model binding</a> and <a href="/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/">JSON serialization</a>.</p>
 <p>Today, I&rsquo;ll present another piece of the puzzle: how to make Entity Framework core handle strongly-typed ids correctly.</p>
 <h2 id="value-conversion-for-a-specific-strongly-typed-id">Value conversion for a specific strongly-typed id</h2>
 <p>Out of the box, EF Core doesn&rsquo;t know anything about our strongly-typed ids. It just sees a custom type with no known conversion to a database type, so it assumes that it&rsquo;s an entity. Which means that if we don&rsquo;t do anything, it will attempt to map <code>ProductId</code> to a <code>ProductId</code> table with a <code>Value</code> column. Definitely <em>not</em> what we want!</p>
 <p>A strongly-typed id is just wrapper for a single value, so it should be mapped to a single column in the same table as its declaring entity. That column should be of a type compatible with the underlying type of the strongly-typed id, i.e. <code>int</code> in the case of <code>ProductId</code>.</p>
 <p>The way to tell EF Core how to do that is to to configure a value converter for properties that are strongly-typed ids. The simplest way to do this is to specify expressions for converting the property to and from the database type:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">modelBuilder.Entity&lt;Product&gt;(builder =&gt;
-{
-    ...
-    builder.Property(p =&gt; p.Id)
-        .HasConversion(id =&gt; id.Value, <span style="color:#66d9ef">value</span> =&gt; <span style="color:#66d9ef">new</span> ProductId(<span style="color:#66d9ef">value</span>));
-    ...
-});
-</code></pre></div><p>You can also wrap the two expressions in a <code>ValueConverter&lt;ProductId, int&gt;</code> object and reuse that object for multiple properties.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>modelBuilder.Entity&lt;Product&gt;(builder =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    builder.Property(p =&gt; p.Id)
+</span></span><span style="display:flex;"><span>        .HasConversion(id =&gt; id.Value, <span style="color:#66d9ef">value</span> =&gt; <span style="color:#66d9ef">new</span> ProductId(<span style="color:#66d9ef">value</span>));
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>You can also wrap the two expressions in a <code>ValueConverter&lt;ProductId, int&gt;</code> object and reuse that object for multiple properties.</p>
 <p>Note that this has to be done for each property that is a strongly-typed id (whether it&rsquo;s a primary key or foreign key). There&rsquo;s currently no way to say &ldquo;apply this conversion for all properties of that type&rdquo;, although it&rsquo;s <a href="https://github.com/dotnet/efcore/issues/10784">being considered for EF Core 6.0</a>.</p>
 <h2 id="applying-the-conversion-to-all-strongly-typed-id-properties">Applying the conversion to all strongly-typed id properties</h2>
 <p>Manually applying these conversions to each and every strongly-typed id in the model is going to get old pretty fast, right? So let&rsquo;s fix that!</p>
 <p>We&rsquo;re going to examine each property of each entity in the EF Core model, and if it&rsquo;s a strongly-typed id, we&rsquo;ll use reflection to generate the appropriate converter, and apply it to the property. This is done by the following method, to be called from <code>OnModelCreating</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> AddStronglyTypedIdConversions(ModelBuilder modelBuilder)
-{
-    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> entityType <span style="color:#66d9ef">in</span> modelBuilder.Model.GetEntityTypes())
-    {
-        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> property <span style="color:#66d9ef">in</span> entityType.GetProperties())
-        {
-            <span style="color:#66d9ef">if</span> (StronglyTypedIdHelper.IsStronglyTypedId(property.ClrType, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">var</span> valueType))
-            {
-                <span style="color:#66d9ef">var</span> converter = StronglyTypedIdConverters.GetOrAdd(
-                    property.ClrType,
-                    <span style="color:#ae81ff">_</span> =&gt; CreateStronglyTypedIdConverter(property.ClrType, valueType));
-                property.SetValueConverter(converter);
-            }
-        }
-    }
-}
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> ConcurrentDictionary&lt;Type, ValueConverter&gt; StronglyTypedIdConverters = <span style="color:#66d9ef">new</span>();
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> ValueConverter CreateStronglyTypedIdConverter(
-    Type stronglyTypedIdType,
-    Type valueType)
-{
-    <span style="color:#75715e">// id =&gt; id.Value
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> toProviderFuncType = <span style="color:#66d9ef">typeof</span>(Func&lt;,&gt;)
-        .MakeGenericType(stronglyTypedIdType, valueType);
-    <span style="color:#66d9ef">var</span> stronglyTypedIdParam = Expression.Parameter(stronglyTypedIdType, <span style="color:#e6db74">&#34;id&#34;</span>);
-    <span style="color:#66d9ef">var</span> toProviderExpression = Expression.Lambda(
-        toProviderFuncType,
-        Expression.Property(stronglyTypedIdParam, <span style="color:#e6db74">&#34;Value&#34;</span>),
-        stronglyTypedIdParam);
-
-    <span style="color:#75715e">// value =&gt; new ProductId(value)
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> fromProviderFuncType = <span style="color:#66d9ef">typeof</span>(Func&lt;,&gt;)
-        .MakeGenericType(valueType, stronglyTypedIdType);
-    <span style="color:#66d9ef">var</span> valueParam = Expression.Parameter(valueType, <span style="color:#e6db74">&#34;value&#34;</span>);
-    <span style="color:#66d9ef">var</span> ctor = stronglyTypedIdType.GetConstructor(<span style="color:#66d9ef">new</span>[] { valueType });
-    <span style="color:#66d9ef">var</span> fromProviderExpression = Expression.Lambda(
-        fromProviderFuncType,
-        Expression.New(ctor, valueParam),
-        valueParam);
-
-    <span style="color:#66d9ef">var</span> converterType = <span style="color:#66d9ef">typeof</span>(ValueConverter&lt;,&gt;)
-        .MakeGenericType(stronglyTypedIdType, valueType);
-
-    <span style="color:#66d9ef">return</span> (ValueConverter)Activator.CreateInstance(
-        converterType,
-        toProviderExpression,
-        fromProviderExpression,
-        <span style="color:#66d9ef">null</span>);
-}
-</code></pre></div><p>The difficult part here is the <code>CreateStronglyTypedIdConverter</code> method. It dynamically generates the <code>id =&gt; id.Value</code> and <code>value =&gt; new ProductId(value)</code> expressions, using reflection and the Linq Expression API. We use a cache to avoid redoing the same work multiple times.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> AddStronglyTypedIdConversions(ModelBuilder modelBuilder)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> entityType <span style="color:#66d9ef">in</span> modelBuilder.Model.GetEntityTypes())
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> property <span style="color:#66d9ef">in</span> entityType.GetProperties())
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (StronglyTypedIdHelper.IsStronglyTypedId(property.ClrType, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">var</span> valueType))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> converter = StronglyTypedIdConverters.GetOrAdd(
+</span></span><span style="display:flex;"><span>                    property.ClrType,
+</span></span><span style="display:flex;"><span>                    <span style="color:#ae81ff">_</span> =&gt; CreateStronglyTypedIdConverter(property.ClrType, valueType));
+</span></span><span style="display:flex;"><span>                property.SetValueConverter(converter);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> ConcurrentDictionary&lt;Type, ValueConverter&gt; StronglyTypedIdConverters = <span style="color:#66d9ef">new</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> ValueConverter CreateStronglyTypedIdConverter(
+</span></span><span style="display:flex;"><span>    Type stronglyTypedIdType,
+</span></span><span style="display:flex;"><span>    Type valueType)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// id =&gt; id.Value</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> toProviderFuncType = <span style="color:#66d9ef">typeof</span>(Func&lt;,&gt;)
+</span></span><span style="display:flex;"><span>        .MakeGenericType(stronglyTypedIdType, valueType);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> stronglyTypedIdParam = Expression.Parameter(stronglyTypedIdType, <span style="color:#e6db74">&#34;id&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> toProviderExpression = Expression.Lambda(
+</span></span><span style="display:flex;"><span>        toProviderFuncType,
+</span></span><span style="display:flex;"><span>        Expression.Property(stronglyTypedIdParam, <span style="color:#e6db74">&#34;Value&#34;</span>),
+</span></span><span style="display:flex;"><span>        stronglyTypedIdParam);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// value =&gt; new ProductId(value)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> fromProviderFuncType = <span style="color:#66d9ef">typeof</span>(Func&lt;,&gt;)
+</span></span><span style="display:flex;"><span>        .MakeGenericType(valueType, stronglyTypedIdType);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> valueParam = Expression.Parameter(valueType, <span style="color:#e6db74">&#34;value&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> ctor = stronglyTypedIdType.GetConstructor(<span style="color:#66d9ef">new</span>[] { valueType });
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> fromProviderExpression = Expression.Lambda(
+</span></span><span style="display:flex;"><span>        fromProviderFuncType,
+</span></span><span style="display:flex;"><span>        Expression.New(ctor, valueParam),
+</span></span><span style="display:flex;"><span>        valueParam);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> converterType = <span style="color:#66d9ef">typeof</span>(ValueConverter&lt;,&gt;)
+</span></span><span style="display:flex;"><span>        .MakeGenericType(stronglyTypedIdType, valueType);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (ValueConverter)Activator.CreateInstance(
+</span></span><span style="display:flex;"><span>        converterType,
+</span></span><span style="display:flex;"><span>        toProviderExpression,
+</span></span><span style="display:flex;"><span>        fromProviderExpression,
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The difficult part here is the <code>CreateStronglyTypedIdConverter</code> method. It dynamically generates the <code>id =&gt; id.Value</code> and <code>value =&gt; new ProductId(value)</code> expressions, using reflection and the Linq Expression API. We use a cache to avoid redoing the same work multiple times.</p>
 <p>If we explicitly configure our entity primary keys and relations, this works fine. However, if we just rely on the EF Core conventions, we&rsquo;re going to run into a problem: <code>entityType.GetProperties()</code> does <em>not</em> return the <code>Id</code> property of <code>Product</code>! Let&rsquo;s take a step back to understand why.</p>
 <p>Before calling <code>OnModelCreating</code> to let the user customize the model, EF Core creates the model based on conventions. One of the conventions is that a property named <code>Id</code> is assumed to be the key for the entity. However, because <code>ProductId</code> is a &ldquo;complex&rdquo; type, EF Core assumes that it&rsquo;s an entity, rather than a scalar value. So it considers the <code>Id</code> property to be a navigation property to the <code>ProductId</code> entity. As a result, it implicitly introduces an <code>IdTempId</code> property as the foreign key, and <code>Id</code> itself doesn&rsquo;t appear as a property (it&rsquo;s a <em>navigation</em> property instead).</p>
 <p>To fix this, we need to explicitly configure <code>Id</code> as the key for the entity, for each entity type:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">modelBuilder.Entity&lt;Product&gt;(builder =&gt; builder.HasKey(p =&gt; p.Id));
-</code></pre></div><p>(note that it has to be done <em>before</em> the call to <code>AddStronglyTypedIdConversions</code>)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>modelBuilder.Entity&lt;Product&gt;(builder =&gt; builder.HasKey(p =&gt; p.Id));
+</span></span></code></pre></div><p>(note that it has to be done <em>before</em> the call to <code>AddStronglyTypedIdConversions</code>)</p>
 <p>Similarly, relations between entities should be configured explicitly so that foreign keys are handled correctly.</p>
 <p>Personally it doesn&rsquo;t really bother me, because I prefer to configure my entities explicitly anyway, rather than just rely on conventions. If you prefer to rely on conventions, there&rsquo;s probably a way to make it work without manual configuration, but I haven&rsquo;t found a satisfying solution yet. It should be easier when <a href="https://github.com/dotnet/efcore/issues/10784">#10784</a> is resolved.</p>
 <p>So, in the end, the <code>OnModelCreating</code> method looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnModelCreating(ModelBuilder modelBuilder)
-{
-    <span style="color:#66d9ef">base</span>.OnModelCreating(modelBuilder);
-
-    <span style="color:#75715e">// Configure each entity type
-</span><span style="color:#75715e"></span>    modelBuilder.Entity&lt;Product&gt;(builder =&gt; builder.HasKey(p =&gt; p.Id));
-
-    AddStronglyTypedIdConversions(modelBuilder);
-}
-</code></pre></div><p>At this point, everything should be working as expected. Since records automatically generate the <code>==</code> operator, you can do this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> Product GetProductById(ProductId id)
-{
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_d</span>bContext.Products.SingleOrDefault(p =&gt; p.Id == id);
-}
-</code></pre></div><p>Note that this works in EF Core 5.0, but not necessarily with older versions, where <a href="https://andrewlock.net/using-strongly-typed-entity-ids-to-avoid-primitive-obsession-part-3/#custom-value-converters-result-in-client-side-evaluation">it could cause client-side evaluation</a>. Not sure when this was fixed exactly, but at least in 5.0 it works fine.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnModelCreating(ModelBuilder modelBuilder)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">base</span>.OnModelCreating(modelBuilder);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Configure each entity type</span>
+</span></span><span style="display:flex;"><span>    modelBuilder.Entity&lt;Product&gt;(builder =&gt; builder.HasKey(p =&gt; p.Id));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    AddStronglyTypedIdConversions(modelBuilder);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>At this point, everything should be working as expected. Since records automatically generate the <code>==</code> operator, you can do this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Product GetProductById(ProductId id)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_d</span>bContext.Products.SingleOrDefault(p =&gt; p.Id == id);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Note that this works in EF Core 5.0, but not necessarily with older versions, where <a href="https://andrewlock.net/using-strongly-typed-entity-ids-to-avoid-primitive-obsession-part-3/#custom-value-converters-result-in-client-side-evaluation">it could cause client-side evaluation</a>. Not sure when this was fixed exactly, but at least in 5.0 it works fine.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In this post we&rsquo;ve seen how to make strongly-typed ids work with Entity Framework Core.</p>
 <p>Most pieces are in place now; there are still a few issues to resolve, which I&rsquo;ll cover in the next post.</p>

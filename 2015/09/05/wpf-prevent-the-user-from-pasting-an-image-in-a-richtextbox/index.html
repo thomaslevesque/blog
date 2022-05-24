@@ -95,16 +95,16 @@ if (!doNotTrack) {
 </ul>
 <p>In my case, I just wanted to prevent an image from being pasted or drag and dropped, so I just cancelled the operation when the <code>FormatToApply</code> was <code>&quot;Bitmap&quot;</code>, as shown below.</p>
 <p>XAML:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;RichTextBox</span> <span style="color:#a6e22e">DataObject.Pasting=</span><span style="color:#e6db74">&#34;RichTextBox1_Pasting&#34;</span> <span style="color:#960050;background-color:#1e0010">...</span> <span style="color:#f92672">/&gt;</span>
-</code></pre></div><p>Code-behind:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> RichTextBox1_Pasting(<span style="color:#66d9ef">object</span> sender, DataObjectPastingEventArgs e)
-{
-    <span style="color:#66d9ef">if</span> (e.FormatToApply == <span style="color:#e6db74">&#34;Bitmap&#34;</span>)
-    {
-        e.CancelCommand();
-    }
-}
-</code></pre></div><p>Of course, it’s also possible to handle this in a smarter way. For instance, if the <code>DataObject</code> contains several formats, we could create a new <code>DataObject</code> with only the acceptable formats. This way the user is still able to paste <em>something</em>, if not the image.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;RichTextBox</span> <span style="color:#a6e22e">DataObject.Pasting=</span><span style="color:#e6db74">&#34;RichTextBox1_Pasting&#34;</span> <span style="color:#960050;background-color:#1e0010">...</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><p>Code-behind:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> RichTextBox1_Pasting(<span style="color:#66d9ef">object</span> sender, DataObjectPastingEventArgs e)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (e.FormatToApply == <span style="color:#e6db74">&#34;Bitmap&#34;</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        e.CancelCommand();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Of course, it’s also possible to handle this in a smarter way. For instance, if the <code>DataObject</code> contains several formats, we could create a new <code>DataObject</code> with only the acceptable formats. This way the user is still able to paste <em>something</em>, if not the image.</p>
 
 		</div>
 		<footer class="post__footer">

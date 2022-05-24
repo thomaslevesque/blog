@@ -88,167 +88,167 @@ if (!doNotTrack) {
 (Image from the <a href="https://www.asp.net/web-api/overview/advanced/httpclient-message-handlers">official ASP.NET website</a>)</p>
 <p>Each handler has a chance to examine and/or modify the request before passing it to the next handler in the chain, and to examine and/or modify the response it receives from the next handler. Typically, the last handler in the pipeline is the <code>HttpClientHandler</code>, which communicates directly with the network.</p>
 <p>The handler chain can be setup like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> pipeline = <span style="color:#66d9ef">new</span> MyHandler1()
-{
-    InnerHandler = <span style="color:#66d9ef">new</span> MyHandler2()
-    {
-        InnerHandler = <span style="color:#66d9ef">new</span> HttpClientHandler()
-    }
-};
-<span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient(pipeline);
-</code></pre></div><p>But if you prefer fluent interfaces, you can easily create an extension method to do it like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> pipeline = <span style="color:#66d9ef">new</span> HttpClientHandler()
-    .DecorateWith(<span style="color:#66d9ef">new</span> MyHandler2())
-    .DecorateWith(<span style="color:#66d9ef">new</span> MyHandler1());
-<span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient(pipeline);
-</code></pre></div><p>All this might seem a little abstract at this point, but this pipeline architecture enables plenty of interesting scenarios. See, HTTP message handlers can be used to add custom behavior to how requests and responses are processed. I&rsquo;ll give a few examples.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> pipeline = <span style="color:#66d9ef">new</span> MyHandler1()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    InnerHandler = <span style="color:#66d9ef">new</span> MyHandler2()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        InnerHandler = <span style="color:#66d9ef">new</span> HttpClientHandler()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient(pipeline);
+</span></span></code></pre></div><p>But if you prefer fluent interfaces, you can easily create an extension method to do it like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> pipeline = <span style="color:#66d9ef">new</span> HttpClientHandler()
+</span></span><span style="display:flex;"><span>    .DecorateWith(<span style="color:#66d9ef">new</span> MyHandler2())
+</span></span><span style="display:flex;"><span>    .DecorateWith(<span style="color:#66d9ef">new</span> MyHandler1());
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> HttpClient(pipeline);
+</span></span></code></pre></div><p>All this might seem a little abstract at this point, but this pipeline architecture enables plenty of interesting scenarios. See, HTTP message handlers can be used to add custom behavior to how requests and responses are processed. I&rsquo;ll give a few examples.</p>
 <p><strong>Side note:</strong> I&rsquo;m presenting this feature from a client-side perspective (since I primarily make client apps), but the same HTTP message handlers are also used <a href="https://www.asp.net/web-api/overview/advanced/http-message-handlers">on the server-side in ASP.NET Web API</a>.</p>
 <h2 id="unit-testing">Unit testing</h2>
 <p>The first use case that comes to mind, and the first I ever used, is unit testing. If you&rsquo;re testing a class that makes online payments over HTTP, you don&rsquo;t want it to actually send requests to the real server&hellip; you just want to ensure that the requests it sends are correct, and that it reacts correctly to specific responses. An easy solution to this problem is to create a &ldquo;stub&rdquo; handler, and inject it into your class to use instead of <code>HttpClientHandler</code>. Here&rsquo;s a simple implementation:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubHandler</span> : HttpMessageHandler
-{
-    <span style="color:#75715e">// Responses to return
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Queue&lt;HttpResponseMessage&gt; <span style="color:#ae81ff">_</span>responses =
-        <span style="color:#66d9ef">new</span> Queue&lt;System.Net.Http.HttpResponseMessage&gt;();
-
-    <span style="color:#75715e">// Requests that were sent via the handler
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;HttpRequestMessage&gt; <span style="color:#ae81ff">_</span>requests =
-        <span style="color:#66d9ef">new</span> List&lt;System.Net.Http.HttpRequestMessage&gt;();
-
-    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Task&lt;HttpResponseMessage&gt; SendAsync(
-        HttpRequestMessage request,
-        CancellationToken cancellationToken)
-    {
-        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>responses.Count == <span style="color:#ae81ff">0</span>)
-            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;No response configured&#34;</span>);
-
-        <span style="color:#ae81ff">_</span>requests.Add(request);
-        <span style="color:#66d9ef">var</span> response = <span style="color:#ae81ff">_</span>responses.Dequeue();
-        <span style="color:#66d9ef">return</span> Task.FromResult(response);
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> QueueResponse(HttpResponseMessage response) =&gt;
-        <span style="color:#ae81ff">_</span>responses.Enqueue(response);
-
-    <span style="color:#66d9ef">public</span> IEnumerable&lt;HttpRequestMessage&gt; GetRequests() =&gt;
-        <span style="color:#ae81ff">_</span>requests;
-}
-</code></pre></div><p>This class lets you record the requests that are sent via the handler and specify the responses that should be returned. For instance, you could write a test like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Arrange
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> handler = <span style="color:#66d9ef">new</span> StubHandler();
-handler.EnqueueResponse(<span style="color:#66d9ef">new</span> HttpResponseMessage(HttpStatusCode.Unauthorized));
-<span style="color:#66d9ef">var</span> processor = <span style="color:#66d9ef">new</span> PaymentProcessor(handler);
-
-<span style="color:#75715e">// Act
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> paymentResult = <span style="color:#66d9ef">await</span> processor.ProcessPayment(<span style="color:#66d9ef">new</span> Payment());
-
-<span style="color:#75715e">// Assert
-</span><span style="color:#75715e"></span>Assert.AreEqual(PaymentStatus.Failed, paymentResult.Status);
-</code></pre></div><p>Of course, rather than creating a stub manually, you could use a mocking framework to generate a fake handler for you. The fact that the <code>SendAsync</code> method is protected makes it a little harder than it should be, but you can easily work around the issue by making a subclass that exposes a public virtual method, and mock that instead:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MockableMessageHandler</span> : HttpMessageHandler
-{
-    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">sealed</span> Task&lt;HttpResponseMessage&gt; SendAsync(
-        HttpRequestMessage request,
-        CancellationToken cancellationToken)
-    {
-        <span style="color:#66d9ef">return</span> DoSendAsync(request);
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> Task&lt;HttpResponseMessage&gt; DoSendAsync(HttpRequestMessage request);
-}
-</code></pre></div><p>Usage example with <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Arrange
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> handler = A.Fake&lt;MockableMessageHandler&gt;();
-A.CallTo(() =&gt; handler.DoSendAsync(A&lt;HttpRequestMessage&gt;.<span style="color:#ae81ff">_</span>))
-    .Returns(<span style="color:#66d9ef">new</span> HttpResponseMessage(HttpStatusCode.Unauthorized));
-<span style="color:#66d9ef">var</span> processor = <span style="color:#66d9ef">new</span> PaymentProcessor(handler);
-...
-</code></pre></div><h2 id="logging">Logging</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubHandler</span> : HttpMessageHandler
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Responses to return</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Queue&lt;HttpResponseMessage&gt; <span style="color:#ae81ff">_</span>responses =
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> Queue&lt;System.Net.Http.HttpResponseMessage&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Requests that were sent via the handler</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;HttpRequestMessage&gt; <span style="color:#ae81ff">_</span>requests =
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> List&lt;System.Net.Http.HttpRequestMessage&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Task&lt;HttpResponseMessage&gt; SendAsync(
+</span></span><span style="display:flex;"><span>        HttpRequestMessage request,
+</span></span><span style="display:flex;"><span>        CancellationToken cancellationToken)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>responses.Count == <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;No response configured&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>requests.Add(request);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> response = <span style="color:#ae81ff">_</span>responses.Dequeue();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Task.FromResult(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> QueueResponse(HttpResponseMessage response) =&gt;
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>responses.Enqueue(response);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> IEnumerable&lt;HttpRequestMessage&gt; GetRequests() =&gt;
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>requests;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This class lets you record the requests that are sent via the handler and specify the responses that should be returned. For instance, you could write a test like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// Arrange</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> handler = <span style="color:#66d9ef">new</span> StubHandler();
+</span></span><span style="display:flex;"><span>handler.EnqueueResponse(<span style="color:#66d9ef">new</span> HttpResponseMessage(HttpStatusCode.Unauthorized));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> processor = <span style="color:#66d9ef">new</span> PaymentProcessor(handler);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Act</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> paymentResult = <span style="color:#66d9ef">await</span> processor.ProcessPayment(<span style="color:#66d9ef">new</span> Payment());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Assert</span>
+</span></span><span style="display:flex;"><span>Assert.AreEqual(PaymentStatus.Failed, paymentResult.Status);
+</span></span></code></pre></div><p>Of course, rather than creating a stub manually, you could use a mocking framework to generate a fake handler for you. The fact that the <code>SendAsync</code> method is protected makes it a little harder than it should be, but you can easily work around the issue by making a subclass that exposes a public virtual method, and mock that instead:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MockableMessageHandler</span> : HttpMessageHandler
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">sealed</span> Task&lt;HttpResponseMessage&gt; SendAsync(
+</span></span><span style="display:flex;"><span>        HttpRequestMessage request,
+</span></span><span style="display:flex;"><span>        CancellationToken cancellationToken)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> DoSendAsync(request);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> Task&lt;HttpResponseMessage&gt; DoSendAsync(HttpRequestMessage request);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Usage example with <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// Arrange</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> handler = A.Fake&lt;MockableMessageHandler&gt;();
+</span></span><span style="display:flex;"><span>A.CallTo(() =&gt; handler.DoSendAsync(A&lt;HttpRequestMessage&gt;.<span style="color:#ae81ff">_</span>))
+</span></span><span style="display:flex;"><span>    .Returns(<span style="color:#66d9ef">new</span> HttpResponseMessage(HttpStatusCode.Unauthorized));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> processor = <span style="color:#66d9ef">new</span> PaymentProcessor(handler);
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><h2 id="logging">Logging</h2>
 <p>Logging sent requests and received responses can help diagnose issues. This can easily be done with a custom delegating handler:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggingHandler</span> : DelegatingHandler
-{
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger <span style="color:#ae81ff">_l</span>ogger;
-
-    <span style="color:#66d9ef">public</span> LoggingHandler(ILogger logger)
-    {
-        <span style="color:#ae81ff">_l</span>ogger = logger;
-    }
-
-    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; SendAsync(
-        HttpRequestMessage request,
-        CancellationToken cancellationToken)
-    {
-        <span style="color:#ae81ff">_l</span>ogger.Trace(<span style="color:#e6db74">$&#34;Request: {request}&#34;</span>);
-        <span style="color:#66d9ef">try</span>
-        {
-            <span style="color:#75715e">// base.SendAsync calls the inner handler
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.SendAsync(request, cancellationToken);
-            <span style="color:#ae81ff">_l</span>ogger.Trace(<span style="color:#e6db74">$&#34;Response: {response}&#34;</span>);
-            <span style="color:#66d9ef">return</span> response;
-        }
-        <span style="color:#66d9ef">catch</span> (Exception ex)
-        {
-            <span style="color:#ae81ff">_l</span>ogger.Error(<span style="color:#e6db74">$&#34;Failed to get response: {ex}&#34;</span>);
-            <span style="color:#66d9ef">throw</span>;
-        }
-    }
-}
-</code></pre></div><h2 id="retrying-failed-requests">Retrying failed requests</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggingHandler</span> : DelegatingHandler
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger <span style="color:#ae81ff">_l</span>ogger;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> LoggingHandler(ILogger logger)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_l</span>ogger = logger;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; SendAsync(
+</span></span><span style="display:flex;"><span>        HttpRequestMessage request,
+</span></span><span style="display:flex;"><span>        CancellationToken cancellationToken)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_l</span>ogger.Trace(<span style="color:#e6db74">$&#34;Request: {request}&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// base.SendAsync calls the inner handler</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.SendAsync(request, cancellationToken);
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.Trace(<span style="color:#e6db74">$&#34;Response: {response}&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> response;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">catch</span> (Exception ex)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.Error(<span style="color:#e6db74">$&#34;Failed to get response: {ex}&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="retrying-failed-requests">Retrying failed requests</h2>
 <p>Another interesting use case for HTTP message handlers is to automatically retry failed requests. For instance, the server you&rsquo;re talking to might be temporarily unavailable (503), or it could be throttling your requests (429), or maybe you lost Internet access. Handling the retry for these cases at the application level is a pain, because it can happen virtually in any part of your code. Having this logic at the lowest possible level and implemented in a way that is completely transparent to the callers can make things much easier.</p>
 <p>Here&rsquo;s a possible implementation of a retry handler:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RetryHandler</span> : DelegatingHandler
-{
-    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; SendAsync(
-        HttpRequestMessage request,
-        CancellationToken cancellationToken)
-    {
-        <span style="color:#66d9ef">while</span> (<span style="color:#66d9ef">true</span>)
-        {
-            <span style="color:#66d9ef">try</span>
-            {
-                <span style="color:#75715e">// base.SendAsync calls the inner handler
-</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.SendAsync(request, cancellationToken);
-
-                <span style="color:#66d9ef">if</span> (response.StatusCode == HttpStatusCode.ServiceUnavailable)
-                {
-                    <span style="color:#75715e">// 503 Service Unavailable
-</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// Wait a bit and try again later
-</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">5000</span>, cancellationToken);
-                    <span style="color:#66d9ef">continue</span>;
-                }
-
-                <span style="color:#66d9ef">if</span> (response.StatusCode == (HttpStatusCode)<span style="color:#ae81ff">429</span>)
-                {
-                    <span style="color:#75715e">// 429 Too many requests
-</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// Wait a bit and try again later
-</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">1000</span>, cancellationToken);
-                    <span style="color:#66d9ef">continue</span>;
-                }
-
-                <span style="color:#75715e">// Not something we can retry, return the response as is
-</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">return</span> response;
-            }
-            <span style="color:#66d9ef">catch</span> (Exception ex) when(IsNetworkError(ex))
-            {
-                <span style="color:#75715e">// Network error
-</span><span style="color:#75715e"></span>                <span style="color:#75715e">// Wait a bit and try again later
-</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">2000</span>, cancellationToken);
-                <span style="color:#66d9ef">continue</span>;
-            }
-        }
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsNetworkError(Exception ex)
-    {
-        <span style="color:#75715e">// Check if it&#39;s a network error
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (ex <span style="color:#66d9ef">is</span> SocketException)
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-        <span style="color:#66d9ef">if</span> (ex.InnerException != <span style="color:#66d9ef">null</span>)
-            <span style="color:#66d9ef">return</span> IsNetworkError(ex.InnerException);
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-    }
-}
-</code></pre></div><p>Note that it&rsquo;s a pretty naive and simplistic implementation; for use in production code, you will probably want to add exponential backoff, take the <code>Retry-After</code> header into account to decide how long you have to wait, or be more subtle in how you check if an exception indicates a connection issue. Also, note that in its current state, this handler will retry <em>forever</em> until it succeeds; make sure to pass a cancellation token so that you can stop retrying if necessary.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RetryHandler</span> : DelegatingHandler
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; SendAsync(
+</span></span><span style="display:flex;"><span>        HttpRequestMessage request,
+</span></span><span style="display:flex;"><span>        CancellationToken cancellationToken)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// base.SendAsync calls the inner handler</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.SendAsync(request, cancellationToken);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (response.StatusCode == HttpStatusCode.ServiceUnavailable)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// 503 Service Unavailable</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Wait a bit and try again later</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">5000</span>, cancellationToken);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (response.StatusCode == (HttpStatusCode)<span style="color:#ae81ff">429</span>)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// 429 Too many requests</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Wait a bit and try again later</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">1000</span>, cancellationToken);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Not something we can retry, return the response as is</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> response;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">catch</span> (Exception ex) when(IsNetworkError(ex))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Network error</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Wait a bit and try again later</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">2000</span>, cancellationToken);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsNetworkError(Exception ex)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Check if it&#39;s a network error</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (ex <span style="color:#66d9ef">is</span> SocketException)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (ex.InnerException != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> IsNetworkError(ex.InnerException);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Note that it&rsquo;s a pretty naive and simplistic implementation; for use in production code, you will probably want to add exponential backoff, take the <code>Retry-After</code> header into account to decide how long you have to wait, or be more subtle in how you check if an exception indicates a connection issue. Also, note that in its current state, this handler will retry <em>forever</em> until it succeeds; make sure to pass a cancellation token so that you can stop retrying if necessary.</p>
 <h2 id="other-use-cases">Other use cases</h2>
 <p>I can&rsquo;t give examples for every possible scenario, but here are a few other possible use cases for HTTP message handlers:</p>
 <ul>

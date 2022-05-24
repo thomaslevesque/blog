@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="[WPF] Using InputBindings with the MVVM pattern" />
 <meta property="og:description" content="If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
-&lt;UserControl.InputBindings&gt; &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt; &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
+ &lt;UserControl.InputBindings&gt;  &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt;  &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
  The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/" /><meta property="article:section" content="posts" />
@@ -20,7 +20,7 @@
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Using InputBindings with the MVVM pattern"/>
 <meta name="twitter:description" content="If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
-&lt;UserControl.InputBindings&gt; &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt; &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
+ &lt;UserControl.InputBindings&gt;  &lt;KeyBinding Modifiers=&#34;Control&#34; Key=&#34;E&#34; Command=&#34;{Binding EditCommand}&#34;/&gt;  &lt;/UserControl.InputBindings&gt; Unfortunately, this code doesn&rsquo;t work, for two reasons :
  The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -83,190 +83,190 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-03-17T00:00:00Z">March 17, 2009</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;UserControl.InputBindings&gt;</span>
-        <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Modifiers=</span><span style="color:#e6db74">&#34;Control&#34;</span> <span style="color:#a6e22e">Key=</span><span style="color:#e6db74">&#34;E&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding EditCommand}&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/UserControl.InputBindings&gt;</span>
-</code></pre></div><p>Unfortunately, this code doesn&rsquo;t work, for two reasons :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>    <span style="color:#f92672">&lt;UserControl.InputBindings&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Modifiers=</span><span style="color:#e6db74">&#34;Control&#34;</span> <span style="color:#a6e22e">Key=</span><span style="color:#e6db74">&#34;E&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{Binding EditCommand}&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/UserControl.InputBindings&gt;</span>
+</span></span></code></pre></div><p>Unfortunately, this code doesn&rsquo;t work, for two reasons :</p>
 <ol>
 <li>The <code>Command</code> property is not a dependency property, so you cannot assign it through binding</li>
 <li><code>InputBinding</code>s are not part of the logical or visual tree of the control, so they don&rsquo;t inherit the <code>DataContext</code></li>
 </ol>
 <p>A solution would be to create the <code>InputBinding</code>s in the code-behind, but in the MVVM pattern we usually prefer to avoid this&hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive. So I eventually came up with a markup extension that enables binding to ViewModel commands, anywhere in XAML, even for non-dependency properties or if the element doesn&rsquo;t normally inherit the <code>DataContext</code>  This extension is used like a regular binding :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;UserControl.InputBindings&gt;</span>
-        <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Modifiers=</span><span style="color:#e6db74">&#34;Control&#34;</span> <span style="color:#a6e22e">Key=</span><span style="color:#e6db74">&#34;E&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{input:CommandBinding EditCommand}&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/UserControl.InputBindings&gt;</span>
-</code></pre></div><p>(The <em>input</em> XML namespace is mapped to the CLR namespace where the markup extension is declared)  In order to write this extension, I had to cheat a little&hellip; I used Reflector to find some private fields that would allow to retrieve the <code>DataContext</code> of the root element. I then accessed those fields using reflection.  Here is the code of the markup extension :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
-<span style="color:#66d9ef">using</span> System.Reflection;
-<span style="color:#66d9ef">using</span> System.Windows;
-<span style="color:#66d9ef">using</span> System.Windows.Input;
-<span style="color:#66d9ef">using</span> System.Windows.Markup;
-
-<span style="color:#66d9ef">namespace</span> MVVMLib.Input
-{
-<span style="color:#a6e22e">    [MarkupExtensionReturnType(typeof(ICommand))]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CommandBindingExtension</span> : MarkupExtension
-    {
-        <span style="color:#66d9ef">public</span> CommandBindingExtension()
-        {
-        }
-
-        <span style="color:#66d9ef">public</span> CommandBindingExtension(<span style="color:#66d9ef">string</span> commandName)
-        {
-            <span style="color:#66d9ef">this</span>.CommandName = commandName;
-        }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">        [ConstructorArgument(&#34;commandName&#34;)]</span>
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> CommandName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">object</span> targetObject;
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">object</span> targetProperty;
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> ProvideValue(IServiceProvider serviceProvider)
-        {
-            IProvideValueTarget provideValueTarget = serviceProvider.GetService(<span style="color:#66d9ef">typeof</span>(IProvideValueTarget)) <span style="color:#66d9ef">as</span> IProvideValueTarget;
-            <span style="color:#66d9ef">if</span> (provideValueTarget != <span style="color:#66d9ef">null</span>)
-            {
-                targetObject = provideValueTarget.TargetObject;
-                targetProperty = provideValueTarget.TargetProperty;
-            }
-
-            <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(CommandName))
-            {
-                <span style="color:#75715e">// The serviceProvider is actually a ProvideValueServiceProvider, which has a private field &#34;_context&#34; of type ParserContext
-</span><span style="color:#75715e"></span>                ParserContext parserContext = GetPrivateFieldValue&lt;ParserContext&gt;(serviceProvider, <span style="color:#e6db74">&#34;_context&#34;</span>);
-                <span style="color:#66d9ef">if</span> (parserContext != <span style="color:#66d9ef">null</span>)
-                {
-                    <span style="color:#75715e">// A ParserContext has a private field &#34;_rootElement&#34;, which returns the root element of the XAML file
-</span><span style="color:#75715e"></span>                    FrameworkElement rootElement = GetPrivateFieldValue&lt;FrameworkElement&gt;(parserContext, <span style="color:#e6db74">&#34;_rootElement&#34;</span>);
-                    <span style="color:#66d9ef">if</span> (rootElement != <span style="color:#66d9ef">null</span>)
-                    {
-                        <span style="color:#75715e">// Now we can retrieve the DataContext
-</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">object</span> dataContext = rootElement.DataContext;
-
-                        <span style="color:#75715e">// The DataContext may not be set yet when the FrameworkElement is first created, and it may change afterwards,
-</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// so we handle the DataContextChanged event to update the Command when needed
-</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">if</span> (!dataContextChangeHandlerSet)
-                        {
-                            rootElement.DataContextChanged += <span style="color:#66d9ef">new</span> DependencyPropertyChangedEventHandler(rootElement_DataContextChanged);
-                            dataContextChangeHandlerSet = <span style="color:#66d9ef">true</span>;
-                        }
-
-                        <span style="color:#66d9ef">if</span> (dataContext != <span style="color:#66d9ef">null</span>)
-                        {
-                            ICommand command = GetCommand(dataContext, CommandName);
-                            <span style="color:#66d9ef">if</span> (command != <span style="color:#66d9ef">null</span>)
-                                <span style="color:#66d9ef">return</span> command;
-                        }
-                    }
-                }
-            }
-
-            <span style="color:#75715e">// The Command property of an InputBinding cannot be null, so we return a dummy extension instead
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> DummyCommand.Instance;
-        }
-
-        <span style="color:#66d9ef">private</span> ICommand GetCommand(<span style="color:#66d9ef">object</span> dataContext, <span style="color:#66d9ef">string</span> commandName)
-        {
-            PropertyInfo prop = dataContext.GetType().GetProperty(commandName);
-            <span style="color:#66d9ef">if</span> (prop != <span style="color:#66d9ef">null</span>)
-            {
-                ICommand command = prop.GetValue(dataContext, <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">as</span> ICommand;
-                <span style="color:#66d9ef">if</span> (command != <span style="color:#66d9ef">null</span>)
-                    <span style="color:#66d9ef">return</span> command;
-            }
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
-        }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> AssignCommand(ICommand command)
-        {
-            <span style="color:#66d9ef">if</span> (targetObject != <span style="color:#66d9ef">null</span> &amp;&amp; targetProperty != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">if</span> (targetProperty <span style="color:#66d9ef">is</span> DependencyProperty)
-                {
-                    DependencyObject depObj = targetObject <span style="color:#66d9ef">as</span> DependencyObject;
-                    DependencyProperty depProp = targetProperty <span style="color:#66d9ef">as</span> DependencyProperty;
-                    depObj.SetValue(depProp, command);
-                }
-                <span style="color:#66d9ef">else</span>
-                {
-                    PropertyInfo prop = targetProperty <span style="color:#66d9ef">as</span> PropertyInfo;
-                    prop.SetValue(targetObject, command, <span style="color:#66d9ef">null</span>);
-                }
-            }
-        }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">bool</span> dataContextChangeHandlerSet = <span style="color:#66d9ef">false</span>;
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> rootElement_DataContextChanged(<span style="color:#66d9ef">object</span> sender, DependencyPropertyChangedEventArgs e)
-        {
-            FrameworkElement rootElement = sender <span style="color:#66d9ef">as</span> FrameworkElement;
-            <span style="color:#66d9ef">if</span> (rootElement != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">object</span> dataContext = rootElement.DataContext;
-                <span style="color:#66d9ef">if</span> (dataContext != <span style="color:#66d9ef">null</span>)
-                {
-                    ICommand command = GetCommand(dataContext, CommandName);
-                    <span style="color:#66d9ef">if</span> (command != <span style="color:#66d9ef">null</span>)
-                    {
-                        AssignCommand(command);
-                    }
-                }
-            }
-        }
-
-        <span style="color:#66d9ef">private</span> T GetPrivateFieldValue&lt;T&gt;(<span style="color:#66d9ef">object</span> target, <span style="color:#66d9ef">string</span> fieldName)
-        {
-            FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-            <span style="color:#66d9ef">if</span> (field != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">return</span> (T)field.GetValue(target);
-            }
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">default</span>(T);
-        }
-
-        <span style="color:#75715e">// A dummy command that does nothing...
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DummyCommand</span> : ICommand
-        {
-
-            <span style="color:#75715e">#region Singleton pattern
-</span><span style="color:#75715e"></span>
-            <span style="color:#66d9ef">private</span> DummyCommand()
-            {
-            }
-
-            <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> DummyCommand <span style="color:#ae81ff">_</span>instance = <span style="color:#66d9ef">null</span>;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> DummyCommand Instance
-            {
-                <span style="color:#66d9ef">get</span>
-                {
-                    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>instance == <span style="color:#66d9ef">null</span>)
-                    {
-                        <span style="color:#ae81ff">_</span>instance = <span style="color:#66d9ef">new</span> DummyCommand();
-                    }
-                    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>instance;
-                }
-            }
-
-            <span style="color:#75715e">#endregion
-</span><span style="color:#75715e"></span>
-            <span style="color:#75715e">#region ICommand Members
-</span><span style="color:#75715e"></span>
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> CanExecute(<span style="color:#66d9ef">object</span> parameter)
-            {
-                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-            }
-
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">event</span> EventHandler CanExecuteChanged;
-
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Execute(<span style="color:#66d9ef">object</span> parameter)
-            {
-            }
-
-            <span style="color:#75715e">#endregion
-</span><span style="color:#75715e"></span>        }
-    }
-}
-</code></pre></div><p>However this solution has a limitation : it works only for the <code>DataContext</code> of the XAML root. So you can&rsquo;t use it, for instance, to define an InputBinding on a control whose <code>DataContext</code> is also redefined, because the markup extension will access the root <code>DataContext</code>. It shouldn&rsquo;t be a problem in most cases, but you need to be aware of that&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>    <span style="color:#f92672">&lt;UserControl.InputBindings&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;KeyBinding</span> <span style="color:#a6e22e">Modifiers=</span><span style="color:#e6db74">&#34;Control&#34;</span> <span style="color:#a6e22e">Key=</span><span style="color:#e6db74">&#34;E&#34;</span> <span style="color:#a6e22e">Command=</span><span style="color:#e6db74">&#34;{input:CommandBinding EditCommand}&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/UserControl.InputBindings&gt;</span>
+</span></span></code></pre></div><p>(The <em>input</em> XML namespace is mapped to the CLR namespace where the markup extension is declared)  In order to write this extension, I had to cheat a little&hellip; I used Reflector to find some private fields that would allow to retrieve the <code>DataContext</code> of the root element. I then accessed those fields using reflection.  Here is the code of the markup extension :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Reflection;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows.Input;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows.Markup;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> MVVMLib.Input
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [MarkupExtensionReturnType(typeof(ICommand))]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CommandBindingExtension</span> : MarkupExtension
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> CommandBindingExtension()
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> CommandBindingExtension(<span style="color:#66d9ef">string</span> commandName)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.CommandName = commandName;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">        [ConstructorArgument(&#34;commandName&#34;)]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> CommandName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">object</span> targetObject;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">object</span> targetProperty;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> ProvideValue(IServiceProvider serviceProvider)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            IProvideValueTarget provideValueTarget = serviceProvider.GetService(<span style="color:#66d9ef">typeof</span>(IProvideValueTarget)) <span style="color:#66d9ef">as</span> IProvideValueTarget;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (provideValueTarget != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                targetObject = provideValueTarget.TargetObject;
+</span></span><span style="display:flex;"><span>                targetProperty = provideValueTarget.TargetProperty;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(CommandName))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// The serviceProvider is actually a ProvideValueServiceProvider, which has a private field &#34;_context&#34; of type ParserContext</span>
+</span></span><span style="display:flex;"><span>                ParserContext parserContext = GetPrivateFieldValue&lt;ParserContext&gt;(serviceProvider, <span style="color:#e6db74">&#34;_context&#34;</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (parserContext != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// A ParserContext has a private field &#34;_rootElement&#34;, which returns the root element of the XAML file</span>
+</span></span><span style="display:flex;"><span>                    FrameworkElement rootElement = GetPrivateFieldValue&lt;FrameworkElement&gt;(parserContext, <span style="color:#e6db74">&#34;_rootElement&#34;</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (rootElement != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        <span style="color:#75715e">// Now we can retrieve the DataContext</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">object</span> dataContext = rootElement.DataContext;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#75715e">// The DataContext may not be set yet when the FrameworkElement is first created, and it may change afterwards,</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#75715e">// so we handle the DataContextChanged event to update the Command when needed</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">if</span> (!dataContextChangeHandlerSet)
+</span></span><span style="display:flex;"><span>                        {
+</span></span><span style="display:flex;"><span>                            rootElement.DataContextChanged += <span style="color:#66d9ef">new</span> DependencyPropertyChangedEventHandler(rootElement_DataContextChanged);
+</span></span><span style="display:flex;"><span>                            dataContextChangeHandlerSet = <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">if</span> (dataContext != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                        {
+</span></span><span style="display:flex;"><span>                            ICommand command = GetCommand(dataContext, CommandName);
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">if</span> (command != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                                <span style="color:#66d9ef">return</span> command;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// The Command property of an InputBinding cannot be null, so we return a dummy extension instead</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> DummyCommand.Instance;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> ICommand GetCommand(<span style="color:#66d9ef">object</span> dataContext, <span style="color:#66d9ef">string</span> commandName)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            PropertyInfo prop = dataContext.GetType().GetProperty(commandName);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (prop != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                ICommand command = prop.GetValue(dataContext, <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">as</span> ICommand;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (command != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> command;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> AssignCommand(ICommand command)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (targetObject != <span style="color:#66d9ef">null</span> &amp;&amp; targetProperty != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (targetProperty <span style="color:#66d9ef">is</span> DependencyProperty)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    DependencyObject depObj = targetObject <span style="color:#66d9ef">as</span> DependencyObject;
+</span></span><span style="display:flex;"><span>                    DependencyProperty depProp = targetProperty <span style="color:#66d9ef">as</span> DependencyProperty;
+</span></span><span style="display:flex;"><span>                    depObj.SetValue(depProp, command);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    PropertyInfo prop = targetProperty <span style="color:#66d9ef">as</span> PropertyInfo;
+</span></span><span style="display:flex;"><span>                    prop.SetValue(targetObject, command, <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">bool</span> dataContextChangeHandlerSet = <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> rootElement_DataContextChanged(<span style="color:#66d9ef">object</span> sender, DependencyPropertyChangedEventArgs e)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            FrameworkElement rootElement = sender <span style="color:#66d9ef">as</span> FrameworkElement;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (rootElement != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">object</span> dataContext = rootElement.DataContext;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (dataContext != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    ICommand command = GetCommand(dataContext, CommandName);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (command != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        AssignCommand(command);
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> T GetPrivateFieldValue&lt;T&gt;(<span style="color:#66d9ef">object</span> target, <span style="color:#66d9ef">string</span> fieldName)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (field != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> (T)field.GetValue(target);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">default</span>(T);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// A dummy command that does nothing...</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DummyCommand</span> : ICommand
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#region Singleton pattern</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> DummyCommand()
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> DummyCommand <span style="color:#ae81ff">_</span>instance = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> DummyCommand Instance
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">get</span>
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>instance == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        <span style="color:#ae81ff">_</span>instance = <span style="color:#66d9ef">new</span> DummyCommand();
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>instance;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#region ICommand Members</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> CanExecute(<span style="color:#66d9ef">object</span> parameter)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">event</span> EventHandler CanExecuteChanged;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Execute(<span style="color:#66d9ef">object</span> parameter)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>However this solution has a limitation : it works only for the <code>DataContext</code> of the XAML root. So you can&rsquo;t use it, for instance, to define an InputBinding on a control whose <code>DataContext</code> is also redefined, because the markup extension will access the root <code>DataContext</code>. It shouldn&rsquo;t be a problem in most cases, but you need to be aware of that&hellip;</p>
 
 		</div>
 		<footer class="post__footer">

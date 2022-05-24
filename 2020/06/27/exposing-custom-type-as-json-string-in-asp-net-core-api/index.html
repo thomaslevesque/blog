@@ -81,90 +81,90 @@ if (!doNotTrack) {
 			<p>Sometimes your API needs to expose a non-primitive type that has a &ldquo;natural&rdquo; string representation. For instance, a standard representation for a duration is the <a href="https://en.wikipedia.org/wiki/ISO_8601#Durations">ISO 8601 format</a>, where &ldquo;1 month, 2 days, 3 hours and 4 minutes&rdquo; can be represented as <code>P1M2DT3H4M</code> (note that this isn&rsquo;t the same as a <code>Timespan</code>, which has no notion of calendar months and years). A duration could be represented in C# as a custom type, like the <code>Duration</code> structure in my <a href="https://github.com/thomaslevesque/Iso8601DurationHelper">Iso8601DurationHelper</a> project. I&rsquo;ll use this as an example for the rest of this post.</p>
 <h2 id="json-serialization">JSON serialization</h2>
 <p>Let&rsquo;s assume you want to expose this class in an ASP.NET Core API:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vacation</span>
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-    <span style="color:#66d9ef">public</span> DateTime StartDate { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-    <span style="color:#66d9ef">public</span> Duration Duration { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}
-</code></pre></div><p>Out of the box, if you&rsquo;re using <code>System.Text.Json</code> as the JSON serializer (which is the default in ASP.NET Core 3.0 and later), it will be serialized like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
-    <span style="color:#f92672">&#34;startDate&#34;</span>: <span style="color:#e6db74">&#34;2020-08-01T00:00:00&#34;</span>,
-    <span style="color:#f92672">&#34;duration&#34;</span>: {
-        <span style="color:#f92672">&#34;years&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;months&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;weeks&#34;</span>: <span style="color:#ae81ff">3</span>,
-        <span style="color:#f92672">&#34;days&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;hours&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;minutes&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;seconds&#34;</span>: <span style="color:#ae81ff">0</span>
-    }
-}
-</code></pre></div><p>While usable, this representation is quite verbose and not very readable&hellip; It would be nicer if the duration was serialized as the string <code>&quot;P3W&quot;</code>. So let&rsquo;s talk about how to achieve this!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vacation</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> DateTime StartDate { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Duration Duration { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Out of the box, if you&rsquo;re using <code>System.Text.Json</code> as the JSON serializer (which is the default in ASP.NET Core 3.0 and later), it will be serialized like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;startDate&#34;</span>: <span style="color:#e6db74">&#34;2020-08-01T00:00:00&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;duration&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;years&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;months&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;weeks&#34;</span>: <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;days&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;hours&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;minutes&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;seconds&#34;</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>While usable, this representation is quite verbose and not very readable&hellip; It would be nicer if the duration was serialized as the string <code>&quot;P3W&quot;</code>. So let&rsquo;s talk about how to achieve this!</p>
 <h3 id="option-1-use-jsonnet-for-serialization">Option 1: Use JSON.NET for serialization</h3>
 <p>If the custom type has an associated <code>TypeConverter</code> that can convert to and from <code>System.String</code> (which is the case for <code>Iso8601DurationHelper.Duration</code>), JSON.NET will automatically use that converter. So, if you enable the JSON.NET serializer as shown in the <a href="https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-3.1&amp;tabs=visual-studio#newtonsoftjson-jsonnet-support">documentation</a>, you will get the desired output:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
-    <span style="color:#f92672">&#34;startDate&#34;</span>: <span style="color:#e6db74">&#34;2020-08-01T00:00:00&#34;</span>,
-    <span style="color:#f92672">&#34;duration&#34;</span>: <span style="color:#e6db74">&#34;P3W&#34;</span>
-}
-</code></pre></div><p>Well, that was easy! Except&hellip; You probably don&rsquo;t want to change your JSON serializer just for this. <code>System.Text.Json</code> has many limitations compared to JSON.NET, but it&rsquo;s also considerably faster. So you should consider carefully which one to use, and the serialization behavior in this particular case is probably not the most important criteria.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;startDate&#34;</span>: <span style="color:#e6db74">&#34;2020-08-01T00:00:00&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;duration&#34;</span>: <span style="color:#e6db74">&#34;P3W&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Well, that was easy! Except&hellip; You probably don&rsquo;t want to change your JSON serializer just for this. <code>System.Text.Json</code> has many limitations compared to JSON.NET, but it&rsquo;s also considerably faster. So you should consider carefully which one to use, and the serialization behavior in this particular case is probably not the most important criteria.</p>
 <h3 id="option-2-add-a-custom-json-converter-for-systemtextjson">Option 2: Add a custom JSON converter for System.Text.Json</h3>
 <p>While <code>System.Text.Json</code> doesn&rsquo;t have as many features as JSON.NET, it&rsquo;s still fairly customizable. For instance, you can define a custom converter to control how values of a given type are serialized or deserialized.</p>
 <p>A minimal JSON converter for <code>Duration</code> looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DurationJsonConverter</span> : JsonConverter&lt;Duration&gt;
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> Duration Read(<span style="color:#66d9ef">ref</span> Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-    {
-        <span style="color:#66d9ef">return</span> Duration.Parse(reader.GetString());
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> Write(Utf8JsonWriter writer, Duration <span style="color:#66d9ef">value</span>, JsonSerializerOptions options)
-    {
-        writer.WriteStringValue(<span style="color:#66d9ef">value</span>.ToString());
-    }
-}
-</code></pre></div><p>Simple enough, right? Now we just need to configure MVC to use this converter. In the <code>Startup</code> class, in the <code>ConfigureServices</code> method, locate the call to <code>AddControllers</code> (or <code>AddControllerWithViews</code>, <code>AddRazorPages</code> or <code>AddMvc</code>, depending on your setup), and append a call to <code>AddJsonOptions</code> like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddControllers()
-    .AddJsonOptions(options =&gt;
-    {
-        options.JsonSerializerOptions.Converters.Add(<span style="color:#66d9ef">new</span> DurationJsonConverter());
-    });
-</code></pre></div><p>With that done, the duration is now properly serialized to its ISO 8601 representation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DurationJsonConverter</span> : JsonConverter&lt;Duration&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> Duration Read(<span style="color:#66d9ef">ref</span> Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Duration.Parse(reader.GetString());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> Write(Utf8JsonWriter writer, Duration <span style="color:#66d9ef">value</span>, JsonSerializerOptions options)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        writer.WriteStringValue(<span style="color:#66d9ef">value</span>.ToString());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Simple enough, right? Now we just need to configure MVC to use this converter. In the <code>Startup</code> class, in the <code>ConfigureServices</code> method, locate the call to <code>AddControllers</code> (or <code>AddControllerWithViews</code>, <code>AddRazorPages</code> or <code>AddMvc</code>, depending on your setup), and append a call to <code>AddJsonOptions</code> like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddControllers()
+</span></span><span style="display:flex;"><span>    .AddJsonOptions(options =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        options.JsonSerializerOptions.Converters.Add(<span style="color:#66d9ef">new</span> DurationJsonConverter());
+</span></span><span style="display:flex;"><span>    });
+</span></span></code></pre></div><p>With that done, the duration is now properly serialized to its ISO 8601 representation.</p>
 <p>Note that this solution (writing a custom converter) can also be used JSON.NET, although the implementation will be slightly different. I won&rsquo;t cover the details here.</p>
 <h2 id="openapi-swagger-description">OpenAPI (Swagger) description</h2>
 <p>If you expose Swagger documentation for your API using <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore">Swashbuckle</a>, you will notice a discrepancy between how the <code>Duration</code> is actually serialized in JSON, and how it&rsquo;s represented in the OpenAPI schema. Swagger UI will show the following response example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#f92672">&#34;startDate&#34;</span>: <span style="color:#e6db74">&#34;2020-06-27T14:36:43.417Z&#34;</span>,
-    <span style="color:#f92672">&#34;duration&#34;</span>: {
-        <span style="color:#f92672">&#34;years&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;months&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;weeks&#34;</span>: <span style="color:#ae81ff">3</span>,
-        <span style="color:#f92672">&#34;days&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;hours&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;minutes&#34;</span>: <span style="color:#ae81ff">0</span>,
-        <span style="color:#f92672">&#34;seconds&#34;</span>: <span style="color:#ae81ff">0</span>
-    }
-}
-</code></pre></div><p>Looks like it ignored our custom serialization format! That&rsquo;s because Swashbuckle cannot know how we configured the serializer. So we have to tell it that <code>Duration</code> is serialized as a string. Fortunately, it&rsquo;s pretty easy! In the call to <code>AddSwaggerGen</code>, just use the <code>MapType</code> method like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddSwaggerGen(options =&gt;
-{
-    options.SwaggerDoc(<span style="color:#e6db74">&#34;v1&#34;</span>, <span style="color:#66d9ef">new</span> OpenApiInfo { Title = <span style="color:#e6db74">&#34;My API&#34;</span>, Version = <span style="color:#e6db74">&#34;v1&#34;</span> });
-    options.MapType(<span style="color:#66d9ef">typeof</span>(Duration), () =&gt; <span style="color:#66d9ef">new</span> OpenApiSchema
-    {
-        Type = <span style="color:#e6db74">&#34;string&#34;</span>,
-        Example = <span style="color:#66d9ef">new</span> OpenApiString(<span style="color:#e6db74">&#34;P3W&#34;</span>)
-    });
-});
-</code></pre></div><p>Swashbuckle will now produce the proper schema for <code>Duration</code>, and the example will look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">0</span>,
-  <span style="color:#f92672">&#34;startDate&#34;</span>: <span style="color:#e6db74">&#34;2020-06-27T14:36:43.417Z&#34;</span>,
-  <span style="color:#f92672">&#34;duration&#34;</span>: <span style="color:#e6db74">&#34;P3W&#34;</span>
-}
-</code></pre></div><p>Remarks:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;startDate&#34;</span>: <span style="color:#e6db74">&#34;2020-06-27T14:36:43.417Z&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;duration&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;years&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;months&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;weeks&#34;</span>: <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;days&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;hours&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;minutes&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;seconds&#34;</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Looks like it ignored our custom serialization format! That&rsquo;s because Swashbuckle cannot know how we configured the serializer. So we have to tell it that <code>Duration</code> is serialized as a string. Fortunately, it&rsquo;s pretty easy! In the call to <code>AddSwaggerGen</code>, just use the <code>MapType</code> method like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddSwaggerGen(options =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    options.SwaggerDoc(<span style="color:#e6db74">&#34;v1&#34;</span>, <span style="color:#66d9ef">new</span> OpenApiInfo { Title = <span style="color:#e6db74">&#34;My API&#34;</span>, Version = <span style="color:#e6db74">&#34;v1&#34;</span> });
+</span></span><span style="display:flex;"><span>    options.MapType(<span style="color:#66d9ef">typeof</span>(Duration), () =&gt; <span style="color:#66d9ef">new</span> OpenApiSchema
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Type = <span style="color:#e6db74">&#34;string&#34;</span>,
+</span></span><span style="display:flex;"><span>        Example = <span style="color:#66d9ef">new</span> OpenApiString(<span style="color:#e6db74">&#34;P3W&#34;</span>)
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>Swashbuckle will now produce the proper schema for <code>Duration</code>, and the example will look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;startDate&#34;</span>: <span style="color:#e6db74">&#34;2020-06-27T14:36:43.417Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;duration&#34;</span>: <span style="color:#e6db74">&#34;P3W&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Remarks:</p>
 <ul>
 <li>We had to specify an example value in the schema, otherwise the example would have just shown <code>&quot;string&quot;</code> instead of an actual ISO 8601 duration.</li>
 <li>With the current version of Swashbuckle.AspNetCore (5.5.1 at the time of writing), if you also expose a nullable <code>Duration</code>, you will have to configure the schema for <code>Duration?</code> separately. There&rsquo;s an open <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1648">issue</a> about this, hopefully it will be resolved so that it&rsquo;s no longer necessary to configure the nullable type separately.</li>

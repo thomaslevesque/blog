@@ -10,7 +10,7 @@
 	<meta property="og:title" content="[Windows Forms] Automatically drag and drop controls (DragMove)" />
 <meta property="og:description" content="Here&rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip;
 In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
-private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)" />
+private void Window_MouseDown(object sender, MouseButtonEventArgs e) {  this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2009-05-06T00:00:00+00:00" />
@@ -21,7 +21,7 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.Drag
 <meta name="twitter:title" content="[Windows Forms] Automatically drag and drop controls (DragMove)"/>
 <meta name="twitter:description" content="Here&rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip;
 In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
-private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)"/>
+private void Window_MouseDown(object sender, MouseButtonEventArgs e) {  this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -84,11 +84,11 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Here&rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip;</p>
 <p>In WPF, there is a very handy method to move a window with no borders : <code>Window.DragMove</code>. It can be used like that :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> Window_MouseDown(<span style="color:#66d9ef">object</span> sender, MouseButtonEventArgs e)
-{
-    <span style="color:#66d9ef">this</span>.DragMove();
-}
-</code></pre></div><p>When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> Window_MouseDown(<span style="color:#66d9ef">object</span> sender, MouseButtonEventArgs e)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.DragMove();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)</p>
 <p>Unfortunately, this method only exists in WPF, and a majority of developers are still working with Windows Forms. So I came up with a solution to use a similar technique in Windows Forms, with a few improvements :</p>
 <ul>
 <li>Usable on any control, not only a window</li>
@@ -110,18 +110,18 @@ if (!doNotTrack) {
 <p>The closest to WPF&rsquo;s DragMove : in the handler of the <code>MouseDown</code> event, call the <code>DragMove</code> extension method on the Form or control to move</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> label2_MouseDown(<span style="color:#66d9ef">object</span> sender, MouseEventArgs e)
-{
-    label2.DragMove();
-}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> label2_MouseDown(<span style="color:#66d9ef">object</span> sender, MouseEventArgs e)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    label2.DragMove();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li>The most flexible : call the <code>EnableDragMove</code> extension method on the Form or control to move (no event handling needed).</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> checkBox1_CheckedChanged(<span style="color:#66d9ef">object</span> sender, EventArgs e)
-{
-    <span style="color:#66d9ef">this</span>.EnableDragMove(checkBox1.Checked);
-}
-</code></pre></div><p>The attached Visual Studio solution contains the WinFormsDragMove library, and a test project to demonstrate the various ways to use this library. A C#2-compatible version of these projects is also included.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> checkBox1_CheckedChanged(<span style="color:#66d9ef">object</span> sender, EventArgs e)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.EnableDragMove(checkBox1.Checked);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The attached Visual Studio solution contains the WinFormsDragMove library, and a test project to demonstrate the various ways to use this library. A C#2-compatible version of these projects is also included.</p>
 <p><a href="DragMove.zip">Download source</a></p>
 
 		</div>

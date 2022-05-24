@@ -116,7 +116,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); + Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff.
+diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;);  Console.WriteLine(&#34;Hello World!&#34;);  Console.WriteLine(&#34;Hello World!&#34;); + Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -131,7 +131,7 @@ diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
-public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync:  private Task&lt;IBookStore&gt; GetBookStoreAsync() { // actual implementation irrelevant  // .
+public async Task&lt;bool&gt; BookExistsAsync(int id) {  var store = await GetBookStoreAsync();  var book = store.GetBookByIdAsync(id);  return book != null; }  // For completeness, here are the types and methods used in BookExistsAsync:  private Task&lt;IBookStore&gt; GetBookStoreAsync() {  // actual implementation irrelevant  // .
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -189,7 +189,7 @@ public async Task&lt;bool&gt; BookExistsAsync(int id) { var store = await GetBoo
 	<div class="content list__excerpt post__content clearfix">
 		Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
-public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation  await Task.
+public class Calculator {  public async Task&lt;int&gt; AddAsync(int x, int y)  {  // simulate long calculation  await Task.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">

@@ -106,127 +106,127 @@ if (!doNotTrack) {
 <p>I know, it&rsquo;s not much of a solution…</p>
 <h2 id="fixing-tostring">Fixing ToString()</h2>
 <p>In the second post of this series, I <a href="https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/#common-base-type-for-strongly-typed-ids">suggested</a> implementing <code>ToString()</code> in the <code>StronglyTypedId&lt;TValue&gt;</code> base type, so that you don&rsquo;t need to do it again in every strongly-typed id:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; Value.ToString();
-</code></pre></div><p>This seemed like a good idea… except for the fact that it doesn&rsquo;t work! If you create a new record that inherits from <code>StronglyTypedId&lt;TValue&gt;</code>, the compiler will always generate a new <code>ToString()</code> method, overriding the one from the base class. This compiler-provided implementation outputs the type and property values, like <code>&quot;ProductId { Value = 42 }&quot;</code>. While this looks nice in the debugger, it&rsquo;s not what we want for strongly-typed ids.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; Value.ToString();
+</span></span></code></pre></div><p>This seemed like a good idea… except for the fact that it doesn&rsquo;t work! If you create a new record that inherits from <code>StronglyTypedId&lt;TValue&gt;</code>, the compiler will always generate a new <code>ToString()</code> method, overriding the one from the base class. This compiler-provided implementation outputs the type and property values, like <code>&quot;ProductId { Value = 42 }&quot;</code>. While this looks nice in the debugger, it&rsquo;s not what we want for strongly-typed ids.</p>
 <p>We need the string representation to be that of the wrapped value. The main reason is that this representation will be used in URL generation. For instance, if you do something like this in a controller:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">return</span> CreatedAtAction(nameof(GetProduct), <span style="color:#66d9ef">new</span> { id = product.Id }, product);
-</code></pre></div><p>ASP.NET Core will add a <code>Location</code> header to the response, containing the URL for the <code>GetProduct</code> action with the specified value for <code>id</code>. This URL should be something like <code>https://localhost:5000/product/42</code>. The problem is that, if you don&rsquo;t replace the compiler-generated implementation of <code>ToString()</code>, it will actually generate something like this: <code>https://localhost:5000/product/ProductId { Value = 42 }</code>. Oops!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">return</span> CreatedAtAction(nameof(GetProduct), <span style="color:#66d9ef">new</span> { id = product.Id }, product);
+</span></span></code></pre></div><p>ASP.NET Core will add a <code>Location</code> header to the response, containing the URL for the <code>GetProduct</code> action with the specified value for <code>id</code>. This URL should be something like <code>https://localhost:5000/product/42</code>. The problem is that, if you don&rsquo;t replace the compiler-generated implementation of <code>ToString()</code>, it will actually generate something like this: <code>https://localhost:5000/product/ProductId { Value = 42 }</code>. Oops!</p>
 <p>The obvious fix would be to mark the <code>ToString()</code> override as <code>sealed</code>; unfortunately this is explicitly forbidden, and produces a compilation error.</p>
 <p>So, what&rsquo;s the solution? Override <code>ToString()</code> explicitly in every strongly-typed id? Well, it would work, but it would be pretty annoying… A better option is to use another new feature of C# 9: source generators. Basically, we&rsquo;re going to automatically generate the method for every strongly-typed id.</p>
 <h3 id="writing-a-source-generator">Writing a source generator</h3>
 <p>Source generators are a similar to Roslyn analyzers, in that they run during compilation of the project and rely on the same Roslyn package. They can add new code to the project, based on the existing code.</p>
 <p>First, we need to create a new project in our solution to contain the source generator. It&rsquo;s a simple class library with a reference to the <code>Microsoft.CodeAnalysis.CSharp</code> package:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Project</span> <span style="color:#a6e22e">Sdk=</span><span style="color:#e6db74">&#34;Microsoft.NET.Sdk&#34;</span><span style="color:#f92672">&gt;</span>
-
-  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
-    <span style="color:#f92672">&lt;TargetFramework&gt;</span>net5.0<span style="color:#f92672">&lt;/TargetFramework&gt;</span>
-  <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
-
-  <span style="color:#f92672">&lt;ItemGroup&gt;</span>
-    <span style="color:#f92672">&lt;PackageReference</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;Microsoft.CodeAnalysis.CSharp&#34;</span> <span style="color:#a6e22e">Version=</span><span style="color:#e6db74">&#34;3.9.0&#34;</span> <span style="color:#a6e22e">PrivateAssets=</span><span style="color:#e6db74">&#34;All&#34;</span> <span style="color:#f92672">/&gt;</span>
-  <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
-<span style="color:#f92672">&lt;/Project&gt;</span>
-</code></pre></div><p>In this project, let&rsquo;s create a <code>StronglyTypedIdGenerator</code> class that implements <code>ISourceGenerator</code> and has the <code>[Generator]</code> attribute:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
-<span style="color:#66d9ef">using</span> System.Collections.Generic;
-<span style="color:#66d9ef">using</span> System.Linq;
-<span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis;
-<span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis.CSharp;
-<span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis.CSharp.Syntax;
-
-<span style="color:#66d9ef">namespace</span> MyProject.SourceGen
-{
-<span style="color:#a6e22e">    [Generator]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StronglyTypedIdGenerator</span> : ISourceGenerator
-    {
-        <span style="color:#75715e">// Adjust the namespace for your project
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> StronglyTypedIdMetadataName = <span style="color:#e6db74">&#34;MyProject.StronglyTypedId`1&#34;</span>;
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Initialize(GeneratorInitializationContext context)
-        {
-            <span style="color:#75715e">// Uncomment the next line to debug the source generator
-</span><span style="color:#75715e"></span>            <span style="color:#75715e">//System.Diagnostics.Debugger.Launch();
-</span><span style="color:#75715e"></span>            context.RegisterForSyntaxNotifications(() =&gt; <span style="color:#66d9ef">new</span> SyntaxReceiver());
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Execute(GeneratorExecutionContext context)
-        {
-            <span style="color:#66d9ef">if</span> (context.SyntaxReceiver <span style="color:#66d9ef">is</span> not SyntaxReceiver receiver)
-                <span style="color:#66d9ef">return</span>;
-
-            INamedTypeSymbol stronglyTypedIdBaseType = context.Compilation.GetTypeByMetadataName(StronglyTypedIdMetadataName)
-                ?? <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">$&#34;Type &#39;{StronglyTypedIdMetadataName}&#39; could not be found&#34;</span>);
-
-            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> declaration <span style="color:#66d9ef">in</span> receiver.CandidateDeclarations)
-            {
-                <span style="color:#66d9ef">var</span> model = context.Compilation.GetSemanticModel(declaration.SyntaxTree);
-                <span style="color:#66d9ef">var</span> type = model.GetDeclaredSymbol(declaration);
-                <span style="color:#66d9ef">if</span> (type <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span>)
-                    <span style="color:#66d9ef">continue</span>;
-
-                <span style="color:#66d9ef">if</span> (!IsStronglyTypedId(type))
-                    <span style="color:#66d9ef">continue</span>;
-
-                <span style="color:#66d9ef">string</span> fullNamespace = type.ContainingNamespace.ToDisplayString();
-                <span style="color:#66d9ef">string</span> typeName = type.Name;
-
-                <span style="color:#66d9ef">var</span> source = <span style="color:#e6db74">$@&#34;namespace {fullNamespace}
-</span><span style="color:#e6db74">{{
-</span><span style="color:#e6db74">    partial record {typeName}
-</span><span style="color:#e6db74">    {{
-</span><span style="color:#e6db74">        public override string ToString() =&gt; Value.ToString();
-</span><span style="color:#e6db74">    }}
-</span><span style="color:#e6db74">}}&#34;</span>;
-                context.AddSource(<span style="color:#e6db74">$&#34;{typeName}.Generated&#34;</span>, source);
-            }
-
-            <span style="color:#66d9ef">bool</span> IsStronglyTypedId(INamedTypeSymbol type)
-            {
-                <span style="color:#66d9ef">return</span> type.BaseType.IsGenericType
-                    &amp;&amp; !type.BaseType.IsUnboundGenericType
-                    &amp;&amp; SymbolEqualityComparer.Default.Equals(type.BaseType.ConstructedFrom, stronglyTypedIdBaseType);
-            }
-        }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SyntaxReceiver</span> : ISyntaxReceiver
-        {
-            <span style="color:#66d9ef">public</span> List&lt;RecordDeclarationSyntax&gt; CandidateDeclarations { <span style="color:#66d9ef">get</span>; } = <span style="color:#66d9ef">new</span>();
-
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnVisitSyntaxNode(SyntaxNode syntaxNode)
-            {
-                <span style="color:#66d9ef">if</span> (syntaxNode <span style="color:#66d9ef">is</span> RecordDeclarationSyntax declaration)
-                {
-                    <span style="color:#75715e">// Must declare a base type (we don&#39;t care which at this point)
-</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">if</span> (declaration.BaseList <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span> || !declaration.BaseList.Types.Any())
-                        <span style="color:#66d9ef">return</span>;
-
-                    <span style="color:#75715e">// Must be partial (otherwise we can&#39;t add new members)
-</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">if</span> (!declaration.Modifiers.Any(SyntaxKind.PartialKeyword))
-                        <span style="color:#66d9ef">return</span>;
-
-                    <span style="color:#75715e">// Must have a single parameter, either in the parameter list or in an explicit constructor
-</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">if</span> (declaration.ParameterList <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span>)
-                    {
-                        <span style="color:#66d9ef">var</span> ctors = declaration.Members.OfType&lt;ConstructorDeclarationSyntax&gt;().ToList();
-                        <span style="color:#75715e">// We need at least one constructor with one parameter
-</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">if</span> (!ctors.Any(c =&gt; c.ParameterList.Parameters.Count == <span style="color:#ae81ff">1</span>))
-                            <span style="color:#66d9ef">return</span>;
-                        <span style="color:#75715e">// And there can&#39;t be a constructor with more than one parameter
-</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">if</span> (ctors.Any(c =&gt; c.ParameterList.Parameters.Count &gt; <span style="color:#ae81ff">1</span>))
-                            <span style="color:#66d9ef">return</span>;
-                    }
-                    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (declaration.ParameterList.Parameters.Count != <span style="color:#ae81ff">1</span>)
-                    {
-                        <span style="color:#66d9ef">return</span>;
-                    }
-
-                    CandidateDeclarations.Add(declaration);
-                }
-            }
-        }
-    }
-}
-</code></pre></div><p>I&rsquo;m not going to describe this code line by line, but here are the important parts:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Project</span> <span style="color:#a6e22e">Sdk=</span><span style="color:#e6db74">&#34;Microsoft.NET.Sdk&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;TargetFramework&gt;</span>net5.0<span style="color:#f92672">&lt;/TargetFramework&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;ItemGroup&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;PackageReference</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;Microsoft.CodeAnalysis.CSharp&#34;</span> <span style="color:#a6e22e">Version=</span><span style="color:#e6db74">&#34;3.9.0&#34;</span> <span style="color:#a6e22e">PrivateAssets=</span><span style="color:#e6db74">&#34;All&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Project&gt;</span>
+</span></span></code></pre></div><p>In this project, let&rsquo;s create a <code>StronglyTypedIdGenerator</code> class that implements <code>ISourceGenerator</code> and has the <code>[Generator]</code> attribute:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Collections.Generic;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Linq;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis.CSharp;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.CodeAnalysis.CSharp.Syntax;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> MyProject.SourceGen
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [Generator]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StronglyTypedIdGenerator</span> : ISourceGenerator
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Adjust the namespace for your project</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> StronglyTypedIdMetadataName = <span style="color:#e6db74">&#34;MyProject.StronglyTypedId`1&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Initialize(GeneratorInitializationContext context)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Uncomment the next line to debug the source generator</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//System.Diagnostics.Debugger.Launch();</span>
+</span></span><span style="display:flex;"><span>            context.RegisterForSyntaxNotifications(() =&gt; <span style="color:#66d9ef">new</span> SyntaxReceiver());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Execute(GeneratorExecutionContext context)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (context.SyntaxReceiver <span style="color:#66d9ef">is</span> not SyntaxReceiver receiver)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            INamedTypeSymbol stronglyTypedIdBaseType = context.Compilation.GetTypeByMetadataName(StronglyTypedIdMetadataName)
+</span></span><span style="display:flex;"><span>                ?? <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">$&#34;Type &#39;{StronglyTypedIdMetadataName}&#39; could not be found&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> declaration <span style="color:#66d9ef">in</span> receiver.CandidateDeclarations)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> model = context.Compilation.GetSemanticModel(declaration.SyntaxTree);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> type = model.GetDeclaredSymbol(declaration);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (type <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (!IsStronglyTypedId(type))
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">string</span> fullNamespace = type.ContainingNamespace.ToDisplayString();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">string</span> typeName = type.Name;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> source = <span style="color:#e6db74">$@&#34;namespace {fullNamespace}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">{{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    partial record {typeName}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    {{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        public override string ToString() =&gt; Value.ToString();
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}}&#34;</span>;
+</span></span><span style="display:flex;"><span>                context.AddSource(<span style="color:#e6db74">$&#34;{typeName}.Generated&#34;</span>, source);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">bool</span> IsStronglyTypedId(INamedTypeSymbol type)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> type.BaseType.IsGenericType
+</span></span><span style="display:flex;"><span>                    &amp;&amp; !type.BaseType.IsUnboundGenericType
+</span></span><span style="display:flex;"><span>                    &amp;&amp; SymbolEqualityComparer.Default.Equals(type.BaseType.ConstructedFrom, stronglyTypedIdBaseType);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SyntaxReceiver</span> : ISyntaxReceiver
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> List&lt;RecordDeclarationSyntax&gt; CandidateDeclarations { <span style="color:#66d9ef">get</span>; } = <span style="color:#66d9ef">new</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnVisitSyntaxNode(SyntaxNode syntaxNode)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (syntaxNode <span style="color:#66d9ef">is</span> RecordDeclarationSyntax declaration)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Must declare a base type (we don&#39;t care which at this point)</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (declaration.BaseList <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span> || !declaration.BaseList.Types.Any())
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Must be partial (otherwise we can&#39;t add new members)</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (!declaration.Modifiers.Any(SyntaxKind.PartialKeyword))
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Must have a single parameter, either in the parameter list or in an explicit constructor</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (declaration.ParameterList <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">var</span> ctors = declaration.Members.OfType&lt;ConstructorDeclarationSyntax&gt;().ToList();
+</span></span><span style="display:flex;"><span>                        <span style="color:#75715e">// We need at least one constructor with one parameter</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">if</span> (!ctors.Any(c =&gt; c.ParameterList.Parameters.Count == <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>                        <span style="color:#75715e">// And there can&#39;t be a constructor with more than one parameter</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">if</span> (ctors.Any(c =&gt; c.ParameterList.Parameters.Count &gt; <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (declaration.ParameterList.Parameters.Count != <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    CandidateDeclarations.Add(declaration);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>I&rsquo;m not going to describe this code line by line, but here are the important parts:</p>
 <ul>
 <li>
 <p>The <code>Initialize</code> method is called when compilation starts. It gives the generator an opportunity to register syntax receivers. Syntax receivers are called every time the compiler encounters a syntax node. In our case, we use it to collect record declarations that we might want to augment. We don&rsquo;t check too many things here because at this point, we don&rsquo;t have access to the semantic model of the code. We just check that:</p>
@@ -248,28 +248,28 @@ if (!doNotTrack) {
 <p>At this point, we have a very simple source generator that just generates a <code>ToString()</code> method, but of course it could be enriched to generate anything we might need in our strongly-typed ids (e.g. implicit conversion to <code>TValue</code>, a <code>Parse</code> method, etc.)</p>
 <h3 id="using-the-source-generator">Using the source generator</h3>
 <p>Using the source generator is pretty easy: just reference the source generator project in the projects that declare strongly-typed ids. Actually, it&rsquo;s not really &ldquo;just&rdquo; a project reference; we need to specify additional attributes on the reference for this to work:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ProjectReference</span>
-  <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;../MyProject.SourceGen/MyProject.SourceGen.csproj&#34;</span>
-  <span style="color:#a6e22e">OutputItemType=</span><span style="color:#e6db74">&#34;Analyzer&#34;</span>
-  <span style="color:#a6e22e">ReferenceOutputAssembly=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#f92672">/&gt;</span>
-</code></pre></div><p><code>OutputItemType</code> is <code>Analyzer</code>, which seems a bit strange, but as I mentioned before, source generators work similarly to analyzers, so it&rsquo;s not really surprising. <code>ReferenceOutputAssembly</code> is false, because we don&rsquo;t need the source generator at runtime, only during compilation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;ProjectReference</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;../MyProject.SourceGen/MyProject.SourceGen.csproj&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">OutputItemType=</span><span style="color:#e6db74">&#34;Analyzer&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ReferenceOutputAssembly=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><p><code>OutputItemType</code> is <code>Analyzer</code>, which seems a bit strange, but as I mentioned before, source generators work similarly to analyzers, so it&rsquo;s not really surprising. <code>ReferenceOutputAssembly</code> is false, because we don&rsquo;t need the source generator at runtime, only during compilation.</p>
 <p>Now, we just need to modify our strongly-typed ids to make them partial, so that the source generator can augment them:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">partial</span> record ProductId(<span style="color:#66d9ef">int</span> Value) : StronglyTypedId&lt;<span style="color:#66d9ef">int</span>&gt;(Value);
-</code></pre></div><p>And that&rsquo;s it! If we rebuild our project, the source generator kicks in and adds the <code>ToString()</code> overrides to all our strongly-typed ids.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">partial</span> <span style="color:#66d9ef">record</span> <span style="color:#a6e22e">ProductId</span>(<span style="color:#66d9ef">int</span> Value) : StronglyTypedId&lt;<span style="color:#66d9ef">int</span>&gt;(Value);
+</span></span></code></pre></div><p>And that&rsquo;s it! If we rebuild our project, the source generator kicks in and adds the <code>ToString()</code> overrides to all our strongly-typed ids.</p>
 <p>Of course, at this point, we can&rsquo;t <em>see</em> the generated code, so how can we know if it&rsquo;s there, and if it&rsquo;s correct? Fortunately, there&rsquo;s a simple way to see that code. In the project that references the source generator, add the following properties:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
-    <span style="color:#f92672">&lt;EmitCompilerGeneratedFiles&gt;</span>true<span style="color:#f92672">&lt;/EmitCompilerGeneratedFiles&gt;</span>
-    <span style="color:#f92672">&lt;CompilerGeneratedFilesOutputPath&gt;</span>.generated<span style="color:#f92672">&lt;/CompilerGeneratedFilesOutputPath&gt;</span>
-  <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
-</code></pre></div><p>The generated code files will now be added to the <code>.generated</code> folder in the project, so we can inspect them:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">namespace</span> MyProject
-{
-    <span style="color:#66d9ef">partial</span> record ProductId
-    {
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; Value.ToString();
-    }
-}
-</code></pre></div><h2 id="conclusion">Conclusion</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;EmitCompilerGeneratedFiles&gt;</span>true<span style="color:#f92672">&lt;/EmitCompilerGeneratedFiles&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;CompilerGeneratedFilesOutputPath&gt;</span>.generated<span style="color:#f92672">&lt;/CompilerGeneratedFilesOutputPath&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
+</span></span></code></pre></div><p>The generated code files will now be added to the <code>.generated</code> folder in the project, so we can inspect them:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> MyProject
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">partial</span> <span style="color:#66d9ef">record</span> <span style="color:#a6e22e">ProductId</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; Value.ToString();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>Well, that was quite a ride! We&rsquo;ve seen that using records as strongly-typed ids is possible today with C# 9, ASP.NET Core 5.0 and EF Core 5.0, but there are many issues to overcome to make it work. I already use the solutions described in this series in a fairly complex project, and it works great; it already prevented me from introducing a few bugs!</p>
 <p>There are still a few wrinkles, though:</p>
 <ul>

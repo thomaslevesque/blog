@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="Handling multipart requests with JSON and file uploads in ASP.NET Core" />
 <meta property="og:description" content="Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
- Embed the image bytes as base64 in the JSON payload, e.g.  { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!" />
+ Embed the image bytes as base64 in the JSON payload, e.g.  {  &#34;title&#34;: &#34;My first blog post&#34;,  &#34;body&#34;: &#34;This is going to be the best blog EVER!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2018-09-04T00:00:00+00:00" />
@@ -19,7 +19,7 @@
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Handling multipart requests with JSON and file uploads in ASP.NET Core"/>
 <meta name="twitter:description" content="Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
- Embed the image bytes as base64 in the JSON payload, e.g.  { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!"/>
+ Embed the image bytes as base64 in the JSON payload, e.g.  {  &#34;title&#34;: &#34;My first blog post&#34;,  &#34;body&#34;: &#34;This is going to be the best blog EVER!"/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -84,154 +84,154 @@ if (!doNotTrack) {
 <ul>
 <li>Embed the image bytes as base64 in the JSON payload, e.g.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">{
-    <span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;My first blog post&#34;</span>,
-    <span style="color:#e6db74">&#34;body&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;This is going to be the best blog EVER!!!!&#34;</span>,
-    <span style="color:#e6db74">&#34;tags&#34;</span><span style="color:#f92672">:</span> [ <span style="color:#e6db74">&#34;first post&#34;</span>, <span style="color:#e6db74">&#34;hello&#34;</span> ],
-    <span style="color:#e6db74">&#34;image&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==&#34;</span>
-}
-</code></pre></div><p>This works fine, but it&rsquo;s probably not a very good idea to embed an arbitrarily long blob in JSON, because it could use a lot of memory if the image is very large.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;My first blog post&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;body&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;This is going to be the best blog EVER!!!!&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;tags&#34;</span><span style="color:#f92672">:</span> [ <span style="color:#e6db74">&#34;first post&#34;</span>, <span style="color:#e6db74">&#34;hello&#34;</span> ],
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;image&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This works fine, but it&rsquo;s probably not a very good idea to embed an arbitrarily long blob in JSON, because it could use a lot of memory if the image is very large.</p>
 <ul>
 <li>Send the JSON and image as separate requests. Easy, but what if we want the image to be mandatory? There&rsquo;s no guarantee that the client will send the image in a second request, so our post object will be in an invalid state.</li>
 <li>Send the JSON and image as a multipart request.</li>
 </ul>
 <p>The last approach seems the most appropriate; unfortunately it&rsquo;s also the most difficult to support… There is no built-in support for this scenario in ASP.NET Core. There is <em>some</em> support for the <code>multipart/form-data</code> content type, though; for instance, we can bind a model to a multipart request body, like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyRequestModel</span>
-{
-<span style="color:#a6e22e">    [Required]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Title { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">    [Required]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Body { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">    [Required]</span>
-    <span style="color:#66d9ef">public</span> IFormFile Image { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}
-
-<span style="color:#66d9ef">public</span> IActionResult Post([FromForm] MyRequestModel request)
-{
-    ...
-}
-</code></pre></div><p>But if we do this, it means that each property maps to a different part of the request; we&rsquo;re completely giving up on JSON.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyRequestModel</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [Required]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Title { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [Required]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Body { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [Required]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> IFormFile Image { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> IActionResult Post([FromForm] MyRequestModel request)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>But if we do this, it means that each property maps to a different part of the request; we&rsquo;re completely giving up on JSON.</p>
 <p>There&rsquo;s also a <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.webutilities.multipartreader?view=aspnetcore-2.1"><code>MultipartReader</code></a> class that we can use to manually decode the request, but it means we have to give up model binding and automatic model validation entirely.</p>
 <h2 id="custom-model-binder">Custom model binder</h2>
 <p>Ideally, we&rsquo;d like to have a request model like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreatePostRequestModel</span>
-{
-<span style="color:#a6e22e">    [Required]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Title { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">    [Required]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Body { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span>[] Tags { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">    [Required]</span>
-    <span style="color:#66d9ef">public</span> IFormFile Image { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}
-</code></pre></div><p>Where the <code>Title</code>, <code>Body</code> and <code>Tags</code> properties come from a form field containing JSON and the <code>Image</code> property comes from the uploaded file. In other words, the request would look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">POST /api/blog/post HTTP/1.1
-Content-Type: multipart/form-data; boundary=AaB03x
- 
---AaB03x
-Content-Disposition: form-data; name=&#34;json&#34;
-Content-Type: application/json
- 
-{
-    &#34;title&#34;: &#34;My first blog post&#34;,
-    &#34;body&#34;: &#34;This is going to be the best blog EVER!!!!&#34;,
-    &#34;tags&#34;: [ &#34;first post&#34;, &#34;hello&#34; ]
-}
---AaB03x
-Content-Disposition: form-data; name=&#34;image&#34;; filename=&#34;image.jpg&#34;
-Content-Type: image/jpeg
- 
-(... content of the image.jpg file ...)
---AaB03x
-</code></pre></div><p>Fortunately, ASP.NET Core is very flexible, and we can actually make this work, by writing a <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding?view=aspnetcore-2.1">custom model binder</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreatePostRequestModel</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [Required]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Title { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [Required]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Body { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span>[] Tags { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [Required]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> IFormFile Image { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Where the <code>Title</code>, <code>Body</code> and <code>Tags</code> properties come from a form field containing JSON and the <code>Image</code> property comes from the uploaded file. In other words, the request would look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>POST /api/blog/post HTTP/1.1
+</span></span><span style="display:flex;"><span>Content-Type: multipart/form-data; boundary=AaB03x
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>--AaB03x
+</span></span><span style="display:flex;"><span>Content-Disposition: form-data; name=&#34;json&#34;
+</span></span><span style="display:flex;"><span>Content-Type: application/json
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    &#34;title&#34;: &#34;My first blog post&#34;,
+</span></span><span style="display:flex;"><span>    &#34;body&#34;: &#34;This is going to be the best blog EVER!!!!&#34;,
+</span></span><span style="display:flex;"><span>    &#34;tags&#34;: [ &#34;first post&#34;, &#34;hello&#34; ]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>--AaB03x
+</span></span><span style="display:flex;"><span>Content-Disposition: form-data; name=&#34;image&#34;; filename=&#34;image.jpg&#34;
+</span></span><span style="display:flex;"><span>Content-Type: image/jpeg
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>(... content of the image.jpg file ...)
+</span></span><span style="display:flex;"><span>--AaB03x
+</span></span></code></pre></div><p>Fortunately, ASP.NET Core is very flexible, and we can actually make this work, by writing a <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding?view=aspnetcore-2.1">custom model binder</a>.</p>
 <p>Here it is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
-<span style="color:#66d9ef">using</span> System.Threading.Tasks;
-<span style="color:#66d9ef">using</span> Microsoft.AspNetCore.Http;
-<span style="color:#66d9ef">using</span> Microsoft.AspNetCore.Mvc;
-<span style="color:#66d9ef">using</span> Microsoft.AspNetCore.Mvc.ModelBinding;
-<span style="color:#66d9ef">using</span> Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
-<span style="color:#66d9ef">using</span> Microsoft.Extensions.Logging;
-<span style="color:#66d9ef">using</span> Microsoft.Extensions.Options;
-<span style="color:#66d9ef">using</span> Newtonsoft.Json;
-
-<span style="color:#66d9ef">namespace</span> TestMultipart.ModelBinding
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JsonWithFilesFormDataModelBinder</span> : IModelBinder
-    {
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IOptions&lt;MvcJsonOptions&gt; <span style="color:#ae81ff">_</span>jsonOptions;
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> FormFileModelBinder <span style="color:#ae81ff">_f</span>ormFileModelBinder;
-
-        <span style="color:#66d9ef">public</span> JsonWithFilesFormDataModelBinder(IOptions&lt;MvcJsonOptions&gt; jsonOptions, ILoggerFactory loggerFactory)
-        {
-            <span style="color:#ae81ff">_</span>jsonOptions = jsonOptions;
-            <span style="color:#ae81ff">_f</span>ormFileModelBinder = <span style="color:#66d9ef">new</span> FormFileModelBinder(loggerFactory);
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task BindModelAsync(ModelBindingContext bindingContext)
-        {
-            <span style="color:#66d9ef">if</span> (bindingContext == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(nameof(bindingContext));
-
-            <span style="color:#75715e">// Retrieve the form part containing the JSON
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">var</span> valueResult = bindingContext.ValueProvider.GetValue(bindingContext.FieldName);
-            <span style="color:#66d9ef">if</span> (valueResult == ValueProviderResult.None)
-            {
-                <span style="color:#75715e">// The JSON was not found
-</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">var</span> message = bindingContext.ModelMetadata.ModelBindingMessageProvider.MissingBindRequiredValueAccessor(bindingContext.FieldName);
-                bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, message);
-                <span style="color:#66d9ef">return</span>;
-            }
-
-            <span style="color:#66d9ef">var</span> rawValue = valueResult.FirstValue;
-
-            <span style="color:#75715e">// Deserialize the JSON
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">var</span> model = JsonConvert.DeserializeObject(rawValue, bindingContext.ModelType, <span style="color:#ae81ff">_</span>jsonOptions.Value.SerializerSettings);
-
-            <span style="color:#75715e">// Now, bind each of the IFormFile properties from the other form parts
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> property <span style="color:#66d9ef">in</span> bindingContext.ModelMetadata.Properties)
-            {
-                <span style="color:#66d9ef">if</span> (property.ModelType != <span style="color:#66d9ef">typeof</span>(IFormFile))
-                    <span style="color:#66d9ef">continue</span>;
-
-                <span style="color:#66d9ef">var</span> fieldName = property.BinderModelName ?? property.PropertyName;
-                <span style="color:#66d9ef">var</span> modelName = fieldName;
-                <span style="color:#66d9ef">var</span> propertyModel = property.PropertyGetter(bindingContext.Model);
-                ModelBindingResult propertyResult;
-                <span style="color:#66d9ef">using</span> (bindingContext.EnterNestedScope(property, fieldName, modelName, propertyModel))
-                {
-                    <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_f</span>ormFileModelBinder.BindModelAsync(bindingContext);
-                    propertyResult = bindingContext.Result;
-                }
-
-                <span style="color:#66d9ef">if</span> (propertyResult.IsModelSet)
-                {
-                    <span style="color:#75715e">// The IFormFile was sucessfully bound, assign it to the corresponding property of the model
-</span><span style="color:#75715e"></span>                    property.PropertySetter(model, propertyResult.Model);
-                }
-                <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (property.IsBindingRequired)
-                {
-                    <span style="color:#66d9ef">var</span> message = property.ModelBindingMessageProvider.MissingBindRequiredValueAccessor(fieldName);
-                    bindingContext.ModelState.TryAddModelError(modelName, message);
-                }
-            }
-
-            <span style="color:#75715e">// Set the successfully constructed model as the result of the model binding
-</span><span style="color:#75715e"></span>            bindingContext.Result = ModelBindingResult.Success(model);
-        }
-    }
-}
-</code></pre></div><p>To use it, just apply this attribute to the <code>CreatePostRequestModel</code> class above:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ModelBinder(typeof(JsonWithFilesFormDataModelBinder), Name = &#34;json&#34;)]</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreatePostRequestModel</span>
-</code></pre></div><p>This tells ASP.NET Core to use our custom model binder to bind this class. The <code>Name = &quot;json&quot;</code> part tells our binder from which field of the multipart request it should read the JSON (this is the <code>bindingContext.FieldName</code> in the binder code).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Threading.Tasks;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.AspNetCore.Http;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.AspNetCore.Mvc;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.AspNetCore.Mvc.ModelBinding;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.Extensions.Logging;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.Extensions.Options;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Newtonsoft.Json;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> TestMultipart.ModelBinding
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JsonWithFilesFormDataModelBinder</span> : IModelBinder
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IOptions&lt;MvcJsonOptions&gt; <span style="color:#ae81ff">_</span>jsonOptions;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> FormFileModelBinder <span style="color:#ae81ff">_f</span>ormFileModelBinder;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> JsonWithFilesFormDataModelBinder(IOptions&lt;MvcJsonOptions&gt; jsonOptions, ILoggerFactory loggerFactory)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>jsonOptions = jsonOptions;
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_f</span>ormFileModelBinder = <span style="color:#66d9ef">new</span> FormFileModelBinder(loggerFactory);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task BindModelAsync(ModelBindingContext bindingContext)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (bindingContext == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(nameof(bindingContext));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Retrieve the form part containing the JSON</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> valueResult = bindingContext.ValueProvider.GetValue(bindingContext.FieldName);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (valueResult == ValueProviderResult.None)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// The JSON was not found</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> message = bindingContext.ModelMetadata.ModelBindingMessageProvider.MissingBindRequiredValueAccessor(bindingContext.FieldName);
+</span></span><span style="display:flex;"><span>                bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, message);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> rawValue = valueResult.FirstValue;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Deserialize the JSON</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> model = JsonConvert.DeserializeObject(rawValue, bindingContext.ModelType, <span style="color:#ae81ff">_</span>jsonOptions.Value.SerializerSettings);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Now, bind each of the IFormFile properties from the other form parts</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> property <span style="color:#66d9ef">in</span> bindingContext.ModelMetadata.Properties)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (property.ModelType != <span style="color:#66d9ef">typeof</span>(IFormFile))
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> fieldName = property.BinderModelName ?? property.PropertyName;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> modelName = fieldName;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> propertyModel = property.PropertyGetter(bindingContext.Model);
+</span></span><span style="display:flex;"><span>                ModelBindingResult propertyResult;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">using</span> (bindingContext.EnterNestedScope(property, fieldName, modelName, propertyModel))
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_f</span>ormFileModelBinder.BindModelAsync(bindingContext);
+</span></span><span style="display:flex;"><span>                    propertyResult = bindingContext.Result;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (propertyResult.IsModelSet)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// The IFormFile was sucessfully bound, assign it to the corresponding property of the model</span>
+</span></span><span style="display:flex;"><span>                    property.PropertySetter(model, propertyResult.Model);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (property.IsBindingRequired)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> message = property.ModelBindingMessageProvider.MissingBindRequiredValueAccessor(fieldName);
+</span></span><span style="display:flex;"><span>                    bindingContext.ModelState.TryAddModelError(modelName, message);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Set the successfully constructed model as the result of the model binding</span>
+</span></span><span style="display:flex;"><span>            bindingContext.Result = ModelBindingResult.Success(model);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>To use it, just apply this attribute to the <code>CreatePostRequestModel</code> class above:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[ModelBinder(typeof(JsonWithFilesFormDataModelBinder), Name = &#34;json&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreatePostRequestModel</span>
+</span></span></code></pre></div><p>This tells ASP.NET Core to use our custom model binder to bind this class. The <code>Name = &quot;json&quot;</code> part tells our binder from which field of the multipart request it should read the JSON (this is the <code>bindingContext.FieldName</code> in the binder code).</p>
 <p>Now we just need to pass a <code>CreatePostRequestModel</code> to our controller action, and we&rsquo;re done:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[HttpPost]</span>
-<span style="color:#66d9ef">public</span> ActionResult&lt;Post&gt; CreatePost(CreatePostRequestModel post)
-{
-    ...
-}
-</code></pre></div><p>This approach enables us to have a clean controller code and keep the benefits of model binding and validation. It messes up the Swagger/OpenAPI model though, but hey, you can&rsquo;t have everything!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[HttpPost]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> ActionResult&lt;Post&gt; CreatePost(CreatePostRequestModel post)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This approach enables us to have a clean controller code and keep the benefits of model binding and validation. It messes up the Swagger/OpenAPI model though, but hey, you can&rsquo;t have everything!</p>
 
 		</div>
 		<footer class="post__footer">

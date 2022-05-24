@@ -80,43 +80,43 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (<code>ref</code> or <code>out</code>) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first <code>await</code>), so the location of the variable won’t exist anymore.</p>
 <p>However, it’s pretty easy to work around that limitation : you only need to create a <code>Ref&lt;T&gt;</code> class to hold the value, and pass an instance of this class by value to the async method:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> btnFilesStats_Click(<span style="color:#66d9ef">object</span> sender, EventArgs e)
-{
-    <span style="color:#66d9ef">var</span> count = <span style="color:#66d9ef">new</span> Ref&lt;<span style="color:#66d9ef">int</span>&gt;();
-    <span style="color:#66d9ef">var</span> size = <span style="color:#66d9ef">new</span> Ref&lt;<span style="color:#66d9ef">ulong</span>&gt;();
-    <span style="color:#66d9ef">await</span> GetFileStats(tbPath.Text, count, size);
-    txtFileStats.Text = <span style="color:#66d9ef">string</span>.Format(<span style="color:#e6db74">&#34;{0} files ({1} bytes)&#34;</span>, count, size);
-}
-
-<span style="color:#66d9ef">async</span> Task GetFileStats(<span style="color:#66d9ef">string</span> path, Ref&lt;<span style="color:#66d9ef">int</span>&gt; totalCount, Ref&lt;<span style="color:#66d9ef">ulong</span>&gt; totalSize)
-{
-    <span style="color:#66d9ef">var</span> folder = <span style="color:#66d9ef">await</span> StorageFolder.GetFolderFromPathAsync(path);
-    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> f <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">await</span> folder.GetFilesAsync())
-    {
-        totalCount.Value += <span style="color:#ae81ff">1</span>;
-        <span style="color:#66d9ef">var</span> props = <span style="color:#66d9ef">await</span> f.GetBasicPropertiesAsync();
-        totalSize.Value += props.Size;
-    }
-    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> f <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">await</span> folder.GetFoldersAsync())
-    {
-        <span style="color:#66d9ef">await</span> GetFilesCountAndSize(f, totalCount, totalSize);
-    }
-}
-</code></pre></div><p>The <code>Ref&lt;T&gt;</code> class looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Ref</span>&lt;T&gt;
-{
-    <span style="color:#66d9ef">public</span> Ref() { }
-    <span style="color:#66d9ef">public</span> Ref(T <span style="color:#66d9ef">value</span>) { Value = <span style="color:#66d9ef">value</span>; }
-    <span style="color:#66d9ef">public</span> T Value { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString()
-    {
-        T <span style="color:#66d9ef">value</span> = Value;
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">value</span> == <span style="color:#66d9ef">null</span> ? <span style="color:#e6db74">&#34;&#34;</span> : <span style="color:#66d9ef">value</span>.ToString();
-    }
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">operator</span> T(Ref&lt;T&gt; r) { <span style="color:#66d9ef">return</span> r.Value; }
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">operator</span> Ref&lt;T&gt;(T <span style="color:#66d9ef">value</span>) { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Ref&lt;T&gt;(<span style="color:#66d9ef">value</span>); }
-}
-</code></pre></div><p>As you can see, it’s pretty straightforward. This approach can also be used in iterator blocks (i.e. <code>yield return</code>), that also don’t allow <code>ref</code> and <code>out</code> parameters. It also has an advantage over standard <code>ref</code> and <code>out</code> parameters: you can make the parameter optional, if for instance you’re not interested in the result (obviously, the callee must handle that case appropriately).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> btnFilesStats_Click(<span style="color:#66d9ef">object</span> sender, EventArgs e)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> count = <span style="color:#66d9ef">new</span> Ref&lt;<span style="color:#66d9ef">int</span>&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> size = <span style="color:#66d9ef">new</span> Ref&lt;<span style="color:#66d9ef">ulong</span>&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> GetFileStats(tbPath.Text, count, size);
+</span></span><span style="display:flex;"><span>    txtFileStats.Text = <span style="color:#66d9ef">string</span>.Format(<span style="color:#e6db74">&#34;{0} files ({1} bytes)&#34;</span>, count, size);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> Task GetFileStats(<span style="color:#66d9ef">string</span> path, Ref&lt;<span style="color:#66d9ef">int</span>&gt; totalCount, Ref&lt;<span style="color:#66d9ef">ulong</span>&gt; totalSize)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> folder = <span style="color:#66d9ef">await</span> StorageFolder.GetFolderFromPathAsync(path);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> f <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">await</span> folder.GetFilesAsync())
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        totalCount.Value += <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> props = <span style="color:#66d9ef">await</span> f.GetBasicPropertiesAsync();
+</span></span><span style="display:flex;"><span>        totalSize.Value += props.Size;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> f <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">await</span> folder.GetFoldersAsync())
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> GetFilesCountAndSize(f, totalCount, totalSize);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <code>Ref&lt;T&gt;</code> class looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Ref</span>&lt;T&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Ref() { }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Ref(T <span style="color:#66d9ef">value</span>) { Value = <span style="color:#66d9ef">value</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> T Value { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        T <span style="color:#66d9ef">value</span> = Value;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">value</span> == <span style="color:#66d9ef">null</span> ? <span style="color:#e6db74">&#34;&#34;</span> : <span style="color:#66d9ef">value</span>.ToString();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">operator</span> T(Ref&lt;T&gt; r) { <span style="color:#66d9ef">return</span> r.Value; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">operator</span> Ref&lt;T&gt;(T <span style="color:#66d9ef">value</span>) { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Ref&lt;T&gt;(<span style="color:#66d9ef">value</span>); }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, it’s pretty straightforward. This approach can also be used in iterator blocks (i.e. <code>yield return</code>), that also don’t allow <code>ref</code> and <code>out</code> parameters. It also has an advantage over standard <code>ref</code> and <code>out</code> parameters: you can make the parameter optional, if for instance you’re not interested in the result (obviously, the callee must handle that case appropriately).</p>
 
 		</div>
 		<footer class="post__footer">

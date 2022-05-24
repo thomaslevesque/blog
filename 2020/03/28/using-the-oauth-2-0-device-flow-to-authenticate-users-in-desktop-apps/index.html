@@ -102,7 +102,7 @@ if (!doNotTrack) {
 <p>The device flow is not very commonly used in desktop apps yet, but you can see it in action in the Azure CLI, when you do <code>az login</code>.</p>
 <h2 id="a-simple-implementation">A simple implementation</h2>
 <p>OK, this post has been a little abstract so far, so let&rsquo;s build something! We&rsquo;re going to create a simple console app that authenticates a user using the device flow.</p>
-<p>In this example, I use Azure AD as the identity provider, because it&rsquo;s easy and doesn&rsquo;t require any setup (of course, you could also do this with your IdP of choice, like Auth0, Okta, a custom IdP based on IdentityServer, etc.). Head to the Azure Portal, in the <em>Azure Active Directory</em> blade, <em>App registrations</em> tab. Create a new registration, give it any name you like, and select <em>&ldquo;Accounts in this organizational directory only (Default directory only - Single tenant)&quot;</em> for the <em>Supported Account Types</em> (it would also work in multi-tenant mode, of course, but let&rsquo;s keep things simple for now). Also enter a redirect URI for a public client. It shouldn&rsquo;t be necessary for the device flow, and it won&rsquo;t actually be used, but for some reason, authentication will fail if it&rsquo;s not defined… one of Azure AD&rsquo;s quirks, I guess.</p>
+<p>In this example, I use Azure AD as the identity provider, because it&rsquo;s easy and doesn&rsquo;t require any setup (of course, you could also do this with your IdP of choice, like Auth0, Okta, a custom IdP based on IdentityServer, etc.). Head to the Azure Portal, in the <em>Azure Active Directory</em> blade, <em>App registrations</em> tab. Create a new registration, give it any name you like, and select <em>&ldquo;Accounts in this organizational directory only (Default directory only - Single tenant)&rdquo;</em> for the <em>Supported Account Types</em> (it would also work in multi-tenant mode, of course, but let&rsquo;s keep things simple for now). Also enter a redirect URI for a public client. It shouldn&rsquo;t be necessary for the device flow, and it won&rsquo;t actually be used, but for some reason, authentication will fail if it&rsquo;s not defined… one of Azure AD&rsquo;s quirks, I guess.</p>
 <p><img src="app-registration.png" alt="App registration"></p>
 <p>Now, go to the <em>Authentication</em> tab of the app, in the <em>Advanced settings</em> section, and set <em>Treat application as a public client</em> to <em>Yes</em>.</p>
 <p><img src="public-client.png" alt="Public client"></p>
@@ -112,139 +112,139 @@ if (!doNotTrack) {
 <li><em>Directory ID</em> (a.k.a. tenant ID; this is your Azure AD tenant)</li>
 </ul>
 <p>Now, in our program, the first step is to issue a request to the device code endpoint to start the authorization flow. The <a href="https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration">OpenID Connect discovery document</a> on Azure AD is incomplete and doesn&rsquo;t mention the device code endpoint, but it can be found in the documentation. We need to send the client id of our application and the requested scopes. In this case, we use <code>openid</code>, <code>profile</code> and <code>offline_access</code> (to get a refresh token), but in real-world scenario you&rsquo;ll probably need an API scope as well.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> TenantId = <span style="color:#e6db74">&#34;&lt;your tenant id&gt;&#34;</span>;
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> ClientId = <span style="color:#e6db74">&#34;&lt;your client id&gt;&#34;</span>;
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;DeviceAuthorizationResponse&gt; StartDeviceFlowAsync(HttpClient client)
-{
-    <span style="color:#66d9ef">string</span> deviceEndpoint = <span style="color:#e6db74">$&#34;https://login.microsoftonline.com/{TenantId}/oauth2/v2.0/devicecode&#34;</span>;
-    <span style="color:#66d9ef">var</span> request = <span style="color:#66d9ef">new</span> HttpRequestMessage(HttpMethod.Post, deviceEndpoint)
-    {
-        Content = <span style="color:#66d9ef">new</span> FormUrlEncodedContent(<span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;
-        {
-<span style="color:#a6e22e">            [&#34;client_id&#34;]</span> = ClientId,
-<span style="color:#a6e22e">            [&#34;scope&#34;]</span> = <span style="color:#e6db74">&#34;openid profile offline_access&#34;</span>
-        })
-    };
-    <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.SendAsync(request);
-    response.EnsureSuccessStatusCode();
-    <span style="color:#66d9ef">var</span> json = <span style="color:#66d9ef">await</span> response.Content.ReadAsStringAsync();
-    <span style="color:#66d9ef">return</span> JsonSerializer.Deserialize&lt;DeviceAuthorizationResponse&gt;(json);
-}
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DeviceAuthorizationResponse</span>
-{
-<span style="color:#a6e22e">    [JsonPropertyName(&#34;device_code&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> DeviceCode { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;user_code&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserCode { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;verification_uri&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> VerificationUri { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;expires_in&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ExpiresIn { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;interval&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Interval { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}
-</code></pre></div><p>Let&rsquo;s call this method and open the <code>verification_uri</code> from the response in the browser. The user will need to enter the <code>user_code</code> in the authorization page.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> var client = <span style="color:#66d9ef">new</span> HttpClient();
-<span style="color:#66d9ef">var</span> authorizationResponse = <span style="color:#66d9ef">await</span> StartDeviceFlowAsync(client);
-Console.WriteLine(<span style="color:#e6db74">&#34;Please visit this URL: &#34;</span> + authorizationResponse.VerificationUri);
-Console.WriteLine(<span style="color:#e6db74">&#34;And enter the following code: &#34;</span> + authorizationResponse.UserCode);
-OpenWebPage(authorizationResponse.VerificationUri);
-</code></pre></div><p>This opens the following page:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> TenantId = <span style="color:#e6db74">&#34;&lt;your tenant id&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> ClientId = <span style="color:#e6db74">&#34;&lt;your client id&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;DeviceAuthorizationResponse&gt; StartDeviceFlowAsync(HttpClient client)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">string</span> deviceEndpoint = <span style="color:#e6db74">$&#34;https://login.microsoftonline.com/{TenantId}/oauth2/v2.0/devicecode&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> request = <span style="color:#66d9ef">new</span> HttpRequestMessage(HttpMethod.Post, deviceEndpoint)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Content = <span style="color:#66d9ef">new</span> FormUrlEncodedContent(<span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">            [&#34;client_id&#34;]</span> = ClientId,
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">            [&#34;scope&#34;]</span> = <span style="color:#e6db74">&#34;openid profile offline_access&#34;</span>
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.SendAsync(request);
+</span></span><span style="display:flex;"><span>    response.EnsureSuccessStatusCode();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> json = <span style="color:#66d9ef">await</span> response.Content.ReadAsStringAsync();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> JsonSerializer.Deserialize&lt;DeviceAuthorizationResponse&gt;(json);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DeviceAuthorizationResponse</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;device_code&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> DeviceCode { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;user_code&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserCode { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;verification_uri&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> VerificationUri { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;expires_in&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ExpiresIn { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;interval&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Interval { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Let&rsquo;s call this method and open the <code>verification_uri</code> from the response in the browser. The user will need to enter the <code>user_code</code> in the authorization page.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> var client = <span style="color:#66d9ef">new</span> HttpClient();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> authorizationResponse = <span style="color:#66d9ef">await</span> StartDeviceFlowAsync(client);
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">&#34;Please visit this URL: &#34;</span> + authorizationResponse.VerificationUri);
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">&#34;And enter the following code: &#34;</span> + authorizationResponse.UserCode);
+</span></span><span style="display:flex;"><span>OpenWebPage(authorizationResponse.VerificationUri);
+</span></span></code></pre></div><p>This opens the following page:</p>
 <p><img src="enter-user-code.png" alt="Enter user code"></p>
 <p><strong>Note:</strong> the specs for the device flow mention an optional <code>verification_uri_complete</code> property in the authorization response, which includes the <code>user_code</code>. Unfortunately, this is not supported by Azure AD, so the user has to enter the code manually.</p>
 <p>Now, while the user is entering the code and logging in, we start polling the IdP to get a token. We need to specify <code>urn:ietf:params:oauth:grant-type:device_code</code> as the <code>grant_type</code>, and provide the <code>device_code</code> from the authorization response.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> tokenResponse = <span style="color:#66d9ef">await</span> GetTokenAsync(client, authorizationResponse);
-Console.WriteLine(<span style="color:#e6db74">&#34;Access token: &#34;</span>);
-Console.WriteLine(tokenResponse.AccessToken);
-Console.WriteLine(<span style="color:#e6db74">&#34;ID token: &#34;</span>);
-Console.WriteLine(tokenResponse.IdToken);
-Console.WriteLine(<span style="color:#e6db74">&#34;refresh token: &#34;</span>);
-Console.WriteLine(tokenResponse.IdToken);
-
-...
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;TokenResponse&gt; GetTokenAsync(HttpClient client, DeviceAuthorizationResponse authResponse)
-{
-    <span style="color:#66d9ef">string</span> tokenEndpoint = <span style="color:#e6db74">$&#34;https://login.microsoftonline.com/{TenantId}/oauth2/v2.0/token&#34;</span>;
-
-    <span style="color:#75715e">// Poll until we get a valid token response or a fatal error
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> pollingDelay = authResponse.Interval;
-    <span style="color:#66d9ef">while</span> (<span style="color:#66d9ef">true</span>)
-    {
-        <span style="color:#66d9ef">var</span> request = <span style="color:#66d9ef">new</span> HttpRequestMessage(HttpMethod.Post, tokenEndpoint)
-        {
-            Content = <span style="color:#66d9ef">new</span> FormUrlEncodedContent(<span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;
-            {
-<span style="color:#a6e22e">                [&#34;grant_type&#34;]</span> = <span style="color:#e6db74">&#34;urn:ietf:params:oauth:grant-type:device_code&#34;</span>,
-<span style="color:#a6e22e">                [&#34;device_code&#34;]</span> = authResponse.DeviceCode,
-<span style="color:#a6e22e">                [&#34;client_id&#34;]</span> = ClientId
-            })
-        };
-        <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.SendAsync(request);
-        <span style="color:#66d9ef">var</span> json = <span style="color:#66d9ef">await</span> response.Content.ReadAsStringAsync();
-        <span style="color:#66d9ef">if</span> (response.IsSuccessStatusCode)
-        {
-            <span style="color:#66d9ef">return</span> JsonSerializer.Deserialize&lt;TokenResponse&gt;(json);
-        }
-        <span style="color:#66d9ef">else</span>
-        {
-            <span style="color:#66d9ef">var</span> errorResponse = JsonSerializer.Deserialize&lt;TokenErrorResponse&gt;(json);
-            <span style="color:#66d9ef">switch</span>(errorResponse.Error)
-            {
-                <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;authorization_pending&#34;</span>:
-                    <span style="color:#75715e">// Not complete yet, wait and try again later
-</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">break</span>;
-                <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;slow_down&#34;</span>:
-                    <span style="color:#75715e">// Not complete yet, and we should slow down the polling
-</span><span style="color:#75715e"></span>                    pollingDelay += <span style="color:#ae81ff">5</span>;                            
-                    <span style="color:#66d9ef">break</span>;
-                <span style="color:#66d9ef">default</span>:
-                    <span style="color:#75715e">// Some other error, nothing we can do but throw
-</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Exception(
-                        <span style="color:#e6db74">$&#34;Authorization failed: {errorResponse.Error} - {errorResponse.ErrorDescription}&#34;</span>);
-            }
-
-            <span style="color:#66d9ef">await</span> Task.Delay(TimeSpan.FromSeconds(pollingDelay));
-        }
-    }
-}
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TokenErrorResponse</span>
-{
-<span style="color:#a6e22e">    [JsonPropertyName(&#34;error&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Error { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;error_description&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ErrorDescription { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TokenResponse</span>
-{
-<span style="color:#a6e22e">    [JsonPropertyName(&#34;access_token&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> AccessToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;id_token&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> IdToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;refresh_token&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> RefreshToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;token_type&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> TokenType { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;expires_in&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ExpiresIn { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [JsonPropertyName(&#34;scope&#34;)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Scope { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}
-</code></pre></div><p>When the user completes the login process in the browser, the next call to the token endpoint returns an <code>access_token</code>, <code>id_token</code> and <code>refresh_token</code> (if you requested the <code>offline_access</code> scope).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> tokenResponse = <span style="color:#66d9ef">await</span> GetTokenAsync(client, authorizationResponse);
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">&#34;Access token: &#34;</span>);
+</span></span><span style="display:flex;"><span>Console.WriteLine(tokenResponse.AccessToken);
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">&#34;ID token: &#34;</span>);
+</span></span><span style="display:flex;"><span>Console.WriteLine(tokenResponse.IdToken);
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">&#34;refresh token: &#34;</span>);
+</span></span><span style="display:flex;"><span>Console.WriteLine(tokenResponse.IdToken);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;TokenResponse&gt; GetTokenAsync(HttpClient client, DeviceAuthorizationResponse authResponse)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">string</span> tokenEndpoint = <span style="color:#e6db74">$&#34;https://login.microsoftonline.com/{TenantId}/oauth2/v2.0/token&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Poll until we get a valid token response or a fatal error</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> pollingDelay = authResponse.Interval;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (<span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> request = <span style="color:#66d9ef">new</span> HttpRequestMessage(HttpMethod.Post, tokenEndpoint)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Content = <span style="color:#66d9ef">new</span> FormUrlEncodedContent(<span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">                [&#34;grant_type&#34;]</span> = <span style="color:#e6db74">&#34;urn:ietf:params:oauth:grant-type:device_code&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">                [&#34;device_code&#34;]</span> = authResponse.DeviceCode,
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">                [&#34;client_id&#34;]</span> = ClientId
+</span></span><span style="display:flex;"><span>            })
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> client.SendAsync(request);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> json = <span style="color:#66d9ef">await</span> response.Content.ReadAsStringAsync();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (response.IsSuccessStatusCode)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> JsonSerializer.Deserialize&lt;TokenResponse&gt;(json);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> errorResponse = JsonSerializer.Deserialize&lt;TokenErrorResponse&gt;(json);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">switch</span>(errorResponse.Error)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;authorization_pending&#34;</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Not complete yet, wait and try again later</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;slow_down&#34;</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Not complete yet, and we should slow down the polling</span>
+</span></span><span style="display:flex;"><span>                    pollingDelay += <span style="color:#ae81ff">5</span>;                            
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// Some other error, nothing we can do but throw</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Exception(
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">$&#34;Authorization failed: {errorResponse.Error} - {errorResponse.ErrorDescription}&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> Task.Delay(TimeSpan.FromSeconds(pollingDelay));
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TokenErrorResponse</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;error&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Error { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;error_description&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ErrorDescription { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TokenResponse</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;access_token&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> AccessToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;id_token&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> IdToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;refresh_token&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> RefreshToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;token_type&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> TokenType { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;expires_in&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ExpiresIn { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonPropertyName(&#34;scope&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Scope { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When the user completes the login process in the browser, the next call to the token endpoint returns an <code>access_token</code>, <code>id_token</code> and <code>refresh_token</code> (if you requested the <code>offline_access</code> scope).</p>
 <p>When the access token expires, you can use the refresh token to get a new one, <a href="https://tools.ietf.org/html/rfc6749#section-6">as described in the specs</a>.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>As you can see, the device flow is pretty easy to implement; it&rsquo;s quite straightforward, with no redirection mechanism. Its simplicity also makes it quite secure, with very few angles of attack. In my opinion, it&rsquo;s the ideal flow for desktop or console applications.</p>

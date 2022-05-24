@@ -96,7 +96,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
-{ &#34;id&#34;: { &#34;value&#34;: 1 }, &#34;name&#34;: &#34;Apple&#34;, &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that.
+{  &#34;id&#34;: {  &#34;value&#34;: 1  },  &#34;name&#34;: &#34;Apple&#34;,  &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">

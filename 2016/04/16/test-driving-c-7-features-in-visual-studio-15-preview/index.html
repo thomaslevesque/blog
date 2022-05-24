@@ -83,15 +83,15 @@ if (!doNotTrack) {
 <p>The new features are not enabled by default. You can enable them individually with <code>/feature:</code> command line switches, but the easiest way is to enable them all by adding <code>__DEMO__</code> and <code>__DEMO_EXPERIMENTAL__</code> to the conditional compilation symbols (in <em>Project properties</em>, <em>Build</em> tab).</p>
 <h3 id="local-functions">Local functions</h3>
 <p>Most functional languages allow you to declare functions in the body of other functions. It’s now possible to do the same in C# 7! The syntax for declaring a method inside another is pretty much what you would expect:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">long</span> Factorial(<span style="color:#66d9ef">int</span> n)
-{
-    <span style="color:#66d9ef">long</span> Fact(<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">long</span> acc)
-    {
-        <span style="color:#66d9ef">return</span> i == <span style="color:#ae81ff">0</span> ? acc : Fact(i - <span style="color:#ae81ff">1</span>, acc * i);
-    }
-    <span style="color:#66d9ef">return</span> Fact(n, <span style="color:#ae81ff">1</span>);
-}
-</code></pre></div><p>Here, the <code>Fact</code> method is local to the <code>Factorial</code> method (in case you’re wondering, it’s a tail-recursive implementation of the factorial — which doesn’t make much sense, since C# doesn’t support tail recursion, but it’s just an example).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">long</span> Factorial(<span style="color:#66d9ef">int</span> n)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">long</span> Fact(<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">long</span> acc)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> i == <span style="color:#ae81ff">0</span> ? acc : Fact(i - <span style="color:#ae81ff">1</span>, acc * i);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Fact(n, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Here, the <code>Fact</code> method is local to the <code>Factorial</code> method (in case you’re wondering, it’s a tail-recursive implementation of the factorial — which doesn’t make much sense, since C# doesn’t support tail recursion, but it’s just an example).</p>
 <p>Of course, it was already possible to simulate local functions with lambda expressions, but there were a few drawbacks:</p>
 <ul>
 <li>it’s less readable, because you have to declare the delegate type explicitly</li>
@@ -107,118 +107,118 @@ if (!doNotTrack) {
 <p>You can read more about this feature <a href="https://github.com/dotnet/roslyn/issues/2930">in the Roslyn Github repository</a>.</p>
 <h3 id="ref-returns-and-ref-locals">Ref returns and ref locals</h3>
 <p>Since the first version of C#, it has always been possible to pass parameters by reference, which is conceptually similar to passing a pointer to a variable in languages like C. Until now, this feature was limited to parameters, but in C# 7 it becomes possible to return values by reference, or to have local variables that refer to the location of another variable. Here’s an example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> TestRefReturn()
-{
-    <span style="color:#66d9ef">var</span> foo = <span style="color:#66d9ef">new</span> Foo();
-    Console.WriteLine(foo); <span style="color:#75715e">// 0, 0
-</span><span style="color:#75715e"></span>    
-    foo.GetByRef(<span style="color:#e6db74">&#34;x&#34;</span>) = <span style="color:#ae81ff">42</span>;
-
-    <span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">int</span> y = <span style="color:#66d9ef">ref</span> foo.GetByRef(<span style="color:#e6db74">&#34;y&#34;</span>);
-    y = <span style="color:#ae81ff">99</span>;
-
-    Console.WriteLine(foo); <span style="color:#75715e">// 42, 99
-</span><span style="color:#75715e"></span>}
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>
-{
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> x;
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> y;
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">int</span> GetByRef(<span style="color:#66d9ef">string</span> name)
-    {
-        <span style="color:#66d9ef">if</span> (name == <span style="color:#e6db74">&#34;x&#34;</span>)
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">ref</span> x;
-        <span style="color:#66d9ef">if</span> (name == <span style="color:#e6db74">&#34;y&#34;</span>)
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">ref</span> y;
-        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(nameof(name));
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; <span style="color:#e6db74">$&#34;{x},{y}&#34;</span>;
-}
-</code></pre></div><p>Let’s have a closer look at this code.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> TestRefReturn()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> foo = <span style="color:#66d9ef">new</span> Foo();
+</span></span><span style="display:flex;"><span>    Console.WriteLine(foo); <span style="color:#75715e">// 0, 0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    foo.GetByRef(<span style="color:#e6db74">&#34;x&#34;</span>) = <span style="color:#ae81ff">42</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">int</span> y = <span style="color:#66d9ef">ref</span> foo.GetByRef(<span style="color:#e6db74">&#34;y&#34;</span>);
+</span></span><span style="display:flex;"><span>    y = <span style="color:#ae81ff">99</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Console.WriteLine(foo); <span style="color:#75715e">// 42, 99</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> x;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> y;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">int</span> GetByRef(<span style="color:#66d9ef">string</span> name)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (name == <span style="color:#e6db74">&#34;x&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">ref</span> x;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (name == <span style="color:#e6db74">&#34;y&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">ref</span> y;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(nameof(name));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">string</span> ToString() =&gt; <span style="color:#e6db74">$&#34;{x},{y}&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Let’s have a closer look at this code.</p>
 <ul>
 <li>On line 6, it looks like I’m assigning a value to the return of a method; what does this even mean? Well, the <code>GetByRef</code> method returns a field of the <code>Foo</code> class <em>by reference</em> (note the <code>ref int</code> return type of <code>GetByRef</code>). So, if I pass <code>&quot;x&quot;</code> as an argument, it returns the <code>x</code> field by reference. If I assign a value to that, it actually assigns a value to the <code>x</code> field.</li>
 <li>On line 8, instead of just assigning a value directly to the field returned by <code>GetByRef</code>, I use a ref local variable <code>y</code>. The local variable now shares the same memory location as the <code>foo.y</code> field. So if I assign a value to it, it changes the value of <code>foo.y</code>.</li>
 </ul>
 <p>Note that you can also return an array location by reference:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> MyBigStruct[] array = <span style="color:#66d9ef">new</span> MyBigStruct[<span style="color:#ae81ff">10</span>];
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> current;
-
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">ref</span> MyBigStruct GetCurrentItem()
-{
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">ref</span> array[current];
-}
-</code></pre></div><p>It’s likely that most C# developers will never actually need this feature; it’s pretty low level, and not the kind of thing you typically need when writing line-of-business applications. However it’s very useful for code whose performance is critical: copying a large structure is expensive, so if we can return it by reference instead, it can be a non-negligible performance benefit.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> MyBigStruct[] array = <span style="color:#66d9ef">new</span> MyBigStruct[<span style="color:#ae81ff">10</span>];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> current;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">ref</span> MyBigStruct GetCurrentItem()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">ref</span> array[current];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It’s likely that most C# developers will never actually need this feature; it’s pretty low level, and not the kind of thing you typically need when writing line-of-business applications. However it’s very useful for code whose performance is critical: copying a large structure is expensive, so if we can return it by reference instead, it can be a non-negligible performance benefit.</p>
 <p>You can learn more about this feature <a href="https://github.com/dotnet/roslyn/issues/118">on Github</a>.</p>
 <h3 id="pattern-matching">Pattern matching</h3>
 <p>Pattern matching is a feature very common in functional languages. C# 7 introduces some aspects of pattern matching, in the form of extensions to the <code>is</code> operator. For instance, when testing the type of a variable, it lets you introduce a new variable after the type, so that this variable is assigned with the left-hand side operand of the <code>is</code>, but with the type specified as the right-hand side operand (it will be clearer with an example).</p>
 <p>Typically, if you need to test that a value is of type <code>DateTime</code>, then do something with that <code>DateTime</code>, you need to test the type, then cast to that type:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">object</span> o = GetValue();
-<span style="color:#66d9ef">if</span> (o <span style="color:#66d9ef">is</span> DateTime)
-{
-    <span style="color:#66d9ef">var</span> d = (DateTime)o;
-    <span style="color:#75715e">// Do something with d
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p>In C# 7, you can do this instead:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">object</span> o = GetValue();
-<span style="color:#66d9ef">if</span> (o <span style="color:#66d9ef">is</span> DateTime d)
-{
-    <span style="color:#75715e">// Do something with d
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p><code>d</code> is now declared directly as part of the <code>o is DateTime</code> expression.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">object</span> o = GetValue();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (o <span style="color:#66d9ef">is</span> DateTime)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> d = (DateTime)o;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Do something with d</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In C# 7, you can do this instead:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">object</span> o = GetValue();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (o <span style="color:#66d9ef">is</span> DateTime d)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Do something with d</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>d</code> is now declared directly as part of the <code>o is DateTime</code> expression.</p>
 <p>This feature can also be used in a switch statement:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">object</span> v = GetValue();
-<span style="color:#66d9ef">switch</span> (v)
-{
-    <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">string</span> s:
-        Console.WriteLine(<span style="color:#e6db74">$&#34;{v} is a string of length {s.Length}&#34;</span>);
-        <span style="color:#66d9ef">break</span>;
-    <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">int</span> i:
-        Console.WriteLine(<span style="color:#e6db74">$&#34;{v} is an {(i % 2 == 0 ? &#34;</span>even<span style="color:#e6db74">&#34; : &#34;</span>odd<span style="color:#e6db74">&#34;)} int&#34;</span>);
-        <span style="color:#66d9ef">break</span>;
-    <span style="color:#66d9ef">default</span>:
-        Console.WriteLine(<span style="color:#e6db74">$&#34;{v} is something else&#34;</span>);
-        <span style="color:#66d9ef">break</span>;
-}
-</code></pre></div><p>In this code, each case introduces a variable of the appropriate type, which you can use in the body of the case.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">object</span> v = GetValue();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">switch</span> (v)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">string</span> s:
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;{v} is a string of length {s.Length}&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">int</span> i:
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;{v} is an {(i % 2 == 0 ? &#34;</span>even<span style="color:#e6db74">&#34; : &#34;</span>odd<span style="color:#e6db74">&#34;)} int&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;{v} is something else&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In this code, each case introduces a variable of the appropriate type, which you can use in the body of the case.</p>
 <p>So far I only covered pattern matching against a simple type, but there are also more advanced forms. For instance:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">switch</span> (DateTime.Today)
-{
-    <span style="color:#66d9ef">case</span> DateTime(*, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">31</span>):
-        Console.WriteLine(<span style="color:#e6db74">&#34;Happy Halloween!&#34;</span>);
-        <span style="color:#66d9ef">break</span>;
-    <span style="color:#66d9ef">case</span> DateTime(<span style="color:#66d9ef">var</span> year, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>) when year &gt; <span style="color:#ae81ff">1776</span>:
-        Console.WriteLine(<span style="color:#e6db74">&#34;Happy Independence Day!&#34;</span>);
-        <span style="color:#66d9ef">break</span>;
-    <span style="color:#66d9ef">case</span> DateTime { DayOfWeek <span style="color:#66d9ef">is</span> DayOfWeek.Saturday }:
-    <span style="color:#66d9ef">case</span> DateTime { DayOfWeek <span style="color:#66d9ef">is</span> DayOfWeek.Sunday }:
-        Console.WriteLine(<span style="color:#e6db74">&#34;Have a nice week-end!&#34;</span>);
-        <span style="color:#66d9ef">break</span>;
-    <span style="color:#66d9ef">default</span>:
-        <span style="color:#66d9ef">break</span>;
-}
-</code></pre></div><p>How cool is that!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">switch</span> (DateTime.Today)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> DateTime(*, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">31</span>):
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;Happy Halloween!&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> DateTime(<span style="color:#66d9ef">var</span> year, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>) when year &gt; <span style="color:#ae81ff">1776</span>:
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;Happy Independence Day!&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> DateTime { DayOfWeek <span style="color:#66d9ef">is</span> DayOfWeek.Saturday }:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> DateTime { DayOfWeek <span style="color:#66d9ef">is</span> DayOfWeek.Sunday }:
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;Have a nice week-end!&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>How cool is that!</p>
 <p>There’s also another (still experimental) form of pattern matching, using a new <code>match</code> keyword:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">object</span> o = GetValue();
-<span style="color:#66d9ef">string</span> description = o match
-    (
-        <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">string</span> s : <span style="color:#e6db74">$&#34;{o} is a string of length {s.Length}&#34;</span>
-        <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">int</span> i : <span style="color:#e6db74">$&#34;{o} is an {(i % 2 == 0 ? &#34;</span>even<span style="color:#e6db74">&#34; : &#34;</span>odd<span style="color:#e6db74">&#34;)} int&#34;</span>
-        <span style="color:#66d9ef">case</span> * : <span style="color:#e6db74">$&#34;{o} is something else&#34;</span>
-    );
-</code></pre></div><p>It’s very similar to a switch, except that it’s an expression, not a statement.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">object</span> o = GetValue();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">string</span> description = o match
+</span></span><span style="display:flex;"><span>    (
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">string</span> s : <span style="color:#e6db74">$&#34;{o} is a string of length {s.Length}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">int</span> i : <span style="color:#e6db74">$&#34;{o} is an {(i % 2 == 0 ? &#34;</span>even<span style="color:#e6db74">&#34; : &#34;</span>odd<span style="color:#e6db74">&#34;)} int&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> * : <span style="color:#e6db74">$&#34;{o} is something else&#34;</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span></code></pre></div><p>It’s very similar to a switch, except that it’s an expression, not a statement.</p>
 <p>There’s a lot more to pattern matching than what I mentioned here. You can look at <a href="https://github.com/dotnet/roslyn/blob/master/docs/features/patterns.md">the spec</a> on Github for more details.</p>
 <h3 id="binary-literals-and-digit-separators">Binary literals and digit separators</h3>
 <p>These features were not explicitly mentioned in the VS Preview release notes, but I noticed they were included as well. They were initially planned for C# 6, but didn’t make it in the final release. They’re back in C# 7.</p>
 <p>You can now write numeric literal in binary, in addition to decimal an hexadecimal:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">int</span> x = <span style="color:#ae81ff">0</span>b11001010;
-</code></pre></div><p>Very convenient to define bit masks!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> x = <span style="color:#ae81ff">0</span>b11001010;
+</span></span></code></pre></div><p>Very convenient to define bit masks!</p>
 <p>To make large numbers more readable, you can also group digits by introducing separators. This can be used for decimal, hexadecimal or binary literals:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">int</span> oneBillion = <span style="color:#ae81ff">1_000_000_000</span>;
-<span style="color:#66d9ef">int</span> foo = <span style="color:#ae81ff">0x7FFF_1234</span>;
-<span style="color:#66d9ef">int</span> bar = <span style="color:#ae81ff">0</span>b1001_0110_1010_0101;
-</code></pre></div><h3 id="conclusion">Conclusion</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> oneBillion = <span style="color:#ae81ff">1_000_000_000</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> foo = <span style="color:#ae81ff">0x7FFF_1234</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> bar = <span style="color:#ae81ff">0</span>b1001_0110_1010_0101;
+</span></span></code></pre></div><h3 id="conclusion">Conclusion</h3>
 <p>So, with Visual Studio “15” Preview, you can start experimenting with the new C# 7 features; don’t hesitate to share your feedback on Github! And keep in mind that it’s still pre-release software, lots of things can change before the final release.</p>
 
 		</div>

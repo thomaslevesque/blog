@@ -92,20 +92,20 @@ if (!doNotTrack) {
 <h3 id="notnull">NotNull</h3>
 <p>This annotation indicates that the element on which it is applied cannot, or must not be null.</p>
 <p>If you apply it to a method or property, it means that the method or property will never return null:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[NotNull]</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetString()
-{
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hello world!&#34;</span>;
-}
-</code></pre></div><p>When a method has this attribute, if you test if the return value is null (or not null), R# will warn you that the condition is always false (or true):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[NotNull]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetString()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hello world!&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When a method has this attribute, if you test if the return value is null (or not null), R# will warn you that the condition is always false (or true):</p>
 <p><img src="image6.png" alt="image" title="image"></p>
 <p>If you apply it to a method parameter, it means that null is not a valid argument value:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Repeat([NotNull] <span style="color:#66d9ef">string</span> s)
-{
-    <span style="color:#66d9ef">if</span> (s == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;s&#34;</span>);
-    <span style="color:#66d9ef">return</span> s + s;
-}
-</code></pre></div><p>If R# determines that the value passed for <code>s</code> can be null, it warns you about it, as shown in the first example.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Repeat([NotNull] <span style="color:#66d9ef">string</span> s)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (s == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;s&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> s + s;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If R# determines that the value passed for <code>s</code> can be null, it warns you about it, as shown in the first example.</p>
 <p>This annotation can be added automatically using ReSharper’s quick-fix menu. The “Not null” option will just add the annotation; the “Check parameter for null” option will add a check and the annotation:</p>
 <p><img src="image7.png" alt="image" title="image"></p>
 <h3 id="imageimage8png-image"><img src="image8.png" alt="image" title="image"></h3>
@@ -117,42 +117,42 @@ if (!doNotTrack) {
 <h3 id="heading"> </h3>
 <h3 id="stringformatmethod">StringFormatMethod</h3>
 <p>This annotation indicates that a method works like the <code>String.Format</code> method, i.e. it takes a composite format string followed by arguments that will replace the placeholders in the format string:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[StringFormatMethod(&#34;format&#34;)]</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Log(<span style="color:#66d9ef">string</span> format, <span style="color:#66d9ef">params</span> <span style="color:#66d9ef">object</span>[] args)
-{
-    ...
-}
-</code></pre></div><p>It lets R# warn you if the placeholders and arguments don’t match:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[StringFormatMethod(&#34;format&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Log(<span style="color:#66d9ef">string</span> format, <span style="color:#66d9ef">params</span> <span style="color:#66d9ef">object</span>[] args)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It lets R# warn you if the placeholders and arguments don’t match:</p>
 <p><img src="image10.png" alt="image" title="image"></p>
 <h3 id="usedimplicitly">UsedImplicitly</h3>
 <p>This one tells ReSharper that a code element is used, even though R# cannot statically detect it. It has the effect of suppressing the <em>“(…) is never used”</em> warning. It’s useful, for instance, when a type or member is used only via reflection.</p>
 <h3 id="noenumeration">NoEnumeration</h3>
 <p>This annotation is applied to an <code>IEnumerable</code> parameter, and means that the method will not enumerate the sequence. R# warns you when you enumerate an <code>IEnumerable</code> multiple times, so using this attribute prevents false positives for this warning:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IEnumerable&lt;T&gt; EmptyIfNull&lt;T&gt;([NoEnumeration] <span style="color:#66d9ef">this</span> IEnumerable&lt;T&gt; source)
-{
-    <span style="color:#66d9ef">return</span> source ?? Enumerable.Empty&lt;T&gt;();
-}
-</code></pre></div><h3 id="instanthandle">InstantHandle</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IEnumerable&lt;T&gt; EmptyIfNull&lt;T&gt;([NoEnumeration] <span style="color:#66d9ef">this</span> IEnumerable&lt;T&gt; source)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> source ?? Enumerable.Empty&lt;T&gt;();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="instanthandle">InstantHandle</h3>
 <p>This one is applied to a delegate parameter, and means that the delegate will be executed during the execution of the method. It prevents the <em>“Access to modified closure”</em> warning that occurs when a lambda captures a variable that is later modified.</p>
 <h3 id="contractannotation">ContractAnnotation</h3>
 <p>This annotation is a powerful way to describe how the output of a method depends on its inputs. It lets R# predict how the method will behave. For instance, this method will return null if its argument is null, an not null otherwise:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ContractAnnotation(&#34;null =&gt; null; notnull =&gt; notnull&#34;)]</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> Transform(<span style="color:#66d9ef">object</span> data)
-{
-    ...
-}
-</code></pre></div><p>Thanks to the annotation, ReSharper will know that if the argument was not null, the result will not be null either.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[ContractAnnotation(&#34;null =&gt; null; notnull =&gt; notnull&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> Transform(<span style="color:#66d9ef">object</span> data)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Thanks to the annotation, ReSharper will know that if the argument was not null, the result will not be null either.</p>
 <p>This method doesn’t return normally (it throws an exception) if its argument is null:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ContractAnnotation(&#34;value:null =&gt; halt&#34;)]</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> CheckArgumentNull&lt;T&gt;(
-<span style="color:#a6e22e">    [NoEnumeration]</span> <span style="color:#66d9ef">this</span> T <span style="color:#66d9ef">value</span>,
-<span style="color:#a6e22e">    [InvokerParameterName]</span> <span style="color:#66d9ef">string</span> paramName)
-    <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">class</span>
-{
-    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> == <span style="color:#66d9ef">null</span>)
-        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(paramName);
-}
-</code></pre></div><p>This lets R# know that if you pass a null to this method, the code following the call will never be reached; if it is reached, the value can be assumed to be not null.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[ContractAnnotation(&#34;value:null =&gt; halt&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> CheckArgumentNull&lt;T&gt;(
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [NoEnumeration]</span> <span style="color:#66d9ef">this</span> T <span style="color:#66d9ef">value</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [InvokerParameterName]</span> <span style="color:#66d9ef">string</span> paramName)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">class</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(paramName);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This lets R# know that if you pass a null to this method, the code following the call will never be reached; if it is reached, the value can be assumed to be not null.</p>
 <h3 id="localizationrequired">LocalizationRequired</h3>
 <p>This annotation means that a property or method parameter should be localized; if you pass a hard-coded string, R# will warn you and suggest to extract it to a resource file.</p>
 <p><img src="image111.png" alt="image11" title="image11"></p>

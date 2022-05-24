@@ -100,41 +100,41 @@ if (!doNotTrack) {
 <p>While, ideally, you would opt for a refactoring, it&rsquo;s not always practical. Because of deadlines, you might not have the time to refactor your code and thoroughly test it for regressions.</p>
 <p>Fortunately, if you&rsquo;re willing to incur a bit of technical debt, there&rsquo;s a simple workaround that works in most cases (what I referred to as &ldquo;cheating&rdquo; earlier). The trick is to resolve one of the dependencies in the cycle lazily, i.e. resolve it at the last possible moment, when you actually need to use it.</p>
 <p>One way to do that is to inject the <code>IServiceProvider</code> into your class, and use <code>services.GetRequiredService&lt;T&gt;()</code> when you need to use <code>T</code>. For instance, the <code>C</code> class I mentioned earlier might initially look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
-{
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IA <span style="color:#ae81ff">_</span>a;
-
-    <span style="color:#66d9ef">public</span> C(IA a)
-    {
-        <span style="color:#ae81ff">_</span>a = a;
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Bar()
-    {
-        ...
-        <span style="color:#ae81ff">_</span>a.Foo()
-        ...
-    }
-}
-</code></pre></div><p>To avoid the dependency cycle, you could rewrite it like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
-{
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>services;
-
-    <span style="color:#66d9ef">public</span> C(IServiceProvider services)
-    {
-        <span style="color:#ae81ff">_</span>services = services;
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Bar()
-    {
-        ...
-        <span style="color:#66d9ef">var</span> a = <span style="color:#ae81ff">_</span>services.GetRequiredService&lt;IA&gt;();
-        a.Foo();
-        ...
-    }
-}
-</code></pre></div><p>Because it&rsquo;s no longer necessary to resolve <code>IA</code> while <code>C</code> is being constructed, the cycle is broken (at least during construction), and the problem fixed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IA <span style="color:#ae81ff">_</span>a;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> C(IA a)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>a = a;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Bar()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>a.Foo()
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>To avoid the dependency cycle, you could rewrite it like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>services;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> C(IServiceProvider services)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>services = services;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Bar()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> a = <span style="color:#ae81ff">_</span>services.GetRequiredService&lt;IA&gt;();
+</span></span><span style="display:flex;"><span>        a.Foo();
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Because it&rsquo;s no longer necessary to resolve <code>IA</code> while <code>C</code> is being constructed, the cycle is broken (at least during construction), and the problem fixed.</p>
 <p>However, I don&rsquo;t really like this approach, because it smells of the <a href="https://en.wikipedia.org/wiki/Service_locator_pattern">Service Locator pattern</a>, which is a known anti-pattern. I see two main issues with it:</p>
 <ul>
 <li>It makes your class depend explicitly on the service provider. This is bad, because your class shouldn&rsquo;t have to know anything about the injection dependency mechanism being used; after all, the app could be using <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>, i.e. not use an IoC container at all.</li>
@@ -142,41 +142,41 @@ if (!doNotTrack) {
 </ul>
 <h2 id="a-cleaner-workaround">A cleaner workaround</h2>
 <p>The approach I actually use in this situation takes advantage of the <code>Lazy&lt;T&gt;</code> class. You will need the following extension method and class:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceCollection AddLazyResolution(<span style="color:#66d9ef">this</span> IServiceCollection services)
-{
-    <span style="color:#66d9ef">return</span> services.AddTransient(
-        <span style="color:#66d9ef">typeof</span>(Lazy&lt;&gt;),
-        <span style="color:#66d9ef">typeof</span>(LazilyResolved&lt;&gt;));
-}
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LazilyResolved</span>&lt;T&gt; : Lazy&lt;T&gt;
-{
-    <span style="color:#66d9ef">public</span> LazilyResolved(IServiceProvider serviceProvider)
-        : <span style="color:#66d9ef">base</span>(serviceProvider.GetRequiredService&lt;T&gt;)
-    {
-    }
-}
-</code></pre></div><p>Call this new method on your service collection during service registration:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddLazyResolution();
-</code></pre></div><p>This enables the resolution of a <code>Lazy&lt;T&gt;</code> which will lazily resolve a <code>T</code> from the service provider.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceCollection AddLazyResolution(<span style="color:#66d9ef">this</span> IServiceCollection services)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> services.AddTransient(
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">typeof</span>(Lazy&lt;&gt;),
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">typeof</span>(LazilyResolved&lt;&gt;));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LazilyResolved</span>&lt;T&gt; : Lazy&lt;T&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> LazilyResolved(IServiceProvider serviceProvider)
+</span></span><span style="display:flex;"><span>        : <span style="color:#66d9ef">base</span>(serviceProvider.GetRequiredService&lt;T&gt;)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Call this new method on your service collection during service registration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddLazyResolution();
+</span></span></code></pre></div><p>This enables the resolution of a <code>Lazy&lt;T&gt;</code> which will lazily resolve a <code>T</code> from the service provider.</p>
 <p>In the class that depends on <code>IA</code>, inject <code>Lazy&lt;IA&gt;</code> instead. When you need to use <code>IA</code>, just access the lazy&rsquo;s value:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
-{
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Lazy&lt;IA&gt; <span style="color:#ae81ff">_</span>a;
-
-    <span style="color:#66d9ef">public</span> C(Lazy&lt;IA&gt; a)
-    {
-        <span style="color:#ae81ff">_</span>a = a;
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Bar()
-    {
-        ...
-        <span style="color:#ae81ff">_</span>a.Value.Foo();
-        ...
-    }
-}
-</code></pre></div><p><strong>Note:</strong> DO NOT access the value in the constructor, just store the <code>Lazy</code> itself. Accessing the value in the constructor would eagerly resolve <code>IA</code>, which would cause the same problem we were trying to solve.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> : IC
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Lazy&lt;IA&gt; <span style="color:#ae81ff">_</span>a;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> C(Lazy&lt;IA&gt; a)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>a = a;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Bar()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>a.Value.Foo();
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Note:</strong> DO NOT access the value in the constructor, just store the <code>Lazy</code> itself. Accessing the value in the constructor would eagerly resolve <code>IA</code>, which would cause the same problem we were trying to solve.</p>
 <p>This solution isn&rsquo;t perfect, but it solves the initial problem without too much hassle, and the dependencies are still clearly declared in the constructor.</p>
 
 		</div>

@@ -123,50 +123,50 @@ H = key.GetHashCode()
 // Calculate the index of the bucket where the entry would be, if it exists
 bucketIndex = H mod B
 // Enumerate entries in the bucket to find one whose key is equal to the
-// key we're looking for
+// key we&#39;re looking for
 entry = buckets[bucketIndex].Find(key)
 </code></pre><p>What makes hash tables so efficient is that finding which bucket contains a given key is very fast, and doesn&rsquo;t depend on the number of entries. When you have the bucket, there&rsquo;s usually very few entries in it, so searching through them is fast as well. For instance, if you have 2000 entries and the hash table has 1000 buckets, each bucket will contain only 2 entries on average.</p>
 <p>But for this to work, an important condition must be met: <strong>the entries have to be evenly distributed among the buckets</strong>. If the 2000 entries end up in the same bucket, you will find the right bucket immediately, but then you will still have to go through each of the 2000 entries to find the right one, so you gain nothing at all compared to a simple list.</p>
 <h2 id="how-to-achieve-an-even-distribution">How to achieve an even distribution</h2>
 <p>To make sure the entries will be evenly distributed among the buckets, the hash code values must also be evenly distributed. This is why <code>GetHashCode</code> can&rsquo;t just return any random or arbitrary value, but must strive to return different values for different objects.</p>
 <p>This is typically done by combining the values that are considered for equality, with a few prime numbers thrown in to improve the distribution. Here&rsquo;s an example, inspired by <a href="https://stackoverflow.com/a/263416/98713">Jon Skeet&rsquo;s answer on StackOverflow</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point3D</span>
-{
-    <span style="color:#66d9ef">public</span> Point3D(<span style="color:#66d9ef">double</span> x, <span style="color:#66d9ef">double</span> y, <span style="color:#66d9ef">double</span> z) =&gt; (X, Y, Z) = (x, y, z);
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> X { <span style="color:#66d9ef">get</span>; }
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Y { <span style="color:#66d9ef">get</span>; }
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Z { <span style="color:#66d9ef">get</span>; }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> Equals(<span style="color:#66d9ef">object</span> other)
-    {
-        <span style="color:#66d9ef">return</span> other <span style="color:#66d9ef">is</span> Point3D p
-            &amp;&amp; p.X == X
-            &amp;&amp; p.Y == Y
-            &amp;&amp; p.Z == Z;
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">int</span> GetHashCode()
-    {
-        <span style="color:#66d9ef">unchecked</span> <span style="color:#75715e">// Allow arithmetic overflow, numbers will just &#34;wrap around&#34;
-</span><span style="color:#75715e"></span>        {
-            <span style="color:#66d9ef">int</span> hashcode = <span style="color:#ae81ff">1430287</span>;
-            hashcode = hashcode * <span style="color:#ae81ff">7302013</span> ^ X.GetHashCode();
-            hashcode = hashcode * <span style="color:#ae81ff">7302013</span> ^ Y.GetHashCode();
-            hashcode = hashcode * <span style="color:#ae81ff">7302013</span> ^ Z.GetHashCode();
-            <span style="color:#66d9ef">return</span> hashcode;
-        }
-    }
-}
-</code></pre></div><p>The <code>Point3D</code> class above has 3 properties. To be considered equal, two instances of <code>Point3D</code> must have the same values for these properties. To compute the hash code, we use the same properties that are considered for equality (this is important to ensure equal objects have the same hash code). The values are then combined using XORs and multiplications with prime numbers. I&rsquo;m not sure exactly why it&rsquo;s important to use prime numbers, but it is; if you&rsquo;re better at math than me, maybe you can take a guess! Of course, you can use different values than the ones shown above, just make sure they&rsquo;re prime.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point3D</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Point3D(<span style="color:#66d9ef">double</span> x, <span style="color:#66d9ef">double</span> y, <span style="color:#66d9ef">double</span> z) =&gt; (X, Y, Z) = (x, y, z);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> X { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Y { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Z { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> Equals(<span style="color:#66d9ef">object</span> other)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> other <span style="color:#66d9ef">is</span> Point3D p
+</span></span><span style="display:flex;"><span>            &amp;&amp; p.X == X
+</span></span><span style="display:flex;"><span>            &amp;&amp; p.Y == Y
+</span></span><span style="display:flex;"><span>            &amp;&amp; p.Z == Z;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">int</span> GetHashCode()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">unchecked</span> <span style="color:#75715e">// Allow arithmetic overflow, numbers will just &#34;wrap around&#34;</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> hashcode = <span style="color:#ae81ff">1430287</span>;
+</span></span><span style="display:flex;"><span>            hashcode = hashcode * <span style="color:#ae81ff">7302013</span> ^ X.GetHashCode();
+</span></span><span style="display:flex;"><span>            hashcode = hashcode * <span style="color:#ae81ff">7302013</span> ^ Y.GetHashCode();
+</span></span><span style="display:flex;"><span>            hashcode = hashcode * <span style="color:#ae81ff">7302013</span> ^ Z.GetHashCode();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> hashcode;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <code>Point3D</code> class above has 3 properties. To be considered equal, two instances of <code>Point3D</code> must have the same values for these properties. To compute the hash code, we use the same properties that are considered for equality (this is important to ensure equal objects have the same hash code). The values are then combined using XORs and multiplications with prime numbers. I&rsquo;m not sure exactly why it&rsquo;s important to use prime numbers, but it is; if you&rsquo;re better at math than me, maybe you can take a guess! Of course, you can use different values than the ones shown above, just make sure they&rsquo;re prime.</p>
 <h2 id="an-easier-way">An easier way</h2>
 <p>The implementation shown above is fine, but it&rsquo;s a little tricky to get right without looking at a reference implementation. Also, you need to be careful with null values.</p>
 <p>Fortunately, there&rsquo;s a very easy alternative: tuples! Using the value tuples introduced in C# 7, the <code>GetHashCode</code> implementation can be made much simpler by taking advantage of the tuple&rsquo;s <code>GetHashCode</code> method:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">int</span> GetHashCode() =&gt; (X, Y, Z).GetHashCode();
-</code></pre></div><p>Note that it can also be used to simplify <code>Equals</code> a bit:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> Equals(<span style="color:#66d9ef">object</span> other) =&gt;
-    other <span style="color:#66d9ef">is</span> Point3D p &amp;&amp; (p.X, p.Y, p.Z).Equals((X, Y, Z));
-</code></pre></div><h2 id="closing">Closing</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">int</span> GetHashCode() =&gt; (X, Y, Z).GetHashCode();
+</span></span></code></pre></div><p>Note that it can also be used to simplify <code>Equals</code> a bit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> Equals(<span style="color:#66d9ef">object</span> other) =&gt;
+</span></span><span style="display:flex;"><span>    other <span style="color:#66d9ef">is</span> Point3D p &amp;&amp; (p.X, p.Y, p.Z).Equals((X, Y, Z));
+</span></span></code></pre></div><h2 id="closing">Closing</h2>
 <p>Well, this post was a bit longer than I expected. Hopefully you learned something from it! I&rsquo;ll probably write a few more of these articles, depending on my inspiration. I already have a few ideas (reference types vs. value types, memory management&hellip;), but feel free to suggest other topics. I can&rsquo;t promise I&rsquo;ll cover them, but at least I&rsquo;ll consider them!</p>
 
 		</div>

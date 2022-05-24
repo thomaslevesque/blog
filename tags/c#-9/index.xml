@@ -36,7 +36,7 @@ Value conversion for a specific strongly-typed id Out of the box, EF Core doesn&
       
       <guid>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</guid>
       <description>In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
-{ &amp;#34;id&amp;#34;: { &amp;#34;value&amp;#34;: 1 }, &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;, &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
+{  &amp;#34;id&amp;#34;: {  &amp;#34;value&amp;#34;: 1  },  &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;,  &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
     </item>
     
     <item>
@@ -57,7 +57,7 @@ Model binding of route and query string parameters Let&amp;rsquo;s say we have a
       
       <guid>https://thomaslevesque.com/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/</guid>
       <description>Strongly-typed ids Entities typically have integer, GUID or string ids, because those types are supported directly by databases. However, if all your entities have ids of the same type, it becomes pretty easy to mix them up, and use the id of a Product where the id of an Order was expected. This is actually a pretty common source of bugs.
-public void AddProductToOrder(int orderId, int productId, int count) { .</description>
+public void AddProductToOrder(int orderId, int productId, int count) {  .</description>
     </item>
     
     <item>

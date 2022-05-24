@@ -97,63 +97,63 @@ if (!doNotTrack) {
 <h2 id="enter-sub-environments">Enter &ldquo;sub-environments&rdquo;</h2>
 <p>It&rsquo;s not an actual feature, it&rsquo;s just a name I made up. But the point is that you can easily introduce another &ldquo;level&rdquo; of configuration settings that just override some settings of the &ldquo;parent&rdquo; environment.</p>
 <p>For instance, in my scenario, I want to introduce a <code>appsettings.Development.LocalAuth.json</code> file that inherits the settings of the Development environment and just overrides the auth server URL:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
-    <span style="color:#e6db74">&#34;Authentication&#34;</span><span style="color:#f92672">:</span> {
-        <span style="color:#e6db74">&#34;Authority&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://localhost:6001&#34;</span>
-    }
-}
-</code></pre></div><p>The way to do that is to add the new file as a configuration source when building the host in <code>Program.cs</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IHostBuilder CreateHostBuilder(<span style="color:#66d9ef">string</span>[] args) =&gt;
-    Host.CreateDefaultBuilder(args)
-        .ConfigureAppConfiguration((context, builder) =&gt;
-        {
-            <span style="color:#66d9ef">string</span> subenv = context.Configuration[<span style="color:#e6db74">&#34;SubEnvironment&#34;</span>];
-            <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(subenv))
-            {
-                <span style="color:#66d9ef">var</span> env = context.HostingEnvironment;
-                builder.AddJsonFile(<span style="color:#e6db74">$&#34;appsettings.{env.EnvironmentName}.{subenv}.json&#34;</span>, optional: <span style="color:#66d9ef">true</span>, reloadOnChange: <span style="color:#66d9ef">true</span>);
-            }
-        })
-        .ConfigureWebHostDefaults(webBuilder =&gt;
-        {
-            webBuilder.UseStartup&lt;Startup&gt;();
-        });
-</code></pre></div><p>(This code is for ASP.NET Core 3.0, but the same applies if you use ASP.NET Core 2.0 with <code>WebHostBuilder</code> instead of <code>HostBuilder</code>.)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Authentication&#34;</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Authority&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://localhost:6001&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The way to do that is to add the new file as a configuration source when building the host in <code>Program.cs</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IHostBuilder CreateHostBuilder(<span style="color:#66d9ef">string</span>[] args) =&gt;
+</span></span><span style="display:flex;"><span>    Host.CreateDefaultBuilder(args)
+</span></span><span style="display:flex;"><span>        .ConfigureAppConfiguration((context, builder) =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">string</span> subenv = context.Configuration[<span style="color:#e6db74">&#34;SubEnvironment&#34;</span>];
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(subenv))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> env = context.HostingEnvironment;
+</span></span><span style="display:flex;"><span>                builder.AddJsonFile(<span style="color:#e6db74">$&#34;appsettings.{env.EnvironmentName}.{subenv}.json&#34;</span>, optional: <span style="color:#66d9ef">true</span>, reloadOnChange: <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>        .ConfigureWebHostDefaults(webBuilder =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            webBuilder.UseStartup&lt;Startup&gt;();
+</span></span><span style="display:flex;"><span>        });
+</span></span></code></pre></div><p>(This code is for ASP.NET Core 3.0, but the same applies if you use ASP.NET Core 2.0 with <code>WebHostBuilder</code> instead of <code>HostBuilder</code>.)</p>
 <p>The magic happens in the call to <code>ConfigureAppConfiguration</code>. It adds a new JSON file whose name depends on the environment and sub-environment. Since this configuration source is added after the existing ones, it will override the settings provided by previous sources.</p>
 <p>The name of the sub-environment is retrieved from the host configuration, which itself is based on environment variables starting with <code>ASPNETCORE_</code> and command line arguments. So, to specify that you want the &ldquo;LocalAuth&rdquo; sub-environment, you need to set the <code>ASPNETCORE_SUBENVIRONMENT</code> environment variable to &ldquo;LocalAuth&rdquo;.</p>
 <p>And that&rsquo;s it! With this, you can refine existing environments for specific scenarios.</p>
 <p><strong>Note:</strong> Since the new configuration source is added last, it will override ALL previous configuration sources, not just the default <code>appsettings.json</code> files. The default host builder adds user secrets, environment variables, and command line arguments after the JSON files, so those will be overriden as well by the sub-environment settings. This is less than ideal, but probably not a major issue for most scenarios. If it&rsquo;s a concern, the fix is to insert the sub-environment config source after the existing JSON sources, but before the user secrets source. It makes the code a bit more involved, but it&rsquo;s doable:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        ...
-        .ConfigureAppConfiguration((context, builder) =&gt;
-        {
-            <span style="color:#66d9ef">string</span> subenv = context.Configuration[<span style="color:#e6db74">&#34;SubEnvironment&#34;</span>];
-            <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(subenv))
-            {
-                <span style="color:#66d9ef">var</span> env = context.HostingEnvironment;
-                <span style="color:#66d9ef">var</span> newSource = <span style="color:#66d9ef">new</span> JsonConfigurationSource
-                {
-                    Path = <span style="color:#e6db74">$&#34;appsettings.{env.EnvironmentName}.{subenv}.json&#34;</span>,
-                    Optional = <span style="color:#66d9ef">true</span>,
-                    ReloadOnChange = <span style="color:#66d9ef">true</span>
-                };
-                newSource.ResolveFileProvider();
-
-                <span style="color:#66d9ef">var</span> lastJsonConfigSource = builder.Sources
-                    .OfType&lt;JsonConfigurationSource&gt;()
-                    .LastOrDefault(s =&gt; !s.Path.Contains(<span style="color:#e6db74">&#34;secrets.json&#34;</span>));
-                <span style="color:#66d9ef">if</span> (lastJsonConfigSource != <span style="color:#66d9ef">null</span>)
-                {
-                    <span style="color:#66d9ef">var</span> index = builder.Sources.IndexOf(lastJsonConfigSource);
-                    builder.Sources.Insert(index + <span style="color:#ae81ff">1</span>, newSource);
-                }
-                <span style="color:#66d9ef">else</span>
-                {
-                    builder.Sources.Insert(<span style="color:#ae81ff">0</span>, newSource);
-                }
-            }
-        })
-        ...
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>        .ConfigureAppConfiguration((context, builder) =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">string</span> subenv = context.Configuration[<span style="color:#e6db74">&#34;SubEnvironment&#34;</span>];
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(subenv))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> env = context.HostingEnvironment;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> newSource = <span style="color:#66d9ef">new</span> JsonConfigurationSource
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    Path = <span style="color:#e6db74">$&#34;appsettings.{env.EnvironmentName}.{subenv}.json&#34;</span>,
+</span></span><span style="display:flex;"><span>                    Optional = <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>                    ReloadOnChange = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>                };
+</span></span><span style="display:flex;"><span>                newSource.ResolveFileProvider();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> lastJsonConfigSource = builder.Sources
+</span></span><span style="display:flex;"><span>                    .OfType&lt;JsonConfigurationSource&gt;()
+</span></span><span style="display:flex;"><span>                    .LastOrDefault(s =&gt; !s.Path.Contains(<span style="color:#e6db74">&#34;secrets.json&#34;</span>));
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (lastJsonConfigSource != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> index = builder.Sources.IndexOf(lastJsonConfigSource);
+</span></span><span style="display:flex;"><span>                    builder.Sources.Insert(index + <span style="color:#ae81ff">1</span>, newSource);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    builder.Sources.Insert(<span style="color:#ae81ff">0</span>, newSource);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>        ...
+</span></span></code></pre></div>
 		</div>
 		<footer class="post__footer">
 			

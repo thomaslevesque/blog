@@ -88,216 +88,216 @@ if (!doNotTrack) {
 <p>After spending a long time trying to find a flexible and elegant approach, I came up with an interesting solution. It consists of a class with a few attached properties that can be set in XAML.  This class can be used as follows :</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
-          <span style="color:#a6e22e">IsSynchronizedWithCurrentItem=</span><span style="color:#e6db74">&#34;True&#34;</span>
-          <span style="color:#a6e22e">util:GridViewSort.AutoSort=</span><span style="color:#e6db74">&#34;True&#34;</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;ListView.View&gt;</span>
-            <span style="color:#f92672">&lt;GridView&gt;</span>
-                <span style="color:#f92672">&lt;GridView.Columns&gt;</span>
-                    <span style="color:#f92672">&lt;GridViewColumn</span> <span style="color:#a6e22e">Header=</span><span style="color:#e6db74">&#34;Name&#34;</span>
-                                    <span style="color:#a6e22e">DisplayMemberBinding=</span><span style="color:#e6db74">&#34;{Binding Name}&#34;</span>
-                                    <span style="color:#a6e22e">util:GridViewSort.PropertyName=</span><span style="color:#e6db74">&#34;Name&#34;</span><span style="color:#f92672">/&gt;</span>
-                    <span style="color:#f92672">&lt;GridViewColumn</span> <span style="color:#a6e22e">Header=</span><span style="color:#e6db74">&#34;First name&#34;</span>
-                                    <span style="color:#a6e22e">DisplayMemberBinding=</span><span style="color:#e6db74">&#34;{Binding FirstName}&#34;</span>
-                                    <span style="color:#a6e22e">util:GridViewSort.PropertyName=</span><span style="color:#e6db74">&#34;FirstName&#34;</span><span style="color:#f92672">/&gt;</span>
-                    <span style="color:#f92672">&lt;GridViewColumn</span> <span style="color:#a6e22e">Header=</span><span style="color:#e6db74">&#34;Date of birth&#34;</span>
-                                    <span style="color:#a6e22e">DisplayMemberBinding=</span><span style="color:#e6db74">&#34;{Binding DateOfBirth}&#34;</span>
-                                    <span style="color:#a6e22e">util:GridViewSort.PropertyName=</span><span style="color:#e6db74">&#34;DateOfBirth&#34;</span><span style="color:#f92672">/&gt;</span>
-                <span style="color:#f92672">&lt;/GridView.Columns&gt;</span>
-            <span style="color:#f92672">&lt;/GridView&gt;</span>
-        <span style="color:#f92672">&lt;/ListView.View&gt;</span>
-    <span style="color:#f92672">&lt;/ListView&gt;</span>
-</code></pre></div><p>The <code>GridViewSort.AutoSort</code> property enables automatic sorting for the <code>ListView</code>. The <code>GridViewSort.PropertyName</code> property, defined for each column, indicates the property to use as the sort criteria. There is no extra code to write. A click on a column header triggers the sorting on this column ; if the ListView is already sorted on this column, the sort order is reversed.  In case you need to handle the sorting manually, I also added a <code>GridViewSort.Command</code> attached property. When used with the MVVM pattern, this property allows you to bind to a command declared in the ViewModel :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
-          <span style="color:#a6e22e">IsSynchronizedWithCurrentItem=</span><span style="color:#e6db74">&#34;True&#34;</span>
-          <span style="color:#a6e22e">util:GridViewSort.Command=</span><span style="color:#e6db74">&#34;{Binding SortCommand}&#34;</span><span style="color:#f92672">&gt;</span>
-    ...
-</code></pre></div><p>The sort command takes as parameter the name of the property to use as the sort criteria.  Note : if both the <code>Command</code> and <code>AutoSort</code> properties are set, <code>Command</code> has priority. <code>AutoSort</code> is ignored.  Here is the full code of the <code>GridViewSort</code> class :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System.ComponentModel;
-<span style="color:#66d9ef">using</span> System.Windows;
-<span style="color:#66d9ef">using</span> System.Windows.Controls;
-<span style="color:#66d9ef">using</span> System.Windows.Input;
-<span style="color:#66d9ef">using</span> System.Windows.Media;
-
-<span style="color:#66d9ef">namespace</span> Wpf.Util
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GridViewSort</span>
-    {
-        <span style="color:#75715e">#region Attached properties
-</span><span style="color:#75715e"></span>
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ICommand GetCommand(DependencyObject obj)
-        {
-            <span style="color:#66d9ef">return</span> (ICommand)obj.GetValue(CommandProperty);
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetCommand(DependencyObject obj, ICommand <span style="color:#66d9ef">value</span>)
-        {
-            obj.SetValue(CommandProperty, <span style="color:#66d9ef">value</span>);
-        }
-
-        <span style="color:#75715e">// Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached(
-                <span style="color:#e6db74">&#34;Command&#34;</span>,
-                <span style="color:#66d9ef">typeof</span>(ICommand),
-                <span style="color:#66d9ef">typeof</span>(GridViewSort),
-                <span style="color:#66d9ef">new</span> UIPropertyMetadata(
-                    <span style="color:#66d9ef">null</span>,
-                    (o, e) =&gt;
-                    {
-                        ItemsControl listView = o <span style="color:#66d9ef">as</span> ItemsControl;
-                        <span style="color:#66d9ef">if</span> (listView != <span style="color:#66d9ef">null</span>)
-                        {
-                            <span style="color:#66d9ef">if</span> (!GetAutoSort(listView)) <span style="color:#75715e">// Don&#39;t change click handler if AutoSort enabled
-</span><span style="color:#75715e"></span>                            {
-                                <span style="color:#66d9ef">if</span> (e.OldValue != <span style="color:#66d9ef">null</span> &amp;&amp; e.NewValue == <span style="color:#66d9ef">null</span>)
-                                {
-                                    listView.RemoveHandler(GridViewColumnHeader.ClickEvent, <span style="color:#66d9ef">new</span> RoutedEventHandler(ColumnHeader_Click));
-                                }
-                                <span style="color:#66d9ef">if</span> (e.OldValue == <span style="color:#66d9ef">null</span> &amp;&amp; e.NewValue != <span style="color:#66d9ef">null</span>)
-                                {
-                                    listView.AddHandler(GridViewColumnHeader.ClickEvent, <span style="color:#66d9ef">new</span> RoutedEventHandler(ColumnHeader_Click));
-                                }
-                            }
-                        }
-                    }
-                )
-            );
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> GetAutoSort(DependencyObject obj)
-        {
-            <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">bool</span>)obj.GetValue(AutoSortProperty);
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetAutoSort(DependencyObject obj, <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">value</span>)
-        {
-            obj.SetValue(AutoSortProperty, <span style="color:#66d9ef">value</span>);
-        }
-
-        <span style="color:#75715e">// Using a DependencyProperty as the backing store for AutoSort.  This enables animation, styling, binding, etc...
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty AutoSortProperty =
-            DependencyProperty.RegisterAttached(
-                <span style="color:#e6db74">&#34;AutoSort&#34;</span>,
-                <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">bool</span>),
-                <span style="color:#66d9ef">typeof</span>(GridViewSort),
-                <span style="color:#66d9ef">new</span> UIPropertyMetadata(
-                    <span style="color:#66d9ef">false</span>,
-                    (o, e) =&gt;
-                    {
-                        ListView listView = o <span style="color:#66d9ef">as</span> ListView;
-                        <span style="color:#66d9ef">if</span> (listView != <span style="color:#66d9ef">null</span>)
-                        {
-                            <span style="color:#66d9ef">if</span> (GetCommand(listView) == <span style="color:#66d9ef">null</span>) <span style="color:#75715e">// Don&#39;t change click handler if a command is set
-</span><span style="color:#75715e"></span>                            {
-                                <span style="color:#66d9ef">bool</span> oldValue = (<span style="color:#66d9ef">bool</span>)e.OldValue;
-                                <span style="color:#66d9ef">bool</span> newValue = (<span style="color:#66d9ef">bool</span>)e.NewValue;
-                                <span style="color:#66d9ef">if</span> (oldValue &amp;&amp; !newValue)
-                                {
-                                    listView.RemoveHandler(GridViewColumnHeader.ClickEvent, <span style="color:#66d9ef">new</span> RoutedEventHandler(ColumnHeader_Click));
-                                }
-                                <span style="color:#66d9ef">if</span> (!oldValue &amp;&amp; newValue)
-                                {
-                                    listView.AddHandler(GridViewColumnHeader.ClickEvent, <span style="color:#66d9ef">new</span> RoutedEventHandler(ColumnHeader_Click));
-                                }
-                            }
-                        }
-                    }
-                )
-            );
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> GetPropertyName(DependencyObject obj)
-        {
-            <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">string</span>)obj.GetValue(PropertyNameProperty);
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetPropertyName(DependencyObject obj, <span style="color:#66d9ef">string</span> <span style="color:#66d9ef">value</span>)
-        {
-            obj.SetValue(PropertyNameProperty, <span style="color:#66d9ef">value</span>);
-        }
-
-        <span style="color:#75715e">// Using a DependencyProperty as the backing store for PropertyName.  This enables animation, styling, binding, etc...
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty PropertyNameProperty =
-            DependencyProperty.RegisterAttached(
-                <span style="color:#e6db74">&#34;PropertyName&#34;</span>,
-                <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>),
-                <span style="color:#66d9ef">typeof</span>(GridViewSort),
-                <span style="color:#66d9ef">new</span> UIPropertyMetadata(<span style="color:#66d9ef">null</span>)
-            );
-
-        <span style="color:#75715e">#endregion
-</span><span style="color:#75715e"></span>
-        <span style="color:#75715e">#region Column header click event handler
-</span><span style="color:#75715e"></span>
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ColumnHeader_Click(<span style="color:#66d9ef">object</span> sender, RoutedEventArgs e)
-        {
-            GridViewColumnHeader headerClicked = e.OriginalSource <span style="color:#66d9ef">as</span> GridViewColumnHeader;
-            <span style="color:#66d9ef">if</span> (headerClicked != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">string</span> propertyName = GetPropertyName(headerClicked.Column);
-                <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(propertyName))
-                {
-                    ListView listView = GetAncestor&lt;ListView&gt;(headerClicked);
-                    <span style="color:#66d9ef">if</span> (listView != <span style="color:#66d9ef">null</span>)
-                    {
-                        ICommand command = GetCommand(listView);
-                        <span style="color:#66d9ef">if</span> (command != <span style="color:#66d9ef">null</span>)
-                        {
-                            <span style="color:#66d9ef">if</span> (command.CanExecute(propertyName))
-                            {
-                                command.Execute(propertyName);
-                            }
-                        }
-                        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (GetAutoSort(listView))
-                        {
-                            ApplySort(listView.Items, propertyName);
-                        }
-                    }
-                }
-            }
-        }
-
-        <span style="color:#75715e">#endregion
-</span><span style="color:#75715e"></span>
-        <span style="color:#75715e">#region Helper methods
-</span><span style="color:#75715e"></span>
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T GetAncestor&lt;T&gt;(DependencyObject reference) <span style="color:#66d9ef">where</span> T : DependencyObject
-        {
-            DependencyObject parent = VisualTreeHelper.GetParent(reference);
-            <span style="color:#66d9ef">while</span> (!(parent <span style="color:#66d9ef">is</span> T))
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
-            <span style="color:#66d9ef">if</span> (parent != <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">return</span> (T)parent;
-            <span style="color:#66d9ef">else</span>
-                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ApplySort(ICollectionView view, <span style="color:#66d9ef">string</span> propertyName)
-        {
-            ListSortDirection direction = ListSortDirection.Ascending;
-            <span style="color:#66d9ef">if</span> (view.SortDescriptions.Count &gt; <span style="color:#ae81ff">0</span>)
-            {
-                SortDescription currentSort = view.SortDescriptions[<span style="color:#ae81ff">0</span>];
-                <span style="color:#66d9ef">if</span> (currentSort.PropertyName == propertyName)
-                {
-                    <span style="color:#66d9ef">if</span> (currentSort.Direction == ListSortDirection.Ascending)
-                        direction = ListSortDirection.Descending;
-                    <span style="color:#66d9ef">else</span>
-                        direction = ListSortDirection.Ascending;
-                }
-                view.SortDescriptions.Clear();
-            }
-            <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(propertyName))
-            {
-                view.SortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription(propertyName, direction));
-            }
-        }
-
-        <span style="color:#75715e">#endregion
-</span><span style="color:#75715e"></span>    }
-}
-</code></pre></div><p>Of course, this class could probably be improved&hellip; for instance, we could add an arrow glyph on the sorted column (maybe by using an <code>Adorner</code>). Maybe I&rsquo;ll do that someday&hellip; meanwhile, please feel free to use it ;)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>    <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">IsSynchronizedWithCurrentItem=</span><span style="color:#e6db74">&#34;True&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">util:GridViewSort.AutoSort=</span><span style="color:#e6db74">&#34;True&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;ListView.View&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;GridView&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;GridView.Columns&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;GridViewColumn</span> <span style="color:#a6e22e">Header=</span><span style="color:#e6db74">&#34;Name&#34;</span>
+</span></span><span style="display:flex;"><span>                                    <span style="color:#a6e22e">DisplayMemberBinding=</span><span style="color:#e6db74">&#34;{Binding Name}&#34;</span>
+</span></span><span style="display:flex;"><span>                                    <span style="color:#a6e22e">util:GridViewSort.PropertyName=</span><span style="color:#e6db74">&#34;Name&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;GridViewColumn</span> <span style="color:#a6e22e">Header=</span><span style="color:#e6db74">&#34;First name&#34;</span>
+</span></span><span style="display:flex;"><span>                                    <span style="color:#a6e22e">DisplayMemberBinding=</span><span style="color:#e6db74">&#34;{Binding FirstName}&#34;</span>
+</span></span><span style="display:flex;"><span>                                    <span style="color:#a6e22e">util:GridViewSort.PropertyName=</span><span style="color:#e6db74">&#34;FirstName&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;GridViewColumn</span> <span style="color:#a6e22e">Header=</span><span style="color:#e6db74">&#34;Date of birth&#34;</span>
+</span></span><span style="display:flex;"><span>                                    <span style="color:#a6e22e">DisplayMemberBinding=</span><span style="color:#e6db74">&#34;{Binding DateOfBirth}&#34;</span>
+</span></span><span style="display:flex;"><span>                                    <span style="color:#a6e22e">util:GridViewSort.PropertyName=</span><span style="color:#e6db74">&#34;DateOfBirth&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/GridView.Columns&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/GridView&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/ListView.View&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/ListView&gt;</span>
+</span></span></code></pre></div><p>The <code>GridViewSort.AutoSort</code> property enables automatic sorting for the <code>ListView</code>. The <code>GridViewSort.PropertyName</code> property, defined for each column, indicates the property to use as the sort criteria. There is no extra code to write. A click on a column header triggers the sorting on this column ; if the ListView is already sorted on this column, the sort order is reversed.  In case you need to handle the sorting manually, I also added a <code>GridViewSort.Command</code> attached property. When used with the MVVM pattern, this property allows you to bind to a command declared in the ViewModel :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>    <span style="color:#f92672">&lt;ListView</span> <span style="color:#a6e22e">ItemsSource=</span><span style="color:#e6db74">&#34;{Binding Persons}&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">IsSynchronizedWithCurrentItem=</span><span style="color:#e6db74">&#34;True&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">util:GridViewSort.Command=</span><span style="color:#e6db74">&#34;{Binding SortCommand}&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span></code></pre></div><p>The sort command takes as parameter the name of the property to use as the sort criteria.  Note : if both the <code>Command</code> and <code>AutoSort</code> properties are set, <code>Command</code> has priority. <code>AutoSort</code> is ignored.  Here is the full code of the <code>GridViewSort</code> class :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.ComponentModel;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows.Controls;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows.Input;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows.Media;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> Wpf.Util
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GridViewSort</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Attached properties</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ICommand GetCommand(DependencyObject obj)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (ICommand)obj.GetValue(CommandProperty);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetCommand(DependencyObject obj, ICommand <span style="color:#66d9ef">value</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            obj.SetValue(CommandProperty, <span style="color:#66d9ef">value</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty CommandProperty =
+</span></span><span style="display:flex;"><span>            DependencyProperty.RegisterAttached(
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;Command&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">typeof</span>(ICommand),
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">typeof</span>(GridViewSort),
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">new</span> UIPropertyMetadata(
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>                    (o, e) =&gt;
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        ItemsControl listView = o <span style="color:#66d9ef">as</span> ItemsControl;
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">if</span> (listView != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                        {
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">if</span> (!GetAutoSort(listView)) <span style="color:#75715e">// Don&#39;t change click handler if AutoSort enabled</span>
+</span></span><span style="display:flex;"><span>                            {
+</span></span><span style="display:flex;"><span>                                <span style="color:#66d9ef">if</span> (e.OldValue != <span style="color:#66d9ef">null</span> &amp;&amp; e.NewValue == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                                {
+</span></span><span style="display:flex;"><span>                                    listView.RemoveHandler(GridViewColumnHeader.ClickEvent, <span style="color:#66d9ef">new</span> RoutedEventHandler(ColumnHeader_Click));
+</span></span><span style="display:flex;"><span>                                }
+</span></span><span style="display:flex;"><span>                                <span style="color:#66d9ef">if</span> (e.OldValue == <span style="color:#66d9ef">null</span> &amp;&amp; e.NewValue != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                                {
+</span></span><span style="display:flex;"><span>                                    listView.AddHandler(GridViewColumnHeader.ClickEvent, <span style="color:#66d9ef">new</span> RoutedEventHandler(ColumnHeader_Click));
+</span></span><span style="display:flex;"><span>                                }
+</span></span><span style="display:flex;"><span>                            }
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>            );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> GetAutoSort(DependencyObject obj)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">bool</span>)obj.GetValue(AutoSortProperty);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetAutoSort(DependencyObject obj, <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">value</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            obj.SetValue(AutoSortProperty, <span style="color:#66d9ef">value</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Using a DependencyProperty as the backing store for AutoSort.  This enables animation, styling, binding, etc...</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty AutoSortProperty =
+</span></span><span style="display:flex;"><span>            DependencyProperty.RegisterAttached(
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;AutoSort&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">bool</span>),
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">typeof</span>(GridViewSort),
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">new</span> UIPropertyMetadata(
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>                    (o, e) =&gt;
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        ListView listView = o <span style="color:#66d9ef">as</span> ListView;
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">if</span> (listView != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                        {
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">if</span> (GetCommand(listView) == <span style="color:#66d9ef">null</span>) <span style="color:#75715e">// Don&#39;t change click handler if a command is set</span>
+</span></span><span style="display:flex;"><span>                            {
+</span></span><span style="display:flex;"><span>                                <span style="color:#66d9ef">bool</span> oldValue = (<span style="color:#66d9ef">bool</span>)e.OldValue;
+</span></span><span style="display:flex;"><span>                                <span style="color:#66d9ef">bool</span> newValue = (<span style="color:#66d9ef">bool</span>)e.NewValue;
+</span></span><span style="display:flex;"><span>                                <span style="color:#66d9ef">if</span> (oldValue &amp;&amp; !newValue)
+</span></span><span style="display:flex;"><span>                                {
+</span></span><span style="display:flex;"><span>                                    listView.RemoveHandler(GridViewColumnHeader.ClickEvent, <span style="color:#66d9ef">new</span> RoutedEventHandler(ColumnHeader_Click));
+</span></span><span style="display:flex;"><span>                                }
+</span></span><span style="display:flex;"><span>                                <span style="color:#66d9ef">if</span> (!oldValue &amp;&amp; newValue)
+</span></span><span style="display:flex;"><span>                                {
+</span></span><span style="display:flex;"><span>                                    listView.AddHandler(GridViewColumnHeader.ClickEvent, <span style="color:#66d9ef">new</span> RoutedEventHandler(ColumnHeader_Click));
+</span></span><span style="display:flex;"><span>                                }
+</span></span><span style="display:flex;"><span>                            }
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>            );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> GetPropertyName(DependencyObject obj)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">string</span>)obj.GetValue(PropertyNameProperty);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetPropertyName(DependencyObject obj, <span style="color:#66d9ef">string</span> <span style="color:#66d9ef">value</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            obj.SetValue(PropertyNameProperty, <span style="color:#66d9ef">value</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Using a DependencyProperty as the backing store for PropertyName.  This enables animation, styling, binding, etc...</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty PropertyNameProperty =
+</span></span><span style="display:flex;"><span>            DependencyProperty.RegisterAttached(
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;PropertyName&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>),
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">typeof</span>(GridViewSort),
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">new</span> UIPropertyMetadata(<span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Column header click event handler</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ColumnHeader_Click(<span style="color:#66d9ef">object</span> sender, RoutedEventArgs e)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            GridViewColumnHeader headerClicked = e.OriginalSource <span style="color:#66d9ef">as</span> GridViewColumnHeader;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (headerClicked != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">string</span> propertyName = GetPropertyName(headerClicked.Column);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(propertyName))
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    ListView listView = GetAncestor&lt;ListView&gt;(headerClicked);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (listView != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        ICommand command = GetCommand(listView);
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">if</span> (command != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                        {
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">if</span> (command.CanExecute(propertyName))
+</span></span><span style="display:flex;"><span>                            {
+</span></span><span style="display:flex;"><span>                                command.Execute(propertyName);
+</span></span><span style="display:flex;"><span>                            }
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (GetAutoSort(listView))
+</span></span><span style="display:flex;"><span>                        {
+</span></span><span style="display:flex;"><span>                            ApplySort(listView.Items, propertyName);
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Helper methods</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T GetAncestor&lt;T&gt;(DependencyObject reference) <span style="color:#66d9ef">where</span> T : DependencyObject
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            DependencyObject parent = VisualTreeHelper.GetParent(reference);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> (!(parent <span style="color:#66d9ef">is</span> T))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                parent = VisualTreeHelper.GetParent(parent);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (parent != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> (T)parent;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ApplySort(ICollectionView view, <span style="color:#66d9ef">string</span> propertyName)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            ListSortDirection direction = ListSortDirection.Ascending;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (view.SortDescriptions.Count &gt; <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                SortDescription currentSort = view.SortDescriptions[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (currentSort.PropertyName == propertyName)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (currentSort.Direction == ListSortDirection.Ascending)
+</span></span><span style="display:flex;"><span>                        direction = ListSortDirection.Descending;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                        direction = ListSortDirection.Ascending;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                view.SortDescriptions.Clear();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">string</span>.IsNullOrEmpty(propertyName))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                view.SortDescriptions.Add(<span style="color:#66d9ef">new</span> SortDescription(propertyName, direction));
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Of course, this class could probably be improved&hellip; for instance, we could add an arrow glyph on the sorted column (maybe by using an <code>Adorner</code>). Maybe I&rsquo;ll do that someday&hellip; meanwhile, please feel free to use it ;)</p>
 <p><strong>Update :</strong> A new version that displays the sort glyph in the sorted column is now available in <a href="/2009/08/04/wpf-automatically-sort-a-gridview-continued/">this blog post</a>.</p>
 
 		</div>

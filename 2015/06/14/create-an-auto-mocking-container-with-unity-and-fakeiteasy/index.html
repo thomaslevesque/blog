@@ -80,73 +80,73 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.</p>
 <p>But as nice as FakeItEasy is, the process of registering all the fake dependencies for the class you are testing is still a bit tedious. Wouldn’t it be nice if the IoC container could automatically create the fakes on demand ? So this code:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> container = <span style="color:#66d9ef">new</span> UnityContainer();
-
-<span style="color:#75715e">// Setup dependencies
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> fooProvider = A.Fake&lt;IFooProvider&gt;();
-container.RegisterInstance(fooProvider);
-<span style="color:#66d9ef">var</span> barService = A.Fake&lt;IBarService&gt;();
-container.RegisterInstance(barService);
-<span style="color:#66d9ef">var</span> bazManager = A.Fake&lt;IBazManager&gt;();
-container.RegisterInstance(bazManager);
-
-<span style="color:#66d9ef">var</span> sut = container.Resolve&lt;SystemUnderTest&gt;();
-</code></pre></div><p>Could be reduced to this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> container = <span style="color:#66d9ef">new</span> UnityContainer();
-
-<span style="color:#75715e">// This will cause the container to provide fakes for all dependencies
-</span><span style="color:#75715e"></span>container.AddNewExtension&lt;AutoFakeExtension&gt;();
-
-<span style="color:#66d9ef">var</span> sut = container.Resolve&lt;SystemUnderTest&gt;();
-</code></pre></div><p>Well, it’s actually pretty easy to do with Unity. Unity is usually not considered the “cool kid” in the small world of IoC containers, but it’s well supported, easy to use, and extensible. I came up with the following extension to enable the above scenario:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AutoFakeExtension</span> : UnityContainerExtension
-{
-    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> Initialize()
-    {
-        Context.Strategies.AddNew&lt;AutoFakeBuilderStrategy&gt;(UnityBuildStage.PreCreation);
-    }
-    
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AutoFakeBuilderStrategy</span> : BuilderStrategy
-    {
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> MethodInfo <span style="color:#ae81ff">_f</span>akeGenericDefinition;
-    
-        <span style="color:#66d9ef">static</span> AutoFakeBuilderStrategy()
-        {
-            <span style="color:#ae81ff">_f</span>akeGenericDefinition = <span style="color:#66d9ef">typeof</span>(A).GetMethod(<span style="color:#e6db74">&#34;Fake&#34;</span>, Type.EmptyTypes);
-        }
-        
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> PreBuildUp(IBuilderContext context)
-        {
-            <span style="color:#66d9ef">if</span> (context.Existing == <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">var</span> type = context.BuildKey.Type;
-                <span style="color:#66d9ef">if</span> (type.IsInterface || type.IsAbstract)
-                {
-                    <span style="color:#66d9ef">var</span> fakeMethod = <span style="color:#ae81ff">_f</span>akeGenericDefinition.MakeGenericMethod(type);
-                    <span style="color:#66d9ef">var</span> fake = fakeMethod.Invoke(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">object</span>[<span style="color:#ae81ff">0</span>]);
-                    context.PersistentPolicies.Set&lt;ILifetimePolicy&gt;(<span style="color:#66d9ef">new</span> ContainerControlledLifetimeManager(), context.BuildKey);
-                    context.Existing = fake;
-                    context.BuildComplete = <span style="color:#66d9ef">true</span>;
-                }
-            }
-            <span style="color:#66d9ef">base</span>.PreBuildUp(context);
-        }
-    }
-}
-</code></pre></div><p>A few comments on this code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> container = <span style="color:#66d9ef">new</span> UnityContainer();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Setup dependencies</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> fooProvider = A.Fake&lt;IFooProvider&gt;();
+</span></span><span style="display:flex;"><span>container.RegisterInstance(fooProvider);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> barService = A.Fake&lt;IBarService&gt;();
+</span></span><span style="display:flex;"><span>container.RegisterInstance(barService);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> bazManager = A.Fake&lt;IBazManager&gt;();
+</span></span><span style="display:flex;"><span>container.RegisterInstance(bazManager);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> sut = container.Resolve&lt;SystemUnderTest&gt;();
+</span></span></code></pre></div><p>Could be reduced to this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> container = <span style="color:#66d9ef">new</span> UnityContainer();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// This will cause the container to provide fakes for all dependencies</span>
+</span></span><span style="display:flex;"><span>container.AddNewExtension&lt;AutoFakeExtension&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> sut = container.Resolve&lt;SystemUnderTest&gt;();
+</span></span></code></pre></div><p>Well, it’s actually pretty easy to do with Unity. Unity is usually not considered the “cool kid” in the small world of IoC containers, but it’s well supported, easy to use, and extensible. I came up with the following extension to enable the above scenario:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AutoFakeExtension</span> : UnityContainerExtension
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> Initialize()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Context.Strategies.AddNew&lt;AutoFakeBuilderStrategy&gt;(UnityBuildStage.PreCreation);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AutoFakeBuilderStrategy</span> : BuilderStrategy
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> MethodInfo <span style="color:#ae81ff">_f</span>akeGenericDefinition;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> AutoFakeBuilderStrategy()
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_f</span>akeGenericDefinition = <span style="color:#66d9ef">typeof</span>(A).GetMethod(<span style="color:#e6db74">&#34;Fake&#34;</span>, Type.EmptyTypes);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> PreBuildUp(IBuilderContext context)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (context.Existing == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> type = context.BuildKey.Type;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (type.IsInterface || type.IsAbstract)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> fakeMethod = <span style="color:#ae81ff">_f</span>akeGenericDefinition.MakeGenericMethod(type);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> fake = fakeMethod.Invoke(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">object</span>[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>                    context.PersistentPolicies.Set&lt;ILifetimePolicy&gt;(<span style="color:#66d9ef">new</span> ContainerControlledLifetimeManager(), context.BuildKey);
+</span></span><span style="display:flex;"><span>                    context.Existing = fake;
+</span></span><span style="display:flex;"><span>                    context.BuildComplete = <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">base</span>.PreBuildUp(context);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A few comments on this code:</p>
 <ul>
 <li>The logic is a bit crude (it generates fakes only for interfaces and abstract classes), but can easily be adjusted if necessary.</li>
 <li>The ugly reflection hack is due to the fact that FakeItEasy doesn’t have an non-generic overload of <code>A.Fake</code> that accepts a <code>Type</code> as a parameter. Well, nobody’s perfect…</li>
 <li>The lifetime is set to “container controlled”, because if you need to configure method calls, you will need to access the same instance that is injected into the system under test:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> fooProvider = container.Resolve&lt;IFooProvider&gt;();
-A.CallTo(() =&gt; fooProvider.GetFoo(<span style="color:#ae81ff">42</span>)).Returns(<span style="color:#66d9ef">new</span> Foo { Id = <span style="color:#ae81ff">42</span>, Name = <span style="color:#960050;background-color:#1e0010">“</span>test<span style="color:#960050;background-color:#1e0010">”</span> });
-</code></pre></div><p>Note that if you register a dependency explicitly, it will take precedence and no fake will be created. So you can use this extension and still be able to manually specify a dependency:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> container = <span style="color:#66d9ef">new</span> UnityContainer();
-container.AddNewExtension&lt;AutoFakeExtension&gt;();
-container.RegisterType&lt;IFooProvider, TestFooProvider&gt;();
-<span style="color:#66d9ef">var</span> sut = container.Resolve&lt;SystemUnderTest&gt;();
-</code></pre></div><p>Of course, this extension could easily be modified to use a different mocking framework. I guess the same principle could be applied to other IoC containers as well, as long as they have suitable extension points.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> fooProvider = container.Resolve&lt;IFooProvider&gt;();
+</span></span><span style="display:flex;"><span>A.CallTo(() =&gt; fooProvider.GetFoo(<span style="color:#ae81ff">42</span>)).Returns(<span style="color:#66d9ef">new</span> Foo { Id = <span style="color:#ae81ff">42</span>, Name = <span style="color:#960050;background-color:#1e0010">“</span>test<span style="color:#960050;background-color:#1e0010">”</span> });
+</span></span></code></pre></div><p>Note that if you register a dependency explicitly, it will take precedence and no fake will be created. So you can use this extension and still be able to manually specify a dependency:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> container = <span style="color:#66d9ef">new</span> UnityContainer();
+</span></span><span style="display:flex;"><span>container.AddNewExtension&lt;AutoFakeExtension&gt;();
+</span></span><span style="display:flex;"><span>container.RegisterType&lt;IFooProvider, TestFooProvider&gt;();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> sut = container.Resolve&lt;SystemUnderTest&gt;();
+</span></span></code></pre></div><p>Of course, this extension could easily be modified to use a different mocking framework. I guess the same principle could be applied to other IoC containers as well, as long as they have suitable extension points.</p>
 <h3 id="what-about-autofixture">What about AutoFixture?</h3>
 <p>Before you ask: yes, I know about <a href="https://github.com/AutoFixture/AutoFixture">AutoFixture</a>. It’s a pretty good library, and I actually tried to use it as well, with some success. The resulting code is very similar to the examples above. The main reason why I didn’t keep using it is that AutoFixture is not really an IoC container (though it does some of the things an IoC container does), and I prefer to use the same IoC mechanism in my unit tests and in the actual application. Also, I’m not very comfortable with the way it handles properties when creating an instance of the SUT. By default, it sets all public writable properties to dummy instances of their type; this is fine if those properties are used for dependency injection, but IMO it doesn’t make sense for other properties. I know I can suppress this behavior for specific properties, but I have to do it manually on a case by case basis; it doesn’t take IoC container specific attributes like <code>[Dependency]</code> into account. So eventually I found it easier to use my custom Unity extension.</p>
 

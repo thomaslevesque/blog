@@ -86,9 +86,9 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>Just another little puzzle based on an issue I had at work…</p>
 <p>Consider this piece of code :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Console.WriteLine(<span style="color:#e6db74">$&#34;x &gt; y is {x &gt; y}&#34;</span>);
-Console.WriteLine(<span style="color:#e6db74">$&#34;!(x &lt;= y) is {!(x &lt;= y)}&#34;</span>);
-</code></pre></div><p>How would you declare and initialize <code>x</code> and <code>y</code> for the program to produce the following, apparently illogical, output?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">$&#34;x &gt; y is {x &gt; y}&#34;</span>);
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">$&#34;!(x &lt;= y) is {!(x &lt;= y)}&#34;</span>);
+</span></span></code></pre></div><p>How would you declare and initialize <code>x</code> and <code>y</code> for the program to produce the following, apparently illogical, output?</p>
 <pre tabindex="0"><code>x &gt; y is False
 !(x &lt;= y) is True
 </code></pre>

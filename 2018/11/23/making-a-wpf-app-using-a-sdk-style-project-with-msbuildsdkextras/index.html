@@ -84,22 +84,22 @@ if (!doNotTrack) {
 <p>However, out of the box, it&rsquo;s only usable for some project types: ASP.NET Core apps, console applications, and simple class libraries. If you want to write a WPF Windows application, for instance, you&rsquo;re stuck with the old, bloated project format. This will change with .NET Core 3.0, but it&rsquo;s not there yet.</p>
 <h2 id="msbuildsdkextras">MSBuildSdkExtras</h2>
 <p>Fortunately, Oren Novotny created a pretty cool project named <a href="https://github.com/onovotny/MSBuildSdkExtras">MSBuildSdkExtras</a>. This is basically an extension of the .NET Core SDK that adds missing MSBuild targets and properties to enable building project types that are not supported out of the box. It presents itself as an alternative SDK, i.e. instead of specifying <code>Sdk=&quot;Microsoft.NET.Sdk&quot;</code> in the root element of your project file, you write <code>Sdk=&quot;MSBuild.Sdk.Extras/1.6.61&quot;</code>. The SDK will be automatically resolved from NuGet (note that you need VS2017 15.6 or higher for this to work). Alternatively, you can just specify <code>Sdk=&quot;MSBuild.Sdk.Extras&quot;</code>, and specify the SDK version in a <code>global.json</code> file in the solution root folder, like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">{
-    <span style="color:#e6db74">&#34;msbuild-sdks&#34;</span><span style="color:#f92672">:</span> {
-        <span style="color:#e6db74">&#34;MSBuild.Sdk.Extras&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;1.6.61&#34;</span>
-    }
-}
-</code></pre></div><p>This approach is useful to share the SDK version between multiple projects.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msbuild-sdks&#34;</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;MSBuild.Sdk.Extras&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;1.6.61&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This approach is useful to share the SDK version between multiple projects.</p>
 <h2 id="our-first-sdk-style-wpf-project">Our first SDK-style WPF project</h2>
 <p>Let&rsquo;s see how to create a WPF project with the SDK project format. Follow the usual steps to create a new WPF application in Visual Studio. Once it&rsquo;s done, unload the project and edit the csproj file; replace the whole content with this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Project</span> <span style="color:#a6e22e">Sdk=</span><span style="color:#e6db74">&#34;MSBuild.Sdk.Extras/1.6.61&#34;</span><span style="color:#f92672">&gt;</span>
-  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
-    <span style="color:#f92672">&lt;OutputType&gt;</span>WinExe<span style="color:#f92672">&lt;/OutputType&gt;</span>
-    <span style="color:#f92672">&lt;TargetFramework&gt;</span>net471<span style="color:#f92672">&lt;/TargetFramework&gt;</span>
-    <span style="color:#f92672">&lt;ExtrasEnableWpfProjectSetup&gt;</span>true<span style="color:#f92672">&lt;/ExtrasEnableWpfProjectSetup&gt;</span>
-  <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
-<span style="color:#f92672">&lt;/Project&gt;</span>
-</code></pre></div><p>Reload your project, and remove the <code>Properties/AssemblyInfo.cs</code> file. That&rsquo;s it, you can now build and run as usual, but now with a much more concise project file!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Project</span> <span style="color:#a6e22e">Sdk=</span><span style="color:#e6db74">&#34;MSBuild.Sdk.Extras/1.6.61&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;OutputType&gt;</span>WinExe<span style="color:#f92672">&lt;/OutputType&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;TargetFramework&gt;</span>net471<span style="color:#f92672">&lt;/TargetFramework&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;ExtrasEnableWpfProjectSetup&gt;</span>true<span style="color:#f92672">&lt;/ExtrasEnableWpfProjectSetup&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Project&gt;</span>
+</span></span></code></pre></div><p>Reload your project, and remove the <code>Properties/AssemblyInfo.cs</code> file. That&rsquo;s it, you can now build and run as usual, but now with a much more concise project file!</p>
 <p>A few things to note:</p>
 <ul>
 <li><code>ExtrasEnableWpfProjectSetup</code> is a MSBuildSdkExtras property to opt in to WPF support (which isn&rsquo;t enabled by default). Basically, it includes WPF file types with the appropriate build action (e.g. <code>ApplicationDefinition</code> for the <code>App.xaml</code> file, <code>Page</code> for other XAML files, etc.) and sets up appropriate tasks to handle XAML compilation.</li>

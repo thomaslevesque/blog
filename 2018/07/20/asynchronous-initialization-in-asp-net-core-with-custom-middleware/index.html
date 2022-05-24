@@ -90,74 +90,74 @@ if (!doNotTrack) {
 </ul>
 <h2 id="async-initialization-middleware">Async initialization middleware</h2>
 <p>A simple way to do it involves writing a custom <a href="/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/">middleware</a> that ensures initialization is complete before processing a request. This middleware starts the initialization process when the app starts, and upon receiving a request, will wait until the initialization is done before passing the request to the next middleware. A basic implementation could look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncInitializationMiddleware</span>
-{
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> RequestDelegate <span style="color:#ae81ff">_</span>next;
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger <span style="color:#ae81ff">_l</span>ogger;
-    <span style="color:#66d9ef">private</span> Task <span style="color:#ae81ff">_</span>initializationTask;
-
-    <span style="color:#66d9ef">public</span> AsyncInitializationMiddleware(RequestDelegate next, IApplicationLifetime lifetime, ILogger&lt;AsyncInitializationMiddleware&gt; logger)
-    {
-        <span style="color:#ae81ff">_</span>next = next;
-        <span style="color:#ae81ff">_l</span>ogger = logger;
-
-        <span style="color:#75715e">// Start initialization when the app starts
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> startRegistration = <span style="color:#66d9ef">default</span>(CancellationTokenRegistration);
-        startRegistration = lifetime.ApplicationStarted.Register(() =&gt;
-        {
-            <span style="color:#ae81ff">_</span>initializationTask = InitializeAsync(lifetime.ApplicationStopping);
-            startRegistration.Dispose();
-        });
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> Task InitializeAsync(CancellationToken cancellationToken)
-    {
-        <span style="color:#66d9ef">try</span>
-        {
-            <span style="color:#ae81ff">_l</span>ogger.LogInformation(<span style="color:#e6db74">&#34;Initialization starting&#34;</span>);
-
-            <span style="color:#75715e">// Do async initialization here
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">2000</span>);
-
-            <span style="color:#ae81ff">_l</span>ogger.LogInformation(<span style="color:#e6db74">&#34;Initialization complete&#34;</span>);
-        }
-        <span style="color:#66d9ef">catch</span>(Exception ex)
-        {
-            <span style="color:#ae81ff">_l</span>ogger.LogError(ex, <span style="color:#e6db74">&#34;Initialization failed&#34;</span>);
-            <span style="color:#66d9ef">throw</span>;
-        }
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task Invoke(HttpContext context)
-    {
-        <span style="color:#75715e">// Take a copy to avoid race conditions
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> initializationTask = <span style="color:#ae81ff">_</span>initializationTask;
-        <span style="color:#66d9ef">if</span> (initializationTask != <span style="color:#66d9ef">null</span>)
-        {
-            <span style="color:#75715e">// Wait until initialization is complete before passing the request to next middleware
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">await</span> initializationTask;
-
-            <span style="color:#75715e">// Clear the task so that we don&#39;t await it again later.
-</span><span style="color:#75715e"></span>            <span style="color:#ae81ff">_</span>initializationTask = <span style="color:#66d9ef">null</span>;
-        }
-
-        <span style="color:#75715e">// Pass the request to the next middleware
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_</span>next(context);
-    }
-}
-</code></pre></div><p>We can then add this middleware to the pipeline in the <code>Startup.Configure</code> method. It should be added early in the pipeline, before any other middleware that would need the initialization to be complete.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app, IHostingEnvironment env)
-{
-    <span style="color:#66d9ef">if</span> (env.IsDevelopment())
-    {
-        app.UseDeveloperExceptionPage();
-    }
-
-    app.UseMiddleware&lt;AsyncInitializationMiddleware&gt;();
-
-    app.UseMvc();
-}
-</code></pre></div><h2 id="dependencies">Dependencies</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncInitializationMiddleware</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> RequestDelegate <span style="color:#ae81ff">_</span>next;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger <span style="color:#ae81ff">_l</span>ogger;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Task <span style="color:#ae81ff">_</span>initializationTask;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> AsyncInitializationMiddleware(RequestDelegate next, IApplicationLifetime lifetime, ILogger&lt;AsyncInitializationMiddleware&gt; logger)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>next = next;
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_l</span>ogger = logger;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Start initialization when the app starts</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> startRegistration = <span style="color:#66d9ef">default</span>(CancellationTokenRegistration);
+</span></span><span style="display:flex;"><span>        startRegistration = lifetime.ApplicationStarted.Register(() =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>initializationTask = InitializeAsync(lifetime.ApplicationStopping);
+</span></span><span style="display:flex;"><span>            startRegistration.Dispose();
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> Task InitializeAsync(CancellationToken cancellationToken)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.LogInformation(<span style="color:#e6db74">&#34;Initialization starting&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Do async initialization here</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">2000</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.LogInformation(<span style="color:#e6db74">&#34;Initialization complete&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">catch</span>(Exception ex)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.LogError(ex, <span style="color:#e6db74">&#34;Initialization failed&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task Invoke(HttpContext context)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Take a copy to avoid race conditions</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> initializationTask = <span style="color:#ae81ff">_</span>initializationTask;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (initializationTask != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Wait until initialization is complete before passing the request to next middleware</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> initializationTask;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Clear the task so that we don&#39;t await it again later.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>initializationTask = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Pass the request to the next middleware</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_</span>next(context);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We can then add this middleware to the pipeline in the <code>Startup.Configure</code> method. It should be added early in the pipeline, before any other middleware that would need the initialization to be complete.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app, IHostingEnvironment env)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (env.IsDevelopment())
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        app.UseDeveloperExceptionPage();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    app.UseMiddleware&lt;AsyncInitializationMiddleware&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    app.UseMvc();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="dependencies">Dependencies</h2>
 <p>At this point, our initialization middleware doesn&rsquo;t depend on any service. If it has transient or singleton dependencies, they can just be injected into the middleware constructor as usual, and used from the <code>InitializeAsync</code> method.</p>
 <p>However, if the dependencies are scoped, we&rsquo;re in trouble: the middleware is instantiated directly from the root provider, not from a scope, so it can&rsquo;t take scoped dependencies in its constructor.</p>
 <p>Depending on scoped dependencies for initialization code doesn&rsquo;t make a lot of sense anyway, since by definition scoped dependencies only exist in the context of a request. But if for some reason you need to do it anyway, the solution is to perform initialization in the middleware&rsquo;s <code>Invoke</code> method, injecting the dependencies as method parameters. This approach has at least two drawbacks:</p>

@@ -10,7 +10,7 @@
 	<meta property="og:title" content="Tuples in C# 7" />
 <meta property="og:description" content="A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count&#43;&#43;; sum &#43;= value; } return Tuple." />
+private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) {  int count = 0;  double sum = 0.0;  foreach (var value in values)  {  count&#43;&#43;;  sum &#43;= value;  }  return Tuple." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2016/07/25/tuples-in-c-7/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2016-07-25T00:00:00+00:00" />
@@ -21,7 +21,7 @@ private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) 
 <meta name="twitter:title" content="Tuples in C# 7"/>
 <meta name="twitter:description" content="A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count&#43;&#43;; sum &#43;= value; } return Tuple."/>
+private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) {  int count = 0;  double sum = 0.0;  foreach (var value in values)  {  count&#43;&#43;;  sum &#43;= value;  }  return Tuple."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -84,47 +84,47 @@ if (!doNotTrack) {
 		</header><div class="content post__content clearfix">
 			<p>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.</p>
 <p>In .NET 4.0, a set of <code>Tuple</code> classes has been introduced in the framework, which can be used as follows:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Tuple&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">double</span>&gt; Tally(IEnumerable&lt;<span style="color:#66d9ef">double</span>&gt; values)
-{
-    <span style="color:#66d9ef">int</span> count = <span style="color:#ae81ff">0</span>;
-    <span style="color:#66d9ef">double</span> sum = <span style="color:#ae81ff">0.0</span>;
-    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> values)
-    {
-        count++;
-        sum += <span style="color:#66d9ef">value</span>;
-    }
-    <span style="color:#66d9ef">return</span> Tuple.Create(count, sum);
-}
-
-...
-
-<span style="color:#66d9ef">var</span> values = ...
-<span style="color:#66d9ef">var</span> t = Tally(values);
-Console.WriteLine(<span style="color:#e6db74">$&#34;There are {t.Item1} values and their sum is {t.Item2}&#34;</span>);
-</code></pre></div><p>There are two annoying issues with the <code>Tuple</code> classes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Tuple&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">double</span>&gt; Tally(IEnumerable&lt;<span style="color:#66d9ef">double</span>&gt; values)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> count = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> sum = <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> values)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        count++;
+</span></span><span style="display:flex;"><span>        sum += <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Tuple.Create(count, sum);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> values = ...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> t = Tally(values);
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">$&#34;There are {t.Item1} values and their sum is {t.Item2}&#34;</span>);
+</span></span></code></pre></div><p>There are two annoying issues with the <code>Tuple</code> classes:</p>
 <ul>
 <li>They’re classes, i.e. reference types. This means they must be allocated on the heap, and garbage collected when they’re no longer used. For applications where performance is critical, it can be an issue. Also, the fact that they can be null is often not desirable.</li>
 <li>The elements in the tuple don’t have names, or rather, they always have the same names (<code>Item1,</code> <code>Item2,</code> etc), which are not meaningful at all. The <code>Tuple&lt;T1, T2&gt;</code> type conveys no information about what the tuple actually represents, which makes it a poor choice in public APIs.</li>
 </ul>
 <p>In C# 7, a new feature will be introduced to improve support for tuples: you will be able to declare tuples types “inline”, a little like anonymous types, except that they’re not limited to the current method. Using this new feature, the code above becomes much cleaner:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> (<span style="color:#66d9ef">int</span> count, <span style="color:#66d9ef">double</span> sum) Tally(IEnumerable&lt;<span style="color:#66d9ef">double</span>&gt; values)
-{
-    <span style="color:#66d9ef">int</span> count = <span style="color:#ae81ff">0</span>;
-    <span style="color:#66d9ef">double</span> sum = <span style="color:#ae81ff">0.0</span>;
-    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> values)
-    {
-        count++;
-        sum += <span style="color:#66d9ef">value</span>;
-    }
-    <span style="color:#66d9ef">return</span> (count, sum);
-}
-
-...
-
-<span style="color:#66d9ef">var</span> values = ...
-<span style="color:#66d9ef">var</span> t = Tally(values);
-Console.WriteLine(<span style="color:#e6db74">$&#34;There are {t.count} values and their sum is {t.sum}&#34;</span>);
-</code></pre></div><p>Note how the return type of the <code>Tally</code> method is declared, and how the result is used. This is much better! The tuple elements now have significant names, and the syntax is nicer too. The feature relies on a new <code>ValueTuple&lt;T1, T2&gt;</code> structure, which means it doesn’t involve a heap allocation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> (<span style="color:#66d9ef">int</span> count, <span style="color:#66d9ef">double</span> sum) Tally(IEnumerable&lt;<span style="color:#66d9ef">double</span>&gt; values)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> count = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> sum = <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> values)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        count++;
+</span></span><span style="display:flex;"><span>        sum += <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (count, sum);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> values = ...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> t = Tally(values);
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">$&#34;There are {t.count} values and their sum is {t.sum}&#34;</span>);
+</span></span></code></pre></div><p>Note how the return type of the <code>Tally</code> method is declared, and how the result is used. This is much better! The tuple elements now have significant names, and the syntax is nicer too. The feature relies on a new <code>ValueTuple&lt;T1, T2&gt;</code> structure, which means it doesn’t involve a heap allocation.</p>
 <p>You can try this feature right now in Visual Studio 15 Preview 3. However, the  <code>ValueTuple&lt;T1, T2&gt;</code> type is not (yet) part of the .NET Framework; to get this example to work, you’ll need to reference the <a href="https://packages.nuget.org/packages/System.ValueTuple">System.ValueTuple</a> NuGet package.</p>
 <p>Finally, one last remark about the names of tuple members: like many other language features, they’re just syntactic sugar. In the compiled code, the tuple members are only referred to as <code>Item1</code> and <code>Item2</code>, not <code>count</code> and <code>sum</code>. The <code>Tally</code> method above actually returns a <code>ValueTuple&lt;int, double&gt;</code>, not a specially generated type. Note that the compiler that ships with VS 15 Preview 3 emits no metadata about the names of the tuple members. This part of the feature is not yet implemented, but should be included in the final version. This means that in the meantime, you can’t use tuples across assemblies (well, you can, but you will lose the member names and will have to use <code>Item1</code> and <code>Item2</code> to refer to the tuple members).</p>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-	<meta name="generator" content="Hugo 0.89.4" />
+	<meta name="generator" content="Hugo 0.99.1" />
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -83,7 +83,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:
-&lt;Grid&gt; &lt;Grid.RowDefinitions&gt; &lt;RowDefinition Height=&#34;Auto&#34;/&gt; &lt;RowDefinition Height=&#34;5&#34;/&gt; &lt;RowDefinition Height=&#34;*&#34;/&gt; &lt;/Grid.RowDefinitions&gt; &lt;Grid.ColumnDefinitions&gt; &lt;ColumnDefinition Width=&#34;60&#34; /&gt; &lt;ColumnDefinition Width=&#34;*&#34; /&gt; &lt;/Grid.ColumnDefinitions&gt; &lt;Label Content=&#34;Name&#34; Grid.Row=&#34;0&#34; Grid.Column=&#34;0&#34; /&gt; &lt;TextBox Text=&#34;Hello world&#34; Grid.
+&lt;Grid&gt;  &lt;Grid.RowDefinitions&gt;  &lt;RowDefinition Height=&#34;Auto&#34;/&gt;  &lt;RowDefinition Height=&#34;5&#34;/&gt;  &lt;RowDefinition Height=&#34;*&#34;/&gt;  &lt;/Grid.RowDefinitions&gt;  &lt;Grid.ColumnDefinitions&gt;  &lt;ColumnDefinition Width=&#34;60&#34; /&gt;  &lt;ColumnDefinition Width=&#34;*&#34; /&gt;  &lt;/Grid.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -112,7 +112,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.
+X xx = GetX(); string name = &#34;Default&#34;; if (xx != null &amp;&amp; xx.Foo != null &amp;&amp; xx.Foo.Bar != null &amp;&amp; xx.Foo.Bar.Baz != null) {  name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&hellip;.
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -217,7 +217,7 @@ To achieve this result, I used an Adorner : this is a component which allows to 
 	<div class="content list__excerpt post__content clearfix">
 		Here&rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip;
 In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
-private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)
+private void Window_MouseDown(object sender, MouseButtonEventArgs e) {  this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released.
 	</div>
 </article>
 </main>

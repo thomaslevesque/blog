@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="C# methods in git diff hunk headers" />
 <meta property="og:description" content="If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs &#43;&#43;&#43; b/Program.cs @@ -13,6 &#43;13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); &#43; Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff." />
+diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs &#43;&#43;&#43; b/Program.cs @@ -13,6 &#43;13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;);  Console.WriteLine(&#34;Hello World!&#34;);  Console.WriteLine(&#34;Hello World!&#34;); &#43; Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2017-01-17T00:00:00+00:00" />
@@ -19,7 +19,7 @@ diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="C# methods in git diff hunk headers"/>
 <meta name="twitter:description" content="If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs &#43;&#43;&#43; b/Program.cs @@ -13,6 &#43;13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); &#43; Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff."/>
+diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs &#43;&#43;&#43; b/Program.cs @@ -13,6 &#43;13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;);  Console.WriteLine(&#34;Hello World!&#34;);  Console.WriteLine(&#34;Hello World!&#34;); &#43; Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -81,38 +81,38 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-01-17T00:00:00Z">January 17, 2017</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with <code>@@</code>), like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">diff --git a/Program.cs b/Program.cs
-index 655a213..5ae1016 100644
-<span style="color:#f92672">--- a/Program.cs
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/Program.cs
-</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -13,6 +13,7 @@ static void Main(string[] args)
-</span><span style="color:#75715e"></span>         Console.WriteLine(&#34;Hello World!&#34;);
-         Console.WriteLine(&#34;Hello World!&#34;);
-         Console.WriteLine(&#34;Hello World!&#34;);
-<span style="color:#a6e22e">+        Console.WriteLine(&#34;blah&#34;);
-</span><span style="color:#a6e22e"></span>     }
-</code></pre></div><p>This is very useful to know where you are when looking at a diff.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span>diff --git a/Program.cs b/Program.cs
+</span></span><span style="display:flex;"><span>index 655a213..5ae1016 100644
+</span></span><span style="display:flex;"><span><span style="color:#f92672">--- a/Program.cs
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/Program.cs
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -13,6 +13,7 @@ static void Main(string[] args)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>         Console.WriteLine(&#34;Hello World!&#34;);
+</span></span><span style="display:flex;"><span>         Console.WriteLine(&#34;Hello World!&#34;);
+</span></span><span style="display:flex;"><span>         Console.WriteLine(&#34;Hello World!&#34;);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">+        Console.WriteLine(&#34;blah&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>     }
+</span></span></code></pre></div><p>This is very useful to know where you are when looking at a diff.</p>
 <p>Git has a few built-in regex patterns to detect methods in some languages, including C#; they are defined in <a href="https://github.com/git/git/blob/d7dffce1cebde29a0c4b309a79e4345450bf352a/userdiff.c#L140"><code>userdiff.c</code></a>. But by default, these patterns are not used&hellip; you need to tell git which file extensions should be associated with which language. This can be specified in a <code>.gitattributes</code> file at the root of your git repository:</p>
 <pre tabindex="0"><code>*.cs    diff=csharp
 </code></pre><p>With this done, <code>git diff</code> should show an output similar to the sample above.</p>
 <p>Are we done yet? Well, almost. See, the patterns for C# were added to git a long time ago, and C# has changed quite a bit since then. Some new keywords that can now be part of a method signature are not recognized by the built-in pattern, e.g. <code>async</code> or <code>partial</code>. This is quite annoying, because when some code has changed in an async method, the diff hunk header shows the signature of a previous, non-async method, or the line where the class is declared, which is confusing.</p>
 <p>My first impulse was to submit a pull request on Github to add the missing keywords; however I soon realized that the <a href="https://github.com/git/git">git repository on Github</a> is just a mirror and does not accept pull requests&hellip; The <a href="https://github.com/git/git/blob/master/Documentation/SubmittingPatches">contribution process</a> consists of sending a patch to the git mailing list, with a long and annoying checklist of requirements. This process seemed so tedious that I gave it up. I honestly don&rsquo;t know why they use such a difficult and old-fashioned contribution process, it just discourages casual contributors. But that&rsquo;s a bit off-topic, so let&rsquo;s move on and try to solve the problem some other way.</p>
 <p>Fortunately, the built-in patterns can be overridden in the git configuration. To define the function name pattern for C#, you need to define the <code>diff.csharp.xfuncname</code> setting in your git config file:</p>
-<pre tabindex="0"><code>[[diff &quot;csharp&quot;]]
+<pre tabindex="0"><code>[[diff &#34;csharp&#34;]]
   xfuncname = ^[ \\t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async|partial)[ \\t]+)*[][&lt;&gt;@.~_[:alnum:]]+[ \\t]+[&lt;&gt;@._[:alnum:]]+[ \\t]*\\(.*\\))[ \\t]*$
 </code></pre><p>As you can see, it&rsquo;s the same pattern as in <code>userdiff.c</code>, with the backslashes escaped and the missing keywords added. With this pattern, <code>git diff</code> now shows the correct function signature in async methods:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">diff --git a/Program.cs b/Program.cs
-index 655a213..5ae1016 100644
-<span style="color:#f92672">--- a/Program.cs
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/Program.cs
-</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -31,5 +32,6 @@ static async Task FooAsync()
-</span><span style="color:#75715e"></span>         Console.WriteLine(&#34;Hello world&#34;);
-         Console.WriteLine(&#34;Hello world&#34;);
-         Console.WriteLine(&#34;Hello world&#34;);
-<span style="color:#a6e22e">+        await Task.Delay(100);
-</span><span style="color:#a6e22e"></span>     }
- }
-</code></pre></div><p>It took me a while to figure it out, so I hope you find it helpful!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span>diff --git a/Program.cs b/Program.cs
+</span></span><span style="display:flex;"><span>index 655a213..5ae1016 100644
+</span></span><span style="display:flex;"><span><span style="color:#f92672">--- a/Program.cs
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/Program.cs
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -31,5 +32,6 @@ static async Task FooAsync()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>         Console.WriteLine(&#34;Hello world&#34;);
+</span></span><span style="display:flex;"><span>         Console.WriteLine(&#34;Hello world&#34;);
+</span></span><span style="display:flex;"><span>         Console.WriteLine(&#34;Hello world&#34;);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">+        await Task.Delay(100);
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e"></span>     }
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div><p>It took me a while to figure it out, so I hope you find it helpful!</p>
 <p><strong>Update</strong>: using <a href="https://github.com/rtyley/submitgit">submitgit</a>, I was able to submit the change, which has been integrated into Git, so you no longer need to edit the Git configuration to support async methods.</p>
 
 		</div>

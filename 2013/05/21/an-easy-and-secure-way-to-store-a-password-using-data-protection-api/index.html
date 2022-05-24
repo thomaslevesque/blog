@@ -81,9 +81,9 @@ if (!doNotTrack) {
 			<p>If you&rsquo;re writing a client application that needs to store user credentials, it&rsquo;s usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration. But then it will be pretty easy to find&hellip;</p>
 <p>Well, the good news is that you don&rsquo;t really need to solve this problem, because Windows already solved it for you! The solution is called <a href="http://msdn.microsoft.com/en-us/library/ms995355.aspx">Data Protection API</a>, and enables you to protect data without having to worry about an encryption key. The documentation is lengthy and boring, but actually it&rsquo;s pretty easy to use from .NET, because the framework provides a <a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography.protecteddata.aspx"><code>ProtectedData</code></a> class that wraps the low-level API calls for you.</p>
 <p>This class has two methods, with pretty self-explanatory names: <code>Protect</code> and <code>Unprotect</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span>[] Protect(<span style="color:#66d9ef">byte</span>[] userData, <span style="color:#66d9ef">byte</span>[] optionalEntropy, DataProtectionScope scope);
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span>[] Unprotect(<span style="color:#66d9ef">byte</span>[] encryptedData, <span style="color:#66d9ef">byte</span>[] optionalEntropy, DataProtectionScope scope);
-</code></pre></div><p>The <code>userData</code> parameter is the plain, unencrypted binary data. The <code>scope</code> is a value that indicates whether to protect the data for the current user (only that user will be able to decrypt it) or for the local machine (any user on the same machine will be able to decrypt it). What about the <code>optionalEntropy</code> parameter? Well, I&rsquo;m not an expert in cryptography, but as far as I understand, it&rsquo;s a kind of &ldquo;salt&rdquo;: according to the documentation, it is used to &ldquo;increase the complexity of the encryption&rdquo;. Obviously, you&rsquo;ll need to provide the same entropy to decrypt the data later. As the name implies, this parameter is optional, so you can just pass null if you don&rsquo;t want to use it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span>[] Protect(<span style="color:#66d9ef">byte</span>[] userData, <span style="color:#66d9ef">byte</span>[] optionalEntropy, DataProtectionScope scope);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span>[] Unprotect(<span style="color:#66d9ef">byte</span>[] encryptedData, <span style="color:#66d9ef">byte</span>[] optionalEntropy, DataProtectionScope scope);
+</span></span></code></pre></div><p>The <code>userData</code> parameter is the plain, unencrypted binary data. The <code>scope</code> is a value that indicates whether to protect the data for the current user (only that user will be able to decrypt it) or for the local machine (any user on the same machine will be able to decrypt it). What about the <code>optionalEntropy</code> parameter? Well, I&rsquo;m not an expert in cryptography, but as far as I understand, it&rsquo;s a kind of &ldquo;salt&rdquo;: according to the documentation, it is used to &ldquo;increase the complexity of the encryption&rdquo;. Obviously, you&rsquo;ll need to provide the same entropy to decrypt the data later. As the name implies, this parameter is optional, so you can just pass null if you don&rsquo;t want to use it.</p>
 <p>So, this API is quite simple, but not directly usable for our goal: the input and output of <code>Protect</code> are byte arrays, but we want to encrypt a password, which is a string; also, it&rsquo;s usually more convenient to store a string than a byte array. To get a byte array from the password string, it&rsquo;s pretty easy: we just need to use a text encoding, like UTF-8. But we can&rsquo;t use the same approach to get a string from the encrypted binary data, because it will probably not contain printable text; instead we can encode the result in Base64, which gives a clean text representation of binary data. So, basically we&rsquo;re going to do this:</p>
 <pre tabindex="0"><code>                      clear text
 (encode to UTF8)   =&gt; clear bytes
@@ -96,54 +96,54 @@ if (!doNotTrack) {
 (decode from UTF8)   =&gt; clear text
 </code></pre><p>I omitted the entropy in the description above; in most cases it will probably be more convenient to have it as a string, too, so we can just encode the string to UTF-8 to get the corresponding bytes.</p>
 <p>Eventually, we can wrap all this in two simple extension methods:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DataProtectionExtensions</span>
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Protect(
-        <span style="color:#66d9ef">this</span> <span style="color:#66d9ef">string</span> clearText,
-        <span style="color:#66d9ef">string</span> optionalEntropy = <span style="color:#66d9ef">null</span>,
-        DataProtectionScope scope = DataProtectionScope.CurrentUser)
-    {
-        <span style="color:#66d9ef">if</span> (clearText == <span style="color:#66d9ef">null</span>)
-            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;clearText&#34;</span>);
-        <span style="color:#66d9ef">byte</span>[] clearBytes = Encoding.UTF8.GetBytes(clearText);
-        <span style="color:#66d9ef">byte</span>[] entropyBytes = <span style="color:#66d9ef">string</span>.IsNullOrEmpty(optionalEntropy)
-            ? <span style="color:#66d9ef">null</span>
-            : Encoding.UTF8.GetBytes(optionalEntropy);
-        <span style="color:#66d9ef">byte</span>[] encryptedBytes = ProtectedData.Protect(clearBytes, entropyBytes, scope);
-        <span style="color:#66d9ef">return</span> Convert.ToBase64String(encryptedBytes);
-    }
-    
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Unprotect(
-        <span style="color:#66d9ef">this</span> <span style="color:#66d9ef">string</span> encryptedText,
-        <span style="color:#66d9ef">string</span> optionalEntropy = <span style="color:#66d9ef">null</span>,
-        DataProtectionScope scope = DataProtectionScope.CurrentUser)
-    {
-        <span style="color:#66d9ef">if</span> (encryptedText == <span style="color:#66d9ef">null</span>)
-            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;encryptedText&#34;</span>);
-        <span style="color:#66d9ef">byte</span>[] encryptedBytes = Convert.FromBase64String(encryptedText);
-        <span style="color:#66d9ef">byte</span>[] entropyBytes = <span style="color:#66d9ef">string</span>.IsNullOrEmpty(optionalEntropy)
-            ? <span style="color:#66d9ef">null</span>
-            : Encoding.UTF8.GetBytes(optionalEntropy);
-        <span style="color:#66d9ef">byte</span>[] clearBytes = ProtectedData.Unprotect(encryptedBytes, entropyBytes, scope);
-        <span style="color:#66d9ef">return</span> Encoding.UTF8.GetString(clearBytes);
-    }
-}
-</code></pre></div><p>Encryption example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> encryptedPassword = password.Protect();
-</code></pre></div><p>Decryption example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">try</span>
-{
-    <span style="color:#66d9ef">string</span> password = encryptedPassword.Unprotect();
-}
-<span style="color:#66d9ef">catch</span>(CryptographicException)
-{
-    <span style="color:#75715e">// Possible causes:
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// - the entropy is not the one used for encryption
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// - the data was encrypted by another user (for scope == CurrentUser)
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// - the data was encrypted on another machine (for scope == LocalMachine)
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// In this case, the stored password is not usable; just prompt the user to enter it again.
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p>What I love with this technique is that it Just Works™: you don&rsquo;t need to worry about how the data is encrypted, where the key is stored, or anything, Windows takes care of everything.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DataProtectionExtensions</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Protect(
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span> <span style="color:#66d9ef">string</span> clearText,
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> optionalEntropy = <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>        DataProtectionScope scope = DataProtectionScope.CurrentUser)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (clearText == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;clearText&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">byte</span>[] clearBytes = Encoding.UTF8.GetBytes(clearText);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">byte</span>[] entropyBytes = <span style="color:#66d9ef">string</span>.IsNullOrEmpty(optionalEntropy)
+</span></span><span style="display:flex;"><span>            ? <span style="color:#66d9ef">null</span>
+</span></span><span style="display:flex;"><span>            : Encoding.UTF8.GetBytes(optionalEntropy);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">byte</span>[] encryptedBytes = ProtectedData.Protect(clearBytes, entropyBytes, scope);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Convert.ToBase64String(encryptedBytes);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> Unprotect(
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span> <span style="color:#66d9ef">string</span> encryptedText,
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> optionalEntropy = <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>        DataProtectionScope scope = DataProtectionScope.CurrentUser)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (encryptedText == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;encryptedText&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">byte</span>[] encryptedBytes = Convert.FromBase64String(encryptedText);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">byte</span>[] entropyBytes = <span style="color:#66d9ef">string</span>.IsNullOrEmpty(optionalEntropy)
+</span></span><span style="display:flex;"><span>            ? <span style="color:#66d9ef">null</span>
+</span></span><span style="display:flex;"><span>            : Encoding.UTF8.GetBytes(optionalEntropy);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">byte</span>[] clearBytes = ProtectedData.Unprotect(encryptedBytes, entropyBytes, scope);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Encoding.UTF8.GetString(clearBytes);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Encryption example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">string</span> encryptedPassword = password.Protect();
+</span></span></code></pre></div><p>Decryption example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">string</span> password = encryptedPassword.Unprotect();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">catch</span>(CryptographicException)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Possible causes:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// - the entropy is not the one used for encryption</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// - the data was encrypted by another user (for scope == CurrentUser)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// - the data was encrypted on another machine (for scope == LocalMachine)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// In this case, the stored password is not usable; just prompt the user to enter it again.</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>What I love with this technique is that it Just Works™: you don&rsquo;t need to worry about how the data is encrypted, where the key is stored, or anything, Windows takes care of everything.</p>
 <p>The code above works on the full .NET framework, but the Data Protection API is also available:</p>
 <ul>
 <li>for Windows Phone: same methods, but without the scope parameter</li>

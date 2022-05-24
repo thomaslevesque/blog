@@ -87,96 +87,96 @@ if (!doNotTrack) {
 <p>*The Timeout property has no effect on asynchronous requests made with the BeginGetResponse or BeginGetRequestStream method.*<em>In the case of asynchronous requests, the client application implements its own time-out mechanism. Refer to the example in the BeginGetResponse method.</em></p>
 </blockquote>
 <p>So, a solution could be to to use these methods directly (or the new <code>Task</code>-based versions: <code>GetRequestStreamAsync</code> and <code>GetResponseAsync</code>); but more often than not, you already have an existing code base that uses the synchronous methods, and changing the code to make it fully asynchronous is usually not trivial. So, the easy approach is to create synchronous wrappers around <code>BeginGetRequestStream</code> and <code>BeginGetResponse</code>, with a way to specify a timeout for these operations:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebRequestExtensions</span>
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Stream GetRequestStreamWithTimeout(
-        <span style="color:#66d9ef">this</span> WebRequest request,
-        <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
-    {
-        <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
-            request.BeginGetRequestStream,
-            request.EndGetRequestStream,
-            millisecondsTimeout ?? request.Timeout);
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> WebResponse GetResponseWithTimeout(
-        <span style="color:#66d9ef">this</span> HttpWebRequest request,
-        <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
-    {
-        <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
-            request.BeginGetResponse,
-            request.EndGetResponse,
-            millisecondsTimeout ?? request.Timeout);
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> T AsyncToSyncWithTimeout&lt;T&gt;(
-        Func&lt;AsyncCallback, <span style="color:#66d9ef">object</span>, IAsyncResult&gt; begin,
-        Func&lt;IAsyncResult, T&gt; end,
-        <span style="color:#66d9ef">int</span> millisecondsTimeout)
-    {
-        <span style="color:#66d9ef">var</span> iar = begin(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>);
-        <span style="color:#66d9ef">if</span> (!iar.AsyncWaitHandle.WaitOne(millisecondsTimeout))
-        {
-            <span style="color:#66d9ef">var</span> ex = <span style="color:#66d9ef">new</span> TimeoutException();
-            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> WebException(ex.Message, ex, WebExceptionStatus.Timeout, <span style="color:#66d9ef">null</span>);
-        }
-        <span style="color:#66d9ef">return</span> end(iar);
-    }
-}
-</code></pre></div><p>(note that I used the Begin/End methods rather than the Async methods, in order to keep compatibility with older versions of .NET)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebRequestExtensions</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Stream GetRequestStreamWithTimeout(
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span> WebRequest request,
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
+</span></span><span style="display:flex;"><span>            request.BeginGetRequestStream,
+</span></span><span style="display:flex;"><span>            request.EndGetRequestStream,
+</span></span><span style="display:flex;"><span>            millisecondsTimeout ?? request.Timeout);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> WebResponse GetResponseWithTimeout(
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span> HttpWebRequest request,
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int?</span> millisecondsTimeout = <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> AsyncToSyncWithTimeout(
+</span></span><span style="display:flex;"><span>            request.BeginGetResponse,
+</span></span><span style="display:flex;"><span>            request.EndGetResponse,
+</span></span><span style="display:flex;"><span>            millisecondsTimeout ?? request.Timeout);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> T AsyncToSyncWithTimeout&lt;T&gt;(
+</span></span><span style="display:flex;"><span>        Func&lt;AsyncCallback, <span style="color:#66d9ef">object</span>, IAsyncResult&gt; begin,
+</span></span><span style="display:flex;"><span>        Func&lt;IAsyncResult, T&gt; end,
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> millisecondsTimeout)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> iar = begin(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (!iar.AsyncWaitHandle.WaitOne(millisecondsTimeout))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> ex = <span style="color:#66d9ef">new</span> TimeoutException();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> WebException(ex.Message, ex, WebExceptionStatus.Timeout, <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> end(iar);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>(note that I used the Begin/End methods rather than the Async methods, in order to keep compatibility with older versions of .NET)</p>
 <p>These extension methods can be used instead of <code>GetRequestStream</code> and <code>GetResponse</code>; each of them will timeout if they take too long, but once you have the request stream, you can take as long as you want to upload the data. Note that the stream itself has its own read and write timeout (5 minutes by default), so if 5 minutes go by without any data being uploaded, the Write method will cause an exception. Here is the new upload scenario using these methods:</p>
 <p><img src="timeout2.png" alt="timeout2" title="timeout2"></p>
 <p>As you can see, the only difference is that the timeout doesn&rsquo;t apply anymore to the transfer of the request body, but only to obtaining the request stream and getting the response. Here’s a full example that corresponds to the scenario above:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">long</span> UploadFile(<span style="color:#66d9ef">string</span> path, <span style="color:#66d9ef">string</span> url, <span style="color:#66d9ef">string</span> contentType)
-{
-    <span style="color:#75715e">// Build request
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> request = (HttpWebRequest)WebRequest.Create(url);
-    request.Method = WebRequestMethods.Http.Post;
-    request.AllowWriteStreamBuffering = <span style="color:#66d9ef">false</span>;
-    request.ContentType = contentType;
-    <span style="color:#66d9ef">string</span> fileName = Path.GetFileName(path);
-    request.Headers[<span style="color:#e6db74">&#34;Content-Disposition&#34;</span>] = <span style="color:#66d9ef">string</span>.Format(<span style="color:#e6db74">&#34;attachment; filename=\&#34;{0}\&#34;&#34;</span>, fileName);
-    
-    <span style="color:#66d9ef">try</span>
-    {
-        <span style="color:#75715e">// Open source file
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> fileStream = File.OpenRead(path))
-        {
-            <span style="color:#75715e">// Set content length based on source file length
-</span><span style="color:#75715e"></span>            request.ContentLength = fileStream.Length;
-            
-            <span style="color:#75715e">// Get the request stream with the default timeout
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> requestStream = request.GetRequestStreamWithTimeout())
-            {
-                <span style="color:#75715e">// Upload the file with no timeout
-</span><span style="color:#75715e"></span>                fileStream.CopyTo(requestStream);
-            }
-        }
-        
-        <span style="color:#75715e">// Get response with the default timeout, and parse the response body
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> response = request.GetResponseWithTimeout())
-        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> responseStream = response.GetResponseStream())
-        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> reader = <span style="color:#66d9ef">new</span> StreamReader(responseStream))
-        {
-            <span style="color:#66d9ef">string</span> json = reader.ReadToEnd();
-            <span style="color:#66d9ef">var</span> j = JObject.Parse(json);
-            <span style="color:#66d9ef">return</span> j.Value&lt;<span style="color:#66d9ef">long</span>&gt;(<span style="color:#e6db74">&#34;Id&#34;</span>);
-        }
-    }
-    <span style="color:#66d9ef">catch</span> (WebException ex)
-    {
-        <span style="color:#66d9ef">if</span> (ex.Status == WebExceptionStatus.Timeout)
-        {
-            LogError(ex, <span style="color:#e6db74">&#34;Timeout while uploading &#39;{0}&#39;&#34;</span>, fileName);
-        }
-        <span style="color:#66d9ef">else</span>
-        {
-            LogError(ex, <span style="color:#e6db74">&#34;Error while uploading &#39;{0}&#39;&#34;</span>, fileName);
-        }
-        <span style="color:#66d9ef">throw</span>;
-    }
-}
-</code></pre></div><p>I hope you will find this helpful!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">long</span> UploadFile(<span style="color:#66d9ef">string</span> path, <span style="color:#66d9ef">string</span> url, <span style="color:#66d9ef">string</span> contentType)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Build request</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> request = (HttpWebRequest)WebRequest.Create(url);
+</span></span><span style="display:flex;"><span>    request.Method = WebRequestMethods.Http.Post;
+</span></span><span style="display:flex;"><span>    request.AllowWriteStreamBuffering = <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>    request.ContentType = contentType;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">string</span> fileName = Path.GetFileName(path);
+</span></span><span style="display:flex;"><span>    request.Headers[<span style="color:#e6db74">&#34;Content-Disposition&#34;</span>] = <span style="color:#66d9ef">string</span>.Format(<span style="color:#e6db74">&#34;attachment; filename=\&#34;{0}\&#34;&#34;</span>, fileName);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Open source file</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> fileStream = File.OpenRead(path))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Set content length based on source file length</span>
+</span></span><span style="display:flex;"><span>            request.ContentLength = fileStream.Length;
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Get the request stream with the default timeout</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> requestStream = request.GetRequestStreamWithTimeout())
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Upload the file with no timeout</span>
+</span></span><span style="display:flex;"><span>                fileStream.CopyTo(requestStream);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Get response with the default timeout, and parse the response body</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> response = request.GetResponseWithTimeout())
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> responseStream = response.GetResponseStream())
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> reader = <span style="color:#66d9ef">new</span> StreamReader(responseStream))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">string</span> json = reader.ReadToEnd();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> j = JObject.Parse(json);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> j.Value&lt;<span style="color:#66d9ef">long</span>&gt;(<span style="color:#e6db74">&#34;Id&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span> (WebException ex)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (ex.Status == WebExceptionStatus.Timeout)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            LogError(ex, <span style="color:#e6db74">&#34;Timeout while uploading &#39;{0}&#39;&#34;</span>, fileName);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            LogError(ex, <span style="color:#e6db74">&#34;Error while uploading &#39;{0}&#39;&#34;</span>, fileName);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>I hope you will find this helpful!</p>
 
 		</div>
 		<footer class="post__footer">

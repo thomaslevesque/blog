@@ -91,39 +91,39 @@ if (!doNotTrack) {
 </ul>
 <p>To provide suggestions, you need to handle the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.controls.searchbox.suggestionsrequested"><code>SuggestionsRequested</code></a> event of the <code>SearchBox</code>, and add suggestions using the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.search.searchsuggestioncollection.appendquerysuggestion"><code>AppendQuerySuggestion</code></a> and <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh700542"><code>AppendResultSuggestion</code></a> methods. Let’s focus on result suggestions.</p>
 <p>The <code>AppendResultSuggestion</code> method takes several parameters, and one of them is the image to display for the suggestion. It is mandatory (passing null will throw an exception), and the parameter is of type <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.irandomaccessstreamreference"><code>IRandomAccessStreamReference</code></a>, i.e. something that can provide a stream. I find this a little peculiar, since it would be more natural to pass an <code>ImageSource</code>, but that’s the way it is… So I looked for a class that implements the <code>IRandomAccessStreamReference</code> interface, and the first obvious candidate I found was <code>StorageFile</code>, which represents a file. So I wrote the following code:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
-{
-    <span style="color:#66d9ef">var</span> deferral = args.Request.GetDeferral();
-    <span style="color:#66d9ef">try</span>
-    {
-        <span style="color:#66d9ef">var</span> imageUri = <span style="color:#66d9ef">new</span> Uri(<span style="color:#e6db74">&#34;ms-appx:///test.png&#34;</span>);
-        <span style="color:#66d9ef">var</span> imageRef = <span style="color:#66d9ef">await</span> StorageFile.GetFileFromApplicationUriAsync(imageUri);
-        args.Request.SearchSuggestionCollection.AppendQuerySuggestion(<span style="color:#e6db74">&#34;test&#34;</span>);
-        args.Request.SearchSuggestionCollection.AppendSearchSeparator(<span style="color:#e6db74">&#34;Foo Bar&#34;</span>);
-        args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
-        args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;bar&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;bar&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
-        args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;baz&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;baz&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
-    }
-    <span style="color:#66d9ef">finally</span>
-    {
-        deferral.Complete();
-    }
-}
-</code></pre></div><p>This code runs without any error, and the suggestions are displayed… but the image is not shown!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> deferral = args.Request.GetDeferral();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> imageUri = <span style="color:#66d9ef">new</span> Uri(<span style="color:#e6db74">&#34;ms-appx:///test.png&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> imageRef = <span style="color:#66d9ef">await</span> StorageFile.GetFileFromApplicationUriAsync(imageUri);
+</span></span><span style="display:flex;"><span>        args.Request.SearchSuggestionCollection.AppendQuerySuggestion(<span style="color:#e6db74">&#34;test&#34;</span>);
+</span></span><span style="display:flex;"><span>        args.Request.SearchSuggestionCollection.AppendSearchSeparator(<span style="color:#e6db74">&#34;Foo Bar&#34;</span>);
+</span></span><span style="display:flex;"><span>        args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
+</span></span><span style="display:flex;"><span>        args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;bar&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;bar&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
+</span></span><span style="display:flex;"><span>        args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;baz&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;baz&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">finally</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        deferral.Complete();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This code runs without any error, and the suggestions are displayed… but the image is not shown!</p>
 <p><img src="BiF0g.png" alt="http://i.stack.imgur.com/BiF0g.png"></p>
 <p>I spent a long time double-checking everything, making lots of minor changes to try and locate the issue, I even wrote a custom implementation of <code>IRandomAccessStreamReference</code>… to no avail.</p>
 <p>I eventually <a href="http://stackoverflow.com/questions/19769689/image-not-shown-for-result-suggestions-in-searchbox">submitted the problem to Stack Overflow</a>, and someone kindly provided the solution, which was very simple: instead of <code>StorageFile</code>, use <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.randomaccessstreamreference"><code>RandomAccessStreamReference</code></a> (seems pretty obvious once you know that it exists). The code now becomes :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
-{
-    <span style="color:#66d9ef">var</span> imageUri = <span style="color:#66d9ef">new</span> Uri(<span style="color:#e6db74">&#34;ms-appx:///test.png&#34;</span>);
-    <span style="color:#66d9ef">var</span> imageRef = RandomAccessStreamReference.CreateFromUri(imageUri);
-    args.Request.SearchSuggestionCollection.AppendQuerySuggestion(<span style="color:#e6db74">&#34;test&#34;</span>);
-    args.Request.SearchSuggestionCollection.AppendSearchSeparator(<span style="color:#e6db74">&#34;Foo Bar&#34;</span>);
-    args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
-    args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;bar&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;bar&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
-    args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;baz&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;baz&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
-}
-</code></pre></div><p>(Note that the method is not asynchronous anymore, so there is no need to use the deferral object).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> SearchBox_SuggestionsRequested(SearchBox sender, SearchBoxSuggestionsRequestedEventArgs args)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> imageUri = <span style="color:#66d9ef">new</span> Uri(<span style="color:#e6db74">&#34;ms-appx:///test.png&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> imageRef = RandomAccessStreamReference.CreateFromUri(imageUri);
+</span></span><span style="display:flex;"><span>    args.Request.SearchSuggestionCollection.AppendQuerySuggestion(<span style="color:#e6db74">&#34;test&#34;</span>);
+</span></span><span style="display:flex;"><span>    args.Request.SearchSuggestionCollection.AppendSearchSeparator(<span style="color:#e6db74">&#34;Foo Bar&#34;</span>);
+</span></span><span style="display:flex;"><span>    args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
+</span></span><span style="display:flex;"><span>    args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;bar&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;bar&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
+</span></span><span style="display:flex;"><span>    args.Request.SearchSuggestionCollection.AppendResultSuggestion(<span style="color:#e6db74">&#34;baz&#34;</span>, <span style="color:#e6db74">&#34;Details&#34;</span>, <span style="color:#e6db74">&#34;baz&#34;</span>, imageRef, <span style="color:#e6db74">&#34;Result&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>(Note that the method is not asynchronous anymore, so there is no need to use the deferral object).</p>
 <p>The suggestions are now displayed as expected, with the image:</p>
 <p><img src="cjmogKp.png" alt="http://i.imgur.com/cjmogKp.png"></p>
 <p>So, the lesson of this story is that even though the <code>image</code> parameter is of type <code>IRandomAccessStreamReference</code>, <strong>it doesn’t seem to accept anything other than an instance of the <code>RandomAccessStreamReference</code> class</strong>. If you pass any other implementation of the interface, it just fails silently and the image is not shown. This is obviously a bug: if the parameter type in the method signature is an interface, it should accept any implementation of that interface, not just a specific implementation; if it doesn’t, it should be declared of the concrete type. I submitted the <a href="https://connect.microsoft.com/VisualStudio/feedback/details/807704/searchbox-windows-8-1-doesnt-show-the-image-if-it-is-not-an-instance-of-randomaccessstreamreference">bug</a> to Connect, hopefully it will be fixed in a future version.</p>

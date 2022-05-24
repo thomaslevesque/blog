@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta property="og:title" content="Exception filters in C# 6: their biggest advantage is not what you think" />
 <meta property="og:description" content="Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
-static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&#34;Error 42 occurred&#34;); } } As you might expect, the catch block will be entered if and only if ex." />
+static void Main() {  try  {  Foo.DoSomethingThatMightFail(null);  }  catch (MyException ex) when (ex.Code == 42)  {  Console.WriteLine(&#34;Error 42 occurred&#34;);  } } As you might expect, the catch block will be entered if and only if ex." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2015/06/21/exception-filters-in-c-6/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2015-06-21T00:00:00+00:00" />
@@ -19,7 +19,7 @@ static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyExcept
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Exception filters in C# 6: their biggest advantage is not what you think"/>
 <meta name="twitter:description" content="Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
-static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&#34;Error 42 occurred&#34;); } } As you might expect, the catch block will be entered if and only if ex."/>
+static void Main() {  try  {  Foo.DoSomethingThatMightFail(null);  }  catch (MyException ex) when (ex.Code == 42)  {  Console.WriteLine(&#34;Error 42 occurred&#34;);  } } As you might expect, the catch block will be entered if and only if ex."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -81,34 +81,34 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-06-21T00:00:00Z">June 21, 2015</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
-{
-    <span style="color:#66d9ef">try</span>
-    {
-        Foo.DoSomethingThatMightFail(<span style="color:#66d9ef">null</span>);
-    }
-    <span style="color:#66d9ef">catch</span> (MyException ex) when (ex.Code == <span style="color:#ae81ff">42</span>)
-    {
-        Console.WriteLine(<span style="color:#e6db74">&#34;Error 42 occurred&#34;</span>);
-    }
-}
-</code></pre></div><p>As you might expect, the <code>catch</code> block will be entered if and only if <code>ex.Code == 42</code>. If the condition is not verified, the exception will bubble up the stack until it’s caught somewhere else or terminates the process.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Foo.DoSomethingThatMightFail(<span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span> (MyException ex) when (ex.Code == <span style="color:#ae81ff">42</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;Error 42 occurred&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you might expect, the <code>catch</code> block will be entered if and only if <code>ex.Code == 42</code>. If the condition is not verified, the exception will bubble up the stack until it’s caught somewhere else or terminates the process.</p>
 <p>At first glance, this feature doesn’t seem to bring anything really new. After all, it has always been possible to do this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
-{
-    <span style="color:#66d9ef">try</span>
-    {
-        Foo.DoSomethingThatMightFail(<span style="color:#66d9ef">null</span>);
-    }
-    <span style="color:#66d9ef">catch</span> (MyException ex)
-    {
-        <span style="color:#66d9ef">if</span> (ex.Code == <span style="color:#ae81ff">42</span>)
-            Console.WriteLine(<span style="color:#e6db74">&#34;Error 42 occurred&#34;</span>);
-        <span style="color:#66d9ef">else</span>
-            <span style="color:#66d9ef">throw</span>;
-    }
-}
-</code></pre></div><p>Since this piece of code is equivalent to the previous one, exception filters are just syntactic sugar, aren’t they? I mean, they <em>are</em> equivalent, right?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Foo.DoSomethingThatMightFail(<span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span> (MyException ex)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (ex.Code == <span style="color:#ae81ff">42</span>)
+</span></span><span style="display:flex;"><span>            Console.WriteLine(<span style="color:#e6db74">&#34;Error 42 occurred&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Since this piece of code is equivalent to the previous one, exception filters are just syntactic sugar, aren’t they? I mean, they <em>are</em> equivalent, right?</p>
 <p>WRONG!</p>
 <h3 id="stack-unwinding">Stack unwinding</h3>
 <p>There is actually a subtle but important difference: <strong>exception filters don’t unwind the stack</strong>. OK, but what does that mean?</p>
@@ -123,23 +123,23 @@ if (!doNotTrack) {
 <p>You may have noticed that I talked about the stack, not the stack trace. Even though it’s common to refer to “the stack” when we mean “the stack trace”, they’re not the same thing. The call stack is a piece of memory allocated to the thread, that contains information for each method call: return address, arguments, and local variables. The stack trace is just a string that contains the names of the methods currently on the call stack (and the location in those methods, if debug symbols are available). The <code>Exception.StackTrace</code> property contains the stack trace as it was when the exception was thrown, and is not affected when the stack is unwound; if you rethrow the same exception with <code>throw;</code>, it is left untouched. It is only overwritten if you rethrow the exception with <code>throw ex;</code>. The stack itself, on the other hand, is unwound when a catch block is entered, as discussed above.</p>
 <h3 id="side-effects">Side effects</h3>
 <p>It’s interesting to note that an exception filter can contain any expression that returns a <code>bool</code> (well, almost… you can’t use <code>await</code>, for instance). It can be an inline condition, a property, a method call, etc. Technically, there’s nothing to prevent you from causing side effects in the exception filter. In most cases, I would strongly advise against doing that, as it can cause very confusing behavior; it can become really hard to understand the order in which things are executed. However, there is a common scenario that could benefit from side effects in exception filters: logging. You could easily create a method that logs the exception and returns false so that the catch block is not entered. This would allow logging exceptions on the fly without actually catching them, hence without unwinding the stack:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">try</span>
-{
-    DoSomethingThatMightFail(s);
-}
-<span style="color:#66d9ef">catch</span> (Exception ex) when (Log(ex, <span style="color:#e6db74">&#34;An error occurred&#34;</span>))
-{
-    <span style="color:#75715e">// this catch block will never be reached
-</span><span style="color:#75715e"></span>}
-
-...
-
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> Log(Exception ex, <span style="color:#66d9ef">string</span> message, <span style="color:#66d9ef">params</span> <span style="color:#66d9ef">object</span>[] args)
-{
-    Debug.Print(message, args);
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-}
-</code></pre></div><h3 id="conclusion">Conclusion</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    DoSomethingThatMightFail(s);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">catch</span> (Exception ex) when (Log(ex, <span style="color:#e6db74">&#34;An error occurred&#34;</span>))
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// this catch block will never be reached</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> Log(Exception ex, <span style="color:#66d9ef">string</span> message, <span style="color:#66d9ef">params</span> <span style="color:#66d9ef">object</span>[] args)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    Debug.Print(message, args);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="conclusion">Conclusion</h3>
 <p>As you can see, exception filters are not just syntactic sugar. Contrary to most C# 6 features, they’re not really a “coding” feature (in that they don’t make the code significantly clearer), but rather a “debugging” feature. Correctly understood and used, they can make it much easier to diagnose problems in your code.</p>
 
 		</div>

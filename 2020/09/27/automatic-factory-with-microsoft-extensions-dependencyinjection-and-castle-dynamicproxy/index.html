@@ -81,140 +81,140 @@ if (!doNotTrack) {
 			<h2 id="dependency-injection-the-good-and-the-bad">Dependency injection: the good and the bad</h2>
 <p>Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&rsquo;s successor), Castle Windsor, etc., but lately I&rsquo;ve mostly been using the one provided by Microsoft in .NET Core : <code>Microsoft.Extensions.DependencyInjection</code>. It&rsquo;s not the most full-featured (in fact, it&rsquo;s pretty bare-bones), but I find it sufficient in most cases.</p>
 <p>As much as I love dependency injection, in some situations it can become a little unwieldy… For instance, when you have a class that is instantiated explicitly with some data, and also needs service dependencies. Consider this class, for example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FooViewModel</span>
-  {
-      <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService <span style="color:#ae81ff">_</span>myService;
-
-      <span style="color:#66d9ef">public</span> FooViewModel(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name, IMyService myService)
-      {
-          Id = id;
-          Name = name;
-          <span style="color:#ae81ff">_</span>myService = myService;
-      }
-
-      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id { <span style="color:#66d9ef">get</span>; }
-      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; }
-  }
-</code></pre></div><p>To create an instance of <code>FooViewModel</code>, you need to pass values for <code>id</code> and <code>name</code>, and an instance of <code>IMyService</code>. Which means you must have access to <code>IMyService</code>, so you need to inject it into the class that creates an instance of <code>FooViewModel</code>, even if it doesn&rsquo;t need it itself. It&rsquo;s OK when there&rsquo;s just one dependency, but if there were more, it could get messy. That&rsquo;s a bit annoying…</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FooViewModel</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService <span style="color:#ae81ff">_</span>myService;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> FooViewModel(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name, IMyService myService)
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>          Id = id;
+</span></span><span style="display:flex;"><span>          Name = name;
+</span></span><span style="display:flex;"><span>          <span style="color:#ae81ff">_</span>myService = myService;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div><p>To create an instance of <code>FooViewModel</code>, you need to pass values for <code>id</code> and <code>name</code>, and an instance of <code>IMyService</code>. Which means you must have access to <code>IMyService</code>, so you need to inject it into the class that creates an instance of <code>FooViewModel</code>, even if it doesn&rsquo;t need it itself. It&rsquo;s OK when there&rsquo;s just one dependency, but if there were more, it could get messy. That&rsquo;s a bit annoying…</p>
 <h2 id="factory-pattern">Factory pattern</h2>
 <p>Fortunately, this is a well known problem, and guess what? It has a well known solution! You typically solve this by introducing a factory. For instance, in this case, since we&rsquo;re creating ViewModels, we can create an <code>IViewModelFactory</code> interface like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IViewModelFactory
-{
-    FooViewModel CreateFooViewModel(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name);
-}
-</code></pre></div><p>Notice that the <code>CreateFooViewModel</code> method has the same &ldquo;data&rdquo; parameters as the <code>FooViewModel</code> constructor, but not the &ldquo;service&rdquo; parameters. This way, a class that needs to instantiate a <code>FooViewModel</code> just needs to pass the data to <code>CreateViewModel</code>, without worrying about the service dependencies.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IViewModelFactory</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    FooViewModel CreateFooViewModel(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Notice that the <code>CreateFooViewModel</code> method has the same &ldquo;data&rdquo; parameters as the <code>FooViewModel</code> constructor, but not the &ldquo;service&rdquo; parameters. This way, a class that needs to instantiate a <code>FooViewModel</code> just needs to pass the data to <code>CreateViewModel</code>, without worrying about the service dependencies.</p>
 <p>An implementation of this factory looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewModelFactory</span> : IViewModelFactory
-{
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService <span style="color:#ae81ff">_</span>myService;
-
-    <span style="color:#66d9ef">public</span> ViewModelFactory(IMyService myService)
-    {
-        <span style="color:#ae81ff">_</span>myService = myService;
-    }
-
-    <span style="color:#66d9ef">public</span> FooViewModel CreateFoo(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name)
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> FooViewModel(id, name, <span style="color:#ae81ff">_</span>myService);
-    }
-}
-</code></pre></div><p>Basically, the factory abstracts the dependencies, so that the rest of the code doesn&rsquo;t need to know about them.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewModelFactory</span> : IViewModelFactory
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService <span style="color:#ae81ff">_</span>myService;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ViewModelFactory(IMyService myService)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>myService = myService;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> FooViewModel CreateFoo(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> FooViewModel(id, name, <span style="color:#ae81ff">_</span>myService);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Basically, the factory abstracts the dependencies, so that the rest of the code doesn&rsquo;t need to know about them.</p>
 <p>It&rsquo;s a very useful pattern, but what happens when you have dozens of different ViewModels, with many different dependencies? Well, you end up with as many methods as you have ViewModels, and you must inject the dependencies of <em>all</em> these ViewModels into the factory. It can quickly get messy in a non-trivial application.</p>
 <p>Sure, you could split the big factory into several smaller factories that are in charge of creating just one ViewModel, or a handful of related ones. But then, you&rsquo;d end up with many factories, which can also be painful to manage.</p>
 <h2 id="resolving-dependencies-automatically">Resolving dependencies automatically</h2>
 <p>Maybe it&rsquo;s time to take a step back and look at the problem from a different perspective…</p>
 <p>How did we get in this mess in the first place? DI containers are supposed to be good at creating instances of classes with dependencies (that&rsquo;s their job, after all!), but as soon as you introduce &ldquo;data&rdquo; parameters in addition to service dependencies, it all breaks down, and you need to do things manually. What we really need is to let the container resolve the service dependencies, and provide the rest ourselves.</p>
 <p>Fortunately, there&rsquo;s a relatively little-known class in <code>Microsoft.Extensions.DependencyInjection</code> that can help us: <code>ActivatorUtilities</code>. This static class has all the smarts to construct an object by resolving service dependencies from the container (a.k.a. service provider), and accepts additional arguments for non-service inputs. For instance, we could use it to construct a <code>FooViewModel</code> like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">ActivatorUtilities.CreateInstance(
-    serviceProvider,
-    <span style="color:#66d9ef">typeof</span>(FooViewModel),
-    <span style="color:#ae81ff">123</span>,      <span style="color:#75715e">// id
-</span><span style="color:#75715e"></span>    <span style="color:#e6db74">&#34;test&#34;</span>);  <span style="color:#75715e">// name
-</span></code></pre></div><p>This way, we don&rsquo;t need to worry about the dependencies: <code>ActivatorUtilities</code> looks at the constructor parameters, resolves what it can from the service provider, and takes the rest from the explicitly passed arguments.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>ActivatorUtilities.CreateInstance(
+</span></span><span style="display:flex;"><span>    serviceProvider,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">typeof</span>(FooViewModel),
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">123</span>,      <span style="color:#75715e">// id</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;test&#34;</span>);  <span style="color:#75715e">// name</span>
+</span></span></code></pre></div><p>This way, we don&rsquo;t need to worry about the dependencies: <code>ActivatorUtilities</code> looks at the constructor parameters, resolves what it can from the service provider, and takes the rest from the explicitly passed arguments.</p>
 <p>Of course, in this form, it&rsquo;s not very convenient, and it&rsquo;s not strongly-typed, so we&rsquo;ll need to wrap this in a factory to make it usable. But the factory code is going to be pretty tedious to write… What if we could automate this?</p>
 <h2 id="implementing-the-factory-automatically">Implementing the factory automatically</h2>
 <p>Castle DynamicProxy is a component of the venerable <a href="https://github.com/castleproject/Core">Castle Core library</a>. To put it simply, it makes it easy to implement types dynamically, optionally delegating to another object, and using interceptors to control the behavior of methods and properties. This makes it very well suited for implementing cross-cutting concerns, and things like mocking libraries (FakeItEasy, Moq and NSubstitute all rely on Castle DynamicProxy).</p>
 <p>But how can it help with our factory problem? Well, we&rsquo;re going to use it to automatically implement our <code>IViewModelFactory</code> interface!</p>
 <p>First, we need to write an interceptor. As the name implies, it will intercept all calls to the proxy object create by Castle DynamicProxy. Here it goes:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
-{
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>serviceProvider;
-
-    <span style="color:#66d9ef">public</span> FactoryInterceptor(IServiceProvider serviceProvider)
-    {
-        <span style="color:#ae81ff">_</span>serviceProvider = serviceProvider;
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Intercept(IInvocation invocation)
-    {
-        invocation.ReturnValue =
-            ActivatorUtilities.CreateInstance(
-                serviceProvider,
-                invocation.Method.ReturnType,
-                invocation.Arguments);
-    }
-}
-</code></pre></div><p>The <code>IInvocation</code> object represents the call. We can examine the method and arguments, and specify the return value. Here we just use the method&rsquo;s return type as the type to create, and we use <code>ActivatorUtilities</code> to create an instance.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>serviceProvider;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> FactoryInterceptor(IServiceProvider serviceProvider)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>serviceProvider = serviceProvider;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Intercept(IInvocation invocation)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        invocation.ReturnValue =
+</span></span><span style="display:flex;"><span>            ActivatorUtilities.CreateInstance(
+</span></span><span style="display:flex;"><span>                serviceProvider,
+</span></span><span style="display:flex;"><span>                invocation.Method.ReturnType,
+</span></span><span style="display:flex;"><span>                invocation.Arguments);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <code>IInvocation</code> object represents the call. We can examine the method and arguments, and specify the return value. Here we just use the method&rsquo;s return type as the type to create, and we use <code>ActivatorUtilities</code> to create an instance.</p>
 <p>Now, we just need to create the actual proxy object for <code>IViewModelFactory</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> generator = <span style="color:#66d9ef">new</span> ProxyGenerator();
-<span style="color:#66d9ef">var</span> interceptor = <span style="color:#66d9ef">new</span> FactoryInterceptor(serviceProvider);
-<span style="color:#66d9ef">var</span> factory = generator.
-    CreateInterfaceProxyWithoutTarget&lt;IViewModelFactory&gt;(
-        interceptor);
-</code></pre></div><p>And that&rsquo;s it, we have our factory! We no longer need to implement the factory&rsquo;s method ourselves, we just need to declare them. We just need to ensure that the methods in the factory interface match the constructors of the ViewModels, or it will fail at runtime.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> generator = <span style="color:#66d9ef">new</span> ProxyGenerator();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> interceptor = <span style="color:#66d9ef">new</span> FactoryInterceptor(serviceProvider);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> factory = generator.
+</span></span><span style="display:flex;"><span>    CreateInterfaceProxyWithoutTarget&lt;IViewModelFactory&gt;(
+</span></span><span style="display:flex;"><span>        interceptor);
+</span></span></code></pre></div><p>And that&rsquo;s it, we have our factory! We no longer need to implement the factory&rsquo;s method ourselves, we just need to declare them. We just need to ensure that the methods in the factory interface match the constructors of the ViewModels, or it will fail at runtime.</p>
 <h2 id="wrapping-it-up">Wrapping it up</h2>
 <p>OK, we&rsquo;re almost done. Let&rsquo;s just package this solution in a handy extension method that we can use to register a factory:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServiceCollectionExtensions</span>
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceCollection AddAutoFactory&lt;TFactory&gt;(<span style="color:#66d9ef">this</span> IServiceCollection services)
-        <span style="color:#66d9ef">where</span> TFactory : <span style="color:#66d9ef">class</span>
-    {
-        services.AddSingleton&lt;TFactory&gt;(CreateFactory&lt;TFactory&gt;);
-        <span style="color:#66d9ef">return</span> services;
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> TFactory CreateFactory&lt;TFactory&gt;(IServiceProvider serviceProvider)
-        <span style="color:#66d9ef">where</span> TFactory : <span style="color:#66d9ef">class</span>
-    {
-        <span style="color:#66d9ef">var</span> generator = <span style="color:#66d9ef">new</span> ProxyGenerator();
-        <span style="color:#66d9ef">return</span> generator.CreateInterfaceProxyWithoutTarget&lt;TFactory&gt;(
-            <span style="color:#66d9ef">new</span> FactoryInterceptor(serviceProvider));
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
-    {
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>serviceProvider;
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt; <span style="color:#ae81ff">_f</span>actories;
-
-        <span style="color:#66d9ef">public</span> FactoryInterceptor(IServiceProvider serviceProvider)
-        {
-            <span style="color:#ae81ff">_</span>serviceProvider = serviceProvider;
-            <span style="color:#ae81ff">_f</span>actories = <span style="color:#66d9ef">new</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt;();
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Intercept(IInvocation invocation)
-        {
-            <span style="color:#66d9ef">var</span> factory = <span style="color:#ae81ff">_f</span>actories.GetOrAdd(invocation.Method, CreateFactory);
-            invocation.ReturnValue = factory(<span style="color:#ae81ff">_</span>serviceProvider, invocation.Arguments);
-        }
-
-        <span style="color:#66d9ef">private</span> ObjectFactory CreateFactory(MethodInfo method)
-        {
-            <span style="color:#66d9ef">return</span> ActivatorUtilities.CreateFactory(
-                method.ReturnType,
-                method.GetParameters().Select(p =&gt; p.ParameterType).ToArray());
-        }
-    }
-}
-</code></pre></div><p><em>Note that I included an optimization in the interceptor: instead of calling <code>ActivatorUtilities.CreateInstance</code> for every call, I used <code>ActivatorUtilities.CreateFactory</code> to create and cache a reusable delegate for each method.</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServiceCollectionExtensions</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IServiceCollection AddAutoFactory&lt;TFactory&gt;(<span style="color:#66d9ef">this</span> IServiceCollection services)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">where</span> TFactory : <span style="color:#66d9ef">class</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        services.AddSingleton&lt;TFactory&gt;(CreateFactory&lt;TFactory&gt;);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> services;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> TFactory CreateFactory&lt;TFactory&gt;(IServiceProvider serviceProvider)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">where</span> TFactory : <span style="color:#66d9ef">class</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> generator = <span style="color:#66d9ef">new</span> ProxyGenerator();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> generator.CreateInterfaceProxyWithoutTarget&lt;TFactory&gt;(
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> FactoryInterceptor(serviceProvider));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>serviceProvider;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt; <span style="color:#ae81ff">_f</span>actories;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> FactoryInterceptor(IServiceProvider serviceProvider)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>serviceProvider = serviceProvider;
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_f</span>actories = <span style="color:#66d9ef">new</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt;();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Intercept(IInvocation invocation)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> factory = <span style="color:#ae81ff">_f</span>actories.GetOrAdd(invocation.Method, CreateFactory);
+</span></span><span style="display:flex;"><span>            invocation.ReturnValue = factory(<span style="color:#ae81ff">_</span>serviceProvider, invocation.Arguments);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> ObjectFactory CreateFactory(MethodInfo method)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> ActivatorUtilities.CreateFactory(
+</span></span><span style="display:flex;"><span>                method.ReturnType,
+</span></span><span style="display:flex;"><span>                method.GetParameters().Select(p =&gt; p.ParameterType).ToArray());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><em>Note that I included an optimization in the interceptor: instead of calling <code>ActivatorUtilities.CreateInstance</code> for every call, I used <code>ActivatorUtilities.CreateFactory</code> to create and cache a reusable delegate for each method.</em></p>
 <p>Using this method, we can register our factory like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
-{
-    ...
-    services.AddAutoFactory&lt;IViewModelFactory&gt;();
-    ...
-}
-</code></pre></div><p>And that&rsquo;s it, we can now inject our auto-implemented factory anywhere it&rsquo;s needed!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    services.AddAutoFactory&lt;IViewModelFactory&gt;();
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And that&rsquo;s it, we can now inject our auto-implemented factory anywhere it&rsquo;s needed!</p>
 <p><strong>Note:</strong> This solution has an important limitation: the factory interface methods must declare <em>concrete</em> return types, not interfaces or abstract classes. Otherwise <code>ActivatorUtilities</code> won&rsquo;t know which concrete type to create.</p>
 
 		</div>

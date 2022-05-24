@@ -102,262 +102,262 @@ if (!doNotTrack) {
 <p>The next problem is to extract the frames from the image: fortunately WPF supports this natively, and the <a href="http://msdn.microsoft.com/en-us/library/system.windows.media.imaging.bitmapdecoder.aspx"><code>BitmapDecoder</code></a> class provides a <code>Frames</code> property to do exactly that. So, no big difficulty so far&hellip;</p>
 <p>Finally, last obstacle: extract the duration of each frame. It&rsquo;s the part that took me the longest, because I needed to do some research&hellip; I first thought I would need to read the file manually and decode the binary data myself. But eventually the solution is quite simple, and takes advantage of the <a href="http://msdn.microsoft.com/en-us/library/system.windows.media.imaging.bitmapmetadata.aspx"><code>BitmapMetadata</code></a> class. The only difficulty has been to find the &ldquo;path&rdquo; of the metadata that contains the delay, but after a few minutes of trial and error, here it is: <code>/grctlext/Delay</code>.</p>
 <p>The final solution is implemented as an attached property named <code>AnimatedSource</code>, that applies to the <code>Image</code> control, and can be used instead of <code>Source</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Image</span> <span style="color:#a6e22e">Stretch=</span><span style="color:#e6db74">&#34;None&#34;</span> <span style="color:#a6e22e">my:ImageBehavior.AnimatedSource=</span><span style="color:#e6db74">&#34;/Images/animation.gif&#34;</span> <span style="color:#f92672">/&gt;</span>
-</code></pre></div><p>This property can also be assigned a normal (not animated) image, it will be displayed normally; therefore this property can be used without worrying about whether the image to display will be animated or not.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Image</span> <span style="color:#a6e22e">Stretch=</span><span style="color:#e6db74">&#34;None&#34;</span> <span style="color:#a6e22e">my:ImageBehavior.AnimatedSource=</span><span style="color:#e6db74">&#34;/Images/animation.gif&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><p>This property can also be assigned a normal (not animated) image, it will be displayed normally; therefore this property can be used without worrying about whether the image to display will be animated or not.</p>
 <p>So in the end, all the goals have been achieved, and we even get some icing on the cake: this solution also works in the designer (at least in Visual Studio 2010), so the animation is immediately visible when you set the <code>AnimatedSource</code> property :)</p>
 <p>Without further ado, here&rsquo;s the complete code:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ImageBehavior</span>
-{
-    <span style="color:#75715e">#region AnimatedSource
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [AttachedPropertyBrowsableForType(typeof(Image))]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ImageSource GetAnimatedSource(Image obj)
-    {
-        <span style="color:#66d9ef">return</span> (ImageSource)obj.GetValue(AnimatedSourceProperty);
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetAnimatedSource(Image obj, ImageSource <span style="color:#66d9ef">value</span>)
-    {
-        obj.SetValue(AnimatedSourceProperty, <span style="color:#66d9ef">value</span>);
-    }
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty AnimatedSourceProperty =
-        DependencyProperty.RegisterAttached(
-            <span style="color:#e6db74">&#34;AnimatedSource&#34;</span>,
-            <span style="color:#66d9ef">typeof</span>(ImageSource),
-            <span style="color:#66d9ef">typeof</span>(ImageBehavior),
-            <span style="color:#66d9ef">new</span> UIPropertyMetadata(
-            <span style="color:#66d9ef">null</span>,
-            AnimatedSourceChanged));
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> AnimatedSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-    {
-        Image imageControl = o <span style="color:#66d9ef">as</span> Image;
-        <span style="color:#66d9ef">if</span> (imageControl == <span style="color:#66d9ef">null</span>)
-            <span style="color:#66d9ef">return</span>;
-
-        <span style="color:#66d9ef">var</span> oldValue = e.OldValue <span style="color:#66d9ef">as</span> ImageSource;
-        <span style="color:#66d9ef">var</span> newValue = e.NewValue <span style="color:#66d9ef">as</span> ImageSource;
-        <span style="color:#66d9ef">if</span> (oldValue != <span style="color:#66d9ef">null</span>)
-        {
-            imageControl.BeginAnimation(Image.SourceProperty, <span style="color:#66d9ef">null</span>);
-        }
-        <span style="color:#66d9ef">if</span> (newValue != <span style="color:#66d9ef">null</span>)
-        {
-            imageControl.DoWhenLoaded(InitAnimationOrImage);
-        }
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> InitAnimationOrImage(Image imageControl)
-    {
-        BitmapSource source = GetAnimatedSource(imageControl) <span style="color:#66d9ef">as</span> BitmapSource;
-        <span style="color:#66d9ef">if</span> (source != <span style="color:#66d9ef">null</span>)
-        {
-            <span style="color:#66d9ef">var</span> decoder = GetDecoder(source) <span style="color:#66d9ef">as</span> GifBitmapDecoder;
-            <span style="color:#66d9ef">if</span> (decoder != <span style="color:#66d9ef">null</span> &amp;&amp; decoder.Frames.Count &gt; <span style="color:#ae81ff">1</span>)
-            {
-                <span style="color:#66d9ef">var</span> animation = <span style="color:#66d9ef">new</span> ObjectAnimationUsingKeyFrames();
-                <span style="color:#66d9ef">var</span> totalDuration = TimeSpan.Zero;
-                BitmapSource prevFrame = <span style="color:#66d9ef">null</span>;
-                FrameInfo prevInfo = <span style="color:#66d9ef">null</span>;
-                <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> rawFrame <span style="color:#66d9ef">in</span> decoder.Frames)
-                {
-                    <span style="color:#66d9ef">var</span> info = GetFrameInfo(rawFrame);
-                    <span style="color:#66d9ef">var</span> frame = MakeFrame(
-                        source,
-                        rawFrame, info,
-                        prevFrame, prevInfo);
-
-                    <span style="color:#66d9ef">var</span> keyFrame = <span style="color:#66d9ef">new</span> DiscreteObjectKeyFrame(frame, totalDuration);
-                    animation.KeyFrames.Add(keyFrame);
-                    
-                    totalDuration += info.Delay;
-                    prevFrame = frame;
-                    prevInfo = info;
-                }
-                animation.Duration = totalDuration;
-                animation.RepeatBehavior = RepeatBehavior.Forever;
-                <span style="color:#66d9ef">if</span> (animation.KeyFrames.Count &gt; <span style="color:#ae81ff">0</span>)
-                    imageControl.Source = (ImageSource)animation.KeyFrames[<span style="color:#ae81ff">0</span>].Value;
-                <span style="color:#66d9ef">else</span>
-                    imageControl.Source = decoder.Frames[<span style="color:#ae81ff">0</span>];
-                imageControl.BeginAnimation(Image.SourceProperty, animation);
-                <span style="color:#66d9ef">return</span>;
-            }
-        }
-        imageControl.Source = source;
-        <span style="color:#66d9ef">return</span>;
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> BitmapDecoder GetDecoder(BitmapSource image)
-    {
-        BitmapDecoder decoder = <span style="color:#66d9ef">null</span>;
-        <span style="color:#66d9ef">var</span> frame = image <span style="color:#66d9ef">as</span> BitmapFrame;
-        <span style="color:#66d9ef">if</span> (frame != <span style="color:#66d9ef">null</span>)
-            decoder = frame.Decoder;
-
-        <span style="color:#66d9ef">if</span> (decoder == <span style="color:#66d9ef">null</span>)
-        {
-            <span style="color:#66d9ef">var</span> bmp = image <span style="color:#66d9ef">as</span> BitmapImage;
-            <span style="color:#66d9ef">if</span> (bmp != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">if</span> (bmp.StreamSource != <span style="color:#66d9ef">null</span>)
-                {
-                    bmp.StreamSource.Position = <span style="color:#ae81ff">0</span>;
-                    decoder = BitmapDecoder.Create(bmp.StreamSource, bmp.CreateOptions, bmp.CacheOption);
-                }
-                <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (bmp.UriSource != <span style="color:#66d9ef">null</span>)
-                {
-                    Uri uri = bmp.UriSource;
-                    <span style="color:#66d9ef">if</span> (bmp.BaseUri != <span style="color:#66d9ef">null</span> &amp;&amp; !uri.IsAbsoluteUri)
-                        uri = <span style="color:#66d9ef">new</span> Uri(bmp.BaseUri, uri);
-                    decoder = BitmapDecoder.Create(uri, bmp.CreateOptions, bmp.CacheOption);
-                }
-            }
-        }
-
-        <span style="color:#66d9ef">return</span> decoder;
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> BitmapSource MakeFrame(
-        BitmapSource fullImage,
-        BitmapSource rawFrame, FrameInfo frameInfo,
-        BitmapSource previousFrame, FrameInfo previousFrameInfo)
-    {
-        DrawingVisual visual = <span style="color:#66d9ef">new</span> DrawingVisual();
-        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> context = visual.RenderOpen())
-        {
-            <span style="color:#66d9ef">if</span> (previousFrameInfo != <span style="color:#66d9ef">null</span> &amp;&amp; previousFrame != <span style="color:#66d9ef">null</span> &amp;&amp;
-                previousFrameInfo.DisposalMethod == FrameDisposalMethod.Combine)
-            {
-                <span style="color:#66d9ef">var</span> fullRect = <span style="color:#66d9ef">new</span> Rect(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, fullImage.PixelWidth, fullImage.PixelHeight);
-                context.DrawImage(previousFrame, fullRect);
-            }
-
-            context.DrawImage(rawFrame, frameInfo.Rect);
-        }
-        <span style="color:#66d9ef">var</span> bitmap = <span style="color:#66d9ef">new</span> RenderTargetBitmap(
-            fullImage.PixelWidth, fullImage.PixelHeight,
-            fullImage.DpiX, fullImage.DpiY,
-            PixelFormats.Pbgra32);
-        bitmap.Render(visual);
-        <span style="color:#66d9ef">return</span> bitmap;
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FrameInfo</span>
-    {
-        <span style="color:#66d9ef">public</span> TimeSpan Delay { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-        <span style="color:#66d9ef">public</span> FrameDisposalMethod DisposalMethod { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Width { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Height { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Left { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Top { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-
-        <span style="color:#66d9ef">public</span> Rect Rect
-        {
-            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Rect(Left, Top, Width, Height); }
-        }
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">enum</span> FrameDisposalMethod
-    {
-        Replace = <span style="color:#ae81ff">0</span>,
-        Combine = <span style="color:#ae81ff">1</span>,
-        RestoreBackground = <span style="color:#ae81ff">2</span>,
-        RestorePrevious = <span style="color:#ae81ff">3</span>
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> FrameInfo GetFrameInfo(BitmapFrame frame)
-    {
-        <span style="color:#66d9ef">var</span> frameInfo = <span style="color:#66d9ef">new</span> FrameInfo
-        {
-            Delay = TimeSpan.FromMilliseconds(<span style="color:#ae81ff">100</span>),
-            DisposalMethod = FrameDisposalMethod.Replace,
-            Width = frame.PixelWidth,
-            Height = frame.PixelHeight,
-            Left = <span style="color:#ae81ff">0</span>,
-            Top = <span style="color:#ae81ff">0</span>
-        };
-
-        BitmapMetadata metadata;
-        <span style="color:#66d9ef">try</span>
-        {
-            metadata = frame.Metadata <span style="color:#66d9ef">as</span> BitmapMetadata;
-            <span style="color:#66d9ef">if</span> (metadata != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> delayQuery = <span style="color:#e6db74">&#34;/grctlext/Delay&#34;</span>;
-                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> disposalQuery = <span style="color:#e6db74">&#34;/grctlext/Disposal&#34;</span>;
-                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> widthQuery = <span style="color:#e6db74">&#34;/imgdesc/Width&#34;</span>;
-                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> heightQuery = <span style="color:#e6db74">&#34;/imgdesc/Height&#34;</span>;
-                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> leftQuery = <span style="color:#e6db74">&#34;/imgdesc/Left&#34;</span>;
-                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> topQuery = <span style="color:#e6db74">&#34;/imgdesc/Top&#34;</span>;
-
-                <span style="color:#66d9ef">var</span> delay = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(delayQuery);
-                <span style="color:#66d9ef">if</span> (delay.HasValue)
-                    frameInfo.Delay = TimeSpan.FromMilliseconds(<span style="color:#ae81ff">10</span> * delay.Value);
-
-                <span style="color:#66d9ef">var</span> disposal = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">byte</span>&gt;(disposalQuery);
-                <span style="color:#66d9ef">if</span> (disposal.HasValue)
-                    frameInfo.DisposalMethod = (FrameDisposalMethod) disposal.Value;
-
-                <span style="color:#66d9ef">var</span> width = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(widthQuery);
-                <span style="color:#66d9ef">if</span> (width.HasValue)
-                    frameInfo.Width = width.Value;
-
-                <span style="color:#66d9ef">var</span> height = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(heightQuery);
-                <span style="color:#66d9ef">if</span> (height.HasValue)
-                    frameInfo.Height = height.Value;
-
-                <span style="color:#66d9ef">var</span> left = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(leftQuery);
-                <span style="color:#66d9ef">if</span> (left.HasValue)
-                    frameInfo.Left = left.Value;
-
-                <span style="color:#66d9ef">var</span> top = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(topQuery);
-                <span style="color:#66d9ef">if</span> (top.HasValue)
-                    frameInfo.Top = top.Value;
-            }
-        }
-        <span style="color:#66d9ef">catch</span> (NotSupportedException)
-        {
-        }
-
-        <span style="color:#66d9ef">return</span> frameInfo;
-    }
-
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> T? GetQueryOrNull&lt;T&gt;(<span style="color:#66d9ef">this</span> BitmapMetadata metadata, <span style="color:#66d9ef">string</span> query)
-        <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">struct</span>
-    {
-        <span style="color:#66d9ef">if</span> (metadata.ContainsQuery(query))
-        {
-            <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span> = metadata.GetQuery(query);
-            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> != <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">return</span> (T) <span style="color:#66d9ef">value</span>;
-        }
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
-    }
-
-    <span style="color:#75715e">#endregion
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p>And here&rsquo;s the <code>DoWhenLoaded</code> extension method used in the code above:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> DoWhenLoaded&lt;T&gt;(<span style="color:#66d9ef">this</span> T element, Action&lt;T&gt; action)
-    <span style="color:#66d9ef">where</span> T : FrameworkElement
-{
-    <span style="color:#66d9ef">if</span> (element.IsLoaded)
-    {
-        action(element);
-    }
-    <span style="color:#66d9ef">else</span>
-    {
-        RoutedEventHandler handler = <span style="color:#66d9ef">null</span>;
-        handler = (sender, e) =&gt;
-        {
-            element.Loaded -= handler;
-            action(element);
-        };
-        element.Loaded += handler;
-    }
-}
-</code></pre></div><p>Enjoy :)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ImageBehavior</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#region AnimatedSource</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [AttachedPropertyBrowsableForType(typeof(Image))]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ImageSource GetAnimatedSource(Image obj)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (ImageSource)obj.GetValue(AnimatedSourceProperty);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SetAnimatedSource(Image obj, ImageSource <span style="color:#66d9ef">value</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        obj.SetValue(AnimatedSourceProperty, <span style="color:#66d9ef">value</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty AnimatedSourceProperty =
+</span></span><span style="display:flex;"><span>        DependencyProperty.RegisterAttached(
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;AnimatedSource&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">typeof</span>(ImageSource),
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">typeof</span>(ImageBehavior),
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> UIPropertyMetadata(
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>            AnimatedSourceChanged));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> AnimatedSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Image imageControl = o <span style="color:#66d9ef">as</span> Image;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (imageControl == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> oldValue = e.OldValue <span style="color:#66d9ef">as</span> ImageSource;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> newValue = e.NewValue <span style="color:#66d9ef">as</span> ImageSource;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (oldValue != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            imageControl.BeginAnimation(Image.SourceProperty, <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (newValue != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            imageControl.DoWhenLoaded(InitAnimationOrImage);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> InitAnimationOrImage(Image imageControl)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        BitmapSource source = GetAnimatedSource(imageControl) <span style="color:#66d9ef">as</span> BitmapSource;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (source != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> decoder = GetDecoder(source) <span style="color:#66d9ef">as</span> GifBitmapDecoder;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (decoder != <span style="color:#66d9ef">null</span> &amp;&amp; decoder.Frames.Count &gt; <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> animation = <span style="color:#66d9ef">new</span> ObjectAnimationUsingKeyFrames();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> totalDuration = TimeSpan.Zero;
+</span></span><span style="display:flex;"><span>                BitmapSource prevFrame = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>                FrameInfo prevInfo = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> rawFrame <span style="color:#66d9ef">in</span> decoder.Frames)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> info = GetFrameInfo(rawFrame);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> frame = MakeFrame(
+</span></span><span style="display:flex;"><span>                        source,
+</span></span><span style="display:flex;"><span>                        rawFrame, info,
+</span></span><span style="display:flex;"><span>                        prevFrame, prevInfo);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> keyFrame = <span style="color:#66d9ef">new</span> DiscreteObjectKeyFrame(frame, totalDuration);
+</span></span><span style="display:flex;"><span>                    animation.KeyFrames.Add(keyFrame);
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span>                    totalDuration += info.Delay;
+</span></span><span style="display:flex;"><span>                    prevFrame = frame;
+</span></span><span style="display:flex;"><span>                    prevInfo = info;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                animation.Duration = totalDuration;
+</span></span><span style="display:flex;"><span>                animation.RepeatBehavior = RepeatBehavior.Forever;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (animation.KeyFrames.Count &gt; <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>                    imageControl.Source = (ImageSource)animation.KeyFrames[<span style="color:#ae81ff">0</span>].Value;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                    imageControl.Source = decoder.Frames[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>                imageControl.BeginAnimation(Image.SourceProperty, animation);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        imageControl.Source = source;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> BitmapDecoder GetDecoder(BitmapSource image)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        BitmapDecoder decoder = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> frame = image <span style="color:#66d9ef">as</span> BitmapFrame;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (frame != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            decoder = frame.Decoder;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (decoder == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> bmp = image <span style="color:#66d9ef">as</span> BitmapImage;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (bmp != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (bmp.StreamSource != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    bmp.StreamSource.Position = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>                    decoder = BitmapDecoder.Create(bmp.StreamSource, bmp.CreateOptions, bmp.CacheOption);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (bmp.UriSource != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    Uri uri = bmp.UriSource;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (bmp.BaseUri != <span style="color:#66d9ef">null</span> &amp;&amp; !uri.IsAbsoluteUri)
+</span></span><span style="display:flex;"><span>                        uri = <span style="color:#66d9ef">new</span> Uri(bmp.BaseUri, uri);
+</span></span><span style="display:flex;"><span>                    decoder = BitmapDecoder.Create(uri, bmp.CreateOptions, bmp.CacheOption);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> decoder;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> BitmapSource MakeFrame(
+</span></span><span style="display:flex;"><span>        BitmapSource fullImage,
+</span></span><span style="display:flex;"><span>        BitmapSource rawFrame, FrameInfo frameInfo,
+</span></span><span style="display:flex;"><span>        BitmapSource previousFrame, FrameInfo previousFrameInfo)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        DrawingVisual visual = <span style="color:#66d9ef">new</span> DrawingVisual();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> context = visual.RenderOpen())
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (previousFrameInfo != <span style="color:#66d9ef">null</span> &amp;&amp; previousFrame != <span style="color:#66d9ef">null</span> &amp;&amp;
+</span></span><span style="display:flex;"><span>                previousFrameInfo.DisposalMethod == FrameDisposalMethod.Combine)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> fullRect = <span style="color:#66d9ef">new</span> Rect(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, fullImage.PixelWidth, fullImage.PixelHeight);
+</span></span><span style="display:flex;"><span>                context.DrawImage(previousFrame, fullRect);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            context.DrawImage(rawFrame, frameInfo.Rect);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> bitmap = <span style="color:#66d9ef">new</span> RenderTargetBitmap(
+</span></span><span style="display:flex;"><span>            fullImage.PixelWidth, fullImage.PixelHeight,
+</span></span><span style="display:flex;"><span>            fullImage.DpiX, fullImage.DpiY,
+</span></span><span style="display:flex;"><span>            PixelFormats.Pbgra32);
+</span></span><span style="display:flex;"><span>        bitmap.Render(visual);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> bitmap;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FrameInfo</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> TimeSpan Delay { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> FrameDisposalMethod DisposalMethod { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Width { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Height { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Left { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> Top { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Rect Rect
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Rect(Left, Top, Width, Height); }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">enum</span> FrameDisposalMethod
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Replace = <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        Combine = <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>        RestoreBackground = <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>        RestorePrevious = <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> FrameInfo GetFrameInfo(BitmapFrame frame)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> frameInfo = <span style="color:#66d9ef">new</span> FrameInfo
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Delay = TimeSpan.FromMilliseconds(<span style="color:#ae81ff">100</span>),
+</span></span><span style="display:flex;"><span>            DisposalMethod = FrameDisposalMethod.Replace,
+</span></span><span style="display:flex;"><span>            Width = frame.PixelWidth,
+</span></span><span style="display:flex;"><span>            Height = frame.PixelHeight,
+</span></span><span style="display:flex;"><span>            Left = <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>            Top = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        BitmapMetadata metadata;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            metadata = frame.Metadata <span style="color:#66d9ef">as</span> BitmapMetadata;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (metadata != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> delayQuery = <span style="color:#e6db74">&#34;/grctlext/Delay&#34;</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> disposalQuery = <span style="color:#e6db74">&#34;/grctlext/Disposal&#34;</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> widthQuery = <span style="color:#e6db74">&#34;/imgdesc/Width&#34;</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> heightQuery = <span style="color:#e6db74">&#34;/imgdesc/Height&#34;</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> leftQuery = <span style="color:#e6db74">&#34;/imgdesc/Left&#34;</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> topQuery = <span style="color:#e6db74">&#34;/imgdesc/Top&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> delay = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(delayQuery);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (delay.HasValue)
+</span></span><span style="display:flex;"><span>                    frameInfo.Delay = TimeSpan.FromMilliseconds(<span style="color:#ae81ff">10</span> * delay.Value);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> disposal = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">byte</span>&gt;(disposalQuery);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (disposal.HasValue)
+</span></span><span style="display:flex;"><span>                    frameInfo.DisposalMethod = (FrameDisposalMethod) disposal.Value;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> width = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(widthQuery);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (width.HasValue)
+</span></span><span style="display:flex;"><span>                    frameInfo.Width = width.Value;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> height = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(heightQuery);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (height.HasValue)
+</span></span><span style="display:flex;"><span>                    frameInfo.Height = height.Value;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> left = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(leftQuery);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (left.HasValue)
+</span></span><span style="display:flex;"><span>                    frameInfo.Left = left.Value;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> top = metadata.GetQueryOrNull&lt;<span style="color:#66d9ef">ushort</span>&gt;(topQuery);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (top.HasValue)
+</span></span><span style="display:flex;"><span>                    frameInfo.Top = top.Value;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">catch</span> (NotSupportedException)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> frameInfo;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> T? GetQueryOrNull&lt;T&gt;(<span style="color:#66d9ef">this</span> BitmapMetadata metadata, <span style="color:#66d9ef">string</span> query)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">struct</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (metadata.ContainsQuery(query))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span> = metadata.GetQuery(query);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> (T) <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And here&rsquo;s the <code>DoWhenLoaded</code> extension method used in the code above:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> DoWhenLoaded&lt;T&gt;(<span style="color:#66d9ef">this</span> T element, Action&lt;T&gt; action)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">where</span> T : FrameworkElement
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (element.IsLoaded)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        action(element);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        RoutedEventHandler handler = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        handler = (sender, e) =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            element.Loaded -= handler;
+</span></span><span style="display:flex;"><span>            action(element);
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>        element.Loaded += handler;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Enjoy :)</p>
 <p><strong>Update</strong>: the code that retrieves the frame duration only works on Windows Seven, and on Windows Vista if the <a href="http://support.microsoft.com/kb/971644/en-us">Platform Update</a> is installed (untested). The default duration (100ms) will be used instead on other versions of Windows. I will update the article if I find a solution that works on all operating systems (I know I could use <code>System.Drawing.Bitmap</code>, but I&rsquo;d rather not depend on this&hellip;)</p>
 <p><strong>Update 2</strong>: as pointed out by Klaus in the comments, the <code>ImageBehavior</code> class didn&rsquo;t handle some important attributes of the frames: the diposal method (whether a frame should entirely replace the previous one, or be combined with it), and the frame position (Left/Top/Width/Height). I updated the code to handle these attributes properly. Thank you Klaus!</p>
 <p><strong>Update 3</strong>: a commenter on the French version of my blog pointed out a problem when the AnimatedSource is an image in a resource dictionary; the UriSource wasn&rsquo;t correctly interpreted when it was a relative URI. This problem is now fixed. Thank you, &ldquo;anonymous&rdquo;!</p>

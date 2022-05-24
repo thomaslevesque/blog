@@ -84,16 +84,16 @@ if (!doNotTrack) {
 <p>If you&rsquo;ve ever tried to use the <code>Clipboard.GetImage</code> method in WPF, you probably had an unpleasant surprise&hellip; In fact, this method returns an <code>InteropBitmap</code> which, in some cases (most cases actually), can&rsquo;t be displayed in an <code>Image</code> control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</p>
 <p>However, if we save that image to a stream and re-read it from the stream, we get a perfectly usable image&hellip; So this could be an acceptable workaround, but I think its pretty bad for performance, because the image gets decoded, re-encoded, and re-decoded. It is also possible to use the <code>Clipboard</code> class from Windows Forms, which works fine, and convert the <code>System.Drawing.Image</code> to a <code>System.Windows.Media.ImageSource</code>, but I don&rsquo;t like the idea of referencing the Windows Forms assembly in a WPF app&hellip; So I decided to manually retrieve the image from the clipboard and handle the decoding myself.</p>
 <p>If we look at the image formats available from the clipboard (<code>Clipboard.GetDataObject().GetFormats()</code>), we can see that they depend on the origin of the image (screenshot, copy from Paint&hellip;). The only format that is always available is <code>DeviceIndependentBitmap</code> (DIB). So I tried to retrieve the <code>MemoryStream</code> for this format and decode it into a <code>BitmapSource</code> :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
-        {
-            MemoryStream ms = Clipboard.GetData(<span style="color:#e6db74">&#34;DeviceIndependentBitmap&#34;</span>) <span style="color:#66d9ef">as</span> MemoryStream;
-            BitmapImage bmp = <span style="color:#66d9ef">new</span> BitmapImage();
-            bmp.BeginInit();
-            bmp.StreamSource = ms;
-            bmp.EndInit();
-            <span style="color:#66d9ef">return</span> bmp;
-        }
-</code></pre></div><p>Unfortunately, this code throws a nasty <code>NotSupportedException</code> : « No imaging component suitable to complete this operation was found ». In other words, it doesn&rsquo;t know how to decode the contents of the stream&hellip; That&rsquo;s quite surprising, because DIB is a very common format. So I had a look at the structure of a DIB in MSDN documentation. Basically, a « classical » bitmap file (.bmp) is made of the following sections :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            MemoryStream ms = Clipboard.GetData(<span style="color:#e6db74">&#34;DeviceIndependentBitmap&#34;</span>) <span style="color:#66d9ef">as</span> MemoryStream;
+</span></span><span style="display:flex;"><span>            BitmapImage bmp = <span style="color:#66d9ef">new</span> BitmapImage();
+</span></span><span style="display:flex;"><span>            bmp.BeginInit();
+</span></span><span style="display:flex;"><span>            bmp.StreamSource = ms;
+</span></span><span style="display:flex;"><span>            bmp.EndInit();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> bmp;
+</span></span><span style="display:flex;"><span>        }
+</span></span></code></pre></div><p>Unfortunately, this code throws a nasty <code>NotSupportedException</code> : « No imaging component suitable to complete this operation was found ». In other words, it doesn&rsquo;t know how to decode the contents of the stream&hellip; That&rsquo;s quite surprising, because DIB is a very common format. So I had a look at the structure of a DIB in MSDN documentation. Basically, a « classical » bitmap file (.bmp) is made of the following sections :</p>
 <ul>
 <li>File header (<code>BITMAPFILEHEADER</code> structure)</li>
 <li>Bitmap header (<code>BITMAPINFO</code> structure)</li>
@@ -101,109 +101,109 @@ if (!doNotTrack) {
 <li>Raw pixel data</li>
 </ul>
 <p>If we observe the content of the DIB from the clipboard, we can see that it has the same structure, without the <code>BITMAPFILEHEADER</code> part&hellip; so the trick is just to add that header at the beginning of the buffer, and use this complete buffer to decode the image. Doesn&rsquo;t seem so hard, does it ? Well, the trouble is that we have to fill in some of the header fields&hellip; for instance, we must provide the location at which the actual image data begins, so we must know the total size of the headers and palette. These values can be read or calculated from the content of the image. The following code performs that task and returns an ImageSource from the clipboard :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
-        {
-            MemoryStream ms = Clipboard.GetData(<span style="color:#e6db74">&#34;DeviceIndependentBitmap&#34;</span>) <span style="color:#66d9ef">as</span> MemoryStream;
-            <span style="color:#66d9ef">if</span> (ms != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">byte</span>[] dibBuffer = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span>[ms.Length];
-                ms.Read(dibBuffer, <span style="color:#ae81ff">0</span>, dibBuffer.Length);
-
-                BITMAPINFOHEADER infoHeader =
-                    BinaryStructConverter.FromByteArray&lt;BITMAPINFOHEADER&gt;(dibBuffer);
-
-                <span style="color:#66d9ef">int</span> fileHeaderSize = Marshal.SizeOf(<span style="color:#66d9ef">typeof</span>(BITMAPFILEHEADER));
-                <span style="color:#66d9ef">int</span> infoHeaderSize = infoHeader.biSize;
-                <span style="color:#66d9ef">int</span> fileSize = fileHeaderSize + infoHeader.biSize + infoHeader.biSizeImage;
-
-                BITMAPFILEHEADER fileHeader = <span style="color:#66d9ef">new</span> BITMAPFILEHEADER();
-                fileHeader.bfType = BITMAPFILEHEADER.BM;
-                fileHeader.bfSize = fileSize;
-                fileHeader.bfReserved1 = <span style="color:#ae81ff">0</span>;
-                fileHeader.bfReserved2 = <span style="color:#ae81ff">0</span>;
-                fileHeader.bfOffBits = fileHeaderSize + infoHeaderSize + infoHeader.biClrUsed * <span style="color:#ae81ff">4</span>;
-
-                <span style="color:#66d9ef">byte</span>[] fileHeaderBytes =
-                    BinaryStructConverter.ToByteArray&lt;BITMAPFILEHEADER&gt;(fileHeader);
-
-                MemoryStream msBitmap = <span style="color:#66d9ef">new</span> MemoryStream();
-                msBitmap.Write(fileHeaderBytes, <span style="color:#ae81ff">0</span>, fileHeaderSize);
-                msBitmap.Write(dibBuffer, <span style="color:#ae81ff">0</span>, dibBuffer.Length);
-                msBitmap.Seek(<span style="color:#ae81ff">0</span>, SeekOrigin.Begin);
-
-                <span style="color:#66d9ef">return</span> BitmapFrame.Create(msBitmap);
-            }
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
-        }
-</code></pre></div><p>Definition of the <code>BITMAPFILEHEADER</code> and <code>BITMAPINFOHEADER</code> structures :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">        [StructLayout(LayoutKind.Sequential, Pack = 2)]</span>
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">BITMAPFILEHEADER</span>
-        {
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">short</span> BM = <span style="color:#ae81ff">0x4d42</span>; <span style="color:#75715e">// BM
-</span><span style="color:#75715e"></span>
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> bfType;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> bfSize;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> bfReserved1;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> bfReserved2;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> bfOffBits;
-        }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">        [StructLayout(LayoutKind.Sequential)]</span>
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">BITMAPINFOHEADER</span>
-        {
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biSize;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biWidth;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biHeight;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> biPlanes;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> biBitCount;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biCompression;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biSizeImage;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biXPelsPerMeter;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biYPelsPerMeter;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biClrUsed;
-            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biClrImportant;
-        }
-</code></pre></div><p>Utility class to convert structures to binary :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BinaryStructConverter</span>
-    {
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T FromByteArray&lt;T&gt;(<span style="color:#66d9ef">byte</span>[] bytes) <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">struct</span>
-        {
-            IntPtr ptr = IntPtr.Zero;
-            <span style="color:#66d9ef">try</span>
-            {
-                <span style="color:#66d9ef">int</span> size = Marshal.SizeOf(<span style="color:#66d9ef">typeof</span>(T));
-                ptr = Marshal.AllocHGlobal(size);
-                Marshal.Copy(bytes, <span style="color:#ae81ff">0</span>, ptr, size);
-                <span style="color:#66d9ef">object</span> obj = Marshal.PtrToStructure(ptr, <span style="color:#66d9ef">typeof</span>(T));
-                <span style="color:#66d9ef">return</span> (T)obj;
-            }
-            <span style="color:#66d9ef">finally</span>
-            {
-                <span style="color:#66d9ef">if</span> (ptr != IntPtr.Zero)
-                    Marshal.FreeHGlobal(ptr);
-            }
-        }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span>[] ToByteArray&lt;T&gt;(T obj) <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">struct</span>
-        {
-            IntPtr ptr = IntPtr.Zero;
-            <span style="color:#66d9ef">try</span>
-            {
-                <span style="color:#66d9ef">int</span> size = Marshal.SizeOf(<span style="color:#66d9ef">typeof</span>(T));
-                ptr = Marshal.AllocHGlobal(size);
-                Marshal.StructureToPtr(obj, ptr, <span style="color:#66d9ef">true</span>);
-                <span style="color:#66d9ef">byte</span>[] bytes = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span>[size];
-                Marshal.Copy(ptr, bytes, <span style="color:#ae81ff">0</span>, size);
-                <span style="color:#66d9ef">return</span> bytes;
-            }
-            <span style="color:#66d9ef">finally</span>
-            {
-                <span style="color:#66d9ef">if</span> (ptr != IntPtr.Zero)
-                    Marshal.FreeHGlobal(ptr);
-            }
-        }
-    }
-</code></pre></div><p>The image returned by that code can be safely used in an <code>Image</code> control.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> ImageSource ImageFromClipboardDib()
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            MemoryStream ms = Clipboard.GetData(<span style="color:#e6db74">&#34;DeviceIndependentBitmap&#34;</span>) <span style="color:#66d9ef">as</span> MemoryStream;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (ms != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">byte</span>[] dibBuffer = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span>[ms.Length];
+</span></span><span style="display:flex;"><span>                ms.Read(dibBuffer, <span style="color:#ae81ff">0</span>, dibBuffer.Length);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                BITMAPINFOHEADER infoHeader =
+</span></span><span style="display:flex;"><span>                    BinaryStructConverter.FromByteArray&lt;BITMAPINFOHEADER&gt;(dibBuffer);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">int</span> fileHeaderSize = Marshal.SizeOf(<span style="color:#66d9ef">typeof</span>(BITMAPFILEHEADER));
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">int</span> infoHeaderSize = infoHeader.biSize;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">int</span> fileSize = fileHeaderSize + infoHeader.biSize + infoHeader.biSizeImage;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                BITMAPFILEHEADER fileHeader = <span style="color:#66d9ef">new</span> BITMAPFILEHEADER();
+</span></span><span style="display:flex;"><span>                fileHeader.bfType = BITMAPFILEHEADER.BM;
+</span></span><span style="display:flex;"><span>                fileHeader.bfSize = fileSize;
+</span></span><span style="display:flex;"><span>                fileHeader.bfReserved1 = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>                fileHeader.bfReserved2 = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>                fileHeader.bfOffBits = fileHeaderSize + infoHeaderSize + infoHeader.biClrUsed * <span style="color:#ae81ff">4</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">byte</span>[] fileHeaderBytes =
+</span></span><span style="display:flex;"><span>                    BinaryStructConverter.ToByteArray&lt;BITMAPFILEHEADER&gt;(fileHeader);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                MemoryStream msBitmap = <span style="color:#66d9ef">new</span> MemoryStream();
+</span></span><span style="display:flex;"><span>                msBitmap.Write(fileHeaderBytes, <span style="color:#ae81ff">0</span>, fileHeaderSize);
+</span></span><span style="display:flex;"><span>                msBitmap.Write(dibBuffer, <span style="color:#ae81ff">0</span>, dibBuffer.Length);
+</span></span><span style="display:flex;"><span>                msBitmap.Seek(<span style="color:#ae81ff">0</span>, SeekOrigin.Begin);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> BitmapFrame.Create(msBitmap);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span></code></pre></div><p>Definition of the <code>BITMAPFILEHEADER</code> and <code>BITMAPINFOHEADER</code> structures :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">        [StructLayout(LayoutKind.Sequential, Pack = 2)]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">BITMAPFILEHEADER</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">short</span> BM = <span style="color:#ae81ff">0x4d42</span>; <span style="color:#75715e">// BM</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> bfType;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> bfSize;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> bfReserved1;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> bfReserved2;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> bfOffBits;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">        [StructLayout(LayoutKind.Sequential)]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">BITMAPINFOHEADER</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biSize;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biWidth;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biHeight;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> biPlanes;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">short</span> biBitCount;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biCompression;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biSizeImage;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biXPelsPerMeter;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biYPelsPerMeter;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biClrUsed;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> biClrImportant;
+</span></span><span style="display:flex;"><span>        }
+</span></span></code></pre></div><p>Utility class to convert structures to binary :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BinaryStructConverter</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T FromByteArray&lt;T&gt;(<span style="color:#66d9ef">byte</span>[] bytes) <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">struct</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            IntPtr ptr = IntPtr.Zero;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">int</span> size = Marshal.SizeOf(<span style="color:#66d9ef">typeof</span>(T));
+</span></span><span style="display:flex;"><span>                ptr = Marshal.AllocHGlobal(size);
+</span></span><span style="display:flex;"><span>                Marshal.Copy(bytes, <span style="color:#ae81ff">0</span>, ptr, size);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">object</span> obj = Marshal.PtrToStructure(ptr, <span style="color:#66d9ef">typeof</span>(T));
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> (T)obj;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">finally</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (ptr != IntPtr.Zero)
+</span></span><span style="display:flex;"><span>                    Marshal.FreeHGlobal(ptr);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span>[] ToByteArray&lt;T&gt;(T obj) <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">struct</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            IntPtr ptr = IntPtr.Zero;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">int</span> size = Marshal.SizeOf(<span style="color:#66d9ef">typeof</span>(T));
+</span></span><span style="display:flex;"><span>                ptr = Marshal.AllocHGlobal(size);
+</span></span><span style="display:flex;"><span>                Marshal.StructureToPtr(obj, ptr, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">byte</span>[] bytes = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span>[size];
+</span></span><span style="display:flex;"><span>                Marshal.Copy(ptr, bytes, <span style="color:#ae81ff">0</span>, size);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> bytes;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">finally</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (ptr != IntPtr.Zero)
+</span></span><span style="display:flex;"><span>                    Marshal.FreeHGlobal(ptr);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>The image returned by that code can be safely used in an <code>Image</code> control.</p>
 <p>That goes to show that, even with a state-of-the-art technology like WPF, we still have to get our hands dirty sometimes ;). Let&rsquo;s hope Microsoft will fix this in a later version&hellip;</p>
 
 		</div>

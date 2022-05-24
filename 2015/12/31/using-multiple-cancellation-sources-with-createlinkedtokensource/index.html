@@ -79,123 +79,123 @@ if (!doNotTrack) {
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-12-31T00:00:00Z">December 31, 2015</time></div></div>
 		</header><div class="content post__content clearfix">
 			<p>Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, <a href="https://msdn.microsoft.com/en-us/library/dd997364%28v=vs.110%29.aspx">a standardized approach to cancellation</a> has been introduced : cancellation tokens. The basic idea is that you create a <code>CancellationTokenSource</code> that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel. That method will then pass it to the other methods it calls, if they can be canceled, and/or regularly check if cancellation was requested. Upon cancellation, the method will typically throw an <code>OperationCanceledException</code>. Quick and dirty example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IBusinessService <span style="color:#ae81ff">_</span>businessService;
-<span style="color:#66d9ef">private</span> CancellationTokenSource <span style="color:#ae81ff">_</span>cancellationSource;
-<span style="color:#66d9ef">private</span> Task <span style="color:#ae81ff">_</span>asyncOperation;
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> StartAsyncOperation()
-{
-    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>asyncOperation != <span style="color:#66d9ef">null</span>)
-        <span style="color:#66d9ef">return</span>;
-    <span style="color:#66d9ef">var</span> <span style="color:#ae81ff">_</span>cancellationSource = <span style="color:#66d9ef">new</span> CancellationTokenSource();
-    <span style="color:#ae81ff">_</span>asyncOperation = <span style="color:#ae81ff">_</span>businessService.DoSomethingAsync(<span style="color:#ae81ff">_</span>cancellationSource.Token);
-}
-
-<span style="color:#75715e">// async void is bad; like I said, this is a quick and dirty example
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> StopAsyncOperation()
-{
-    <span style="color:#66d9ef">try</span>
-    {
-        <span style="color:#ae81ff">_</span>cancellationSource.Cancel();
-        <span style="color:#75715e">// wait for the operation to finish
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_</span>asyncOperation;
-    }
-    <span style="color:#66d9ef">catch</span> (OperationCanceledException)
-    {
-        <span style="color:#75715e">// Operation was successfully canceled
-</span><span style="color:#75715e"></span>    }
-    <span style="color:#66d9ef">catch</span> (Exception)
-    {
-        <span style="color:#75715e">// Oops, something went wrong
-</span><span style="color:#75715e"></span>    }
-    <span style="color:#66d9ef">finally</span>
-    {
-        <span style="color:#ae81ff">_</span>asyncOperation = <span style="color:#66d9ef">null</span>;
-        <span style="color:#ae81ff">_</span>cancellationSource.Dispose();
-        <span style="color:#ae81ff">_</span>cancellationSource = <span style="color:#66d9ef">null</span>;
-    }
-
-...
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BusinessService</span> : IBusinessService
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task DoSomethingAsync(CancellationToken cancellationToken)
-    {
-        <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromServerAsync(cancellationToken);
-        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> line <span style="color:#66d9ef">in</span> data)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            <span style="color:#66d9ef">await</span> ProcessLineAsync(line, cancellationToken);
-        }
-    }
-
-    ...
-}
-</code></pre></div><p>In this case, <code>StopAsyncOperation</code> would be called, for instance, if the user chooses to abort the operation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IBusinessService <span style="color:#ae81ff">_</span>businessService;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> CancellationTokenSource <span style="color:#ae81ff">_</span>cancellationSource;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> Task <span style="color:#ae81ff">_</span>asyncOperation;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> StartAsyncOperation()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>asyncOperation != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#ae81ff">_</span>cancellationSource = <span style="color:#66d9ef">new</span> CancellationTokenSource();
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">_</span>asyncOperation = <span style="color:#ae81ff">_</span>businessService.DoSomethingAsync(<span style="color:#ae81ff">_</span>cancellationSource.Token);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// async void is bad; like I said, this is a quick and dirty example</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">void</span> StopAsyncOperation()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>cancellationSource.Cancel();
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// wait for the operation to finish</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_</span>asyncOperation;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span> (OperationCanceledException)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Operation was successfully canceled</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span> (Exception)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Oops, something went wrong</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">finally</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>asyncOperation = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>cancellationSource.Dispose();
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>cancellationSource = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BusinessService</span> : IBusinessService
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task DoSomethingAsync(CancellationToken cancellationToken)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromServerAsync(cancellationToken);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> line <span style="color:#66d9ef">in</span> data)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            cancellationToken.ThrowIfCancellationRequested();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> ProcessLineAsync(line, cancellationToken);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In this case, <code>StopAsyncOperation</code> would be called, for instance, if the user chooses to abort the operation.</p>
 <p>This all works pretty well and is rather easy to setup. But what if there is another reason to cancel the operation, known only by the <code>BusinessService</code> and outside the control of the calling method? That’s where the <code>CancellationSource.CreateLinkedTokenSource</code> method comes into play; basically, this method creates a cancellation source that will be canceled when any of the specified tokens is canceled.</p>
 <p>Let’s start with a simple case: you have another cancellation token that you also want to take into account. The code would look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task DoSomethingAsync(CancellationToken cancellationToken)
-{
-    <span style="color:#66d9ef">var</span> otherToken = GetOtherCancellationToken();
-    <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, otherToken))
-    {
-        <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromServerAsync(linkedCts.Token);
-        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> line <span style="color:#66d9ef">in</span> data)
-        {
-            linkedCts.Token.ThrowIfCancellationRequested();
-            <span style="color:#66d9ef">await</span> ProcessLineAsync(line, linkedCts.Token);
-        }
-    }
-}
-</code></pre></div><p>We created a linked cancellation source based on the two cancellation tokens, then used the token from this new source instead of <code>cancellationToken</code>. If either <code>cancellationToken</code> or <code>otherToken</code> is canceled, <code>linkedCts.Token</code> will be canceled as well. If necessary, the calling code can detect how the operation was canceled by checking the <code>CancellationToken</code> property of the <code>OperationCanceledException</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task DoSomethingAsync(CancellationToken cancellationToken)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> otherToken = GetOtherCancellationToken();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, otherToken))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromServerAsync(linkedCts.Token);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> line <span style="color:#66d9ef">in</span> data)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            linkedCts.Token.ThrowIfCancellationRequested();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> ProcessLineAsync(line, linkedCts.Token);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We created a linked cancellation source based on the two cancellation tokens, then used the token from this new source instead of <code>cancellationToken</code>. If either <code>cancellationToken</code> or <code>otherToken</code> is canceled, <code>linkedCts.Token</code> will be canceled as well. If necessary, the calling code can detect how the operation was canceled by checking the <code>CancellationToken</code> property of the <code>OperationCanceledException</code>.</p>
 <p>Now let’s see a slightly more difficult case: the second cancellation source is actually an event. You want to cancel the operation when the event occurs, in addition to user cancellation represented by the <code>cancellationToken</code> parameter. So you need to subscribe to the event and trigger the cancellation when it occurs. Here’s a way to do it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task DoSomethingAsync(CancellationToken cancellationToken)
-{
-    <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
-    {
-        EventHandler handler = (sender, e) =&gt; linkedCts.Cancel();
-        <span style="color:#66d9ef">try</span>
-        {
-            SomeEvent += handler;
-            <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromServerAsync(linkedCts.Token);
-            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> line <span style="color:#66d9ef">in</span> data)
-            {
-                linkedCts.Token.ThrowIfCancellationRequested();
-                <span style="color:#66d9ef">await</span> ProcessLineAsync(line, linkedCts.Token);
-            }
-        }
-        <span style="color:#66d9ef">finally</span>
-        {
-            SomeEvent -= handler;
-        }
-    }
-}
-</code></pre></div><p>Here we only pass <code>cancellationToken</code> to <code>CreateLinkedTokenSource</code>, and we directly cancel <code>linkedCts</code> when the event is raised. The code is getting a bit convoluted, but it achieves the desired result.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task DoSomethingAsync(CancellationToken cancellationToken)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        EventHandler handler = (sender, e) =&gt; linkedCts.Cancel();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            SomeEvent += handler;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">await</span> GetDataFromServerAsync(linkedCts.Token);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> line <span style="color:#66d9ef">in</span> data)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                linkedCts.Token.ThrowIfCancellationRequested();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">await</span> ProcessLineAsync(line, linkedCts.Token);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">finally</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            SomeEvent -= handler;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Here we only pass <code>cancellationToken</code> to <code>CreateLinkedTokenSource</code>, and we directly cancel <code>linkedCts</code> when the event is raised. The code is getting a bit convoluted, but it achieves the desired result.</p>
 <p>I can’t really give you a specific real-world use case of this technique, because the cases where I used it are too specific to be of public interest, but I can outline the general scenario. I have a long running operation that is made up of multiple long running operations. The whole operation can be canceled globally, and each of the sub-operations can also be canceled individually, without affecting the others. Here’s the rough outline of what it looks like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">async</span> Task GlobalOperationAsync(CancellationToken cancellationToken)
-{
-    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> subOperation <span style="color:#66d9ef">is</span> SubOperations)
-    {
-        cancellationToken.ThrowIfCancellationRequested();
-        <span style="color:#66d9ef">var</span> subToken = subOperation.GetSpecificCancellationToken();
-        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, subToken))
-        {
-            <span style="color:#66d9ef">try</span>
-            {
-                <span style="color:#66d9ef">await</span> subOperation.RunAsync(linkedCts.Token);
-            }
-            <span style="color:#66d9ef">catch</span> (OperationCanceledException ex)
-            {
-                <span style="color:#75715e">// Rethrow only if global cancellation was requested
-</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> (cancellationToken.IsCancellationRequested)
-                    <span style="color:#66d9ef">throw</span>;
-                    
-                <span style="color:#75715e">// otherwise continue running the other sub-operations
-</span><span style="color:#75715e"></span>            }
-        }
-    }
-}
-</code></pre></div><p>Note that even though <code>CancellationToken</code> was introduced with the TPL and all the examples I gave were asynchronous, nothing prevents you from using this technique with synchronous code.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">async</span> Task GlobalOperationAsync(CancellationToken cancellationToken)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> subOperation <span style="color:#66d9ef">is</span> SubOperations)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        cancellationToken.ThrowIfCancellationRequested();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> subToken = subOperation.GetSpecificCancellationToken();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, subToken))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">await</span> subOperation.RunAsync(linkedCts.Token);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">catch</span> (OperationCanceledException ex)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Rethrow only if global cancellation was requested</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (cancellationToken.IsCancellationRequested)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">throw</span>;
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// otherwise continue running the other sub-operations</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Note that even though <code>CancellationToken</code> was introduced with the TPL and all the examples I gave were asynchronous, nothing prevents you from using this technique with synchronous code.</p>
 <p>I hope you find this helpful. Have a great New Year’s Eve celebration and a happy new year!</p>
 
 		</div>

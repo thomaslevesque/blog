@@ -82,31 +82,31 @@ if (!doNotTrack) {
 <h2 id="transforming-templates-at-build-time">Transforming templates at build time</h2>
 <p>If your project is a classic csproj or vbproj (i.e. not a .NET Core SDK-style project), things are actually quite simple and well documented on <a href="https://docs.microsoft.com/en-us/visualstudio/modeling/code-generation-in-a-build-process">this page</a>.</p>
 <p>Unload your project, and open it in the editor. Add the following <code>PropertyGroup</code> near the beginning of the file:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;PropertyGroup&gt;</span>
-    <span style="color:#75715e">&lt;!-- 15.0 is for VS2017, adjust if necessary --&gt;</span>
-    <span style="color:#f92672">&lt;VisualStudioVersion</span> <span style="color:#a6e22e">Condition=</span><span style="color:#e6db74">&#34;&#39;$(VisualStudioVersion)&#39; == &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>15.0<span style="color:#f92672">&lt;/VisualStudioVersion&gt;</span>
-    <span style="color:#f92672">&lt;VSToolsPath</span> <span style="color:#a6e22e">Condition=</span><span style="color:#e6db74">&#34;&#39;$(VSToolsPath)&#39; == &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)<span style="color:#f92672">&lt;/VSToolsPath&gt;</span>
-    <span style="color:#75715e">&lt;!-- This is what will cause the templates to be transformed when the project is built (default is false) --&gt;</span>
-    <span style="color:#f92672">&lt;TransformOnBuild&gt;</span>true<span style="color:#f92672">&lt;/TransformOnBuild&gt;</span>
-    <span style="color:#75715e">&lt;!-- Set to true to force overwriting of read-only output files, e.g. if they&#39;re not checked out (default is false) --&gt;</span>
-    <span style="color:#f92672">&lt;OverwriteReadOnlyOutputFiles&gt;</span>true<span style="color:#f92672">&lt;/OverwriteReadOnlyOutputFiles&gt;</span>
-    <span style="color:#75715e">&lt;!-- Set to false to transform files even if the output appears to be up-to-date (default is true)  --&gt;</span>
-    <span style="color:#f92672">&lt;TransformOutOfDateOnly&gt;</span>false<span style="color:#f92672">&lt;/TransformOutOfDateOnly&gt;</span>
-<span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
-</code></pre></div><p>And add the following <code>Import</code> at the end, after the import of <code>Microsoft.CSharp.targets</code> or <code>Microsoft.VisualBasic.targets</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets&#34;</span> <span style="color:#f92672">/&gt;</span>
-</code></pre></div><p>Reload your project, and you&rsquo;re done. Building the project should now transform the templates and regenerate their output.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 15.0 is for VS2017, adjust if necessary --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;VisualStudioVersion</span> <span style="color:#a6e22e">Condition=</span><span style="color:#e6db74">&#34;&#39;$(VisualStudioVersion)&#39; == &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>15.0<span style="color:#f92672">&lt;/VisualStudioVersion&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;VSToolsPath</span> <span style="color:#a6e22e">Condition=</span><span style="color:#e6db74">&#34;&#39;$(VSToolsPath)&#39; == &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)<span style="color:#f92672">&lt;/VSToolsPath&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- This is what will cause the templates to be transformed when the project is built (default is false) --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;TransformOnBuild&gt;</span>true<span style="color:#f92672">&lt;/TransformOnBuild&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- Set to true to force overwriting of read-only output files, e.g. if they&#39;re not checked out (default is false) --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;OverwriteReadOnlyOutputFiles&gt;</span>true<span style="color:#f92672">&lt;/OverwriteReadOnlyOutputFiles&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- Set to false to transform files even if the output appears to be up-to-date (default is true)  --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;TransformOutOfDateOnly&gt;</span>false<span style="color:#f92672">&lt;/TransformOutOfDateOnly&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
+</span></span></code></pre></div><p>And add the following <code>Import</code> at the end, after the import of <code>Microsoft.CSharp.targets</code> or <code>Microsoft.VisualBasic.targets</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><p>Reload your project, and you&rsquo;re done. Building the project should now transform the templates and regenerate their output.</p>
 <h2 id="sdk-style-projects">SDK-style projects</h2>
 <p>If you&rsquo;re using the new project format that comes with the .NET Core SDK (sometimes informally called &ldquo;SDK-style project&rdquo;), the approach described above will need a small change to work. This is because the default targets file (<code>Sdk.targets</code> in the .NET Core SDK) is now imported implicitly at the very end of the project, so you can&rsquo;t import the text templating targets after the default targets. This causes the <code>BuildDependsOn</code> variable, which is modified by the T4 targets, to be overwritten, so the <code>TransformAll</code> target doesn&rsquo;t run before the <code>Build</code> target.</p>
 <p>Fortunately, there&rsquo;s a workaround: you can import the default targets file explicitly, and import the text templating targets after that:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;Sdk.targets&#34;</span> <span style="color:#a6e22e">Sdk=</span><span style="color:#e6db74">&#34;Microsoft.NET.Sdk&#34;</span> <span style="color:#f92672">/&gt;</span>
-<span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets&#34;</span> <span style="color:#f92672">/&gt;</span>
-</code></pre></div><p>Note that it will cause a MSBuild warning in the build output (MSB4011) because <code>Sdk.targets</code> is imported twice; you can safely ignore this warning.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;Sdk.targets&#34;</span> <span style="color:#a6e22e">Sdk=</span><span style="color:#e6db74">&#34;Microsoft.NET.Sdk&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><p>Note that it will cause a MSBuild warning in the build output (MSB4011) because <code>Sdk.targets</code> is imported twice; you can safely ignore this warning.</p>
 <h2 id="passing-msbuild-variables-to-templates">Passing MSBuild variables to templates</h2>
 <p>At some point, the code generation logic might become too complex to remain entirely in the T4 template file. You might want to extract some of it into a helper assembly, and reference this assembly from the template, like this:</p>
-<pre tabindex="0"><code>&lt;#@ assembly name=&quot;../CodeGenHelper/bin/Release/net462/CodeGenHelper.dll&quot; #&gt;
+<pre tabindex="0"><code>&lt;#@ assembly name=&#34;../CodeGenHelper/bin/Release/net462/CodeGenHelper.dll&#34; #&gt;
 </code></pre><p>Of course, specifying the path like this isn&rsquo;t very very convenient&hellip; For instance, if you&rsquo;re currently in <code>Debug</code> configuration, the <code>Release</code> version of CodeGenHelper.dll might be out of date. Fortunately, Visual Studio&rsquo;s <code>TextTemplatingFileGenerator</code> custom tool recognizes MSBuild variables from the project, so you can do this instead:</p>
-<pre tabindex="0"><code>&lt;#@ assembly name=&quot;$(SolutionDir)/CodeGenHelper/bin/$(Configuration)/net462/CodeGenHelper.dll&quot; #&gt;
+<pre tabindex="0"><code>&lt;#@ assembly name=&#34;$(SolutionDir)/CodeGenHelper/bin/$(Configuration)/net462/CodeGenHelper.dll&#34; #&gt;
 </code></pre><p>The <code>$(SolutionDir)</code> and <code>$(Configuration)</code> variables will be expanded to their actual values. If you save the template, the template will be transformed using the CodeGenHelper.dll assembly. Nice!</p>
 <p>However, there&rsquo;s a catch&hellip; if you configured the project to transform templates on build as described above, the build will now fail, with an error like this:</p>
 <blockquote>
@@ -114,17 +114,17 @@ if (!doNotTrack) {
 </blockquote>
 <p>Notice the <code>$(SolutionDir)</code> and <code>$(Configuration)</code> variables in the path? They were not expanded! This is because the MSBuild target that transforms the templates and the <code>TextTemplatingFileGenerator</code> custom tool don&rsquo;t use the same text transformation engine. And unfortunately, the one used by MSBuild doesn&rsquo;t recognize MSBuild properties out of the box&hellip; Ironic, isn&rsquo;t it?</p>
 <p>All is not lost, though. All you have to do is explicitly specify the variables you want to pass as T4 parameters. Edit your project file again, and create a new <code>ItemGroup</code> with the following items:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;ItemGroup&gt;</span>
-    <span style="color:#f92672">&lt;T4ParameterValues</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;SolutionDir&#34;</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;Value&gt;</span>$(SolutionDir)<span style="color:#f92672">&lt;/Value&gt;</span>
-        <span style="color:#f92672">&lt;Visible&gt;</span>False<span style="color:#f92672">&lt;/Visible&gt;</span>
-    <span style="color:#f92672">&lt;/T4ParameterValues&gt;</span>
-    <span style="color:#f92672">&lt;T4ParameterValues</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;Configuration&#34;</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;Value&gt;</span>$(Configuration)<span style="color:#f92672">&lt;/Value&gt;</span>
-        <span style="color:#f92672">&lt;Visible&gt;</span>False<span style="color:#f92672">&lt;/Visible&gt;</span>
-    <span style="color:#f92672">&lt;/T4ParameterValues&gt;</span>
-<span style="color:#f92672">&lt;/ItemGroup&gt;</span>
-</code></pre></div><p>The <code>Include</code> attribute is the name of the parameter as it will be passed to the text transformation engine. The <code>Value</code> element is, well, the value. And the <code>Visible</code> element prevents the <code>T4ParameterValues</code> item from appearing under the project in the solution explorer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;ItemGroup&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;T4ParameterValues</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;SolutionDir&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;Value&gt;</span>$(SolutionDir)<span style="color:#f92672">&lt;/Value&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;Visible&gt;</span>False<span style="color:#f92672">&lt;/Visible&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/T4ParameterValues&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;T4ParameterValues</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;Configuration&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;Value&gt;</span>$(Configuration)<span style="color:#f92672">&lt;/Value&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;Visible&gt;</span>False<span style="color:#f92672">&lt;/Visible&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/T4ParameterValues&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/ItemGroup&gt;</span>
+</span></span></code></pre></div><p>The <code>Include</code> attribute is the name of the parameter as it will be passed to the text transformation engine. The <code>Value</code> element is, well, the value. And the <code>Visible</code> element prevents the <code>T4ParameterValues</code> item from appearing under the project in the solution explorer.</p>
 <p>With this change, the build should now successfully transform the templates again.</p>
 <p>So, just keep in mind that the <code>TextTemplatingFileGenerator</code> custom tool and the MSBuild text transformation target have different mechanisms for passing variables:</p>
 <ul>

@@ -88,264 +88,264 @@ if (!doNotTrack) {
 <li>not all controls have a <code>Command</code> property (actually, most don&rsquo;t), and when this property exists, it corresponds only to one event of the control (e.g. the click on a button). There is no really easy way to &ldquo;bind&rdquo; the other events to commands of the ViewModel</li>
 </ul>
 <p>It would be nice to be able to bind events directly to ViewModel methods, like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Button</span> <span style="color:#a6e22e">Content=</span><span style="color:#e6db74">&#34;Click me&#34;</span>
-        <span style="color:#a6e22e">Click=</span><span style="color:#e6db74">&#34;{my:EventBinding OnClick}&#34;</span> <span style="color:#f92672">/&gt;</span>
-</code></pre></div><p>With the <code>OnClick</code> method defined in the ViewModel:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnClick(<span style="color:#66d9ef">object</span> sender, EventArgs e)
-{
-    MessageBox.Show(<span style="color:#e6db74">&#34;Hello world!&#34;</span>);
-}
-</code></pre></div><p>Well, this is now possible! Here&rsquo;s a proof of concept&hellip; The <code>EventBindingExtension</code> class shown below first gets the <code>DataContext</code> of the control, then looks for the specified method on the <code>DataContext</code>, and eventually returns a delegate for this method:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
-<span style="color:#66d9ef">using</span> System.Collections.Generic;
-<span style="color:#66d9ef">using</span> System.ComponentModel;
-<span style="color:#66d9ef">using</span> System.Diagnostics;
-<span style="color:#66d9ef">using</span> System.Linq;
-<span style="color:#66d9ef">using</span> System.Reflection;
-<span style="color:#66d9ef">using</span> System.Windows;
-<span style="color:#66d9ef">using</span> System.Windows.Markup;
-
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EventBindingExtension</span> : MarkupExtension
-    {
-        <span style="color:#66d9ef">public</span> EventBindingExtension() { }
-
-        <span style="color:#66d9ef">public</span> EventBindingExtension(<span style="color:#66d9ef">string</span> eventHandlerName)
-        {
-            <span style="color:#66d9ef">this</span>.EventHandlerName = eventHandlerName;
-        }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">        [ConstructorArgument(&#34;eventHandlerName&#34;)]</span>
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> EventHandlerName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> ProvideValue(IServiceProvider serviceProvider)
-        {
-            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">string</span>.IsNullOrEmpty(EventHandlerName))
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;The EventHandlerName property is not set&#34;</span>, <span style="color:#e6db74">&#34;EventHandlerName&#34;</span>);
-
-            <span style="color:#66d9ef">var</span> target = (IProvideValueTarget)serviceProvider.GetService(<span style="color:#66d9ef">typeof</span>(IProvideValueTarget));
-
-            EventInfo eventInfo = target.TargetProperty <span style="color:#66d9ef">as</span> EventInfo;
-            <span style="color:#66d9ef">if</span> (eventInfo == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;The target property must be an event&#34;</span>);
-            
-            <span style="color:#66d9ef">object</span> dataContext = GetDataContext(target.TargetObject);
-            <span style="color:#66d9ef">if</span> (dataContext == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;No DataContext found&#34;</span>);
-
-            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, eventInfo, EventHandlerName);
-            <span style="color:#66d9ef">if</span> (handler == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;No valid event handler was found&#34;</span>, <span style="color:#e6db74">&#34;EventHandlerName&#34;</span>);
-
-            <span style="color:#66d9ef">return</span> handler;
-        }
-
-        <span style="color:#75715e">#region Helper methods
-</span><span style="color:#75715e"></span>
-        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span> GetHandler(<span style="color:#66d9ef">object</span> dataContext, EventInfo eventInfo, <span style="color:#66d9ef">string</span> eventHandlerName)
-        {
-            Type dcType = dataContext.GetType();
-
-            <span style="color:#66d9ef">var</span> method = dcType.GetMethod(
-                eventHandlerName,
-                GetParameterTypes(eventInfo));
-            <span style="color:#66d9ef">if</span> (method != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">if</span> (method.IsStatic)
-                    <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(eventInfo.EventHandlerType, method);
-                <span style="color:#66d9ef">else</span>
-                    <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(eventInfo.EventHandlerType, dataContext, method);
-            }
-
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
-        }
-
-        <span style="color:#66d9ef">static</span> Type[] GetParameterTypes(EventInfo eventInfo)
-        {
-            <span style="color:#66d9ef">var</span> invokeMethod = eventInfo.EventHandlerType.GetMethod(<span style="color:#e6db74">&#34;Invoke&#34;</span>);
-            <span style="color:#66d9ef">return</span> invokeMethod.GetParameters().Select(p =&gt; p.ParameterType).ToArray();
-        }
-
-        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span> GetDataContext(<span style="color:#66d9ef">object</span> target)
-        {
-            <span style="color:#66d9ef">var</span> depObj = target <span style="color:#66d9ef">as</span> DependencyObject;
-            <span style="color:#66d9ef">if</span> (depObj == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
-
-            <span style="color:#66d9ef">return</span> depObj.GetValue(FrameworkElement.DataContextProperty)
-                ?? depObj.GetValue(FrameworkContentElement.DataContextProperty);
-        }
-
-        <span style="color:#75715e">#endregion
-</span><span style="color:#75715e"></span>    }
-</code></pre></div><p>This class can be used as shown in the example above.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Button</span> <span style="color:#a6e22e">Content=</span><span style="color:#e6db74">&#34;Click me&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Click=</span><span style="color:#e6db74">&#34;{my:EventBinding OnClick}&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><p>With the <code>OnClick</code> method defined in the ViewModel:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnClick(<span style="color:#66d9ef">object</span> sender, EventArgs e)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    MessageBox.Show(<span style="color:#e6db74">&#34;Hello world!&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Well, this is now possible! Here&rsquo;s a proof of concept&hellip; The <code>EventBindingExtension</code> class shown below first gets the <code>DataContext</code> of the control, then looks for the specified method on the <code>DataContext</code>, and eventually returns a delegate for this method:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Collections.Generic;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.ComponentModel;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Diagnostics;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Linq;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Reflection;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows.Markup;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EventBindingExtension</span> : MarkupExtension
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> EventBindingExtension() { }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> EventBindingExtension(<span style="color:#66d9ef">string</span> eventHandlerName)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.EventHandlerName = eventHandlerName;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">        [ConstructorArgument(&#34;eventHandlerName&#34;)]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> EventHandlerName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> ProvideValue(IServiceProvider serviceProvider)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">string</span>.IsNullOrEmpty(EventHandlerName))
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;The EventHandlerName property is not set&#34;</span>, <span style="color:#e6db74">&#34;EventHandlerName&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> target = (IProvideValueTarget)serviceProvider.GetService(<span style="color:#66d9ef">typeof</span>(IProvideValueTarget));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            EventInfo eventInfo = target.TargetProperty <span style="color:#66d9ef">as</span> EventInfo;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (eventInfo == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;The target property must be an event&#34;</span>);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">object</span> dataContext = GetDataContext(target.TargetObject);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (dataContext == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;No DataContext found&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, eventInfo, EventHandlerName);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (handler == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;No valid event handler was found&#34;</span>, <span style="color:#e6db74">&#34;EventHandlerName&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> handler;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Helper methods</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span> GetHandler(<span style="color:#66d9ef">object</span> dataContext, EventInfo eventInfo, <span style="color:#66d9ef">string</span> eventHandlerName)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Type dcType = dataContext.GetType();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> method = dcType.GetMethod(
+</span></span><span style="display:flex;"><span>                eventHandlerName,
+</span></span><span style="display:flex;"><span>                GetParameterTypes(eventInfo));
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (method != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (method.IsStatic)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(eventInfo.EventHandlerType, method);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(eventInfo.EventHandlerType, dataContext, method);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> Type[] GetParameterTypes(EventInfo eventInfo)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> invokeMethod = eventInfo.EventHandlerType.GetMethod(<span style="color:#e6db74">&#34;Invoke&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> invokeMethod.GetParameters().Select(p =&gt; p.ParameterType).ToArray();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span> GetDataContext(<span style="color:#66d9ef">object</span> target)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> depObj = target <span style="color:#66d9ef">as</span> DependencyObject;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (depObj == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> depObj.GetValue(FrameworkElement.DataContextProperty)
+</span></span><span style="display:flex;"><span>                ?? depObj.GetValue(FrameworkContentElement.DataContextProperty);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>This class can be used as shown in the example above.</p>
 <p>As it is now, this markup extension has an annoying limitation: the <code>DataContext</code> must be set before the call to <code>ProvideValue</code>, otherwise it won&rsquo;t be possible to find the event handler method. A solution could be to subscribe to the <code>DataContextChanged</code> event to look for the method after the <code>DataContext</code> is set, but in the meantime we still need to return something&hellip; and we can&rsquo;t return null, because it would cause an exception (since you can&rsquo;t subscribe to an event with a null handler). So we need to return a dummy handler generated dynamically from the event signature. It makes things a bit harder&hellip; but it&rsquo;s still feasible.</p>
 <p>Here&rsquo;s a second version that implements this improvement :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
-<span style="color:#66d9ef">using</span> System.Collections.Generic;
-<span style="color:#66d9ef">using</span> System.ComponentModel;
-<span style="color:#66d9ef">using</span> System.Diagnostics;
-<span style="color:#66d9ef">using</span> System.Linq;
-<span style="color:#66d9ef">using</span> System.Reflection;
-<span style="color:#66d9ef">using</span> System.Reflection.Emit;
-<span style="color:#66d9ef">using</span> System.Windows;
-<span style="color:#66d9ef">using</span> System.Windows.Markup;
-
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EventBindingExtension</span> : MarkupExtension
-    {
-        <span style="color:#66d9ef">private</span> EventInfo <span style="color:#ae81ff">_</span>eventInfo;
-
-        <span style="color:#66d9ef">public</span> EventBindingExtension() { }
-
-        <span style="color:#66d9ef">public</span> EventBindingExtension(<span style="color:#66d9ef">string</span> eventHandlerName)
-        {
-            <span style="color:#66d9ef">this</span>.EventHandlerName = eventHandlerName;
-        }
-<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">        [ConstructorArgument(&#34;eventHandlerName&#34;)]</span>
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> EventHandlerName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> ProvideValue(IServiceProvider serviceProvider)
-        {
-            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">string</span>.IsNullOrEmpty(EventHandlerName))
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;The EventHandlerName property is not set&#34;</span>, <span style="color:#e6db74">&#34;EventHandlerName&#34;</span>);
-
-            <span style="color:#66d9ef">var</span> target = (IProvideValueTarget)serviceProvider.GetService(<span style="color:#66d9ef">typeof</span>(IProvideValueTarget));
-
-            <span style="color:#66d9ef">var</span> targetObj = target.TargetObject <span style="color:#66d9ef">as</span> DependencyObject;
-            <span style="color:#66d9ef">if</span> (targetObj == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;The target object must be a DependencyObject&#34;</span>);
-
-            <span style="color:#ae81ff">_</span>eventInfo = target.TargetProperty <span style="color:#66d9ef">as</span> EventInfo;
-            <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>eventInfo == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;The target property must be an event&#34;</span>);
-
-            <span style="color:#66d9ef">object</span> dataContext = GetDataContext(targetObj);
-            <span style="color:#66d9ef">if</span> (dataContext == <span style="color:#66d9ef">null</span>)
-            {
-                SubscribeToDataContextChanged(targetObj);
-                <span style="color:#66d9ef">return</span> GetDummyHandler(<span style="color:#ae81ff">_</span>eventInfo.EventHandlerType);
-            }
-
-            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, <span style="color:#ae81ff">_</span>eventInfo, EventHandlerName);
-            <span style="color:#66d9ef">if</span> (handler == <span style="color:#66d9ef">null</span>)
-            {
-                Trace.TraceError(
-                    <span style="color:#e6db74">&#34;EventBinding: no suitable method named &#39;{0}&#39; found in type &#39;{1}&#39; to handle event &#39;{2&#39;}&#34;</span>,
-                    EventHandlerName,
-                    dataContext.GetType(),
-                    <span style="color:#ae81ff">_</span>eventInfo);
-                <span style="color:#66d9ef">return</span> GetDummyHandler(<span style="color:#ae81ff">_</span>eventInfo.EventHandlerType);
-            }
-
-            <span style="color:#66d9ef">return</span> handler;
-            
-        }
-
-        <span style="color:#75715e">#region Helper methods
-</span><span style="color:#75715e"></span>
-        <span style="color:#66d9ef">static</span> Delegate GetHandler(<span style="color:#66d9ef">object</span> dataContext, EventInfo eventInfo, <span style="color:#66d9ef">string</span> eventHandlerName)
-        {
-            Type dcType = dataContext.GetType();
-
-            <span style="color:#66d9ef">var</span> method = dcType.GetMethod(
-                eventHandlerName,
-                GetParameterTypes(eventInfo.EventHandlerType));
-            <span style="color:#66d9ef">if</span> (method != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#66d9ef">if</span> (method.IsStatic)
-                    <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(eventInfo.EventHandlerType, method);
-                <span style="color:#66d9ef">else</span>
-                    <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(eventInfo.EventHandlerType, dataContext, method);
-            }
-
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
-        }
-
-        <span style="color:#66d9ef">static</span> Type[] GetParameterTypes(Type delegateType)
-        {
-            <span style="color:#66d9ef">var</span> invokeMethod = delegateType.GetMethod(<span style="color:#e6db74">&#34;Invoke&#34;</span>);
-            <span style="color:#66d9ef">return</span> invokeMethod.GetParameters().Select(p =&gt; p.ParameterType).ToArray();
-        }
-
-        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span> GetDataContext(DependencyObject target)
-        {
-            <span style="color:#66d9ef">return</span> target.GetValue(FrameworkElement.DataContextProperty)
-                ?? target.GetValue(FrameworkContentElement.DataContextProperty);
-        }
-
-        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Dictionary&lt;Type, Delegate&gt; <span style="color:#ae81ff">_d</span>ummyHandlers = <span style="color:#66d9ef">new</span> Dictionary&lt;Type, Delegate&gt;();
-
-        <span style="color:#66d9ef">static</span> Delegate GetDummyHandler(Type eventHandlerType)
-        {
-            Delegate handler;
-            <span style="color:#66d9ef">if</span> (!<span style="color:#ae81ff">_d</span>ummyHandlers.TryGetValue(eventHandlerType, <span style="color:#66d9ef">out</span> handler))
-            {
-                handler = CreateDummyHandler(eventHandlerType);
-                <span style="color:#ae81ff">_d</span>ummyHandlers[eventHandlerType] = handler;
-            }
-            <span style="color:#66d9ef">return</span> handler;
-        }
-
-        <span style="color:#66d9ef">static</span> Delegate CreateDummyHandler(Type eventHandlerType)
-        {
-            <span style="color:#66d9ef">var</span> parameterTypes = GetParameterTypes(eventHandlerType);
-            <span style="color:#66d9ef">var</span> returnType = eventHandlerType.GetMethod(<span style="color:#e6db74">&#34;Invoke&#34;</span>).ReturnType;
-            <span style="color:#66d9ef">var</span> dm = <span style="color:#66d9ef">new</span> DynamicMethod(<span style="color:#e6db74">&#34;DummyHandler&#34;</span>, returnType, parameterTypes);
-            <span style="color:#66d9ef">var</span> il = dm.GetILGenerator();
-            <span style="color:#66d9ef">if</span> (returnType != <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">void</span>))
-            {
-                <span style="color:#66d9ef">if</span> (returnType.IsValueType)
-                {
-                    <span style="color:#66d9ef">var</span> local = il.DeclareLocal(returnType);
-                    il.Emit(OpCodes.Ldloca_S, local);
-                    il.Emit(OpCodes.Initobj, returnType);
-                    il.Emit(OpCodes.Ldloc_0);
-                }
-                <span style="color:#66d9ef">else</span>
-                {
-                    il.Emit(OpCodes.Ldnull);
-                }
-            }
-            il.Emit(OpCodes.Ret);
-            <span style="color:#66d9ef">return</span> dm.CreateDelegate(eventHandlerType);
-        }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> SubscribeToDataContextChanged(DependencyObject targetObj)
-        {
-            DependencyPropertyDescriptor
-                .FromProperty(FrameworkElement.DataContextProperty, targetObj.GetType())
-                .AddValueChanged(targetObj, TargetObject_DataContextChanged);
-        }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> UnsubscribeFromDataContextChanged(DependencyObject targetObj)
-        {
-            DependencyPropertyDescriptor
-                .FromProperty(FrameworkElement.DataContextProperty, targetObj.GetType())
-                .RemoveValueChanged(targetObj, TargetObject_DataContextChanged);
-        }
-
-        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> TargetObject_DataContextChanged(<span style="color:#66d9ef">object</span> sender, EventArgs e)
-        {
-            DependencyObject targetObj = sender <span style="color:#66d9ef">as</span> DependencyObject;
-            <span style="color:#66d9ef">if</span> (targetObj == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">return</span>;
-
-            <span style="color:#66d9ef">object</span> dataContext = GetDataContext(targetObj);
-            <span style="color:#66d9ef">if</span> (dataContext == <span style="color:#66d9ef">null</span>)
-                <span style="color:#66d9ef">return</span>;
-
-            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, <span style="color:#ae81ff">_</span>eventInfo, EventHandlerName);
-            <span style="color:#66d9ef">if</span> (handler != <span style="color:#66d9ef">null</span>)
-            {
-                <span style="color:#ae81ff">_</span>eventInfo.AddEventHandler(targetObj, handler);
-            }
-            UnsubscribeFromDataContextChanged(targetObj);
-        }
-
-        <span style="color:#75715e">#endregion
-</span><span style="color:#75715e"></span>    }
-</code></pre></div><p>So this is the kind of things we can do thanks to this new WPF feature. We could also imagine a behavior system similar to what we can do with attached properties, e.g. to execute a standard action when an event occurs. There are lots of possible applications for this, I leave it to you to find them ;)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Collections.Generic;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.ComponentModel;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Diagnostics;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Linq;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Reflection;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Reflection.Emit;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Windows.Markup;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EventBindingExtension</span> : MarkupExtension
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> EventInfo <span style="color:#ae81ff">_</span>eventInfo;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> EventBindingExtension() { }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> EventBindingExtension(<span style="color:#66d9ef">string</span> eventHandlerName)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.EventHandlerName = eventHandlerName;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">        [ConstructorArgument(&#34;eventHandlerName&#34;)]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> EventHandlerName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> ProvideValue(IServiceProvider serviceProvider)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">string</span>.IsNullOrEmpty(EventHandlerName))
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">&#34;The EventHandlerName property is not set&#34;</span>, <span style="color:#e6db74">&#34;EventHandlerName&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> target = (IProvideValueTarget)serviceProvider.GetService(<span style="color:#66d9ef">typeof</span>(IProvideValueTarget));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> targetObj = target.TargetObject <span style="color:#66d9ef">as</span> DependencyObject;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (targetObj == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;The target object must be a DependencyObject&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>eventInfo = target.TargetProperty <span style="color:#66d9ef">as</span> EventInfo;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>eventInfo == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;The target property must be an event&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">object</span> dataContext = GetDataContext(targetObj);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (dataContext == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                SubscribeToDataContextChanged(targetObj);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> GetDummyHandler(<span style="color:#ae81ff">_</span>eventInfo.EventHandlerType);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, <span style="color:#ae81ff">_</span>eventInfo, EventHandlerName);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (handler == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                Trace.TraceError(
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;EventBinding: no suitable method named &#39;{0}&#39; found in type &#39;{1}&#39; to handle event &#39;{2&#39;}&#34;</span>,
+</span></span><span style="display:flex;"><span>                    EventHandlerName,
+</span></span><span style="display:flex;"><span>                    dataContext.GetType(),
+</span></span><span style="display:flex;"><span>                    <span style="color:#ae81ff">_</span>eventInfo);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> GetDummyHandler(<span style="color:#ae81ff">_</span>eventInfo.EventHandlerType);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> handler;
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Helper methods</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> Delegate GetHandler(<span style="color:#66d9ef">object</span> dataContext, EventInfo eventInfo, <span style="color:#66d9ef">string</span> eventHandlerName)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Type dcType = dataContext.GetType();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> method = dcType.GetMethod(
+</span></span><span style="display:flex;"><span>                eventHandlerName,
+</span></span><span style="display:flex;"><span>                GetParameterTypes(eventInfo.EventHandlerType));
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (method != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (method.IsStatic)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(eventInfo.EventHandlerType, method);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(eventInfo.EventHandlerType, dataContext, method);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> Type[] GetParameterTypes(Type delegateType)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> invokeMethod = delegateType.GetMethod(<span style="color:#e6db74">&#34;Invoke&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> invokeMethod.GetParameters().Select(p =&gt; p.ParameterType).ToArray();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span> GetDataContext(DependencyObject target)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> target.GetValue(FrameworkElement.DataContextProperty)
+</span></span><span style="display:flex;"><span>                ?? target.GetValue(FrameworkContentElement.DataContextProperty);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Dictionary&lt;Type, Delegate&gt; <span style="color:#ae81ff">_d</span>ummyHandlers = <span style="color:#66d9ef">new</span> Dictionary&lt;Type, Delegate&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> Delegate GetDummyHandler(Type eventHandlerType)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Delegate handler;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (!<span style="color:#ae81ff">_d</span>ummyHandlers.TryGetValue(eventHandlerType, <span style="color:#66d9ef">out</span> handler))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                handler = CreateDummyHandler(eventHandlerType);
+</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_d</span>ummyHandlers[eventHandlerType] = handler;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> handler;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> Delegate CreateDummyHandler(Type eventHandlerType)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> parameterTypes = GetParameterTypes(eventHandlerType);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> returnType = eventHandlerType.GetMethod(<span style="color:#e6db74">&#34;Invoke&#34;</span>).ReturnType;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> dm = <span style="color:#66d9ef">new</span> DynamicMethod(<span style="color:#e6db74">&#34;DummyHandler&#34;</span>, returnType, parameterTypes);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> il = dm.GetILGenerator();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (returnType != <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">void</span>))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (returnType.IsValueType)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> local = il.DeclareLocal(returnType);
+</span></span><span style="display:flex;"><span>                    il.Emit(OpCodes.Ldloca_S, local);
+</span></span><span style="display:flex;"><span>                    il.Emit(OpCodes.Initobj, returnType);
+</span></span><span style="display:flex;"><span>                    il.Emit(OpCodes.Ldloc_0);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    il.Emit(OpCodes.Ldnull);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            il.Emit(OpCodes.Ret);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> dm.CreateDelegate(eventHandlerType);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> SubscribeToDataContextChanged(DependencyObject targetObj)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            DependencyPropertyDescriptor
+</span></span><span style="display:flex;"><span>                .FromProperty(FrameworkElement.DataContextProperty, targetObj.GetType())
+</span></span><span style="display:flex;"><span>                .AddValueChanged(targetObj, TargetObject_DataContextChanged);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> UnsubscribeFromDataContextChanged(DependencyObject targetObj)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            DependencyPropertyDescriptor
+</span></span><span style="display:flex;"><span>                .FromProperty(FrameworkElement.DataContextProperty, targetObj.GetType())
+</span></span><span style="display:flex;"><span>                .RemoveValueChanged(targetObj, TargetObject_DataContextChanged);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> TargetObject_DataContextChanged(<span style="color:#66d9ef">object</span> sender, EventArgs e)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            DependencyObject targetObj = sender <span style="color:#66d9ef">as</span> DependencyObject;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (targetObj == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">object</span> dataContext = GetDataContext(targetObj);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (dataContext == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, <span style="color:#ae81ff">_</span>eventInfo, EventHandlerName);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (handler != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>eventInfo.AddEventHandler(targetObj, handler);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            UnsubscribeFromDataContextChanged(targetObj);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>So this is the kind of things we can do thanks to this new WPF feature. We could also imagine a behavior system similar to what we can do with attached properties, e.g. to execute a standard action when an event occurs. There are lots of possible applications for this, I leave it to you to find them ;)</p>
 
 		</div>
 		<footer class="post__footer">
