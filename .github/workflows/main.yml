@@ -4,8 +4,8 @@ on:
   push:
     branches: [ master ]
   schedule:
-    # run every day at 2pm (UTC) to publish scheduled posts
-    - cron:  '0 14 * * *'
+    # run every day at 1pm (UTC) to publish scheduled posts
+    - cron:  '0 13 * * *'
 
 jobs:
   build:
