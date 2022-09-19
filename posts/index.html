@@ -74,6 +74,21 @@ if (!doNotTrack) {
 	</header><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/" rel="bookmark">
+			Using multiple JSON serialization settings in ASP.NET Core
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2022-09-19T00:00:00Z">September 19, 2022</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		My blog has been a bit quiet in the last 18 months or so, because, well, life happened&hellip; In that time span I became a father, changed jobs twice, and relocated to Canada with my family, so free time has been scarce. Anyway, I recently ran into a problem that I found worthy of a blog post, and I have a bit of time to write!
+Heterogenous JSON formats Let&rsquo;s say we&rsquo;re building an ASP.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/" rel="bookmark">
 			Building a project that target .NET Framework 4.5 in Visual Studio 2022
 			</a>
@@ -265,21 +280,6 @@ public void AddProductToOrder(int orderId, int productId, int count) {  .
 		I&rsquo;ve been using Azure Cosmos DB on a fairly regular basis for the last 2 years or so. It&rsquo;s a pretty good database, but one thing has always bothered me: the lack of a proper tool to query and modify data in the database. Basically, here are the current options:
  The standalone Cosmos DB Explorer website The Data Explorer in the Azure Portal Cosmos DB support in Azure Storage Explorer  These 3 options are actually the same thing, made from the same code base, which was recently open-sourced.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2020/08/31/inject-service-into-system-text-json-converter/" rel="bookmark">
-			Inject a service into a System.Text.Json converter
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-08-31T00:00:00Z">August 31, 2020</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Most JSON converters are fairly simple, and typically self-contained. But once in a while, you need to do something a little more complex in a converter, and you end up needing to call a service. However, there&rsquo;s no built-in dependency injection in System.Text.Json converters… How can you access the service you need?
-There are basically two variants of this problem. One has a simple solution, the other is a bit of a hack…
-	</div>
 </article>
 </main>
 
@@ -317,11 +317,11 @@ There are basically two variants of this problem. One has a simple solution, the
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
 		</ul>
 	</div>
 </div>
@@ -334,8 +334,8 @@ There are basically two variants of this problem. One has a simple solution, the
 		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>

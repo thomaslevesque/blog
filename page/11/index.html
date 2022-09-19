@@ -73,6 +73,22 @@ if (!doNotTrack) {
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/" rel="bookmark">
+			[Windows Forms] Automatically drag and drop controls (DragMove)
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-05-06T00:00:00Z">May 06, 2009</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Here&rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&hellip;
+In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
+private void Window_MouseDown(object sender, MouseButtonEventArgs e) {  this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/2009/04/17/wpf-binding-to-an-asynchronous-collection/" rel="bookmark">
 			[WPF] Binding to an asynchronous collection
 			</a>
@@ -226,11 +242,11 @@ The end-user of any application expects that his preferences (window size, state
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
 		</ul>
 	</div>
 </div>
@@ -243,8 +259,8 @@ The end-user of any application expects that his preferences (window size, state
 		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>

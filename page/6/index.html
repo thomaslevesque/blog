@@ -73,6 +73,20 @@ if (!doNotTrack) {
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/" rel="bookmark">
+			Test driving C# 7 features in Visual Studio “15” Preview
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-04-16T00:00:00Z">April 16, 2016</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/" rel="bookmark">
 			Automatically inject fakes in test fixture with FakeItEasy
 			</a>
@@ -203,20 +217,6 @@ static void Main() {  try  {  Foo.DoSomethingThatMightFail(null);  }  catch (MyE
 	<div class="content list__excerpt post__content clearfix">
 		Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2015/06/04/async-and-cancellation-support-for-wait-handles/" rel="bookmark">
-			Async and cancellation support for wait handles
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-06-04T00:00:00Z">June 04, 2015</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		The .NET framework comes with a number of low-level synchronization primitives. The most commonly used are collectively known as “wait handles”, and inherit the WaitHandle class: Semaphore, Mutex, AutoResetEvent and ManualResetEvent. These classes have been there since at least .NET 2.0 (1.1 for some of them), but they haven’t evolved much since they were introduced, which means they don’t support common features that were introduced later. In particular, they don’t provide support for waiting asynchronously, nor do they support cancelling the wait.
-	</div>
 </article>
 </main>
 
@@ -254,11 +254,11 @@ static void Main() {  try  {  Foo.DoSomethingThatMightFail(null);  }  catch (MyE
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/">C# 9 records as strongly-typed ids - Part 3: JSON serialization</a></li>
 		</ul>
 	</div>
 </div>
@@ -271,8 +271,8 @@ static void Main() {  try  {  Foo.DoSomethingThatMightFail(null);  }  catch (MyE
 		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>

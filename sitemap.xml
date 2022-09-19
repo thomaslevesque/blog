@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
+    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/json/</loc>
+    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/posts/</loc>
+    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/serialization/</loc>
+    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/</loc>
+    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/</loc>
+    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/</loc>
+    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://thomaslevesque.com/tags/.net-4.5/</loc>
     <lastmod>2021-11-12T00:00:00+00:00</lastmod>
   </url><url>
@@ -14,16 +35,7 @@
     <loc>https://thomaslevesque.com/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/</loc>
     <lastmod>2021-11-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/posts/</loc>
-    <lastmod>2021-11-12T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://thomaslevesque.com/tags/reference-assemblies/</loc>
-    <lastmod>2021-11-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/</loc>
-    <lastmod>2021-11-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/</loc>
     <lastmod>2021-11-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/visual-studio-2022/</loc>
@@ -77,16 +89,7 @@
     <loc>https://thomaslevesque.com/tags/entity-framework-core/</loc>
     <lastmod>2020-12-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
-    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</loc>
-    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/json/</loc>
-    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/serialization/</loc>
     <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</loc>

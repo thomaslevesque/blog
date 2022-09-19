@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Using multiple JSON serialization settings in ASP.NET Core - Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Using multiple JSON serialization settings in ASP.NET Core" />
+<meta property="og:description" content="My blog has been a bit quiet in the last 18 months or so, because, well, life happened&hellip; In that time span I became a father, changed jobs twice, and relocated to Canada with my family, so free time has been scarce. Anyway, I recently ran into a problem that I found worthy of a blog post, and I have a bit of time to write!
+Heterogenous JSON formats Let&rsquo;s say we&rsquo;re building an ASP." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://thomaslevesque.com/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-09-19T00:00:00+00:00" />
+
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Using multiple JSON serialization settings in ASP.NET Core"/>
+<meta name="twitter:description" content="My blog has been a bit quiet in the last 18 months or so, because, well, life happened&hellip; In that time span I became a father, changed jobs twice, and relocated to Canada with my family, so free time has been scarce. Anyway, I recently ran into a problem that I found worthy of a blog post, and I have a bit of time to write!
+Heterogenous JSON formats Let&rsquo;s say we&rsquo;re building an ASP."/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-31621259-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<a class="main__header__type" href="/posts/">posts</a>
+			<h1 class="post__title">Using multiple JSON serialization settings in ASP.NET Core</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2022-09-19T00:00:00Z">September 19, 2022</time></div></div>
+		</header><div class="content post__content clearfix">
+			<p>My blog has been a bit quiet in the last 18 months or so, because, well, life happened&hellip; In that time span I became a father, changed jobs twice, and relocated to Canada with my family, so free time has been scarce. Anyway, I recently ran into a problem that I found worthy of a blog post, <em>and</em> I have a bit of time to write!</p>
+<h2 id="heterogenous-json-formats">Heterogenous JSON formats</h2>
+<p>Let&rsquo;s say we&rsquo;re building an ASP.NET Core Web API that, for some reason, has heterogenous JSON formats: some endpoints use <code>camelCase</code> property names and represent enums as strings, others use <code>PascalCase</code> and represent enums as integers, maybe some others use <code>snake_case</code>&hellip; It&rsquo;s a bit of a mess, but let&rsquo;s assume that we don&rsquo;t have a choice in the matter.</p>
+<p>We could just decorate the objects exposed by these endpoints with attributes to specify the JSON property names, but it&rsquo;s really annoying&hellip; I usually prefer to have a rule that is applied globally, and only use attributes for exceptions to the rule. Basically, what I&rsquo;d like to do is say &ldquo;for this controller, use these JSON serialization settings&rdquo; or &ldquo;for this endpoint, use those other settings&rdquo;.</p>
+<p>Unfortunately, ASP.NET Core only lets us specify global JSON serialization settings, using <code>.AddControllers().AddJsonOptions(...)</code>, and these settings are used for all endpoints&hellip; I found a few questions on Stack Overflow about this, but none of them had a satisfactory answer. The good news is that ASP.NET Core is highly extensible, which means we can probably customize the behavior to fit our needs (in fact, I don&rsquo;t think I&rsquo;ve ever seen a framework that offers that much flexibility; the team at Microsoft really did an amazing job).</p>
+<h2 id="input-and-output-formatters">Input and output formatters</h2>
+<p>In ASP.NET Core, the format for request and response bodies is controlled by input and output formatters: input formatters deserialize the request body, output formatters serialize the response body. There are formatters for different formats, based on the content type: one for JSON, one for XML, one for plain text, etc. For JSON, by default, ASP.NET Core uses <code>SystemTextJsonInputFormatter</code> and <code>SystemTextJsonOutputFormatter</code>; both of these use the JSON serialization settings defined in <code>AddJsonOptions</code>.</p>
+<p>In fact, there can even be multiple formatters for the same content type! How does ASP.NET Core pick the one to use? Well, each formatter implements a method to indicate whether it can handle a given request or response; the first one that returns <code>true</code> is picked.</p>
+<p>We&rsquo;re going to use this to our advantage: we&rsquo;ll add our own formatters (one input/output formatter pair for each JSON format we want to support), and each will only accept to read requests or write responses for a specific format.</p>
+<h2 id="named-json-settings">Named JSON settings</h2>
+<p>First, we need a way to specify multiple JSON serialization settings, and access these settings by name. Fortunately, ASP.NET Core got us covered here, with its <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0#named">Named Options</a> feature.</p>
+<p>The <code>AddJsonOptions</code> method just configures <code>JsonOptions</code> for the default option name (which is an empty string), but we can also do it for a specific name. In fact, let&rsquo;s write an overload of <code>AddJsonOptions</code> to do this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IMvcBuilder AddJsonOptions(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span> IMvcBuilder builder,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">string</span> settingsName,
+</span></span><span style="display:flex;"><span>    Action&lt;JsonOptions&gt; configure)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ArgumentNullException.ThrowIfNull(builder);
+</span></span><span style="display:flex;"><span>    ArgumentNullException.ThrowIfNull(configure);
+</span></span><span style="display:flex;"><span>    builder.Services.Configure(settingsName, configure);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> builder;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And now we can use the same familiar approach as when configuring the global JSON options, but with a name:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>builder.Services.AddControllers()
+</span></span><span style="display:flex;"><span>    .AddJsonOptions(options =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Global settings: use the defaults, but serialize enums as strings</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// (because it really should be the default)</span>
+</span></span><span style="display:flex;"><span>        options.JsonSerializerOptions.Converters.Add(
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> JsonStringEnumConverter(JsonNamingPolicy.CamelCase, <span style="color:#66d9ef">false</span>));
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .AddJsonOptions(<span style="color:#e6db74">&#34;old&#34;</span>, options =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Custom JSON format for interop with an old system that uses PascalCase</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// and enums as numbers</span>
+</span></span><span style="display:flex;"><span>        options.JsonSerializerOptions.PropertyNamingPolicy = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>    });
+</span></span></code></pre></div><p>So now we can have global (unnamed) settings, and named settings (<code>old</code>). Of course, at this point, nothing uses the <code>old</code> settings&hellip; we&rsquo;ll get there soon.</p>
+<h2 id="endpoint-metadata">Endpoint metadata</h2>
+<p>In order to indicate which JSON format is used for a given endpoint, we need to add some metadata to the endpoint. Adding custom metadata to endpoints in ASP.NET Core is pretty easy: any attribute applied to a controller or action is considered metadata. So let&rsquo;s just create a custom attribute:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JsonSettingsNameAttribute</span> : Attribute
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> JsonSettingsNameAttribute(<span style="color:#66d9ef">string</span> name)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Name = name;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We can then apply this attribute to a whole controller class, or to a specific action method:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[ApiController]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[Route(&#34;[controller]</span><span style="color:#e6db74">&#34;)]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#75715e">// This controller uses the &#34;old&#34; JSON format</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[JsonSettingsName(&#34;old&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OldApiController</span> : ControllerBase
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [HttpGet(&#34;foo&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> IActionResult Foo() { ... }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [HttpGet(&#34;bar&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// This action uses the &#34;blah&#34; JSON format</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [JsonSettingsName(&#34;blah&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> IActionResult Bar() { ... }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And we can access the information from the endpoint at runtime like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string?</span> GetJsonSettingsName(<span style="color:#66d9ef">this</span> HttpContext context)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> context.GetEndpoint()
+</span></span><span style="display:flex;"><span>        ?.Metadata
+</span></span><span style="display:flex;"><span>        .GetMetadata&lt;JsonSettingsNameAttribute&gt;()
+</span></span><span style="display:flex;"><span>        ?.Name;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Easy!</p>
+<h2 id="custom-formatters">Custom formatters</h2>
+<p>The next piece of the puzzle is to actually write the custom formatters. This might sound difficult, but it&rsquo;s really not that hard, because we don&rsquo;t need to reimplement the whole thing: we can inherit from the default JSON formatters, and just override the <code>CanRead</code> and <code>CanWriteResult</code> methods. Our formatters will be created for a specific format, and only handle requests and responses for endpoints that use this format. Here we go:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpecificSystemTextJsonInputFormatter</span> : SystemTextJsonInputFormatter
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> SpecificSystemTextJsonInputFormatter(<span style="color:#66d9ef">string</span> settingsName, JsonOptions options, ILogger&lt;SpecificSystemTextJsonInputFormatter&gt; logger)
+</span></span><span style="display:flex;"><span>        : <span style="color:#66d9ef">base</span>(options, logger)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        SettingsName = settingsName;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SettingsName { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> CanRead(InputFormatterContext context)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (context.HttpContext.GetJsonSettingsName() != SettingsName)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">base</span>.CanRead(context);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpecificSystemTextJsonOutputFormatter</span> : SystemTextJsonOutputFormatter
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> SpecificSystemTextJsonOutputFormatter(<span style="color:#66d9ef">string</span> settingsName, JsonSerializerOptions jsonSerializerOptions) : <span style="color:#66d9ef">base</span>(jsonSerializerOptions)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        SettingsName = settingsName;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SettingsName { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> CanWriteResult(OutputFormatterCanWriteContext context)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (context.HttpContext.GetJsonSettingsName() != SettingsName)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">base</span>.CanWriteResult(context);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, the logic here is pretty simple. If the JSON settings name for the current <code>HttpContext</code> matches the formatter&rsquo;s settings name, accept it (more accurately, let the base implementation decide to accept it or not). If it doesn&rsquo;t match, reject it.</p>
+<p>Note that this isn&rsquo;t the <em>whole</em> logic: the formatters still need to be instantiated with the correct <code>JsonOptions</code> or <code>JsonSerializerOptions</code>. We&rsquo;ll get to this soon.</p>
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>OK, so we now have:</p>
+<ul>
+<li>named JSON settings</li>
+<li>a way to indicate which named settings (if any) apply to an endpoint</li>
+<li>custom input and output formatters that take the JSON settings name into account</li>
+</ul>
+<p>We still need to instantiate the formatters and add them to ASP.NET Core&rsquo;s options. This would normally be done in the call to <code>AddControllers</code>, like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddControllers(options =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    options.InputFormatters.Add(...);
+</span></span><span style="display:flex;"><span>    options.OutputFormatters.Add(...);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>However, our formatters have dependencies on other services, so we can&rsquo;t do it directly. We need to use <code>IConfigureOptions</code> instead. Andrew Lock explains this very well in <a href="https://andrewlock.net/access-services-inside-options-and-startup-using-configureoptions/">this article</a>.</p>
+<p>So let&rsquo;s create a class that implements <code>IConfigureOptions&lt;MvcOptions&gt;</code> and adds the formatters for a given format name:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigureMvcJsonOptions</span> : IConfigureOptions&lt;MvcOptions&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> <span style="color:#ae81ff">_</span>jsonSettingsName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IOptionsMonitor&lt;JsonOptions&gt; <span style="color:#ae81ff">_</span>jsonOptions;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILoggerFactory <span style="color:#ae81ff">_l</span>oggerFactory;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ConfigureMvcJsonOptions(
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> jsonSettingsName,
+</span></span><span style="display:flex;"><span>        IOptionsMonitor&lt;JsonOptions&gt; jsonOptions,
+</span></span><span style="display:flex;"><span>        ILoggerFactory loggerFactory)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>jsonSettingsName = jsonSettingsName;
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>jsonOptions = jsonOptions;
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_l</span>oggerFactory = loggerFactory;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(MvcOptions options)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> jsonOptions = <span style="color:#ae81ff">_</span>jsonOptions.Get(<span style="color:#ae81ff">_</span>jsonSettingsName);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> logger = <span style="color:#ae81ff">_l</span>oggerFactory.CreateLogger&lt;SpecificSystemTextJsonInputFormatter&gt;();
+</span></span><span style="display:flex;"><span>        options.InputFormatters.Insert(
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> SpecificSystemTextJsonInputFormatter(
+</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>jsonSettingsName,
+</span></span><span style="display:flex;"><span>                jsonOptions,
+</span></span><span style="display:flex;"><span>                logger));
+</span></span><span style="display:flex;"><span>        options.OutputFormatters.Insert(
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> SpecificSystemTextJsonOutputFormatter(
+</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>jsonSettingsName,
+</span></span><span style="display:flex;"><span>                jsonOptions.JsonSerializerOptions));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <code>Configure</code> method of this class will be called every time the options system needs to build a <code>MvcOptions</code> object.</p>
+<p>A few things to note:</p>
+<ul>
+<li>We depend on <code>IOptionsMonitor&lt;JsonOptions&gt;</code> to be able to access named options (<code>IOptions&lt;JsonOptions&gt;</code> doesn&rsquo;t offer this feature)</li>
+<li>We insert our formatters in the first position, because ASP.NET Core tries each formatter in order. If we added ours at the end, it would pick the first compatible formatter, i.e. the default JSON formatter, ignoring our formatter.</li>
+</ul>
+<p>Finally, we need to register this <code>ConfigureMvcJsonOptions</code> class as a singleton service. We should do this for each settings name. We&rsquo;re going to do this in our <code>AddJsonOptions</code> extension method from earlier:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IMvcBuilder AddJsonOptions(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span> IMvcBuilder builder,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">string</span> settingsName,
+</span></span><span style="display:flex;"><span>    Action&lt;JsonOptions&gt; configure)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ArgumentNullException.ThrowIfNull(builder);
+</span></span><span style="display:flex;"><span>    ArgumentNullException.ThrowIfNull(configure);
+</span></span><span style="display:flex;"><span>    builder.Services.Configure(settingsName, configure);
+</span></span><span style="display:flex;"><span>    builder.Services.AddSingleton&lt;IConfigureOptions&lt;MvcOptions&gt;&gt;(sp =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> options = sp.GetRequiredService&lt;IOptionsMonitor&lt;JsonOptions&gt;&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> loggerFactory = sp.GetRequiredService&lt;ILoggerFactory&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> ConfigureMvcJsonOptions(settingsName, options, loggerFactory);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> builder;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And everything is now in place! If we decorate a controller with <code>[JsonSettingsName(&quot;old&quot;)]</code>, it will use the <code>old</code> JSON settings. Other controllers will still use the default one.</p>
+<p>You can find the full code with a working example in <a href="https://github.com/thomaslevesque/AspNetCore.SystemTextJson.MultipleSettings">this Github repository</a>:</p>
+<p><img src="camelcase.png" alt="camelCase format" title="camelCase format">
+<img src="default.png" alt="default format" title="default format"></p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/asp.net-core/" rel="tag">ASP.NET Core</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/json/" rel="tag">JSON</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/serialization/" rel="tag">serialization</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Thomas Levesque</span>
+	</div>
+	<div class="authorbox__description">
+		Thomas Levesque is a French software developer from Paris.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Building a project that target .NET Framework 4.5 in Visual Studio 2022</p>
+		</a>
+	</div>
+</nav>
+
+<div>
+    <script src="https://utteranc.es/client.js"
+            repo="thomaslevesque/blog"
+            issue-term="pathname"
+            label="post-comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://thomaslevesque.com/" />
+	</form>
+</div>
+<div class="widget-social widget">
+    <h4 class="widget-social__title widget__title">Social</h4>
+    <div class="widget-social__content widget__content">
+        <a class="widget-social__link-custom widget__link" title="GitHub" rel="noopener noreferrer" href="https://github.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="Twitter" rel="noopener noreferrer" href="https://twitter.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-twitter" width="24" height="24" viewBox="0 0 384 312"><path d="m384 36.9c-14.1 6.3-29.3 10.5-45.2 12.4 16.3-9.7 28.8-25.2 34.6-43.6-15.2 9-32.1 15.6-50 19.1-14.4-15.2-34.9-24.8-57.5-24.8-43.5 0-78.8 35.3-78.8 78.8 0 6.2.7 12.2 2 17.9-65.5-3.3-123.5-34.6-162.4-82.3-6.7 11.6-10.6 25.2-10.6 39.6 0 27.3 13.9 51.4 35 65.6-12.9-.4-25.1-4-35.7-9.9v1c0 38.2 27.2 70 63.2 77.2-6.6 1.8-13.6 2.8-20.8 2.8-5.1 0-10-.5-14.8-1.4 10 31.3 39.1 54.1 73.6 54.7-27 21.1-60.9 33.7-97.8 33.7-6.4 0-12.6-.4-18.8-1.1 34.9 22.4 76.3 35.4 120.8 35.4 144.9 0 224.1-120 224.1-224.1 0-3.4-.1-6.8-.2-10.2 15.4-11.1 28.7-25 39.3-40.8z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="RSS feed" rel="noopener noreferrer" href="/index.xml">
+            <svg class="widget-social__link-icon-custom icon icon-rss" x="0px" y="0px" width="24" height="24" viewBox="0 0 1000 1000"><path d="M277.2,856.3c0,37.1-13,68.7-39,94.6c-26,26-57.5,39-94.6,39S75,976.9,49,951c-26-26-39-57.5-39-94.6c0-37.1,13-68.7,39-94.6c26-26,57.5-39,94.6-39s68.7,13,94.6,39C264.3,787.7,277.2,819.2,277.2,856.3z M633.6,941.9c0.9,13-3,24.1-11.8,33.4c-8.4,9.7-19.3,14.6-32.7,14.6h-94c-11.6,0-21.6-3.8-29.9-11.5c-8.4-7.7-13-17.3-13.9-28.9c-10.2-106.2-53-197.1-128.4-272.5c-75.4-75.4-166.2-118.2-272.5-128.4c-11.6-0.9-21.2-5.6-28.9-13.9c-7.7-8.4-11.5-18.3-11.5-29.9v-94c0-13.5,4.9-24.4,14.6-32.7c7.9-7.9,17.9-11.8,29.9-11.8H58c74.2,6,145.2,24.7,213,56c67.7,31.3,127.8,73.4,180.2,126.3c52.9,52.4,95,112.5,126.3,180.2C608.8,796.7,627.5,867.7,633.6,941.9L633.6,941.9z M989.9,943.3c0.9,12.5-3.2,23.4-12.5,32.7c-8.3,9.3-19,13.9-32,13.9h-99.5c-12.1,0-22.4-4.1-31-12.2s-13.1-18-13.6-29.6c-5.6-99.8-29-194.5-70.3-284.3c-41.3-89.8-95-167.7-161.1-233.8C503.8,363.9,425.8,310.2,336,269c-89.8-41.3-184.5-65-284.3-71c-11.6-0.5-21.5-5-29.6-13.6c-8.1-8.6-12.2-18.7-12.2-30.3V54.6c0-13,4.6-23.7,13.9-32c8.4-8.4,18.6-12.5,30.6-12.5h2.1c121.6,6,237.9,33.9,349,83.5c111.1,49.6,209.8,117.8,296.1,204.6c86.8,86.3,155,185,204.6,296.1C956,705.4,983.8,821.8,989.9,943.3L989.9,943.3z"/></svg>
+        </a>
+    </div>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Top tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2022 Thomas Levesque.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>
