@@ -2,22 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://thomaslevesque.com/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/cloudflare-workers/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/javascript/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/posts/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/tutorial/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://thomaslevesque.com/tags/asp.net-core/</loc>
     <lastmod>2022-09-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/json/</loc>
     <lastmod>2022-09-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/posts/</loc>
-    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://thomaslevesque.com/tags/serialization/</loc>
-    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/</loc>
-    <lastmod>2022-09-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/</loc>
     <lastmod>2022-09-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/</loc>

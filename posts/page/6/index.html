@@ -74,6 +74,20 @@ if (!doNotTrack) {
 	</header><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/2016/04/20/publishing-a-package-from-appveyor-to-nuget-org/" rel="bookmark">
+			Publishing a package from AppVeyor to NuGet.org
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-04-20T00:00:00Z">April 20, 2016</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		In the last few months, I’ve been using AppVeyor CI on some of my open-source projects (along with Cake for the build scripts). I really like it, but one thing bothered me: I couldn’t find a way to manually publish packages to NuGet.org directly from AppVeyor. I had to download the package locally, then upload it manually from my machine (either with nuget push on the command line, or via the web form on NuGet.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/" rel="bookmark">
 			Test driving C# 7 features in Visual Studio “15” Preview
 			</a>
@@ -204,20 +218,6 @@ x &gt; y is False !(x &lt;= y) is True
 		Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
 static void Main() {  try  {  Foo.DoSomethingThatMightFail(null);  }  catch (MyException ex) when (ex.Code == 42)  {  Console.WriteLine(&#34;Error 42 occurred&#34;);  } } As you might expect, the catch block will be entered if and only if ex.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/" rel="bookmark">
-			Create an auto-mocking container with Unity and FakeItEasy
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-06-14T00:00:00Z">June 14, 2015</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.
-	</div>
 </article>
 </main>
 
@@ -256,11 +256,11 @@ static void Main() {  try  {  Foo.DoSomethingThatMightFail(null);  }  catch (MyE
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/">Building a URL shortener in 12 lines of code using Cloudflare Workers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
 		</ul>
 	</div>
 </div>

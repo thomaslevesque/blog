@@ -73,6 +73,23 @@ if (!doNotTrack) {
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/" rel="bookmark">
+			Handling query string parameters with no value in ASP.NET Core
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-01-30T00:00:00Z">January 30, 2020</time>
+	<time class="meta__text" datetime="2020-05-05T00:00:00Z">(Last Modified: May 05, 2020)</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
+ query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
+ But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/" rel="bookmark">
 			ASP.NET Core: when environments are not enough, use sub-environments!
 			</a>
@@ -204,21 +221,6 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
 		Update 2021/09/19: If you&rsquo;re using the newer Microsoft.Identity.Web library, you don&rsquo;t have anything to do to handle this, as it&rsquo;s already handled by the library. This article only applies if you&rsquo;re using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!
  If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &ldquo;wildcard&rdquo; tenant id such as organizations or common in the authority URL:
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/" rel="bookmark">
-			Making a WPF app using a SDK-style project with MSBuildSdkExtras
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-11-23T00:00:00Z">November 23, 2018</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Ever since the first stable release of the .NET Core SDK, we&rsquo;ve enjoyed a better C# project format, often called &ldquo;SDK-style&rdquo; because you specify a SDK to use in the project file. It&rsquo;s still a .csproj XML file, it&rsquo;s still based on MSBuild, but it&rsquo;s much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.
-However, out of the box, it&rsquo;s only usable for some project types: ASP.
-	</div>
 </article>
 </main>
 
@@ -256,11 +258,11 @@ However, out of the box, it&rsquo;s only usable for some project types: ASP.
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/">Building a URL shortener in 12 lines of code using Cloudflare Workers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/">C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</a></li>
 		</ul>
 	</div>
 </div>

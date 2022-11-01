@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Building a URL shortener in 12 lines of code using Cloudflare Workers - Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Building a URL shortener in 12 lines of code using Cloudflare Workers" />
+<meta property="og:description" content="Cloudflare Workers Cloudflare Workers is a serverless environment that runs Javascript. Basically, you just write code that handle HTTP requests, similarly to Node.js. The code is deployed globally across the Cloudflare network, which means it&rsquo;s always running as close as possible to the end user.
+I was recently playing with Cloudflare Workers to see how it worked, and I realized how incredibly easy it was to make a simple URL shortener with it!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://thomaslevesque.com/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-11-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-11-01T00:00:00+00:00" />
+
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Building a URL shortener in 12 lines of code using Cloudflare Workers"/>
+<meta name="twitter:description" content="Cloudflare Workers Cloudflare Workers is a serverless environment that runs Javascript. Basically, you just write code that handle HTTP requests, similarly to Node.js. The code is deployed globally across the Cloudflare network, which means it&rsquo;s always running as close as possible to the end user.
+I was recently playing with Cloudflare Workers to see how it worked, and I realized how incredibly easy it was to make a simple URL shortener with it!"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-31621259-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<a class="main__header__type" href="/posts/">posts</a>
+			<h1 class="post__title">Building a URL shortener in 12 lines of code using Cloudflare Workers</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2022-11-01T00:00:00Z">November 01, 2022</time></div></div>
+		</header><div class="content post__content clearfix">
+			<h2 id="cloudflare-workers">Cloudflare Workers</h2>
+<p><a href="https://developers.cloudflare.com/workers/">Cloudflare Workers</a> is a serverless environment that runs Javascript. Basically, you just write code that handle HTTP requests, similarly to Node.js. The code is deployed globally across the Cloudflare network, which means it&rsquo;s always running as close as possible to the end user.</p>
+<p>I was recently playing with Cloudflare Workers to see how it worked, and I realized how incredibly easy it was to make a simple URL shortener with it! Here&rsquo;s a short tutorial to show you how it can be done.</p>
+<p>First, you need a Cloudflare account. Don&rsquo;t worry, it&rsquo;s free! If you need to scale up, you might need a paid plan, but a free plan is enough for experimenting. Once you have your account, login to the dashboard.</p>
+<h2 id="kv-storage">KV Storage</h2>
+<p>First, we&rsquo;re going to need a storage location for the data. We&rsquo;ll use <a href="https://developers.cloudflare.com/workers/runtime-apis/kv">Workers KV</a>, which is a simple key-value store provided by Cloudflare Workers. Go to the <strong>Workers &gt; KV</strong> section and click <strong>Create namespace</strong>. Choose a name and click <strong>Add</strong>:</p>
+<p><img src="create-kv-namespace.png" alt="Screenshot of the &amp;lsquo;Create namespace&amp;rsquo; form in Cloudflare dashboard" title="Create namespace"></p>
+<p>Click <strong>View</strong> in the namespace list to access your new namespace, and add a few entries. The key will be the &ldquo;token&rdquo; for a short URL, and the value will be the URL it redirects to.</p>
+<p><img src="kv-entries.png" alt="Screenshot of the KV key-value editor UI" title="KV entries"></p>
+<h2 id="creating-the-worker-service">Creating the worker service</h2>
+<p>Now, head to the <strong>Workers &gt; Overview</strong> section, and click <strong>Create a service</strong>. Pick a name, select the <strong>HTTP handler</strong> template with the module syntax, and click <strong>Create service</strong>:</p>
+<p><img src="create-service.png" alt="Screenshot of the &amp;lsquo;Create a service&amp;rsquo; form in Cloudflare dashboard" title="Create a service"></p>
+<p>You should then be redirected to your new service:</p>
+<p><img src="worker-service-page.png" alt="Screenshot of the worker service page" title="Service page"></p>
+<h2 id="binding-the-kv-namespace-to-a-variable">Binding the KV namespace to a variable</h2>
+<p>Before we start coding, we need to bind our KV namespace to a variable, so that we can access it from the code. Go to the <strong>Settings</strong> tab, then to the <strong>Variables</strong> section:</p>
+<p><img src="settings-variables.png" alt="Screenshot of the Variables page of the service" title="Settings &gt; Variables"></p>
+<p>Under <strong>KV Namespace Bindings</strong> click <strong>Add binding</strong>, enter <code>kv</code> as variable name (you can pick any name you like, of course), pick the KV namespace you created earlier from the dropdown, and click <strong>Save</strong>.</p>
+<p><img src="kv-namespace-binding.png" alt="Screenshot of the &amp;ldquo;Add KV namespace binding&amp;rdquo; form" title="KV namespace binding"></p>
+<h2 id="the-code">The code</h2>
+<p>We are now ready to start coding! Go back to the <strong>Resources</strong> tab, and click the <strong>Quick edit</strong> button. You will land on the code editor page:</p>
+<p><img src="code-editor.png" alt="Screenshot of the code editor for the service" title="Code editor"></p>
+<p>On the left is a simple Javascript code editor, and on the right is the UI to test your worker. You can send requests to the worker and check how it responds. This makes it <em>very</em> easy to test your code!</p>
+<p>Replace the code with the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">async</span> <span style="color:#a6e22e">fetch</span>(<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">env</span>) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">method</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;GET&#34;</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Response</span>(<span style="color:#e6db74">&#34;Forbidden&#34;</span>, { <span style="color:#a6e22e">status</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">403</span> });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">pathname</span> } <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">URL</span>(<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">url</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">key</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">pathname</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#39;/&#39;</span>)[<span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">key</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Response</span>(<span style="color:#e6db74">&#34;Not found&#34;</span>, { <span style="color:#a6e22e">status</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">404</span> });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">dest</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">kv</span>.<span style="color:#a6e22e">get</span>(<span style="color:#a6e22e">key</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">dest</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Response</span>(<span style="color:#e6db74">&#34;Redirecting...&#34;</span>, { <span style="color:#a6e22e">status</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">302</span>, <span style="color:#a6e22e">headers</span><span style="color:#f92672">:</span> { <span style="color:#e6db74">&#34;Location&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">dest</span> }});
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Response</span>(<span style="color:#e6db74">&#34;Not found&#34;</span>, { <span style="color:#a6e22e">status</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">404</span> });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Brief explanation of this code:</p>
+<ul>
+<li>We have two parameters:
+<ul>
+<li><code>request</code>, which, predictably, represents the HTTP request we just received</li>
+<li><code>env</code>, which gives access to environment variables and KV namespace bindings</li>
+</ul>
+</li>
+<li>We only want to process <code>GET</code> requests, so we return a <code>403 Forbidden</code> response if the method isn&rsquo;t <code>GET</code>.</li>
+<li>We extract the path from the URL, and get the first path segment; this is the token for the short URL.</li>
+<li>We access the KV namespace to find the destination URL associated with the token.</li>
+<li>If we find it, we return a <code>302 Found</code> response to redirect to that URL (specified in the <code>Location</code> header)</li>
+<li>Otherwise, we return a <code>404 Not Found</code></li>
+</ul>
+<h2 id="testing-and-deploying">Testing and deploying</h2>
+<p>You can test it using the <strong>HTTP</strong> panel:</p>
+<p><img src="test-notfound.png" alt="Screenshot of a request for a non-existing URL token, returning a 404 response" title="Not found">
+<img src="test-found.png" alt="Screenshot of a request for an existing URL token, returning a 302 response" title="Found"></p>
+<p>Once you&rsquo;re satisfied that it works, you can deploy by clicking the <strong>Save and deploy</strong> button.</p>
+<p>Once it&rsquo;s deployed, you can enter the URL from the test panel directly in your browser&rsquo;s address bar, and you will be redirected to the destination URL.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We just made a URL shortener in 12 lines of code (not counting blank lines or lines with only braces). Not bad! Of course, it&rsquo;s pretty minimalist, but it&rsquo;s a start. There&rsquo;s no management UI, but you can use the KV editor to add new URLs.</p>
+<p>Oh, and of course, for it to be useful as a URL shortener, it needs a domain name that is actually short, but that&rsquo;s out of scope for this post&hellip;</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/cloudflare-workers/" rel="tag">Cloudflare Workers</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">Javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Thomas Levesque</span>
+	</div>
+	<div class="authorbox__description">
+		Thomas Levesque is a French software developer, currently living in Québec, Canada.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Using multiple JSON serialization settings in ASP.NET Core</p>
+		</a>
+	</div>
+</nav>
+
+<div>
+    <script src="https://utteranc.es/client.js"
+            repo="thomaslevesque/blog"
+            issue-term="pathname"
+            label="post-comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://thomaslevesque.com/" />
+	</form>
+</div>
+<div class="widget-social widget">
+    <h4 class="widget-social__title widget__title">Social</h4>
+    <div class="widget-social__content widget__content">
+        <a class="widget-social__link-custom widget__link" title="GitHub" rel="noopener noreferrer" href="https://github.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="Twitter" rel="noopener noreferrer" href="https://twitter.com/thomaslevesque" target="_blank">
+            <svg class="widget-social__link-icon-custom icon icon-twitter" width="24" height="24" viewBox="0 0 384 312"><path d="m384 36.9c-14.1 6.3-29.3 10.5-45.2 12.4 16.3-9.7 28.8-25.2 34.6-43.6-15.2 9-32.1 15.6-50 19.1-14.4-15.2-34.9-24.8-57.5-24.8-43.5 0-78.8 35.3-78.8 78.8 0 6.2.7 12.2 2 17.9-65.5-3.3-123.5-34.6-162.4-82.3-6.7 11.6-10.6 25.2-10.6 39.6 0 27.3 13.9 51.4 35 65.6-12.9-.4-25.1-4-35.7-9.9v1c0 38.2 27.2 70 63.2 77.2-6.6 1.8-13.6 2.8-20.8 2.8-5.1 0-10-.5-14.8-1.4 10 31.3 39.1 54.1 73.6 54.7-27 21.1-60.9 33.7-97.8 33.7-6.4 0-12.6-.4-18.8-1.1 34.9 22.4 76.3 35.4 120.8 35.4 144.9 0 224.1-120 224.1-224.1 0-3.4-.1-6.8-.2-10.2 15.4-11.1 28.7-25 39.3-40.8z"/></svg>
+        </a>
+        <a class="widget-social__link-custom widget__link" title="RSS feed" rel="noopener noreferrer" href="/index.xml">
+            <svg class="widget-social__link-icon-custom icon icon-rss" x="0px" y="0px" width="24" height="24" viewBox="0 0 1000 1000"><path d="M277.2,856.3c0,37.1-13,68.7-39,94.6c-26,26-57.5,39-94.6,39S75,976.9,49,951c-26-26-39-57.5-39-94.6c0-37.1,13-68.7,39-94.6c26-26,57.5-39,94.6-39s68.7,13,94.6,39C264.3,787.7,277.2,819.2,277.2,856.3z M633.6,941.9c0.9,13-3,24.1-11.8,33.4c-8.4,9.7-19.3,14.6-32.7,14.6h-94c-11.6,0-21.6-3.8-29.9-11.5c-8.4-7.7-13-17.3-13.9-28.9c-10.2-106.2-53-197.1-128.4-272.5c-75.4-75.4-166.2-118.2-272.5-128.4c-11.6-0.9-21.2-5.6-28.9-13.9c-7.7-8.4-11.5-18.3-11.5-29.9v-94c0-13.5,4.9-24.4,14.6-32.7c7.9-7.9,17.9-11.8,29.9-11.8H58c74.2,6,145.2,24.7,213,56c67.7,31.3,127.8,73.4,180.2,126.3c52.9,52.4,95,112.5,126.3,180.2C608.8,796.7,627.5,867.7,633.6,941.9L633.6,941.9z M989.9,943.3c0.9,12.5-3.2,23.4-12.5,32.7c-8.3,9.3-19,13.9-32,13.9h-99.5c-12.1,0-22.4-4.1-31-12.2s-13.1-18-13.6-29.6c-5.6-99.8-29-194.5-70.3-284.3c-41.3-89.8-95-167.7-161.1-233.8C503.8,363.9,425.8,310.2,336,269c-89.8-41.3-184.5-65-284.3-71c-11.6-0.5-21.5-5-29.6-13.6c-8.1-8.6-12.2-18.7-12.2-30.3V54.6c0-13,4.6-23.7,13.9-32c8.4-8.4,18.6-12.5,30.6-12.5h2.1c121.6,6,237.9,33.9,349,83.5c111.1,49.6,209.8,117.8,296.1,204.6c86.8,86.3,155,185,204.6,296.1C956,705.4,983.8,821.8,989.9,943.3L989.9,943.3z"/></svg>
+        </a>
+    </div>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/">Building a URL shortener in 12 lines of code using Cloudflare Workers</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Top tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2022 Thomas Levesque.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>
