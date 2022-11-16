@@ -2,7 +2,7 @@ baseURL = "https://thomaslevesque.com/"
 languageCode = "en-us"
 title = "Thomas Levesque's .NET Blog"
 theme = "mainroad"
-googleAnalytics = "UA-31621259-1"
+googleAnalytics = "G-18RG5M4ZD6"
 
 [menu]
   [[menu.main]]
