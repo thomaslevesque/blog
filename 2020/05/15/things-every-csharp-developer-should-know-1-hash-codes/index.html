@@ -7,7 +7,7 @@
 	<title>Things every C# developer should know #1: hash codes - Thomas Levesque&#39;s .NET Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta property="og:title" content="Things every C# developer should know #1: hash codes" />
+		<meta property="og:title" content="Things every C# developer should know #1: hash codes" />
 <meta property="og:description" content="As a C# developer, there are obviously a lot of skills you need to master to be effective: language syntax, framework classes, third-party libraries, databases, regular expressions, the HTTP protocol, etc. But there are a handful of things that I consider to be really fundamental, and I often see C# developers, even experienced ones, who don&rsquo;t master them. So, I&rsquo;m doing a series about those things! Today: hash codes.
 The GetHashCode method OK, I realize that most developers don&rsquo;t need to implement their own hash table, or even implement GetHashCode very often, but still, it&rsquo;s important to know about this." />
 <meta property="og:type" content="article" />
@@ -17,17 +17,21 @@ The GetHashCode method OK, I realize that most developers don&rsquo;t need to im
 
 
 
-	<meta name="twitter:card" content="summary"/>
+		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Things every C# developer should know #1: hash codes"/>
 <meta name="twitter:description" content="As a C# developer, there are obviously a lot of skills you need to master to be effective: language syntax, framework classes, third-party libraries, databases, regular expressions, the HTTP protocol, etc. But there are a handful of things that I consider to be really fundamental, and I often see C# developers, even experienced ones, who don&rsquo;t master them. So, I&rsquo;m doing a series about those things! Today: hash codes.
 The GetHashCode method OK, I realize that most developers don&rsquo;t need to implement their own hash table, or even implement GetHashCode very often, but still, it&rsquo;s important to know about this."/>
 
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="/css/custom.css">
+
 	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="me" href="https://mastodon.cloud/@thomaslevesque">
 		
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-18RG5M4ZD6"></script>
 <script>
@@ -40,18 +44,20 @@ if (!doNotTrack) {
 }
 </script>
 
-	<link rel="me" href="https://mastodon.cloud/@thomaslevesque">
 </head>
 <body class="body">
 	<div class="container container--outer">
 		<header class="header">
-	<div class="container">
-		<div class="logo">
-			<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
-				<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
-				<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
-			</a>
-		</div>
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+					<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
+				</div>
+		</a>
+	</div>
 		
 <nav class="menu">
 	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
@@ -220,7 +226,6 @@ entry = buckets[bucketIndex].Find(key)
 		</a>
 	</div>
 </nav>
-
 <div>
     <script src="https://utteranc.es/client.js"
             repo="thomaslevesque/blog"
@@ -237,10 +242,10 @@ entry = buckets[bucketIndex].Find(key)
 			<aside class="sidebar"><div class="widget-search widget">
 	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
 		<label>
-			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
 		</label>
 		<input class="widget-search__submit" type="submit" value="Search">
-		<input type="hidden" name="sitesearch" value="https://thomaslevesque.com/" />
+		<input type="hidden" name="sitesearch" value="https://thomaslevesque.com/">
 	</form>
 </div>
 <div class="widget-social widget">
