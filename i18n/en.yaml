@@ -2,6 +2,3 @@
 - id: tags_title
   translation: "Top tags"
 
-# Fix Authorbox name (see https://github.com/Vimux/Mainroad/issues/237)
-- id: authorbox_name
-  translation: "About {{ . }}"
