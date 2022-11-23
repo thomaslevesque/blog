@@ -101,16 +101,16 @@ if (!doNotTrack) {
 <p>Now let&rsquo;s try to create a dynamic object that allows to write a C# code similar to the Javascript code above. To do that, we will store the values of dynamic properties in a <code>Dictionary&lt;string, object&gt;</code>. To make this class work, we need to override the <a href="http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject.trygetmember%28VS.100%29.aspx"><code>TryGetMember</code></a> and <a href="http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject.trygetmember%28VS.100%29.aspx"><code>TrySetMember</code></a> methods. These methods implement the logic to read or write a member of the dynamic object. To illustrate the idea, let&rsquo;s have a look at the code, I&rsquo;ll comment it later:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDynamicObject</span> : DynamicObject
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; <span style="color:#ae81ff">_</span>properties = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; _properties = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TryGetMember(GetMemberBinder binder, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">object</span> result)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>properties.TryGetValue(binder.Name, <span style="color:#66d9ef">out</span> result);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> _properties.TryGetValue(binder.Name, <span style="color:#66d9ef">out</span> result);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TrySetMember(SetMemberBinder binder, <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span>)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>properties[binder.Name] = <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>        _properties[binder.Name] = <span style="color:#66d9ef">value</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
@@ -135,26 +135,26 @@ if (!doNotTrack) {
 <p>Of course there are many more useful things to do with a custom dynamic object&hellip; for instance, here&rsquo;s a simple wrapper for a <code>DataRow</code>, to make it easier to access the fields:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicDataRow</span> : DynamicObject
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> DataRow <span style="color:#ae81ff">_d</span>ataRow;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> DataRow _dataRow;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> DynamicDataRow(DataRow dataRow)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (dataRow == <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;dataRow&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_d</span>ataRow = dataRow;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>._dataRow = dataRow;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> DataRow DataRow
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_d</span>ataRow; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _dataRow; }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TryGetMember(GetMemberBinder binder, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">object</span> result)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        result = <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_d</span>ataRow.Table.Columns.Contains(binder.Name))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (_dataRow.Table.Columns.Contains(binder.Name))
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            result = <span style="color:#ae81ff">_d</span>ataRow[binder.Name];
+</span></span><span style="display:flex;"><span>            result = _dataRow[binder.Name];
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
@@ -162,9 +162,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> TrySetMember(SetMemberBinder binder, <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span>)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_d</span>ataRow.Table.Columns.Contains(binder.Name))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (_dataRow.Table.Columns.Contains(binder.Name))
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_d</span>ataRow[binder.Name] = <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>            _dataRow[binder.Name] = <span style="color:#66d9ef">value</span>;
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;

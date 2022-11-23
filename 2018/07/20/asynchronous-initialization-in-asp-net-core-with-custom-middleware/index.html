@@ -10,7 +10,7 @@
 		<meta property="og:title" content="Asynchronous initialization in ASP.NET Core with custom middleware" />
 <meta property="og:description" content="Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp." />
+There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2018-07-20T00:00:00+00:00" />
@@ -21,7 +21,7 @@ Sometimes you need to perform some initialization steps when your web applicatio
 <meta name="twitter:title" content="Asynchronous initialization in ASP.NET Core with custom middleware"/>
 <meta name="twitter:description" content="Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp."/>
+There&rsquo;s no current scope in the Configure method, so you can&rsquo;t use services registered with &ldquo;scoped&rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &lsquo;MyApp."/>
 
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -99,20 +99,20 @@ if (!doNotTrack) {
 <p>A simple way to do it involves writing a custom <a href="/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/">middleware</a> that ensures initialization is complete before processing a request. This middleware starts the initialization process when the app starts, and upon receiving a request, will wait until the initialization is done before passing the request to the next middleware. A basic implementation could look like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncInitializationMiddleware</span>
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> RequestDelegate <span style="color:#ae81ff">_</span>next;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger <span style="color:#ae81ff">_l</span>ogger;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Task <span style="color:#ae81ff">_</span>initializationTask;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> RequestDelegate _next;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger _logger;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Task _initializationTask;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> AsyncInitializationMiddleware(RequestDelegate next, IApplicationLifetime lifetime, ILogger&lt;AsyncInitializationMiddleware&gt; logger)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>next = next;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_l</span>ogger = logger;
+</span></span><span style="display:flex;"><span>        _next = next;
+</span></span><span style="display:flex;"><span>        _logger = logger;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Start initialization when the app starts</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> startRegistration = <span style="color:#66d9ef">default</span>(CancellationTokenRegistration);
 </span></span><span style="display:flex;"><span>        startRegistration = lifetime.ApplicationStarted.Register(() =&gt;
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>initializationTask = InitializeAsync(lifetime.ApplicationStopping);
+</span></span><span style="display:flex;"><span>            _initializationTask = InitializeAsync(lifetime.ApplicationStopping);
 </span></span><span style="display:flex;"><span>            startRegistration.Dispose();
 </span></span><span style="display:flex;"><span>        });
 </span></span><span style="display:flex;"><span>    }
@@ -121,16 +121,16 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.LogInformation(<span style="color:#e6db74">&#34;Initialization starting&#34;</span>);
+</span></span><span style="display:flex;"><span>            _logger.LogInformation(<span style="color:#e6db74">&#34;Initialization starting&#34;</span>);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Do async initialization here</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">2000</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.LogInformation(<span style="color:#e6db74">&#34;Initialization complete&#34;</span>);
+</span></span><span style="display:flex;"><span>            _logger.LogInformation(<span style="color:#e6db74">&#34;Initialization complete&#34;</span>);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">catch</span>(Exception ex)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.LogError(ex, <span style="color:#e6db74">&#34;Initialization failed&#34;</span>);
+</span></span><span style="display:flex;"><span>            _logger.LogError(ex, <span style="color:#e6db74">&#34;Initialization failed&#34;</span>);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span>;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
@@ -138,18 +138,18 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task Invoke(HttpContext context)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Take a copy to avoid race conditions</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> initializationTask = <span style="color:#ae81ff">_</span>initializationTask;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> initializationTask = _initializationTask;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (initializationTask != <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Wait until initialization is complete before passing the request to next middleware</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> initializationTask;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Clear the task so that we don&#39;t await it again later.</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>initializationTask = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>            _initializationTask = <span style="color:#66d9ef">null</span>;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Pass the request to the next middleware</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_</span>next(context);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> _next(context);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>We can then add this middleware to the pipeline in the <code>Startup.Configure</code> method. It should be added early in the pipeline, before any other middleware that would need the initialization to be complete.</p>

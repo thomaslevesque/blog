@@ -93,7 +93,7 @@ if (!doNotTrack) {
 	<div class="content list__excerpt post__content clearfix">
 		Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
 The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:
- History suggestions are search queries previously entered by the user.
+History suggestions are search queries previously entered by the user.
 	</div>
 </article><article class="list__item post">
 	
@@ -140,7 +140,7 @@ It’s often useful to be notified when the value of a dependency property chang
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Caller info attributes are one of the new features of C# 5. They&rsquo;re attributes applied to optional method parameters that enable you to pass caller information implicitly to a method. I&rsquo;m not sure that description is very clear, so an example will help you understand:
-static void Log(  string message, [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null, [CallerLineNumber] int lineNumber = 0) {  Console.WriteLine(  &#34;[{0:g} - {1} - {2} - line {3}] {4}&#34;,  DateTime.
+static void Log( string message, [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null, [CallerLineNumber] int lineNumber = 0) { Console.WriteLine( &#34;[{0:g} - {1} - {2} - line {3}] {4}&#34;, DateTime.
 	</div>
 </article><article class="list__item post">
 	
@@ -171,7 +171,7 @@ static void Log(  string message, [CallerMemberName] string memberName = null, [
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
-// Collection to which the view is bound public ObservableCollection People { get; private set; } ...  // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People);  // Show only adults view.Filter = o =&gt; ((Person)o).Age &gt;= 18;  // Sort by last name and first name view.
+// Collection to which the view is bound public ObservableCollection People { get; private set; } ... // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People); // Show only adults view.Filter = o =&gt; ((Person)o).Age &gt;= 18; // Sort by last name and first name view.SortDescriptions.Add(new SortDescription(&#34;LastName&#34;, ListSortDirection.
 	</div>
 </article><article class="list__item post">
 	

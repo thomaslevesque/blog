@@ -149,39 +149,39 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">where</span> P : <span style="color:#66d9ef">class</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">where</span> T : IChildItem&lt;P&gt;
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> P <span style="color:#ae81ff">_</span>parent;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> IList&lt;T&gt; <span style="color:#ae81ff">_</span>collection;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> P _parent;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> IList&lt;T&gt; _collection;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> ChildItemCollection(P parent)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_</span>parent = parent;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_</span>collection = <span style="color:#66d9ef">new</span> List&lt;T&gt;();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>._parent = parent;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>._collection = <span style="color:#66d9ef">new</span> List&lt;T&gt;();
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> ChildItemCollection(P parent, IList&lt;T&gt; collection)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_</span>parent = parent;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#ae81ff">_</span>collection = collection;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>._parent = parent;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>._collection = collection;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region IList&lt;T&gt; Members</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> IndexOf(T item)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.IndexOf(item);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> _collection.IndexOf(item);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Insert(<span style="color:#66d9ef">int</span> index, T item)
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (item != <span style="color:#66d9ef">null</span>)
-</span></span><span style="display:flex;"><span>                item.Parent = <span style="color:#ae81ff">_</span>parent;
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>collection.Insert(index, item);
+</span></span><span style="display:flex;"><span>                item.Parent = _parent;
+</span></span><span style="display:flex;"><span>            _collection.Insert(index, item);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> RemoveAt(<span style="color:#66d9ef">int</span> index)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            T oldItem = <span style="color:#ae81ff">_</span>collection[index];
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>collection.RemoveAt(index);
+</span></span><span style="display:flex;"><span>            T oldItem = _collection[index];
+</span></span><span style="display:flex;"><span>            _collection.RemoveAt(index);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (oldItem != <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>                oldItem.Parent = <span style="color:#66d9ef">null</span>;
 </span></span><span style="display:flex;"><span>        }
@@ -190,14 +190,14 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span>
 </span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection[index];
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> _collection[index];
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">set</span>
 </span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                T oldItem = <span style="color:#ae81ff">_</span>collection[index];
+</span></span><span style="display:flex;"><span>                T oldItem = _collection[index];
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> != <span style="color:#66d9ef">null</span>)
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">value</span>.Parent = <span style="color:#ae81ff">_</span>parent;
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>collection[index] = <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">value</span>.Parent = _parent;
+</span></span><span style="display:flex;"><span>                _collection[index] = <span style="color:#66d9ef">value</span>;
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (oldItem != <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>                    oldItem.Parent = <span style="color:#66d9ef">null</span>;
 </span></span><span style="display:flex;"><span>            }
@@ -210,43 +210,43 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Add(T item)
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (item != <span style="color:#66d9ef">null</span>)
-</span></span><span style="display:flex;"><span>                item.Parent = <span style="color:#ae81ff">_</span>parent;
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>collection.Add(item);
+</span></span><span style="display:flex;"><span>                item.Parent = _parent;
+</span></span><span style="display:flex;"><span>            _collection.Add(item);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Clear()
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">foreach</span> (T item <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">_</span>collection)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">foreach</span> (T item <span style="color:#66d9ef">in</span> _collection)
 </span></span><span style="display:flex;"><span>            {
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (item != <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>                    item.Parent = <span style="color:#66d9ef">null</span>;
 </span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>collection.Clear();
+</span></span><span style="display:flex;"><span>            _collection.Clear();
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> Contains(T item)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.Contains(item);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> _collection.Contains(item);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> CopyTo(T[] array, <span style="color:#66d9ef">int</span> arrayIndex)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>collection.CopyTo(array, arrayIndex);
+</span></span><span style="display:flex;"><span>            _collection.CopyTo(array, arrayIndex);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Count
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.Count; }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _collection.Count; }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsReadOnly
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.IsReadOnly; }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _collection.IsReadOnly; }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> Remove(T item)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">bool</span> b = <span style="color:#ae81ff">_</span>collection.Remove(item);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">bool</span> b = _collection.Remove(item);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (item != <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>                item.Parent = <span style="color:#66d9ef">null</span>;
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> b;
@@ -258,7 +258,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> IEnumerator&lt;T&gt; GetEnumerator()
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>collection.GetEnumerator();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> _collection.GetEnumerator();
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
@@ -267,7 +267,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (<span style="color:#ae81ff">_</span>collection <span style="color:#66d9ef">as</span> System.Collections.IEnumerable).GetEnumerator();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (_collection <span style="color:#66d9ef">as</span> System.Collections.IEnumerable).GetEnumerator();
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion

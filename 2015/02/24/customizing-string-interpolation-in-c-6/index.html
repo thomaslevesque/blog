@@ -109,12 +109,12 @@ if (!doNotTrack) {
 <p>Here’s a more advanced example. String interpolation is a convenient way to build URLs, but if you include arbitrary strings in a URL, you need to be careful to URL-encode them. A custom string interpolator can do that for you; you just need to create a custom <code>IFormatProvider</code> that will take care of encoding the values. The implementation was not obvious at first, but after some trial and error I came up with this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UrlFormatProvider</span> : IFormatProvider
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UrlFormatter <span style="color:#ae81ff">_f</span>ormatter = <span style="color:#66d9ef">new</span> UrlFormatter();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UrlFormatter _formatter = <span style="color:#66d9ef">new</span> UrlFormatter();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> GetFormat(Type formatType)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (formatType == <span style="color:#66d9ef">typeof</span>(ICustomFormatter))
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_f</span>ormatter;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> _formatter;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
@@ -153,12 +153,12 @@ if (!doNotTrack) {
 <p>We can use the same approach as for URLs and create a <code>SqlFormatProvider</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SqlFormatProvider</span> : IFormatProvider
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SqlFormatter <span style="color:#ae81ff">_f</span>ormatter = <span style="color:#66d9ef">new</span> SqlFormatter();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SqlFormatter _formatter = <span style="color:#66d9ef">new</span> SqlFormatter();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> GetFormat(Type formatType)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (formatType == <span style="color:#66d9ef">typeof</span>(ICustomFormatter))
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_f</span>ormatter;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> _formatter;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>

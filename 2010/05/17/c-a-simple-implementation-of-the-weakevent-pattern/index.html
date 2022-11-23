@@ -94,16 +94,16 @@ if (!doNotTrack) {
 <p>Rather than keeping a weak reference to the delegate itself, we should use a less transient object : the target object of the delegate (<code>Delegate.Target</code>) would be a better choice. So I created the <code>WeakDelegate&lt;TDelegate&gt;</code> class, which wraps a delegate by storing separately the method and a weak reference to the target :</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeakDelegate</span>&lt;TDelegate&gt; : IEquatable&lt;TDelegate&gt;
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> WeakReference <span style="color:#ae81ff">_</span>targetReference;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> MethodInfo <span style="color:#ae81ff">_</span>method;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> WeakReference _targetReference;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> MethodInfo _method;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> WeakDelegate(Delegate realDelegate)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (realDelegate.Target != <span style="color:#66d9ef">null</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>targetReference = <span style="color:#66d9ef">new</span> WeakReference(realDelegate.Target);
+</span></span><span style="display:flex;"><span>            _targetReference = <span style="color:#66d9ef">new</span> WeakReference(realDelegate.Target);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>targetReference = <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>method = realDelegate.Method;
+</span></span><span style="display:flex;"><span>            _targetReference = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        _method = realDelegate.Method;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> TDelegate GetDelegate()
@@ -113,19 +113,19 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Delegate GetDelegateInternal()
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>targetReference != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (_targetReference != <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(<span style="color:#66d9ef">typeof</span>(TDelegate), <span style="color:#ae81ff">_</span>targetReference.Target, <span style="color:#ae81ff">_</span>method);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(<span style="color:#66d9ef">typeof</span>(TDelegate), _targetReference.Target, _method);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(<span style="color:#66d9ef">typeof</span>(TDelegate), <span style="color:#ae81ff">_</span>method);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Delegate.CreateDelegate(<span style="color:#66d9ef">typeof</span>(TDelegate), _method);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsAlive
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>targetReference == <span style="color:#66d9ef">null</span> || <span style="color:#ae81ff">_</span>targetReference.IsAlive; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _targetReference == <span style="color:#66d9ef">null</span> || _targetReference.IsAlive; }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
@@ -135,8 +135,8 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        Delegate d = (Delegate)(<span style="color:#66d9ef">object</span>)other;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> d != <span style="color:#66d9ef">null</span>
-</span></span><span style="display:flex;"><span>            &amp;&amp; d.Target == <span style="color:#ae81ff">_</span>targetReference.Target
-</span></span><span style="display:flex;"><span>            &amp;&amp; d.Method.Equals(<span style="color:#ae81ff">_</span>method);
+</span></span><span style="display:flex;"><span>            &amp;&amp; d.Target == _targetReference.Target
+</span></span><span style="display:flex;"><span>            &amp;&amp; d.Method.Equals(_method);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>endregion
@@ -150,28 +150,28 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>Now, we just need to manage a list of these <code>WeakDelegate&lt;TDelegate&gt;</code>. This is done by the <code>WeakEvent&lt;TDelegate&gt;</code> class :</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeakEvent</span>&lt;TEventHandler&gt;
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> List&lt;WeakDelegate&lt;TEventHandler&gt;&gt; <span style="color:#ae81ff">_</span>handlers;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> List&lt;WeakDelegate&lt;TEventHandler&gt;&gt; _handlers;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> WeakEvent()
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>handlers = <span style="color:#66d9ef">new</span> List&lt;WeakDelegate&lt;TEventHandler&gt;&gt;();
+</span></span><span style="display:flex;"><span>        _handlers = <span style="color:#66d9ef">new</span> List&lt;WeakDelegate&lt;TEventHandler&gt;&gt;();
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> AddHandler(TEventHandler handler)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        Delegate d = (Delegate)(<span style="color:#66d9ef">object</span>)handler;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>handlers.Add(<span style="color:#66d9ef">new</span> WeakDelegate&lt;TEventHandler&gt;(d));
+</span></span><span style="display:flex;"><span>        _handlers.Add(<span style="color:#66d9ef">new</span> WeakDelegate&lt;TEventHandler&gt;(d));
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> RemoveHandler(TEventHandler handler)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// also remove &#34;dead&#34; (garbage collected) handlers</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>handlers.RemoveAll(wd =&gt; !wd.IsAlive || wd.Equals(handler));
+</span></span><span style="display:flex;"><span>        _handlers.RemoveAll(wd =&gt; !wd.IsAlive || wd.Equals(handler));
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Raise(<span style="color:#66d9ef">object</span> sender, EventArgs e)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> handlers = <span style="color:#ae81ff">_</span>handlers.ToArray();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> handlers = _handlers.ToArray();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> weakDelegate <span style="color:#66d9ef">in</span> handlers)
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (weakDelegate.IsAlive)
@@ -180,27 +180,27 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>
 </span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>handlers.Remove(weakDelegate);
+</span></span><span style="display:flex;"><span>                _handlers.Remove(weakDelegate);
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> List&lt;WeakDelegate&lt;TEventHandler&gt;&gt; Handlers
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>handlers; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _handlers; }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>This class automatically handles the removal of &ldquo;dead&rdquo; (garbage collected) handlers, and provides a <code>Raise</code> method to call the handlers. It can be used as follows :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> WeakEvent&lt;EventHandler&gt; <span style="color:#ae81ff">_</span>myEvent = <span style="color:#66d9ef">new</span> WeakEvent&lt;EventHandler&gt;();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> WeakEvent&lt;EventHandler&gt; _myEvent = <span style="color:#66d9ef">new</span> WeakEvent&lt;EventHandler&gt;();
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">event</span> EventHandler MyEvent
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">add</span> { <span style="color:#ae81ff">_</span>myEvent.AddHandler(<span style="color:#66d9ef">value</span>); }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">remove</span> { <span style="color:#ae81ff">_</span>myEvent.RemoveHandler(<span style="color:#66d9ef">value</span>); }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">add</span> { _myEvent.AddHandler(<span style="color:#66d9ef">value</span>); }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">remove</span> { _myEvent.RemoveHandler(<span style="color:#66d9ef">value</span>); }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> OnMyEvent()
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">_</span>myEvent.Raise(<span style="color:#66d9ef">this</span>, EventArgs.Empty);
+</span></span><span style="display:flex;"><span>    _myEvent.Raise(<span style="color:#66d9ef">this</span>, EventArgs.Empty);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>This is a bit longer to write than a &ldquo;regular&rdquo; event, but considering the benefits, it&rsquo;s very acceptable. Anyway, you can easily create a Visual Studio snippet to quickly create a weak event, with only 3 fields to fill in :</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34; ?&gt;</span>

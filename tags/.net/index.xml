@@ -24,7 +24,7 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
       
       <guid>https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/</guid>
       <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
- The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
+The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
     </item>
     
     <item>

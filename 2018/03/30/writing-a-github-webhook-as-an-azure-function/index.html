@@ -180,14 +180,14 @@ if (!doNotTrack) {
 <p>Once you have the private key as an <code>RSAParameters</code> object, you can generate a JWT like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GetTokenForApplication()
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> key = <span style="color:#66d9ef">new</span> RsaSecurityKey(<span style="color:#ae81ff">_</span>settings.RsaParameters);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> key = <span style="color:#66d9ef">new</span> RsaSecurityKey(_settings.RsaParameters);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> creds = <span style="color:#66d9ef">new</span> SigningCredentials(key, SecurityAlgorithms.RsaSha256);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> now = DateTime.UtcNow;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> token = <span style="color:#66d9ef">new</span> JwtSecurityToken(claims: <span style="color:#66d9ef">new</span>[]
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;iat&#34;</span>, now.ToUnixTimeStamp().ToString(), ClaimValueTypes.Integer),
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;exp&#34;</span>, now.AddMinutes(<span style="color:#ae81ff">10</span>).ToUnixTimeStamp().ToString(), ClaimValueTypes.Integer),
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;iss&#34;</span>, <span style="color:#ae81ff">_</span>settings.AppId)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;iss&#34;</span>, _settings.AppId)
 </span></span><span style="display:flex;"><span>        },
 </span></span><span style="display:flex;"><span>        signingCredentials: creds);
 </span></span><span style="display:flex;"><span>

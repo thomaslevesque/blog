@@ -90,13 +90,13 @@ if (!doNotTrack) {
 <p>As much as I love dependency injection, in some situations it can become a little unwieldy… For instance, when you have a class that is instantiated explicitly with some data, and also needs service dependencies. Consider this class, for example:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FooViewModel</span>
 </span></span><span style="display:flex;"><span>  {
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService <span style="color:#ae81ff">_</span>myService;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService _myService;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> FooViewModel(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name, IMyService myService)
 </span></span><span style="display:flex;"><span>      {
 </span></span><span style="display:flex;"><span>          Id = id;
 </span></span><span style="display:flex;"><span>          Name = name;
-</span></span><span style="display:flex;"><span>          <span style="color:#ae81ff">_</span>myService = myService;
+</span></span><span style="display:flex;"><span>          _myService = myService;
 </span></span><span style="display:flex;"><span>      }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id { <span style="color:#66d9ef">get</span>; }
@@ -113,16 +113,16 @@ if (!doNotTrack) {
 <p>An implementation of this factory looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewModelFactory</span> : IViewModelFactory
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService <span style="color:#ae81ff">_</span>myService;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMyService _myService;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ViewModelFactory(IMyService myService)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>myService = myService;
+</span></span><span style="display:flex;"><span>        _myService = myService;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> FooViewModel CreateFoo(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> name)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> FooViewModel(id, name, <span style="color:#ae81ff">_</span>myService);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> FooViewModel(id, name, _myService);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Basically, the factory abstracts the dependencies, so that the rest of the code doesn&rsquo;t need to know about them.</p>
@@ -145,11 +145,11 @@ if (!doNotTrack) {
 <p>First, we need to write an interceptor. As the name implies, it will intercept all calls to the proxy object create by Castle DynamicProxy. Here it goes:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>serviceProvider;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider _serviceProvider;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> FactoryInterceptor(IServiceProvider serviceProvider)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>serviceProvider = serviceProvider;
+</span></span><span style="display:flex;"><span>        _serviceProvider = serviceProvider;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Intercept(IInvocation invocation)
@@ -190,19 +190,19 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FactoryInterceptor</span> : IInterceptor
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>serviceProvider;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt; <span style="color:#ae81ff">_f</span>actories;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider _serviceProvider;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt; _factories;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> FactoryInterceptor(IServiceProvider serviceProvider)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>serviceProvider = serviceProvider;
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_f</span>actories = <span style="color:#66d9ef">new</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt;();
+</span></span><span style="display:flex;"><span>            _serviceProvider = serviceProvider;
+</span></span><span style="display:flex;"><span>            _factories = <span style="color:#66d9ef">new</span> ConcurrentDictionary&lt;MethodInfo, ObjectFactory&gt;();
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Intercept(IInvocation invocation)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> factory = <span style="color:#ae81ff">_f</span>actories.GetOrAdd(invocation.Method, CreateFactory);
-</span></span><span style="display:flex;"><span>            invocation.ReturnValue = factory(<span style="color:#ae81ff">_</span>serviceProvider, invocation.Arguments);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> factory = _factories.GetOrAdd(invocation.Method, CreateFactory);
+</span></span><span style="display:flex;"><span>            invocation.ReturnValue = factory(_serviceProvider, invocation.Arguments);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> ObjectFactory CreateFactory(MethodInfo method)

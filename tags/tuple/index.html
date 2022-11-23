@@ -110,8 +110,8 @@ But sometimes, you do need the index of the current item; this usually leads to 
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
-  emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
-  deconstruction of tuples into separate variables
+emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
+deconstruction of tuples into separate variables
 Well, it looks like the C# language team has been busy during the last month, because both items are now implemented in VS 15 Preview 4, which was released today!
 	</div>
 </article><article class="list__item post">
@@ -129,7 +129,7 @@ Well, it looks like the C# language team has been busy during the last month, be
 	<div class="content list__excerpt post__content clearfix">
 		A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) {  int count = 0;  double sum = 0.0;  foreach (var value in values)  {  count++;  sum += value;  }  return Tuple.
+private static Tuple&lt;int, double&gt; Tally(IEnumerable&lt;double&gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.
 	</div>
 </article>
 </main>

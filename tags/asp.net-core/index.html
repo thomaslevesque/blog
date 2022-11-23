@@ -120,7 +120,7 @@ Heterogenous JSON formats Let&rsquo;s say we&rsquo;re building an ASP.
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
-{  &#34;id&#34;: {  &#34;value&#34;: 1  },  &#34;name&#34;: &#34;Apple&#34;,  &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that.
+{ &#34;id&#34;: { &#34;value&#34;: 1 }, &#34;name&#34;: &#34;Apple&#34;, &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that.
 	</div>
 </article><article class="list__item post">
 	
@@ -212,8 +212,8 @@ However, some client or server implementations actually require that a given hea
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
- query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
- But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.
+query components are often used to carry identifying information in the form of &ldquo;key=value&rdquo; pairs
+But it&rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&rsquo;s not standardized.
 	</div>
 </article><article class="list__item post">
 	
@@ -229,7 +229,7 @@ However, some client or server implementations actually require that a given hea
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Out of the box, ASP.NET Core has the concept of &ldquo;environments&rdquo;, which allows your app to use different settings based on which environment it&rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
- appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&rsquo;t have to specify unchanged settings in every environment if they&rsquo;re already specified in the global settings file.
+appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment With the default configuration, environment-specific settings just override global settings, so you don&rsquo;t have to specify unchanged settings in every environment if they&rsquo;re already specified in the global settings file.
 	</div>
 </article><article class="list__item post">
 	

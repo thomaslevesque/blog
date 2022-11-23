@@ -14,8 +14,8 @@
       
       <guid>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
       <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
- query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
- But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.</description>
+query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
+But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&amp;rsquo;s not standardized.</description>
     </item>
     
   </channel>

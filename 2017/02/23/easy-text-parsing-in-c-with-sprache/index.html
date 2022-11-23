@@ -181,7 +181,7 @@ quoted-pair    = &#34;\&#34; CHAR
 </span></span><span style="display:flex;"><span>        Parse.AnyChar.Except(DoubleQuote);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;<span style="color:#66d9ef">char</span>&gt; QuotedPair =
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> <span style="color:#ae81ff">_</span> <span style="color:#66d9ef">in</span> Backslash
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> Backslash
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> c <span style="color:#66d9ef">in</span> Parse.AnyChar
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">select</span> c;
 </span></span></code></pre></div><p>The <code>QdText</code> rule doesn&rsquo;t require much explanation, but <code>QuotedPair</code> is more interesting&hellip; As you can see, it looks like a Linq query: this is Sprache&rsquo;s way of specifying a sequence. This particular query means: <em>match a backslash (named <code>_</code> because we ignore it) followed by any character named <code>c</code>, and return just <code>c</code></em> (quoted pairs are not escape sequences in the same sense as in C, Java or C#, so <code>&quot;\n&quot;</code> isn&rsquo;t interpreted as &ldquo;new line&rdquo; but just as <code>&quot;n&quot;</code>).</p>
@@ -219,7 +219,7 @@ quoted-pair    = &#34;\&#34; CHAR
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;Parameter&gt; Parameter =
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> name <span style="color:#66d9ef">in</span> Token
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> <span style="color:#ae81ff">_</span> <span style="color:#66d9ef">in</span> EqualSign
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> EqualSign
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">value</span> <span style="color:#66d9ef">in</span> ParameterValue
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">new</span> Parameter(name, <span style="color:#66d9ef">value</span>);
 </span></span></code></pre></div><p>Here we match a token (the parameter name), followed by the <code>'='</code> sign, followed by a parameter value, and we combine the name and value into a <code>Parameter</code> instance.</p>
@@ -236,7 +236,7 @@ quoted-pair    = &#34;\&#34; CHAR
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;Parameter[]&gt; Parameters =
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> first <span style="color:#66d9ef">in</span> Parameter.Once()
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> others <span style="color:#66d9ef">in</span> (
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">from</span> <span style="color:#ae81ff">_</span> <span style="color:#66d9ef">in</span> ListDelimiter
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> ListDelimiter
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">from</span> p <span style="color:#66d9ef">in</span> Parameter
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">select</span> p).Many()
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">select</span> first.Concat(others).ToArray();
@@ -259,7 +259,7 @@ quoted-pair    = &#34;\&#34; CHAR
 </span></span></code></pre></div><p>And finally we can write the top-level rule:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Parser&lt;Challenge&gt; Challenge =
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> scheme <span style="color:#66d9ef">in</span> Token
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> <span style="color:#ae81ff">_</span> <span style="color:#66d9ef">in</span> Parse.WhiteSpace.AtLeastOnce()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> _ <span style="color:#66d9ef">in</span> Parse.WhiteSpace.AtLeastOnce()
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">from</span> parameters <span style="color:#66d9ef">in</span> Parameters
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">new</span> Challenge(scheme, parameters);
 </span></span></code></pre></div><p>Note that I made this rule public, unlike the others: it&rsquo;s the only one we need to expose.</p>

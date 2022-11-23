@@ -150,7 +150,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">string</span> s =&gt; <span style="color:#66d9ef">new</span> ProductId(<span style="color:#66d9ef">int</span>.Parse(s)),
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">null</span> =&gt; <span style="color:#66d9ef">null</span>,
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span> =&gt; <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">$&#34;Cannot convert from {value} to ProductId&#34;</span>, nameof(<span style="color:#66d9ef">value</span>))
+</span></span><span style="display:flex;"><span>            _ =&gt; <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">$&#34;Cannot convert from {value} to ProductId&#34;</span>, nameof(<span style="color:#66d9ef">value</span>))
 </span></span><span style="display:flex;"><span>        };
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
@@ -162,7 +162,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            {
 </span></span><span style="display:flex;"><span>                ProductId id =&gt; id.Value.ToString(),
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">null</span> =&gt; <span style="color:#66d9ef">null</span>,
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span> =&gt; <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">$&#34;Cannot convert {value} to string&#34;</span>, nameof(<span style="color:#66d9ef">value</span>))
+</span></span><span style="display:flex;"><span>                _ =&gt; <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException(<span style="color:#e6db74">$&#34;Cannot convert {value} to string&#34;</span>, nameof(<span style="color:#66d9ef">value</span>))
 </span></span><span style="display:flex;"><span>            };
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
@@ -228,7 +228,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> lambda.Compile();
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsStronglyTypedId(Type type) =&gt; IsStronglyTypedId(type, <span style="color:#66d9ef">out</span> <span style="color:#ae81ff">_</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsStronglyTypedId(Type type) =&gt; IsStronglyTypedId(type, <span style="color:#66d9ef">out</span> _);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsStronglyTypedId(Type type, [NotNullWhen(<span style="color:#66d9ef">true</span>)] <span style="color:#66d9ef">out</span> Type idType)
 </span></span><span style="display:flex;"><span>    {
@@ -262,10 +262,10 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> converter;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Type <span style="color:#ae81ff">_</span>type;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Type _type;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> StronglyTypedIdConverter(Type type)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>type = type;
+</span></span><span style="display:flex;"><span>        _type = type;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
@@ -291,7 +291,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> <span style="color:#66d9ef">is</span> TValue idValue)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> factory = StronglyTypedIdHelper.GetFactory&lt;TValue&gt;(<span style="color:#ae81ff">_</span>type);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> factory = StronglyTypedIdHelper.GetFactory&lt;TValue&gt;(_type);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> factory(idValue);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
@@ -318,21 +318,21 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> ConcurrentDictionary&lt;Type, TypeConverter&gt; ActualConverters = <span style="color:#66d9ef">new</span>();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> TypeConverter <span style="color:#ae81ff">_</span>innerConverter;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> TypeConverter _innerConverter;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> StronglyTypedIdConverter(Type stronglyTypedIdType)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>innerConverter = ActualConverters.GetOrAdd(stronglyTypedIdType, CreateActualConverter);
+</span></span><span style="display:flex;"><span>        _innerConverter = ActualConverters.GetOrAdd(stronglyTypedIdType, CreateActualConverter);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> CanConvertFrom(ITypeDescriptorContext context, Type sourceType) =&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>innerConverter.CanConvertFrom(context, sourceType);
+</span></span><span style="display:flex;"><span>        _innerConverter.CanConvertFrom(context, sourceType);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">bool</span> CanConvertTo(ITypeDescriptorContext context, Type destinationType) =&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>innerConverter.CanConvertTo(context, destinationType);
+</span></span><span style="display:flex;"><span>        _innerConverter.CanConvertTo(context, destinationType);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span>) =&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>innerConverter.ConvertFrom(context, culture, <span style="color:#66d9ef">value</span>);
+</span></span><span style="display:flex;"><span>        _innerConverter.ConvertFrom(context, culture, <span style="color:#66d9ef">value</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> ConvertTo(ITypeDescriptorContext context, CultureInfo culture, <span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span>, Type destinationType) =&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>innerConverter.ConvertTo(context, culture, <span style="color:#66d9ef">value</span>, destinationType);
+</span></span><span style="display:flex;"><span>        _innerConverter.ConvertTo(context, culture, <span style="color:#66d9ef">value</span>, destinationType);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> TypeConverter CreateActualConverter(Type stronglyTypedIdType)

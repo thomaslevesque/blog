@@ -132,17 +132,17 @@ if (!doNotTrack) {
 <p>So, we need to create an awaiter that captures a synchronization context, and causes the awaiting method to resume on this synchronization context. Here’s how it looks like:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">SynchronizationContextAwaiter</span> : INotifyCompletion
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> SendOrPostCallback <span style="color:#ae81ff">_</span>postCallback = state =&gt; ((Action)state)();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> SendOrPostCallback _postCallback = state =&gt; ((Action)state)();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SynchronizationContext <span style="color:#ae81ff">_</span>context;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> SynchronizationContext _context;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> SynchronizationContextAwaiter(SynchronizationContext context)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>context = context;
+</span></span><span style="display:flex;"><span>        _context = context;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsCompleted =&gt; <span style="color:#ae81ff">_</span>context == SynchronizationContext.Current;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsCompleted =&gt; _context == SynchronizationContext.Current;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnCompleted(Action continuation) =&gt; <span style="color:#ae81ff">_</span>context.Post(<span style="color:#ae81ff">_</span>postCallback, continuation);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnCompleted(Action continuation) =&gt; _context.Post(_postCallback, continuation);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> GetResult() { }
 </span></span><span style="display:flex;"><span>}

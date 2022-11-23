@@ -138,7 +138,8 @@ if (!doNotTrack) {
 	<div class="content list__excerpt post__content clearfix">
 		I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
 I just came up with this one:
-static void Test(out int x, out int y) {  x = 42;  y = 123;  Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!
+static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!
+I’ll try to post more puzzles in the future if I can come up with others.
 	</div>
 </article><article class="list__item post">
 	
@@ -171,7 +172,7 @@ string text = $&#34;{p.Name} was born on {p.DateOfBirth:D}&#34;; A lesser known 
 	<div class="content list__excerpt post__content clearfix">
 		Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
-public class Calculator {  public async Task&lt;int&gt; AddAsync(int x, int y)  {  // simulate long calculation  await Task.
+public class Calculator { public async Task&lt;int&gt; AddAsync(int x, int y) { // simulate long calculation await Task.Delay(100).ConfigureAwait(false); // the answer to life, the universe and everything.
 	</div>
 </article><article class="list__item post">
 	

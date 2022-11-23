@@ -14,7 +14,7 @@
       
       <guid>https://thomaslevesque.com/2020/09/17/introducing-cosmos-db-studio/</guid>
       <description>I&amp;rsquo;ve been using Azure Cosmos DB on a fairly regular basis for the last 2 years or so. It&amp;rsquo;s a pretty good database, but one thing has always bothered me: the lack of a proper tool to query and modify data in the database. Basically, here are the current options:
- The standalone Cosmos DB Explorer website The Data Explorer in the Azure Portal Cosmos DB support in Azure Storage Explorer  These 3 options are actually the same thing, made from the same code base, which was recently open-sourced.</description>
+The standalone Cosmos DB Explorer website The Data Explorer in the Azure Portal Cosmos DB support in Azure Storage Explorer These 3 options are actually the same thing, made from the same code base, which was recently open-sourced.</description>
     </item>
     
     <item>
@@ -24,7 +24,7 @@
       
       <guid>https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
       <description>This is the second post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
+Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post) In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
     </item>
     
     <item>
@@ -34,7 +34,7 @@
       
       <guid>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
       <description>This is the first post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
+Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2) Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
     </item>
     
     <item>

@@ -93,7 +93,7 @@ if (!doNotTrack) {
 <p><em>Update 2020/06/17: A few of the features mentioned in this post are now available in the .NET 5 preview 5 SDK.</em></p>
 <h2 id="target-typed-new">Target typed <code>new</code></h2>
 <p>In C# 9, it will be possible to omit the type in object creation expressions, if the type can be inferred from the context, making code terser and less repetitive:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; <span style="color:#ae81ff">_</span>properties = <span style="color:#66d9ef">new</span>();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt; _properties = <span style="color:#66d9ef">new</span>();
 </span></span></code></pre></div><h2 id="parameter-null-checking">Parameter null-checking</h2>
 <p>This feature introduces a simple syntax to automate null checks on method parameters. For instance, this code :</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SayHello(<span style="color:#66d9ef">string</span> name)
@@ -114,7 +114,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    &lt; <span style="color:#ae81ff">10</span> =&gt; <span style="color:#e6db74">&#34;small&#34;</span>,
 </span></span><span style="display:flex;"><span>    &gt;= <span style="color:#ae81ff">10</span> and &lt; <span style="color:#ae81ff">100</span> =&gt; <span style="color:#e6db74">&#34;medium&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">_</span> =&gt; <span style="color:#e6db74">&#34;large&#34;</span>
+</span></span><span style="display:flex;"><span>    _ =&gt; <span style="color:#e6db74">&#34;large&#34;</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="records-and-with-expressions">Records and <code>with</code> expressions</h2>
 <p>This is the big one, in my opinion. Creating simple data types in C# have always been more painful than it should be; you have to create a class, declare properties, add a constructor if you want your type to be immutable, override <code>Equals</code> and <code>GetHashCode</code>, maybe add a deconstructor, etc. C# 7 tuples made this a little easier, but still not ideal since a tuple is anonymous. The new Record feature in C# 9 makes things <em>much</em> easier!</p>

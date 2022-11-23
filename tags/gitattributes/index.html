@@ -93,7 +93,7 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args)  Console.WriteLine(&#34;Hello World!&#34;);  Console.WriteLine(&#34;Hello World!&#34;);  Console.WriteLine(&#34;Hello World!&#34;); + Console.WriteLine(&#34;blah&#34;);  } This is very useful to know where you are when looking at a diff.
+diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args) Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); Console.WriteLine(&#34;Hello World!&#34;); + Console.WriteLine(&#34;blah&#34;); } This is very useful to know where you are when looking at a diff.
 	</div>
 </article>
 </main>

@@ -43,8 +43,8 @@ As a reminder, the issue in previous releases was that the Command property of t
       
       <guid>https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
       <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
- This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
- To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
+This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
+To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
     </item>
     
     <item>

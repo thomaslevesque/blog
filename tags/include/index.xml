@@ -14,8 +14,8 @@
       
       <guid>https://thomaslevesque.com/2010/10/03/entity-framework-using-include-with-lambda-expressions/</guid>
       <description>I&amp;rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
-var query =  from ord in db.Orders.Include(&amp;#34;OrderDetails&amp;#34;)  where ord.Date &amp;gt;= DateTime.Today  select ord; Or if I also want to eagerly load the product:
-var query =  from ord in db.</description>
+var query = from ord in db.Orders.Include(&amp;#34;OrderDetails&amp;#34;) where ord.Date &amp;gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
+var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;) where ord.Date &amp;gt;= DateTime.</description>
     </item>
     
   </channel>

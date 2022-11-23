@@ -78,7 +78,7 @@ Value conversion for a specific strongly-typed id Out of the box, EF Core doesn&
       
       <guid>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</guid>
       <description>In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
-{  &amp;#34;id&amp;#34;: {  &amp;#34;value&amp;#34;: 1  },  &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;,  &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
+{ &amp;#34;id&amp;#34;: { &amp;#34;value&amp;#34;: 1 }, &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;, &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
     </item>
     
     <item>
@@ -99,7 +99,7 @@ Model binding of route and query string parameters Let&amp;rsquo;s say we have a
       
       <guid>https://thomaslevesque.com/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/</guid>
       <description>Strongly-typed ids Entities typically have integer, GUID or string ids, because those types are supported directly by databases. However, if all your entities have ids of the same type, it becomes pretty easy to mix them up, and use the id of a Product where the id of an Order was expected. This is actually a pretty common source of bugs.
-public void AddProductToOrder(int orderId, int productId, int count) {  .</description>
+public void AddProductToOrder(int orderId, int productId, int count) { .</description>
     </item>
     
     <item>
@@ -118,7 +118,7 @@ public void AddProductToOrder(int orderId, int productId, int count) {  .</descr
       
       <guid>https://thomaslevesque.com/2020/09/17/introducing-cosmos-db-studio/</guid>
       <description>I&amp;rsquo;ve been using Azure Cosmos DB on a fairly regular basis for the last 2 years or so. It&amp;rsquo;s a pretty good database, but one thing has always bothered me: the lack of a proper tool to query and modify data in the database. Basically, here are the current options:
- The standalone Cosmos DB Explorer website The Data Explorer in the Azure Portal Cosmos DB support in Azure Storage Explorer  These 3 options are actually the same thing, made from the same code base, which was recently open-sourced.</description>
+The standalone Cosmos DB Explorer website The Data Explorer in the Azure Portal Cosmos DB support in Azure Storage Explorer These 3 options are actually the same thing, made from the same code base, which was recently open-sourced.</description>
     </item>
     
     <item>
@@ -227,8 +227,8 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
       
       <guid>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
       <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
- query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
- But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.</description>
+query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
+But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&amp;rsquo;s not standardized.</description>
     </item>
     
     <item>
@@ -238,7 +238,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
       
       <guid>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
       <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
- appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
+appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
     </item>
     
     <item>
@@ -248,7 +248,7 @@ It is generally agreed that this should be avoided; I won&amp;rsquo;t go into th
       
       <guid>https://thomaslevesque.com/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</guid>
       <description>A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
-[Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() {  var left = Enumerable.Empty&amp;lt;int&amp;gt;();  var right = Enumerable.Empty&amp;lt;int&amp;gt;();  TestHelper.AssertThrowsWhenArgumentNull(  () =&amp;gt; left.FullOuterJoin(right, x =&amp;gt; x, y =&amp;gt; y, (k, x, y) =&amp;gt; 0, 0, 0, null),  &amp;#34;left&amp;#34;, &amp;#34;right&amp;#34;, &amp;#34;leftKeySelector&amp;#34;, &amp;#34;rightKeySelector&amp;#34;, &amp;#34;resultSelector&amp;#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.</description>
+[Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&amp;lt;int&amp;gt;(); var right = Enumerable.Empty&amp;lt;int&amp;gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&amp;gt; left.FullOuterJoin(right, x =&amp;gt; x, y =&amp;gt; y, (k, x, y) =&amp;gt; 0, 0, 0, null), &amp;#34;left&amp;#34;, &amp;#34;right&amp;#34;, &amp;#34;leftKeySelector&amp;#34;, &amp;#34;rightKeySelector&amp;#34;, &amp;#34;resultSelector&amp;#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.</description>
     </item>
     
     <item>
@@ -269,7 +269,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
       
       <guid>https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
       <description>This is the second post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
+Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post) In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
     </item>
     
     <item>
@@ -279,7 +279,7 @@ But sometimes, you do need the index of the current item; this usually leads to 
       
       <guid>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
       <description>This is the first post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
+Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2) Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
     </item>
     
     <item>
@@ -317,7 +317,7 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
       
       <guid>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>Update 2021/09/19: If you&amp;rsquo;re using the newer Microsoft.Identity.Web library, you don&amp;rsquo;t have anything to do to handle this, as it&amp;rsquo;s already handled by the library. This article only applies if you&amp;rsquo;re using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!
- If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
+If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
     </item>
     
     <item>
@@ -347,7 +347,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
       
       <guid>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
       <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
- Embed the image bytes as base64 in the JSON payload, e.g.  {  &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;,  &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
+Embed the image bytes as base64 in the JSON payload, e.g. { &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
     </item>
     
     <item>
@@ -358,7 +358,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
       <guid>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
       <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
+There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
     </item>
     
     <item>
@@ -406,7 +406,7 @@ Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreat
       
       <guid>https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/</guid>
       <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
- The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
+The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
     </item>
     
     <item>
@@ -475,7 +475,7 @@ Let&amp;rsquo;s see what&amp;rsquo;s new!</description>
       
       <guid>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</guid>
       <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args)  Console.WriteLine(&amp;#34;Hello World!&amp;#34;);  Console.WriteLine(&amp;#34;Hello World!&amp;#34;);  Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;);  } This is very useful to know where you are when looking at a diff.</description>
+diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args) Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;); } This is very useful to know where you are when looking at a diff.</description>
     </item>
     
     <item>
@@ -495,8 +495,8 @@ You might have noticed that HttpClient has a constructor that accepts a HttpMess
       
       <guid>https://thomaslevesque.com/2016/08/23/tuple-deconstruction-in-c-7/</guid>
       <description>Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
-  emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
-  deconstruction of tuples into separate variables
+emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
+deconstruction of tuples into separate variables
 Well, it looks like the C# language team has been busy during the last month, because both items are now implemented in VS 15 Preview 4, which was released today!</description>
     </item>
     
@@ -508,7 +508,7 @@ Well, it looks like the C# language team has been busy during the last month, be
       <guid>https://thomaslevesque.com/2016/07/25/tuples-in-c-7/</guid>
       <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) {  int count = 0;  double sum = 0.0;  foreach (var value in values)  {  count++;  sum += value;  }  return Tuple.</description>
+private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.</description>
     </item>
     
     <item>
@@ -518,7 +518,7 @@ private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&
       
       <guid>https://thomaslevesque.com/2016/06/21/pitfall-using-var-and-async-together/</guid>
       <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
-public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) {  var store = await GetBookStoreAsync();  var book = store.GetBookByIdAsync(id);  return book != null; }  // For completeness, here are the types and methods used in BookExistsAsync:  private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() {  // actual implementation irrelevant  // .</description>
+public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync: private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() { // actual implementation irrelevant // .</description>
     </item>
     
     <item>
@@ -615,7 +615,7 @@ x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
       
       <guid>https://thomaslevesque.com/2015/06/21/exception-filters-in-c-6/</guid>
       <description>Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
-static void Main() {  try  {  Foo.DoSomethingThatMightFail(null);  }  catch (MyException ex) when (ex.Code == 42)  {  Console.WriteLine(&amp;#34;Error 42 occurred&amp;#34;);  } } As you might expect, the catch block will be entered if and only if ex.</description>
+static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&amp;#34;Error 42 occurred&amp;#34;); } } As you might expect, the catch block will be entered if and only if ex.</description>
     </item>
     
     <item>
@@ -653,7 +653,8 @@ static void Main() {  try  {  Foo.DoSomethingThatMightFail(null);  }  catch (MyE
       <guid>https://thomaslevesque.com/2015/03/10/c-puzzle-1/</guid>
       <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
 I just came up with this one:
-static void Test(out int x, out int y) {  x = 42;  y = 123;  Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!</description>
+static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!
+I’ll try to post more puzzles in the future if I can come up with others.</description>
     </item>
     
     <item>
@@ -674,7 +675,7 @@ string text = $&amp;#34;{p.Name} was born on {p.DateOfBirth:D}&amp;#34;; A lesse
       <guid>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
-public class Calculator {  public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y)  {  // simulate long calculation  await Task.</description>
+public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.Delay(100).ConfigureAwait(false); // the answer to life, the universe and everything.</description>
     </item>
     
     <item>
@@ -816,7 +817,7 @@ Of course, this is not a new issue, and there are quite a few open-source librar
       <guid>https://thomaslevesque.com/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</guid>
       <description>Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
 The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:
- History suggestions are search queries previously entered by the user.</description>
+History suggestions are search queries previously entered by the user.</description>
     </item>
     
     <item>
@@ -845,7 +846,7 @@ It’s often useful to be notified when the value of a dependency property chang
       
       <guid>https://thomaslevesque.com/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/</guid>
       <description>Caller info attributes are one of the new features of C# 5. They&amp;rsquo;re attributes applied to optional method parameters that enable you to pass caller information implicitly to a method. I&amp;rsquo;m not sure that description is very clear, so an example will help you understand:
-static void Log(  string message, [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null, [CallerLineNumber] int lineNumber = 0) {  Console.WriteLine(  &amp;#34;[{0:g} - {1} - {2} - line {3}] {4}&amp;#34;,  DateTime.</description>
+static void Log( string message, [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null, [CallerLineNumber] int lineNumber = 0) { Console.WriteLine( &amp;#34;[{0:g} - {1} - {2} - line {3}] {4}&amp;#34;, DateTime.</description>
     </item>
     
     <item>
@@ -864,7 +865,7 @@ static void Log(  string message, [CallerMemberName] string memberName = null, [
       
       <guid>https://thomaslevesque.com/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/</guid>
       <description>WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
-// Collection to which the view is bound public ObservableCollection People { get; private set; } ...  // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People);  // Show only adults view.Filter = o =&amp;gt; ((Person)o).Age &amp;gt;= 18;  // Sort by last name and first name view.</description>
+// Collection to which the view is bound public ObservableCollection People { get; private set; } ... // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People); // Show only adults view.Filter = o =&amp;gt; ((Person)o).Age &amp;gt;= 18; // Sort by last name and first name view.SortDescriptions.Add(new SortDescription(&amp;#34;LastName&amp;#34;, ListSortDirection.</description>
     </item>
     
     <item>
@@ -923,8 +924,8 @@ Many solutions to this problem have been proposed on technical forums and blogs,
       
       <guid>https://thomaslevesque.com/2010/10/03/entity-framework-using-include-with-lambda-expressions/</guid>
       <description>I&amp;rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
-var query =  from ord in db.Orders.Include(&amp;#34;OrderDetails&amp;#34;)  where ord.Date &amp;gt;= DateTime.Today  select ord; Or if I also want to eagerly load the product:
-var query =  from ord in db.</description>
+var query = from ord in db.Orders.Include(&amp;#34;OrderDetails&amp;#34;) where ord.Date &amp;gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
+var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;) where ord.Date &amp;gt;= DateTime.</description>
     </item>
     
     <item>
@@ -934,7 +935,7 @@ var query =  from ord in db.</description>
       
       <guid>https://thomaslevesque.com/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</guid>
       <description>The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:
-&amp;lt;Grid&amp;gt;  &amp;lt;Grid.RowDefinitions&amp;gt;  &amp;lt;RowDefinition Height=&amp;#34;Auto&amp;#34;/&amp;gt;  &amp;lt;RowDefinition Height=&amp;#34;5&amp;#34;/&amp;gt;  &amp;lt;RowDefinition Height=&amp;#34;*&amp;#34;/&amp;gt;  &amp;lt;/Grid.RowDefinitions&amp;gt;  &amp;lt;Grid.ColumnDefinitions&amp;gt;  &amp;lt;ColumnDefinition Width=&amp;#34;60&amp;#34; /&amp;gt;  &amp;lt;ColumnDefinition Width=&amp;#34;*&amp;#34; /&amp;gt;  &amp;lt;/Grid.</description>
+&amp;lt;Grid&amp;gt; &amp;lt;Grid.RowDefinitions&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;Auto&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;5&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;*&amp;#34;/&amp;gt; &amp;lt;/Grid.RowDefinitions&amp;gt; &amp;lt;Grid.ColumnDefinitions&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;60&amp;#34; /&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;*&amp;#34; /&amp;gt; &amp;lt;/Grid.ColumnDefinitions&amp;gt; &amp;lt;Label Content=&amp;#34;Name&amp;#34; Grid.Row=&amp;#34;0&amp;#34; Grid.Column=&amp;#34;0&amp;#34; /&amp;gt; &amp;lt;TextBox Text=&amp;#34;Hello world&amp;#34; Grid.</description>
     </item>
     
     <item>
@@ -953,7 +954,7 @@ var query =  from ord in db.</description>
       
       <guid>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
       <description>The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) {  name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
+X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
     </item>
     
     <item>
@@ -1003,7 +1004,7 @@ To achieve this result, I used an Adorner : this is a component which allows to 
       
       <guid>https://thomaslevesque.com/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</guid>
       <description>If you have read my previous posts on the topic, you know I&amp;rsquo;m a big fan of custom markup extensions&amp;hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&amp;hellip; It could be useful in various cases, for instance :
-  if the value of the markup extension can change in response to an event</description>
+if the value of the markup extension can change in response to an event</description>
     </item>
     
     <item>
@@ -1023,7 +1024,7 @@ To achieve this result, I used an Adorner : this is a component which allows to 
       <guid>https://thomaslevesque.com/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</guid>
       <description>Here&amp;rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&amp;hellip;
 In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
-private void Window_MouseDown(object sender, MouseButtonEventArgs e) {  this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released.</description>
+private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)</description>
     </item>
     
     <item>
@@ -1033,8 +1034,8 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) {  this.Dra
       
       <guid>https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
       <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
- This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
- To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
+This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
+To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
     </item>
     
     <item>
@@ -1053,8 +1054,8 @@ private void Window_MouseDown(object sender, MouseButtonEventArgs e) {  this.Dra
       
       <guid>https://thomaslevesque.com/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
       <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
- &amp;lt;UserControl.InputBindings&amp;gt;  &amp;lt;KeyBinding Modifiers=&amp;#34;Control&amp;#34; Key=&amp;#34;E&amp;#34; Command=&amp;#34;{Binding EditCommand}&amp;#34;/&amp;gt;  &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&amp;rsquo;t work, for two reasons :
- The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&amp;rsquo;t inherit the DataContext  A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
+&amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;#34;Control&amp;#34; Key=&amp;#34;E&amp;#34; Command=&amp;#34;{Binding EditCommand}&amp;#34;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&amp;rsquo;t work, for two reasons :
+The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&amp;rsquo;t inherit the DataContext A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
     </item>
     
     <item>

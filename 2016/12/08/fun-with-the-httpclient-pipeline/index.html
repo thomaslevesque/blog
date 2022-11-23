@@ -115,30 +115,30 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubHandler</span> : HttpMessageHandler
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Responses to return</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Queue&lt;HttpResponseMessage&gt; <span style="color:#ae81ff">_</span>responses =
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Queue&lt;HttpResponseMessage&gt; _responses =
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> Queue&lt;System.Net.Http.HttpResponseMessage&gt;();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Requests that were sent via the handler</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;HttpRequestMessage&gt; <span style="color:#ae81ff">_</span>requests =
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> List&lt;HttpRequestMessage&gt; _requests =
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> List&lt;System.Net.Http.HttpRequestMessage&gt;();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Task&lt;HttpResponseMessage&gt; SendAsync(
 </span></span><span style="display:flex;"><span>        HttpRequestMessage request,
 </span></span><span style="display:flex;"><span>        CancellationToken cancellationToken)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>responses.Count == <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (_responses.Count == <span style="color:#ae81ff">0</span>)
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;No response configured&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>requests.Add(request);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> response = <span style="color:#ae81ff">_</span>responses.Dequeue();
+</span></span><span style="display:flex;"><span>        _requests.Add(request);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> response = _responses.Dequeue();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Task.FromResult(response);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> QueueResponse(HttpResponseMessage response) =&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>responses.Enqueue(response);
+</span></span><span style="display:flex;"><span>        _responses.Enqueue(response);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> IEnumerable&lt;HttpRequestMessage&gt; GetRequests() =&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>requests;
+</span></span><span style="display:flex;"><span>        _requests;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>This class lets you record the requests that are sent via the handler and specify the responses that should be returned. For instance, you could write a test like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// Arrange</span>
@@ -166,7 +166,7 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>Usage example with <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// Arrange</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> handler = A.Fake&lt;MockableMessageHandler&gt;();
-</span></span><span style="display:flex;"><span>A.CallTo(() =&gt; handler.DoSendAsync(A&lt;HttpRequestMessage&gt;.<span style="color:#ae81ff">_</span>))
+</span></span><span style="display:flex;"><span>A.CallTo(() =&gt; handler.DoSendAsync(A&lt;HttpRequestMessage&gt;._))
 </span></span><span style="display:flex;"><span>    .Returns(<span style="color:#66d9ef">new</span> HttpResponseMessage(HttpStatusCode.Unauthorized));
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> processor = <span style="color:#66d9ef">new</span> PaymentProcessor(handler);
 </span></span><span style="display:flex;"><span>...
@@ -174,28 +174,28 @@ if (!doNotTrack) {
 <p>Logging sent requests and received responses can help diagnose issues. This can easily be done with a custom delegating handler:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggingHandler</span> : DelegatingHandler
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger <span style="color:#ae81ff">_l</span>ogger;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger _logger;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> LoggingHandler(ILogger logger)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_l</span>ogger = logger;
+</span></span><span style="display:flex;"><span>        _logger = logger;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;HttpResponseMessage&gt; SendAsync(
 </span></span><span style="display:flex;"><span>        HttpRequestMessage request,
 </span></span><span style="display:flex;"><span>        CancellationToken cancellationToken)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_l</span>ogger.Trace(<span style="color:#e6db74">$&#34;Request: {request}&#34;</span>);
+</span></span><span style="display:flex;"><span>        _logger.Trace(<span style="color:#e6db74">$&#34;Request: {request}&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#75715e">// base.SendAsync calls the inner handler</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> response = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.SendAsync(request, cancellationToken);
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.Trace(<span style="color:#e6db74">$&#34;Response: {response}&#34;</span>);
+</span></span><span style="display:flex;"><span>            _logger.Trace(<span style="color:#e6db74">$&#34;Response: {response}&#34;</span>);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> response;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">catch</span> (Exception ex)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_l</span>ogger.Error(<span style="color:#e6db74">$&#34;Failed to get response: {ex}&#34;</span>);
+</span></span><span style="display:flex;"><span>            _logger.Error(<span style="color:#e6db74">$&#34;Failed to get response: {ex}&#34;</span>);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span>;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }

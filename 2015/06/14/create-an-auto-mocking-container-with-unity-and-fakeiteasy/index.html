@@ -115,11 +115,11 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AutoFakeBuilderStrategy</span> : BuilderStrategy
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> MethodInfo <span style="color:#ae81ff">_f</span>akeGenericDefinition;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> MethodInfo _fakeGenericDefinition;
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> AutoFakeBuilderStrategy()
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_f</span>akeGenericDefinition = <span style="color:#66d9ef">typeof</span>(A).GetMethod(<span style="color:#e6db74">&#34;Fake&#34;</span>, Type.EmptyTypes);
+</span></span><span style="display:flex;"><span>            _fakeGenericDefinition = <span style="color:#66d9ef">typeof</span>(A).GetMethod(<span style="color:#e6db74">&#34;Fake&#34;</span>, Type.EmptyTypes);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>        
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> PreBuildUp(IBuilderContext context)
@@ -129,7 +129,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> type = context.BuildKey.Type;
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (type.IsInterface || type.IsAbstract)
 </span></span><span style="display:flex;"><span>                {
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> fakeMethod = <span style="color:#ae81ff">_f</span>akeGenericDefinition.MakeGenericMethod(type);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> fakeMethod = _fakeGenericDefinition.MakeGenericMethod(type);
 </span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">var</span> fake = fakeMethod.Invoke(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">object</span>[<span style="color:#ae81ff">0</span>]);
 </span></span><span style="display:flex;"><span>                    context.PersistentPolicies.Set&lt;ILifetimePolicy&gt;(<span style="color:#66d9ef">new</span> ContainerControlledLifetimeManager(), context.BuildKey);
 </span></span><span style="display:flex;"><span>                    context.Existing = fake;

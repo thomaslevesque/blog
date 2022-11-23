@@ -24,7 +24,7 @@ Heterogenous JSON formats Let&amp;rsquo;s say we&amp;rsquo;re building an ASP.</
       
       <guid>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</guid>
       <description>In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
-{  &amp;#34;id&amp;#34;: {  &amp;#34;value&amp;#34;: 1  },  &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;,  &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
+{ &amp;#34;id&amp;#34;: { &amp;#34;value&amp;#34;: 1 }, &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;, &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
     </item>
     
     <item>
@@ -74,8 +74,8 @@ However, some client or server implementations actually require that a given hea
       
       <guid>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
       <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
- query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
- But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.</description>
+query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
+But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&amp;rsquo;s not standardized.</description>
     </item>
     
     <item>
@@ -85,7 +85,7 @@ However, some client or server implementations actually require that a given hea
       
       <guid>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
       <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
- appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment  With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
+appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
     </item>
     
     <item>
@@ -113,7 +113,7 @@ However, some client or server implementations actually require that a given hea
       
       <guid>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>Update 2021/09/19: If you&amp;rsquo;re using the newer Microsoft.Identity.Web library, you don&amp;rsquo;t have anything to do to handle this, as it&amp;rsquo;s already handled by the library. This article only applies if you&amp;rsquo;re using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!
- If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
+If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
     </item>
     
     <item>
@@ -133,7 +133,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
       
       <guid>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
       <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
- Embed the image bytes as base64 in the JSON payload, e.g.  {  &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;,  &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
+Embed the image bytes as base64 in the JSON payload, e.g. { &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
     </item>
     
     <item>
@@ -144,7 +144,7 @@ Using a middleware: not such a good idea Two months ago I published a blog post 
       <guid>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
       <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
- There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
+There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
     </item>
     
     <item>

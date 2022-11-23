@@ -87,7 +87,7 @@ if (!doNotTrack) {
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-08-31T00:00:00Z">August 31, 2020</time></div></div>
 		</header><div class="content post__content clearfix">
-			<p>Most JSON converters are fairly simple, and typically self-contained. But once 
+			<p>Most JSON converters are fairly simple, and typically self-contained. But once
 in a while, you need to do something a little more complex in a converter, and
 you end up needing to call a service. However, there&rsquo;s no built-in dependency
 injection in System.Text.Json converters… How can you access the service you
@@ -122,17 +122,17 @@ options, like this:</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigureJsonOptions</span> : IConfigureOptions&lt;JsonOptions&gt;
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IFooService <span style="color:#ae81ff">_f</span>ooService;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IFooService _fooService;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ConfigureJsonOptions(IFooService fooService)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_f</span>ooService = fooService;
+</span></span><span style="display:flex;"><span>        _fooService = fooService;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(JsonOptions options)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        options.JsonSerializerOptions.Converters
-</span></span><span style="display:flex;"><span>            .Add(<span style="color:#66d9ef">new</span> FooConverter(<span style="color:#ae81ff">_f</span>ooService));
+</span></span><span style="display:flex;"><span>            .Add(<span style="color:#66d9ef">new</span> FooConverter(_fooService));
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="case-by-case-converter">Case-by-case converter</h2>
@@ -155,7 +155,7 @@ exposes a <code>ServiceProvider</code>. We could then retrieve it from the optio
 it to resolve the service we need. Let&rsquo;s do this!</p>
 <p>First, the dummy converter itself. We could just inject a <code>IServiceProvider</code>
 into it, but it would be the root provider, so we wouldn&rsquo;t be able to resolve
-scoped services. We could, instead, inject a <code>IHttpContextAccessor</code>, from which 
+scoped services. We could, instead, inject a <code>IHttpContextAccessor</code>, from which
 we&rsquo;ll be able to access the <code>IServiceProvider</code> for the current request. But
 then we would only be able to resolve services in the context of handling a
 HTTP request. So let&rsquo;s combine both approaches:</p>
@@ -167,15 +167,15 @@ HTTP request. So let&rsquo;s combine both approaches:</p>
 </span></span><span style="display:flex;"><span>    JsonConverter&lt;<span style="color:#66d9ef">object</span>&gt;,
 </span></span><span style="display:flex;"><span>    IServiceProvider
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHttpContextAccessor <span style="color:#ae81ff">_</span>httpContextAccessor;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>serviceProvider;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHttpContextAccessor _httpContextAccessor;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider _serviceProvider;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ServiceProviderDummyConverter(
 </span></span><span style="display:flex;"><span>        IHttpContextAccessor httpContextAccessor,
 </span></span><span style="display:flex;"><span>        IServiceProvider serviceProvider)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>httpContextAccessor = httpContextAccessor;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>serviceProvider = serviceProvider;
+</span></span><span style="display:flex;"><span>        _httpContextAccessor = httpContextAccessor;
+</span></span><span style="display:flex;"><span>        _serviceProvider = serviceProvider;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> GetService(Type serviceType)
@@ -184,8 +184,8 @@ HTTP request. So let&rsquo;s combine both approaches:</p>
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// scoped services.</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// If there isn&#39;t a current HttpContext, just use the root service</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// provider.</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> services = <span style="color:#ae81ff">_</span>httpContextAccessor.HttpContext?.RequestServices
-</span></span><span style="display:flex;"><span>            ?? <span style="color:#ae81ff">_</span>serviceProvider;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> services = _httpContextAccessor.HttpContext?.RequestServices
+</span></span><span style="display:flex;"><span>            ?? _serviceProvider;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> services.GetService(serviceType);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
@@ -220,23 +220,23 @@ registered by default:</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigureJsonOptions</span> : IConfigureOptions&lt;JsonOptions&gt;
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHttpContextAccessor <span style="color:#ae81ff">_</span>httpContextAccessor;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider <span style="color:#ae81ff">_</span>serviceProvider;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHttpContextAccessor _httpContextAccessor;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider _serviceProvider;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ConfigureJsonOptions(
 </span></span><span style="display:flex;"><span>        IHttpContextAccessor httpContextAccessor,
 </span></span><span style="display:flex;"><span>        IServiceProvider serviceProvider)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>httpContextAccessor = httpContextAccessor;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>serviceProvider = serviceProvider;
+</span></span><span style="display:flex;"><span>        _httpContextAccessor = httpContextAccessor;
+</span></span><span style="display:flex;"><span>        _serviceProvider = serviceProvider;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(JsonOptions options)
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        options.JsonSerializerOptions.Converters.Add(
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> ServiceProviderDummyConverter(
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>httpContextAccessor,
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>serviceProvider));
+</span></span><span style="display:flex;"><span>                _httpContextAccessor,
+</span></span><span style="display:flex;"><span>                _serviceProvider));
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Finally, let&rsquo;s write an extension method to easily retrieve the

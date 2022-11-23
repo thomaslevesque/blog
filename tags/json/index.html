@@ -120,7 +120,7 @@ Heterogenous JSON formats Let&rsquo;s say we&rsquo;re building an ASP.
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
-{  &#34;id&#34;: {  &#34;value&#34;: 1  },  &#34;name&#34;: &#34;Apple&#34;,  &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that.
+{ &#34;id&#34;: { &#34;value&#34;: 1 }, &#34;name&#34;: &#34;Apple&#34;, &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that.
 	</div>
 </article><article class="list__item post">
 	
@@ -167,7 +167,7 @@ There are basically two variants of this problem. One has a simple solution, the
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		This is the second post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post)  In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&rsquo;s TypeNameHandling feature. In this post, I&rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .
+Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post) In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&rsquo;s TypeNameHandling feature. In this post, I&rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .
 	</div>
 </article><article class="list__item post">
 	
@@ -183,7 +183,7 @@ There are basically two variants of this problem. One has a simple solution, the
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		This is the first post in a series of 2:
- Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2)  Azure Cosmos DB is Microsoft&rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.
+Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2) Azure Cosmos DB is Microsoft&rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.
 	</div>
 </article><article class="list__item post">
 	
@@ -199,7 +199,7 @@ There are basically two variants of this problem. One has a simple solution, the
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Suppose we&rsquo;re writing an API for a blog. Our &ldquo;create post&rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
- Embed the image bytes as base64 in the JSON payload, e.g.  {  &#34;title&#34;: &#34;My first blog post&#34;,  &#34;body&#34;: &#34;This is going to be the best blog EVER!
+Embed the image bytes as base64 in the JSON payload, e.g. { &#34;title&#34;: &#34;My first blog post&#34;, &#34;body&#34;: &#34;This is going to be the best blog EVER!
 	</div>
 </article><article class="list__item post">
 	

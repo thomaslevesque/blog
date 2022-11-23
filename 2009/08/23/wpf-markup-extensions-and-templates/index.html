@@ -112,8 +112,8 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (target.TargetObject.GetType().FullName == <span style="color:#e6db74">&#34;System.Windows.SharedDp&#34;</span>)
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>targetObject = target.TargetObject;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>targetProperty = target.TargetProperty;
+</span></span><span style="display:flex;"><span>        _targetObject = target.TargetObject;
+</span></span><span style="display:flex;"><span>        _targetProperty = target.TargetProperty;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ProvideValueInternal(serviceProvider);
@@ -128,17 +128,17 @@ if (!doNotTrack) {
 <p>So we need to keep track of not one target object, but a collection of target objects, which will all be update by the <code>UpdateValue</code> method. Here&rsquo;s the final code of the <code>UpdatableMarkupExtension</code> base class :</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UpdatableMarkupExtension</span> : MarkupExtension
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> List&lt;<span style="color:#66d9ef">object</span>&gt; <span style="color:#ae81ff">_</span>targetObjects = <span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">object</span>&gt;();
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">object</span> <span style="color:#ae81ff">_</span>targetProperty;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> List&lt;<span style="color:#66d9ef">object</span>&gt; _targetObjects = <span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">object</span>&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">object</span> _targetProperty;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> IEnumerable&lt;<span style="color:#66d9ef">object</span>&gt; TargetObjects
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>targetObjects; }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _targetObjects; }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">object</span> TargetProperty
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">_</span>targetProperty; }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _targetProperty; }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">object</span> ProvideValue(IServiceProvider serviceProvider)
@@ -154,8 +154,8 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Save target information for later updates</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>targetObjects.Add(target.TargetObject);
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>targetProperty = target.TargetProperty;
+</span></span><span style="display:flex;"><span>                _targetObjects.Add(target.TargetObject);
+</span></span><span style="display:flex;"><span>                _targetProperty = target.TargetProperty;
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Delegate the work to the derived class</span>
@@ -164,15 +164,15 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> UpdateValue(<span style="color:#66d9ef">object</span> <span style="color:#66d9ef">value</span>)
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>targetObjects.Count &gt; <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (_targetObjects.Count &gt; <span style="color:#ae81ff">0</span>)
 </span></span><span style="display:flex;"><span>            {
 </span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Update the target property of each target object</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> target <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">_</span>targetObjects)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> target <span style="color:#66d9ef">in</span> _targetObjects)
 </span></span><span style="display:flex;"><span>                {
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>targetProperty <span style="color:#66d9ef">is</span> DependencyProperty)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (_targetProperty <span style="color:#66d9ef">is</span> DependencyProperty)
 </span></span><span style="display:flex;"><span>                    {
 </span></span><span style="display:flex;"><span>                        DependencyObject obj = target <span style="color:#66d9ef">as</span> DependencyObject;
-</span></span><span style="display:flex;"><span>                        DependencyProperty prop = <span style="color:#ae81ff">_</span>targetProperty <span style="color:#66d9ef">as</span> DependencyProperty;
+</span></span><span style="display:flex;"><span>                        DependencyProperty prop = _targetProperty <span style="color:#66d9ef">as</span> DependencyProperty;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>                        Action updateAction = () =&gt; obj.SetValue(prop, <span style="color:#66d9ef">value</span>);
 </span></span><span style="display:flex;"><span>
@@ -186,7 +186,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                    }
 </span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span> <span style="color:#75715e">// _targetProperty is PropertyInfo</span>
 </span></span><span style="display:flex;"><span>                    {
-</span></span><span style="display:flex;"><span>                        PropertyInfo prop = <span style="color:#ae81ff">_</span>targetProperty <span style="color:#66d9ef">as</span> PropertyInfo;
+</span></span><span style="display:flex;"><span>                        PropertyInfo prop = _targetProperty <span style="color:#66d9ef">as</span> PropertyInfo;
 </span></span><span style="display:flex;"><span>                        prop.SetValue(target, <span style="color:#66d9ef">value</span>, <span style="color:#66d9ef">null</span>);
 </span></span><span style="display:flex;"><span>                    }
 </span></span><span style="display:flex;"><span>                }

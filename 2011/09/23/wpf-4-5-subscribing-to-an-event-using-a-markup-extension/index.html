@@ -200,7 +200,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EventBindingExtension</span> : MarkupExtension
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> EventInfo <span style="color:#ae81ff">_</span>eventInfo;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> EventInfo _eventInfo;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> EventBindingExtension() { }
 </span></span><span style="display:flex;"><span>
@@ -223,26 +223,26 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (targetObj == <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;The target object must be a DependencyObject&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">_</span>eventInfo = target.TargetProperty <span style="color:#66d9ef">as</span> EventInfo;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>eventInfo == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>            _eventInfo = target.TargetProperty <span style="color:#66d9ef">as</span> EventInfo;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (_eventInfo == <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InvalidOperationException(<span style="color:#e6db74">&#34;The target property must be an event&#34;</span>);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">object</span> dataContext = GetDataContext(targetObj);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (dataContext == <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>            {
 </span></span><span style="display:flex;"><span>                SubscribeToDataContextChanged(targetObj);
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> GetDummyHandler(<span style="color:#ae81ff">_</span>eventInfo.EventHandlerType);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> GetDummyHandler(_eventInfo.EventHandlerType);
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, <span style="color:#ae81ff">_</span>eventInfo, EventHandlerName);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, _eventInfo, EventHandlerName);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (handler == <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>            {
 </span></span><span style="display:flex;"><span>                Trace.TraceError(
 </span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;EventBinding: no suitable method named &#39;{0}&#39; found in type &#39;{1}&#39; to handle event &#39;{2&#39;}&#34;</span>,
 </span></span><span style="display:flex;"><span>                    EventHandlerName,
 </span></span><span style="display:flex;"><span>                    dataContext.GetType(),
-</span></span><span style="display:flex;"><span>                    <span style="color:#ae81ff">_</span>eventInfo);
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> GetDummyHandler(<span style="color:#ae81ff">_</span>eventInfo.EventHandlerType);
+</span></span><span style="display:flex;"><span>                    _eventInfo);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> GetDummyHandler(_eventInfo.EventHandlerType);
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> handler;
@@ -281,15 +281,15 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                ?? target.GetValue(FrameworkContentElement.DataContextProperty);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Dictionary&lt;Type, Delegate&gt; <span style="color:#ae81ff">_d</span>ummyHandlers = <span style="color:#66d9ef">new</span> Dictionary&lt;Type, Delegate&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> Dictionary&lt;Type, Delegate&gt; _dummyHandlers = <span style="color:#66d9ef">new</span> Dictionary&lt;Type, Delegate&gt;();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> Delegate GetDummyHandler(Type eventHandlerType)
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            Delegate handler;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (!<span style="color:#ae81ff">_d</span>ummyHandlers.TryGetValue(eventHandlerType, <span style="color:#66d9ef">out</span> handler))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (!_dummyHandlers.TryGetValue(eventHandlerType, <span style="color:#66d9ef">out</span> handler))
 </span></span><span style="display:flex;"><span>            {
 </span></span><span style="display:flex;"><span>                handler = CreateDummyHandler(eventHandlerType);
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_d</span>ummyHandlers[eventHandlerType] = handler;
+</span></span><span style="display:flex;"><span>                _dummyHandlers[eventHandlerType] = handler;
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> handler;
 </span></span><span style="display:flex;"><span>        }
@@ -342,10 +342,10 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (dataContext == <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, <span style="color:#ae81ff">_</span>eventInfo, EventHandlerName);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> handler = GetHandler(dataContext, _eventInfo, EventHandlerName);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (handler != <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>eventInfo.AddEventHandler(targetObj, handler);
+</span></span><span style="display:flex;"><span>                _eventInfo.AddEventHandler(targetObj, handler);
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>            UnsubscribeFromDataContextChanged(targetObj);
 </span></span><span style="display:flex;"><span>        }

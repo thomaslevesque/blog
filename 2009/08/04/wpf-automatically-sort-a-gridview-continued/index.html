@@ -387,27 +387,27 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SortGlyphAdorner</span> : Adorner
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> GridViewColumnHeader <span style="color:#ae81ff">_</span>columnHeader;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> ListSortDirection <span style="color:#ae81ff">_d</span>irection;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> ImageSource <span style="color:#ae81ff">_</span>sortGlyph;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> GridViewColumnHeader _columnHeader;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> ListSortDirection _direction;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> ImageSource _sortGlyph;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> SortGlyphAdorner(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
 </span></span><span style="display:flex;"><span>                : <span style="color:#66d9ef">base</span>(columnHeader)
 </span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>columnHeader = columnHeader;
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_d</span>irection = direction;
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>sortGlyph = sortGlyph;
+</span></span><span style="display:flex;"><span>                _columnHeader = columnHeader;
+</span></span><span style="display:flex;"><span>                _direction = direction;
+</span></span><span style="display:flex;"><span>                _sortGlyph = sortGlyph;
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> Geometry GetDefaultGlyph()
 </span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">double</span> x1 = <span style="color:#ae81ff">_</span>columnHeader.ActualWidth - <span style="color:#ae81ff">13</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">double</span> x1 = _columnHeader.ActualWidth - <span style="color:#ae81ff">13</span>;
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">double</span> x2 = x1 + <span style="color:#ae81ff">10</span>;
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">double</span> x3 = x1 + <span style="color:#ae81ff">5</span>;
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">double</span> y1 = <span style="color:#ae81ff">_</span>columnHeader.ActualHeight / <span style="color:#ae81ff">2</span> - <span style="color:#ae81ff">3</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">double</span> y1 = _columnHeader.ActualHeight / <span style="color:#ae81ff">2</span> - <span style="color:#ae81ff">3</span>;
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">double</span> y2 = y1 + <span style="color:#ae81ff">5</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_d</span>irection == ListSortDirection.Ascending)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (_direction == ListSortDirection.Ascending)
 </span></span><span style="display:flex;"><span>                {
 </span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">double</span> tmp = y1;
 </span></span><span style="display:flex;"><span>                    y1 = y2;
@@ -434,12 +434,12 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            {
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">base</span>.OnRender(drawingContext);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">_</span>sortGlyph != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (_sortGlyph != <span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>                {
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">double</span> x = <span style="color:#ae81ff">_</span>columnHeader.ActualWidth - <span style="color:#ae81ff">13</span>;
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">double</span> y = <span style="color:#ae81ff">_</span>columnHeader.ActualHeight / <span style="color:#ae81ff">2</span> - <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">double</span> x = _columnHeader.ActualWidth - <span style="color:#ae81ff">13</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">double</span> y = _columnHeader.ActualHeight / <span style="color:#ae81ff">2</span> - <span style="color:#ae81ff">5</span>;
 </span></span><span style="display:flex;"><span>                    Rect rect = <span style="color:#66d9ef">new</span> Rect(x, y, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>);
-</span></span><span style="display:flex;"><span>                    drawingContext.DrawImage(<span style="color:#ae81ff">_</span>sortGlyph, rect);
+</span></span><span style="display:flex;"><span>                    drawingContext.DrawImage(_sortGlyph, rect);
 </span></span><span style="display:flex;"><span>                }
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>
 </span></span><span style="display:flex;"><span>                {

@@ -33,7 +33,7 @@ Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, g
       
       <guid>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>Update 2021/09/19: If you&amp;rsquo;re using the newer Microsoft.Identity.Web library, you don&amp;rsquo;t have anything to do to handle this, as it&amp;rsquo;s already handled by the library. This article only applies if you&amp;rsquo;re using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!
- If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
+If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
     </item>
     
     <item>

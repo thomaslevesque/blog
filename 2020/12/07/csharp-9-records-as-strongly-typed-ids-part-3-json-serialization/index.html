@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 		<meta property="og:title" content="C# 9 records as strongly-typed ids - Part 3: JSON serialization" />
 <meta property="og:description" content="In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
-{  &#34;id&#34;: {  &#34;value&#34;: 1  },  &#34;name&#34;: &#34;Apple&#34;,  &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that." />
+{ &#34;id&#34;: { &#34;value&#34;: 1 }, &#34;name&#34;: &#34;Apple&#34;, &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-12-07T00:00:00+00:00" />
@@ -20,7 +20,7 @@
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="C# 9 records as strongly-typed ids - Part 3: JSON serialization"/>
 <meta name="twitter:description" content="In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
-{  &#34;id&#34;: {  &#34;value&#34;: 1  },  &#34;name&#34;: &#34;Apple&#34;,  &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that."/>
+{ &#34;id&#34;: { &#34;value&#34;: 1 }, &#34;name&#34;: &#34;Apple&#34;, &#34;unitPrice&#34;: 0.8 } When you think about it, it&rsquo;s not really unexpected: the strongly-typed id is a &ldquo;complex&rdquo; object, not a primitive type, so it makes sense that it&rsquo;s serialized as an object. But it&rsquo;s clearly not what we want… Let&rsquo;s see how to fix that."/>
 
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">

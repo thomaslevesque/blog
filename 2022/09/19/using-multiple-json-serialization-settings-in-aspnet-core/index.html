@@ -218,34 +218,34 @@ if (!doNotTrack) {
 <p>So let&rsquo;s create a class that implements <code>IConfigureOptions&lt;MvcOptions&gt;</code> and adds the formatters for a given format name:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigureMvcJsonOptions</span> : IConfigureOptions&lt;MvcOptions&gt;
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> <span style="color:#ae81ff">_</span>jsonSettingsName;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IOptionsMonitor&lt;JsonOptions&gt; <span style="color:#ae81ff">_</span>jsonOptions;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILoggerFactory <span style="color:#ae81ff">_l</span>oggerFactory;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> _jsonSettingsName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IOptionsMonitor&lt;JsonOptions&gt; _jsonOptions;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILoggerFactory _loggerFactory;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ConfigureMvcJsonOptions(
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> jsonSettingsName,
 </span></span><span style="display:flex;"><span>        IOptionsMonitor&lt;JsonOptions&gt; jsonOptions,
 </span></span><span style="display:flex;"><span>        ILoggerFactory loggerFactory)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>jsonSettingsName = jsonSettingsName;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_</span>jsonOptions = jsonOptions;
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">_l</span>oggerFactory = loggerFactory;
+</span></span><span style="display:flex;"><span>        _jsonSettingsName = jsonSettingsName;
+</span></span><span style="display:flex;"><span>        _jsonOptions = jsonOptions;
+</span></span><span style="display:flex;"><span>        _loggerFactory = loggerFactory;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(MvcOptions options)
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> jsonOptions = <span style="color:#ae81ff">_</span>jsonOptions.Get(<span style="color:#ae81ff">_</span>jsonSettingsName);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> logger = <span style="color:#ae81ff">_l</span>oggerFactory.CreateLogger&lt;SpecificSystemTextJsonInputFormatter&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> jsonOptions = _jsonOptions.Get(_jsonSettingsName);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> logger = _loggerFactory.CreateLogger&lt;SpecificSystemTextJsonInputFormatter&gt;();
 </span></span><span style="display:flex;"><span>        options.InputFormatters.Insert(
 </span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">0</span>,
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> SpecificSystemTextJsonInputFormatter(
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>jsonSettingsName,
+</span></span><span style="display:flex;"><span>                _jsonSettingsName,
 </span></span><span style="display:flex;"><span>                jsonOptions,
 </span></span><span style="display:flex;"><span>                logger));
 </span></span><span style="display:flex;"><span>        options.OutputFormatters.Insert(
 </span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">0</span>,
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> SpecificSystemTextJsonOutputFormatter(
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">_</span>jsonSettingsName,
+</span></span><span style="display:flex;"><span>                _jsonSettingsName,
 </span></span><span style="display:flex;"><span>                jsonOptions.JsonSerializerOptions));
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}

@@ -104,16 +104,16 @@ if (!doNotTrack) {
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// Pseudo code...</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHubContext&lt;ChatHub, IChatClient&gt; <span style="color:#ae81ff">_</span>hubContext;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceBusPublisher <span style="color:#ae81ff">_</span>serviceBusPublisher;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHubContext&lt;ChatHub, IChatClient&gt; _hubContext;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceBusPublisher _serviceBusPublisher;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task SendMessageToAllAsync(<span style="color:#66d9ef">string</span> text)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Send the message to clients connected to the current instance</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_</span>hubContext.Clients.All.ReceiveMessageAsync(text);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> _hubContext.Clients.All.ReceiveMessageAsync(text);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Notify other instances to send the same message</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_</span>serviceBusPublisher.PublishMessageAsync(<span style="color:#66d9ef">new</span> SendToAllMessage(text));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> _serviceBusPublisher.PublishMessageAsync(<span style="color:#66d9ef">new</span> SendToAllMessage(text));
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
 <li>
@@ -139,7 +139,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>; <span style="color:#75715e">// ignore message from self</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Send the message to clients connected to the current instance</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#ae81ff">_</span>hubContext.Clients.All.ReceiveMessageAsync(message.Text);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> _hubContext.Clients.All.ReceiveMessageAsync(message.Text);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>I&rsquo;m not showing the full details of how to implement this solution, because to be honest, it kind of sucks. It works, but it&rsquo;s a bit ugly: the fact that it&rsquo;s using a service bus to share messages with other server instances is too visible, you can&rsquo;t just ignore it. Every time you send a message via SignalR, you also have to explicitly send one to the service bus. It would be better to hide that ugliness behind an abstraction, or even better, make it completely invisible&hellip;</p>
 <p>If you have used the Redis or Azure SignalR Service approaches before, you might have noticed how simple they are to use. Basically, in your <code>Startup.ConfigureServices</code> method, just append <code>AddRedis(...)</code> or <code>AddAzureSignalR(...)</code> after <code>services.AddSignalR()</code>, and you&rsquo;re done: you can use SignalR as usual, the details of how it handles scale-out are completely abstracted away. Wouldn&rsquo;t it be nice to be able to do the same for Azure Service Bus? I thought so too, so I made a library that does exactly that: <a href="https://github.com/thomaslevesque/AspNetCore.SignalR.AzureServiceBus">AspNetCore.SignalR.AzureServiceBus</a>. To use it, reference the <a href="https://www.nuget.org/packages/AspNetCore.SignalR.AzureServiceBus/1.0.0-alpha.1">NuGet package</a>, and just add this in your <code>Startup.ConfigureServices</code> method:</p>

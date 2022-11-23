@@ -93,8 +93,8 @@ if (!doNotTrack) {
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		I&rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
-var query =  from ord in db.Orders.Include(&#34;OrderDetails&#34;)  where ord.Date &gt;= DateTime.Today  select ord; Or if I also want to eagerly load the product:
-var query =  from ord in db.
+var query = from ord in db.Orders.Include(&#34;OrderDetails&#34;) where ord.Date &gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
+var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where ord.Date &gt;= DateTime.
 	</div>
 </article><article class="list__item post">
 	
