@@ -53,3 +53,9 @@ googleAnalytics = "G-18RG5M4ZD6"
 [Params.widgets.social]
   github = "thomaslevesque"
   twitter = "thomaslevesque"
+
+[[Params.widgets.social.custom]]
+  title = "Mastodon"
+  url = "https://mastodon.cloud/@thomaslevesque"
+  rel = "me"
+  icon = "svg/mastodon.svg"
