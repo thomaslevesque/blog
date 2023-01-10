@@ -119,7 +119,7 @@ class FactoryInterceptor : IInterceptor
     {
         invocation.ReturnValue =
             ActivatorUtilities.CreateInstance(
-                serviceProvider,
+                _serviceProvider,
                 invocation.Method.ReturnType,
                 invocation.Arguments);
     }
