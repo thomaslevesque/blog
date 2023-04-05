@@ -197,7 +197,7 @@ using (var client = new HttpClient(handler))
 
 Note that we need to **disable the `HttpClient`'s timeout by setting it to an infinite value**, otherwise the default behavior will interfere with our handler.
 
-Now let's try to send a request with a timeout of 5 seconds to a server that takes to long to respond:
+Now let's try to send a request with a timeout of 5 seconds to a server that takes too long to respond:
 
 ```csharp
 var request = new HttpRequestMessage(HttpMethod.Get, "http://foo/");
