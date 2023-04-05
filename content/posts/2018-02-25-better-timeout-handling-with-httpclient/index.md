@@ -38,7 +38,7 @@ Let's see how we can associate a timeout value to a request. The `HttpRequestMes
 ```csharp
 public static class HttpRequestExtensions
 {
-    private static string TimeoutPropertyKey = "RequestTimeout";
+    private const string TimeoutPropertyKey = "RequestTimeout";
 
     public static void SetTimeout(
         this HttpRequestMessage request,
