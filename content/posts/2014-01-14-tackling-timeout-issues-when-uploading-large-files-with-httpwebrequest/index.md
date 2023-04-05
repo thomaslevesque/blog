@@ -22,7 +22,7 @@ Obtaining the request stream or getting the response (orange parts) isn’t supp
 
 In my opinion, it’s a design flaw of the `HttpWebRequest` class, and one that has bothered me for a very long time. So I eventually came up with a solution. It relies on the fact that the asynchronous versions of `GetRequestStream` and `GetResponse` don’t have a timeout mechanism. Here’s what the documentation says: 
 
-> *The Timeout property has no effect on asynchronous requests made with the BeginGetResponse or BeginGetRequestStream method.**In the case of asynchronous requests, the client application implements its own time-out mechanism. Refer to the example in the BeginGetResponse method.*
+> *The Timeout property has no effect on asynchronous requests made with the BeginGetResponse or BeginGetRequestStream method. In the case of asynchronous requests, the client application implements its own time-out mechanism. Refer to the example in the BeginGetResponse method.*
 
  So, a solution could be to to use these methods directly (or the new `Task`-based versions: `GetRequestStreamAsync` and `GetResponseAsync`); but more often than not, you already have an existing code base that uses the synchronous methods, and changing the code to make it fully asynchronous is usually not trivial. So, the easy approach is to create synchronous wrappers around `BeginGetRequestStream` and `BeginGetResponse`, with a way to specify a timeout for these operations: 
 
