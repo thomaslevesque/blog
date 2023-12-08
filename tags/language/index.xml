@@ -6,18 +6,17 @@
     <description>Recent content in language on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/language/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/language/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A quick review of C# 10 new language features</title>
       <link>https://thomaslevesque.com/2021/11/04/a-quick-review-of-csharp-10-new-language-features/</link>
       <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2021/11/04/a-quick-review-of-csharp-10-new-language-features/</guid>
       <description>.NET 6.0 and C# 10 are just around the corner, so now is a good time to review some of the most interesting new language features!
 Record structs 📄 Proposal
 Records were introduced in C# 9 as a simple way to define data types with value equality semantics, for instance:
 public record Money(decimal Amount, string CurrencyCode); An annoying limitation was that records were always reference types, but in some scenarios it would have been better to use value types.</description>
     </item>
-    
   </channel>
 </rss>

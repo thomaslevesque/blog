@@ -15,6 +15,7 @@
 <meta property="article:modified_time" content="2011-03-21T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] How to bind to data when the DataContext is not inherited"/>
 <meta name="twitter:description" content="The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&rsquo;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&hellip;"/>
@@ -110,14 +111,14 @@ if (!doNotTrack) {
 <p>The idea is to create a class (I called it <code>BindingProxy</code> for reasons that should become obvious very soon) that inherits <code>Freezable</code> and declares a <code>Data</code> dependency property:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BindingProxy</span> : Freezable
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Overrides of Freezable</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Overrides of Freezable
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Freezable CreateInstanceCore()
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> BindingProxy();
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> Data
 </span></span><span style="display:flex;"><span>        {

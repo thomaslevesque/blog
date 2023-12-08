@@ -17,6 +17,7 @@ The Command property is not a dependency property, so you cannot assign it throu
 <meta property="article:modified_time" content="2009-03-17T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Using InputBindings with the MVVM pattern"/>
 <meta name="twitter:description" content="If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
@@ -234,7 +235,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DummyCommand</span> : ICommand
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#region Singleton pattern</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#region</span> Singleton pattern
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> DummyCommand()
 </span></span><span style="display:flex;"><span>            {
@@ -253,9 +254,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                }
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#region ICommand Members</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#region</span> ICommand Members
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> CanExecute(<span style="color:#66d9ef">object</span> parameter)
 </span></span><span style="display:flex;"><span>            {
@@ -268,7 +269,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            {
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}

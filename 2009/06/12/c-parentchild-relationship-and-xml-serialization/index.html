@@ -15,6 +15,7 @@
 <meta property="article:modified_time" content="2009-06-12T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[C#] Parent/child relationship and XML serialization"/>
 <meta name="twitter:description" content="Today I&rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent)."/>
@@ -163,7 +164,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>._collection = collection;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region IList&lt;T&gt; Members</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> IList&lt;T&gt; Members
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> IndexOf(T item)
 </span></span><span style="display:flex;"><span>        {
@@ -202,9 +203,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region ICollection&lt;T&gt; Members</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> ICollection&lt;T&gt; Members
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Add(T item)
 </span></span><span style="display:flex;"><span>        {
@@ -251,25 +252,25 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> b;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region IEnumerable&lt;T&gt; Members</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> IEnumerable&lt;T&gt; Members
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> IEnumerator&lt;T&gt; GetEnumerator()
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> _collection.GetEnumerator();
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region IEnumerable Members</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> IEnumerable Members
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (_collection <span style="color:#66d9ef">as</span> System.Collections.IEnumerable).GetEnumerator();
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></div><p>Now let&rsquo;s see how this class can be used in the case of the above example&hellip; First let&rsquo;s change the <code>Child</code> class so that it implements the <code>IChildItem&lt;Parent&gt;</code> interface :</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Child</span> : IChildItem&lt;Parent&gt;
@@ -279,7 +280,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">        [XmlIgnore]</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Parent ParentObject { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">set</span>; }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region IChildItem&lt;Parent&gt; Members</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> IChildItem&lt;Parent&gt; Members
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        Parent IChildItem&lt;Parent&gt;.Parent
 </span></span><span style="display:flex;"><span>        {
@@ -293,7 +294,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></div><p>Note that here the <code>IChildItem&lt;Parent&gt;</code> interface is implemented <em>explicitly</em> : this is a way to &ldquo;hide&rdquo; the <code>Parent</code> property, that will only be accessible when manipulating the <code>Child</code> object through a variable of type <code>IChildItem&lt;Parent&gt;</code>. We also define the <code>set</code> accessor of the <code>ParentObject</code> property as <code>internal</code>, so that it can&rsquo;t be modified from another assembly.  In the <code>Parent</code> class, the <code>List&lt;Child&gt;</code> just has to be replaced by a <code>ChildItemCollection&lt;Parent, Child&gt;</code>. We also remove the <code>AddChild</code> and <code>RemoveChild</code> methods, which are no more necessary since the <code>ChildItemCollection&lt;P,T&gt;</code> takes care of setting the <code>Parent</code> property.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parent</span>

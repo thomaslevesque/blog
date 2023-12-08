@@ -6,1106 +6,885 @@
     <description>Recent content on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Nov 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Building a URL shortener in 12 lines of code using Cloudflare Workers</title>
       <link>https://thomaslevesque.com/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/</link>
       <pubDate>Tue, 01 Nov 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/</guid>
       <description>Cloudflare Workers Cloudflare Workers is a serverless environment that runs Javascript. Basically, you just write code that handle HTTP requests, similarly to Node.js. The code is deployed globally across the Cloudflare network, which means it&amp;rsquo;s always running as close as possible to the end user.
 I was recently playing with Cloudflare Workers to see how it worked, and I realized how incredibly easy it was to make a simple URL shortener with it!</description>
     </item>
-    
     <item>
       <title>Using multiple JSON serialization settings in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/</link>
       <pubDate>Mon, 19 Sep 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/</guid>
       <description>My blog has been a bit quiet in the last 18 months or so, because, well, life happened&amp;hellip; In that time span I became a father, changed jobs twice, and relocated to Canada with my family, so free time has been scarce. Anyway, I recently ran into a problem that I found worthy of a blog post, and I have a bit of time to write!
 Heterogenous JSON formats Let&amp;rsquo;s say we&amp;rsquo;re building an ASP.</description>
     </item>
-    
     <item>
       <title>Building a project that target .NET Framework 4.5 in Visual Studio 2022</title>
       <link>https://thomaslevesque.com/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/</link>
       <pubDate>Fri, 12 Nov 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/</guid>
       <description>I maintain a few libraries that still target .NET Framework 4.5 (among others). .NET 4.5 has long been out of support, but I try to keep supporting older frameworks in my libraries as long as it&amp;rsquo;s not a major inconvenience, because many people maintain old applications that can&amp;rsquo;t easily be updated to a newer framework.
 Anyway, until recently, supporting .NET 4.5 wasn&amp;rsquo;t much of a problem, but today I hit a snag&amp;hellip; Before installing VS 2022 on my Surface Pro, I removed VS 2019 and old versions of .</description>
     </item>
-    
     <item>
       <title>A quick review of C# 10 new language features</title>
       <link>https://thomaslevesque.com/2021/11/04/a-quick-review-of-csharp-10-new-language-features/</link>
       <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2021/11/04/a-quick-review-of-csharp-10-new-language-features/</guid>
       <description>.NET 6.0 and C# 10 are just around the corner, so now is a good time to review some of the most interesting new language features!
 Record structs 📄 Proposal
 Records were introduced in C# 9 as a simple way to define data types with value equality semantics, for instance:
 public record Money(decimal Amount, string CurrencyCode); An annoying limitation was that records were always reference types, but in some scenarios it would have been better to use value types.</description>
     </item>
-    
     <item>
       <title>C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</title>
       <link>https://thomaslevesque.com/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/</link>
       <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/</guid>
       <description>We&amp;rsquo;re reaching the end of this series on records as strongly-typed ids. Sorry for the long delay since the last post… life happened! So far we&amp;rsquo;ve covered ASP.NET Core model binding, JSON serialization, and EF Core integration. Almost everything is working, we just need to fix a few more details.
 Handling database-generated values in EF Core First, I want to address a question asked by @OpsOwns in the comments of the last post:</description>
     </item>
-    
     <item>
       <title>C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</title>
       <link>https://thomaslevesque.com/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/</link>
       <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/</guid>
       <description>So far in this series, I showed how to use C# 9 records to declare strongly-typed ids as easily as this:
 public record ProductId(int Value) : StronglyTypedId&amp;lt;int&amp;gt;(Value); I also explained how to make them work correctly with ASP.NET Core model binding and JSON serialization.
 Today, I&amp;rsquo;ll present another piece of the puzzle: how to make Entity Framework core handle strongly-typed ids correctly.
 Value conversion for a specific strongly-typed id Out of the box, EF Core doesn&amp;rsquo;t know anything about our strongly-typed ids.</description>
     </item>
-    
     <item>
       <title>C# 9 records as strongly-typed ids - Part 3: JSON serialization</title>
       <link>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</link>
       <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</guid>
       <description>In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
 { &amp;#34;id&amp;#34;: { &amp;#34;value&amp;#34;: 1 }, &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;, &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
     </item>
-    
     <item>
       <title>C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</title>
       <link>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</link>
       <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</guid>
       <description>Last time, I explained how easy it is to use C# 9 record types as strongly-typed ids:
 public record ProductId(int Value); But unfortunately, we&amp;rsquo;re not quite done yet: there are a few issues to fix before our strongly-typed ids are really usable. For instance, ASP.NET Core doesn&amp;rsquo;t know how to handle them in route parameters or query string parameters. In this post, I&amp;rsquo;ll show how to address this issue.
 Model binding of route and query string parameters Let&amp;rsquo;s say we have an entity like this:</description>
     </item>
-    
     <item>
       <title>Using C# 9 records as strongly-typed ids</title>
       <link>https://thomaslevesque.com/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/</link>
       <pubDate>Fri, 30 Oct 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/</guid>
       <description>Strongly-typed ids Entities typically have integer, GUID or string ids, because those types are supported directly by databases. However, if all your entities have ids of the same type, it becomes pretty easy to mix them up, and use the id of a Product where the id of an Order was expected. This is actually a pretty common source of bugs.
 public void AddProductToOrder(int orderId, int productId, int count) { .</description>
     </item>
-    
     <item>
       <title>Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</title>
       <link>https://thomaslevesque.com/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/</link>
       <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/</guid>
       <description>Dependency injection: the good and the bad Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&amp;rsquo;s successor), Castle Windsor, etc., but lately I&amp;rsquo;ve mostly been using the one provided by Microsoft in .NET Core : Microsoft.Extensions.DependencyInjection. It&amp;rsquo;s not the most full-featured (in fact, it&amp;rsquo;s pretty bare-bones), but I find it sufficient in most cases.</description>
     </item>
-    
     <item>
       <title>Introducing Cosmos DB Studio</title>
       <link>https://thomaslevesque.com/2020/09/17/introducing-cosmos-db-studio/</link>
       <pubDate>Thu, 17 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/09/17/introducing-cosmos-db-studio/</guid>
       <description>I&amp;rsquo;ve been using Azure Cosmos DB on a fairly regular basis for the last 2 years or so. It&amp;rsquo;s a pretty good database, but one thing has always bothered me: the lack of a proper tool to query and modify data in the database. Basically, here are the current options:
 The standalone Cosmos DB Explorer website The Data Explorer in the Azure Portal Cosmos DB support in Azure Storage Explorer These 3 options are actually the same thing, made from the same code base, which was recently open-sourced.</description>
     </item>
-    
     <item>
       <title>Inject a service into a System.Text.Json converter</title>
       <link>https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/</link>
       <pubDate>Mon, 31 Aug 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/</guid>
       <description>Most JSON converters are fairly simple, and typically self-contained. But once in a while, you need to do something a little more complex in a converter, and you end up needing to call a service. However, there&amp;rsquo;s no built-in dependency injection in System.Text.Json converters… How can you access the service you need?
 There are basically two variants of this problem. One has a simple solution, the other is a bit of a hack…</description>
     </item>
-    
     <item>
       <title>ASP.NET Core 3, IIS and empty HTTP headers</title>
       <link>https://thomaslevesque.com/2020/07/23/aspnet-core-iis-and-empty-http-headers/</link>
       <pubDate>Thu, 23 Jul 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/07/23/aspnet-core-iis-and-empty-http-headers/</guid>
       <description>HTTP headers are key/value pairs sent at the beginning of a request or response. According to the grammar in RFC 7230, a field could have an empty value. In practice, it probably doesn&amp;rsquo;t make much sense: semantically, a header with an empty value or the absence of that header are equivalent.
 However, some client or server implementations actually require that a given header is present, even if it&amp;rsquo;s empty. For instance, the validation tests for WOPI (an HTTP-based protocol used to integrate Office for the Web with an application) require that the X-WOPI-Lock header is included in the response in certain situations, even if it&amp;rsquo;s empty (even though the spec says it can be omitted).</description>
     </item>
-    
     <item>
       <title>Exposing a custom type as a JSON string in an ASP.NET Core API</title>
       <link>https://thomaslevesque.com/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/</link>
       <pubDate>Sat, 27 Jun 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/</guid>
       <description>Sometimes your API needs to expose a non-primitive type that has a &amp;ldquo;natural&amp;rdquo; string representation. For instance, a standard representation for a duration is the ISO 8601 format, where &amp;ldquo;1 month, 2 days, 3 hours and 4 minutes&amp;rdquo; can be represented as P1M2DT3H4M (note that this isn&amp;rsquo;t the same as a Timespan, which has no notion of calendar months and years). A duration could be represented in C# as a custom type, like the Duration structure in my Iso8601DurationHelper project.</description>
     </item>
-    
     <item>
       <title>Git tip: how to fix an accidental commit on the wrong branch</title>
       <link>https://thomaslevesque.com/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/</link>
       <pubDate>Fri, 29 May 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/05/29/git-tip-how-to-fix-an-accidental-commit-on-the-wrong-branch/</guid>
       <description>Oh no, you just accidentally commited to master, when you were supposed to work on a feature branch! How to fix it? It&amp;rsquo;s actually pretty easy with Git!
 A common Git workflow nowadays is the &amp;ldquo;feature branch&amp;rdquo; workflow: you can&amp;rsquo;t push directly to the &amp;ldquo;main&amp;rdquo; branch (usually master, but it can be something else); instead you have to create a branch from master, commit to that branch, publish it and submit a pull request.</description>
     </item>
-    
     <item>
       <title>Exciting new features in C# 9</title>
       <link>https://thomaslevesque.com/2020/05/25/exciting-new-features-in-csharp-9/</link>
       <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/05/25/exciting-new-features-in-csharp-9/</guid>
       <description>Last week at Microsoft Build, there have been a lot of exciting annoucements! .NET 5, Blazor WebAssembly, .NET MAUI, WinUI… But the thing I&amp;rsquo;m most eager to get my hands on is C# 9, which introduces many interesting new features, so let&amp;rsquo;s take a quick tour! There&amp;rsquo;s a long list, so I won&amp;rsquo;t cover all of them here, but I will highlight the ones I find the most interesting.
 Note: Unfortunately the new C# features aren&amp;rsquo;t supported yet in the latest SDK preview, so we can&amp;rsquo;t test them in actual projects.</description>
     </item>
-    
     <item>
       <title>Things every C# developer should know #1: hash codes</title>
       <link>https://thomaslevesque.com/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/</guid>
       <description>As a C# developer, there are obviously a lot of skills you need to master to be effective: language syntax, framework classes, third-party libraries, databases, regular expressions, the HTTP protocol, etc. But there are a handful of things that I consider to be really fundamental, and I often see C# developers, even experienced ones, who don&amp;rsquo;t master them. So, I&amp;rsquo;m doing a series about those things! Today: hash codes.
 The GetHashCode method OK, I realize that most developers don&amp;rsquo;t need to implement their own hash table, or even implement GetHashCode very often, but still, it&amp;rsquo;s important to know about this.</description>
     </item>
-    
     <item>
       <title>Moving my blog to Hugo</title>
       <link>https://thomaslevesque.com/2020/05/06/moving-my-blog-to-hugo/</link>
       <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/05/06/moving-my-blog-to-hugo/</guid>
       <description>If you&amp;rsquo;re a regular reader of my blog, you probably noticed that the design has changed. In fact, it&amp;rsquo;s not just the design, it&amp;rsquo;s just about everything!
 My blog used to be hosted on WordPress. It did the job, but honestly, I didn&amp;rsquo;t really like WordPress. It&amp;rsquo;s slow, bloated, and the editing and publishing experience is a bit of a mess (or at least, it&amp;rsquo;s not a good fit for the way I like to work).</description>
     </item>
-    
     <item>
       <title>About</title>
       <link>https://thomaslevesque.com/about/</link>
       <pubDate>Fri, 01 May 2020 23:42:43 +0200</pubDate>
-      
       <guid>https://thomaslevesque.com/about/</guid>
       <description>I&amp;rsquo;m Thomas Levesque, a French software developer from Paris. I&amp;rsquo;ve been programming in C# almost since the beginning, and I still love it. I&amp;rsquo;ve done a lot of desktop app development with WinForms and WPF, but nowadays my focus is mostly on ASP.NET Core.
 I&amp;rsquo;m a core maintainer of FakeItEasy, the easy mocking library for .NET. I also maintain a few personal open-source projects, which you can see on my Github account.</description>
     </item>
-    
     <item>
       <title>Using the OAuth 2.0 device flow to authenticate users in desktop apps</title>
       <link>https://thomaslevesque.com/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</guid>
       <description>Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
 Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:</description>
     </item>
-    
     <item>
       <title>Lazily resolving services to fix circular dependencies in .NET Core</title>
       <link>https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</link>
       <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</guid>
       <description>The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
 It is generally agreed that this should be avoided; I won&amp;rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</description>
     </item>
-    
     <item>
       <title>Handling query string parameters with no value in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
       <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
 query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
 But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&amp;rsquo;s not standardized.</description>
     </item>
-    
     <item>
       <title>ASP.NET Core: when environments are not enough, use sub-environments!</title>
       <link>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</link>
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
       <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
 appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
     </item>
-    
     <item>
       <title>Easy unit testing of null argument validation (C# 8 edition)</title>
       <link>https://thomaslevesque.com/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</guid>
       <description>A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
 [Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&amp;lt;int&amp;gt;(); var right = Enumerable.Empty&amp;lt;int&amp;gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&amp;gt; left.FullOuterJoin(right, x =&amp;gt; x, y =&amp;gt; y, (k, x, y) =&amp;gt; 0, 0, 0, null), &amp;#34;left&amp;#34;, &amp;#34;right&amp;#34;, &amp;#34;leftKeySelector&amp;#34;, &amp;#34;rightKeySelector&amp;#34;, &amp;#34;resultSelector&amp;#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.</description>
     </item>
-    
     <item>
       <title>Using foreach with index in C#</title>
       <link>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</guid>
       <description>Just a quick tip today!
 for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.
 But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
     </item>
-    
     <item>
       <title>Handling type hierarchies in Cosmos DB (part 2)</title>
       <link>https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</link>
       <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
       <description>This is the second post in a series of 2:
 Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post) In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
     </item>
-    
     <item>
       <title>Handling type hierarchies in Cosmos DB (part 1)</title>
       <link>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</link>
       <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
       <description>This is the first post in a series of 2:
 Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2) Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
     </item>
-    
     <item>
       <title>Using TypeScript to write Cosmos DB stored procedures with async/await</title>
       <link>https://thomaslevesque.com/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/07/15/using-typescript-to-write-cosmos-db-stored-procedures-with-async-await/</guid>
       <description>Disclaimer: I am by no mean a TypeScript expert. In fact, I know very little about JS, npm, gulp, etc. So it&amp;rsquo;s entirely possible I said something really stupid in this article, or maybe I missed a much simpler way of doing things. Don&amp;rsquo;t hesitate to let me know in the comments!
 Azure Cosmos DB (formerly known as Azure Document DB) is a NoSQL, multi-model, globally-distributed database hosted in Azure. If you come from relational SQL databases, it&amp;rsquo;s a very different world.</description>
     </item>
-    
     <item>
       <title>Scaling out ASP.NET Core SignalR using Azure Service Bus</title>
       <link>https://thomaslevesque.com/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</link>
       <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</guid>
       <description>ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&amp;rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.</description>
     </item>
-    
     <item>
       <title>Google&#43; shutdown: fixing Google authentication in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</link>
       <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</guid>
       <description>A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&amp;rsquo;t affect you as a developer; but if you&amp;rsquo;re using Google authentication in an ASP.</description>
     </item>
-    
     <item>
       <title>Multitenant Azure AD issuer validation in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</link>
       <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>Update 2021/09/19: If you&amp;rsquo;re using the newer Microsoft.Identity.Web library, you don&amp;rsquo;t have anything to do to handle this, as it&amp;rsquo;s already handled by the library. This article only applies if you&amp;rsquo;re using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!
 If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
     </item>
-    
     <item>
       <title>Making a WPF app using a SDK-style project with MSBuildSdkExtras</title>
       <link>https://thomaslevesque.com/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</link>
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</guid>
       <description>Ever since the first stable release of the .NET Core SDK, we&amp;rsquo;ve enjoyed a better C# project format, often called &amp;ldquo;SDK-style&amp;rdquo; because you specify a SDK to use in the project file. It&amp;rsquo;s still a .csproj XML file, it&amp;rsquo;s still based on MSBuild, but it&amp;rsquo;s much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.
 However, out of the box, it&amp;rsquo;s only usable for some project types: ASP.</description>
     </item>
-    
     <item>
       <title>Asynchronous initialization in ASP.NET Core, revisited</title>
       <link>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</link>
       <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</guid>
       <description>Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
 Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&amp;rsquo;t such a good approach.</description>
     </item>
-    
     <item>
       <title>Handling multipart requests with JSON and file uploads in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</link>
       <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
       <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
 Embed the image bytes as base64 in the JSON payload, e.g. { &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
     </item>
-    
     <item>
       <title>Asynchronous initialization in ASP.NET Core with custom middleware</title>
       <link>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</link>
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
       <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
 There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
     </item>
-    
     <item>
       <title>Hosting an ASP.NET Core 2 application on a Raspberry Pi</title>
       <link>https://thomaslevesque.com/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/</link>
       <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/</guid>
       <description>As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&amp;hellip; For instance, is a very small machine like a Raspberry Pi, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is!</description>
     </item>
-    
     <item>
       <title>Writing a GitHub Webhook as an Azure Function</title>
       <link>https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/</link>
       <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/</guid>
       <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
 A bit of background As you may already know, I&amp;rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
     </item>
-    
     <item>
       <title>Understanding the ASP.NET Core middleware pipeline</title>
       <link>https://thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</link>
       <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</guid>
       <description>Middlewhat? The ASP.NET Core architecture features a system of middleware, which are pieces of code that handle requests and responses. Middleware are chained to each other to form a pipeline. Incoming requests are passed through the pipeline, where each middleware has a chance to do something with them before passing them to the next middleware. Outgoing responses are also passed through the pipeline, in reverse order. If this sounds very abstract, the following schema from the official ASP.</description>
     </item>
-    
     <item>
       <title>Cleanup Git history to remove unwanted files</title>
       <link>https://thomaslevesque.com/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</link>
       <pubDate>Tue, 06 Mar 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/03/06/cleanup-git-history-to-remove-unwanted-files/</guid>
       <description>I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&amp;hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.
 Fortunately, it&amp;rsquo;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&amp;rsquo;t have been there in the first place.</description>
     </item>
-    
     <item>
       <title>Better timeout handling with HttpClient</title>
       <link>https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/</link>
       <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/</guid>
       <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
 The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
     </item>
-    
     <item>
       <title>Transform T4 templates as part of the build, and pass variables from the project</title>
       <link>https://thomaslevesque.com/2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/</link>
       <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2017/11/13/transform-t4-templates-as-part-of-the-build-and-pass-variables-from-the-project/</guid>
       <description>T4 (Text Template Transformation Toolkit) is a great tool to generate code at design time; you can, for instance, create POCO classes from database tables, generate repetitive code, etc. In Visual Studio, T4 files (.tt extension) are associated with the TextTemplatingFileGenerator custom tool, which transforms the template to generate an output file every time you save the template. But sometimes it&amp;rsquo;s not enough, and you want to ensure that the template&amp;rsquo;s output is regenerated before build.</description>
     </item>
-    
     <item>
       <title>Common MSBuild properties and items with Directory.Build.props</title>
       <link>https://thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/</link>
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/</guid>
       <description>To be honest, I never really liked MSBuild until recently. The project files generated by Visual Studio were a mess, most of their content was redundant, you had to unload the projects to edit them, it was poorly documented&amp;hellip; But with the advent of .NET Core and the new &amp;ldquo;SDK-style&amp;rdquo; projects, it&amp;rsquo;s become much, much better.
 MSBuild 15 introduced a pretty cool feature: implicit imports (I don&amp;rsquo;t know if it&amp;rsquo;s the official name, but I&amp;rsquo;ll use it anyway).</description>
     </item>
-    
     <item>
       <title>Testing and debugging library code from LINQPad</title>
       <link>https://thomaslevesque.com/2017/08/26/testing-and-debugging-library-code-from-linqpad/</link>
       <pubDate>Sat, 26 Aug 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2017/08/26/testing-and-debugging-library-code-from-linqpad/</guid>
       <description>I&amp;rsquo;ve been meaning to blog about LINQPad in a very long time. In case you don&amp;rsquo;t know about it, LINQPad is a tool that lets you write and test code very quickly without having to create a full-blown project in Visual Studio. It supports C#, VB.NET, F# and SQL. It was initially intended as an educational tool to experiment with LINQ (its author, Joe Albahari, developed it as companion to his C# in a Nutshell book), but it&amp;rsquo;s also extremely useful as a general-purpose .</description>
     </item>
-    
     <item>
       <title>Linq performance improvements in .NET Core</title>
       <link>https://thomaslevesque.com/2017/03/29/linq-performance-improvements-in-net-core/</link>
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2017/03/29/linq-performance-improvements-in-net-core/</guid>
       <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
 For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:</description>
     </item>
-    
     <item>
       <title>Easy text parsing in C# with Sprache</title>
       <link>https://thomaslevesque.com/2017/02/23/easy-text-parsing-in-c-with-sprache/</link>
       <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2017/02/23/easy-text-parsing-in-c-with-sprache/</guid>
       <description>A few days ago, I discovered a little gem: Sprache. The name means &amp;ldquo;language&amp;rdquo; in German. It&amp;rsquo;s a very elegant and easy to use library to create text parsers, using parser combinators, which are a very common technique in functional programming. The theorical concept may seem a bit scary, but as you&amp;rsquo;ll see in a minute, Sprache makes it very simple.
 Text parsing Parsing text is a common task, but it can be tedious and error-prone.</description>
     </item>
-    
     <item>
       <title>What&#39;s new in FakeItEasy 3.0.0?</title>
       <link>https://thomaslevesque.com/2017/02/20/whats-new-in-fakeiteasy-3-0-0/</link>
       <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2017/02/20/whats-new-in-fakeiteasy-3-0-0/</guid>
       <description>FakeItEasy is a popular mocking framework for .NET, with an very intuitive and easy-to-use API. For about one year, I&amp;rsquo;ve been a maintainer of FakeItEasy, along with Adam Ralph and Blair Conrad. It&amp;rsquo;s been a real pleasure working with them and I had a lot of fun!
 Today I&amp;rsquo;m glad to announce that we&amp;rsquo;re releasing FakeItEasy 3.0.0, which supports .NET Core and introduces a few useful features.
 Let&amp;rsquo;s see what&amp;rsquo;s new!</description>
     </item>
-    
     <item>
       <title>C# methods in git diff hunk headers</title>
       <link>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</link>
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</guid>
       <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
 diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args) Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;); } This is very useful to know where you are when looking at a diff.</description>
     </item>
-    
     <item>
       <title>Fun with the HttpClient pipeline</title>
       <link>https://thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/</link>
       <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
       <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.
 You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&amp;rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
     </item>
-    
     <item>
       <title>Tuple deconstruction in C# 7</title>
       <link>https://thomaslevesque.com/2016/08/23/tuple-deconstruction-in-c-7/</link>
       <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2016/08/23/tuple-deconstruction-in-c-7/</guid>
       <description>Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
 emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
 deconstruction of tuples into separate variables
 Well, it looks like the C# language team has been busy during the last month, because both items are now implemented in VS 15 Preview 4, which was released today!</description>
     </item>
-    
     <item>
       <title>Tuples in C# 7</title>
       <link>https://thomaslevesque.com/2016/07/25/tuples-in-c-7/</link>
       <pubDate>Mon, 25 Jul 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2016/07/25/tuples-in-c-7/</guid>
       <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
 In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
 private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.</description>
     </item>
-    
     <item>
       <title>Pitfall: using var and async together</title>
       <link>https://thomaslevesque.com/2016/06/21/pitfall-using-var-and-async-together/</link>
       <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2016/06/21/pitfall-using-var-and-async-together/</guid>
       <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
 public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync: private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() { // actual implementation irrelevant // .</description>
     </item>
-    
     <item>
       <title>Publishing a package from AppVeyor to NuGet.org</title>
       <link>https://thomaslevesque.com/2016/04/20/publishing-a-package-from-appveyor-to-nuget-org/</link>
       <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2016/04/20/publishing-a-package-from-appveyor-to-nuget-org/</guid>
       <description>In the last few months, I’ve been using AppVeyor CI on some of my open-source projects (along with Cake for the build scripts). I really like it, but one thing bothered me: I couldn’t find a way to manually publish packages to NuGet.org directly from AppVeyor. I had to download the package locally, then upload it manually from my machine (either with nuget push on the command line, or via the web form on NuGet.</description>
     </item>
-    
     <item>
       <title>Test driving C# 7 features in Visual Studio “15” Preview</title>
       <link>https://thomaslevesque.com/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</link>
       <pubDate>Sat, 16 Apr 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2016/04/16/test-driving-c-7-features-in-visual-studio-15-preview/</guid>
       <description>About two weeks ago, Microsoft released the first preview of the next version of Visual Studio. You can read about what’s new in the release notes. Some of the new features are really nice (for instance I love the new “lightweight installer”), but the most interesting for me is that it comes with a version of the compiler that includes a few of the features planned for C# 7. Let’s have a closer look at them!</description>
     </item>
-    
     <item>
       <title>Automatically inject fakes in test fixture with FakeItEasy</title>
       <link>https://thomaslevesque.com/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</link>
       <pubDate>Sun, 17 Jan 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</guid>
       <description>Today I’d like to share a nice feature I discovered recently in FakeItEasy.
 When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier.</description>
     </item>
-    
     <item>
       <title>Using multiple cancellation sources with CreateLinkedTokenSource</title>
       <link>https://thomaslevesque.com/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</link>
       <pubDate>Thu, 31 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</guid>
       <description>Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel.</description>
     </item>
-    
     <item>
       <title>Explicitly switch to the UI thread in an async method</title>
       <link>https://thomaslevesque.com/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</link>
       <pubDate>Wed, 11 Nov 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</guid>
       <description>Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).</description>
     </item>
-    
     <item>
       <title>[WPF] Prevent the user from pasting an image in a RichTextBox</title>
       <link>https://thomaslevesque.com/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</link>
       <pubDate>Sat, 05 Sep 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</guid>
       <description>WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.
 When I googled for a way to prevent that, the only solutions I found suggested to intercept the Ctrl-V keystroke, and swallow the event if the clipboard contains an image.</description>
     </item>
-    
     <item>
       <title>Weak events in C#, take two</title>
       <link>https://thomaslevesque.com/2015/08/16/weak-events-in-c-take-two/</link>
       <pubDate>Sun, 16 Aug 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/08/16/weak-events-in-c-take-two/</guid>
       <description>A few years ago, I blogged about a generic implementation of the weak event pattern in C#. The goal was to mitigate the memory leaks associated with events when you forget to unsubscribe. The implementation was based on the use of weak references to the subscribers, to allow them to be garbage collected.
 My initial solution was more a proof of concept than anything else, and had a major performance issue, due to the use of DynamicInvoke every time the event was raised.</description>
     </item>
-    
     <item>
       <title>C# Puzzle 2</title>
       <link>https://thomaslevesque.com/2015/07/30/c-puzzle-2/</link>
       <pubDate>Thu, 30 Jul 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/07/30/c-puzzle-2/</guid>
       <description>Just another little puzzle based on an issue I had at work…
 Consider this piece of code :
 Console.WriteLine($&amp;#34;x &amp;gt; y is {x &amp;gt; y}&amp;#34;); Console.WriteLine($&amp;#34;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;#34;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
 x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
     </item>
-    
     <item>
       <title>How to retrieve dates as UTC in SQLite</title>
       <link>https://thomaslevesque.com/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/</link>
       <pubDate>Sun, 28 Jun 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/06/28/how-to-retrieve-dates-as-utc-in-sqlite/</guid>
       <description>SQLite is a nice in-process database engine: it’s very lightweight, doesn’t require any server or configuration, and runs on all platforms. There is even an official ADO.NET provider that’s very well made. However, if you store dates as UTC with this provider, you will probably encounter a serious issue: even though the date is properly stored as UTC (it’s stored in a form similar to ISO8601, with a ‘Z’ to indicate the UTC timezone), when you read it back from the database, you will get a DateTime converted to local time, with Kind = Unspecified.</description>
     </item>
-    
     <item>
       <title>Exception filters in C# 6: their biggest advantage is not what you think</title>
       <link>https://thomaslevesque.com/2015/06/21/exception-filters-in-c-6/</link>
       <pubDate>Sun, 21 Jun 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/06/21/exception-filters-in-c-6/</guid>
       <description>Exception filters are one of the major new features of C# 6. They take advantage of a CLR feature that was there from the start, but wasn’t used in C# until now. They allow you to specify a condition on a catch block:
 static void Main() { try { Foo.DoSomethingThatMightFail(null); } catch (MyException ex) when (ex.Code == 42) { Console.WriteLine(&amp;#34;Error 42 occurred&amp;#34;); } } As you might expect, the catch block will be entered if and only if ex.</description>
     </item>
-    
     <item>
       <title>Create an auto-mocking container with Unity and FakeItEasy</title>
       <link>https://thomaslevesque.com/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</link>
       <pubDate>Sun, 14 Jun 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</guid>
       <description>Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.</description>
     </item>
-    
     <item>
       <title>Async and cancellation support for wait handles</title>
       <link>https://thomaslevesque.com/2015/06/04/async-and-cancellation-support-for-wait-handles/</link>
       <pubDate>Thu, 04 Jun 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/06/04/async-and-cancellation-support-for-wait-handles/</guid>
       <description>The .NET framework comes with a number of low-level synchronization primitives. The most commonly used are collectively known as “wait handles”, and inherit the WaitHandle class: Semaphore, Mutex, AutoResetEvent and ManualResetEvent. These classes have been there since at least .NET 2.0 (1.1 for some of them), but they haven’t evolved much since they were introduced, which means they don’t support common features that were introduced later. In particular, they don’t provide support for waiting asynchronously, nor do they support cancelling the wait.</description>
     </item>
-    
     <item>
       <title>Leveraging ReSharper annotations</title>
       <link>https://thomaslevesque.com/2015/03/13/leveraging-resharper-annotations/</link>
       <pubDate>Fri, 13 Mar 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/03/13/leveraging-resharper-annotations/</guid>
       <description>I don’t think it’s really necessary to present ReSharper (often abbreviated R#), but in case you don’t know about it, it’s a tool made by JetBrains that performs real-time analysis of your C# or VB.NET code to warn you about possible bugs, bad practices, convention violations, etc. It also provides many useful refactorings and code generators. I’ve been using it for a few years now, and it has tremendously improved both my productivity and my coding style.</description>
     </item>
-    
     <item>
       <title>C# Puzzle 1</title>
       <link>https://thomaslevesque.com/2015/03/10/c-puzzle-1/</link>
       <pubDate>Tue, 10 Mar 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/03/10/c-puzzle-1/</guid>
       <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
 I just came up with this one:
 static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!
 I’ll try to post more puzzles in the future if I can come up with others.</description>
     </item>
-    
     <item>
       <title>Customizing string interpolation in C# 6</title>
       <link>https://thomaslevesque.com/2015/02/24/customizing-string-interpolation-in-c-6/</link>
       <pubDate>Tue, 24 Feb 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/02/24/customizing-string-interpolation-in-c-6/</guid>
       <description>One of the major new features in C# 6 is string interpolation, which allows you to write things like this:
 string text = $&amp;#34;{p.Name} was born on {p.DateOfBirth:D}&amp;#34;; A lesser known aspect of this feature is that an interpolated string can be treated either as a String, or as an IFormattable, depending on the context. When it is converted to an IFormattable, it constructs a FormattableString object that implements the interface and exposes:</description>
     </item>
-    
     <item>
       <title>Async unit tests with NUnit</title>
       <link>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</link>
       <pubDate>Sun, 01 Feb 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
 public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.Delay(100).ConfigureAwait(false); // the answer to life, the universe and everything.</description>
     </item>
-    
     <item>
       <title>A new library to display animated GIFs in XAML apps</title>
       <link>https://thomaslevesque.com/2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/</link>
       <pubDate>Sat, 17 Jan 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/</guid>
       <description>A few years ago, I wrote an article that showed how to display an animated GIF in WPF. The article included the full code, and was quite successful, since WPF had no built-in support for animated GIFs. Based on the issues reported in the comments, I made many edits to the code in the article. At some point I realized it was very impractical, so I published the code on CodePlex (it has now moved to GitHub) under the name WpfAnimatedGif, and started maintaining it there.</description>
     </item>
-    
     <item>
       <title>Optimize ToArray and ToList by providing the number of elements</title>
       <link>https://thomaslevesque.com/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</link>
       <pubDate>Sun, 07 Dec 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/12/07/optimize-toarray-and-tolist-by-providing-the-number-of-elements/</guid>
       <description>The ToArray and ToList extension methods are convenient ways to eagerly materialize an enumerable sequence (e.g. a Linq query) into an array or a list. However, there’s something that bothers me: both of these methods are very inefficient if they don’t know the number of elements in the sequence (which is almost always the case when you use them on a Linq query). Let’s focus on ToArray for now (ToList has a few differences, but the principle is mostly the same).</description>
     </item>
-    
     <item>
       <title>Easily convert file sizes to human-readable form</title>
       <link>https://thomaslevesque.com/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</link>
       <pubDate>Sun, 23 Nov 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</guid>
       <description>If you write an application that has anything to do with file management, you will probably need to display the size of the files. But if a file has a size of 123456789 bytes, it doesn’t mean that you should just display this value to the user, because it’s hard to read, and the user usually doesn’t need 1-byte precision. Instead, you will write something like 118 MB.
 This should be a no-brainer, but there are actually a number of different ways to display byte sizes… For instance, there are several co-existing conventions for units and prefixes:</description>
     </item>
-    
     <item>
       <title>StringTemplate: another approach to string interpolation</title>
       <link>https://thomaslevesque.com/2014/11/17/stringtemplate-another-approach-to-string-interpolation/</link>
       <pubDate>Mon, 17 Nov 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/11/17/stringtemplate-another-approach-to-string-interpolation/</guid>
       <description>With the upcoming version 6 of C#, there’s a lot of talk on CodePlex and elsewhere about string interpolation. Not very surprising, since it’s one of the major features of that release… In case you were living under a rock during the last few months and you haven’t heard about it, string interpolation is a way to insert C# expressions inside a string, so that they’re evaluated at runtime and replaced with their values.</description>
     </item>
-    
     <item>
       <title>Passing parameters by reference to an asynchronous method</title>
       <link>https://thomaslevesque.com/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</link>
       <pubDate>Tue, 04 Nov 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</guid>
       <description>Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (ref or out) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first await), so the location of the variable won’t exist anymore.</description>
     </item>
-    
     <item>
       <title>Easy unit testing of null argument validation</title>
       <link>https://thomaslevesque.com/2014/11/02/easy-unit-testing-of-null-argument-validation/</link>
       <pubDate>Sun, 02 Nov 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/11/02/easy-unit-testing-of-null-argument-validation/</guid>
       <description>When unit testing a method, one of the things to test is argument validation : for instance, ensure that the method throws a ArgumentNullException when a null argument is passed for a parameter that isn’t allowed to be null. Writing this kind of test is very easy, but it’s also a tedious and repetitive task, especially if the method has many parameters… So I wrote a method that automates part of this task: it tries to pass null for each of the specified arguments, and asserts that the method throws an ArgumentNullException.</description>
     </item>
-    
     <item>
       <title>Visual Studio Online &#43; Git integration with Team Explorer</title>
       <link>https://thomaslevesque.com/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</link>
       <pubDate>Sun, 12 Oct 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</guid>
       <description>I recently started using Visual Studio Online for personal projects, and I must say it’s a pretty good platform, although it would be nice to be able to host public projects as well as private ones. The thing I like the most is the integration with Visual Studio Team Explorer to manage work items and builds.
 However, I noticed a little gotcha when using Git for source control : the remote for VS Online must be named origin, otherwise Team Explorer won’t detect that it’s a VS Online project, and it won’t show the “Builds” and “Work items” pages.</description>
     </item>
-    
     <item>
       <title>A review of NDepend</title>
       <link>https://thomaslevesque.com/2014/07/30/a-review-of-ndepend/</link>
       <pubDate>Wed, 30 Jul 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/07/30/a-review-of-ndepend/</guid>
       <description>I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.
 NDepend is a static analysis tool for .NET that checks your code base against a large set of rules that fall in various categories, such as code quality, object-oriented design, architecture, naming conventions, etc. All of these rules are completely customizable.</description>
     </item>
-    
     <item>
       <title>[WPF] Declare global hotkeys in XAML with NHotkey</title>
       <link>https://thomaslevesque.com/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</link>
       <pubDate>Wed, 05 Feb 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</guid>
       <description>A common requirement for desktop applications is to handle system-wide hotkeys, in order to intercept keyboard shortcuts even when they don’t have focus. Unfortunately, there is no built-in feature in the .NET framework to do it.
 Of course, this is not a new issue, and there are quite a few open-source libraries that address it (e.g. VirtualInput). Most of them rely on a global system hook, which allow them to intercept all keystrokes, even the ones you’re not interested in.</description>
     </item>
-    
     <item>
       <title>Tackling timeout issues when uploading large files with HttpWebRequest</title>
       <link>https://thomaslevesque.com/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/</link>
       <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/01/14/tackling-timeout-issues-when-uploading-large-files-with-httpwebrequest/</guid>
       <description>If you ever had to upload large volumes of data over HTTP, you probably ran into timeout issues. The default Timeout value for HttpWebRequest is 100 seconds, which means that if it takes more than that from the time you send the request headers to the time you receive the response headers, your request will fail. Obviously, if you’re uploading a large file, you need to increase that timeout… but to which value?</description>
     </item>
-    
     <item>
       <title>Uploading data with HttpClient using a &#34;push&#34; model</title>
       <link>https://thomaslevesque.com/2013/11/30/uploading-data-with-httpclient-using-a-push-model/</link>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2013/11/30/uploading-data-with-httpclient-using-a-push-model/</guid>
       <description>If you have used the HttpWebRequest class to upload data, you know that it uses a “push” model. What I mean is that you call the GetRequestStream method, which opens the connection if necessary, sends the headers, and returns a stream on which you can write directly.
 .NET 4.5 introduced the HttpClient class as a new way to communicate over HTTP. It actually relies on HttpWebRequest under the hood, but offers a more convenient and fully asynchronous API.</description>
     </item>
-    
     <item>
       <title>[WinRT] Toggle selection of a list item on long press</title>
       <link>https://thomaslevesque.com/2013/11/21/winrt-toggle-selection-of-a-list-item-on-long-press/</link>
       <pubDate>Thu, 21 Nov 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2013/11/21/winrt-toggle-selection-of-a-list-item-on-long-press/</guid>
       <description>As you probably know, the standard way to select or deselect an item in a WinRT list control is to slide it up or down a little. Although I rather like this gesture, it’s not very intuitive for users unfamiliar with Modern UI. And it gets even more confusing, because my previous statement wasn’t perfectly accurate: in fact, you have to slide the item perpendicularly to the panning direction. In a GridView, which (by default) pans horizontally, that means up or down; but in a ListView, which pans vertically, you have to slide the item left or right.</description>
     </item>
-    
     <item>
       <title>Running a custom tool automatically when a file is modified</title>
       <link>https://thomaslevesque.com/2013/11/14/running-a-custom-tool-automatically-when-a-file-is-modified/</link>
       <pubDate>Thu, 14 Nov 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2013/11/14/running-a-custom-tool-automatically-when-a-file-is-modified/</guid>
       <description>As far as I can remember, Visual Studio always had something called “custom tools”, also known as single-file generators. When you apply such a tool to a file in your project, it will generate something (typically code, but not necessarily) based on the content of the file. For instance, the default custom tool for resource files is called ResXFileCodeGenerator, and generates a class that provides easy access to the resources defined in the resx file.</description>
     </item>
-    
     <item>
       <title>Strongly typed helper for toast notifications</title>
       <link>https://thomaslevesque.com/2013/11/10/strongly-typed-helper-for-toast-notifications/</link>
       <pubDate>Sun, 10 Nov 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2013/11/10/strongly-typed-helper-for-toast-notifications/</guid>
       <description>Windows 8 provides an API for showing toast notifications. Unfortunately, it’s very cumbersome: to define the content of a notification, you must use a predefined template that is provided in the form of an XmlDocument, and set the value for each field in the XML. There is nothing in the API to let you know which fields the template defines, you need to check the toast template catalog in the documentation.</description>
     </item>
-    
     <item>
       <title>Showing result suggestions in a WinRT SearchBox: bug regarding the image</title>
       <link>https://thomaslevesque.com/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</link>
       <pubDate>Mon, 04 Nov 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</guid>
       <description>Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
 The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:
 History suggestions are search queries previously entered by the user.</description>
     </item>
-    
     <item>
       <title>An easy and secure way to store a password using Data Protection API</title>
       <link>https://thomaslevesque.com/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/</link>
       <pubDate>Tue, 21 May 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2013/05/21/an-easy-and-secure-way-to-store-a-password-using-data-protection-api/</guid>
       <description>If you&amp;rsquo;re writing a client application that needs to store user credentials, it&amp;rsquo;s usually not a good idea to store the password as plain text, for obvious security reasons. So you need to encrypt it, but as soon as you start to think about encryption, it raises all kinds of issues&amp;hellip; Which algorithm should you use? Which encryption key? Obviously you will need the key to decrypt the password, so it needs to be either in the executable or in the configuration.</description>
     </item>
-    
     <item>
       <title>Detecting dependency property changes in WinRT</title>
       <link>https://thomaslevesque.com/2013/04/21/detecting-dependency-property-changes-in-winrt/</link>
       <pubDate>Sun, 21 Apr 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2013/04/21/detecting-dependency-property-changes-in-winrt/</guid>
       <description>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
 It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.</description>
     </item>
-    
     <item>
       <title>Using C# 5 caller info attributes when targeting earlier versions of the .NET framework</title>
       <link>https://thomaslevesque.com/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/</link>
       <pubDate>Wed, 13 Jun 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2012/06/13/using-c-5-caller-info-attributes-when-targeting-earlier-versions-of-the-net-framework/</guid>
       <description>Caller info attributes are one of the new features of C# 5. They&amp;rsquo;re attributes applied to optional method parameters that enable you to pass caller information implicitly to a method. I&amp;rsquo;m not sure that description is very clear, so an example will help you understand:
 static void Log( string message, [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null, [CallerLineNumber] int lineNumber = 0) { Console.WriteLine( &amp;#34;[{0:g} - {1} - {2} - line {3}] {4}&amp;#34;, DateTime.</description>
     </item>
-    
     <item>
       <title>Little known new features in Visual Studio 2012</title>
       <link>https://thomaslevesque.com/2012/06/02/little-known-new-features-in-visual-studio-2012/</link>
       <pubDate>Sat, 02 Jun 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2012/06/02/little-known-new-features-in-visual-studio-2012/</guid>
       <description>Visual Studio 2012 RC is out since last week, and even though I didn’t have much time to play with it yet, I think I like it so far. Lots of things have already been said about the design, and about the most important new features, but there are also many smaller and less remarkable improvements that make life easier for us. Since I have seen little or nothing written about those, I thought I would make a list of what I noticed so far.</description>
     </item>
-    
     <item>
       <title>[WPF] Using Linq to shape data in a CollectionView</title>
       <link>https://thomaslevesque.com/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/</link>
       <pubDate>Wed, 30 Nov 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2011/11/30/wpf-using-linq-to-shape-data-in-a-collectionview/</guid>
       <description>WPF provides a simple mechanism for shaping collections of data, via the ICollectionView interface and its Filter, SortDescriptions and GroupDescriptions properties:
 // Collection to which the view is bound public ObservableCollection People { get; private set; } ... // Default view of the People collection ICollectionView view = CollectionViewSource.GetDefaultView(People); // Show only adults view.Filter = o =&amp;gt; ((Person)o).Age &amp;gt;= 18; // Sort by last name and first name view.SortDescriptions.Add(new SortDescription(&amp;#34;LastName&amp;#34;, ListSortDirection.</description>
     </item>
-    
     <item>
       <title>[WPF] Creating parameterized styles with attached properties</title>
       <link>https://thomaslevesque.com/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/</link>
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2011/10/01/wpf-creating-parameterized-styles-with-attached-properties/</guid>
       <description>Today I&amp;rsquo;d like to share a trick that I used quite often in the past few months. Let&amp;rsquo;s assume that in order to improve the look of your application, you created custom styles for the standard controls:
 OK, I&amp;rsquo;m not a designer&amp;hellip; but it will serve the purpose well enough to illustrate my point ;). These styles are very simple, they&amp;rsquo;re just the default styles of CheckBox and RadioButton in which I only changed the templates to replace the BulletChromes with these awesome blue tick marks.</description>
     </item>
-    
     <item>
       <title>[WPF 4.5] Subscribing to an event using a markup extension</title>
       <link>https://thomaslevesque.com/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</link>
       <pubDate>Fri, 23 Sep 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</guid>
       <description>It&amp;rsquo;s been a while since I last wrote about markup extensions&amp;hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&amp;rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events.
 Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&amp;rsquo;t do the same to subscribe to an event.</description>
     </item>
-    
     <item>
       <title>Tail recursion in C#</title>
       <link>https://thomaslevesque.com/2011/09/02/tail-recursion-in-c/</link>
       <pubDate>Fri, 02 Sep 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2011/09/02/tail-recursion-in-c/</guid>
       <description>Regardless of the programming language you&amp;rsquo;re using, there are tasks for which the most natural implementation uses a recursive algorithm (even if it&amp;rsquo;s not always the optimal solution). The trouble with the recursive approach is that it can use a lot of space on the stack: when you reach a certain recursion depth, the memory allocated for the thread stack runs out, and you get a stack overflow error that usually terminates the process (StackOverflowException in .</description>
     </item>
-    
     <item>
       <title>[WPF] Display an animated GIF image</title>
       <link>https://thomaslevesque.com/2011/03/27/wpf-display-an-animated-gif-image/</link>
       <pubDate>Sun, 27 Mar 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2011/03/27/wpf-display-an-animated-gif-image/</guid>
       <description>Note: The code in this article is out of date; the current code is hosted on GitHub.
 WPF is a great technology, but sometimes it seems to be missing some really basic features&amp;hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation.
 Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:</description>
     </item>
-    
     <item>
       <title>[WPF] How to bind to data when the DataContext is not inherited</title>
       <link>https://thomaslevesque.com/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</link>
       <pubDate>Mon, 21 Mar 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/</guid>
       <description>The DataContext property in WPF is extremely handy, because it is automatically inherited by all children of the element where you assign it; therefore you don&amp;rsquo;t need to set it again on each element you want to bind. However, in some cases the DataContext is not accessible: it happens for elements that are not part of the visual or logical tree. It can be very difficult then to bind a property on those elements&amp;hellip;</description>
     </item>
-    
     <item>
       <title>[Entity Framework] Using Include with lambda expressions</title>
       <link>https://thomaslevesque.com/2010/10/03/entity-framework-using-include-with-lambda-expressions/</link>
       <pubDate>Sun, 03 Oct 2010 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2010/10/03/entity-framework-using-include-with-lambda-expressions/</guid>
       <description>I&amp;rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
 var query = from ord in db.Orders.Include(&amp;#34;OrderDetails&amp;#34;) where ord.Date &amp;gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
 var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;) where ord.Date &amp;gt;= DateTime.</description>
     </item>
-    
     <item>
       <title>[WPF] A simpler Grid using XAML attribute syntax</title>
       <link>https://thomaslevesque.com/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</link>
       <pubDate>Tue, 20 Jul 2010 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</guid>
       <description>The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:
 &amp;lt;Grid&amp;gt; &amp;lt;Grid.RowDefinitions&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;Auto&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;5&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;*&amp;#34;/&amp;gt; &amp;lt;/Grid.RowDefinitions&amp;gt; &amp;lt;Grid.ColumnDefinitions&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;60&amp;#34; /&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;*&amp;#34; /&amp;gt; &amp;lt;/Grid.ColumnDefinitions&amp;gt; &amp;lt;Label Content=&amp;#34;Name&amp;#34; Grid.Row=&amp;#34;0&amp;#34; Grid.Column=&amp;#34;0&amp;#34; /&amp;gt; &amp;lt;TextBox Text=&amp;#34;Hello world&amp;#34; Grid.</description>
     </item>
-    
     <item>
       <title>[C#] A simple implementation of the WeakEvent pattern</title>
       <link>https://thomaslevesque.com/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</link>
       <pubDate>Mon, 17 May 2010 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2010/05/17/c-a-simple-implementation-of-the-weakevent-pattern/</guid>
       <description>As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&amp;rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available.</description>
     </item>
-    
     <item>
       <title>Automating null checks with Linq expressions</title>
       <link>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</link>
       <pubDate>Sun, 21 Feb 2010 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
       <description>The problem Have you ever written code like the following ?
 X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
     </item>
-    
     <item>
       <title>[VS2010] Binding support in InputBindings</title>
       <link>https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/</link>
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
       <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings.
 As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip;</description>
     </item>
-    
     <item>
       <title>[C# 4.0] Implementing a custom dynamic object</title>
       <link>https://thomaslevesque.com/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</link>
       <pubDate>Thu, 08 Oct 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</guid>
       <description>If you&amp;rsquo;ve been following the news about .NET, you probably know that the upcoming version 4.0 of C# introduces a new dynamic type. This type allows to access members of an object which are not statically known (at compile time). These members will be resolved at runtime, thanks to the DLR (Dynamic Language Runtime). This feature makes it easier to manipulate COM objects, or any object which type is not statically known.</description>
     </item>
-    
     <item>
       <title>[WPF] Markup extensions and templates</title>
       <link>https://thomaslevesque.com/2009/08/23/wpf-markup-extensions-and-templates/</link>
       <pubDate>Sun, 23 Aug 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/08/23/wpf-markup-extensions-and-templates/</guid>
       <description>Note : This post follows the one about a a markup extension that can update its target, and reuses the same code.
 You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&amp;hellip; In this post I&amp;rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template.
 The problem Let&amp;rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</description>
     </item>
-    
     <item>
       <title>[WPF] Automatically sort a GridView (continued)</title>
       <link>https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/</link>
       <pubDate>Tue, 04 Aug 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/</guid>
       <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
 To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
     </item>
-    
     <item>
       <title>[WPF] A markup extension that can update its target</title>
       <link>https://thomaslevesque.com/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</link>
       <pubDate>Tue, 28 Jul 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</guid>
       <description>If you have read my previous posts on the topic, you know I&amp;rsquo;m a big fan of custom markup extensions&amp;hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&amp;hellip; It could be useful in various cases, for instance :
 if the value of the markup extension can change in response to an event</description>
     </item>
-    
     <item>
       <title>[C#] Parent/child relationship and XML serialization</title>
       <link>https://thomaslevesque.com/2009/06/12/c-parentchild-relationship-and-xml-serialization/</link>
       <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/06/12/c-parentchild-relationship-and-xml-serialization/</guid>
       <description>Today I&amp;rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&amp;rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).</description>
     </item>
-    
     <item>
       <title>[Windows Forms] Automatically drag and drop controls (DragMove)</title>
       <link>https://thomaslevesque.com/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</link>
       <pubDate>Wed, 06 May 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/05/06/windows-forms-automatically-drag-and-drop-controls-dragmove/</guid>
       <description>Here&amp;rsquo;s a piece of code I wrote a while ago, I just thought it could be useful for WinForms developers&amp;hellip;
 In WPF, there is a very handy method to move a window with no borders : Window.DragMove. It can be used like that :
 private void Window_MouseDown(object sender, MouseButtonEventArgs e) { this.DragMove(); } When you call this method, the window is moved with the mouse until the button is released. It could hardly be simpler ;)</description>
     </item>
-    
     <item>
       <title>[WPF] Binding to an asynchronous collection</title>
       <link>https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/</link>
       <pubDate>Fri, 17 Apr 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
       <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
 This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
 To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
     </item>
-    
     <item>
       <title>[WPF] Automatically sort a GridView when a column header is clicked</title>
       <link>https://thomaslevesque.com/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</link>
       <pubDate>Fri, 27 Mar 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/</guid>
       <description>It&amp;rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&amp;hellip; With the DataGridView in Windows Forms, it was &amp;ldquo;automagic&amp;rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&amp;hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class.</description>
     </item>
-    
     <item>
       <title>[WPF] Using InputBindings with the MVVM pattern</title>
       <link>https://thomaslevesque.com/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</link>
       <pubDate>Tue, 17 Mar 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
       <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
 &amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;#34;Control&amp;#34; Key=&amp;#34;E&amp;#34; Command=&amp;#34;{Binding EditCommand}&amp;#34;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&amp;rsquo;t work, for two reasons :
 The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&amp;rsquo;t inherit the DataContext A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
     </item>
-    
     <item>
       <title>[Visual Studio] Trick : make a project item a child item of another</title>
       <link>https://thomaslevesque.com/2009/03/05/visual-studio-trick-make-a-project-item-a-child-item-of-another/</link>
       <pubDate>Thu, 05 Mar 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/03/05/visual-studio-trick-make-a-project-item-a-child-item-of-another/</guid>
       <description>You probably noticed that, in a C# project tree, some items are placed &amp;ldquo;under&amp;rdquo; a parent item : it is the case, for instance, for files generated by a designer or wizard :
 The following trick shows how to apply the same behavior to your own files.
 Let&amp;rsquo;s assume that you want to customize the classes generated by the EDM designer. You can&amp;rsquo;t modify the Model1.designer.cs file, because you changes would be overwritten by the designer.</description>
     </item>
-    
     <item>
       <title>[WPF] Article about the Model-View-ViewModel design pattern, by Josh Smith</title>
       <link>https://thomaslevesque.com/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/</link>
       <pubDate>Wed, 25 Feb 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/02/25/wpf-article-about-model-view-viewmodel-design-pattern-by-josh-smith/</guid>
       <description>Soon after the release of WPF, people have been talking more and more about &amp;ldquo;Model-View-ViewModel&amp;rdquo; (MVVM). This expression refers to a design pattern, drawing its inspiration from the Model-View-Controller (MVC) and Presentation Model (PM) patterns, and created specifically to take advantage of WPF features. This patterns enables an excellent decoupling between data, behavior and presentation, which makes the code easier to understand and maintain, and improves the collaboration between developers and designers.</description>
     </item>
-    
     <item>
       <title>Build an RSS reader in 5 minutes</title>
       <link>https://thomaslevesque.com/2009/02/13/build-an-rss-reader-in-5-minutes/</link>
       <pubDate>Fri, 13 Feb 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/02/13/build-an-rss-reader-in-5-minutes/</guid>
       <description>Today, I stumbled upon a very handy class : SyndicationFeed. This class, introduced in .NET 3.5, allows to manipulate syndication feeds (like RSS 2.0 or Atom 1.0) with very little code. It can be used to create and publish our own feeds, or to read existing ones. For instance, here&amp;rsquo;s how to retrieve the news feed from Google News and display its title, its hyperlink, and the titles of it&amp;rsquo;s items :</description>
     </item>
-    
     <item>
       <title>[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)</title>
       <link>https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
       <pubDate>Thu, 05 Feb 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
       <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)
 If you&amp;rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&amp;hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&amp;rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</description>
     </item>
-    
     <item>
       <title>[WPF] Binding to application settings using a markup extension</title>
       <link>https://thomaslevesque.com/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</link>
       <pubDate>Tue, 18 Nov 2008 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</guid>
       <description>Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.
 The end-user of any application expects that his preferences (window size, state of this or that option&amp;hellip;) are saved to be restored at the next run : that&amp;rsquo;s why .NET 2.0 introduced application settings as a unified way to persist these settings.</description>
     </item>
-    
   </channel>
 </rss>

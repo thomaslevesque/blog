@@ -6,16 +6,15 @@
     <description>Recent content in byte on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/byte/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 23 Nov 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/byte/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Easily convert file sizes to human-readable form</title>
       <link>https://thomaslevesque.com/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</link>
       <pubDate>Sun, 23 Nov 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</guid>
       <description>If you write an application that has anything to do with file management, you will probably need to display the size of the files. But if a file has a size of 123456789 bytes, it doesn’t mean that you should just display this value to the user, because it’s hard to read, and the user usually doesn’t need 1-byte precision. Instead, you will write something like 118 MB.
 This should be a no-brainer, but there are actually a number of different ways to display byte sizes… For instance, there are several co-existing conventions for units and prefixes:</description>
     </item>
-    
   </channel>
 </rss>

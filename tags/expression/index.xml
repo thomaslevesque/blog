@@ -6,27 +6,24 @@
     <description>Recent content in expression on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 Oct 2010 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/expression/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Oct 2010 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/expression/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Entity Framework] Using Include with lambda expressions</title>
       <link>https://thomaslevesque.com/2010/10/03/entity-framework-using-include-with-lambda-expressions/</link>
       <pubDate>Sun, 03 Oct 2010 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2010/10/03/entity-framework-using-include-with-lambda-expressions/</guid>
       <description>I&amp;rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:
 var query = from ord in db.Orders.Include(&amp;#34;OrderDetails&amp;#34;) where ord.Date &amp;gt;= DateTime.Today select ord; Or if I also want to eagerly load the product:
 var query = from ord in db.Orders.Include(&amp;#34;OrderDetails.Product&amp;#34;) where ord.Date &amp;gt;= DateTime.</description>
     </item>
-    
     <item>
       <title>Automating null checks with Linq expressions</title>
       <link>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</link>
       <pubDate>Sun, 21 Feb 2010 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
       <description>The problem Have you ever written code like the following ?
 X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
     </item>
-    
   </channel>
 </rss>

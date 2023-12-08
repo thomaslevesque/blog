@@ -16,6 +16,7 @@ I was recently playing with Cloudflare Workers to see how it worked, and I reali
 <meta property="article:modified_time" content="2022-11-01T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Building a URL shortener in 12 lines of code using Cloudflare Workers"/>
 <meta name="twitter:description" content="Cloudflare Workers Cloudflare Workers is a serverless environment that runs Javascript. Basically, you just write code that handle HTTP requests, similarly to Node.js. The code is deployed globally across the Cloudflare network, which means it&rsquo;s always running as close as possible to the end user.
@@ -92,19 +93,19 @@ if (!doNotTrack) {
 <p>First, you need a Cloudflare account. Don&rsquo;t worry, it&rsquo;s free! If you need to scale up, you might need a paid plan, but a free plan is enough for experimenting. Once you have your account, login to the dashboard.</p>
 <h2 id="kv-storage">KV Storage</h2>
 <p>First, we&rsquo;re going to need a storage location for the data. We&rsquo;ll use <a href="https://developers.cloudflare.com/workers/runtime-apis/kv">Workers KV</a>, which is a simple key-value store provided by Cloudflare Workers. Go to the <strong>Workers &gt; KV</strong> section and click <strong>Create namespace</strong>. Choose a name and click <strong>Add</strong>:</p>
-<p><img src="create-kv-namespace.png" alt="Screenshot of the &amp;lsquo;Create namespace&amp;rsquo; form in Cloudflare dashboard" title="Create namespace"></p>
+<p><img src="create-kv-namespace.png" alt="Screenshot of the &lsquo;Create namespace&rsquo; form in Cloudflare dashboard" title="Create namespace"></p>
 <p>Click <strong>View</strong> in the namespace list to access your new namespace, and add a few entries. The key will be the &ldquo;token&rdquo; for a short URL, and the value will be the URL it redirects to.</p>
 <p><img src="kv-entries.png" alt="Screenshot of the KV key-value editor UI" title="KV entries"></p>
 <h2 id="creating-the-worker-service">Creating the worker service</h2>
 <p>Now, head to the <strong>Workers &gt; Overview</strong> section, and click <strong>Create a service</strong>. Pick a name, select the <strong>HTTP handler</strong> template with the module syntax, and click <strong>Create service</strong>:</p>
-<p><img src="create-service.png" alt="Screenshot of the &amp;lsquo;Create a service&amp;rsquo; form in Cloudflare dashboard" title="Create a service"></p>
+<p><img src="create-service.png" alt="Screenshot of the &lsquo;Create a service&rsquo; form in Cloudflare dashboard" title="Create a service"></p>
 <p>You should then be redirected to your new service:</p>
 <p><img src="worker-service-page.png" alt="Screenshot of the worker service page" title="Service page"></p>
 <h2 id="binding-the-kv-namespace-to-a-variable">Binding the KV namespace to a variable</h2>
 <p>Before we start coding, we need to bind our KV namespace to a variable, so that we can access it from the code. Go to the <strong>Settings</strong> tab, then to the <strong>Variables</strong> section:</p>
 <p><img src="settings-variables.png" alt="Screenshot of the Variables page of the service" title="Settings &gt; Variables"></p>
 <p>Under <strong>KV Namespace Bindings</strong> click <strong>Add binding</strong>, enter <code>kv</code> as variable name (you can pick any name you like, of course), pick the KV namespace you created earlier from the dropdown, and click <strong>Save</strong>.</p>
-<p><img src="kv-namespace-binding.png" alt="Screenshot of the &amp;ldquo;Add KV namespace binding&amp;rdquo; form" title="KV namespace binding"></p>
+<p><img src="kv-namespace-binding.png" alt="Screenshot of the &ldquo;Add KV namespace binding&rdquo; form" title="KV namespace binding"></p>
 <h2 id="the-code">The code</h2>
 <p>We are now ready to start coding! Go back to the <strong>Resources</strong> tab, and click the <strong>Quick edit</strong> button. You will land on the code editor page:</p>
 <p><img src="code-editor.png" alt="Screenshot of the code editor for the service" title="Code editor"></p>

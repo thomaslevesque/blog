@@ -17,6 +17,7 @@ Many solutions to this problem have been proposed on technical forums and blogs,
 <meta property="article:modified_time" content="2011-03-27T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Display an animated GIF image"/>
 <meta name="twitter:description" content="Note: The code in this article is out of date; the current code is hosted on GitHub.
@@ -114,7 +115,7 @@ if (!doNotTrack) {
 <p>Without further ado, here&rsquo;s the complete code:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ImageBehavior</span>
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#region AnimatedSource</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#region</span> AnimatedSource
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">
 </span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [AttachedPropertyBrowsableForType(typeof(Image))]</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ImageSource GetAnimatedSource(Image obj)
@@ -342,7 +343,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>And here&rsquo;s the <code>DoWhenLoaded</code> extension method used in the code above:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> DoWhenLoaded&lt;T&gt;(<span style="color:#66d9ef">this</span> T element, Action&lt;T&gt; action)

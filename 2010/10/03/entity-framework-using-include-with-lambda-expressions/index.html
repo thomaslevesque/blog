@@ -17,6 +17,7 @@ var query = from ord in db.Orders.Include(&#34;OrderDetails.Product&#34;) where 
 <meta property="article:modified_time" content="2010-10-03T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[Entity Framework] Using Include with lambda expressions"/>
 <meta name="twitter:description" content="I&rsquo;m currently working on a project that uses Entity Framework 4. Even though lazy loading is enabled, I often use the ObjectQuery.Include method to eagerly load associated entities, in order to avoid database roundtrips when I access them:

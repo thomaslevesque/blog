@@ -15,6 +15,7 @@
 <meta property="article:modified_time" content="2010-05-17T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[C#] A simple implementation of the WeakEvent pattern"/>
 <meta name="twitter:description" content="As you probably know, incorrect usage of events is one of the main causes for memory leaks in .NET applications : an event keeps references to its listener objects (through a delegate), which prevents the garbage collector from collecting them when they&rsquo;re not used anymore. This is especially true of static events, because the references are kept for all the lifetime of the application. If the application often adds handlers to the event and never removes them, the memory usage will grow as long as the application runs, until no more memory is available."/>
@@ -128,7 +129,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#region IEquatable&lt;TDelegate&gt; Members</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#region</span> IEquatable&lt;TDelegate&gt; Members
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> Equals(TDelegate other)
 </span></span><span style="display:flex;"><span>    {
@@ -138,7 +139,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            &amp;&amp; d.Method.Equals(_method);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">void</span> Invoke(<span style="color:#66d9ef">params</span> <span style="color:#66d9ef">object</span>[] args)
 </span></span><span style="display:flex;"><span>    {

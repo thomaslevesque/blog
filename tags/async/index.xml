@@ -6,94 +6,77 @@
     <description>Recent content in async on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Sep 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/async/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 25 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/async/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Asynchronous initialization in ASP.NET Core, revisited</title>
       <link>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</link>
       <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</guid>
       <description>Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
 Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&amp;rsquo;t such a good approach.</description>
     </item>
-    
     <item>
       <title>Asynchronous initialization in ASP.NET Core with custom middleware</title>
       <link>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</link>
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
       <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
 There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
     </item>
-    
     <item>
       <title>C# methods in git diff hunk headers</title>
       <link>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</link>
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</guid>
       <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
 diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args) Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;); } This is very useful to know where you are when looking at a diff.</description>
     </item>
-    
     <item>
       <title>Pitfall: using var and async together</title>
       <link>https://thomaslevesque.com/2016/06/21/pitfall-using-var-and-async-together/</link>
       <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2016/06/21/pitfall-using-var-and-async-together/</guid>
       <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
 public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync: private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() { // actual implementation irrelevant // .</description>
     </item>
-    
     <item>
       <title>Using multiple cancellation sources with CreateLinkedTokenSource</title>
       <link>https://thomaslevesque.com/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</link>
       <pubDate>Thu, 31 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/12/31/using-multiple-cancellation-sources-with-createlinkedtokensource/</guid>
       <description>Async programming in C# used to be hard; thanks to .NET 4’s Task Parallel Library and C# 5’s async/await feature, it has become fairly easy, and as a result, is becoming much more common. At the same time, a standardized approach to cancellation has been introduced : cancellation tokens. The basic idea is that you create a CancellationTokenSource that controls the cancellation, and pass the token it provides to the method that you want to be able to cancel.</description>
     </item>
-    
     <item>
       <title>Explicitly switch to the UI thread in an async method</title>
       <link>https://thomaslevesque.com/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</link>
       <pubDate>Wed, 11 Nov 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/11/11/explicitly-switch-to-the-ui-thread-in-an-async-method/</guid>
       <description>Async code is a great way to keep your app’s UI responsive. You can start an async operation from the UI thread, await it without blocking the UI thread, and naturally resume on the UI thread when it’s done. This is a very powerful feature, and most of the time you don’t even need to think about it; it “just works”. However, this works only if the async operation is started from a thread that has a synchronization context (such as the UI thread in Windows Forms, WPF or WinRT).</description>
     </item>
-    
     <item>
       <title>Async and cancellation support for wait handles</title>
       <link>https://thomaslevesque.com/2015/06/04/async-and-cancellation-support-for-wait-handles/</link>
       <pubDate>Thu, 04 Jun 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/06/04/async-and-cancellation-support-for-wait-handles/</guid>
       <description>The .NET framework comes with a number of low-level synchronization primitives. The most commonly used are collectively known as “wait handles”, and inherit the WaitHandle class: Semaphore, Mutex, AutoResetEvent and ManualResetEvent. These classes have been there since at least .NET 2.0 (1.1 for some of them), but they haven’t evolved much since they were introduced, which means they don’t support common features that were introduced later. In particular, they don’t provide support for waiting asynchronously, nor do they support cancelling the wait.</description>
     </item>
-    
     <item>
       <title>Async unit tests with NUnit</title>
       <link>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</link>
       <pubDate>Sun, 01 Feb 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
 public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.Delay(100).ConfigureAwait(false); // the answer to life, the universe and everything.</description>
     </item>
-    
     <item>
       <title>Passing parameters by reference to an asynchronous method</title>
       <link>https://thomaslevesque.com/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</link>
       <pubDate>Tue, 04 Nov 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/11/04/passing-parameters-by-reference-to-an-asynchronous-method/</guid>
       <description>Asynchrony in C# 5 is awesome, and I’ve been using it a lot since it was introduced. But there are few annoying limitations; for instance, you cannot pass parameters by reference (ref or out) to an asynchronous method. There are good reasons for that; the most obvious is that if you pass a local variable by reference, it is stored on the stack, but the current stack won’t remain available during the whole execution of the async method (only until the first await), so the location of the variable won’t exist anymore.</description>
     </item>
-    
   </channel>
 </rss>

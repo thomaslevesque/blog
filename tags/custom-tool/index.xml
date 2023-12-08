@@ -6,15 +6,14 @@
     <description>Recent content in custom tool on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 Nov 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/custom-tool/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Nov 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/custom-tool/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Running a custom tool automatically when a file is modified</title>
       <link>https://thomaslevesque.com/2013/11/14/running-a-custom-tool-automatically-when-a-file-is-modified/</link>
       <pubDate>Thu, 14 Nov 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2013/11/14/running-a-custom-tool-automatically-when-a-file-is-modified/</guid>
       <description>As far as I can remember, Visual Studio always had something called “custom tools”, also known as single-file generators. When you apply such a tool to a file in your project, it will generate something (typically code, but not necessarily) based on the content of the file. For instance, the default custom tool for resource files is called ResXFileCodeGenerator, and generates a class that provides easy access to the resources defined in the resx file.</description>
     </item>
-    
   </channel>
 </rss>

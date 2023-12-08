@@ -6,117 +6,96 @@
     <description>Recent content in XAML on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/xaml/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Jan 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/xaml/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A new library to display animated GIFs in XAML apps</title>
       <link>https://thomaslevesque.com/2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/</link>
       <pubDate>Sat, 17 Jan 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/01/17/a-new-library-to-display-animated-gifs-in-xaml-apps/</guid>
       <description>A few years ago, I wrote an article that showed how to display an animated GIF in WPF. The article included the full code, and was quite successful, since WPF had no built-in support for animated GIFs. Based on the issues reported in the comments, I made many edits to the code in the article. At some point I realized it was very impractical, so I published the code on CodePlex (it has now moved to GitHub) under the name WpfAnimatedGif, and started maintaining it there.</description>
     </item>
-    
     <item>
       <title>[WPF] Declare global hotkeys in XAML with NHotkey</title>
       <link>https://thomaslevesque.com/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</link>
       <pubDate>Wed, 05 Feb 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/02/05/wpf-declare-global-hotkeys-in-xaml-with-nhotkey/</guid>
       <description>A common requirement for desktop applications is to handle system-wide hotkeys, in order to intercept keyboard shortcuts even when they don’t have focus. Unfortunately, there is no built-in feature in the .NET framework to do it.
 Of course, this is not a new issue, and there are quite a few open-source libraries that address it (e.g. VirtualInput). Most of them rely on a global system hook, which allow them to intercept all keystrokes, even the ones you’re not interested in.</description>
     </item>
-    
     <item>
       <title>Detecting dependency property changes in WinRT</title>
       <link>https://thomaslevesque.com/2013/04/21/detecting-dependency-property-changes-in-winrt/</link>
       <pubDate>Sun, 21 Apr 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2013/04/21/detecting-dependency-property-changes-in-winrt/</guid>
       <description>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
 It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.</description>
     </item>
-    
     <item>
       <title>[WPF 4.5] Subscribing to an event using a markup extension</title>
       <link>https://thomaslevesque.com/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</link>
       <pubDate>Fri, 23 Sep 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2011/09/23/wpf-4-5-subscribing-to-an-event-using-a-markup-extension/</guid>
       <description>It&amp;rsquo;s been a while since I last wrote about markup extensions&amp;hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&amp;rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events.
 Until now, it was possible to use a markup extension in XAML to assign a value to a property, but we couldn&amp;rsquo;t do the same to subscribe to an event.</description>
     </item>
-    
     <item>
       <title>[WPF] A simpler Grid using XAML attribute syntax</title>
       <link>https://thomaslevesque.com/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</link>
       <pubDate>Tue, 20 Jul 2010 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2010/07/20/wpf-a-simpler-grid-using-xaml-attribute-syntax/</guid>
       <description>The Grid control is one of the most frequently used containers in WPF. It allows to layout elements easily in rows and columns. Unfortunately the code to declare it, while simple to write, is made quite awkward by the use of the property element syntax:
 &amp;lt;Grid&amp;gt; &amp;lt;Grid.RowDefinitions&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;Auto&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;5&amp;#34;/&amp;gt; &amp;lt;RowDefinition Height=&amp;#34;*&amp;#34;/&amp;gt; &amp;lt;/Grid.RowDefinitions&amp;gt; &amp;lt;Grid.ColumnDefinitions&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;60&amp;#34; /&amp;gt; &amp;lt;ColumnDefinition Width=&amp;#34;*&amp;#34; /&amp;gt; &amp;lt;/Grid.ColumnDefinitions&amp;gt; &amp;lt;Label Content=&amp;#34;Name&amp;#34; Grid.Row=&amp;#34;0&amp;#34; Grid.Column=&amp;#34;0&amp;#34; /&amp;gt; &amp;lt;TextBox Text=&amp;#34;Hello world&amp;#34; Grid.</description>
     </item>
-    
     <item>
       <title>[VS2010] Binding support in InputBindings</title>
       <link>https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/</link>
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
       <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings.
 As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip;</description>
     </item>
-    
     <item>
       <title>[WPF] Markup extensions and templates</title>
       <link>https://thomaslevesque.com/2009/08/23/wpf-markup-extensions-and-templates/</link>
       <pubDate>Sun, 23 Aug 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/08/23/wpf-markup-extensions-and-templates/</guid>
       <description>Note : This post follows the one about a a markup extension that can update its target, and reuses the same code.
 You may have noticed that using a custom markup extension in a template sometimes lead to unexpected results&amp;hellip; In this post I&amp;rsquo;ll explain what the problem is, and how to create a markup extensions that behaves correctly in a template.
 The problem Let&amp;rsquo;s take the example from the previous post : a markup extension which gives the state of network connectivity, and updates its target when the network is connected or disconnected :</description>
     </item>
-    
     <item>
       <title>[WPF] Automatically sort a GridView (continued)</title>
       <link>https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/</link>
       <pubDate>Tue, 04 Aug 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/</guid>
       <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
 To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
     </item>
-    
     <item>
       <title>[WPF] A markup extension that can update its target</title>
       <link>https://thomaslevesque.com/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</link>
       <pubDate>Tue, 28 Jul 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/</guid>
       <description>If you have read my previous posts on the topic, you know I&amp;rsquo;m a big fan of custom markup extensions&amp;hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&amp;hellip; It could be useful in various cases, for instance :
 if the value of the markup extension can change in response to an event</description>
     </item>
-    
     <item>
       <title>[WPF] Using InputBindings with the MVVM pattern</title>
       <link>https://thomaslevesque.com/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</link>
       <pubDate>Tue, 17 Mar 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
       <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
 &amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;#34;Control&amp;#34; Key=&amp;#34;E&amp;#34; Command=&amp;#34;{Binding EditCommand}&amp;#34;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&amp;rsquo;t work, for two reasons :
 The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&amp;rsquo;t inherit the DataContext A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
     </item>
-    
     <item>
       <title>[WPF] Binding to application settings using a markup extension</title>
       <link>https://thomaslevesque.com/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</link>
       <pubDate>Tue, 18 Nov 2008 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2008/11/18/wpf-binding-to-application-settings-using-a-markup-extension/</guid>
       <description>Hi, this is my first post on this blog, I hope you will enjoy it ;-). If you want to know a few things about me, please check out this page.
 The end-user of any application expects that his preferences (window size, state of this or that option&amp;hellip;) are saved to be restored at the next run : that&amp;rsquo;s why .NET 2.0 introduced application settings as a unified way to persist these settings.</description>
     </item>
-    
   </channel>
 </rss>

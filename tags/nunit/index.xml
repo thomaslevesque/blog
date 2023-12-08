@@ -6,26 +6,23 @@
     <description>Recent content in nunit on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/nunit/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 01 Feb 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/nunit/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Async unit tests with NUnit</title>
       <link>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</link>
       <pubDate>Sun, 01 Feb 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</guid>
       <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
 Let’s assume the system under test is this very interesting Calculator class:
 public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.Delay(100).ConfigureAwait(false); // the answer to life, the universe and everything.</description>
     </item>
-    
     <item>
       <title>Easy unit testing of null argument validation</title>
       <link>https://thomaslevesque.com/2014/11/02/easy-unit-testing-of-null-argument-validation/</link>
       <pubDate>Sun, 02 Nov 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2014/11/02/easy-unit-testing-of-null-argument-validation/</guid>
       <description>When unit testing a method, one of the things to test is argument validation : for instance, ensure that the method throws a ArgumentNullException when a null argument is passed for a parameter that isn’t allowed to be null. Writing this kind of test is very easy, but it’s also a tedious and repetitive task, especially if the method has many parameters… So I wrote a method that automates part of this task: it tries to pass null for each of the specified arguments, and asserts that the method throws an ArgumentNullException.</description>
     </item>
-    
   </channel>
 </rss>

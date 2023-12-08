@@ -6,35 +6,30 @@
     <description>Recent content in Authentication on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/authentication/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/authentication/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Using the OAuth 2.0 device flow to authenticate users in desktop apps</title>
       <link>https://thomaslevesque.com/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</guid>
       <description>Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
 Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:</description>
     </item>
-    
     <item>
       <title>Google&#43; shutdown: fixing Google authentication in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</link>
       <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</guid>
       <description>A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&amp;rsquo;t affect you as a developer; but if you&amp;rsquo;re using Google authentication in an ASP.</description>
     </item>
-    
     <item>
       <title>Multitenant Azure AD issuer validation in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</link>
       <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>Update 2021/09/19: If you&amp;rsquo;re using the newer Microsoft.Identity.Web library, you don&amp;rsquo;t have anything to do to handle this, as it&amp;rsquo;s already handled by the library. This article only applies if you&amp;rsquo;re using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!
 If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
     </item>
-    
   </channel>
 </rss>

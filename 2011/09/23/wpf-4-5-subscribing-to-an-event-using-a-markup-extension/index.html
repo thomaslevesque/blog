@@ -16,6 +16,7 @@ Until now, it was possible to use a markup extension in XAML to assign a value t
 <meta property="article:modified_time" content="2011-09-23T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF 4.5] Subscribing to an event using a markup extension"/>
 <meta name="twitter:description" content="It&rsquo;s been a while since I last wrote about markup extensions&hellip; The release of Visual Studio 11 Developer Preview, which introduces a number of new features to WPF, just gave me a reason to play with them again. The feature I&rsquo;m going to discuss here is perhaps not the most impressive, but it fills in a gap of the previous versions: the support of markup extensions for events.
@@ -146,7 +147,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> handler;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Helper methods</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Helper methods
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span> GetHandler(<span style="color:#66d9ef">object</span> dataContext, EventInfo eventInfo, <span style="color:#66d9ef">string</span> eventHandlerName)
 </span></span><span style="display:flex;"><span>        {
@@ -182,7 +183,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                ?? depObj.GetValue(FrameworkContentElement.DataContextProperty);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></div><p>This class can be used as shown in the example above.</p>
 <p>As it is now, this markup extension has an annoying limitation: the <code>DataContext</code> must be set before the call to <code>ProvideValue</code>, otherwise it won&rsquo;t be possible to find the event handler method. A solution could be to subscribe to the <code>DataContextChanged</code> event to look for the method after the <code>DataContext</code> is set, but in the meantime we still need to return something&hellip; and we can&rsquo;t return null, because it would cause an exception (since you can&rsquo;t subscribe to an event with a null handler). So we need to return a dummy handler generated dynamically from the event signature. It makes things a bit harder&hellip; but it&rsquo;s still feasible.</p>
@@ -248,7 +249,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Helper methods</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Helper methods
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> Delegate GetHandler(<span style="color:#66d9ef">object</span> dataContext, EventInfo eventInfo, <span style="color:#66d9ef">string</span> eventHandlerName)
 </span></span><span style="display:flex;"><span>        {
@@ -349,7 +350,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            UnsubscribeFromDataContextChanged(targetObj);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></div><p>So this is the kind of things we can do thanks to this new WPF feature. We could also imagine a behavior system similar to what we can do with attached properties, e.g. to execute a standard action when an event occurs. There are lots of possible applications for this, I leave it to you to find them ;)</p>
 

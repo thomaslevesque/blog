@@ -6,164 +6,133 @@
     <description>Recent content in asp.net core on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/asp.net-core/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Sep 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/asp.net-core/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Using multiple JSON serialization settings in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/</link>
       <pubDate>Mon, 19 Sep 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/</guid>
       <description>My blog has been a bit quiet in the last 18 months or so, because, well, life happened&amp;hellip; In that time span I became a father, changed jobs twice, and relocated to Canada with my family, so free time has been scarce. Anyway, I recently ran into a problem that I found worthy of a blog post, and I have a bit of time to write!
 Heterogenous JSON formats Let&amp;rsquo;s say we&amp;rsquo;re building an ASP.</description>
     </item>
-    
     <item>
       <title>C# 9 records as strongly-typed ids - Part 3: JSON serialization</title>
       <link>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</link>
       <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</guid>
       <description>In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
 { &amp;#34;id&amp;#34;: { &amp;#34;value&amp;#34;: 1 }, &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;, &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
     </item>
-    
     <item>
       <title>C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</title>
       <link>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</link>
       <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</guid>
       <description>Last time, I explained how easy it is to use C# 9 record types as strongly-typed ids:
 public record ProductId(int Value); But unfortunately, we&amp;rsquo;re not quite done yet: there are a few issues to fix before our strongly-typed ids are really usable. For instance, ASP.NET Core doesn&amp;rsquo;t know how to handle them in route parameters or query string parameters. In this post, I&amp;rsquo;ll show how to address this issue.
 Model binding of route and query string parameters Let&amp;rsquo;s say we have an entity like this:</description>
     </item>
-    
     <item>
       <title>Inject a service into a System.Text.Json converter</title>
       <link>https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/</link>
       <pubDate>Mon, 31 Aug 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/</guid>
       <description>Most JSON converters are fairly simple, and typically self-contained. But once in a while, you need to do something a little more complex in a converter, and you end up needing to call a service. However, there&amp;rsquo;s no built-in dependency injection in System.Text.Json converters… How can you access the service you need?
 There are basically two variants of this problem. One has a simple solution, the other is a bit of a hack…</description>
     </item>
-    
     <item>
       <title>ASP.NET Core 3, IIS and empty HTTP headers</title>
       <link>https://thomaslevesque.com/2020/07/23/aspnet-core-iis-and-empty-http-headers/</link>
       <pubDate>Thu, 23 Jul 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/07/23/aspnet-core-iis-and-empty-http-headers/</guid>
       <description>HTTP headers are key/value pairs sent at the beginning of a request or response. According to the grammar in RFC 7230, a field could have an empty value. In practice, it probably doesn&amp;rsquo;t make much sense: semantically, a header with an empty value or the absence of that header are equivalent.
 However, some client or server implementations actually require that a given header is present, even if it&amp;rsquo;s empty. For instance, the validation tests for WOPI (an HTTP-based protocol used to integrate Office for the Web with an application) require that the X-WOPI-Lock header is included in the response in certain situations, even if it&amp;rsquo;s empty (even though the spec says it can be omitted).</description>
     </item>
-    
     <item>
       <title>Exposing a custom type as a JSON string in an ASP.NET Core API</title>
       <link>https://thomaslevesque.com/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/</link>
       <pubDate>Sat, 27 Jun 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/06/27/exposing-custom-type-as-json-string-in-asp-net-core-api/</guid>
       <description>Sometimes your API needs to expose a non-primitive type that has a &amp;ldquo;natural&amp;rdquo; string representation. For instance, a standard representation for a duration is the ISO 8601 format, where &amp;ldquo;1 month, 2 days, 3 hours and 4 minutes&amp;rdquo; can be represented as P1M2DT3H4M (note that this isn&amp;rsquo;t the same as a Timespan, which has no notion of calendar months and years). A duration could be represented in C# as a custom type, like the Duration structure in my Iso8601DurationHelper project.</description>
     </item>
-    
     <item>
       <title>Handling query string parameters with no value in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
       <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
 query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
 But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&amp;rsquo;s not standardized.</description>
     </item>
-    
     <item>
       <title>ASP.NET Core: when environments are not enough, use sub-environments!</title>
       <link>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</link>
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
       <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
 appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
     </item>
-    
     <item>
       <title>Scaling out ASP.NET Core SignalR using Azure Service Bus</title>
       <link>https://thomaslevesque.com/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</link>
       <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/03/18/scaling-out-asp-net-core-signalr-using-azure-service-bus/</guid>
       <description>ASP.NET Core SignalR is a super easy way to establish two-way communication between an ASP.NET Core app and its clients, using WebSockets, Server-Sent Events, or long polling, depending on the client&amp;rsquo;s capabilities. For instance, it can be used to send a notification to all connected clients. However, if you scale out your application to multiple server instances, it no longer works out of the box: only the clients connected to the instance that sent the notification will receive it.</description>
     </item>
-    
     <item>
       <title>Google&#43; shutdown: fixing Google authentication in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</link>
       <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/</guid>
       <description>A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&amp;rsquo;t affect you as a developer; but if you&amp;rsquo;re using Google authentication in an ASP.</description>
     </item>
-    
     <item>
       <title>Multitenant Azure AD issuer validation in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</link>
       <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
       <description>Update 2021/09/19: If you&amp;rsquo;re using the newer Microsoft.Identity.Web library, you don&amp;rsquo;t have anything to do to handle this, as it&amp;rsquo;s already handled by the library. This article only applies if you&amp;rsquo;re using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!
 If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
     </item>
-    
     <item>
       <title>Asynchronous initialization in ASP.NET Core, revisited</title>
       <link>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</link>
       <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</guid>
       <description>Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
 Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&amp;rsquo;t such a good approach.</description>
     </item>
-    
     <item>
       <title>Handling multipart requests with JSON and file uploads in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</link>
       <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
       <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
 Embed the image bytes as base64 in the JSON payload, e.g. { &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
     </item>
-    
     <item>
       <title>Asynchronous initialization in ASP.NET Core with custom middleware</title>
       <link>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</link>
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
       <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
 Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
 There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
     </item>
-    
     <item>
       <title>Hosting an ASP.NET Core 2 application on a Raspberry Pi</title>
       <link>https://thomaslevesque.com/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/</link>
       <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/</guid>
       <description>As you probably know, .NET Core runs on many platforms: Windows, macOS, and many UNIX/Linux variants, whether on x86/x64 architectures or on ARM. This enables a wide range of interesting scenarios&amp;hellip; For instance, is a very small machine like a Raspberry Pi, which its low performance ARM processor and small amount of RAM (1 GB on my RPi 2 Model B), enough to host an ASP.NET Core web app? Yes it is!</description>
     </item>
-    
     <item>
       <title>Understanding the ASP.NET Core middleware pipeline</title>
       <link>https://thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</link>
       <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/</guid>
       <description>Middlewhat? The ASP.NET Core architecture features a system of middleware, which are pieces of code that handle requests and responses. Middleware are chained to each other to form a pipeline. Incoming requests are passed through the pipeline, where each middleware has a chance to do something with them before passing them to the next middleware. Outgoing responses are also passed through the pipeline, in reverse order. If this sounds very abstract, the following schema from the official ASP.</description>
     </item>
-    
   </channel>
 </rss>

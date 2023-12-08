@@ -6,54 +6,45 @@
     <description>Recent content in dependency injection on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://thomaslevesque.com/tags/dependency-injection/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://thomaslevesque.com/tags/dependency-injection/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</title>
       <link>https://thomaslevesque.com/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/</link>
       <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/</guid>
       <description>Dependency injection: the good and the bad Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&amp;rsquo;s successor), Castle Windsor, etc., but lately I&amp;rsquo;ve mostly been using the one provided by Microsoft in .NET Core : Microsoft.Extensions.DependencyInjection. It&amp;rsquo;s not the most full-featured (in fact, it&amp;rsquo;s pretty bare-bones), but I find it sufficient in most cases.</description>
     </item>
-    
     <item>
       <title>Inject a service into a System.Text.Json converter</title>
       <link>https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/</link>
       <pubDate>Mon, 31 Aug 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/</guid>
       <description>Most JSON converters are fairly simple, and typically self-contained. But once in a while, you need to do something a little more complex in a converter, and you end up needing to call a service. However, there&amp;rsquo;s no built-in dependency injection in System.Text.Json converters… How can you access the service you need?
 There are basically two variants of this problem. One has a simple solution, the other is a bit of a hack…</description>
     </item>
-    
     <item>
       <title>Lazily resolving services to fix circular dependencies in .NET Core</title>
       <link>https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</link>
       <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</guid>
       <description>The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
 It is generally agreed that this should be avoided; I won&amp;rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</description>
     </item>
-    
     <item>
       <title>Automatically inject fakes in test fixture with FakeItEasy</title>
       <link>https://thomaslevesque.com/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</link>
       <pubDate>Sun, 17 Jan 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</guid>
       <description>Today I’d like to share a nice feature I discovered recently in FakeItEasy.
 When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier.</description>
     </item>
-    
     <item>
       <title>Create an auto-mocking container with Unity and FakeItEasy</title>
       <link>https://thomaslevesque.com/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</link>
       <pubDate>Sun, 14 Jun 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2015/06/14/create-an-auto-mocking-container-with-unity-and-fakeiteasy/</guid>
       <description>Unit testing can be tedious sometimes, especially when testing classes that have complex dependencies. Fortunately, some tools make it somewhat easier. I’ve been using FakeItEasy a lot recently; it’s a very easy to use mocking framework for .NET. It has a very lean and simple API based on generics and lambda expressions, and is a real pleasure to work with. It came as a breath of fresh air compared to the old RhinoMocks I had been using before.</description>
     </item>
-    
   </channel>
 </rss>

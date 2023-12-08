@@ -16,6 +16,7 @@ To achieve this result, I used an Adorner : this is a component which allows to 
 <meta property="article:modified_time" content="2009-08-04T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Automatically sort a GridView (continued)"/>
 <meta name="twitter:description" content="A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
@@ -112,7 +113,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GridViewSort</span>
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Public attached properties</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Public attached properties
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ICommand GetCommand(DependencyObject obj)
 </span></span><span style="display:flex;"><span>        {
@@ -255,9 +256,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty SortGlyphDescendingProperty =
 </span></span><span style="display:flex;"><span>            DependencyProperty.RegisterAttached(<span style="color:#e6db74">&#34;SortGlyphDescending&#34;</span>, <span style="color:#66d9ef">typeof</span>(ImageSource), <span style="color:#66d9ef">typeof</span>(GridViewSort), <span style="color:#66d9ef">new</span> UIPropertyMetadata(<span style="color:#66d9ef">null</span>));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Private attached properties</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Private attached properties
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> GridViewColumnHeader GetSortedColumnHeader(DependencyObject obj)
 </span></span><span style="display:flex;"><span>        {
@@ -273,9 +274,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> DependencyProperty SortedColumnHeaderProperty =
 </span></span><span style="display:flex;"><span>            DependencyProperty.RegisterAttached(<span style="color:#e6db74">&#34;SortedColumnHeader&#34;</span>, <span style="color:#66d9ef">typeof</span>(GridViewColumnHeader), <span style="color:#66d9ef">typeof</span>(GridViewSort), <span style="color:#66d9ef">new</span> UIPropertyMetadata(<span style="color:#66d9ef">null</span>));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Column header click event handler</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Column header click <span style="color:#66d9ef">event</span> handler
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ColumnHeader_Click(<span style="color:#66d9ef">object</span> sender, RoutedEventArgs e)
 </span></span><span style="display:flex;"><span>        {
@@ -305,9 +306,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Helper methods</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Helper methods
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T GetAncestor&lt;T&gt;(DependencyObject reference) <span style="color:#66d9ef">where</span> T : DependencyObject
 </span></span><span style="display:flex;"><span>        {
@@ -380,11 +381,11 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region SortGlyphAdorner nested class</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> SortGlyphAdorner nested <span style="color:#66d9ef">class</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SortGlyphAdorner</span> : Adorner
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SortGlyphAdorner</span> : Adorner
 </span></span><span style="display:flex;"><span>        {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> GridViewColumnHeader _columnHeader;
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">private</span> ListSortDirection _direction;
@@ -447,7 +448,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>I hope you&rsquo;ll find that useful :)</p>

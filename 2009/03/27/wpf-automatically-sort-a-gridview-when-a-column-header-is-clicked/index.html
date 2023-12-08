@@ -15,6 +15,7 @@
 <meta property="article:modified_time" content="2009-03-27T00:00:00+00:00" />
 
 
+
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[WPF] Automatically sort a GridView when a column header is clicked"/>
 <meta name="twitter:description" content="It&rsquo;s quite simple, in WPF, to present data in a grid, thanks to the GridView class. If you want to sort it, however, it gets a little harder&hellip; With the DataGridView in Windows Forms, it was &ldquo;automagic&rdquo; : when the user clicked a column header, the grid was automatically sorted. To achieve the same behavior in WPF, you need to get your hands dirty&hellip; The method recommended by Microsoft is described in this article ; it is based on the Click event of the GridViewColumnHeader class."/>
@@ -129,7 +130,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GridViewSort</span>
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Attached properties</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Attached properties
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ICommand GetCommand(DependencyObject obj)
 </span></span><span style="display:flex;"><span>        {
@@ -230,9 +231,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">new</span> UIPropertyMetadata(<span style="color:#66d9ef">null</span>)
 </span></span><span style="display:flex;"><span>            );
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Column header click event handler</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Column header click <span style="color:#66d9ef">event</span> handler
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ColumnHeader_Click(<span style="color:#66d9ef">object</span> sender, RoutedEventArgs e)
 </span></span><span style="display:flex;"><span>        {
@@ -262,9 +263,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Helper methods</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Helper methods
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T GetAncestor&lt;T&gt;(DependencyObject reference) <span style="color:#66d9ef">where</span> T : DependencyObject
 </span></span><span style="display:flex;"><span>        {
@@ -300,7 +301,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Of course, this class could probably be improved&hellip; for instance, we could add an arrow glyph on the sorted column (maybe by using an <code>Adorner</code>). Maybe I&rsquo;ll do that someday&hellip; meanwhile, please feel free to use it ;)</p>

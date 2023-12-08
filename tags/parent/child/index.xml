@@ -5,15 +5,14 @@
     <link>https://thomaslevesque.com/tags/parent/child/</link>
     <description>Recent content in parent/child on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://thomaslevesque.com/tags/parent/child/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <atom:link href="https://thomaslevesque.com/tags/parent/child/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[C#] Parent/child relationship and XML serialization</title>
       <link>https://thomaslevesque.com/2009/06/12/c-parentchild-relationship-and-xml-serialization/</link>
       <pubDate>Fri, 12 Jun 2009 00:00:00 +0000</pubDate>
-      
       <guid>https://thomaslevesque.com/2009/06/12/c-parentchild-relationship-and-xml-serialization/</guid>
       <description>Today I&amp;rsquo;d like to present an idea that occurred to me recently. Nothing about WPF this time, this is all about C# class design ! The problem It&amp;rsquo;s very common in C# programs to have an object that owns a collection of child items with a reference to their parent. For instance, this is the case for Windows Forms controls, which have a collection of child controls (Controls), and a reference to their parent control (Parent).</description>
     </item>
-    
   </channel>
 </rss>
