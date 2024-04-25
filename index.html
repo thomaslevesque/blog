@@ -81,6 +81,23 @@ if (!doNotTrack) {
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
+			<a href="/2024/04/25/running-a-github-actions-workflow-that-doesnt-exist-yet-on-the-default-branch/" rel="bookmark">
+			Running a GitHub Actions workflow that doesn&#39;t exist yet on the default branch
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-04-25T00:00:00Z">April 25, 2024</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Writing this mostly for future me in case I need it again. Hopefully it can help someone else too!
+Sometimes you need to run a GitHub Actions workflow, but it&rsquo;s not on the default branch yet, because it&rsquo;s still a work in progress and hasn&rsquo;t been merged yet. Typically it&rsquo;s just because you want to test it.
+If it has a pull_request trigger, no problem, it will just run automatically when you open the pull request that adds it (if you have the appropriate permissions on the repo).
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
 			<a href="/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/" rel="bookmark">
 			Building a URL shortener in 12 lines of code using Cloudflare Workers
 			</a>
@@ -281,26 +298,11 @@ Model binding of route and query string parameters Let&rsquo;s say we have an en
 		Strongly-typed ids Entities typically have integer, GUID or string ids, because those types are supported directly by databases. However, if all your entities have ids of the same type, it becomes pretty easy to mix them up, and use the id of a Product where the id of an Order was expected. This is actually a pretty common source of bugs.
 public void AddProductToOrder(int orderId, int productId, int count) { .
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/2020/09/27/automatic-factory-with-microsoft-extensions-dependencyinjection-and-castle-dynamicproxy/" rel="bookmark">
-			Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-09-27T00:00:00Z">September 27, 2020</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Dependency injection: the good and the bad Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&rsquo;s successor), Castle Windsor, etc., but lately I&rsquo;ve mostly been using the one provided by Microsoft in .NET Core : Microsoft.Extensions.DependencyInjection. It&rsquo;s not the most full-featured (in fact, it&rsquo;s pretty bare-bones), but I find it sufficient in most cases.
-	</div>
 </article>
 </main>
 
 <div class="pagination">
-	<span class="pagination__item pagination__item--current">1/11</span>
+	<span class="pagination__item pagination__item--current">1/12</span>
 	<a class="pagination__item pagination__item--next btn" href="/page/2/">»</a>
 </div>
 
@@ -346,11 +348,11 @@ public void AddProductToOrder(int orderId, int productId, int count) { .
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2024/04/25/running-a-github-actions-workflow-that-doesnt-exist-yet-on-the-default-branch/">Running a GitHub Actions workflow that doesn&#39;t exist yet on the default branch</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/">Building a URL shortener in 12 lines of code using Cloudflare Workers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 		</ul>
 	</div>
 </div>

@@ -82,6 +82,23 @@ if (!doNotTrack) {
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
+			<a href="/2011/03/27/wpf-display-an-animated-gif-image/" rel="bookmark">
+			[WPF] Display an animated GIF image
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2011-03-27T00:00:00Z">March 27, 2011</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Note: The code in this article is out of date; the current code is hosted on GitHub.
+WPF is a great technology, but sometimes it seems to be missing some really basic features&hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation.
+Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
 			<a href="/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/" rel="bookmark">
 			[WPF] How to bind to data when the DataContext is not inherited
 			</a>
@@ -221,28 +238,12 @@ The problem Let&rsquo;s take the example from the previous post : a markup exte
 		A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
 To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/2009/07/28/wpf-a-markup-extension-that-can-update-its-target/" rel="bookmark">
-			[WPF] A markup extension that can update its target
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2009-07-28T00:00:00Z">July 28, 2009</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		If you have read my previous posts on the topic, you know I&rsquo;m a big fan of custom markup extensions&hellip; However, they have a limitation that can be quite annoying : they are only evaluated once. Yet it would be useful to be able to evaluate them again to update the target property, like a binding&hellip; It could be useful in various cases, for instance :
-if the value of the markup extension can change in response to an event
-	</div>
 </article>
 </main>
 
 <div class="pagination">
 	<a class="pagination__item pagination__item--prev btn" href="/posts/page/9/">«</a>
-	<span class="pagination__item pagination__item--current">10/11</span>
+	<span class="pagination__item pagination__item--current">10/12</span>
 	<a class="pagination__item pagination__item--next btn" href="/posts/page/11/">»</a>
 </div>
 
@@ -289,11 +290,11 @@ if the value of the markup extension can change in response to an event
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2024/04/25/running-a-github-actions-workflow-that-doesnt-exist-yet-on-the-default-branch/">Running a GitHub Actions workflow that doesn&#39;t exist yet on the default branch</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/">Building a URL shortener in 12 lines of code using Cloudflare Workers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/">C# 9 records as strongly-typed ids - Part 5: final bits and conclusion</a></li>
 		</ul>
 	</div>
 </div>
