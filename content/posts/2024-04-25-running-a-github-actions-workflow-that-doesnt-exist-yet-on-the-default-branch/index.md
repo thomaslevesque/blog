@@ -12,7 +12,7 @@ Writing this mostly for future me in case I need it again. Hopefully it can help
 
 Sometimes you need to run a GitHub Actions workflow, but it's not on the default branch yet, because it's still a work in progress and hasn't been merged yet. Typically it's just because you want to test it.
 
-If it has a `pull_request` trigger, no problem, it will just run automatically when you open the pull request that adds it (if you have the appropriate permissions on the repo). But if it's a manually run workflow like (`workflow_dispatch` trigger), it won't appear in the Actions tab until it's merged on the default branch or has run at least once. But how can you run it for the first time before it's merged?
+If it has a `pull_request` trigger, no problem, it will just run automatically when you open the pull request that adds it (if you have the appropriate permissions on the repo). But if it's a manually run workflow (`workflow_dispatch` trigger), it won't appear in the Actions tab until it's merged on the default branch or has run at least once. But how can you run it for the first time before it's merged?
 
 It's actually reasonably easy, but not exactly straightforward.
 
