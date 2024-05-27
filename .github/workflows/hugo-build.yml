@@ -37,17 +37,11 @@ jobs:
       run: |
         hugo --source $GITHUB_WORKSPACE/src --destination $GITHUB_WORKSPACE/out --environment production
 
-    # - name: Commit and push result
-    #   run: |
-    #     cd $GITHUB_WORKSPACE/out
-    #     git config user.name "Hugo Bot"
-    #     git config user.email "hugobot@thomaslevesque.net"
-    #     git add .
-    #     git commit -m "Publish site for $GITHUB_SHA" || echo "No changes to commit"
-    #     git push
-
-    - name: Save artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        path: out
-        name: result
+    - name: Commit and push result
+      run: |
+        cd $GITHUB_WORKSPACE/out
+        git config user.name "Hugo Bot"
+        git config user.email "hugobot@thomaslevesque.net"
+        git add .
+        git commit -m "Publish site for $GITHUB_SHA" || echo "No changes to commit"
+        git push
