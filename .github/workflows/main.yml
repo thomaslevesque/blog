@@ -14,13 +14,13 @@ jobs:
     steps:
 
     - name: Checkout source
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: recursive
         path: src
 
     - name: Checkout destination
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         ref: gh-pages
         path: out
