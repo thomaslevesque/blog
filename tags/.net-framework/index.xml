@@ -4,7 +4,7 @@
     <title>.NET Framework on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/.net-framework/</link>
     <description>Recent content in .NET Framework on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 12 Nov 2021 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/.net-framework/index.xml" rel="self" type="application/rss+xml" />
@@ -13,8 +13,7 @@
       <link>https://thomaslevesque.com/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/</link>
       <pubDate>Fri, 12 Nov 2021 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/</guid>
-      <description>I maintain a few libraries that still target .NET Framework 4.5 (among others). .NET 4.5 has long been out of support, but I try to keep supporting older frameworks in my libraries as long as it&amp;rsquo;s not a major inconvenience, because many people maintain old applications that can&amp;rsquo;t easily be updated to a newer framework.
-Anyway, until recently, supporting .NET 4.5 wasn&amp;rsquo;t much of a problem, but today I hit a snag&amp;hellip; Before installing VS 2022 on my Surface Pro, I removed VS 2019 and old versions of .</description>
+      <description>I maintain a few libraries that still target .NET Framework 4.5 (among others). .NET 4.5 has long been out of support, but I try to keep supporting older frameworks in my libraries as long as it&amp;rsquo;s not a major inconvenience, because many people maintain old applications that can&amp;rsquo;t easily be updated to a newer framework.&#xA;Anyway, until recently, supporting .NET 4.5 wasn&amp;rsquo;t much of a problem, but today I hit a snag&amp;hellip; Before installing VS 2022 on my Surface Pro, I removed VS 2019 and old versions of .</description>
     </item>
   </channel>
 </rss>

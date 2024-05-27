@@ -4,7 +4,7 @@
     <title>System.Text.JSON on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/system.text.json/</link>
     <description>Recent content in System.Text.JSON on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 31 Aug 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/system.text.json/index.xml" rel="self" type="application/rss+xml" />
@@ -13,8 +13,7 @@
       <link>https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/</link>
       <pubDate>Mon, 31 Aug 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/08/31/inject-service-into-system-text-json-converter/</guid>
-      <description>Most JSON converters are fairly simple, and typically self-contained. But once in a while, you need to do something a little more complex in a converter, and you end up needing to call a service. However, there&amp;rsquo;s no built-in dependency injection in System.Text.Json converters… How can you access the service you need?
-There are basically two variants of this problem. One has a simple solution, the other is a bit of a hack…</description>
+      <description>Most JSON converters are fairly simple, and typically self-contained. But once in a while, you need to do something a little more complex in a converter, and you end up needing to call a service. However, there&amp;rsquo;s no built-in dependency injection in System.Text.Json converters… How can you access the service you need?&#xA;There are basically two variants of this problem. One has a simple solution, the other is a bit of a hack…</description>
     </item>
   </channel>
 </rss>

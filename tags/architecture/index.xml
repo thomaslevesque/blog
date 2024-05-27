@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>architecture on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Architecture on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/architecture/</link>
-    <description>Recent content in architecture on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Architecture on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 30 Jul 2014 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/architecture/index.xml" rel="self" type="application/rss+xml" />
@@ -13,8 +13,7 @@
       <link>https://thomaslevesque.com/2014/07/30/a-review-of-ndepend/</link>
       <pubDate>Wed, 30 Jul 2014 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2014/07/30/a-review-of-ndepend/</guid>
-      <description>I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.
-NDepend is a static analysis tool for .NET that checks your code base against a large set of rules that fall in various categories, such as code quality, object-oriented design, architecture, naming conventions, etc. All of these rules are completely customizable.</description>
+      <description>I’ve been hearing quite a lot about NDepend over the last few years, but I had never tried it until recently, when its creator Patrick Smacchia was kind enough to offer me a license.&#xA;NDepend is a static analysis tool for .NET that checks your code base against a large set of rules that fall in various categories, such as code quality, object-oriented design, architecture, naming conventions, etc. All of these rules are completely customizable.</description>
     </item>
   </channel>
 </rss>

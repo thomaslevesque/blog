@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>animated on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Animated on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/animated/</link>
-    <description>Recent content in animated on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Animated on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 17 Jan 2015 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/animated/index.xml" rel="self" type="application/rss+xml" />
@@ -20,9 +20,7 @@
       <link>https://thomaslevesque.com/2011/03/27/wpf-display-an-animated-gif-image/</link>
       <pubDate>Sun, 27 Mar 2011 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2011/03/27/wpf-display-an-animated-gif-image/</guid>
-      <description>Note: The code in this article is out of date; the current code is hosted on GitHub.
-WPF is a great technology, but sometimes it seems to be missing some really basic features&amp;hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation.
-Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:</description>
+      <description>Note: The code in this article is out of date; the current code is hosted on GitHub.&#xA;WPF is a great technology, but sometimes it seems to be missing some really basic features&amp;hellip; A frequently mentioned example is the lack of support for animated GIF images. Actually, the GIF format itself is supported by the imaging API, but the Image control only shows the first frame of the animation.&#xA;Many solutions to this problem have been proposed on technical forums and blogs, usually variations of the following approaches:</description>
     </item>
   </channel>
 </rss>

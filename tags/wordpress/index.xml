@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>wordpress on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Wordpress on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/wordpress/</link>
-    <description>Recent content in wordpress on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Wordpress on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 06 May 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/wordpress/index.xml" rel="self" type="application/rss+xml" />
@@ -13,8 +13,7 @@
       <link>https://thomaslevesque.com/2020/05/06/moving-my-blog-to-hugo/</link>
       <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/05/06/moving-my-blog-to-hugo/</guid>
-      <description>If you&amp;rsquo;re a regular reader of my blog, you probably noticed that the design has changed. In fact, it&amp;rsquo;s not just the design, it&amp;rsquo;s just about everything!
-My blog used to be hosted on WordPress. It did the job, but honestly, I didn&amp;rsquo;t really like WordPress. It&amp;rsquo;s slow, bloated, and the editing and publishing experience is a bit of a mess (or at least, it&amp;rsquo;s not a good fit for the way I like to work).</description>
+      <description>If you&amp;rsquo;re a regular reader of my blog, you probably noticed that the design has changed. In fact, it&amp;rsquo;s not just the design, it&amp;rsquo;s just about everything!&#xA;My blog used to be hosted on WordPress. It did the job, but honestly, I didn&amp;rsquo;t really like WordPress. It&amp;rsquo;s slow, bloated, and the editing and publishing experience is a bit of a mess (or at least, it&amp;rsquo;s not a good fit for the way I like to work).</description>
     </item>
   </channel>
 </rss>

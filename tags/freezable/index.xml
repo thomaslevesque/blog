@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>freezable on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Freezable on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/freezable/</link>
-    <description>Recent content in freezable on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Freezable on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 21 Mar 2011 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/freezable/index.xml" rel="self" type="application/rss+xml" />

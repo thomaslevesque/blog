@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>timeout on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Timeout on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/timeout/</link>
-    <description>Recent content in timeout on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Timeout on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 25 Feb 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/timeout/index.xml" rel="self" type="application/rss+xml" />
@@ -13,8 +13,7 @@
       <link>https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/</link>
       <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/</guid>
-      <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
-The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
+      <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:&#xA;The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
     </item>
     <item>
       <title>Tackling timeout issues when uploading large files with HttpWebRequest</title>

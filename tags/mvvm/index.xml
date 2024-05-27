@@ -4,7 +4,7 @@
     <title>MVVM on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/mvvm/</link>
     <description>Recent content in MVVM on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 26 Oct 2009 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/mvvm/index.xml" rel="self" type="application/rss+xml" />
@@ -13,17 +13,14 @@
       <link>https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/</link>
       <pubDate>Mon, 26 Oct 2009 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2009/10/26/vs2010-binding-support-in-inputbindings/</guid>
-      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings.
-As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip;</description>
+      <description>THE feature that was missing from WPF ! Visual Studio 2010 beta 2 has been released last week, and it brings to WPF a long awaited feature : support for bindings in InputBindings.&#xA;As a reminder, the issue in previous releases was that the Command property of the InputBinding class wasn&amp;rsquo;t a DependencyProperty, so it wasn&amp;rsquo;t possible to bind it. Furthermore, InputBindings didn&amp;rsquo;t inherit the parent DataContext, which made it difficult to provide alternative implementations&amp;hellip;</description>
     </item>
     <item>
       <title>[WPF] Binding to an asynchronous collection</title>
       <link>https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/</link>
       <pubDate>Fri, 17 Apr 2009 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2009/04/17/wpf-binding-to-an-asynchronous-collection/</guid>
-      <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :
-This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread
-To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
+      <description>As you may have noticed, it is not possible to modify the contents of an ObservableCollection on a separate thread if a view is bound to this collection : the CollectionView raises a NotSupportedException :&#xA;This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread&#xA;To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a collection of strings in the ViewModel :</description>
     </item>
     <item>
       <title>[WPF] Automatically sort a GridView when a column header is clicked</title>
@@ -37,9 +34,7 @@ To illustrate this, let&amp;rsquo;s take a simple example : a ListBox bound to a
       <link>https://thomaslevesque.com/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</link>
       <pubDate>Tue, 17 Mar 2009 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2009/03/17/wpf-using-inputbindings-with-the-mvvm-pattern/</guid>
-      <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :
-&amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;#34;Control&amp;#34; Key=&amp;#34;E&amp;#34; Command=&amp;#34;{Binding EditCommand}&amp;#34;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&amp;rsquo;t work, for two reasons :
-The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&amp;rsquo;t inherit the DataContext A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
+      <description>If you develop WPF applications according to the Model-View-ViewModel pattern, you may have faced this issue : in XAML, how to bind a key or mouse gesture to a ViewModel command ? The obvious and intuitive approach would be this one :&#xA;&amp;lt;UserControl.InputBindings&amp;gt; &amp;lt;KeyBinding Modifiers=&amp;#34;Control&amp;#34; Key=&amp;#34;E&amp;#34; Command=&amp;#34;{Binding EditCommand}&amp;#34;/&amp;gt; &amp;lt;/UserControl.InputBindings&amp;gt; Unfortunately, this code doesn&amp;rsquo;t work, for two reasons :&#xA;The Command property is not a dependency property, so you cannot assign it through binding InputBindings are not part of the logical or visual tree of the control, so they don&amp;rsquo;t inherit the DataContext A solution would be to create the InputBindings in the code-behind, but in the MVVM pattern we usually prefer to avoid this&amp;hellip; I spent a long time looking for alternative solutions to do this in XAML, but most of them are quite complex and unintuitive.</description>
     </item>
     <item>
       <title>[WPF] Article about the Model-View-ViewModel design pattern, by Josh Smith</title>

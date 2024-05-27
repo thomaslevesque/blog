@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>strongly-typed ids on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Strongly-Typed Ids on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/strongly-typed-ids/</link>
-    <description>Recent content in strongly-typed ids on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Strongly-Typed Ids on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 19 Mar 2021 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/strongly-typed-ids/index.xml" rel="self" type="application/rss+xml" />
@@ -13,43 +13,35 @@
       <link>https://thomaslevesque.com/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/</link>
       <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/</guid>
-      <description>We&amp;rsquo;re reaching the end of this series on records as strongly-typed ids. Sorry for the long delay since the last post… life happened! So far we&amp;rsquo;ve covered ASP.NET Core model binding, JSON serialization, and EF Core integration. Almost everything is working, we just need to fix a few more details.
-Handling database-generated values in EF Core First, I want to address a question asked by @OpsOwns in the comments of the last post:</description>
+      <description>We&amp;rsquo;re reaching the end of this series on records as strongly-typed ids. Sorry for the long delay since the last post… life happened! So far we&amp;rsquo;ve covered ASP.NET Core model binding, JSON serialization, and EF Core integration. Almost everything is working, we just need to fix a few more details.&#xA;Handling database-generated values in EF Core First, I want to address a question asked by @OpsOwns in the comments of the last post:</description>
     </item>
     <item>
       <title>C# 9 records as strongly-typed ids - Part 4: Entity Framework Core integration</title>
       <link>https://thomaslevesque.com/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/</link>
       <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/</guid>
-      <description>So far in this series, I showed how to use C# 9 records to declare strongly-typed ids as easily as this:
-public record ProductId(int Value) : StronglyTypedId&amp;lt;int&amp;gt;(Value); I also explained how to make them work correctly with ASP.NET Core model binding and JSON serialization.
-Today, I&amp;rsquo;ll present another piece of the puzzle: how to make Entity Framework core handle strongly-typed ids correctly.
-Value conversion for a specific strongly-typed id Out of the box, EF Core doesn&amp;rsquo;t know anything about our strongly-typed ids.</description>
+      <description>So far in this series, I showed how to use C# 9 records to declare strongly-typed ids as easily as this:&#xA;public record ProductId(int Value) : StronglyTypedId&amp;lt;int&amp;gt;(Value); I also explained how to make them work correctly with ASP.NET Core model binding and JSON serialization.&#xA;Today, I&amp;rsquo;ll present another piece of the puzzle: how to make Entity Framework core handle strongly-typed ids correctly.&#xA;Value conversion for a specific strongly-typed id Out of the box, EF Core doesn&amp;rsquo;t know anything about our strongly-typed ids.</description>
     </item>
     <item>
       <title>C# 9 records as strongly-typed ids - Part 3: JSON serialization</title>
       <link>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</link>
       <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/12/07/csharp-9-records-as-strongly-typed-ids-part-3-json-serialization/</guid>
-      <description>In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:
-{ &amp;#34;id&amp;#34;: { &amp;#34;value&amp;#34;: 1 }, &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;, &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
+      <description>In the previous post in this series, we noticed that the strongly-typed id was serialized to JSON in an unexpected way:&#xA;{ &amp;#34;id&amp;#34;: { &amp;#34;value&amp;#34;: 1 }, &amp;#34;name&amp;#34;: &amp;#34;Apple&amp;#34;, &amp;#34;unitPrice&amp;#34;: 0.8 } When you think about it, it&amp;rsquo;s not really unexpected: the strongly-typed id is a &amp;ldquo;complex&amp;rdquo; object, not a primitive type, so it makes sense that it&amp;rsquo;s serialized as an object. But it&amp;rsquo;s clearly not what we want… Let&amp;rsquo;s see how to fix that.</description>
     </item>
     <item>
       <title>C# 9 records as strongly-typed ids - Part 2: ASP.NET Core route and query parameters</title>
       <link>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</link>
       <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/11/23/csharp-9-records-as-strongly-typed-ids-part-2-aspnet-core-route-and-query-parameters/</guid>
-      <description>Last time, I explained how easy it is to use C# 9 record types as strongly-typed ids:
-public record ProductId(int Value); But unfortunately, we&amp;rsquo;re not quite done yet: there are a few issues to fix before our strongly-typed ids are really usable. For instance, ASP.NET Core doesn&amp;rsquo;t know how to handle them in route parameters or query string parameters. In this post, I&amp;rsquo;ll show how to address this issue.
-Model binding of route and query string parameters Let&amp;rsquo;s say we have an entity like this:</description>
+      <description>Last time, I explained how easy it is to use C# 9 record types as strongly-typed ids:&#xA;public record ProductId(int Value); But unfortunately, we&amp;rsquo;re not quite done yet: there are a few issues to fix before our strongly-typed ids are really usable. For instance, ASP.NET Core doesn&amp;rsquo;t know how to handle them in route parameters or query string parameters. In this post, I&amp;rsquo;ll show how to address this issue.&#xA;Model binding of route and query string parameters Let&amp;rsquo;s say we have an entity like this:</description>
     </item>
     <item>
       <title>Using C# 9 records as strongly-typed ids</title>
       <link>https://thomaslevesque.com/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/</link>
       <pubDate>Fri, 30 Oct 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/10/30/using-csharp-9-records-as-strongly-typed-ids/</guid>
-      <description>Strongly-typed ids Entities typically have integer, GUID or string ids, because those types are supported directly by databases. However, if all your entities have ids of the same type, it becomes pretty easy to mix them up, and use the id of a Product where the id of an Order was expected. This is actually a pretty common source of bugs.
-public void AddProductToOrder(int orderId, int productId, int count) { .</description>
+      <description>Strongly-typed ids Entities typically have integer, GUID or string ids, because those types are supported directly by databases. However, if all your entities have ids of the same type, it becomes pretty easy to mix them up, and use the id of a Product where the id of an Order was expected. This is actually a pretty common source of bugs.&#xA;public void AddProductToOrder(int orderId, int productId, int count) { .</description>
     </item>
   </channel>
 </rss>

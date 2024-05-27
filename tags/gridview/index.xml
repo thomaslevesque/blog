@@ -4,7 +4,7 @@
     <title>GridView on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/gridview/</link>
     <description>Recent content in GridView on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 21 Nov 2013 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/gridview/index.xml" rel="self" type="application/rss+xml" />
@@ -20,8 +20,7 @@
       <link>https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/</link>
       <pubDate>Tue, 04 Aug 2009 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2009/08/04/wpf-automatically-sort-a-gridview-continued/</guid>
-      <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.
-To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
+      <description>A few months ago, I wrote a post where I explained how to automatically sort a GridView when a column header is clicked. I had mentioned a possible improvement : add a sort glyph in the column header to show which column is sorted. In today&amp;rsquo;s post, I present a new version of the GridViewSort class, which displays the sort glyph.&#xA;To achieve this result, I used an Adorner : this is a component which allows to draw over existing UI elements, on an independant rendering layer.</description>
     </item>
     <item>
       <title>[WPF] Automatically sort a GridView when a column header is clicked</title>

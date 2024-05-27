@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>gitattributes on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Gitattributes on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/gitattributes/</link>
-    <description>Recent content in gitattributes on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Gitattributes on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 17 Jan 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/gitattributes/index.xml" rel="self" type="application/rss+xml" />
@@ -13,8 +13,7 @@
       <link>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</link>
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</guid>
-      <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args) Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;); } This is very useful to know where you are when looking at a diff.</description>
+      <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:&#xA;diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args) Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;); } This is very useful to know where you are when looking at a diff.</description>
     </item>
   </channel>
 </rss>

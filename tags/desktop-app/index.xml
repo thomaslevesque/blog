@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>desktop app on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Desktop App on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/desktop-app/</link>
-    <description>Recent content in desktop app on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Desktop App on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 17 Sep 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/desktop-app/index.xml" rel="self" type="application/rss+xml" />
@@ -13,8 +13,7 @@
       <link>https://thomaslevesque.com/2020/09/17/introducing-cosmos-db-studio/</link>
       <pubDate>Thu, 17 Sep 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/09/17/introducing-cosmos-db-studio/</guid>
-      <description>I&amp;rsquo;ve been using Azure Cosmos DB on a fairly regular basis for the last 2 years or so. It&amp;rsquo;s a pretty good database, but one thing has always bothered me: the lack of a proper tool to query and modify data in the database. Basically, here are the current options:
-The standalone Cosmos DB Explorer website The Data Explorer in the Azure Portal Cosmos DB support in Azure Storage Explorer These 3 options are actually the same thing, made from the same code base, which was recently open-sourced.</description>
+      <description>I&amp;rsquo;ve been using Azure Cosmos DB on a fairly regular basis for the last 2 years or so. It&amp;rsquo;s a pretty good database, but one thing has always bothered me: the lack of a proper tool to query and modify data in the database. Basically, here are the current options:&#xA;The standalone Cosmos DB Explorer website The Data Explorer in the Azure Portal Cosmos DB support in Azure Storage Explorer These 3 options are actually the same thing, made from the same code base, which was recently open-sourced.</description>
     </item>
   </channel>
 </rss>

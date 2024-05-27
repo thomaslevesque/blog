@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>reference on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Reference on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/reference/</link>
-    <description>Recent content in reference on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Reference on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 04 Nov 2014 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/reference/index.xml" rel="self" type="application/rss+xml" />

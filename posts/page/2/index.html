@@ -3,20 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Posts - Thomas Levesque&#39;s .NET Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-		<meta property="og:title" content="Posts" />
-<meta property="og:description" content="Tips, tricks and thoughts about .NET development" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://thomaslevesque.com/posts/" />
+		<meta property="og:url" content="https://thomaslevesque.com/posts/">
+  <meta property="og:site_name" content="Thomas Levesque&#39;s .NET Blog">
+  <meta property="og:title" content="Posts">
+  <meta property="og:description" content="Tips, tricks and thoughts about .NET development">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="website">
 
-
-
-		<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Posts"/>
-<meta name="twitter:description" content="Tips, tricks and thoughts about .NET development"/>
+		<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Posts">
+<meta name="twitter:description" content="Tips, tricks and thoughts about .NET development">
 
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -29,16 +27,25 @@
 
 	<link rel="shortcut icon" href="/favicon.ico">
 		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-18RG5M4ZD6"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-18RG5M4ZD6', { 'anonymize_ip': false });
-}
-</script>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-18RG5M4ZD6"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-18RG5M4ZD6');
+        }
+      </script>
+    
+  
+
 
 </head>
 <body class="body">
@@ -88,7 +95,7 @@ if (!doNotTrack) {
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-09-27T00:00:00Z">September 27, 2020</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-09-27T00:00:00Z">September 27, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Dependency injection: the good and the bad Dependency injection (DI) is a great pattern, which can really help make your code cleaner, more decoupled and more testable. There are many DI libraries, like Autofac, Lamar (StructureMap&rsquo;s successor), Castle Windsor, etc., but lately I&rsquo;ve mostly been using the one provided by Microsoft in .NET Core : Microsoft.Extensions.DependencyInjection. It&rsquo;s not the most full-featured (in fact, it&rsquo;s pretty bare-bones), but I find it sufficient in most cases.
@@ -103,7 +110,7 @@ if (!doNotTrack) {
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-09-17T00:00:00Z">September 17, 2020</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-09-17T00:00:00Z">September 17, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		I&rsquo;ve been using Azure Cosmos DB on a fairly regular basis for the last 2 years or so. It&rsquo;s a pretty good database, but one thing has always bothered me: the lack of a proper tool to query and modify data in the database. Basically, here are the current options:
@@ -119,7 +126,7 @@ The standalone Cosmos DB Explorer website The Data Explorer in the Azure Portal 
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-08-31T00:00:00Z">August 31, 2020</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-08-31T00:00:00Z">August 31, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Most JSON converters are fairly simple, and typically self-contained. But once in a while, you need to do something a little more complex in a converter, and you end up needing to call a service. However, there&rsquo;s no built-in dependency injection in System.Text.Json converters… How can you access the service you need?
@@ -135,7 +142,7 @@ There are basically two variants of this problem. One has a simple solution, the
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-07-23T00:00:00Z">July 23, 2020</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-07-23T00:00:00Z">July 23, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		HTTP headers are key/value pairs sent at the beginning of a request or response. According to the grammar in RFC 7230, a field could have an empty value. In practice, it probably doesn&rsquo;t make much sense: semantically, a header with an empty value or the absence of that header are equivalent.
@@ -151,7 +158,7 @@ However, some client or server implementations actually require that a given hea
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-06-27T00:00:00Z">June 27, 2020</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-06-27T00:00:00Z">June 27, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Sometimes your API needs to expose a non-primitive type that has a &ldquo;natural&rdquo; string representation. For instance, a standard representation for a duration is the ISO 8601 format, where &ldquo;1 month, 2 days, 3 hours and 4 minutes&rdquo; can be represented as P1M2DT3H4M (note that this isn&rsquo;t the same as a Timespan, which has no notion of calendar months and years). A duration could be represented in C# as a custom type, like the Duration structure in my Iso8601DurationHelper project.
@@ -166,7 +173,7 @@ However, some client or server implementations actually require that a given hea
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-05-29T00:00:00Z">May 29, 2020</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-05-29T00:00:00Z">May 29, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Oh no, you just accidentally commited to master, when you were supposed to work on a feature branch! How to fix it? It&rsquo;s actually pretty easy with Git!
@@ -182,7 +189,7 @@ A common Git workflow nowadays is the &ldquo;feature branch&rdquo; workflow: you
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-05-25T00:00:00Z">May 25, 2020</time>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-05-25T00:00:00Z">May 25, 2020</time>
 	<time class="meta__text" datetime="2020-06-17T00:00:00Z">(Last Modified: June 17, 2020)</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
@@ -199,7 +206,7 @@ Note: Unfortunately the new C# features aren&rsquo;t supported yet in the latest
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-05-15T00:00:00Z">May 15, 2020</time></div><div class="meta__item-series meta__item"><svg class="meta__icon icon icon-series" viewBox="0 0 16 16" x="0px" y="0px" width="24" height="24" transform="scale(0.9)">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-05-15T00:00:00Z">May 15, 2020</time></div><div class="meta__item-series meta__item"><svg class="meta__icon icon icon-series" viewBox="0 0 16 16" x="0px" y="0px" width="24" height="24" transform="scale(0.9)">
     <rect x="5" y="3" width="9" height="2" rx="0.5" ry="0.5"/>
     <rect x="5" y="7" width="9" height="2" rx="0.5" ry="0.5"/>
     <rect x="5" y="11" width="9" height="2" rx="0.5" ry="0.5"/>
@@ -226,7 +233,7 @@ The GetHashCode method OK, I realize that most developers don&rsquo;t need to im
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-05-06T00:00:00Z">May 06, 2020</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-05-06T00:00:00Z">May 06, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		If you&rsquo;re a regular reader of my blog, you probably noticed that the design has changed. In fact, it&rsquo;s not just the design, it&rsquo;s just about everything!
@@ -242,7 +249,7 @@ My blog used to be hosted on WordPress. It did the job, but honestly, I didn&rsq
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-03-28T00:00:00Z">March 28, 2020</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2020-03-28T00:00:00Z">March 28, 2020</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
@@ -261,9 +268,7 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
 			
 <aside class="sidebar"><div class="widget-search widget">
 	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
-		<label>
-			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
-		</label>
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
 		<input class="widget-search__submit" type="submit" value="Search">
 		<input type="hidden" name="sitesearch" value="https://thomaslevesque.com/">
 	</form>
@@ -313,18 +318,18 @@ Authorization code flow OpenID Connect is an authentication layer built on top o
 	<div class="widget__content">
 		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net-core">asp.net-core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net core">asp.net core</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual-studio">visual-studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual studio">visual studio</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net-core">.net-core</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c#-9">c#-9</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net core">.net core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c# 9">c# 9</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit-testing">unit-testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit testing">unit testing</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency-injection">dependency-injection</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup-extension">markup-extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency injection">dependency injection</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup extension">markup extension</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
 	</div>
 </div>

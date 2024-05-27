@@ -2,21 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C# on Thomas Levesque&#39;s .NET Blog</title>
-    <link>https://thomaslevesque.com/tags/c#/</link>
+    <link>https://thomaslevesque.com/tags/c%23/</link>
     <description>Recent content in C# on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 04 Nov 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://thomaslevesque.com/tags/c#/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://thomaslevesque.com/tags/c%23/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A quick review of C# 10 new language features</title>
       <link>https://thomaslevesque.com/2021/11/04/a-quick-review-of-csharp-10-new-language-features/</link>
       <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2021/11/04/a-quick-review-of-csharp-10-new-language-features/</guid>
-      <description>.NET 6.0 and C# 10 are just around the corner, so now is a good time to review some of the most interesting new language features!
-Record structs 📄 Proposal
-Records were introduced in C# 9 as a simple way to define data types with value equality semantics, for instance:
-public record Money(decimal Amount, string CurrencyCode); An annoying limitation was that records were always reference types, but in some scenarios it would have been better to use value types.</description>
+      <description>.NET 6.0 and C# 10 are just around the corner, so now is a good time to review some of the most interesting new language features!&#xA;Record structs 📄 Proposal&#xA;Records were introduced in C# 9 as a simple way to define data types with value equality semantics, for instance:&#xA;public record Money(decimal Amount, string CurrencyCode); An annoying limitation was that records were always reference types, but in some scenarios it would have been better to use value types.</description>
     </item>
     <item>
       <title>Automatic factory with Microsoft.Extensions.DependencyInjection and Castle DynamicProxy</title>
@@ -30,123 +27,105 @@ public record Money(decimal Amount, string CurrencyCode); An annoying limitation
       <link>https://thomaslevesque.com/2020/05/25/exciting-new-features-in-csharp-9/</link>
       <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/05/25/exciting-new-features-in-csharp-9/</guid>
-      <description>Last week at Microsoft Build, there have been a lot of exciting annoucements! .NET 5, Blazor WebAssembly, .NET MAUI, WinUI… But the thing I&amp;rsquo;m most eager to get my hands on is C# 9, which introduces many interesting new features, so let&amp;rsquo;s take a quick tour! There&amp;rsquo;s a long list, so I won&amp;rsquo;t cover all of them here, but I will highlight the ones I find the most interesting.
-Note: Unfortunately the new C# features aren&amp;rsquo;t supported yet in the latest SDK preview, so we can&amp;rsquo;t test them in actual projects.</description>
+      <description>Last week at Microsoft Build, there have been a lot of exciting annoucements! .NET 5, Blazor WebAssembly, .NET MAUI, WinUI… But the thing I&amp;rsquo;m most eager to get my hands on is C# 9, which introduces many interesting new features, so let&amp;rsquo;s take a quick tour! There&amp;rsquo;s a long list, so I won&amp;rsquo;t cover all of them here, but I will highlight the ones I find the most interesting.&#xA;Note: Unfortunately the new C# features aren&amp;rsquo;t supported yet in the latest SDK preview, so we can&amp;rsquo;t test them in actual projects.</description>
     </item>
     <item>
       <title>Things every C# developer should know #1: hash codes</title>
       <link>https://thomaslevesque.com/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/</guid>
-      <description>As a C# developer, there are obviously a lot of skills you need to master to be effective: language syntax, framework classes, third-party libraries, databases, regular expressions, the HTTP protocol, etc. But there are a handful of things that I consider to be really fundamental, and I often see C# developers, even experienced ones, who don&amp;rsquo;t master them. So, I&amp;rsquo;m doing a series about those things! Today: hash codes.
-The GetHashCode method OK, I realize that most developers don&amp;rsquo;t need to implement their own hash table, or even implement GetHashCode very often, but still, it&amp;rsquo;s important to know about this.</description>
+      <description>As a C# developer, there are obviously a lot of skills you need to master to be effective: language syntax, framework classes, third-party libraries, databases, regular expressions, the HTTP protocol, etc. But there are a handful of things that I consider to be really fundamental, and I often see C# developers, even experienced ones, who don&amp;rsquo;t master them. So, I&amp;rsquo;m doing a series about those things! Today: hash codes.&#xA;The GetHashCode method OK, I realize that most developers don&amp;rsquo;t need to implement their own hash table, or even implement GetHashCode very often, but still, it&amp;rsquo;s important to know about this.</description>
     </item>
     <item>
       <title>Using the OAuth 2.0 device flow to authenticate users in desktop apps</title>
       <link>https://thomaslevesque.com/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/03/28/using-the-oauth-2-0-device-flow-to-authenticate-users-in-desktop-apps/</guid>
-      <description>Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…
-Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:</description>
+      <description>Over the last few years, OpenID Connect has become one of the most common ways to authenticate users in a web application. But if you want to use it in a desktop application, it can be a little awkward…&#xA;Authorization code flow OpenID Connect is an authentication layer built on top of OAuth 2.0, which means that you have to use one of the OAuth 2.0 authorization flows. A few years ago, there were basically two possible flows that you could use in a desktop client application to authenticate a user:</description>
     </item>
     <item>
       <title>Lazily resolving services to fix circular dependencies in .NET Core</title>
       <link>https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</link>
       <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/03/18/lazily-resolving-services-to-fix-circular-dependencies-in-net-core/</guid>
-      <description>The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:
-It is generally agreed that this should be avoided; I won&amp;rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</description>
+      <description>The problem with circular dependencies When building an application, good design dictates that you should avoid circular dependencies between your services. A circular dependency is when some components depend on each other, directly or indirectly, e.g. A depends on B which depends on C which depends on A:&#xA;It is generally agreed that this should be avoided; I won&amp;rsquo;t go into the details of the conceptual and theoretical reasons, because there are plenty of resources about it on the web.</description>
     </item>
     <item>
       <title>Handling query string parameters with no value in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2020/01/30/handling-query-string-parameters-with-no-value-in-asp-net-core/</guid>
-      <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that
-query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs
-But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&amp;rsquo;s not standardized.</description>
+      <description>Query strings are typically made of a sequence of key-value pairs, like ?foo=hello&amp;amp;bar=world…. However, if you look at RFC 3986, you can see that query strings are very loosely specified. It mentions that&#xA;query components are often used to carry identifying information in the form of &amp;ldquo;key=value&amp;rdquo; pairs&#xA;But it&amp;rsquo;s just an observation, not a rule (RFCs usually have very specific wording for rules, with words like MUST, SHOULD, etc.). So basically, a query string can be almost anything, it&amp;rsquo;s not standardized.</description>
     </item>
     <item>
       <title>ASP.NET Core: when environments are not enough, use sub-environments!</title>
       <link>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</link>
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2019/12/20/asp-net-core-when-environments-are-not-enough-use-sub-environments/</guid>
-      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:
-appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
+      <description>Out of the box, ASP.NET Core has the concept of &amp;ldquo;environments&amp;rdquo;, which allows your app to use different settings based on which environment it&amp;rsquo;s running in. For instance, you can have Development/Staging/Production environments, each with its own settings file, and a common settings file shared by all environments:&#xA;appsettings.json: global settings appsettings.Development.json: settings specific to the Development environment appsettings.Staging.json: settings specific to the Staging environment appsettings.Production.json: settings specific to the Production environment With the default configuration, environment-specific settings just override global settings, so you don&amp;rsquo;t have to specify unchanged settings in every environment if they&amp;rsquo;re already specified in the global settings file.</description>
     </item>
     <item>
       <title>Easy unit testing of null argument validation (C# 8 edition)</title>
       <link>https://thomaslevesque.com/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</guid>
-      <description>A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:
-[Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&amp;lt;int&amp;gt;(); var right = Enumerable.Empty&amp;lt;int&amp;gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&amp;gt; left.FullOuterJoin(right, x =&amp;gt; x, y =&amp;gt; y, (k, x, y) =&amp;gt; 0, 0, 0, null), &amp;#34;left&amp;#34;, &amp;#34;right&amp;#34;, &amp;#34;leftKeySelector&amp;#34;, &amp;#34;rightKeySelector&amp;#34;, &amp;#34;resultSelector&amp;#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.</description>
+      <description>A few years ago, I blogged about a way to automate unit testing of null argument validation. Its usage looked like this:&#xA;[Fact] public void FullOuterJoin_Throws_If_Argument_Is_Null() { var left = Enumerable.Empty&amp;lt;int&amp;gt;(); var right = Enumerable.Empty&amp;lt;int&amp;gt;(); TestHelper.AssertThrowsWhenArgumentNull( () =&amp;gt; left.FullOuterJoin(right, x =&amp;gt; x, y =&amp;gt; y, (k, x, y) =&amp;gt; 0, 0, 0, null), &amp;#34;left&amp;#34;, &amp;#34;right&amp;#34;, &amp;#34;leftKeySelector&amp;#34;, &amp;#34;rightKeySelector&amp;#34;, &amp;#34;resultSelector&amp;#34;); } Basically, for each of the specified parameters, the AssertThrowsWhenArgumentNull method rewrites the lambda expression by replacing the corresponding argument with null, compiles and executes it, and checks that it throws an ArgumentNullException with the appropriate parameter name.</description>
     </item>
     <item>
       <title>Using foreach with index in C#</title>
       <link>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</guid>
-      <description>Just a quick tip today!
-for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.
-But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
+      <description>Just a quick tip today!&#xA;for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.&#xA;But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
     </item>
     <item>
       <title>Handling type hierarchies in Cosmos DB (part 2)</title>
       <link>https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</link>
       <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2019/10/15/handling-type-hierarchies-in-cosmos-db-part-2/</guid>
-      <description>This is the second post in a series of 2:
-Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post) In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
+      <description>This is the second post in a series of 2:&#xA;Handling type hierarchies in Cosmos DB (part 1) Handling type hierarchies in Cosmos DB (part 2) (this post) In the previous post, I talked about the difficulty of handling type hierarchies in Cosmos DB, showed that the problem was actually with the JSON serializer, and proposed a solution using JSON.NET&amp;rsquo;s TypeNameHandling feature. In this post, I&amp;rsquo;ll show another approach based on custom converters, and how to integrate the solution with the Cosmos DB .</description>
     </item>
     <item>
       <title>Handling type hierarchies in Cosmos DB (part 1)</title>
       <link>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</link>
       <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2019/10/14/handling-type-hierarchies-in-cosmos-db-part1/</guid>
-      <description>This is the first post in a series of 2:
-Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2) Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
+      <description>This is the first post in a series of 2:&#xA;Handling type hierarchies in Cosmos DB (part 1) (this post) Handling type hierarchies in Cosmos DB (part 2) Azure Cosmos DB is Microsoft&amp;rsquo;s NoSQL cloud database. In Cosmos DB, you store JSON documents in containers. This makes it very easy to model data, because you don&amp;rsquo;t need to split complex objects into multiple tables and use joins like in relational databases.</description>
     </item>
     <item>
       <title>Multitenant Azure AD issuer validation in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</link>
       <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/</guid>
-      <description>Update 2021/09/19: If you&amp;rsquo;re using the newer Microsoft.Identity.Web library, you don&amp;rsquo;t have anything to do to handle this, as it&amp;rsquo;s already handled by the library. This article only applies if you&amp;rsquo;re using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!
-If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
+      <description>Update 2021/09/19: If you&amp;rsquo;re using the newer Microsoft.Identity.Web library, you don&amp;rsquo;t have anything to do to handle this, as it&amp;rsquo;s already handled by the library. This article only applies if you&amp;rsquo;re using the generic OpenID Connect provider. Thanks to Ohad Schneider for mentioning this!&#xA;If you use Azure AD authentication and want to allow users from any tenant to connect to your ASP.NET Core application, you need to configure the Azure AD app as multi-tenant, and use a &amp;ldquo;wildcard&amp;rdquo; tenant id such as organizations or common in the authority URL:</description>
     </item>
     <item>
       <title>Asynchronous initialization in ASP.NET Core, revisited</title>
       <link>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</link>
       <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2018/09/25/asynchronous-initialization-in-asp-net-core-revisited/</guid>
-      <description>Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).
-Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&amp;rsquo;t such a good approach.</description>
+      <description>Initialization in ASP.NET Core is a bit awkward. There are well defined places for registering services (the Startup.ConfigureServices method) and for building the middleware pipeline (the Startup.Configure method), but not for performing other initialization steps (e.g. pre-loading data, seeding a database, etc.).&#xA;Using a middleware: not such a good idea Two months ago I published a blog post about asynchronous initialization of an ASP.NET Core app using a custom middleware. At the time I was rather pleased with my solution, but a comment from Frantisek made me realize it wasn&amp;rsquo;t such a good approach.</description>
     </item>
     <item>
       <title>Handling multipart requests with JSON and file uploads in ASP.NET Core</title>
       <link>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</link>
       <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2018/09/04/handling-multipart-requests-with-json-and-file-uploads-in-asp-net-core/</guid>
-      <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:
-Embed the image bytes as base64 in the JSON payload, e.g. { &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
+      <description>Suppose we&amp;rsquo;re writing an API for a blog. Our &amp;ldquo;create post&amp;rdquo; endpoint should receive the title, body, tags and an image to display at the top of the post. This raises a question: how do we send the image? There are at least 3 options:&#xA;Embed the image bytes as base64 in the JSON payload, e.g. { &amp;#34;title&amp;#34;: &amp;#34;My first blog post&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;This is going to be the best blog EVER!</description>
     </item>
     <item>
       <title>Asynchronous initialization in ASP.NET Core with custom middleware</title>
       <link>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</link>
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2018/07/20/asynchronous-initialization-in-asp-net-core-with-custom-middleware/</guid>
-      <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.
-Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:
-There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
+      <description>Update: I no longer recommend the approach described in this post. I propose a better solution here: Asynchronous initialization in ASP.NET Core, revisited.&#xA;Sometimes you need to perform some initialization steps when your web application starts. However, putting such code in the Startup.Configure method is generally not a good idea, because:&#xA;There&amp;rsquo;s no current scope in the Configure method, so you can&amp;rsquo;t use services registered with &amp;ldquo;scoped&amp;rdquo; lifetime (this would throw an InvalidOperationException: Cannot resolve scoped service &amp;lsquo;MyApp.</description>
     </item>
     <item>
       <title>Writing a GitHub Webhook as an Azure Function</title>
       <link>https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/</link>
       <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2018/03/30/writing-a-github-webhook-as-an-azure-function/</guid>
-      <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.
-A bit of background As you may already know, I&amp;rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
+      <description>I recently experimented with Azure Functions and GitHub apps, and I wanted to share what I learned.&#xA;A bit of background As you may already know, I&amp;rsquo;m one of the maintainers of the FakeItEasy mocking library. As is common in open-source projects, we use a workflow based on feature branches and pull requests. When a change is requested in a PR during code review, we usually make the change as a fixup commit, because it makes it easier to review, and because we like to keep a clean history.</description>
     </item>
     <item>
       <title>Understanding the ASP.NET Core middleware pipeline</title>
@@ -160,8 +139,7 @@ A bit of background As you may already know, I&amp;rsquo;m one of the maintainer
       <link>https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/</link>
       <pubDate>Sun, 25 Feb 2018 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/</guid>
-      <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
-The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
+      <description>The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:&#xA;The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.</description>
     </item>
     <item>
       <title>Testing and debugging library code from LINQPad</title>
@@ -175,51 +153,42 @@ The timeout is defined at the HttpClient level and applies to all requests made 
       <link>https://thomaslevesque.com/2017/03/29/linq-performance-improvements-in-net-core/</link>
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2017/03/29/linq-performance-improvements-in-net-core/</guid>
-      <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.
-For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:</description>
+      <description>By now, you&amp;rsquo;re probably aware that Microsoft released an open-source and cross-platform version of the .NET platform: .NET Core. This means you can now build and run .NET apps on Linux or macOS. This is pretty cool in itself, but it doesn&amp;rsquo;t end there: .NET Core also brings a lot of improvements to the Base Class Library.&#xA;For instance, Linq has been made faster in .NET Core. I made a little benchmark to compare the performance of some common Linq methods, and the results are quite impressive:</description>
     </item>
     <item>
       <title>C# methods in git diff hunk headers</title>
       <link>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</link>
       <pubDate>Tue, 17 Jan 2017 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</guid>
-      <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:
-diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args) Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;); } This is very useful to know where you are when looking at a diff.</description>
+      <description>If you use git on the command line, you may have noticed that diff hunks often show the method signature in the hunk header (the line that starts with @@), like this:&#xA;diff --git a/Program.cs b/Program.cs index 655a213..5ae1016 100644 --- a/Program.cs +++ b/Program.cs @@ -13,6 +13,7 @@ static void Main(string[] args) Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); Console.WriteLine(&amp;#34;Hello World!&amp;#34;); + Console.WriteLine(&amp;#34;blah&amp;#34;); } This is very useful to know where you are when looking at a diff.</description>
     </item>
     <item>
       <title>Fun with the HttpClient pipeline</title>
       <link>https://thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/</link>
       <pubDate>Thu, 08 Dec 2016 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2016/12/08/fun-with-the-httpclient-pipeline/</guid>
-      <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.
-You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&amp;rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
+      <description>A few years ago, Microsoft introduced the HttpClient class as a modern alternative to HttpWebRequest to make web requests from .NET apps. Not only is this new API much easier to use, cleaner, and asynchronous by design, it&amp;rsquo;s also easily extensible.&#xA;You might have noticed that HttpClient has a constructor that accepts a HttpMessageHandler. What is this handler? It&amp;rsquo;s an object that accepts a request (HttpRequestMessage) and returns a response (HttpResponseMessage); how it does that is entirely dependent on the implementation.</description>
     </item>
     <item>
       <title>Tuple deconstruction in C# 7</title>
       <link>https://thomaslevesque.com/2016/08/23/tuple-deconstruction-in-c-7/</link>
       <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2016/08/23/tuple-deconstruction-in-c-7/</guid>
-      <description>Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:
-emitting metadata for the names of tuple elements, so that the names are preserved across assemblies
-deconstruction of tuples into separate variables
-Well, it looks like the C# language team has been busy during the last month, because both items are now implemented in VS 15 Preview 4, which was released today!</description>
+      <description>Last time on this blog I talked about the new tuple feature of C# 7. In Visual Studio 15 Preview 3, the feature wasn’t quite finished; it lacked 2 important aspects:&#xA;emitting metadata for the names of tuple elements, so that the names are preserved across assemblies&#xA;deconstruction of tuples into separate variables&#xA;Well, it looks like the C# language team has been busy during the last month, because both items are now implemented in VS 15 Preview 4, which was released today!</description>
     </item>
     <item>
       <title>Tuples in C# 7</title>
       <link>https://thomaslevesque.com/2016/07/25/tuples-in-c-7/</link>
       <pubDate>Mon, 25 Jul 2016 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2016/07/25/tuples-in-c-7/</guid>
-      <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.
-In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:
-private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.</description>
+      <description>A tuple is an finite ordered list of values, of possibly different types, which is used to bundle related values together without having to create a specific type to hold them.&#xA;In .NET 4.0, a set of Tuple classes has been introduced in the framework, which can be used as follows:&#xA;private static Tuple&amp;lt;int, double&amp;gt; Tally(IEnumerable&amp;lt;double&amp;gt; values) { int count = 0; double sum = 0.0; foreach (var value in values) { count++; sum += value; } return Tuple.</description>
     </item>
     <item>
       <title>Pitfall: using var and async together</title>
       <link>https://thomaslevesque.com/2016/06/21/pitfall-using-var-and-async-together/</link>
       <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2016/06/21/pitfall-using-var-and-async-together/</guid>
-      <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
-public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync: private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() { // actual implementation irrelevant // .</description>
+      <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:&#xA;public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync: private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() { // actual implementation irrelevant // .</description>
     </item>
     <item>
       <title>Test driving C# 7 features in Visual Studio “15” Preview</title>
@@ -233,8 +202,7 @@ public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = awai
       <link>https://thomaslevesque.com/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</link>
       <pubDate>Sun, 17 Jan 2016 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2016/01/17/automatically-inject-fakes-in-test-fixture-with-fakeiteasy/</guid>
-      <description>Today I’d like to share a nice feature I discovered recently in FakeItEasy.
-When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier.</description>
+      <description>Today I’d like to share a nice feature I discovered recently in FakeItEasy.&#xA;When you write unit tests for a class that takes dependencies, you typically need to create fake/mock dependencies and manually inject them into the SUT (System Under Test), or use a DI container to register the fake dependencies and construct the SUT. This is a bit tedious, and a few months ago I came up with an auto-mocking Unity extension to make it easier.</description>
     </item>
     <item>
       <title>Using multiple cancellation sources with CreateLinkedTokenSource</title>
@@ -255,18 +223,14 @@ When you write unit tests for a class that takes dependencies, you typically nee
       <link>https://thomaslevesque.com/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</link>
       <pubDate>Sat, 05 Sep 2015 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2015/09/05/wpf-prevent-the-user-from-pasting-an-image-in-a-richtextbox/</guid>
-      <description>WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.
-When I googled for a way to prevent that, the only solutions I found suggested to intercept the Ctrl-V keystroke, and swallow the event if the clipboard contains an image.</description>
+      <description>WPF’s RichTextBox control is quite powerful, and very handy if you need to accept rich text input. However, one of its features can become an issue: the user can paste an image. Depending on what you intend to do with the text entered by the user, you might not want that.&#xA;When I googled for a way to prevent that, the only solutions I found suggested to intercept the Ctrl-V keystroke, and swallow the event if the clipboard contains an image.</description>
     </item>
     <item>
       <title>C# Puzzle 2</title>
       <link>https://thomaslevesque.com/2015/07/30/c-puzzle-2/</link>
       <pubDate>Thu, 30 Jul 2015 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2015/07/30/c-puzzle-2/</guid>
-      <description>Just another little puzzle based on an issue I had at work…
-Consider this piece of code :
-Console.WriteLine($&amp;#34;x &amp;gt; y is {x &amp;gt; y}&amp;#34;); Console.WriteLine($&amp;#34;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;#34;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?
-x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
+      <description>Just another little puzzle based on an issue I had at work…&#xA;Consider this piece of code :&#xA;Console.WriteLine($&amp;#34;x &amp;gt; y is {x &amp;gt; y}&amp;#34;); Console.WriteLine($&amp;#34;!(x &amp;lt;= y) is {!(x &amp;lt;= y)}&amp;#34;); How would you declare and initialize x and y for the program to produce the following, apparently illogical, output?&#xA;x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
     </item>
     <item>
       <title>How to retrieve dates as UTC in SQLite</title>
@@ -294,19 +258,14 @@ x &amp;gt; y is False !(x &amp;lt;= y) is True </description>
       <link>https://thomaslevesque.com/2015/03/10/c-puzzle-1/</link>
       <pubDate>Tue, 10 Mar 2015 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2015/03/10/c-puzzle-1/</guid>
-      <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!
-I just came up with this one:
-static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!
-I’ll try to post more puzzles in the future if I can come up with others.</description>
+      <description>I love to solve C# puzzles; I think it’s a great way to gain a deep understanding of the language. And besides, it’s fun!&#xA;I just came up with this one:&#xA;static void Test(out int x, out int y) { x = 42; y = 123; Console.WriteLine (x == y); } What do you think this code prints? Can you be sure? Post your answer in the comments!&#xA;I’ll try to post more puzzles in the future if I can come up with others.</description>
     </item>
     <item>
       <title>Async unit tests with NUnit</title>
       <link>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</link>
       <pubDate>Sun, 01 Feb 2015 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2015/02/01/async-unit-tests-with-nunit/</guid>
-      <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.
-Let’s assume the system under test is this very interesting Calculator class:
-public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.Delay(100).ConfigureAwait(false); // the answer to life, the universe and everything.</description>
+      <description>Recently, my team and I started writing unit tests on an application that uses a lot of async code. We used NUnit (2.6) because we were already familiar with it, but we had never tried it on async code yet.&#xA;Let’s assume the system under test is this very interesting Calculator class:&#xA;public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, int y) { // simulate long calculation await Task.Delay(100).ConfigureAwait(false); // the answer to life, the universe and everything.</description>
     </item>
     <item>
       <title>Optimize ToArray and ToList by providing the number of elements</title>
@@ -320,8 +279,7 @@ public class Calculator { public async Task&amp;lt;int&amp;gt; AddAsync(int x, i
       <link>https://thomaslevesque.com/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</link>
       <pubDate>Sun, 23 Nov 2014 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2014/11/23/easily-convert-file-sizes-to-human-readable-form/</guid>
-      <description>If you write an application that has anything to do with file management, you will probably need to display the size of the files. But if a file has a size of 123456789 bytes, it doesn’t mean that you should just display this value to the user, because it’s hard to read, and the user usually doesn’t need 1-byte precision. Instead, you will write something like 118 MB.
-This should be a no-brainer, but there are actually a number of different ways to display byte sizes… For instance, there are several co-existing conventions for units and prefixes:</description>
+      <description>If you write an application that has anything to do with file management, you will probably need to display the size of the files. But if a file has a size of 123456789 bytes, it doesn’t mean that you should just display this value to the user, because it’s hard to read, and the user usually doesn’t need 1-byte precision. Instead, you will write something like 118 MB.&#xA;This should be a no-brainer, but there are actually a number of different ways to display byte sizes… For instance, there are several co-existing conventions for units and prefixes:</description>
     </item>
     <item>
       <title>Passing parameters by reference to an asynchronous method</title>
@@ -342,17 +300,14 @@ This should be a no-brainer, but there are actually a number of different ways t
       <link>https://thomaslevesque.com/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</link>
       <pubDate>Mon, 04 Nov 2013 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2013/11/04/showing-result-suggestions-in-a-winrt-searchbox-bug-regarding-the-image/</guid>
-      <description>Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.
-The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:
-History suggestions are search queries previously entered by the user.</description>
+      <description>Today I ran into a strange problem that made me waste an hour or two, so I thought I’d write about it in case someone else faces the same issue.&#xA;The SearchBox control was introduced in Windows 8.1 to enable search scenarios from within a Windows Store app. One of its features is that it can show suggestions based on user input. There are three kinds of suggestions:&#xA;History suggestions are search queries previously entered by the user.</description>
     </item>
     <item>
       <title>Detecting dependency property changes in WinRT</title>
       <link>https://thomaslevesque.com/2013/04/21/detecting-dependency-property-changes-in-winrt/</link>
       <pubDate>Sun, 21 Apr 2013 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2013/04/21/detecting-dependency-property-changes-in-winrt/</guid>
-      <description>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…
-It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.</description>
+      <description>Today I’d like to share a trick I used while developing my first Windows Store application. I’m very new to this technology and it’s my first article about it, so I hope I won’t make a fool of myself…&#xA;It’s often useful to be notified when the value of a dependency property changes; many controls expose events for that purpose, but it’s not always the case. For instance, recently I was trying to detect when the Content property of a ContentControl changed.</description>
     </item>
     <item>
       <title>Tail recursion in C#</title>
@@ -373,8 +328,7 @@ It’s often useful to be notified when the value of a dependency property chang
       <link>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</link>
       <pubDate>Sun, 21 Feb 2010 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2010/02/21/automating-null-checks-with-linq-expressions/</guid>
-      <description>The problem Have you ever written code like the following ?
-X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
+      <description>The problem Have you ever written code like the following ?&#xA;X xx = GetX(); string name = &amp;#34;Default&amp;#34;; if (xx != null &amp;amp;&amp;amp; xx.Foo != null &amp;amp;&amp;amp; xx.Foo.Bar != null &amp;amp;&amp;amp; xx.Foo.Bar.Baz != null) { name = xx.Foo.Bar.Baz.Name; } I bet you have ! You just need to get the value of xx.Foo.Bar.Baz.Name, but you have to test every intermediate object to ensure that it&amp;rsquo;s not null. It can quickly become annoying if the property you need is nested in a deep object graph&amp;hellip;.</description>
     </item>
     <item>
       <title>[C#] Parent/child relationship and XML serialization</title>

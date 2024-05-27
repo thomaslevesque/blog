@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>dpapi on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Dpapi on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/dpapi/</link>
-    <description>Recent content in dpapi on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Dpapi on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 21 May 2013 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/dpapi/index.xml" rel="self" type="application/rss+xml" />

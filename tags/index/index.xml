@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>index on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Index on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/index/</link>
-    <description>Recent content in index on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Index on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/index/index.xml" rel="self" type="application/rss+xml" />
@@ -13,9 +13,7 @@
       <link>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2019/11/18/using-foreach-with-index-in-c/</guid>
-      <description>Just a quick tip today!
-for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.
-But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
+      <description>Just a quick tip today!&#xA;for and foreach loops are among the most useful constructs in a C# developer&amp;rsquo;s toolbox. To iterate a collection, foreach is, in my opinion, more convenient than for in most cases. It works with all collection types, including those that are not indexable such as IEnumerable&amp;lt;T&amp;gt;, and doesn&amp;rsquo;t require to access the current element by its index.&#xA;But sometimes, you do need the index of the current item; this usually leads to one of these patterns:</description>
     </item>
   </channel>
 </rss>

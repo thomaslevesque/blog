@@ -65,10 +65,10 @@
     <loc>https://thomaslevesque.com/2021/11/04/a-quick-review-of-csharp-10-new-language-features/</loc>
     <lastmod>2021-11-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/tags/c#/</loc>
+    <loc>https://thomaslevesque.com/tags/c%23/</loc>
     <lastmod>2021-11-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/tags/c#-10/</loc>
+    <loc>https://thomaslevesque.com/tags/c%23-10/</loc>
     <lastmod>2021-11-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/features/</loc>
@@ -77,7 +77,7 @@
     <loc>https://thomaslevesque.com/tags/language/</loc>
     <lastmod>2021-11-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/tags/c#-9/</loc>
+    <loc>https://thomaslevesque.com/tags/c%23-9/</loc>
     <lastmod>2021-03-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2021/03/19/csharp-9-records-as-strongly-typed-ids-part-5-final-bits-and-conclusion/</loc>
@@ -98,7 +98,7 @@
     <loc>https://thomaslevesque.com/tags/strongly-typed-ids/</loc>
     <lastmod>2021-03-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/series/using-c#-9-records-as-strongly-typed-ids/</loc>
+    <loc>https://thomaslevesque.com/series/using-c%23-9-records-as-strongly-typed-ids/</loc>
     <lastmod>2021-03-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2020/12/23/csharp-9-records-as-strongly-typed-ids-part-4-entity-framework-core-integration/</loc>
@@ -200,7 +200,7 @@
     <loc>https://thomaslevesque.com/tags/hash-table/</loc>
     <lastmod>2020-05-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/series/things-every-c#-developer-should-know/</loc>
+    <loc>https://thomaslevesque.com/series/things-every-c%23-developer-should-know/</loc>
     <lastmod>2020-05-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/</loc>
@@ -287,7 +287,7 @@
     <loc>https://thomaslevesque.com/tags/argument-validation/</loc>
     <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/tags/c#-8/</loc>
+    <loc>https://thomaslevesque.com/tags/c%23-8/</loc>
     <lastmod>2019-11-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2019/11/19/easy-unit-testing-of-null-argument-validation-c-8-edition/</loc>
@@ -545,7 +545,7 @@
     <loc>https://thomaslevesque.com/tags/httpmessagehandler/</loc>
     <lastmod>2016-12-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/tags/c#-7/</loc>
+    <loc>https://thomaslevesque.com/tags/c%23-7/</loc>
     <lastmod>2016-08-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/deconstruction/</loc>
@@ -668,7 +668,7 @@
     <loc>https://thomaslevesque.com/tags/utc/</loc>
     <lastmod>2015-06-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/tags/c#-6/</loc>
+    <loc>https://thomaslevesque.com/tags/c%23-6/</loc>
     <lastmod>2015-06-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/exception-filters/</loc>
@@ -920,7 +920,7 @@
     <loc>https://thomaslevesque.com/2013/04/21/detecting-dependency-property-changes-in-winrt/</loc>
     <lastmod>2013-04-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/tags/c#-5/</loc>
+    <loc>https://thomaslevesque.com/tags/c%23-5/</loc>
     <lastmod>2012-06-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/caller-info/</loc>
@@ -1040,7 +1040,7 @@
     <loc>https://thomaslevesque.com/2009/10/08/c-4-0-implementing-a-custom-dynamic-object/</loc>
     <lastmod>2009-10-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/tags/c#-4.0/</loc>
+    <loc>https://thomaslevesque.com/tags/c%23-4.0/</loc>
     <lastmod>2009-10-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/dlr/</loc>
@@ -1065,6 +1065,9 @@
     <lastmod>2009-06-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/collection/</loc>
+    <lastmod>2009-06-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/parent/child/</loc>
     <lastmod>2009-06-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/xml-serialization/</loc>
@@ -1123,7 +1126,5 @@
   </url><url>
     <loc>https://thomaslevesque.com/tags/settings/</loc>
     <lastmod>2008-11-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/parent/child/</loc>
   </url>
 </urlset>

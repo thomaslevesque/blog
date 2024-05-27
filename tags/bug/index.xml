@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>bug on Thomas Levesque&#39;s .NET Blog</title>
+    <title>Bug on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/bug/</link>
-    <description>Recent content in bug on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Bug on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 21 Jun 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/bug/index.xml" rel="self" type="application/rss+xml" />
@@ -13,24 +13,21 @@
       <link>https://thomaslevesque.com/2016/06/21/pitfall-using-var-and-async-together/</link>
       <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2016/06/21/pitfall-using-var-and-async-together/</guid>
-      <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:
-public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync: private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() { // actual implementation irrelevant // .</description>
+      <description>A few days ago at work, I stumbled upon a sneaky bug in our main app. The code looked innocent enough, and at first glance I couldn’t understand what was wrong… The code was similar to the following:&#xA;public async Task&amp;lt;bool&amp;gt; BookExistsAsync(int id) { var store = await GetBookStoreAsync(); var book = store.GetBookByIdAsync(id); return book != null; } // For completeness, here are the types and methods used in BookExistsAsync: private Task&amp;lt;IBookStore&amp;gt; GetBookStoreAsync() { // actual implementation irrelevant // .</description>
     </item>
     <item>
       <title>Visual Studio Online &#43; Git integration with Team Explorer</title>
       <link>https://thomaslevesque.com/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</link>
       <pubDate>Sun, 12 Oct 2014 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2014/10/12/visual-studio-online-git-integration-with-team-explorer/</guid>
-      <description>I recently started using Visual Studio Online for personal projects, and I must say it’s a pretty good platform, although it would be nice to be able to host public projects as well as private ones. The thing I like the most is the integration with Visual Studio Team Explorer to manage work items and builds.
-However, I noticed a little gotcha when using Git for source control : the remote for VS Online must be named origin, otherwise Team Explorer won’t detect that it’s a VS Online project, and it won’t show the “Builds” and “Work items” pages.</description>
+      <description>I recently started using Visual Studio Online for personal projects, and I must say it’s a pretty good platform, although it would be nice to be able to host public projects as well as private ones. The thing I like the most is the integration with Visual Studio Team Explorer to manage work items and builds.&#xA;However, I noticed a little gotcha when using Git for source control : the remote for VS Online must be named origin, otherwise Team Explorer won’t detect that it’s a VS Online project, and it won’t show the “Builds” and “Work items” pages.</description>
     </item>
     <item>
       <title>[WPF] Paste an image from the clipboard (bug in Clipboard.GetImage)</title>
       <link>https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/</link>
       <pubDate>Thu, 05 Feb 2009 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/</guid>
-      <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)
-If you&amp;rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&amp;hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&amp;rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</description>
+      <description>Oops&amp;hellip; 2 months already since my previous (and first) post&amp;hellip; I really have to get on a more regular schedule ;)&#xA;If you&amp;rsquo;ve ever tried to use the Clipboard.GetImage method in WPF, you probably had an unpleasant surprise&amp;hellip; In fact, this method returns an InteropBitmap which, in some cases (most cases actually), can&amp;rsquo;t be displayed in an Image control : no exception is thrown, the image size is correct, but the image either appears empty or unrecognizable.</description>
     </item>
   </channel>
 </rss>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>.net core sdk on Thomas Levesque&#39;s .NET Blog</title>
+    <title>.Net Core Sdk on Thomas Levesque&#39;s .NET Blog</title>
     <link>https://thomaslevesque.com/tags/.net-core-sdk/</link>
-    <description>Recent content in .net core sdk on Thomas Levesque&#39;s .NET Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in .Net Core Sdk on Thomas Levesque&#39;s .NET Blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 23 Nov 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/.net-core-sdk/index.xml" rel="self" type="application/rss+xml" />
@@ -13,8 +13,7 @@
       <link>https://thomaslevesque.com/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</link>
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/2018/11/23/making-a-wpf-app-using-a-sdk-style-project-with-msbuildsdkextras/</guid>
-      <description>Ever since the first stable release of the .NET Core SDK, we&amp;rsquo;ve enjoyed a better C# project format, often called &amp;ldquo;SDK-style&amp;rdquo; because you specify a SDK to use in the project file. It&amp;rsquo;s still a .csproj XML file, it&amp;rsquo;s still based on MSBuild, but it&amp;rsquo;s much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.
-However, out of the box, it&amp;rsquo;s only usable for some project types: ASP.</description>
+      <description>Ever since the first stable release of the .NET Core SDK, we&amp;rsquo;ve enjoyed a better C# project format, often called &amp;ldquo;SDK-style&amp;rdquo; because you specify a SDK to use in the project file. It&amp;rsquo;s still a .csproj XML file, it&amp;rsquo;s still based on MSBuild, but it&amp;rsquo;s much more lightweight and much easier to edit by hand. Personally, I love it and use it everywhere I can.&#xA;However, out of the box, it&amp;rsquo;s only usable for some project types: ASP.</description>
     </item>
   </channel>
 </rss>
