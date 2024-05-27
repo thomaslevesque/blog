@@ -1,0 +1,53 @@
+name: Deploy to GitHub pages
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    # run every day at 1pm (UTC) to publish scheduled posts
+    - cron:  '0 13 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout source
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        path: src
+
+    - name: Checkout destination
+      uses: actions/checkout@v4
+      with:
+        ref: gh-pages
+        path: out
+
+    - name: install Hugo
+      uses: peaceiris/actions-hugo@v3
+      with:
+        hugo-version: 0.125.4
+
+    - name: Clear output before build
+      run: rm -rf $GITHUB_WORKSPACE/out/*
+
+    - name: Build website with Hugo
+      run: |
+        hugo --source $GITHUB_WORKSPACE/src --destination $GITHUB_WORKSPACE/out --environment production
+
+    # - name: Commit and push result
+    #   run: |
+    #     cd $GITHUB_WORKSPACE/out
+    #     git config user.name "Hugo Bot"
+    #     git config user.email "hugobot@thomaslevesque.net"
+    #     git add .
+    #     git commit -m "Publish site for $GITHUB_SHA" || echo "No changes to commit"
+    #     git push
+
+    - name: Save artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        path: out
+        name: result
