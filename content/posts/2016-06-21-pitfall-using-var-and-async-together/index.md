@@ -63,3 +63,4 @@ So, how to avoid this kind of mistake? Stop using `var` and always specify types
 
 Ideally, I would have liked ReSharper to spot the issue; perhaps it should consider all `Task`-returning methods to be implicitly `[NotNull]`, unless specified otherwise. Until then, I don’t have a silver bullet against this issue; just pay attention when you call an async method, and write unit tests!
 
+**Update:** Since C# 8, if you have [nullable reference types](https://learn.microsoft.com/en-us/dotnet/csharp/nullable-references) enabled, the compiler does warn you that `book` is never null. Variants of this pitfall still exist though, e.g. if you call `book.ToString()`, expecting `book` to be a `Book` when it's actually a `Task<Book>`.
