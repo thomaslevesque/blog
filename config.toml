@@ -24,7 +24,7 @@ googleAnalytics = "G-18RG5M4ZD6"
 
 [Author] # Used in authorbox
   name = "Thomas Levesque"
-  bio = "Thomas Levesque is a French software developer, currently living in Québec, Canada."
+  bio = "Thomas Levesque is a French software developer with 20 years of experience, mostly on .NET."
   avatar = "images/avatar.jpg"
 
 [Params]
