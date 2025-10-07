@@ -59,3 +59,9 @@ googleAnalytics = "G-18RG5M4ZD6"
   url = "https://mastodon.cloud/@thomaslevesque"
   rel = "me"
   icon = "svg/mastodon.svg"
+
+[[Params.widgets.social.custom]]
+  title = "RSS"
+  url = "/index.xml"
+  rel = "me"
+  icon = "svg/rss.svg"
