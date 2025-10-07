@@ -89,6 +89,21 @@
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
+			<a href="/2019/01/10/google-shutdown-fixing-google-authentication-in-asp-net-core/" rel="bookmark">
+			Google&#43; shutdown: fixing Google authentication in ASP.NET Core
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2019-01-10T00:00:00Z">January 10, 2019</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		A few months ago, Google decided to shutdown Google+, due to multiple data leaks. More recently, they announced that the Google+ APIs will be shutdown on March 7, 2019, which is pretty soon! In fact, calls to these APIs might start to fail as soon as January 28, which is less than 3 weeks from now. You might think that it doesn&rsquo;t affect you as a developer; but if you&rsquo;re using Google authentication in an ASP.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
 			<a href="/2018/12/24/multitenant-azure-ad-issuer-validation-in-asp-net-core/" rel="bookmark">
 			Multitenant Azure AD issuer validation in ASP.NET Core
 			</a>
@@ -228,22 +243,6 @@ A bit of background As you may already know, I&rsquo;m one of the maintainers of
 		I recently had to work with a Git repository whose modifications needed to be ported to another repo. Unfortunately, the repo had been created without a .gitignore file, so a lot of useless files (bin/obj/packages directories&hellip;) had been commited. This made the history hard to follow, because each commit had hundreds of modified files.
 Fortunately, it&rsquo;s rather easy with Git to cleanup a branch, by recreating the same commits without the files that shouldn&rsquo;t have been there in the first place.
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/2018/02/25/better-timeout-handling-with-httpclient/" rel="bookmark">
-			Better timeout handling with HttpClient
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2018-02-25T00:00:00Z">February 25, 2018</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		The problem If you often use HttpClient to call REST APIs or to transfer files, you may have been annoyed by the way this class handles request timeout. There are two major issues with timeout handling in HttpClient:
-The timeout is defined at the HttpClient level and applies to all requests made with this HttpClient; it would be more convenient to be able to specify a timeout individually for each request.
-	</div>
 </article>
 </main>
 
@@ -301,11 +300,11 @@ The timeout is defined at the HttpClient level and applies to all requests made 
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2025/04/11/interesting-new-csharp-14-features-coming-with-net-10/">Interesting new C# 14 features coming with .NET 10</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2024/04/25/running-a-github-actions-workflow-that-doesnt-exist-yet-on-the-default-branch/">Running a GitHub Actions workflow that doesn&#39;t exist yet on the default branch</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/">Building a URL shortener in 12 lines of code using Cloudflare Workers</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
 			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
-			<li class="widget__item"><a class="widget__link" href="/2021/11/04/a-quick-review-of-csharp-10-new-language-features/">A quick review of C# 10 new language features</a></li>
 		</ul>
 	</div>
 </div>

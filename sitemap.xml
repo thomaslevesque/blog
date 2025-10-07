@@ -2,22 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://thomaslevesque.com/tags/csharp/</loc>
+    <lastmod>2025-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/dotnet/</loc>
+    <lastmod>2025-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/features/</loc>
+    <lastmod>2025-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/2025/04/11/interesting-new-csharp-14-features-coming-with-net-10/</loc>
+    <lastmod>2025-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/posts/</loc>
+    <lastmod>2025-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/tags/</loc>
+    <lastmod>2025-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://thomaslevesque.com/</loc>
+    <lastmod>2025-04-11T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://thomaslevesque.com/tags/ci/</loc>
     <lastmod>2024-04-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/github-actions/</loc>
     <lastmod>2024-04-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://thomaslevesque.com/posts/</loc>
-    <lastmod>2024-04-25T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://thomaslevesque.com/2024/04/25/running-a-github-actions-workflow-that-doesnt-exist-yet-on-the-default-branch/</loc>
-    <lastmod>2024-04-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/</loc>
-    <lastmod>2024-04-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/</loc>
     <lastmod>2024-04-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/</loc>
@@ -69,9 +81,6 @@
     <lastmod>2021-11-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/c%23-10/</loc>
-    <lastmod>2021-11-04T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/features/</loc>
     <lastmod>2021-11-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/language/</loc>
@@ -525,9 +534,6 @@
     <lastmod>2017-02-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/2017/01/17/c-methods-in-git-diff-hunk-headers/</loc>
-    <lastmod>2017-01-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://thomaslevesque.com/tags/csharp/</loc>
     <lastmod>2017-01-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://thomaslevesque.com/tags/diff/</loc>

@@ -6,8 +6,29 @@
     <description>Recent content in Tags on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Apr 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 11 Apr 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Csharp</title>
+      <link>https://thomaslevesque.com/tags/csharp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://thomaslevesque.com/tags/csharp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dotnet</title>
+      <link>https://thomaslevesque.com/tags/dotnet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://thomaslevesque.com/tags/dotnet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Features</title>
+      <link>https://thomaslevesque.com/tags/features/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://thomaslevesque.com/tags/features/</guid>
+      <description></description>
+    </item>
     <item>
       <title>CI</title>
       <link>https://thomaslevesque.com/tags/ci/</link>
@@ -111,13 +132,6 @@
       <link>https://thomaslevesque.com/tags/c%23-10/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/tags/c%23-10/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Features</title>
-      <link>https://thomaslevesque.com/tags/features/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://thomaslevesque.com/tags/features/</guid>
       <description></description>
     </item>
     <item>
@@ -853,13 +867,6 @@
       <link>https://thomaslevesque.com/tags/mocking/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://thomaslevesque.com/tags/mocking/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Csharp</title>
-      <link>https://thomaslevesque.com/tags/csharp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://thomaslevesque.com/tags/csharp/</guid>
       <description></description>
     </item>
     <item>
