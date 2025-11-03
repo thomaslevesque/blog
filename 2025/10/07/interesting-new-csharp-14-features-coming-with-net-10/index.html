@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Interesting new C# 14 features coming with .NET 10 - Thomas Levesque&#39;s .NET Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:url" content="https://thomaslevesque.com/2025/10/07/interesting-new-csharp-14-features-coming-with-net-10/">
+  <meta property="og:site_name" content="Thomas Levesque&#39;s .NET Blog">
+  <meta property="og:title" content="Interesting new C# 14 features coming with .NET 10">
+  <meta property="og:description" content="With the release of .NET 10 just around the corner (next month!), it’s time to take a look at the new features we can expect for C# 14.
+Note: the goal of this post is not to be an exhaustive list of all new features. I will only cover the ones that seem the most interesting to me. This doesn’t mean the features I don’t mention are useless, but they just have more niche use cases so they probably won’t have as much impact on most developers.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-10-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-10-07T00:00:00+00:00">
+    <meta property="article:tag" content="Csharp">
+    <meta property="article:tag" content="Dotnet">
+    <meta property="article:tag" content="Features">
+
+		<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Interesting new C# 14 features coming with .NET 10">
+<meta name="twitter:description" content="With the release of .NET 10 just around the corner (next month!), it&rsquo;s time to take a look at the new features we can expect for C# 14.
+Note: the goal of this post is not to be an exhaustive list of all new features. I will only cover the ones that seem the most interesting to me. This doesn&rsquo;t mean the features I don&rsquo;t mention are useless, but they just have more niche use cases so they probably won&rsquo;t have as much impact on most developers.">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-18RG5M4ZD6"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-18RG5M4ZD6');
+        }
+      </script>
+    
+  
+
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="Thomas Levesque&#39;s .NET Blog" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">Thomas Levesque&#39;s .NET Blog</div>
+					<div class="logo__tagline">Tips, tricks and thoughts about .NET development</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<a class="main__header__type" href="/posts/">posts</a>
+			<h1 class="post__title">Interesting new C# 14 features coming with .NET 10</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2025-10-07T00:00:00Z">October 07, 2025</time></div></div>
+		</header><div class="content post__content clearfix">
+			<p>With the release of .NET 10 just around the corner (next month!), it&rsquo;s time to take a look at the new features we can expect for C# 14.</p>
+<blockquote>
+<p>Note: the goal of this post is not to be an exhaustive list of all new features. I will only cover the ones that seem the most interesting to me. This doesn&rsquo;t mean the features I don&rsquo;t mention are useless, but they just have more niche use cases so they probably won&rsquo;t have as much impact on most developers.</p>
+</blockquote>
+<h2 id="field-backed-properties">Field-backed properties</h2>
+<p>Sometimes also called &ldquo;semi-auto properties&rdquo;, this feature introduces a new <code>field</code> keyword in property accessor bodies, that refers to an auto-generated backing field for the property.</p>
+<blockquote>
+<p>Note: this is not <em>really</em> a new feature, since it was already present in C# 13 as a preview feature (you had to set the language version to <code>preview</code> to use it). In C# 14 it will no longer be in preview.</p>
+</blockquote>
+<p>Let&rsquo;s do a bit of history first. In the first version of C#, property accessors had to be fully specified, with a manually declared backing field:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> _foo;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Foo
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _foo; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">set</span> { _foo = <span style="color:#66d9ef">value</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Let&rsquo;s face it: it was pretty tedious. In 95% of cases, there was no logic besides returning or setting the field, so it was really uninteresting code. I&rsquo;m pretty sure many people just exposed fields publicly to avoid having to deal with that.</p>
+<p>With C# 3 came automatically implemented properties (sometimes referred to as &ldquo;auto properties&rdquo;), which made it possible to write properties with much less ceremony for the most common case (properties that just wrap a field without doing anything else). The previous code could now be written like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Foo { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span></code></pre></div><p>This was a great improvement, but as soon as you needed to do something else in the accessors (lazily initialize the property on the first call, add validation or raise an event in the setter, etc.), you had to fall back to the manual approach, including the declaration of a backing field:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> _foo;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Foo
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _foo; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">set</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> &lt; <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentOutOfRangeException();
+</span></span><span style="display:flex;"><span>        _foo = <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>        OnFooChanged();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The new &ldquo;field-backed properties&rdquo; feature coming in C# 14 lets you have the best of both worlds: use automatically implemented accessors when you don&rsquo;t need to do anything more than getting or setting the field, but still have the option to write your own accessor code without explicitly declaring a backing field. This is achieved by introducing a <code>field</code> keyword that refers to the automatically generated backing field. With this new feature, the previous example becomes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Foo
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">get</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">set</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">value</span> &lt; <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentOutOfRangeException();
+</span></span><span style="display:flex;"><span>        field = <span style="color:#66d9ef">value</span>;
+</span></span><span style="display:flex;"><span>        OnFooChanged();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The getter does nothing more than returning the field, so we can just let the compiler generate its implementation. The setter does a bit more work and needs to access the field, but it does so via the <code>field</code> keyword. No more explicit field declaration!</p>
+<h2 id="partial-events-and-constructors">Partial events and constructors</h2>
+<p>C# 13 had already added partial properties and indexers, C# 14 will complete the set of members you can declare as partial by adding events and constructors.</p>
+<p>This is mostly useful in code generation scenarios: you declare a member with no implementation, and a source generator writes the implementation for you.</p>
+<h2 id="extension-members">Extension members</h2>
+<p>Since their introduction in C# 3, extension methods have become a cornerstone of the language, enabling expressive and flexible code. They basically let you add methods to a type you don&rsquo;t control, and use them as if they were actually instance members of that type (even though they&rsquo;re actually just static methods with some syntactic sugar).</p>
+<p>However, they could only be used to add methods, not properties, and only to an instance of the extended type, not to the type itself (i.e. static). C# 14 will introduce a new, more powerful extension mechanism to address these limitations, enabling instance or static extension methods and properties. The syntax is a bit unusual, but flexible enough. It looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Extensions</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Extension block for String</span>
+</span></span><span style="display:flex;"><span>    extension(<span style="color:#66d9ef">string</span> s) 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Instance extension method</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Similar to classic extension methods, but the &#34;target&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// parameter is declared on the extension block itself.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Capitalize() =&gt; s[..<span style="color:#ae81ff">1</span>].ToUpper() + s[<span style="color:#ae81ff">1.</span>.];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Generic extension block for IEnumerable&lt;T&gt;</span>
+</span></span><span style="display:flex;"><span>    extension&lt;T&gt;(IEnumerable&lt;T&gt; source)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">where</span> T : INumber&lt;T&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Instance extension method</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> IEnumerable&lt;T&gt; WhereGreaterThan(T threshold)
+</span></span><span style="display:flex;"><span>            =&gt; source.Where(x =&gt; x &gt; threshold);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Instance extension property</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsEmpty =&gt; !source.Any();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Static extension block that adds static members to List&lt;T&gt;</span>
+</span></span><span style="display:flex;"><span>    extension&lt;T&gt;(List&lt;T&gt;)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Static extension method</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> List&lt;T&gt; Singleton(T <span style="color:#66d9ef">value</span>) =&gt; [<span style="color:#66d9ef">value</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Static extension property</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> List&lt;T&gt; Empty =&gt; [];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>All these members can be called as if they were actually members of the type they extend:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">string</span> name = GetName().Capitalize();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>IEnumerable&lt;<span style="color:#66d9ef">int</span>&gt; items = GetItems();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (!items.IsEmpty)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> largeItems = items.WhereGreaterThan(<span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> listWithSingleItem = List&lt;<span style="color:#66d9ef">int</span>&gt;.Singleton(<span style="color:#ae81ff">42</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> emptyList = List&lt;<span style="color:#66d9ef">int</span>&gt;.Empty;
+</span></span></code></pre></div><p>I&rsquo;ve been waiting for something like this for many years, so I really look forward to this feature!</p>
+<h2 id="null-conditional-assignment">Null-conditional assignment</h2>
+<p>C# 6 introduced the null-conditional operator <code>?.</code> to access a property or field on an expression only if it&rsquo;s not null:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>Item? item = GetItem();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">string?</span> name = item?.Name; <span style="color:#75715e">// only accesses Name if item is not null</span>
+</span></span></code></pre></div><p>However, this only worked in &ldquo;read&rdquo; scenarios: you couldn&rsquo;t conditionally assign a member if the expression was not null. You still had to explicitly check for null before trying to assign the member:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>Item? item = GetItem();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (item <span style="color:#66d9ef">is</span> not <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>   item.Name = <span style="color:#e6db74">&#34;foo&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>C# 14 will simplify this kind of scenario by allowing this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>Item? item = GetItem();
+</span></span><span style="display:flex;"><span>item?.Name = <span style="color:#e6db74">&#34;foo&#34;</span>; <span style="color:#75715e">// only assigns Name if item is not null</span>
+</span></span></code></pre></div><p>It&rsquo;s a small thing, but it helps make code terser and cleaner.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This concludes our small tour of the main new  features of C# 14. I expect field-backed properties and extension members to be the most impactful, but of course that depends on your use cases. If you want to learn about the features I didn&rsquo;t mention here, <a href="https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-14">here&rsquo;s the full list</a>.</p>
+<p>You can already experiment with these features by installing the <a href="https://dotnet.microsoft.com/en-us/download/dotnet/10.0">.NET 10 release candidate</a>.</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/csharp/" rel="tag">csharp</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/dotnet/" rel="tag">dotnet</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/features/" rel="tag">features</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Thomas Levesque avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Thomas Levesque</span>
+	</div>
+	<div class="authorbox__description">
+		Thomas Levesque is a French software developer with 20 years of experience, mostly on .NET.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/2024/04/25/running-a-github-actions-workflow-that-doesnt-exist-yet-on-the-default-branch/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Running a GitHub Actions workflow that doesn&#39;t exist yet on the default branch</p>
+		</a>
+	</div>
+</nav>
+<div class="giscus">
+    <script src="https://giscus.app/client.js"
+        data-repo="thomaslevesque/blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkyNTkxNDk0Njk="
+        data-category="Blog comments"
+        data-category-id="DIC_kwDOD3JOnc4CPJVg"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://thomaslevesque.com/">
+	</form>
+</div>
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Twitter" rel="noopener noreferrer" href="https://twitter.com/thomaslevesque" target="_blank">
+				<svg class="widget-social__link-icon icon icon-twitter" width="24" height="24" viewBox="0 0 384 312"><path d="m384 36.9c-14.1 6.3-29.3 10.5-45.2 12.4 16.3-9.7 28.8-25.2 34.6-43.6-15.2 9-32.1 15.6-50 19.1-14.4-15.2-34.9-24.8-57.5-24.8-43.5 0-78.8 35.3-78.8 78.8 0 6.2.7 12.2 2 17.9-65.5-3.3-123.5-34.6-162.4-82.3-6.7 11.6-10.6 25.2-10.6 39.6 0 27.3 13.9 51.4 35 65.6-12.9-.4-25.1-4-35.7-9.9v1c0 38.2 27.2 70 63.2 77.2-6.6 1.8-13.6 2.8-20.8 2.8-5.1 0-10-.5-14.8-1.4 10 31.3 39.1 54.1 73.6 54.7-27 21.1-60.9 33.7-97.8 33.7-6.4 0-12.6-.4-18.8-1.1 34.9 22.4 76.3 35.4 120.8 35.4 144.9 0 224.1-120 224.1-224.1 0-3.4-.1-6.8-.2-10.2 15.4-11.1 28.7-25 39.3-40.8z"/></svg>
+				<span>Twitter</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/thomaslevesque" target="_blank">
+				<svg class="widget-social__link-icon icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+
+		
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Mastodon"  rel="me" href="https://mastodon.cloud/@thomaslevesque" target="_blank">
+					<svg class="widget-social__link-icon icon icon-mastodon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
+    <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z" />
+</svg>
+				<span>Mastodon</span>
+			</a>
+		</div>
+		
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="RSS"  rel="me" href="/index.xml" target="_blank">
+					<svg class="widget-social__link-icon icon icon-rss" x="0px" y="0px" width="24" height="24" viewBox="0 0 1000 1000"><path d="M277.2,856.3c0,37.1-13,68.7-39,94.6c-26,26-57.5,39-94.6,39S75,976.9,49,951c-26-26-39-57.5-39-94.6c0-37.1,13-68.7,39-94.6c26-26,57.5-39,94.6-39s68.7,13,94.6,39C264.3,787.7,277.2,819.2,277.2,856.3z M633.6,941.9c0.9,13-3,24.1-11.8,33.4c-8.4,9.7-19.3,14.6-32.7,14.6h-94c-11.6,0-21.6-3.8-29.9-11.5c-8.4-7.7-13-17.3-13.9-28.9c-10.2-106.2-53-197.1-128.4-272.5c-75.4-75.4-166.2-118.2-272.5-128.4c-11.6-0.9-21.2-5.6-28.9-13.9c-7.7-8.4-11.5-18.3-11.5-29.9v-94c0-13.5,4.9-24.4,14.6-32.7c7.9-7.9,17.9-11.8,29.9-11.8H58c74.2,6,145.2,24.7,213,56c67.7,31.3,127.8,73.4,180.2,126.3c52.9,52.4,95,112.5,126.3,180.2C608.8,796.7,627.5,867.7,633.6,941.9L633.6,941.9z M989.9,943.3c0.9,12.5-3.2,23.4-12.5,32.7c-8.3,9.3-19,13.9-32,13.9h-99.5c-12.1,0-22.4-4.1-31-12.2s-13.1-18-13.6-29.6c-5.6-99.8-29-194.5-70.3-284.3c-41.3-89.8-95-167.7-161.1-233.8C503.8,363.9,425.8,310.2,336,269c-89.8-41.3-184.5-65-284.3-71c-11.6-0.5-21.5-5-29.6-13.6c-8.1-8.6-12.2-18.7-12.2-30.3V54.6c0-13,4.6-23.7,13.9-32c8.4-8.4,18.6-12.5,30.6-12.5h2.1c121.6,6,237.9,33.9,349,83.5c111.1,49.6,209.8,117.8,296.1,204.6c86.8,86.3,155,185,204.6,296.1C956,705.4,983.8,821.8,989.9,943.3L989.9,943.3z"/></svg>
+				<span>RSS</span>
+			</a>
+		</div>
+		
+	</div>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/2025/10/07/interesting-new-csharp-14-features-coming-with-net-10/">Interesting new C# 14 features coming with .NET 10</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2024/04/25/running-a-github-actions-workflow-that-doesnt-exist-yet-on-the-default-branch/">Running a GitHub Actions workflow that doesn&#39;t exist yet on the default branch</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2022/11/01/building-a-url-shortener-in-12-lines-of-code-using-cloudflare-workers/">Building a URL shortener in 12 lines of code using Cloudflare Workers</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2022/09/19/using-multiple-json-serialization-settings-in-aspnet-core/">Using multiple JSON serialization settings in ASP.NET Core</a></li>
+			<li class="widget__item"><a class="widget__link" href="/2021/11/12/building-a-project-that-target-net-45-in-visual-studio-2022/">Building a project that target .NET Framework 4.5 in Visual Studio 2022</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Top tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23/" title="c#">c#</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wpf/" title="wpf">wpf</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/asp.net-core/" title="asp.net core">asp.net core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/xaml/" title="xaml">xaml</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/async/" title="async">async</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-studio/" title="visual studio">visual studio</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json/" title="json">json</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/.net-core/" title=".net core">.net core</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c%23-9/" title="c# 9">c# 9</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linq/" title="linq">linq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/unit-testing/" title="unit testing">unit testing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/binding/" title="binding">binding</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dependency-injection/" title="dependency injection">dependency injection</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/markup-extension/" title="markup extension">markup extension</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mvvm/" title="mvvm">mvvm</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2025 Thomas Levesque.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

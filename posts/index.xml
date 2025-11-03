@@ -6,13 +6,13 @@
     <description>Recent content in Posts on Thomas Levesque&#39;s .NET Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://thomaslevesque.com/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Interesting new C# 14 features coming with .NET 10</title>
-      <link>https://thomaslevesque.com/2025/04/11/interesting-new-csharp-14-features-coming-with-net-10/</link>
-      <pubDate>Fri, 11 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://thomaslevesque.com/2025/04/11/interesting-new-csharp-14-features-coming-with-net-10/</guid>
+      <link>https://thomaslevesque.com/2025/10/07/interesting-new-csharp-14-features-coming-with-net-10/</link>
+      <pubDate>Tue, 07 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://thomaslevesque.com/2025/10/07/interesting-new-csharp-14-features-coming-with-net-10/</guid>
       <description>With the release of .NET 10 just around the corner (next month!), it&amp;rsquo;s time to take a look at the new features we can expect for C# 14.&#xA;Note: the goal of this post is not to be an exhaustive list of all new features. I will only cover the ones that seem the most interesting to me. This doesn&amp;rsquo;t mean the features I don&amp;rsquo;t mention are useless, but they just have more niche use cases so they probably won&amp;rsquo;t have as much impact on most developers.</description>
     </item>
     <item>
