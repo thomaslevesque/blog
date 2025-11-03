@@ -1,8 +1,10 @@
 ﻿---
 layout: post
 title: "Interesting new C# 14 features coming with .NET 10"
-date: 2025-04-11
-url: /2025/04/11/interesting-new-csharp-14-features-coming-with-net-10/
+date: 2025-10-07
+url: /2025/10/07/interesting-new-csharp-14-features-coming-with-net-10/
+aliases:
+  - /2025/04/11/interesting-new-csharp-14-features-coming-with-net-10/
 tags:
   - csharp
   - dotnet
